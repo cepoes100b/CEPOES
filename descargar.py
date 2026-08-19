@@ -45,16 +45,17 @@ CABECERAS = {
 
 SESION = requests.Session()
 SESION.headers.update(CABECERAS)
-# El servidor de IDECBA acepta el primer pedido y después empieza a rechazar
-# conexiones (ConnectTimeout, ni siquiera completa el saludo TCP). Parece un
-# límite por IP. Dos medidas: forzar IPv4 —el sitio anuncia IPv6 pero no
-# responde por ahí, y los runners de GitHub lo intentan primero— y bajar pocos
-# archivos por corrida, espaciados, rotando cuáles (ver COLA más abajo).
+# Nota para el futuro: durante un tiempo esto pareció un bloqueo por IP, porque
+# los pedidos morían con ConnectTimeout. No lo era. Eran URLs mal armadas: el
+# servidor de IDECBA no devuelve 404 rápido en rutas inexistentes, se cuelga
+# hasta agotar el timeout. Con el catálogo por categorías (ver fuentes.py) cada
+# descarga resuelve en poco más de un segundo. Si algún día vuelven los
+# timeouts en masa, sospechar primero del catálogo y recién después de la red.
 TIMEOUT = (8, 60)           # (conexión, lectura): si no conecta en 8s, no va a conectar
 REINTENTOS = 3
 ESPERA = [5, 15]            # backoff entre reintentos
-ENTRE_ARCHIVOS = 6          # pausa entre datasets, para no gatillar el límite
-POR_CORRIDA = 4             # cuántos datasets se intentan por vez
+ENTRE_ARCHIVOS = 3          # pausa entre datasets, por cortesía con el servidor
+POR_CORRIDA = 11            # todos: entran de sobra en una corrida
 PRESUPUESTO_SEG = 600       # 10 min de tope duro
 
 # Los runners de GitHub tienen IPv6 y lo prueban primero; si el destino publica
@@ -179,11 +180,10 @@ ESTADO = os.path.join(BASE, "estado_descargas.json")
 def cola_por_antiguedad():
     """Ordena los datasets por hace cuánto que no se bajan.
 
-    Como IDECBA corta las conexiones cuando se le piden muchos archivos
-    seguidos, cada corrida intenta sólo unos pocos: los que hace más tiempo que
-    no se actualizan, y siempre primero los que nunca se pudieron bajar. Con
-    una corrida diaria el ciclo completo se cierra en pocos días, de sobra para
-    series que se publican una vez por mes o por trimestre.
+    Con POR_CORRIDA en 11 se intentan todos y el orden es indistinto, pero el
+    mecanismo se conserva: si alguna fuente vuelve a ponerse lenta, basta con
+    bajar POR_CORRIDA para que cada corrida atienda a los más desactualizados
+    y el ciclo igual se complete en pocos días.
     """
     import json
     try:

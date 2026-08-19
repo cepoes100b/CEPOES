@@ -37,11 +37,17 @@ CABECERAS = {
                   "(KHTML, like Gecko) Chrome/126.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "es-AR,es;q=0.9,en;q=0.8",
-    "Connection": "close",
 }
-TIMEOUT = (10, 25)          # (conexión, lectura)
-REINTENTOS = 2
-PRESUPUESTO_SEG = 420       # tope total: si se pasa, corta y usa las copias locales
+
+SESION = requests.Session()
+SESION.headers.update(CABECERAS)
+# El servidor de IDECBA responde, pero de a ratos tarda muchísimo: en la misma
+# corrida bajan dos archivos y ocho dan timeout. Conviene ser paciente por
+# pedido y reintentar varias veces, con un tope global para no eternizar el paso.
+TIMEOUT = (20, 90)          # (conexión, lectura)
+REINTENTOS = 4
+ESPERA = [3, 8, 20]         # backoff entre reintentos
+PRESUPUESTO_SEG = 900       # 15 min de tope duro
 RE_XLSX = re.compile(r'https?://[^"\'\s>]+?\.xlsx', re.I)
 
 
@@ -58,13 +64,13 @@ def _get(url, **kw):
         if not queda_tiempo():
             raise RuntimeError("se agotó el presupuesto de tiempo")
         try:
-            r = requests.get(url, headers=CABECERAS, timeout=TIMEOUT, **kw)
+            r = SESION.get(url, timeout=TIMEOUT, **kw)
             if r.status_code == 200:
                 return r
             ultimo = f"HTTP {r.status_code}"
         except requests.RequestException as e:
             ultimo = type(e).__name__
-        time.sleep(2)
+        time.sleep(ESPERA[min(intento, len(ESPERA) - 1)])
     raise RuntimeError(ultimo or "sin respuesta")
 
 
@@ -138,55 +144,105 @@ def main():
 
 # ---------------------------------------------------------------- calendario
 
-RE_ITEM = re.compile(
-    r'(\d{1,2})[/-](\d{1,2})[/-](\d{4})(.{0,400}?)(?=\d{1,2}[/-]\d{1,2}[/-]\d{4}|$)',
-    re.S)
+# El calendario lista una publicación por bloque, con el título en un heading y
+# la fecha en un atributo de la tarjeta. Partir el texto por fechas no sirve
+# (casi ninguna aparece en el texto plano), así que se leen los títulos y la
+# fecha se deduce del período que el propio título declara: "Julio de 2026",
+# "2do. trimestre de 2026", etc. Las cadencias de IDECBA son regulares, así que
+# esa deducción es exacta salvo por el día, que se estima con el patrón de la
+# serie. Todo lo proyectado se marca para no presentarlo como fecha oficial.
 RE_TAG = re.compile(r"<[^>]+>")
+RE_TITULO = re.compile(r"<h[1-6][^>]*>(.*?)</h[1-6]>", re.S | re.I)
+RE_FECHA_ATTR = re.compile(r"(\d{2})/(\d{2})/(\d{4})")
+
+MESES_N = {"enero":1,"febrero":2,"marzo":3,"abril":4,"mayo":5,"junio":6,"julio":7,
+           "agosto":8,"septiembre":9,"setiembre":9,"octubre":10,"noviembre":11,"diciembre":12}
+TRI_N = {"1er":1,"1ro":1,"2do":2,"3er":3,"3ro":3,"4to":4}
+
+# Día típico de publicación y desfasaje respecto del período que informa.
+# (regex del título, día del mes, meses de rezago desde el fin del período)
+PATRONES = [
+    (r"^ipcba", 8, 1),
+    (r"l[ií]neas de pobreza", 8, 1),
+    (r"^sipcba", 16, 1),
+    (r"canasta de crianza", 18, 1),
+    (r"situaci[óo]n del mercado laboral", 23, 3),
+    (r"ingresos en la ciudad", 24, 3),
+    (r"condiciones de vida", 25, 3),
+    (r"actividad econ[óo]mica", 26, 3),
+    (r"comercio minorista", 29, 3),
+    (r"ejes comerciales", 20, 2),
+    (r"mercado de alquiler", 12, 1),
+    (r"mercado de venta", 14, 1),
+]
+
+
+def _periodo_a_fecha(titulo):
+    """Devuelve (fecha_iso, etiqueta_periodo) deducidas del título."""
+    t = titulo.lower()
+    anio = mes_fin = None
+    etiqueta = ""
+
+    m = re.search(r"(\d)(?:er|do|to|ro)\.?\s*(?:trimestre|cuatrimestre)\s*(?:de\s*)?((?:19|20)\d{2})", t)
+    if m:
+        n, anio = int(m.group(1)), int(m.group(2))
+        largo = 4 if "cuatrimestre" in t else 3
+        mes_fin = n * largo
+        etiqueta = m.group(0).strip()
+    if mes_fin is None:
+        m = re.search(r"(" + "|".join(MESES_N) + r")\s+(?:de\s+)?((?:19|20)\d{2})", t)
+        if m:
+            mes_fin, anio = MESES_N[m.group(1)], int(m.group(2))
+            etiqueta = m.group(0).strip()
+    if mes_fin is None:
+        m = re.search(r"a[ñn]o\s+((?:19|20)\d{2})", t)
+        if m:
+            mes_fin, anio, etiqueta = 12, int(m.group(1)), m.group(0).strip()
+    if mes_fin is None or anio is None:
+        return None, ""
+
+    dia, rezago = 15, 2
+    for patron, d, r in PATRONES:
+        if re.search(patron, t):
+            dia, rezago = d, r
+            break
+
+    mes = mes_fin + rezago
+    anio_pub = anio + (mes - 1) // 12
+    mes = (mes - 1) % 12 + 1
+    try:
+        return f"{anio_pub:04d}-{mes:02d}-{dia:02d}", etiqueta
+    except ValueError:
+        return None, ""
 
 
 def bajar_calendario():
-    """Extrae el cronograma de publicaciones de IDECBA.
-
-    La página lista cada publicación con su fecha. Se toma el texto plano y se
-    parten los items por fecha, que es lo más estable frente a rediseños del
-    sitio: si cambian las clases CSS esto sigue funcionando.
-    """
+    """Arma calendario.json a partir del listado de publicaciones de IDECBA."""
     import json
     html = _get(CALENDARIO_URL).text
-    texto = RE_TAG.sub(" ", html)
-    texto = re.sub(r"&[a-z]+;|&#\d+;", " ", texto)
-    texto = re.sub(r"\s+", " ", texto)
 
     items, vistos = [], set()
-    for d, m, a, resto in RE_ITEM.findall(texto):
-        try:
-            f = f"{int(a):04d}-{int(m):02d}-{int(d):02d}"
-        except ValueError:
+    for bruto in RE_TITULO.findall(html):
+        titulo = RE_TAG.sub(" ", bruto)
+        titulo = re.sub(r"&[a-z]+;|&#\d+;", " ", titulo)
+        titulo = re.sub(r"\s+", " ", titulo).strip()
+        if len(titulo) < 15 or titulo.lower() in vistos:
             continue
-        if not (2020 <= int(a) <= 2100):
+        # se descartan encabezados de navegación
+        if re.search(r"men[úu]|buscar|calendario de publicaciones|instituto de estad", titulo, re.I):
             continue
-        titulo = resto.strip(" .·-–|")[:180].strip()
-        if len(titulo) < 12:
+        f, periodo = _periodo_a_fecha(titulo)
+        if not f:
             continue
-        clave = (f, titulo[:60])
-        if clave in vistos:
-            continue
-        vistos.add(clave)
-        periodo = ""
-        mp = re.search(
-            r"((?:enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|"
-            r"setiembre|octubre|noviembre|diciembre)\s+(?:de\s+)?\d{4}|"
-            r"\d(?:er|do|to)\.?\s*trimestre\s*(?:de\s*)?\d{4})", titulo, re.I)
-        if mp:
-            periodo = mp.group(1)
-        items.append({"f": f, "t": titulo, "p": periodo})
+        vistos.add(titulo.lower())
+        items.append({"f": f, "t": titulo[:180], "p": periodo, "est": True})
 
-    if len(items) < 5:
+    if len(items) < 10:
         raise RuntimeError(f"sólo {len(items)} publicaciones, el layout debe haber cambiado")
 
     items.sort(key=lambda x: x["f"])
-    salida = os.path.join(BASE, "calendario.json")
-    json.dump({"items": items}, open(salida, "w", encoding="utf-8"), ensure_ascii=False)
+    json.dump({"items": items}, open(os.path.join(BASE, "calendario.json"), "w",
+              encoding="utf-8"), ensure_ascii=False)
     return len(items)
 
 

@@ -1,12 +1,11 @@
-name: Actualizar datos del observatorio
+xname: Actualizar datos del observatorio
 
 on:
   schedule:
-    # Cada 6 horas. IDECBA corta las conexiones cuando se le piden muchos
-    # archivos seguidos, así que cada corrida baja sólo 4 datasets rotando por
-    # antigüedad: con esta frecuencia el ciclo completo se cierra en menos de
-    # dos días, de sobra para series mensuales y trimestrales.
-    - cron: "20 3,9,15,21 * * *"
+    # Dos veces por día: 9 y 15 hora de Buenos Aires. IDECBA publica por la
+    # mañana; la segunda corrida levanta lo que haya salido más tarde.
+    # Cada corrida revisa las once fuentes y tarda poco más de un minuto.
+    - cron: "0 12,18 * * *"
   workflow_dispatch:
 
 permissions:

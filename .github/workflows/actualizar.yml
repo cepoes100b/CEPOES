@@ -1,0 +1,50 @@
+name: Actualizar datos del observatorio
+
+on:
+  schedule:
+    # 12:00 UTC = 9:00 en Buenos Aires. IDECBA suele publicar por la mañana;
+    # lo que salga más tarde entra en la corrida del día siguiente.
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-datos
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Bajar planillas de IDECBA
+        run: python descargar.py
+        continue-on-error: true    # si una fuente falla, se sigue con la copia anterior
+
+      - name: Generar datos.json
+        run: python generar_datos.py
+
+      - name: Verificar el resultado
+        run: python verificar.py
+
+      - name: Commitear si cambió
+        run: |
+          git config user.name  "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Sin cambios"
+          else
+            git commit -m "datos: actualización automática $(date -u +%F)"
+            git push
+          fi

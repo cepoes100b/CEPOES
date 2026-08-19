@@ -1,4 +1,4 @@
-xname: Actualizar datos del observatorio
+name: Actualizar datos del observatorio
 
 on:
   schedule:

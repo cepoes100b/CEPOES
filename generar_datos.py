@@ -78,9 +78,21 @@ def main():
     bloque("pobreza",         lambda: P.pobreza(xlsx("pobreza_tasas.xlsx")), "pobreza_tasas.xlsx")
     bloque("comex",           lambda: P.comex(xlsx("comex_tot.xlsx")), "comex_tot.xlsx")
     bloque("masa_salarial",   lambda: P.masa_salarial(xlsx("masa_salarial.xlsx")), "masa_salarial.xlsx")
-    # la serie de ocupación total sale del mismo archivo que los datos por comuna
-    bloque("locales_evo",     lambda: P.locales_evo(xlsx("ejes48_comuna_tasas.xlsx")),
-                              "ejes48_comuna_tasas.xlsx")
+    # Ocupación de locales: empalme.
+    # IDECBA cambió el relevamiento de 53 a 48 ejes comerciales. La planilla
+    # nueva sólo trae los últimos cuatro cuatrimestres, así que se conservan los
+    # períodos anteriores de la serie histórica y se pisan con los nuevos allí
+    # donde se superponen. Sin esto la serie se cortaría de 11 puntos a 4.
+    # El salto de nivel (~1,3 puntos) es real: son universos distintos.
+    def _locales_empalmadas():
+        nueva = P.locales_evo(xlsx("ejes48_comuna_tasas.xlsx"))
+        vieja = previo.get("locales_evo") or {}
+        combinado = dict(zip(vieja.get("periodos", []), vieja.get("tasa", [])))
+        combinado.update(zip(nueva["periodos"], nueva["tasa"]))
+        orden = sorted(combinado, key=lambda p: (int(p[:4]), int(p[-1])))
+        return {"periodos": orden, "tasa": [combinado[p] for p in orden]}
+
+    bloque("locales_evo", _locales_empalmadas, "ejes48_comuna_tasas.xlsx")
     bloque("comunas_locales", lambda: P.comunas_locales(xlsx("ejes48_comuna_tasas.xlsx")),
                               "ejes48_comuna_tasas.xlsx")
     bloque("pgb",             lambda: P.pgb(xlsx("pgb_var.xlsx")), "pgb_var.xlsx")

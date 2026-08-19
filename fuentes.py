@@ -62,7 +62,7 @@ DATASETS = {
     ),
     "pobreza_tasas.xlsx": (
         "linea-de-pobreza-e-indigencia",
-        r"(hogares|personas).*(pobreza|indigencia)",
+        r"distribucion-de-hogares-y-personas-por-estrato-de-ingresos",
         "Líneas de pobreza e indigencia · hogares y personas",
     ),
     "pgb_var.xlsx": (

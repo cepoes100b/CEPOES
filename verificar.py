@@ -121,20 +121,26 @@ def main():
         if faltan:
             errores.append(f"{blo}: faltan campos que la web necesita: {', '.join(faltan)}")
 
-    # 3.a3 saltos de escala: si una serie cambia de orden de magnitud respecto
-    # de la publicada, casi siempre es que el parser leyó la columna equivocada
-    # (pasó con industria: se mezclaron los bloques de valores corrientes y
-    # constantes, y la serie pasó de un índice ~180 a pesos ~400.000).
-    if ant:
-        for blo, ser in (("industria", "total_const"), ("masa_salarial", "total"),
-                         ("canastas", "total"), ("comex", "expo")):
-            va = [v for v in ((d.get(blo) or {}).get(ser) or []) if v]
-            vb = [v for v in ((ant.get(blo) or {}).get(ser) or []) if v]
-            if len(va) > 3 and len(vb) > 3:
-                ma, mb = max(va), max(vb)
-                if mb and not (0.2 < ma / mb < 5):
-                    errores.append(f"{blo}.{ser}: la escala cambió de ~{mb:.0f} a ~{ma:.0f} "
-                                   "(¿el parser leyó otra columna?)")
+    # 3.a3 orden de magnitud esperado por serie.
+    # Antes esto se comparaba contra la versión publicada, pero eso no distingue
+    # "se rompió" de "se arregló": cuando corregí el parser de industria, el
+    # control frenó justamente el arreglo. Con rangos declarados el criterio no
+    # depende de lo que haya publicado antes.
+    ESCALAS = {
+        ("industria", "total_const"): (20, 2000),        # índice base oct-2001=100
+        ("masa_salarial", "total"):   (20, 5_000_000),   # índice, crece con la inflación
+        ("canastas", "total"):        (1000, 100_000_000),
+        ("comex", "expo"):            (50, 5000),        # millones de dólares
+        ("pgb", "total"):             (-60, 60),         # variación porcentual
+    }
+    for (blo, ser), (lo, hi) in ESCALAS.items():
+        vals = [abs(v) for v in ((d.get(blo) or {}).get(ser) or []) if v]
+        if not vals:
+            continue
+        m = max(vals)
+        if not lo <= m <= hi:
+            errores.append(f"{blo}.{ser}: el máximo es {m:.4g} y debería caer entre "
+                           f"{lo:g} y {hi:g} (¿el parser leyó otra columna?)")
 
     # 3.b los bloques que no se regeneran tienen que seguir estando
     for k in ("presupuesto", "censo", "poblacion"):

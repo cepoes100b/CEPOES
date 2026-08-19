@@ -29,6 +29,12 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r requirements.txt
 
+      # Informativo: dice cuáles URLs de fuentes.py responden y cuáles no.
+      # No corta nunca; su salida es para corregir el catálogo a mano.
+      - name: Comprobar las fuentes
+        run: python verificar_fuentes.py
+        continue-on-error: true
+
       - name: Bajar planillas de IDECBA
         run: python descargar.py
         continue-on-error: true

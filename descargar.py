@@ -19,23 +19,44 @@ import requests
 
 from fuentes import DATASETS, DIRECTOS, CALENDARIO_URL
 
+# En GitHub Actions stdout no es una terminal, así que Python la bufferiza y el
+# paso queda mudo hasta terminar. Con esto cada línea sale en el momento.
+try:
+    sys.stdout.reconfigure(line_buffering=True)
+except AttributeError:
+    pass
+
 BASE = os.path.dirname(os.path.abspath(__file__))
 DIR_XLSX = os.path.join(BASE, "idecba")
 os.makedirs(DIR_XLSX, exist_ok=True)
 
+# Cabeceras de navegador: varios firewalls de sitios públicos rechazan o
+# demoran indefinidamente a los clientes que no se presentan como uno.
 CABECERAS = {
-    "User-Agent": "CEPOES-Observatorio/1.0 (+https://cepoes.tiiny.site) requests",
-    "Accept": "text/html,application/xhtml+xml,*/*;q=0.8",
-    "Accept-Language": "es-AR,es;q=0.9",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                  "(KHTML, like Gecko) Chrome/126.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "es-AR,es;q=0.9,en;q=0.8",
+    "Connection": "close",
 }
-TIMEOUT = 30
-REINTENTOS = 3
+TIMEOUT = (10, 25)          # (conexión, lectura)
+REINTENTOS = 2
+PRESUPUESTO_SEG = 420       # tope total: si se pasa, corta y usa las copias locales
 RE_XLSX = re.compile(r'https?://[^"\'\s>]+?\.xlsx', re.I)
+
+
+ARRANQUE = time.time()
+
+
+def queda_tiempo():
+    return time.time() - ARRANQUE < PRESUPUESTO_SEG
 
 
 def _get(url, **kw):
     ultimo = None
     for intento in range(REINTENTOS):
+        if not queda_tiempo():
+            raise RuntimeError("se agotó el presupuesto de tiempo")
         try:
             r = requests.get(url, headers=CABECERAS, timeout=TIMEOUT, **kw)
             if r.status_code == 200:
@@ -43,7 +64,7 @@ def _get(url, **kw):
             ultimo = f"HTTP {r.status_code}"
         except requests.RequestException as e:
             ultimo = type(e).__name__
-        time.sleep(2 * (intento + 1))
+        time.sleep(2)
     raise RuntimeError(ultimo or "sin respuesta")
 
 
@@ -82,6 +103,11 @@ def main():
     for nombre, url, desc, via_pagina in pendientes:
         destino = os.path.join(DIR_XLSX, nombre)
         existia = os.path.exists(destino)
+        print(f"  … {nombre:26} consultando", flush=True)
+        if not queda_tiempo():
+            conservados.append(nombre)
+            print(f"  ~ {nombre:26} sin tiempo, se conserva la copia anterior")
+            continue
         try:
             url_archivo = link_xlsx(url) if via_pagina else url
             n = bajar_archivo(url_archivo, destino)
@@ -94,7 +120,7 @@ def main():
             else:
                 fallas.append(nombre)
                 print(f"  ✘ {nombre:26} SIN COPIA LOCAL ({e})")
-        time.sleep(1)
+        time.sleep(0.5)
 
     try:
         n = bajar_calendario()

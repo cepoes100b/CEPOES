@@ -10,11 +10,17 @@ descargador lo reporta y conserva la última copia commiteada del xlsx, así el
 observatorio nunca se queda sin datos.
 """
 
+# Las entradas marcadas "verificada" se comprobaron contra el sitio. El resto
+# se armaron por patrón y pueden estar mal: correr  python verificar_fuentes.py
+# para saber cuáles responden y corregir acá las que fallen. Una URL inexistente
+# no devuelve 404 rápido: el servidor se cuelga hasta el timeout, así que una
+# entrada mal escrita se parece mucho a un problema de red.
 BASE = "https://www.estadisticaciudad.gob.ar/eyc/banco-datos/"
 
 # archivo local -> (URL de la página del dataset, descripción legible)
 DATASETS = {
     "ipcba_evol.xlsx": (
+        # verificada
         BASE + "ipcba-base-2021-100-evolucion-del-nivel-general-estacionales-regulados-y-resto-ipcba-indices-y-variaciones-porcentuales-respecto-del-mes-anterior-ciudad-de-buenos-aires-febrero-de-2022-ago/",
         "IPCBA base 2021=100 · nivel general, estacionales, regulados y resto",
     ),
@@ -23,7 +29,8 @@ DATASETS = {
         "Canastas de consumo del hogar de referencia",
     ),
     "empleo.xlsx": (
-        BASE + "tasas-de-actividad-empleo-desocupacion-y-subocupacion-horaria-ciudad-de-buenos-aires-3er-trimestre-de-2014-1er-trimestre-de-2/",
+        # verificada
+        BASE + "tasas-de-actividad-empleo-desocupacion-subocupacion-horaria-ciudad-de-buenos-aires-3er-trimestre-de-2014-2do-trimestre-de-2024/",
         "ETOI · tasas de actividad, empleo, desocupación y subocupación",
     ),
     "pobreza_tasas.xlsx": (

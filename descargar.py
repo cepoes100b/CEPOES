@@ -19,6 +19,8 @@ import socket
 
 import requests
 
+import parsers as P
+
 from fuentes import CAT_BASE, DATASETS, CALENDARIO_URL
 
 # En GitHub Actions stdout no es una terminal, así que Python la bufferiza y el
@@ -128,18 +130,48 @@ def link_xlsx(url_pagina):
     return encontrados[0].replace("http://", "https://")
 
 
-def bajar_archivo(url, destino):
+def validar(nombre, ruta):
+    """Levanta ValueError si el parser no puede leer el archivo recién bajado."""
+    fn = VALIDADORES.get(nombre)
+    if fn is None:
+        return
+    fn(ruta)
+
+
+def bajar_archivo(url, destino, nombre=None):
     r = _get(url, stream=True)
     ct = r.headers.get("Content-Type", "")
     contenido = r.content
     if len(contenido) < 4000 or contenido[:2] != b"PK":
         raise RuntimeError(f"no parece un xlsx (Content-Type={ct}, {len(contenido)} bytes)")
-    tmp = destino + ".parcial"
+    tmp = destino + ".nuevo.xlsx"
     with open(tmp, "wb") as f:
         f.write(contenido)
+    try:
+        validar(nombre or os.path.basename(destino), tmp)
+    except Exception as e:
+        os.remove(tmp)
+        raise RuntimeError(f"bajó pero el parser no lo pudo leer: {e}") from None
     os.replace(tmp, destino)
     return len(contenido)
 
+
+# Un archivo nuevo sólo reemplaza al anterior si el parser correspondiente lo
+# puede leer. Sin esto, bajar el dataset equivocado —cosa que pasa cuando un
+# patrón de fuentes.py apunta a otra planilla— pisa la copia buena para siempre
+# y el bloque queda congelado sin que nada lo avise.
+VALIDADORES = {
+    "ipcba_evol.xlsx":         P.ipcba,
+    "canastas.xlsx":           P.canastas,
+    "empleo.xlsx":             P.empleo,
+    "pobreza_tasas.xlsx":      P.pobreza,
+    "comex_tot.xlsx":          P.comex,
+    "masa_salarial.xlsx":      P.masa_salarial,
+    "industria_ing.xlsx":      lambda f: P.industria(f, None),
+    "ejes48_comuna_tasas.xlsx": P.comunas_locales,
+    "pgb_var.xlsx":            P.pgb,
+    "ipcba_aperturas.xlsx":    P.ipcba_divisiones,
+}
 
 ESTADO = os.path.join(BASE, "estado_descargas.json")
 
@@ -192,7 +224,7 @@ def main():
         try:
             post = buscar_post(categoria, patron)
             url_archivo = link_xlsx(post)
-            n = bajar_archivo(url_archivo, destino)
+            n = bajar_archivo(url_archivo, destino, nombre)
             ok.append(nombre)
             est[nombre] = int(time.time())
             print(f"  ✔ {nombre:26} {n//1024:5} KB  {url_archivo.split('/')[-1]}")

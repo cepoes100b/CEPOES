@@ -431,32 +431,43 @@ def masa_salarial(path):
 
 # ---------------------------------------------------------------- locales
 
+def _hojas_cuatrimestre(wb):
+    """Hojas del tipo '1er. cuatr. de 2025', ordenadas cronológicamente."""
+    out = []
+    for sn in wb.sheetnames:
+        m = re.match(r"(1er|2do|3er|4to)\.?\s*cuatr\.?\s*de\s*((19|20)\d{2})", norm(sn))
+        if m:
+            out.append((int(m.group(2)), TRIMESTRES[m.group(1)], sn))
+    return sorted(out)
+
+
 def locales_evo(path):
-    """Serie de la fila 'Total General' por cuatrimestre."""
-    _, ws = abrir(path)
-    fila_sub = next((r for r in range(1, 8)
-                     if "cuatrimestre" in norm(ws.cell(r, 2).value)), None)
-    if fila_sub is None:
-        raise ValueError(f"{path}: no encontré la fila de cuatrimestres")
-    fila_anio = fila_sub - 1
+    """Serie de la tasa de ocupación total, cuatrimestre a cuatrimestre.
 
-    periodos, cols, anio = [], [], None
-    for c in range(2, ws.max_column + 1):
-        a = anio_de(ws.cell(fila_anio, c).value)
-        if a:
-            anio = a
-        m = re.match(r"(1er|2do|3er|4to)\.?\s*cuatrimestre", norm(ws.cell(fila_sub, c).value))
-        if m and anio:
-            periodos.append(f"{anio}-C{TRIMESTRES[m.group(1)]}")
-            cols.append(c)
+    Sale del mismo archivo que los datos por comuna: cada hoja es un período y
+    trae una fila 'Total'. Antes dependía de una planilla aparte, pero IDECBA
+    cambió su layout y además era una descarga más contra un servidor al que
+    conviene no pedirle de más.
+    """
+    wb = openpyxl.load_workbook(path, data_only=True)
+    hojas = _hojas_cuatrimestre(wb)
+    if len(hojas) < 3:
+        raise ValueError(f"{path}: {len(hojas)} hojas de cuatrimestre, esperaba 3+")
 
-    fila_total = next((r for r in range(1, ws.max_row + 1)
-                       if norm(ws.cell(r, 1).value).startswith("total general")), None)
-    if fila_total is None:
-        raise ValueError(f"{path}: no encontré la fila 'Total General'")
-    tasa = [r1(num(ws.cell(fila_total, c).value), 1) for c in cols]
-    if len(tasa) < 4:
-        raise ValueError(f"{path}: {len(tasa)} cuatrimestres, esperaba 4+")
+    periodos, tasa = [], []
+    for anio, q, sn in hojas:
+        ws = wb[sn]
+        v = None
+        for r in range(1, ws.max_row + 1):
+            if norm(ws.cell(r, 1).value).startswith("total"):
+                v = r1(num(ws.cell(r, 4).value), 1)
+                break
+        if v is None:
+            continue
+        periodos.append(f"{anio}-C{q}")
+        tasa.append(v)
+    if len(tasa) < 3:
+        raise ValueError(f"{path}: sólo {len(tasa)} períodos con fila Total")
     return {"periodos": periodos, "tasa": tasa}
 
 

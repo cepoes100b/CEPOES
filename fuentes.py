@@ -50,11 +50,6 @@ DATASETS = {
         r"locales-relevados-ocupados-densidad-comercial-tasa-de-ocupacion.*por-comuna-48-ejes",
         "Locales relevados, ocupados y tasa de ocupación por comuna (48 ejes)",
     ),
-    "locales.xlsx": (
-        "ejes-comerciales",
-        r"tasa-de-ocupacion.*eje-comercial",
-        "Tasa de ocupación de locales por eje comercial",
-    ),
     "industria_ing.xlsx": (
         "industria",
         r"ingresos.*por-rama-de-actividad",
@@ -66,14 +61,14 @@ DATASETS = {
         "Canastas de consumo · hogar 1, evolución del valor",
     ),
     "pobreza_tasas.xlsx": (
-        "pobreza-e-indigencia",
-        r"hogares-y-personas.*pobreza-e-indigencia",
+        "linea-de-pobreza-e-indigencia",
+        r"(hogares|personas).*(pobreza|indigencia)",
         "Líneas de pobreza e indigencia · hogares y personas",
     ),
     "pgb_var.xlsx": (
         "producto-geografico-bruto-pgb",
-        r"variacion-porcentual.*(sector|rama)",
-        "PGB a precios constantes · variación interanual por sector",
+        r"variacion-porcentual-respecto-a-igual-trimestre-del-ano-anterior",
+        "PGB trimestral · variación respecto a igual trimestre del año anterior",
     ),
     "ipcba_aperturas.xlsx": (
         "indice-mensual-base-2021",

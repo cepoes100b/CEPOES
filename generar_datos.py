@@ -78,7 +78,9 @@ def main():
     bloque("pobreza",         lambda: P.pobreza(xlsx("pobreza_tasas.xlsx")), "pobreza_tasas.xlsx")
     bloque("comex",           lambda: P.comex(xlsx("comex_tot.xlsx")), "comex_tot.xlsx")
     bloque("masa_salarial",   lambda: P.masa_salarial(xlsx("masa_salarial.xlsx")), "masa_salarial.xlsx")
-    bloque("locales_evo",     lambda: P.locales_evo(xlsx("locales.xlsx")), "locales.xlsx")
+    # la serie de ocupación total sale del mismo archivo que los datos por comuna
+    bloque("locales_evo",     lambda: P.locales_evo(xlsx("ejes48_comuna_tasas.xlsx")),
+                              "ejes48_comuna_tasas.xlsx")
     bloque("comunas_locales", lambda: P.comunas_locales(xlsx("ejes48_comuna_tasas.xlsx")),
                               "ejes48_comuna_tasas.xlsx")
     bloque("pgb",             lambda: P.pgb(xlsx("pgb_var.xlsx")), "pgb_var.xlsx")

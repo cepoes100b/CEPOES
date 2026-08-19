@@ -95,7 +95,18 @@ def main():
     bloque("locales_evo", _locales_empalmadas, "ejes48_comuna_tasas.xlsx")
     bloque("comunas_locales", lambda: P.comunas_locales(xlsx("ejes48_comuna_tasas.xlsx")),
                               "ejes48_comuna_tasas.xlsx")
-    bloque("pgb",             lambda: P.pgb(xlsx("pgb_var.xlsx")), "pgb_var.xlsx")
+    # PGB. La planilla de variaciones no trae los pesos por sector (eso sale de
+    # la serie a precios corrientes, que es otro dataset), así que ese campo se
+    # arrastra del datos.json anterior. Sin esto el bloque se regenera sin
+    # `pesos_ultimo` y el gráfico de participación sectorial se queda sin datos.
+    def _pgb_con_pesos():
+        v = P.pgb(xlsx("pgb_var.xlsx"))
+        anterior = (previo.get("pgb") or {}).get("pesos_ultimo")
+        if anterior:
+            v["pesos_ultimo"] = anterior
+        return v
+
+    bloque("pgb", _pgb_con_pesos, "pgb_var.xlsx")
 
     # las divisiones del IPCBA van adentro del bloque ipcba
     try:

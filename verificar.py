@@ -107,6 +107,20 @@ def main():
         if div["periodo"] != esperado:
             avisos.append(f"ipcba.divisiones es de {div['periodo']} y la serie llega a {esperado}")
 
+    # 3.a2 campos que la web da por sentados: si faltan, la página se rompe entera
+    REQUERIDOS = {
+        "pgb": ("trimestres", "total", "categorias", "ultimo_trim", "ultimo_var",
+                "sectores_ultimo", "pesos_ultimo"),
+        "industria": ("periodos", "total_const", "pesos", "pesos_periodo"),
+        "comex": ("anios", "expo", "pct_pgb"),
+        "comunas_locales": ("periodo", "data", "total"),
+    }
+    for blo, campos in REQUERIDOS.items():
+        b = d.get(blo) or {}
+        faltan = [c for c in campos if not b.get(c)]
+        if faltan:
+            errores.append(f"{blo}: faltan campos que la web necesita: {', '.join(faltan)}")
+
     # 3.b los bloques que no se regeneran tienen que seguir estando
     for k in ("presupuesto", "censo", "poblacion"):
         if not d.get(k):

@@ -371,27 +371,51 @@ def comex(path):
 
 # ------------------------------------------------- industria / masa salarial
 
-def _serie_mensual_por_rama(path):
-    """Layout compartido: col A año (sólo en enero), col B mes, col C total,
-    col D+ ramas. Devuelve (periodos, total, ramas{nombre: serie})."""
+def _bloques_por_rama(path):
+    """Lee las planillas de la Encuesta Industrial.
+
+    Layout: col A el año (sólo en enero), col B el mes, y a partir de ahí DOS
+    bloques de columnas con las mismas ramas repetidas —"Valores corrientes" y
+    "Valores constantes"—, cada uno encabezado por su propio "Total".
+    IDECBA ya publica la serie deflactada, así que no hay que deflactar nada:
+    alcanza con leer el bloque correcto. (Mezclarlos daba pesos disparatados y
+    una serie en la escala equivocada.)
+
+    Devuelve (periodos, {nombre_bloque: {"total": [...], "ramas": {...}}}).
+    """
     _, ws = abrir(path)
-    fila_ramas = None
+
+    # fila 2 (o la que sea) nombra los bloques; la siguiente nombra las ramas
+    fila_bloques = fila_ramas = None
     for r in range(1, 8):
+        etiquetas = [(c, norm(ws.cell(r, c).value)) for c in range(1, ws.max_column + 1)]
+        if any("valores" in e for _c, e in etiquetas):
+            fila_bloques = r
         if norm(ws.cell(r, 3).value) == "total":
             fila_ramas = r
             break
     if fila_ramas is None:
         raise ValueError(f"{path}: no encontré la fila de ramas")
 
-    ramas_col = {}
-    for c in range(4, ws.max_column + 1):
-        nombre = ws.cell(fila_ramas, c).value
-        if nombre and len(str(nombre).strip()) > 2:
-            ramas_col[str(nombre).strip()] = c
+    # cada 'Total' abre un bloque; se corta en el siguiente 'Total'
+    inicios = [c for c in range(3, ws.max_column + 1)
+               if norm(ws.cell(fila_ramas, c).value) == "total"]
+    if not inicios:
+        raise ValueError(f"{path}: no encontré ninguna columna 'Total'")
 
-    periodos, total = [], []
-    ramas = {k: [] for k in ramas_col}
-    anio = None
+    bloques = {}
+    for k, c0 in enumerate(inicios):
+        fin = inicios[k + 1] if k + 1 < len(inicios) else ws.max_column + 1
+        nombre = norm(ws.cell(fila_bloques, c0).value) if fila_bloques else f"bloque{k}"
+        ramas = {}
+        for c in range(c0 + 1, fin):
+            et = ws.cell(fila_ramas, c).value
+            if et and len(str(et).strip()) > 2:
+                ramas[str(et).strip()] = c
+        bloques[nombre or f"bloque{k}"] = {"col_total": c0, "cols": ramas}
+
+    periodos, anio = [], None
+    filas = []
     for r in range(fila_ramas + 1, ws.max_row + 1):
         a = anio_de(ws.cell(r, 1).value)
         if a:
@@ -399,52 +423,57 @@ def _serie_mensual_por_rama(path):
         mes = MESES.get(norm(ws.cell(r, 2).value))
         if not (mes and anio):
             continue
-        t = num(ws.cell(r, 3).value)
-        if t is None:
+        if all(num(ws.cell(r, b["col_total"]).value) is None for b in bloques.values()):
             continue
         periodos.append(f"{anio}-{mes:02d}")
-        total.append(r1(t, 2))
-        for nombre, c in ramas_col.items():
-            ramas[nombre].append(r1(num(ws.cell(r, c).value), 2))
+        filas.append(r)
     if len(periodos) < 24:
         raise ValueError(f"{path}: {len(periodos)} meses, esperaba 24+")
-    return periodos, total, ramas
+
+    salida = {}
+    for nombre, b in bloques.items():
+        salida[nombre] = {
+            "total": [r1(num(ws.cell(r, b["col_total"]).value), 2) for r in filas],
+            "ramas": {n: [r1(num(ws.cell(r, c).value), 2) for r in filas]
+                      for n, c in b["cols"].items()},
+        }
+    return periodos, salida
+
+
+def _elegir(bloques, *claves):
+    for k in claves:
+        for nombre in bloques:
+            if k in nombre:
+                return bloques[nombre]
+    return bloques[list(bloques)[0]]
 
 
 def industria(path, ipcba_bloque=None):
-    """Ingresos fabriles. Si se pasa la serie del IPCBA, se deflacta para
-    obtener la serie a precios constantes que grafica el observatorio."""
-    periodos, total, ramas = _serie_mensual_por_rama(path)
+    """Ingresos fabriles: serie a precios constantes y peso de cada rama.
 
-    total_const = total
-    if ipcba_bloque and ipcba_bloque.get("meses"):
-        # se reconstruye un índice de precios encadenado desde las variaciones
-        idx, acum = {}, 100.0
-        for etiqueta, v in zip(ipcba_bloque["meses"], ipcba_bloque["var_m"]):
-            mm, aa = etiqueta.split("-")
-            k = f"20{aa}-{MES_CORTO.index(mm) + 1:02d}"
-            acum *= (1 + (v or 0) / 100)
-            idx[k] = acum
-        if idx:
-            base = idx[max(idx)]
-            total_const = [r1(t * base / idx[p], 2) if p in idx and idx[p] else None
-                           for p, t in zip(periodos, total)]
+    El parámetro ipcba_bloque se mantiene por compatibilidad pero ya no se usa:
+    la planilla trae la serie constante calculada por IDECBA.
+    """
+    periodos, bloques = _bloques_por_rama(path)
+    const = _elegir(bloques, "constante")
+    corr = _elegir(bloques, "corriente")
 
     ult = len(periodos) - 1
-    suma = sum(v[ult] for v in ramas.values() if v[ult] is not None) or 1
-    pesos = {n: r1(v[ult] / suma * 100, 2) for n, v in ramas.items()
+    suma = sum(v[ult] for v in corr["ramas"].values() if v[ult] is not None) or 1
+    pesos = {n: r1(v[ult] / suma * 100, 2) for n, v in corr["ramas"].items()
              if v[ult] is not None}
     return {
         "periodos": periodos,
-        "total_const": total_const,
+        "total_const": const["total"],
         "pesos": pesos,
         "pesos_periodo": periodos[ult],
     }
 
 
 def masa_salarial(path):
-    periodos, total, _ = _serie_mensual_por_rama(path)
-    return {"periodos": periodos, "total": total}
+    periodos, bloques = _bloques_por_rama(path)
+    b = _elegir(bloques, "constante", "corriente")
+    return {"periodos": periodos, "total": b["total"]}
 
 
 # ---------------------------------------------------------------- locales

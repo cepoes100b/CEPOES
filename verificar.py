@@ -121,6 +121,21 @@ def main():
         if faltan:
             errores.append(f"{blo}: faltan campos que la web necesita: {', '.join(faltan)}")
 
+    # 3.a3 saltos de escala: si una serie cambia de orden de magnitud respecto
+    # de la publicada, casi siempre es que el parser leyó la columna equivocada
+    # (pasó con industria: se mezclaron los bloques de valores corrientes y
+    # constantes, y la serie pasó de un índice ~180 a pesos ~400.000).
+    if ant:
+        for blo, ser in (("industria", "total_const"), ("masa_salarial", "total"),
+                         ("canastas", "total"), ("comex", "expo")):
+            va = [v for v in ((d.get(blo) or {}).get(ser) or []) if v]
+            vb = [v for v in ((ant.get(blo) or {}).get(ser) or []) if v]
+            if len(va) > 3 and len(vb) > 3:
+                ma, mb = max(va), max(vb)
+                if mb and not (0.2 < ma / mb < 5):
+                    errores.append(f"{blo}.{ser}: la escala cambió de ~{mb:.0f} a ~{ma:.0f} "
+                                   "(¿el parser leyó otra columna?)")
+
     # 3.b los bloques que no se regeneran tienen que seguir estando
     for k in ("presupuesto", "censo", "poblacion"):
         if not d.get(k):

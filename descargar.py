@@ -15,6 +15,8 @@ import re
 import sys
 import time
 
+import socket
+
 import requests
 
 from fuentes import DATASETS, DIRECTOS, CALENDARIO_URL
@@ -41,13 +43,25 @@ CABECERAS = {
 
 SESION = requests.Session()
 SESION.headers.update(CABECERAS)
-# El servidor de IDECBA responde, pero de a ratos tarda muchísimo: en la misma
-# corrida bajan dos archivos y ocho dan timeout. Conviene ser paciente por
-# pedido y reintentar varias veces, con un tope global para no eternizar el paso.
-TIMEOUT = (20, 90)          # (conexión, lectura)
-REINTENTOS = 4
-ESPERA = [3, 8, 20]         # backoff entre reintentos
-PRESUPUESTO_SEG = 900       # 15 min de tope duro
+# El servidor de IDECBA acepta el primer pedido y después empieza a rechazar
+# conexiones (ConnectTimeout, ni siquiera completa el saludo TCP). Parece un
+# límite por IP. Dos medidas: forzar IPv4 —el sitio anuncia IPv6 pero no
+# responde por ahí, y los runners de GitHub lo intentan primero— y bajar pocos
+# archivos por corrida, espaciados, rotando cuáles (ver COLA más abajo).
+TIMEOUT = (8, 60)           # (conexión, lectura): si no conecta en 8s, no va a conectar
+REINTENTOS = 3
+ESPERA = [5, 15]            # backoff entre reintentos
+ENTRE_ARCHIVOS = 6          # pausa entre datasets, para no gatillar el límite
+POR_CORRIDA = 4             # cuántos datasets se intentan por vez
+PRESUPUESTO_SEG = 600       # 10 min de tope duro
+
+# Los runners de GitHub tienen IPv6 y lo prueban primero; si el destino publica
+# AAAA pero no atiende, cada conexión se cuelga hasta el timeout.
+try:
+    import urllib3.util.connection as _u3
+    _u3.allowed_gai_family = lambda: socket.AF_INET
+except Exception:
+    pass
 RE_XLSX = re.compile(r'https?://[^"\'\s>]+?\.xlsx', re.I)
 
 
@@ -100,11 +114,46 @@ def bajar_archivo(url, destino):
     return len(contenido)
 
 
+ESTADO = os.path.join(BASE, "estado_descargas.json")
+
+
+def cola_por_antiguedad():
+    """Ordena los datasets por hace cuánto que no se bajan.
+
+    Como IDECBA corta las conexiones cuando se le piden muchos archivos
+    seguidos, cada corrida intenta sólo unos pocos: los que hace más tiempo que
+    no se actualizan, y siempre primero los que nunca se pudieron bajar. Con
+    una corrida diaria el ciclo completo se cierra en pocos días, de sobra para
+    series que se publican una vez por mes o por trimestre.
+    """
+    import json
+    try:
+        est = json.load(open(ESTADO, encoding="utf-8"))
+    except Exception:
+        est = {}
+    todos = [(n, u, d, True) for n, (u, d) in DATASETS.items()]
+    todos += [(n, u, d, False) for n, (u, d) in DIRECTOS.items()]
+    # nunca bajado = prioridad máxima (timestamp 0)
+    todos.sort(key=lambda t: est.get(t[0], 0))
+    return todos, est
+
+
+def guardar_estado(est):
+    import json
+    try:
+        json.dump(est, open(ESTADO, "w", encoding="utf-8"), indent=1)
+    except Exception:
+        pass
+
+
 def main():
     ok, conservados, fallas = [], [], []
 
-    pendientes = [(n, u, d, True) for n, (u, d) in DATASETS.items()]
-    pendientes += [(n, u, d, False) for n, (u, d) in DIRECTOS.items()]
+    todos, est = cola_por_antiguedad()
+    pendientes = todos[:POR_CORRIDA]
+    en_espera = [t[0] for t in todos[POR_CORRIDA:]]
+    print(f"Se intentan {len(pendientes)} de {len(todos)} datasets en esta corrida.")
+    print(f"Quedan para las próximas: {', '.join(en_espera)}\n")
 
     for nombre, url, desc, via_pagina in pendientes:
         destino = os.path.join(DIR_XLSX, nombre)
@@ -118,6 +167,7 @@ def main():
             url_archivo = link_xlsx(url) if via_pagina else url
             n = bajar_archivo(url_archivo, destino)
             ok.append(nombre)
+            est[nombre] = int(time.time())
             print(f"  ✔ {nombre:26} {n//1024:5} KB  {url_archivo.split('/')[-1]}")
         except Exception as e:
             if existia:
@@ -126,8 +176,12 @@ def main():
             else:
                 fallas.append(nombre)
                 print(f"  ✘ {nombre:26} SIN COPIA LOCAL ({e})")
-        time.sleep(0.5)
+        time.sleep(ENTRE_ARCHIVOS)
 
+    guardar_estado(est)
+
+    # El calendario se intenta siempre: es una sola página y es lo que más
+    # rápido queda desactualizado.
     try:
         n = bajar_calendario()
         print(f"  ✔ {'calendario.json':26} {n} publicaciones")

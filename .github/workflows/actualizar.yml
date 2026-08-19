@@ -16,9 +16,9 @@ jobs:
   actualizar:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -42,7 +42,20 @@ jobs:
           git add -A
           if git diff --cached --quiet; then
             echo "Sin cambios"
-          else
-            git commit -m "datos: actualización automática $(date -u +%F)"
-            git push
+            exit 0
           fi
+          git commit -m "datos: actualización automática $(date -u +%F)"
+          # La corrida puede durar varios minutos y alguien puede haber tocado
+          # el repositorio mientras tanto. Se reintenta trayendo lo remoto por
+          # rebase antes de empujar, en vez de fallar por no ser fast-forward.
+          for intento in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $intento)"
+              exit 0
+            fi
+            echo "Push rechazado, traigo los cambios remotos y reintento…"
+            git pull --rebase --autostash origin main || exit 1
+            sleep 3
+          done
+          echo "No pude empujar después de 3 intentos"
+          exit 1

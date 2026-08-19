@@ -149,44 +149,62 @@ def ipcba(path):
 
 
 def ipcba_divisiones(path):
-    """Índices y variaciones por división COICOP del último mes publicado."""
-    _, ws = abrir(path)
-    hdr = None
-    for r in range(1, 12):
-        etiquetas = [norm(ws.cell(r, c).value) for c in range(1, 8)]
-        if any("division" in e or "nivel general" in e for e in etiquetas):
-            hdr = r
-            break
-    if hdr is None:
-        raise ValueError(f"{path}: no encontré el encabezado de divisiones")
+    """Índices y variaciones por división COICOP del último mes publicado.
 
-    periodo = None
+    La planilla es ancha: una fila por apertura (nivel general, divisiones,
+    grupos y clases) y una columna por mes. Las divisiones —las 12 o 13 de
+    primer nivel— vienen en negrita; el resto de las filas son sus aperturas.
+    Ese formato es el que las distingue, así que se lee el estilo de la celda
+    en vez de mantener una lista de nombres a mano.
+    """
+    wb = openpyxl.load_workbook(path)               # sin data_only: hace falta el formato
+    ws = wb[wb.sheetnames[0]]
+
+    # fila de fechas y columnas de meses
+    fila_fechas = None
     for r in range(1, 8):
-        dt = celda_fecha(ws.cell(r, 1).value) or celda_fecha(ws.cell(r, 2).value)
-        if dt:
-            periodo = f"{dt.year}-{dt.month:02d}"
+        if sum(1 for c in range(2, 8) if celda_fecha(ws.cell(r, c).value)) >= 3:
+            fila_fechas = r
             break
+    if fila_fechas is None:
+        raise ValueError(f"{path}: no encontré la fila de meses")
+
+    cols = [(c, celda_fecha(ws.cell(fila_fechas, c).value))
+            for c in range(2, ws.max_column + 1)
+            if celda_fecha(ws.cell(fila_fechas, c).value)]
+    if len(cols) < 13:
+        raise ValueError(f"{path}: {len(cols)} meses, esperaba 13+")
+
+    c_ult, dt = cols[-1]
+    c_ant = cols[-2][0]
+    c_ia = next((c for c, d in cols
+                 if d.year == dt.year - 1 and d.month == dt.month), None)
+
+    # valores en un segundo pase, ya con las fórmulas resueltas
+    wsv = openpyxl.load_workbook(path, data_only=True)[ws.title]
 
     data = []
-    for r in range(hdr + 1, ws.max_row + 1):
-        nombre = ws.cell(r, 1).value
-        if not nombre or len(str(nombre).strip()) < 4:
+    for r in range(fila_fechas + 1, ws.max_row + 1):
+        celda = ws.cell(r, 1)
+        nombre = str(celda.value or "").strip()
+        if len(nombre) < 3 or not celda.font.b:      # sólo las divisiones
             continue
-        n = norm(nombre)
-        if n.startswith("nota") or n.startswith("fuente") or "nivel general" in n:
+        if norm(nombre).startswith("nivel general"):
             continue
-        ix = num(ws.cell(r, 2).value)
+        ix = num(wsv.cell(r, c_ult).value)
         if ix is None:
             continue
+        ant = num(wsv.cell(r, c_ant).value)
+        ia = num(wsv.cell(r, c_ia).value) if c_ia else None
         data.append({
-            "nombre": str(nombre).strip(),
+            "nombre": nombre,
             "indice": r1(ix, 2),
-            "var_mensual": r1(num(ws.cell(r, 3).value), 2),
-            "var_ia": r1(num(ws.cell(r, 4).value), 2),
+            "var_mensual": r1((ix / ant - 1) * 100, 2) if ant else None,
+            "var_ia": r1((ix / ia - 1) * 100, 2) if ia else None,
         })
-    if len(data) < 8:
-        raise ValueError(f"{path}: {len(data)} divisiones, esperaba 12 o 13")
-    return {"periodo": periodo, "data": data}
+    if not 10 <= len(data) <= 16:
+        raise ValueError(f"{path}: {len(data)} divisiones, esperaba entre 12 y 13")
+    return {"periodo": f"{dt.year}-{dt.month:02d}", "data": data}
 
 
 # ---------------------------------------------------------------- canastas

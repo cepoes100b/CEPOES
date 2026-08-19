@@ -94,6 +94,19 @@ def main():
     if len(cl.get("data") or {}) != 15:
         errores.append(f"comunas_locales: {len(cl.get('data') or {})} comunas, esperaba 15")
 
+    # 3.a las divisiones del IPCBA: 12 o 13, del mismo mes que la serie
+    div = ((d.get("ipcba") or {}).get("divisiones") or {})
+    filas = div.get("data") or []
+    if not 10 <= len(filas) <= 16:
+        errores.append(f"ipcba.divisiones: {len(filas)} filas, esperaba entre 12 y 13 "
+                       "(¿se colaron los grupos y clases?)")
+    meses = (d.get("ipcba") or {}).get("meses") or []
+    if meses and div.get("periodo"):
+        mm, aa = meses[-1].split("-")
+        esperado = f"20{aa}-{['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'].index(mm)+1:02d}"
+        if div["periodo"] != esperado:
+            avisos.append(f"ipcba.divisiones es de {div['periodo']} y la serie llega a {esperado}")
+
     # 3.b los bloques que no se regeneran tienen que seguir estando
     for k in ("presupuesto", "censo", "poblacion"):
         if not d.get(k):

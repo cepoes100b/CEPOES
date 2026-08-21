@@ -45,7 +45,7 @@ jobs:
         run: python verificar_equipamientos.py
 
       - name: Generar Oferta territorial ampliada
-        run: python generar_oferta_ampliada.py
+        run: python generar_oferta_ampliada_runner.py
 
       - name: Verificar Oferta territorial ampliada
         run: python verificar_oferta_ampliada.py

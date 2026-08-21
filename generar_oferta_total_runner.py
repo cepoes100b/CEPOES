@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import generar_oferta_ampliada_runner as R
+import oferta_extra_2_fix  # muta la configuración extra antes de importarla
 from oferta_extra_2 import EXTRA_CATEGORIES, EXTRA_DATASETS, EXTRA_LAYERS
 
 

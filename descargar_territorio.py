@@ -93,10 +93,14 @@ def validate(path: Path, fmt: str) -> None:
     if path.stat().st_size < 500:
         raise RuntimeError("archivo demasiado chico")
     if fmt == "xlsx":
-        wb = load_workbook(path, read_only=True, data_only=True)
-        ws = wb[wb.sheetnames[0]]
-        headers = [str(c.value or "").strip() for c in next(ws.iter_rows(min_row=1, max_row=1))]
-        wb.close()
+        # Se abre como stream: openpyxl no debe depender de la extensión del
+        # archivo temporal (.nuevo.xlsx). Así validamos antes de reemplazar la
+        # copia buena sin provocar InvalidFileException por el nombre temporal.
+        with path.open("rb") as fh:
+            wb = load_workbook(fh, read_only=True, data_only=True)
+            ws = wb[wb.sheetnames[0]]
+            headers = [str(c.value or "").strip() for c in next(ws.iter_rows(min_row=1, max_row=1))]
+            wb.close()
         if len([h for h in headers if h]) < 4:
             raise RuntimeError("XLSX sin encabezados reconocibles")
     elif fmt == "csv":
@@ -140,7 +144,9 @@ def main() -> int:
             if not url:
                 raise RuntimeError("recurso sin URL")
             r = get(url)
-            tmp = dst.with_suffix(dst.suffix + ".nuevo")
+            # Mantener la extensión real al final del temporal facilita además
+            # la inspección manual de los artefactos durante una corrida fallida.
+            tmp = dst.with_name(f"{dst.stem}.nuevo{dst.suffix}")
             tmp.write_bytes(r.content)
             try:
                 validate(tmp, cfg["format"])

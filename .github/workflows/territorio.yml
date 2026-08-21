@@ -1,0 +1,60 @@
+name: Actualizar datos territoriales
+
+on:
+  schedule:
+    # 15:10 de Buenos Aires, diez minutos después de la segunda corrida diaria
+    # del observatorio. Estas fuentes cambian mucho menos seguido, pero la consulta
+    # diaria permite levantar actualizaciones sin depender de una fecha fija.
+    - cron: "10 18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-territorio
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Descargar fuentes territoriales de BA Data
+        run: python descargar_territorio.py
+        continue-on-error: true
+
+      - name: Generar territorio.json
+        run: python generar_territorio.py
+
+      - name: Verificar territorio.json
+        run: python verificar_territorio.py
+
+      - name: Commitear si cambió
+        run: |
+          git config user.name  "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add territorio.json estado_territorio.json badata/
+          if git diff --cached --quiet; then
+            echo "Sin cambios"
+            exit 0
+          fi
+          git commit -m "territorio: actualización automática $(date -u +%F)"
+          for intento in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $intento)"
+              exit 0
+            fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" || exit 1
+            sleep 3
+          done
+          echo "No pude empujar después de 3 intentos"
+          exit 1

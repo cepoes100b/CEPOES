@@ -33,7 +33,7 @@ jobs:
         continue-on-error: true
 
       - name: Generar territorio.json
-        run: python generar_territorio.py
+        run: python generar_territorio_runner.py
 
       - name: Verificar territorio.json
         run: python verificar_territorio.py

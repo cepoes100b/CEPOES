@@ -1,9 +1,8 @@
-"""Ejecuta el generador territorial con normalización robusta de comunas.
+"""Ejecuta el generador territorial con normalizaciones robustas.
 
-BA Data publica la comuna del padrón educativo con cero a la izquierda en
-algunos registros (01..09). La expresión original interpretaba bien 10..15 pero
-podía no reconocer 01..09. Este runner centraliza la corrección sin alterar el
-resto del generador.
+BA Data publica algunos identificadores territoriales con convenciones distintas
+a las usadas por el Censo 2022 que alimenta las fichas de CEPOES. Este runner
+centraliza esas compatibilizaciones sin duplicar el generador principal.
 """
 import re
 
@@ -25,6 +24,11 @@ def parse_comuna(v):
 
 
 G.parse_comuna = parse_comuna
+
+# BA Data usa "Boca" en algunas capas mientras la base censal de CEPOES usa
+# "La Boca". Sin este alias el registro queda agregado a Comuna 4 pero no al
+# barrio, produciendo ceros falsos en la ficha barrial.
+G.BARRIO_ALIASES["boca"] = "La Boca"
 
 if __name__ == "__main__":
     raise SystemExit(G.main())

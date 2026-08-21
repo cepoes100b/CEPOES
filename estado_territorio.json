@@ -1,0 +1,41 @@
+{
+  "datasets": {
+    "educacion": {
+      "dataset": "establecimientos-educativos",
+      "resource_id": "3ab9e91f-cb79-4f9c-ae4f-9833c170ac8b",
+      "resource_name": "Padrón de Establecimientos Educativos (CSV)",
+      "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-educacion/establecimientos-educativos/padron-establecimientos.csv",
+      "source_last_modified": "2026-08-07T14:39:04.238122",
+      "downloaded_at": 1787328108,
+      "bytes": 1084106
+    },
+    "cesac": {
+      "dataset": "centros-salud-accion-comunitaria-cesac",
+      "resource_id": "d64d33e4-0e83-4862-b102-2949c0134926",
+      "resource_name": "Centros de Salud y Acción Comunitaria (CSV)",
+      "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-salud/centros-salud-accion-comunitaria-cesac/centros_salud_nivel_1_cesac.csv",
+      "source_last_modified": "2020-09-04T00:00:00",
+      "downloaded_at": 1787328108,
+      "bytes": 21274
+    },
+    "hospitales": {
+      "dataset": "hospitales",
+      "resource_id": "33fad129-348a-4254-ba2c-638157250d3a",
+      "resource_name": "Hospitales (XLSX)",
+      "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-salud/hospitales/hospitales.xlsx",
+      "source_last_modified": "2025-01-29T00:00:00",
+      "downloaded_at": 1787328108,
+      "bytes": 10816
+    },
+    "espacios_verdes": {
+      "dataset": "espacios-verdes",
+      "resource_id": "cf78beb2-0d40-4bf9-bff4-df8194612eed",
+      "resource_name": "Espacios Verdes Públicos (XLSX)",
+      "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/secretaria-de-desarrollo-urbano/espacios-verdes/espacio_verde_publico.xlsx",
+      "source_last_modified": "2022-07-12T00:00:00",
+      "downloaded_at": 1787328118,
+      "bytes": 3911326
+    }
+  },
+  "updated_at": 1787328118
+}

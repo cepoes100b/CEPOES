@@ -32,6 +32,9 @@ jobs:
         run: python descargar_territorio.py
         continue-on-error: true
 
+      - name: Descargar límites oficiales de barrios
+        run: python descargar_limites_barrios.py
+
       - name: Generar territorio.json
         run: python generar_territorio_runner.py
 

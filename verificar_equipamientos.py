@@ -22,7 +22,7 @@ def load(name):
 
 
 def main() -> int:
-    errors = []
+    errors, notices = [], []
     terr = json.loads(TERR.read_text(encoding="utf-8"))
     docs = {}
     for key, (name, lo, hi) in FILES.items():
@@ -59,14 +59,19 @@ def main() -> int:
                 if detail != agg:
                     errors.append(f"comuna {cid}: {label} detalle={detail}, territorio={agg}")
 
+        # Un registro oficial puede traer comuna pero no barrio. Eso no invalida
+        # el listado comunal: se informa como aviso y simplemente no aparece al
+        # filtrar por barrio. Nunca se imputa a un barrio por aproximación.
         for key, items in [("educacion", docs["educacion"]["items"]), ("salud", docs["salud"]["items"]), ("espacios", docs["espacios"]["items"])]:
             missing = [x for x in items if not x.get("barrio")]
             if missing:
-                errors.append(f"{key}: {len(missing)} registros sin barrio")
+                notices.append(f"{key}: {len(missing)} registros oficiales sin barrio")
 
     print("Equipamientos:")
     for key, d in docs.items():
         print(f"  · {key}: {len(d.get('items') or [])}")
+    for n in notices:
+        print("  ~", n)
     if errors:
         print(f"\n✘ {len(errors)} problema(s) — NO se publica")
         for e in errors:

@@ -1,0 +1,33 @@
+﻿X;Y;NOMBRE;DIRECCION;CALLE_NORMALIZADA;ALTURA_NORMALIZADA;DESTINATARIO;TIPO;BARRIO ;COMUNA;CODIGO_POSTAL;CODIGO_POSTAL_ARGENTINO;OBSERVACIONES
+-58,373035;-34,612617;Hogar 26 de Julio;Avenida Belgrano 482;BELGRANO AV.;482;Mujeres y madres con hijos;Dispositivo propio;Montserrat;1;1092;C1092AAR;
+-58,369815;-34,617307;Hogar Félix Lora;Avenida Paseo Colón 811;PASEO COLON AV.;811;Hombres;Dispositivo propio;San Telmo;1;1063;C1063ACI;
+-58,403496;-34,646345;Parador Bepo Ghezzi;Herminio Masantonio 2970;MASANTONIO, HERMINIO;2970;Hombres;Dispositivo propio;Parque Patricios;4;1437;C1437HVB;
+-58,354246;-34,636198;Centro de Acompañamiento y Seguimiento Social La Boca;Avenida Don Pedro de Mendoza 1357;DON PEDRO DE MENDOZA AV.;1357;Hombres con discapacidad;Dispositivo propio;La Boca;4;1156;C1156ADA;
+-58,353457;-34,623441;Centro de Inclusión Social Costanera;Avenida España 2256;ESPA\u00d1A AV.;2256;Familias;Dispositivo propio;La Boca;4;;;
+-58,375788;-34,627075;Parador Azucena Villaflor;Piedras 1583;PIEDRAS;1583;Mujeres y madres con hijos menores de 18 años;Dispositivo propio;Constitución;1;1140;C1140ABG;
+;;Parador Retiro;Avenida Gendarmería Nacional 522;;;Hombres;Dispositivo propio;Retiro;1;;;
+-58,383606;-34,629123;Hogar El Amparo - Ejército de Salvación;O´Brien 1264;O'BRIEN;1264;Mujeres solas;Dispositivo conveniado;Constitución;1;1137;C1137ABD;
+-58,379228;-34,640971;Hogar El Refugio - Ejército de Salvación;Copahue 2032;COPAHUE;2032;Hombres mayores de 21 y menores de 60 años;Dispositivo conveniado;Barracas;4;1274;C1274ABB;
+-58,383606;-34,629123;Hogar Betania - Ejército de Salvación;O´Brien 1272;O'BRIEN;1272;Mujeres solas;Dispositivo conveniado;Constitución;1;1137;C1137ABD;
+-58,375567;-34,623969;Hogar Año Santo - Cáritas;Chacabuco 1345;CHACABUCO;1345;Hombres mayores;Dispositivo conveniado;San Telmo;1;1140;C1140AAC;
+-58,41478;-34,643137;Hogar San Martín de Porres - Cáritas;Guaraní 372;GUARANI;372;Hombres;Dispositivo conveniado;Nueva Pompeya;4;1437;C1437EBH;
+-58,41478;-34,643137;Hogar San Francisco de Asís - Cáritas;Guaraní 372;GUARANI;372;Hombres;Dispositivo conveniado;Nueva Pompeya;4;1437;C1437EBH;
+-58,46289;-34,630233;Parador San José de Flores - Arzobispado de Buenos Aires;Coronel Ramón L. Falcón 2453;FALCON, RAMON L.,CNEL.;2453;Hombres mayores de 18 años;Dispositivo conveniado;Flores;7;1406;C1406GNW;
+;;Hogar Santa María del Pueblo Villa 1-11-14 - Arzobispado de Buenos Aires;;;;;Dispositivo conveniado;Flores;7;;;
+-58,447907;-34,548038;Hogar Amparo Maternal - Asociación Damas Católicas de San José;Ernesto A. Bavio 2816;BAVIO, ERNESTO A.;2816;Madres con bebés;Dispositivo conveniado;Belgrano;13;1428;C1428CDH;
+-58,446833;-34,59254;Hogar Niño Jesús - Comedor Infantil Niño Jesús Asociación Civil;Avenida Corrientes 6104;CORRIENTES AV.;6104;;Dispositivo conveniado;Chacarita;15;1414;C1414ALN;
+-58,404633;-34,642554;Centro de Integración Monteagudo - Proyecto 7;Monteagudo 435;MONTEAGUDO;435;Hombres;Dispositivo conveniado;Parque Patricios;4;1437;C1437EVI;
+-58,395921;-34,63277;Hogar Frida - Proyecto 7;15 de Noviembre de 1889 2315;15 DE NOVIEMBRE DE 1889;2315;Mujeres con hijos;Dispositivo conveniado;Parque Patricios;4;1261;C1261AAK;
+;;Hogar Isauro Arancibia - Isauro Arancibia Asociación Civil;Avenida Paseo Colón 1318, 1º piso;;;Niñas, niños y adolescentes;Dispositivo conveniado;San Telmo;1;;;
+-58,393786;-34,610494;Hogar Renacer Madres - Accionando Sueños;Avenida Hipólito Yrigoyen 1924;YRIGOYEN, HIPOLITO;1924;Madres con hijos menores de 18 años;Dispositivo conveniado;Balvanera ;3;1089;C1089AAL;
+-58,503672;-34,634434;Hogar Renacer - Accionando Sueños;Saráchaga 5564;SARACHAGA;5564;Hombres;Dispositivo conveniado;Villa Luro;10;1407;C1407EHB;
+-58,422537;-34,606049;Hogar ASAC - Asociación de Ayuda al Ciego;Juan Domingo Perón 3988;PERON, JUAN DOMINGO, TTE. GENERAL;3988;Personas con discapacidad visual;Dispositivo conveniado para personas con necesidades especiales;Almagro;5;1198;C1198AAX;
+-58,504086;-34,643181;"Hogar HODIF - Asociación Pro Hogares y Promoción del Discapacitado ""Monseñor Francois""";Corvalán 475;CORVALAN;475;Personas con discapacidad motriz y mental;Dispositivo conveniado para personas con necesidades especiales;Villa Luro;10;1408;C1408HQI;
+-58,478334;-34,623819;"Hogar HODIF - Asociación Pro Hogares y Promoción del Discapacitado ""Monseñor Francois""";Campana 777;CAMPANA;777;Personas con discapacidad motriz y mental;Dispositivo conveniado para personas con necesidades especiales;Floresta;10;1406;C1406AUM;
+-58,478775;-34,560056;Hogar Naón - Fundación Pobre de Asís;Rómulo Naón 3200;NAON, ROMULO;3200;Personas con discapacidad motriz;Dispositivo conveniado para personas con necesidades especiales;Coghlan;12;1430;C1430EQJ;
+-58,433462;-34,574829;Hogar Kaupé - Fundación Pobre de Asís;Ancón 5321;ANCON;5321;Mujeres con discapacidad motriz;Dispositivo conveniado para personas con necesidades especiales;Palermo;14;1425;C1425BZE;
+-58,442829;-34,63606;Natatorio del Polideportivo Parque Chacabuco;Avenida Asamblea 1301;ASAMBLEA AV.;1301;Grupos familiares y/o mujeres solas;Dispositivo propio;Parque Chacabuco;7;1406;C1406HVD;Funciona solo durante el Operativo Frío (de junio a agosto)
+-58,474224;-34,645812;Polideportivo Avellaneda;Lacarra 1257;LACARRA AV.;1257;Grupos familiares y/o mujeres solas;Dispositivo propio;Parque Avellaneda;9;1407;C1407JQY;Funciona solo durante el Operativo Frío (de junio a agosto)
+-58,389291;-34,649017;Polideportivo Pereyra;Avenida Vélez Sarsfield 1271;VELEZ SARSFIELD AV.;1271;Hombres solos;Dispositivo propio;Barracas;4;1285;C1285AAB;Funciona solo durante el Operativo Frío (de junio a agosto)
+;;Siempre es Hoy;Avenida General Francisco Fernández de la Cruz 3262;;;Hombres solos;Dispositivo conveniado;Villa Soldati;8;;;
+-58,46696;-34,622624;Hogar Puente 1 - Puentes de Esperanza;General Artigas 691;ARTIGAS, JOSE GERVASIO, GRAL.;691;Mujeres solas o con niños;Dispositivo conveniado;Flores;7;1406;C1406ABI;

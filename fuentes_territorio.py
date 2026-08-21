@@ -12,10 +12,13 @@ BA_DATA_BASE = "https://data.buenosaires.gob.ar/dataset/"
 DATASETS_TERRITORIO = {
     "educacion": {
         "dataset": "establecimientos-educativos",
-        "resource_pattern": r"^Establecimientos Educativos \(CSV\)$",
+        # El padrón tiene campos explícitos de estado, sector, barrio y comuna.
+        # El recurso cartográfico más liviano usa abreviaturas y no permite
+        # filtrar establecimientos inactivos con la misma precisión.
+        "resource_pattern": r"^Padr[oó]n de Establecimientos Educativos \(CSV\)$",
         "format": "csv",
         "filename": "establecimientos_educativos.csv",
-        "descripcion": "Establecimientos educativos con comuna y barrio",
+        "descripcion": "Padrón de establecimientos educativos con comuna y barrio",
     },
     "cesac": {
         "dataset": "centros-salud-accion-comunitaria-cesac",

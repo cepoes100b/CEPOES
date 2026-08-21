@@ -1,0 +1,8 @@
+id,long,lat,planta,horarios,link,email,telefono,calle_nombre,calle_altura,barrio,comuna,codigo_postal,codigo_postal_argentino
+1,-58.3889780953303,-34.6417668470164,Barracas,"de lunes a viernes de 8 a 18 hs, y los sábados de 8 a 13 hs",http://www.buenosaires.gob.ar/tramites/vtv,vtv@buenosaires.gob.ar,147,Av. Vélez Sarsfield,566,Barracas,4,1282,C1282AFS
+2,-58.3802906214414,-34.6552791113537,Barracas,"de lunes a viernes de 8 a 18 hs, y los sábados de 8 a 13 hs",http://www.buenosaires.gob.ar/tramites/vtv,vtv@buenosaires.gob.ar,147,Santa María del Buen Aire,1001,Barracas,4,1277,C1277ADO
+3,-58.3741981268028,-34.6501924622965,Barracas,"de lunes a viernes de 8 a 18 hs, y los sábados de 8 a 13 hs",http://www.buenosaires.gob.ar/tramites/vtv,vtv@buenosaires.gob.ar,147,Herrera,1995,Barracas,4,1295,C1295ACK
+4,-58.4712574258815,-34.5900962084683,Paternal,"de lunes a viernes de 8 a 18 hs, y los sábados de 8 a 13 hs",http://www.buenosaires.gob.ar/tramites/vtv,vtv@buenosaires.gob.ar,147,Tronador,115,Paternal,15,1427,C1427CRC
+5,-58.3698274960821,-34.6513169697629,Barracas,"de lunes a viernes de 8 a 18 hs, y los sábados de 8 a 13 hs",http://www.buenosaires.gob.ar/tramites/vtv,vtv@buenosaires.gob.ar,147,Osvaldo Cruz,1711,Barracas,4,1293,C1293ACB
+6,-58.4235096469283,-34.6620235276151,Pompeya,"de lunes a viernes de 8 a 18 hs, y los sábados de 8 a 13 hs",http://www.buenosaires.gob.ar/tramites/vtv,vtv@buenosaires.gob.ar,147,Av. 27 de Febrero,5483,Nueva Pompeya,4,1437,C1437FXE
+7,-58.4700546461669,-34.5846093118221,Villa Ortuzar,"de lunes a viernes de 8 a 18 hs, y los sábados de 8 a 13 hs",http://www.buenosaires.gob.ar/tramites/vtv,vtv@buenosaires.gob.ar,147,Donado,973,Villa Ortuzar,15,1427,C1427CZC

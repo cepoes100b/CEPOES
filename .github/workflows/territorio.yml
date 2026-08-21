@@ -39,7 +39,7 @@ jobs:
         run: python verificar_territorio.py
 
       - name: Generar listados de equipamientos
-        run: python generar_equipamientos.py
+        run: python generar_equipamientos_runner.py
 
       - name: Verificar listados de equipamientos
         run: python verificar_equipamientos.py

@@ -32,6 +32,10 @@ jobs:
         run: python descargar_territorio.py
         continue-on-error: true
 
+      - name: Descargar segunda ampliación de fuentes oficiales
+        run: python descargar_oferta_extra_2.py
+        continue-on-error: true
+
       - name: Descargar límites oficiales de barrios
         run: python descargar_limites_barrios.py
 
@@ -47,11 +51,11 @@ jobs:
       - name: Verificar listados base
         run: python verificar_equipamientos.py
 
-      - name: Generar Oferta territorial ampliada
-        run: python generar_oferta_ampliada_runner.py
+      - name: Generar Oferta territorial total
+        run: python generar_oferta_total_runner.py
 
-      - name: Verificar Oferta territorial ampliada
-        run: python verificar_oferta_ampliada.py
+      - name: Verificar Oferta territorial total
+        run: python verificar_oferta_total.py
 
       - name: Commitear si cambió
         run: |

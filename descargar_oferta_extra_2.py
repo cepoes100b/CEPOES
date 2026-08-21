@@ -6,6 +6,7 @@ import time
 from pathlib import Path
 
 import descargar_territorio as D
+import oferta_extra_2_fix  # aplica correcciones verificadas y suma capas oficiales
 from oferta_extra_2 import EXTRA_DATASETS
 
 BASE = Path(__file__).resolve().parent

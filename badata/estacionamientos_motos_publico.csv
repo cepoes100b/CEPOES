@@ -1,0 +1,49 @@
+long,lat,id,calle,entre_calle,y_calle,ubicacion,area,gestion,dom_norma,barrio,comuna
+-58.3817869571431,-34.6071781903624,1,9 de Julio  (Cerrito),"Mitre, B.","Perón, J. D., Tte. Gral.",Vereda,Microcentro,Estacionamiento Público,"CERRITO y MITRE, BARTOLOME",San Nicolas,Comuna 1
+-58.3816320003239,-34.6112755027191,2,9 de Julio  (Lima),"Alsina, A.",Moreno,Vereda,Microcentro,Estacionamiento Público,"LIMA y ALSINA, ADOLFO",Monserrat,Comuna 1
+-58.3808889249542,-34.6074839092608,3,"9 de Julio  (Pellegrini, C.)",Rivadavia,Bartolomé Mitre,Vereda,Microcentro,Estacionamiento Público,"PELLEGRINI, CARLOS y RIVADAVIA AV.",San Nicolas,Comuna 1
+-58.3809295532701,-34.6070697123025,4,"9 de Julio  (Pellegrini, C.)",Bartolomé Mitre,"Perón, J. D., Tte. Gral.",Vereda,Microcentro,Estacionamiento Público,"PELLEGRINI, CARLOS y MITRE, BARTOLOME",San Nicolas,Comuna 1
+-58.3808633536407,-34.6032632936847,5,"9 de Julio  (Pellegrini, C.)","Corrientes, Av.",Lavalle,Vereda,Microcentro,Estacionamiento Público,"PELLEGRINI, CARLOS y CORRIENTES AV.",San Nicolas,Comuna 1
+-58.3812338606034,-34.6020051608405,6,"9 de Julio  (Pellegrini, C.)",Lavalle,Tucumán,Vereda,Microcentro,Estacionamiento Público,"PELLEGRINI, CARLOS y LAVALLE",San Nicolas,Comuna 1
+-58.381300862122,-34.6008732794839,7,"9 de Julio  (Pellegrini, C.)",Tucumán,Viamonte,Vereda,Microcentro,Estacionamiento Público,"PELLEGRINI, CARLOS y TUCUMAN",San Nicolas,Comuna 1
+-58.3813822133444,-34.6003243340834,8,"9 de Julio  (Pellegrini, C.)",Viamonte,"Córdoba, Av.",Vereda,Microcentro,Estacionamiento Público,"PELLEGRINI, CARLOS y VIAMONTE",San Nicolas,Comuna 1
+-58.3809992857706,-34.6058087702545,9,"9 de Julio  (Pellegrini, C.)","Perón, J. D., Tte. Gral.",Sarmiento,Vereda,Microcentro,Estacionamiento Público,"PELLEGRINI, CARLOS y PERON, JUAN DOMINGO, TTE. GENERAL",San Nicolas,Comuna 1
+-58.3808529979424,-34.6081484532956,10,"9 de Julio  (Pellegrini, C.)",Rivadavia,Bartolomé Mitre,Vereda,Microcentro,Estacionamiento Público,"PELLEGRINI, CARLOS y RIVADAVIA AV.",San Nicolas,Comuna 1
+-58.3806459865753,-34.6085545549211,11,"9 de Julio  (Pellegrini, C.)",Rivadavia,Av. De Mayo,Vereda,Microcentro,Estacionamiento Público,"PELLEGRINI, CARLOS y RIVADAVIA AV.",Monserrat,Comuna 1
+-58.3807158234067,-34.6123532720308,12,"9 de Julio (Irigoyen, B. de)",Moreno,"Belgrano, Av.",Vereda,Microcentro,Estacionamiento Público,"IRIGOYEN, BERNARDO DE y Y MORENO",Monserrat,Comuna 1
+-58.3802696936662,-34.6058950611189,13,"Carabelas, Pje.","Perón, J. D., Tte. Gral.",Sarmiento,Vereda,Microcentro,Estacionamiento Público,"CARABELAS y PERON, JUAN DOMINGO, TTE. GENERAL",San Nicolas,Comuna 1
+-58.3802709506719,-34.6048054241906,14,"Carabelas, Pje.",Sarmiento,"Sáenz Peña, R., Pres., Av.",Vereda,Microcentro,Estacionamiento Público,CARABELAS y SARMIENTO,San Nicolas,Comuna 1
+-58.3843776140411,-34.6039602373846,15,"Corrientes, Av.",Libertad,Talcahuano,Vereda,Microcentro,Estacionamiento Público,CORRIENTES AV. y LIBERTAD,San Nicolas,Comuna 1
+-58.3859920816926,-34.6040539130454,16,"Corrientes, Av.",Talcahuano,Uruguay,Vereda,Microcentro,Estacionamiento Público,CORRIENTES AV. y TALCAHUANO,San Nicolas,Comuna 1
+-58.3900938507048,-34.6043719331482,17,"Corrientes, Av.",Montevideo,Rodríguez Peña,Vereda,Microcentro,Estacionamiento Público,CORRIENTES AV. y MONTEVIDEO,San Nicolas,Comuna 1
+-58.391800703874,-34.6045169628679,18,"Corrientes, Av.",Rodríguez Peña,"Callao, Av.",Vereda,Microcentro,Estacionamiento Público,CORRIENTES AV. y RODRIGUEZ PEÑA,San Nicolas,Comuna 1
+-58.3783286620508,-34.6055927867977,19,"Sáenz Peña, R., Pres., Av.",Esmeralda,Suipacha,Vereda,Microcentro,Estacionamiento Público,"SAENZ PEÑA, ROQUE, PRES. DIAGONAL NORTE AV. y ESMERALDA",San Nicolas,Comuna 1
+-58.3798691021398,-34.6045292713857,20,"Sáenz Peña, R., Pres., Av.",Suipacha,"Pellegrini, Carlos",Vereda,Microcentro,Estacionamiento Público,"SAENZ PEÑA, ROQUE, PRES. DIAGONAL NORTE AV. y SUIPACHA",San Nicolas,Comuna 1
+-58.3795957998634,-34.6047164205733,21,"Sáenz Peña, R., Pres., Av.",Sarmiento,Carabelas,Vereda,Microcentro,Estacionamiento Público,"SAENZ PEÑA, ROQUE, PRES. DIAGONAL NORTE AV. y SARMIENTO",San Nicolas,Comuna 1
+-58.3825103985801,-34.6031287328264,22,"Sáenz Peña, R., Pres., Av.",Cerrito,Libertad,Vereda,Microcentro,Estacionamiento Público,"SAENZ PEÑA, ROQUE, PRES. DIAGONAL NORTE AV. y CERRITO",San Nicolas,Comuna 1
+-58.3778944128739,-34.6081834752009,23,Rivadavia,Esmeralda,Suipacha,Vereda,Microcentro,Estacionamiento Público,RIVADAVIA AV. y ESMERALDA,San Nicolas,Comuna 1
+-58.374632875298,-34.6086522542096,24,"de Mayo, Av.",Bolívar,Perú,Calle,Microcentro,Estacionamiento Público,DE MAYO AV. y BOLIVAR,Monserrat,Comuna 1
+-58.3754036048916,-34.6086996291491,25,"de Mayo, Av.",Perú,Chacabuco,Calle,Microcentro,Estacionamiento Público,DE MAYO AV. y PERU,Monserrat,Comuna 1
+-58.3780523780154,-34.6088887797903,26,"de Mayo, Av.",Piedras,Tacuarí,Calle,Microcentro,Estacionamiento Público,DE MAYO AV. y PIEDRAS,Monserrat,Comuna 1
+-58.3802890664988,-34.6090411789079,27,"de Mayo, Av.",Tacuarí,"Irigoyen, Bernardo de",Calle,Microcentro,Estacionamiento Público,DE MAYO AV. y TACUARI,Monserrat,Comuna 1
+-58.37637531302,-34.6091035017927,28,Chacabuco,"de Mayo, Av.","Yrigoyen, H.",Calle,Microcentro,Estacionamiento Público,CHACABUCO y DE MAYO AV.,Monserrat,Comuna 1
+-58.3717023383951,-34.6031631732617,29,"Corrientes, Av.",25 de Mayo,Reconquista,Calle,Microcentro,Estacionamiento Público,CORRIENTES AV. y 25 DE MAYO,San Nicolas,Comuna 1
+-58.3730413826659,-34.6032485439735,30,"Corrientes, Av.",Reconquista,San Martín,Calle,Microcentro,Estacionamiento Público,CORRIENTES AV. y RECONQUISTA,San Nicolas,Comuna 1
+-58.3745743578572,-34.6033329359672,31,"Corrientes, Av.",San Martín,Florida,Calle,Microcentro,Estacionamiento Público,CORRIENTES AV. y SAN MARTIN,San Nicolas,Comuna 1
+-58.3762284739904,-34.6034443392809,32,"Corrientes, Av.",Florida,Maipú,Calle,Microcentro,Estacionamiento Público,CORRIENTES AV. y FLORIDA,San Nicolas,Comuna 1
+-58.3773376245145,-34.603511222576,33,"Corrientes, Av.",Maipú,Esmeralda,Calle,Microcentro,Estacionamiento Público,CORRIENTES AV. y MAIPU,San Nicolas,Comuna 1
+-58.3785317046027,-34.6035905485847,34,"Corrientes, Av.",Esmeralda,Suipacha,Calle,Microcentro,Estacionamiento Público,CORRIENTES AV. y ESMERALDA,San Nicolas,Comuna 1
+-58.3801243852647,-34.6036791717532,35,"Corrientes, Av.",Suipacha,Carlos Pellegrini,Calle,Microcentro,Estacionamiento Público,CORRIENTES AV. y SUIPACHA,San Nicolas,Comuna 1
+-58.3777313410568,-34.6090264186153,36,Piedras,"de Mayo, Av.","Yrigoyen, H.",Calle,Microcentro,Estacionamiento Público,PIEDRAS y DE MAYO AV.,Monserrat,Comuna 1
+-58.3748525143532,-34.6073728864215,37,"Sáenz Peña, R., Pres., Av.",Rivadavia,Florida,Calle,Microcentro,Estacionamiento Público,"SAENZ PEÑA, ROQUE, PRES. DIAGONAL NORTE AV. y RIVADAVIA AV.",San Nicolas,Comuna 1
+-58.3759612366816,-34.6067738273486,38,"Sáenz Peña, R., Pres., Av.",Bartolomé Mitre,Maipú,Calle,Microcentro,Estacionamiento Público,"SAENZ PEÑA, ROQUE, PRES. DIAGONAL NORTE AV. y MITRE, BARTOLOME",San Nicolas,Comuna 1
+-58.3766650241502,-34.6064178823158,39,"Sáenz Peña, R., Pres., Av.",Maipú,"Perón, J. D., Tte. Gral.",Calle,Microcentro,Estacionamiento Público,"SAENZ PEÑA, ROQUE, PRES. DIAGONAL NORTE AV. y MAIPU",San Nicolas,Comuna 1
+-58.378136710161,-34.6056601674499,40,"Sáenz Peña, R., Pres., Av.",Esmeralda,Suipacha,Calle,Microcentro,Estacionamiento Público,"SAENZ PEÑA, ROQUE, PRES. DIAGONAL NORTE AV. y ESMERALDA",San Nicolas,Comuna 1
+-58.3794808467016,-34.6049408398375,41,"Sáenz Peña, R., Pres., Av.",Suipacha,Sarmiento,Calle,Microcentro,Estacionamiento Público,"SAENZ PEÑA, ROQUE, PRES. DIAGONAL NORTE AV. y SUIPACHA",San Nicolas,Comuna 1
+-58.3797918678918,-34.6046119079576,42,"Sáenz Peña, R., Pres., Av.",Sarmiento,Carabelas,Calle,Microcentro,Estacionamiento Público,"SAENZ PEÑA, ROQUE, PRES. DIAGONAL NORTE AV. y SARMIENTO",San Nicolas,Comuna 1
+-58.3761417738857,-34.6080994935941,43,Rivadavia,Florida,Maipú,Calle,Microcentro,Estacionamiento Público,RIVADAVIA AV. y FLORIDA,San Nicolas,Comuna 1
+-58.3775949100025,-34.6081776660437,44,Rivadavia,Maipú,Esmeralda,Calle,Microcentro,Estacionamiento Público,RIVADAVIA AV. y MAIPU,San Nicolas,Comuna 1
+-58.3794879702705,-34.6082943723853,45,Rivadavia,Suipacha,"Pellegrini, Carlos",Calle,Microcentro,Estacionamiento Público,RIVADAVIA AV. y SUIPACHA,San Nicolas,Comuna 1
+-58.3747716811592,-34.5998576188447,46,Viamonte,San Martín,Florida,Calle,Microcentro,Estacionamiento Público,VIAMONTE y SAN MARTIN,San Nicolas,Comuna 1
+-58.3774885748784,-34.6000316609689,47,Viamonte,Maipú,Esmeralda,Calle,Microcentro,Estacionamiento Público,VIAMONTE y MAIPU,San Nicolas,Comuna 1
+-58.3792234225366,-34.6001413092708,48,Viamonte,Esmeralda,Suipacha,Calle,Microcentro,Estacionamiento Público,VIAMONTE y ESMERALDA,San Nicolas,Comuna 1

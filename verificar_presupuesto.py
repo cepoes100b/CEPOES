@@ -8,6 +8,12 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent
 PATH = BASE / "presupuesto.json"
 
+# Ley 6929: Presupuesto de la Administración Gubernamental GCBA 2026.
+# Art. 1: gastos corrientes + capital = $17.341.466.875.159.
+LEGAL_SANCTIONED = {
+    2026: 17_341_466_875_159.0,
+}
+
 
 def finite_positive(v) -> bool:
     try:
@@ -34,6 +40,19 @@ def main() -> int:
     for key in ("sancionado", "vigente", "devengado"):
         if not finite_positive(total.get(key)):
             problems.append(f"total {key} no positivo")
+
+    # Control de escala independiente del cruce entre los dos CSV. Evita que un
+    # mismo error de parseo monetario haga coincidir ejecutado y sancionado.
+    sanc = float(total.get("sancionado") or 0)
+    if year >= 2024 and sanc < 1_000_000_000_000:
+        problems.append(f"sancionado fuera de escala esperable: ${sanc:,.0f}")
+
+    legal = LEGAL_SANCTIONED.get(year)
+    if legal and sanc:
+        legal_diff = abs(sanc - legal) / legal * 100
+        if legal_diff > 0.5:
+            problems.append(f"sancionado difiere {legal_diff:.3f}% del total legal de {year}")
+
     ep = total.get("ejecucion_pct")
     if ep is None or not (0 <= float(ep) <= 150):
         problems.append(f"ejecución global fuera de rango: {ep}")
@@ -74,6 +93,8 @@ def main() -> int:
             problems.append(f"fuente {k} sin trazabilidad de recurso")
 
     print(f"Presupuesto · {year} T{quarter} · {ctl.get('filas_ejecutado',0)} filas · ejecución {ep}%")
+    if legal and sanc:
+        print(f"  control legal: sancionado {sanc/1e12:.3f} billones · Ley 6929 {legal/1e12:.3f} billones")
     if problems:
         print(f"✘ {len(problems)} problema(s) — NO se publica")
         for x in problems:

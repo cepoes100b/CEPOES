@@ -6,6 +6,7 @@ on:
       - endeudamiento-bcra-direct-v229
     paths:
       - probar_geolocalizacion_cp_mapadeladeuda.py
+      - probar_geolocalizacion_cp_mapadeladeuda_v2.py
       - .github/workflows/probar-geolocalizacion-cp-mapadeladeuda-v229.yml
   workflow_dispatch:
 
@@ -54,7 +55,7 @@ jobs:
           PY
 
       - name: Probar CP → GeoNames → barrios del PMTiles de Mapa
-        run: python probar_geolocalizacion_cp_mapadeladeuda.py
+        run: python probar_geolocalizacion_cp_mapadeladeuda_v2.py
 
       - name: Validar diagnóstico
         run: |
@@ -64,6 +65,10 @@ jobs:
           assert x['privacidad']['microdatos_bcra_arca_leidos'] is False
           assert x['privacidad']['identificadores_personales_leidos'] is False
           assert len(x['resultados']) == 4
+          assert x['fuentes']['geonames']['archivo_zip_leido'].lower().endswith('ar.txt')
+          assert max(r['cp_asignados'] for r in x['resultados'].values()) >= 50
+          assert max(r['cobertura_deudores_pct'] for r in x['resultados'].values()) >= 50
+          assert max(r['barrios_con_datos'] for r in x['resultados'].values()) >= 20
           print(json.dumps(x['ranking_exploratorio'], ensure_ascii=False, indent=2))
           for m,r in x['resultados'].items():
               print(m, 'CP=', r['cp_asignados'], 'cobertura=', r['cobertura_deudores_pct'], 'barrios=', r['barrios_con_datos'])

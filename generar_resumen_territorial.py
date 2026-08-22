@@ -4,6 +4,13 @@ El objetivo es permitir radiografias, comparaciones y mapas tematicos sin que el
 navegador tenga que descargar las 62 capas individuales (mas de 100 mil registros).
 Los conteos representan registros de las fuentes oficiales; no se suman como si
 fueran una unica magnitud cuando las capas miden objetos de naturaleza distinta.
+
+La territorializacion del resumen es jerarquica y consistente:
+1) si el registro tiene coordenadas, se usa el cruce con los 48 barrios oficiales;
+2) si no tiene coordenadas utilizables pero trae un barrio reconocido, la comuna
+   se deriva de la relacion oficial barrio -> comuna de territorio.json;
+3) solo cuando no hay barrio se conserva una comuna valida informada por la fuente.
+Esto evita contradicciones internas de algunos datasets entre barrio y comuna.
 """
 from __future__ import annotations
 
@@ -12,6 +19,8 @@ import json
 import re
 import unicodedata
 from pathlib import Path
+
+import generar_oferta_ampliada_runner as SPATIAL
 
 BASE = Path(__file__).resolve().parent
 DIR = BASE / "equipamientos"
@@ -96,12 +105,19 @@ def barrio_slug(value: object, barrios: dict) -> str | None:
     raw = ALIASES.get(raw, raw)
     if raw in barrios:
         return raw
-    # Segunda oportunidad comparando nombres canonicos del archivo territorial.
     n = norm(value)
     for key, b in barrios.items():
         if norm(b.get("nombre")) == n:
             return key
     return None
+
+
+def comuna_id(value: object) -> str | None:
+    try:
+        cid = int(value)
+    except (TypeError, ValueError):
+        return None
+    return str(cid) if 1 <= cid <= 15 else None
 
 
 def empty_scope(nombre: str, comuna: int | None, poblacion: int) -> dict:
@@ -150,6 +166,7 @@ def main() -> int:
     territory = json.loads(TERR.read_text(encoding="utf-8"))
     barrios_t = territory.get("barrios") or {}
     comunas_t = territory.get("comunas") or {}
+    spatial_index = SPATIAL.load_spatial_index()
 
     comunas = {
         str(cid): empty_scope(f"Comuna {cid}", int(cid), c.get("poblacion") or 0)
@@ -162,6 +179,7 @@ def main() -> int:
 
     layer_meta = {}
     unmapped = {}
+    adjustments = {}
     total_records = 0
     for meta in catalog.get("layers") or []:
         lid = meta.get("id")
@@ -177,23 +195,51 @@ def main() -> int:
         category = meta.get("category") or "otros"
         assigned_barrio = 0
         assigned_comuna = 0
+        spatial_used = 0
+        conflicts_fixed = 0
+
         for item in items:
-            cid = item.get("comuna")
-            try:
-                cid = str(int(cid)) if cid is not None else None
-            except (TypeError, ValueError):
-                cid = None
+            source_cid = comuna_id(item.get("comuna"))
+            source_bkey = barrio_slug(item.get("barrio"), barrios) if item.get("barrio") else None
+            cid = source_cid
+            bkey = source_bkey
+
+            # Coordenadas + limites oficiales tienen prioridad. Esto corrige tanto
+            # ausencias como contradicciones barrio/comuna presentes en la fuente.
+            loc = SPATIAL.locate(item.get("coord"), spatial_index) if item.get("coord") else None
+            if loc:
+                loc_cid, loc_barrio = loc
+                loc_cid = str(int(loc_cid))
+                loc_bkey = barrio_slug(loc_barrio, barrios)
+                if loc_bkey:
+                    if source_cid != loc_cid or (source_bkey and source_bkey != loc_bkey):
+                        conflicts_fixed += 1
+                    cid = loc_cid
+                    bkey = loc_bkey
+                    spatial_used += 1
+            elif bkey:
+                # Sin coordenada util, un barrio canonico determina una unica comuna.
+                canonical_cid = str(int(barrios[bkey].get("comuna") or 0))
+                if canonical_cid in comunas:
+                    if source_cid and source_cid != canonical_cid:
+                        conflicts_fixed += 1
+                    cid = canonical_cid
+
             if cid in comunas:
                 add_count(comunas[cid], lid, category)
                 assigned_comuna += 1
-            bkey = barrio_slug(item.get("barrio"), barrios) if item.get("barrio") else None
             if bkey:
                 add_count(barrios[bkey], lid, category)
                 assigned_barrio += 1
+
         unmapped[lid] = {
             "total": len(items),
             "sin_comuna": len(items) - assigned_comuna,
             "sin_barrio": len(items) - assigned_barrio,
+        }
+        adjustments[lid] = {
+            "territorializados_por_coordenadas": spatial_used,
+            "conflictos_fuente_corregidos": conflicts_fixed,
         }
         last = meta.get("source_last_modified")
         layer_meta[lid] = {
@@ -221,10 +267,16 @@ def main() -> int:
         "layers": layer_meta,
         "comunas": comunas,
         "barrios": barrios,
-        "control": {"no_territorializados": unmapped},
+        "control": {
+            "no_territorializados": unmapped,
+            "ajustes_territoriales": adjustments,
+            "criterio": "Coordenadas con limites oficiales > barrio canonico > comuna informada",
+        },
     }
     OUT.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    corrected = sum(x["conflictos_fuente_corregidos"] for x in adjustments.values())
     print(f"resumen-territorial.json · {OUT.stat().st_size//1024} KB · {len(comunas)} comunas · {len(barrios)} barrios · {len(layer_meta)} capas")
+    print(f"  · inconsistencias barrio/comuna corregidas con criterio territorial: {corrected}")
     return 0
 
 

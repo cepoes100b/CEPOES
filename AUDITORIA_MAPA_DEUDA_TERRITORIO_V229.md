@@ -39,6 +39,68 @@ El manifest declara:
 
 La descripción del dataset indica que las métricas agregadas y la geometría IGN normalizada fueron entregadas al frontend ya preparadas.
 
+### Contrato exacto del slice barrial de CABA
+
+La inspección directa de:
+
+`https://datos.mapadeladeuda.ar/periods/2026-06/slices/barrio_caba/02/default.json`
+
+confirmó el contrato efectivo de producción.
+
+Claves superiores observadas:
+
+- `contract`;
+- `period`;
+- `level`;
+- `scope`;
+- `filters`;
+- `activeFilters`;
+- `defaultMetric`;
+- `metrics`;
+- `kpis`;
+- `columns`;
+- `aliases`;
+- `rows`.
+
+`contract = mobile-slices-v2`.
+
+La colección territorial está en `rows` y contiene **exactamente 48 filas**. Las filas son arrays compactos y se interpretan mediante `columns`:
+
+```text
+geo_id, du, dm, mt, mm, tmo, imt, imm, idt, idm, dtm
+```
+
+Los aliases declarados por la propia fuente son:
+
+- `du` -> `deudores_unicos_total`;
+- `dm` -> `deudores_unicos_mora`;
+- `mt` -> `monto_total`;
+- `mm` -> `monto_mora`;
+- `tmo` -> `tasa_mora`;
+- `imt` -> `incidencia_monto_total`;
+- `imm` -> `incidencia_monto_mora`;
+- `idt` -> `incidencia_deudores_total`;
+- `idm` -> `incidencia_deudores_mora`;
+- `dtm` -> `dif_tasa_mora_pp`.
+
+El extractor de referencia ya valida automáticamente:
+
+- 48 filas en el slice;
+- 48 barrios en el lookup;
+- 48 `geo_id` únicos;
+- cero identificadores vacíos;
+- cero identificadores sin correspondencia en el lookup.
+
+La ejecución verde del 22/08/2026 reprodujo además los KPI CABA publicados para junio de 2026:
+
+- deudores únicos totales: `1.877.802`;
+- deudores únicos en mora: `255.805`;
+- monto total: `13.388.912.516` miles de pesos;
+- monto en mora: `1.567.437.981` miles de pesos;
+- tasa de mora: `11,706985%`.
+
+Este archivo de 48 barrios queda establecido como **vector de benchmark territorial**. No es fuente de producción CEPOES: se utilizará sólo para validar una réplica independiente construida desde BCRA/ARCA.
+
 ### Lookup geográfico
 
 `https://datos.mapadeladeuda.ar/geo/lookup.json`
@@ -81,6 +143,10 @@ El frontend carga, entre otros:
 
 No se observó una solicitud de red a un servicio de geocodificación ni a una tabla pública de códigos postales durante la ejecución normal del sitio. El navegador sólo representa datos territoriales previamente procesados.
 
+La búsqueda en el bundle público tampoco identificó referencias metodológicas a `pgeocode`, `GeoNames`, `Nominatim`, GeoRef u otro geocodificador. La referencia a `centroid` observada corresponde a internals de la librería cartográfica y no constituye evidencia de que esa haya sido la regla de asignación territorial de la base.
+
+Tampoco se encontró un sourcemap público útil del bundle ni un repositorio público identificable del pipeline analítico.
+
 ## Lo que todavía NO está demostrado
 
 La auditoría pública no permite afirmar todavía:
@@ -105,14 +171,16 @@ La estrategia CEPOES queda ordenada así:
 3. buscar referencias específicas al insumo utilizado para georreferenciar códigos postales;
 4. documentar cualquier regla encontrada y su fecha/versión.
 
+La búsqueda pública realizada hasta el 22/08/2026 confirmó repetidamente la fórmula metodológica general —personas físicas, código postal asociado a la identificación y cartografía IGN—, pero no encontró todavía una especificación pública del paso `CP -> ubicación`.
+
 ### B. Reconstrucción empírica si el crosswalk no está publicado
 
 Si no aparece la tabla original, CEPOES puede reconstruir la asignación de manera auditable:
 
 1. generar con BCRA/ARCA agregados por código postal para CABA;
-2. descargar los 48 agregados públicos de Mapa de la Deuda para el mismo período y universo de filtros;
+2. usar como benchmark los 48 agregados públicos extraídos para el mismo período y universo de filtros;
 3. reconciliar primero el universo de acreedores para reducir diferencias no territoriales;
-4. construir candidatos `CP -> barrio` utilizando un insumo postal georreferenciado reproducible;
+4. construir candidatos `CP -> ubicación` utilizando un insumo postal georreferenciado reproducible;
 5. superponer los puntos/áreas postales con las mismas geometrías administrativas declaradas por Mapa de la Deuda/IGN;
 6. comparar el agregado resultante barrio por barrio contra los 48 valores publicados;
 7. medir error de deudores, mora y montos por barrio;

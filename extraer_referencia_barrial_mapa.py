@@ -82,20 +82,37 @@ def row_quality(row: dict) -> int:
 
 
 def extract_records(slice_obj):
-    """Encuentra robustamente la colección territorial dentro del slice.
+    """Devuelve la colección territorial del contrato público vigente.
 
-    El contrato público puede representar las geografías como lista de objetos
-    o como diccionario indexado por geo_id. Recorremos sólo estructuras JSON
-    y priorizamos candidatos de tamaño cercano a los 48 barrios de CABA.
+    La inspección estructural del 22/08/2026 confirmó el contrato
+    `mobile-slices-v2`: el slice tiene una clave superior `rows` con exactamente
+    48 registros para `barrio_caba/02`. Se usa ese contrato explícito y se
+    conserva un fallback genérico sólo para detectar cambios futuros.
     """
+    if isinstance(slice_obj, dict):
+        direct = slice_obj.get("rows")
+        if (
+            isinstance(direct, list)
+            and direct
+            and all(isinstance(x, dict) for x in direct)
+        ):
+            return {
+                "path": "$.rows",
+                "origin": "mobile-slices-v2",
+                "score": 1000,
+            }, [dict(x) for x in direct]
+
     candidates = []
 
     def add_candidate(path: str, rows: list[dict], origin: str) -> None:
         if not rows:
             return
         quality = sum(row_quality(r) for r in rows[: min(20, len(rows))])
-        # 48 es un criterio de ranking, no una condición rígida.
-        size_bonus = max(0, 60 - abs(len(rows) - 48))
+        # Penalizar fuerte colecciones que no estén cerca del universo de 48.
+        if 40 <= len(rows) <= 60:
+            size_bonus = 200 - abs(len(rows) - 48) * 5
+        else:
+            size_bonus = -100 - abs(len(rows) - 48)
         explicit_geo = sum(
             1 for r in rows[: min(20, len(rows))]
             if any(k in r and str(r.get(k, "")).strip() for k in GEO_KEYS)
@@ -119,7 +136,6 @@ def extract_records(slice_obj):
         if not isinstance(node, dict):
             return
 
-        # Caso frecuente en APIs agregadas: {"geo_id_1": {...}, ...}.
         dict_items = [(k, v) for k, v in node.items() if isinstance(v, dict)]
         if len(dict_items) >= 2 and len(dict_items) >= int(len(node) * 0.7):
             rows = []
@@ -174,7 +190,7 @@ def collect_lookup_barrios(lookup_obj):
 
 def main():
     s = requests.Session()
-    s.headers.update({"User-Agent": "CEPOES-public-method-audit/2.1"})
+    s.headers.update({"User-Agent": "CEPOES-public-method-audit/2.2"})
 
     barrios = get_json(s, BARRIOS_URL)
     lookup = get_json(s, LOOKUP_URL)
@@ -280,10 +296,11 @@ def main():
         })
 
     payload = {
-        "schema": "cepoes-mapadeladeuda-barrio-reference-v2",
+        "schema": "cepoes-mapadeladeuda-barrio-reference-v3",
         "period": PERIOD,
         "source_slice": BARRIOS_URL,
         "source_lookup": LOOKUP_URL,
+        "slice_contract": barrios.get("contract") if isinstance(barrios, dict) else None,
         "slice_collection": collection_meta,
         "barrios_en_slice": len(rows),
         "barrios_en_lookup": len(lookup_barrios),
@@ -302,6 +319,7 @@ def main():
     )
 
     print(json.dumps({
+        "slice_contract": payload["slice_contract"],
         "slice_collection": collection_meta,
         "barrios_en_slice": payload["barrios_en_slice"],
         "barrios_en_lookup": payload["barrios_en_lookup"],

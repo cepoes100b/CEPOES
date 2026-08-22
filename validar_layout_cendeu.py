@@ -4,9 +4,8 @@
 No imprime ni persiste filas, CUIT/CUIL ni valores individuales. Sólo produce métricas
 estructurales agregadas sobre una muestra acotada leída en streaming desde el .7z.
 
-El candidato de 24 campos se toma del LEAME DEUDORES.pdf incluido por el BCRA en el
-archivo 202606DEUDORES.7Z. El diseño suma 171 caracteres: los campos monetarios 7 a 17
-tienen 12 posiciones cada uno.
+El diseño de 24 campos y 171 caracteres se toma del LEAME DEUDORES.pdf incluido por
+el BCRA en 202606DEUDORES.7Z. Los campos numéricos pueden venir alineados con espacios.
 """
 from __future__ import annotations
 
@@ -19,7 +18,6 @@ from pathlib import Path
 LONGITUD_CANDIDATA = 171
 MAX_FILAS = 500
 
-# (nombre, inicio 0-based, fin exclusivo)
 CAMPOS = (
     ("entidad", 0, 5),
     ("periodo", 5, 11),
@@ -93,9 +91,7 @@ def leer_lineas(archivo: Path, interno: str) -> list[str]:
         for raw in proc.stdout:
             if not raw.strip():
                 continue
-            # El archivo vigente es ASCII/UTF-8 compatible; cp1252 cubre cualquier byte extendido.
-            linea = raw.rstrip(b"\r\n").decode("cp1252", errors="replace")
-            lineas.append(linea)
+            lineas.append(raw.rstrip(b"\r\n").decode("cp1252", errors="replace"))
             if len(lineas) >= MAX_FILAS:
                 break
     finally:
@@ -109,8 +105,9 @@ def leer_lineas(archivo: Path, interno: str) -> list[str]:
     return lineas
 
 
-def es_digitos(s: str) -> bool:
-    return bool(s) and s.isdigit()
+def digitos_alineados(s: str) -> bool:
+    v = s.strip()
+    return bool(v) and v.isdigit()
 
 
 def main() -> int:
@@ -127,28 +124,29 @@ def main() -> int:
     for x in lineas:
         largos[len(x)] = largos.get(len(x), 0) + 1
 
-    validas_longitud = [x for x in lineas if len(x) == LONGITUD_CANDIDATA]
+    validas = [x for x in lineas if len(x) == LONGITUD_CANDIDATA]
     controles = {
-        "entidad_5_digitos": 0,
-        "periodo_6_digitos": 0,
-        "tipo_id_2_digitos": 0,
-        "identificacion_11_digitos": 0,
-        "situacion_2_digitos": 0,
-        "dias_atraso_4_digitos": 0,
+        "entidad": 0,
+        "periodo": 0,
+        "tipo_id": 0,
+        "identificacion": 0,
+        "situacion": 0,
+        "dias_atraso": 0,
     }
-    for x in validas_longitud:
-        controles["entidad_5_digitos"] += es_digitos(x[0:5])
-        controles["periodo_6_digitos"] += bool(re.fullmatch(r"20\d{4}", x[5:11]))
-        controles["tipo_id_2_digitos"] += es_digitos(x[11:13])
-        controles["identificacion_11_digitos"] += es_digitos(x[13:24])
-        controles["situacion_2_digitos"] += es_digitos(x[27:29])
-        controles["dias_atraso_4_digitos"] += es_digitos(x[167:171])
+    situaciones_validas = {"1", "2", "3", "4", "5", "11"}
+    for x in validas:
+        controles["entidad"] += digitos_alineados(x[0:5])
+        controles["periodo"] += bool(re.fullmatch(r"20\d{4}", x[5:11].strip()))
+        controles["tipo_id"] += digitos_alineados(x[11:13])
+        controles["identificacion"] += digitos_alineados(x[13:24])
+        controles["situacion"] += x[27:29].strip() in situaciones_validas
+        controles["dias_atraso"] += digitos_alineados(x[167:171])
 
-    n = len(validas_longitud)
+    n = len(validas)
     ratios = {k: (v / n if n else 0.0) for k, v in controles.items()}
     confirmado = n == len(lineas) and n > 0 and all(v >= 0.98 for v in ratios.values())
     salida = {
-        "schema": "cepoes-cendeu-layout-check-v2",
+        "schema": "cepoes-cendeu-layout-check-v3",
         "archivo": archivo.name,
         "archivo_interno": interno,
         "filas_muestreadas": len(lineas),

@@ -1,0 +1,96 @@
+name: Diagnosticar universo CABA BCRA v2.29
+
+on:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-v228
+    paths:
+      - 'descargar_bcra_deudores.py'
+      - 'reconciliar_bcra_entidades.py'
+      - 'diagnosticar_universo_caba.py'
+      - '.github/workflows/diagnosticar-universo-caba-v229.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: diagnosticar-universo-caba-v229
+  cancel-in-progress: true
+
+jobs:
+  diagnosticar-universo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+          python -m pip install --disable-pip-version-check requests
+
+      - name: Compilar herramientas
+        run: python -m py_compile descargar_bcra_deudores.py reconciliar_bcra_entidades.py diagnosticar_universo_caba.py
+
+      - name: Descargar PADRON ARCA con reintentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            echo "PADRON intento $intento/3"
+            python descargar_bcra_deudores.py PADRON || true
+            ARCHIVO="$(find bcra_deudores -maxdepth 1 -type f -name '*PADRON.7Z' -print -quit 2>/dev/null || true)"
+            if [ -n "$ARCHIVO" ] && 7z t "$ARCHIVO" >/dev/null; then
+              echo "PADRON íntegro: $ARCHIVO"
+              break
+            fi
+            rm -f bcra_deudores/*PADRON.7Z bcra_deudores/*PADRON.7Z.part 2>/dev/null || true
+            if [ "$intento" -eq 3 ]; then
+              echo "No se pudo obtener PADRON íntegro" >&2
+              exit 1
+            fi
+            sleep $((intento * 15))
+          done
+
+      - name: Descargar DEUDORES BCRA con reintentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            echo "DEUDORES intento $intento/3"
+            python descargar_bcra_deudores.py DEUDORES || true
+            ARCHIVO="$(find bcra_deudores -maxdepth 1 -type f -name '*DEUDORES.7Z' -print -quit 2>/dev/null || true)"
+            if [ -n "$ARCHIVO" ] && 7z t "$ARCHIVO" >/dev/null; then
+              echo "DEUDORES íntegro: $ARCHIVO"
+              break
+            fi
+            rm -f bcra_deudores/*DEUDORES.7Z bcra_deudores/*DEUDORES.7Z.part 2>/dev/null || true
+            if [ "$intento" -eq 3 ]; then
+              echo "No se pudo obtener DEUDORES íntegro" >&2
+              exit 1
+            fi
+            sleep $((intento * 15))
+          done
+
+      - name: Diagnosticar definición de universo
+        run: python diagnosticar_universo_caba.py
+
+      - name: Publicar sólo diagnóstico agregado
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostico-universo-caba-v229
+          path: diagnostico_universo_caba.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Eliminar archivos crudos
+        if: always()
+        run: |
+          rm -rf bcra_deudores
+          rm -f *.part

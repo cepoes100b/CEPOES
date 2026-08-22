@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import math
 import re
 import sys
 from pathlib import Path
@@ -10,6 +9,8 @@ from typing import Any
 CPA_VALUE_RE = re.compile(r"\bC\d{4}[A-Z]{3}\b", re.I)
 ID11_VALUE_RE = re.compile(r"(?<!\d)\d{11}(?!\d)")
 PERIODO_RE = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
+DEUDORES_FILE_RE = re.compile(r"(?:^|[^0-9])\d{6}DEUDORES(?:\.[A-Z0-9]+)?$", re.I)
+PADRON_FILE_RE = re.compile(r"(?:^|[^0-9])\d{8}PADRON(?:\.[A-Z0-9]+)?$", re.I)
 FORBIDDEN_KEYS = {
     "identificacion", "identificador", "cuit", "cuil", "cdi", "documento",
     "documento_personal", "denominacion", "nombre_persona", "domicilio",
@@ -41,8 +42,6 @@ def walk_privacy(value: Any, path: str = "$", parent_key: str | None = None) -> 
         for i, v in enumerate(value):
             walk_privacy(v, f"{path}[{i}]", parent_key)
     elif isinstance(value, str):
-        # Evitar falsos positivos en metadatos documentales que contienen 11 dígitos
-        # sólo si son nombres de archivo o fechas; un CPA completo nunca debe aparecer.
         if CPA_VALUE_RE.search(value):
             fail(f"CPA individual detectado en salida pública: {path}")
         if parent_key not in {"archivo_deuda", "archivo_padron", "actualizado_utc"} and ID11_VALUE_RE.search(value):
@@ -76,8 +75,6 @@ def validate_metrics(obj: dict, label: str, min_deudores: int = 0) -> None:
         fail(f"{label}: distribución de situación inválida")
     if sum(situ.values()) != d:
         fail(f"{label}: distribución de situación no suma deudores")
-    if sum(situ[str(i)] for i in (3, 4, 5)) > d:
-        fail(f"{label}: situaciones de mora inválidas")
 
 
 def verificar(data: dict) -> None:
@@ -91,10 +88,20 @@ def verificar(data: dict) -> None:
     fuente = data.get("fuente") or {}
     if fuente.get("organismo") != "Banco Central de la República Argentina":
         fail("organismo fuente inesperado")
-    if not re.search(r"24DSF\d{6}", str(fuente.get("archivo_deuda", "")), re.I):
-        fail("archivo de deuda no identifica 24DSF y período")
-    if not re.search(r"\d{8}PADRON", str(fuente.get("archivo_padron", "")), re.I):
-        fail("archivo padrón no conserva fecha/nombre oficial")
+    archivo_deuda = str(fuente.get("archivo_deuda", ""))
+    archivo_padron = str(fuente.get("archivo_padron", ""))
+    if not DEUDORES_FILE_RE.search(archivo_deuda):
+        fail("archivo de deuda no identifica AAAAMMDEUDORES")
+    if not PADRON_FILE_RE.search(archivo_padron):
+        fail("archivo padrón no conserva AAAAMMDDPADRON")
+    periodo_archivo = re.search(r"(\d{6})DEUDORES", archivo_deuda, flags=re.I)
+    periodo_json = data["periodo"].replace("-", "")
+    if not periodo_archivo or periodo_archivo.group(1) != periodo_json:
+        fail("período del archivo DEUDORES no coincide con período del JSON")
+    if fuente.get("composicion_monto") != "préstamos/garantías afrontadas + garantías otorgadas + otros conceptos":
+        fail("composición del monto público inesperada")
+    if fuente.get("definicion_mora") != "situaciones BCRA 3, 4 o 5 (más de 90 días de atraso)":
+        fail("definición de mora inesperada")
 
     metodologia = data.get("metodologia") or {}
     minimo = metodologia.get("minimo_publicacion_barrio")
@@ -102,11 +109,17 @@ def verificar(data: dict) -> None:
         fail("mínimo de publicación territorial debe ser >=30")
 
     cobertura = data.get("cobertura_procesamiento") or {}
+    leidos = cobertura.get("registros_deudores_leidos")
+    vinculados = cobertura.get("registros_entidad_vinculados_caba")
     ph = cobertura.get("personas_humanas_caba")
     mapped = cobertura.get("personas_con_barrio_asignado")
     suppressed = cobertura.get("personas_en_celdas_suprimidas")
-    if not all(isinstance(x, int) and x >= 0 for x in (ph, mapped, suppressed)):
+    if not all(isinstance(x, int) and x >= 0 for x in (leidos, vinculados, ph, mapped, suppressed)):
         fail("cobertura: cantidades inválidas")
+    if vinculados > leidos:
+        fail("cobertura: registros vinculados supera registros leídos")
+    if ph > vinculados:
+        fail("cobertura: personas únicas supera registros entidad vinculados")
     if mapped > ph:
         fail("cobertura: territorializados supera personas CABA")
     expected_cov = pct(mapped, ph)
@@ -126,10 +139,7 @@ def verificar(data: dict) -> None:
     if not isinstance(barrios, list):
         fail("barrios debe ser lista")
     seen: set[str] = set()
-    pub_deudores = 0
-    pub_deuda = 0
-    pub_mora = 0
-    pub_deuda_mora = 0
+    pub_deudores = pub_deuda = pub_mora = pub_deuda_mora = 0
     for b in barrios:
         if not isinstance(b, dict):
             fail("barrio no es objeto")

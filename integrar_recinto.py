@@ -16,6 +16,8 @@ from urllib.parse import parse_qs, urlparse
 BASE = Path(__file__).resolve().parent
 LEG_PATH = BASE / "legislatura_publica.json"
 SES_PATH = BASE / "sesiones_publicas.json"
+EXP_NUM_RE = re.compile(r"\b(\d+\s*-\s*[A-ZÁÉÍÓÚÜÑ]+\s*-\s*\d{4})\b", re.IGNORECASE)
+SANCTION_TYPE = "SANCION DE UN EXPEDIENTE"
 
 
 def clean(value) -> str:
@@ -24,6 +26,11 @@ def clean(value) -> str:
 
 def norm_num(value) -> str:
     return re.sub(r"\s+", "", clean(value).upper())
+
+
+def number_from_description(value) -> str:
+    m = EXP_NUM_RE.search(clean(value))
+    return norm_num(m.group(1)) if m else ""
 
 
 def project_id(project: dict) -> str:
@@ -39,7 +46,11 @@ def project_id(project: dict) -> str:
 
 
 def source_key(item: dict) -> tuple[str, str]:
-    return clean(item.get("id_expediente")), norm_num(item.get("numero_expediente"))
+    eid = clean(item.get("id_expediente"))
+    num = norm_num(item.get("numero_expediente"))
+    if not num:
+        num = number_from_description(item.get("descripcion"))
+    return eid, num
 
 
 def session_ref(session: dict) -> dict:
@@ -81,6 +92,8 @@ def main() -> int:
 
     links: dict[int, dict[str, dict]] = defaultdict(dict)
     discovered: dict[str, dict] = {}
+    discovered_by_id: dict[str, str] = {}
+    discovered_by_num: dict[str, str] = {}
 
     def resolve(eid: str, num: str) -> int | None:
         if eid and eid in by_id:
@@ -92,7 +105,15 @@ def main() -> int:
     def discovery(eid: str, num: str, session: dict, kind: str, basic: dict | None = None):
         if not eid and not num:
             return
-        key = f"id:{eid}" if eid else f"num:{num}"
+
+        key = ""
+        if eid and eid in discovered_by_id:
+            key = discovered_by_id[eid]
+        elif num and num in discovered_by_num:
+            key = discovered_by_num[num]
+        else:
+            key = f"id:{eid}" if eid else f"num:{num}"
+
         row = discovered.setdefault(key, {
             "id_expediente": eid or None,
             "numero": num or None,
@@ -102,11 +123,17 @@ def main() -> int:
             "motivos": [],
             "datos_basicos": basic or None,
         })
-        if eid and not row.get("id_expediente"):
-            row["id_expediente"] = eid
-            row["url_ficha"] = f"https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id={eid}"
-        if num and not row.get("numero"):
-            row["numero"] = num
+
+        if eid:
+            discovered_by_id[eid] = key
+            if not row.get("id_expediente"):
+                row["id_expediente"] = eid
+                row["url_ficha"] = f"https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id={eid}"
+        if num:
+            discovered_by_num[num] = key
+            if not row.get("numero"):
+                row["numero"] = num
+
         row["primera_sesion"] = min(row["primera_sesion"], clean(session.get("fecha")))
         row["ultima_sesion"] = max(row["ultima_sesion"], clean(session.get("fecha")))
         if kind not in row["motivos"]:
@@ -139,6 +166,10 @@ def main() -> int:
             })
 
         for item in session.get("sanciones") or []:
+            # No promovemos un hito de sanción salvo que el SLP lo tipifique
+            # expresamente como SANCION DE UN EXPEDIENTE.
+            if clean(item.get("tipo")).upper() != SANCTION_TYPE:
+                continue
             eid, num = source_key(item)
             idx = resolve(eid, num)
             if idx is None:
@@ -147,6 +178,7 @@ def main() -> int:
             bucket(idx, session)["sanciones"].append({
                 "tipo": clean(item.get("tipo")),
                 "descripcion": clean(item.get("descripcion")),
+                "numero_expediente": num or None,
             })
 
         for vote in session.get("votaciones_nominales") or []:
@@ -163,6 +195,7 @@ def main() -> int:
     with_vote = 0
     with_session_sanction = 0
     linked_sessions = 0
+    audit_rows: list[str] = []
 
     for i, project in enumerate(projects):
         ficha = project.get("ficha_oficial") or {}
@@ -216,6 +249,11 @@ def main() -> int:
             if ficha.get("estado_actual") != "archivado":
                 ficha["etapa_ciclo"] = "sancionado"
                 project["etapa_ciclo"] = "sancionado"
+
+        audit_rows.append(
+            f"{project.get('numero')}: sesiones={len(session_rows)} "
+            f"sancion={'sí' if has_sanction else 'no'} votacion={'sí' if has_vote else 'no'}"
+        )
 
     summary = leg.setdefault("resumen", {})
     current_states = Counter()
@@ -274,6 +312,8 @@ def main() -> int:
         f"{with_vote} con votación nominal · {with_session_sanction} con sanción en sesión · "
         f"{len(discovered)} descubiertos sólo en recinto"
     )
+    for row in audit_rows[:30]:
+        print("  · " + row)
     return 0
 
 

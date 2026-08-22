@@ -31,6 +31,26 @@ def main() -> None:
     if not html or not base:
         raise SystemExit("No se pudo abrir la página pública de archivos deudores")
 
+    print("FORM ACTIONS")
+    for action in re.findall(r"<form[^>]*action=[\"']([^\"']*)[\"']", html, flags=re.I):
+        print(" FORM", urljoin(base, action))
+
+    print("SCRIPT SRCS")
+    for src in re.findall(r"<script[^>]*src=[\"']([^\"']+)[\"']", html, flags=re.I):
+        print(" SCRIPT", urljoin(base, src))
+
+    print("RELEVANT HTML")
+    for token in ("202606DEUDORES.7Z", "20260731PADRON.7Z", "24DSF202606.7Z"):
+        pos = html.upper().find(token.upper())
+        print(f" TOKEN {token} POS {pos}")
+        if pos >= 0:
+            print(html[max(0, pos - 1200): pos + 1200])
+
+    print("POSSIBLE DOWNLOAD ROUTES")
+    for m in re.findall(r"(?:url|href|action)\s*[:=]\s*[\"']([^\"']+)[\"']", html, flags=re.I):
+        if any(k in m.lower() for k in ("download", "descarg", "archivo", "file")):
+            print(" ROUTE", urljoin(base, m))
+
     hrefs = re.findall(r'href=[\"\']([^\"\']+)[\"\']', html, flags=re.I)
     links = []
     for href in hrefs:
@@ -38,7 +58,6 @@ def main() -> None:
         if re.search(r"(?:DEUDORES|PADRON|24DSF|1DSF).*\.7z(?:\?|$)", full, flags=re.I):
             links.append(full)
 
-    # También buscar URLs o nombres embebidos en JS/HTML.
     for name in re.findall(r"[A-Za-z0-9_./?=&%-]*(?:DEUDORES|PADRON|24DSF|1DSF)[A-Za-z0-9_./?=&%-]*\.7z", html, flags=re.I):
         links.append(urljoin(base, name))
 
@@ -48,29 +67,14 @@ def main() -> None:
         print("LINK", link)
         try:
             h = session.head(link, timeout=30, allow_redirects=True)
-            print(
-                "  HEAD",
-                h.status_code,
-                "type=", h.headers.get("content-type"),
-                "length=", h.headers.get("content-length"),
-                "final=", h.url,
-            )
+            print("  HEAD", h.status_code, "type=", h.headers.get("content-type"), "length=", h.headers.get("content-length"), "final=", h.url)
         except Exception as exc:
             print("  HEAD ERROR", exc)
 
     deudores = [x for x in links if re.search(r"\d{6}DEUDORES\.7z", x, flags=re.I)]
     padrones = [x for x in links if re.search(r"\d{8}PADRON\.7z", x, flags=re.I)]
-    if not deudores:
-        print("HTML SNIPPET DEUDORES")
-        m = re.search(r".{0,500}DEUDORES.{0,500}", html, flags=re.I | re.S)
-        print(m.group(0) if m else "sin coincidencia")
-    if not padrones:
-        print("HTML SNIPPET PADRON")
-        m = re.search(r".{0,500}PADRON.{0,500}", html, flags=re.I | re.S)
-        print(m.group(0) if m else "sin coincidencia")
-
     if not deudores or not padrones:
-        raise SystemExit("No se resolvieron links directos de DEUDORES y PADRON")
+        raise SystemExit("No se resolvieron nombres de DEUDORES y PADRON")
 
 
 if __name__ == "__main__":

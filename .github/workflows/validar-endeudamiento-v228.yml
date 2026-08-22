@@ -7,6 +7,8 @@ on:
       - 'procesar_endeudamiento_bcra.py'
       - 'verificar_endeudamiento.py'
       - 'test_endeudamiento_sintetico.py'
+      - 'construir_cpa_territorio.py'
+      - 'verificar_cpa_territorio.py'
       - 'V228.md'
       - '.gitignore'
       - '.github/workflows/validar-endeudamiento-v228.yml'
@@ -15,16 +17,37 @@ on:
 jobs:
   validar:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Compilar procesador y verificadores
-        run: python -m py_compile procesar_endeudamiento_bcra.py verificar_endeudamiento.py test_endeudamiento_sintetico.py
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Compilar procesadores y verificadores
+        run: >-
+          python -m py_compile
+          procesar_endeudamiento_bcra.py verificar_endeudamiento.py test_endeudamiento_sintetico.py
+          construir_cpa_territorio.py verificar_cpa_territorio.py
       - name: Probar agregación, mora, territorialización y privacidad
         run: python test_endeudamiento_sintetico.py
+      - name: Construir cruce CPA desde fuentes territoriales oficiales disponibles
+        run: >-
+          python construir_cpa_territorio.py
+          --badata badata --territorio territorio.json
+          --salida /tmp/cpa_territorio.csv --estado /tmp/estado_cpa_territorio.json
+      - name: Verificar cruce CPA territorial
+        run: python verificar_cpa_territorio.py /tmp/cpa_territorio.csv /tmp/estado_cpa_territorio.json territorio.json
+      - name: Resumir fuentes CPA útiles
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/estado_cpa_territorio.json', encoding='utf-8'))
+          useful=[s for s in x['fuentes'] if s['tiene_cpa'] and s['tiene_barrio']]
+          for s in sorted(useful, key=lambda z:z['cpa_distintos_validos'], reverse=True):
+              print(f"{s['fuente']}: {s['cpa_distintos_validos']} CPA · {s['observaciones_validas']} observaciones · no canónicos {s['barrios_no_canonicos']} · comuna inconsistente {s['comuna_inconsistente']}")
+          PY
       - name: Verificar que insumos crudos queden bloqueados por Git
         run: |
           for f in 24DSF202606.7Z 24DSF202606.TXT 202606DEUDORES.7Z 20260731PADRON.TXT; do

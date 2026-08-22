@@ -1,0 +1,42 @@
+name: Validar universo temprano v2.26
+
+on:
+  pull_request:
+    paths:
+      - "actualizar_universo.py"
+      - "verificar_universo.py"
+      - "actualizar_legislatura.py"
+      - "actualizar_sesiones.py"
+      - "normalizar_sesiones.py"
+      - ".github/workflows/validar-universo-v226.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Validar sintaxis
+        run: python -m py_compile actualizar_universo.py verificar_universo.py
+      - name: Actualizar agenda
+        run: python actualizar_legislatura.py
+      - name: Actualizar sesiones
+        run: python actualizar_sesiones.py
+      - name: Normalizar recinto
+        run: python normalizar_sesiones.py
+      - name: Actualizar radar temprano
+        run: python actualizar_universo.py
+      - name: Verificar núcleo de agenda
+        run: python verificar_legislatura.py
+      - name: Verificar sesiones
+        run: python verificar_sesiones.py
+      - name: Verificar universo temprano
+        run: python verificar_universo.py

@@ -110,14 +110,36 @@ def read_rows(path: Path):
 
 
 def pick(fields: dict[str, str], *aliases: str, prefix: str | None = None) -> str | None:
+    """Busca una columna tolerando las distintas convenciones históricas de BA Data.
+
+    Los recursos recientes usan encabezados como ``sancion`` o ``vigente...``.
+    Algunos recursos históricos fueron exportados desde tablas dinámicas y usan
+    encabezados como ``SumaDeSancion`` o ``SumaDeVigente_Trim2_Cont``. Primero
+    priorizamos coincidencias exactas/prefijo y sólo después una coincidencia
+    contenida, evitando columnas descriptivas.
+    """
     for alias in aliases:
-        if norm(alias) in fields:
-            return fields[norm(alias)]
+        key = norm(alias)
+        if key in fields:
+            return fields[key]
     if prefix:
         p = norm(prefix)
         for key, original in fields.items():
             if key.startswith(p):
                 return original
+        candidates = []
+        for key, original in fields.items():
+            if p not in key:
+                continue
+            if key.startswith(("desc_", "descripcion_")) or "_desc_" in key:
+                continue
+            # Las exportaciones históricas más comunes comienzan con sumade.
+            # Se priorizan antes que cualquier otra coincidencia contenida.
+            rank = 0 if key.startswith("sumade") else 1
+            candidates.append((rank, len(key), key, original))
+        if candidates:
+            candidates.sort()
+            return candidates[0][3]
     return None
 
 

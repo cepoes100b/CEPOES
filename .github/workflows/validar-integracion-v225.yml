@@ -1,0 +1,42 @@
+name: Validar integración recinto v2.25
+
+on:
+  pull_request:
+    paths:
+      - "integrar_recinto.py"
+      - "verificar_integracion_recinto.py"
+      - "actualizar_sesiones.py"
+      - "enriquecer_expedientes.py"
+      - "completar_ciclo_legislativo.py"
+      - ".github/workflows/validar-integracion-v225.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Validar sintaxis
+        run: python -m py_compile integrar_recinto.py verificar_integracion_recinto.py
+      - name: Regenerar núcleo y sesiones
+        run: |
+          python actualizar_legislatura.py
+          python enriquecer_expedientes.py
+          python completar_ciclo_legislativo.py
+          python actualizar_sesiones.py
+      - name: Integrar recinto
+        run: python integrar_recinto.py
+      - name: Verificar ciclo
+        run: python verificar_ciclo_legislativo.py
+      - name: Verificar sesiones
+        run: python verificar_sesiones.py
+      - name: Verificar integración
+        run: python verificar_integracion_recinto.py

@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Cruza el núcleo de expedientes con sesiones/votaciones oficiales (v2.25).
-
-No duplica el detalle nominal: legislatura_publica.json conserva referencias,
-resultados agregados e hitos; sesiones_publicas.json sigue siendo la fuente
-detallada de recinto.
-"""
+"""Cruza el núcleo de expedientes con sesiones/votaciones oficiales (v2.25)."""
 from __future__ import annotations
 
 import json
@@ -17,7 +12,6 @@ BASE = Path(__file__).resolve().parent
 LEG_PATH = BASE / "legislatura_publica.json"
 SES_PATH = BASE / "sesiones_publicas.json"
 EXP_NUM_RE = re.compile(r"\b(\d+\s*-\s*[A-ZÁÉÍÓÚÜÑ]+\s*-\s*\d{4})\b", re.IGNORECASE)
-SANCTION_TYPE = "SANCION DE UN EXPEDIENTE"
 
 
 def clean(value) -> str:
@@ -70,6 +64,15 @@ def compact_vote(vote: dict) -> dict:
     }
 
 
+def compact_sanction(item: dict, num: str) -> dict:
+    return {
+        "tipo": clean(item.get("tipo")),
+        "descripcion": clean(item.get("descripcion")),
+        "numero_expediente": num or None,
+        "alcance": item.get("alcance") or "no_especificada",
+    }
+
+
 def main() -> int:
     if not LEG_PATH.exists() or not SES_PATH.exists():
         print("✘ faltan legislatura_publica.json o sesiones_publicas.json")
@@ -77,6 +80,10 @@ def main() -> int:
 
     leg = json.loads(LEG_PATH.read_text(encoding="utf-8"))
     ses = json.loads(SES_PATH.read_text(encoding="utf-8"))
+    if int(ses.get("version") or 0) < 2:
+        print("✘ sesiones_publicas.json debe pasar por normalizar_sesiones.py antes de integrar")
+        return 1
+
     projects = leg.get("expedientes") or []
     sessions = ses.get("sesiones") or []
 
@@ -105,15 +112,12 @@ def main() -> int:
     def discovery(eid: str, num: str, session: dict, kind: str, basic: dict | None = None):
         if not eid and not num:
             return
-
-        key = ""
         if eid and eid in discovered_by_id:
             key = discovered_by_id[eid]
         elif num and num in discovered_by_num:
             key = discovered_by_num[num]
         else:
             key = f"id:{eid}" if eid else f"num:{num}"
-
         row = discovered.setdefault(key, {
             "id_expediente": eid or None,
             "numero": num or None,
@@ -123,7 +127,6 @@ def main() -> int:
             "motivos": [],
             "datos_basicos": basic or None,
         })
-
         if eid:
             discovered_by_id[eid] = key
             if not row.get("id_expediente"):
@@ -133,7 +136,6 @@ def main() -> int:
             discovered_by_num[num] = key
             if not row.get("numero"):
                 row["numero"] = num
-
         row["primera_sesion"] = min(row["primera_sesion"], clean(session.get("fecha")))
         row["ultima_sesion"] = max(row["ultima_sesion"], clean(session.get("fecha")))
         if kind not in row["motivos"]:
@@ -166,20 +168,14 @@ def main() -> int:
             })
 
         for item in session.get("sanciones") or []:
-            # No promovemos un hito de sanción salvo que el SLP lo tipifique
-            # expresamente como SANCION DE UN EXPEDIENTE.
-            if clean(item.get("tipo")).upper() != SANCTION_TYPE:
-                continue
             eid, num = source_key(item)
+            alcance = item.get("alcance") or "no_especificada"
             idx = resolve(eid, num)
+            kind = "sancion_" + alcance
             if idx is None:
-                discovery(eid, num, session, "sancion")
+                discovery(eid, num, session, kind)
                 continue
-            bucket(idx, session)["sanciones"].append({
-                "tipo": clean(item.get("tipo")),
-                "descripcion": clean(item.get("descripcion")),
-                "numero_expediente": num or None,
-            })
+            bucket(idx, session)["sanciones"].append(compact_sanction(item, num))
 
         for vote in session.get("votaciones_nominales") or []:
             basic = vote.get("expediente") or {}
@@ -191,10 +187,7 @@ def main() -> int:
                 continue
             bucket(idx, session)["votaciones_nominales"].append(compact_vote(vote))
 
-    linked_projects = 0
-    with_vote = 0
-    with_session_sanction = 0
-    linked_sessions = 0
+    linked_projects = with_vote = with_any_sanction = with_initial = with_definitive = linked_sessions = 0
     audit_rows: list[str] = []
 
     for i, project in enumerate(projects):
@@ -206,17 +199,24 @@ def main() -> int:
 
         linked_projects += 1
         linked_sessions += len(session_rows)
+        sanctions = [s for row in session_rows for s in row["sanciones"]]
         has_vote = any(row["votaciones_nominales"] for row in session_rows)
-        has_sanction = any(row["sanciones"] for row in session_rows)
+        has_any = bool(sanctions)
+        has_initial = any(s.get("alcance") == "inicial" for s in sanctions)
+        has_definitive = any(s.get("alcance") == "definitiva" for s in sanctions)
         with_vote += int(has_vote)
-        with_session_sanction += int(has_sanction)
+        with_any_sanction += int(has_any)
+        with_initial += int(has_initial)
+        with_definitive += int(has_definitive)
 
         project["actividad_recinto"] = {
             "fuente": "sesiones_publicas.json",
             "sesiones": session_rows,
             "total_sesiones": len(session_rows),
             "tuvo_votacion_nominal": has_vote,
-            "tuvo_sancion_en_sesion": has_sanction,
+            "tuvo_sancion_en_sesion": has_any,
+            "tuvo_sancion_inicial": has_initial,
+            "tuvo_sancion_definitiva": has_definitive,
         }
 
         existing = ficha.get("sesiones") or []
@@ -243,22 +243,33 @@ def main() -> int:
 
         hitos = ficha.setdefault("hitos", {})
         hitos["tuvo_sesion"] = bool(existing)
-        if has_sanction:
+        hitos["tuvo_sancion_inicial"] = bool(hitos.get("tuvo_sancion_inicial")) or has_initial
+        hitos["tuvo_sancion_definitiva"] = bool(hitos.get("tuvo_sancion_definitiva")) or has_definitive
+        if has_any:
             hitos["tuvo_sancion"] = True
             ficha["evidencia_sancion"] = True
-            if ficha.get("estado_actual") != "archivado":
+
+        if ficha.get("estado_actual") != "archivado":
+            if hitos.get("tuvo_sancion_definitiva"):
                 ficha["etapa_ciclo"] = "sancionado"
                 project["etapa_ciclo"] = "sancionado"
+            elif hitos.get("tuvo_sancion_inicial"):
+                ficha["etapa_ciclo"] = "sancion_inicial"
+                project["etapa_ciclo"] = "sancion_inicial"
 
+        detail = " | ".join(
+            f"{s.get('alcance')}: {s.get('descripcion')}" for s in sanctions
+        ) or "sin sanción"
         audit_rows.append(
             f"{project.get('numero')}: sesiones={len(session_rows)} "
-            f"sancion={'sí' if has_sanction else 'no'} votacion={'sí' if has_vote else 'no'}"
+            f"votacion={'sí' if has_vote else 'no'} · {detail}"
         )
 
     summary = leg.setdefault("resumen", {})
     current_states = Counter()
     cycle_stages = Counter()
     with_dictamen = detailed_dictamens = with_sanction = currently_sanctioned = with_session = 0
+    all_initial = all_definitive = 0
     enriched = 0
     for project in projects:
         ficha = project.get("ficha_oficial") or {}
@@ -269,6 +280,8 @@ def main() -> int:
             hitos = ficha.get("hitos") or {}
             with_dictamen += int(bool(hitos.get("tuvo_dictamen")))
             with_sanction += int(bool(hitos.get("tuvo_sancion")))
+            all_initial += int(bool(hitos.get("tuvo_sancion_inicial")))
+            all_definitive += int(bool(hitos.get("tuvo_sancion_definitiva")))
             with_session += int(bool(hitos.get("tuvo_sesion")))
             currently_sanctioned += int(ficha.get("estado_actual") == "sancionado")
             detailed_dictamens += len(ficha.get("dictamenes") or [])
@@ -278,6 +291,8 @@ def main() -> int:
         "expedientes_con_dictamen": with_dictamen,
         "dictamenes_detallados": detailed_dictamens,
         "expedientes_con_sancion": with_sanction,
+        "expedientes_con_sancion_inicial": all_initial,
+        "expedientes_con_sancion_definitiva": all_definitive,
         "expedientes_sancionados": currently_sanctioned,
         "expedientes_con_sesion": with_session,
         "estados_actuales": dict(sorted(current_states.items())),
@@ -286,19 +301,22 @@ def main() -> int:
         "expedientes_vinculados_recinto": linked_projects,
         "vinculaciones_sesion_expediente": linked_sessions,
         "expedientes_con_votacion_nominal": with_vote,
-        "expedientes_con_sancion_en_sesion": with_session_sanction,
+        "expedientes_con_sancion_en_sesion": with_any_sanction,
+        "expedientes_con_sancion_inicial_en_sesion": with_initial,
+        "expedientes_con_sancion_definitiva_en_sesion": with_definitive,
         "expedientes_descubiertos_solo_recinto": len(discovered),
     })
 
     leg["version"] = max(int(leg.get("version") or 0), 6)
     leg["integracion_recinto"] = {
-        "schema": 1,
+        "schema": 2,
         "fuente": "sesiones_publicas.json",
         "actualizado_en_fuente": ses.get("actualizado_en"),
         "sesiones_fuente": len(sessions),
         "expedientes_vinculados": linked_projects,
         "expedientes_descubiertos_solo_recinto": len(discovered),
         "regla": "cruce por id_expediente oficial; número de expediente como respaldo",
+        "regla_sancion": "sanción inicial y definitiva se conservan como hitos distintos; sólo la definitiva eleva etapa_ciclo a sancionado",
     }
     leg["expedientes_descubiertos_recinto"] = sorted(
         discovered.values(),
@@ -308,8 +326,8 @@ def main() -> int:
     LEG_PATH.write_text(json.dumps(leg, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     print(
         "Integración recinto · "
-        f"{linked_projects}/{len(projects)} expedientes vinculados · "
-        f"{with_vote} con votación nominal · {with_session_sanction} con sanción en sesión · "
+        f"{linked_projects}/{len(projects)} expedientes vinculados · {with_vote} con votación nominal · "
+        f"{with_any_sanction} con sanción ({with_initial} inicial · {with_definitive} definitiva) · "
         f"{len(discovered)} descubiertos sólo en recinto"
     )
     for row in audit_rows[:30]:

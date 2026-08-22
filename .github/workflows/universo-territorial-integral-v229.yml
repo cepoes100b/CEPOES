@@ -1,0 +1,112 @@
+name: Universo territorial integral BCRA v2.29
+
+on:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-direct-v229
+    paths:
+      - procesar_universo_territorial_integral.py
+      - .github/workflows/universo-territorial-integral-v229.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: universo-territorial-integral-v229
+  cancel-in-progress: true
+
+jobs:
+  procesar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+          python -m pip install --disable-pip-version-check requests
+
+      - name: Compilar herramientas
+        run: |
+          python -m py_compile descargar_bcra_deudores.py reconciliar_bcra_entidades.py procesar_universo_territorial_integral.py
+
+      - name: Descargar PADRON ARCA con reintentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            echo "PADRON intento $intento/3"
+            python descargar_bcra_deudores.py PADRON || true
+            ARCHIVO="$(find bcra_deudores -maxdepth 1 -type f -name '*PADRON.7Z' -print -quit 2>/dev/null || true)"
+            if [ -n "$ARCHIVO" ] && 7z t "$ARCHIVO" >/dev/null; then
+              echo "PADRON íntegro: $ARCHIVO"
+              break
+            fi
+            rm -f bcra_deudores/*PADRON.7Z bcra_deudores/*PADRON.7Z.part 2>/dev/null || true
+            if [ "$intento" -eq 3 ]; then
+              echo "No se pudo obtener PADRON íntegro" >&2
+              exit 1
+            fi
+            sleep $((intento * 15))
+          done
+
+      - name: Descargar DEUDORES BCRA con reintentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            echo "DEUDORES intento $intento/3"
+            python descargar_bcra_deudores.py DEUDORES || true
+            ARCHIVO="$(find bcra_deudores -maxdepth 1 -type f -name '*DEUDORES.7Z' -print -quit 2>/dev/null || true)"
+            if [ -n "$ARCHIVO" ] && 7z t "$ARCHIVO" >/dev/null; then
+              echo "DEUDORES íntegro: $ARCHIVO"
+              break
+            fi
+            rm -f bcra_deudores/*DEUDORES.7Z bcra_deudores/*DEUDORES.7Z.part 2>/dev/null || true
+            if [ "$intento" -eq 3 ]; then
+              echo "No se pudo obtener DEUDORES íntegro" >&2
+              exit 1
+            fi
+            sleep $((intento * 15))
+          done
+
+      - name: Procesar universo y territorio en una sola pasada
+        run: python procesar_universo_territorial_integral.py
+
+      - name: Validar salida agregada
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('diagnostico_universo_territorial_integral.json', encoding='utf-8'))
+          assert x['privacidad']['microdatos_publicados'] is False
+          assert x['privacidad']['identificadores_personales_en_salida'] is False
+          assert x['fuentes_acreedores_bcra']['entidad_financiera']['codigos_unicos'] >= 60
+          assert x['fuentes_acreedores_bcra']['enf_emisora_tarjeta']['codigos_unicos'] >= 80
+          assert x['fuentes_acreedores_bcra']['otro_pnfc']['codigos_unicos'] >= 400
+          assert len(x['escenarios']) == 5
+          assert x['controles']['cendeu_registros_leidos'] > 30_000_000
+          print(json.dumps(x['escenarios'], ensure_ascii=False, indent=2))
+          print('CP publicados:', len(x['agregado_cp_1000_1499']['filas']))
+          print('Celdas CP×sexo×edad:', len(x['agregado_cp_sexo_edad_1000_1499']['filas']))
+          PY
+
+      - name: Publicar sólo diagnóstico agregado
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostico-universo-territorial-integral-v229
+          path: diagnostico_universo_territorial_integral.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Eliminar archivos crudos
+        if: always()
+        run: |
+          rm -rf bcra_deudores
+          rm -f *.part

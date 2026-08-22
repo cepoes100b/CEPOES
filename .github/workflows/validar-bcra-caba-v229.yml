@@ -37,8 +37,49 @@ jobs:
       - name: Compilar herramientas
         run: python -m py_compile descargar_bcra_deudores.py procesar_bcra_caba.py
 
-      - name: Descargar PADRON ARCA y DEUDORES BCRA
-        run: python descargar_bcra_deudores.py PADRON DEUDORES
+      - name: Descargar PADRON ARCA con reintentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            echo "Intento PADRON $intento/3"
+            python descargar_bcra_deudores.py PADRON || true
+            if compgen -G 'bcra_deudores/*PADRON.7Z' > /dev/null; then
+              ARCHIVO="$(ls bcra_deudores/*PADRON.7Z | head -n 1)"
+              if 7z t "$ARCHIVO" >/dev/null; then
+                echo "PADRON descargado y 7z válido"
+                break
+              fi
+              rm -f "$ARCHIVO"
+            fi
+            if [ "$intento" -eq 3 ]; then
+              echo 'No se pudo descargar un PADRON válido tras 3 intentos' >&2
+              exit 1
+            fi
+            sleep $((intento * 15))
+          done
+
+      - name: Descargar DEUDORES BCRA con reintentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            echo "Intento DEUDORES $intento/3"
+            python descargar_bcra_deudores.py DEUDORES || true
+            if compgen -G 'bcra_deudores/*DEUDORES.7Z' > /dev/null; then
+              ARCHIVO="$(ls bcra_deudores/*DEUDORES.7Z | head -n 1)"
+              if 7z t "$ARCHIVO" >/dev/null; then
+                echo "DEUDORES descargado y 7z válido"
+                break
+              fi
+              rm -f "$ARCHIVO"
+            fi
+            if [ "$intento" -eq 3 ]; then
+              echo 'No se pudo descargar un DEUDORES válido tras 3 intentos' >&2
+              exit 1
+            fi
+            sleep $((intento * 15))
+          done
 
       - name: Procesar agregado CABA sin persistir microdatos
         run: python procesar_bcra_caba.py

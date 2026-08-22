@@ -1,0 +1,102 @@
+name: Validar agregado CABA BCRA v2.29
+
+on:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-v228
+    paths:
+      - 'descargar_bcra_deudores.py'
+      - 'procesar_bcra_caba.py'
+      - '.github/workflows/validar-bcra-caba-v229.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validar-bcra-caba-v229
+  cancel-in-progress: true
+
+jobs:
+  agregado-caba:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+          python -m pip install --disable-pip-version-check requests
+
+      - name: Compilar herramientas
+        run: python -m py_compile descargar_bcra_deudores.py procesar_bcra_caba.py
+
+      - name: Descargar PADRON ARCA con reintentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            echo "Intento PADRON $intento/3"
+            python descargar_bcra_deudores.py PADRON || true
+            if compgen -G 'bcra_deudores/*PADRON.7Z' > /dev/null; then
+              ARCHIVO="$(ls bcra_deudores/*PADRON.7Z | head -n 1)"
+              if 7z t "$ARCHIVO" >/dev/null; then
+                echo "PADRON descargado y 7z válido"
+                break
+              fi
+              rm -f "$ARCHIVO"
+            fi
+            if [ "$intento" -eq 3 ]; then
+              echo 'No se pudo descargar un PADRON válido tras 3 intentos' >&2
+              exit 1
+            fi
+            sleep $((intento * 15))
+          done
+
+      - name: Descargar DEUDORES BCRA con reintentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            echo "Intento DEUDORES $intento/3"
+            python descargar_bcra_deudores.py DEUDORES || true
+            if compgen -G 'bcra_deudores/*DEUDORES.7Z' > /dev/null; then
+              ARCHIVO="$(ls bcra_deudores/*DEUDORES.7Z | head -n 1)"
+              if 7z t "$ARCHIVO" >/dev/null; then
+                echo "DEUDORES descargado y 7z válido"
+                break
+              fi
+              rm -f "$ARCHIVO"
+            fi
+            if [ "$intento" -eq 3 ]; then
+              echo 'No se pudo descargar un DEUDORES válido tras 3 intentos' >&2
+              exit 1
+            fi
+            sleep $((intento * 15))
+          done
+
+      - name: Procesar agregado CABA sin persistir microdatos
+        run: python procesar_bcra_caba.py
+
+      - name: Mostrar diagnóstico agregado
+        run: cat diagnostico_bcra_caba.json
+
+      - name: Publicar sólo diagnóstico agregado
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostico-bcra-caba-v229
+          path: diagnostico_bcra_caba.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Eliminar archivos crudos
+        if: always()
+        run: |
+          rm -rf bcra_deudores
+          rm -f *.part

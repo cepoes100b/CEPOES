@@ -1,0 +1,87 @@
+name: Validar diseño DEUDORES BCRA v2.29
+
+on:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-v228
+    paths:
+      - 'descargar_bcra_deudores.py'
+      - 'inspeccionar_bcra_deudores.py'
+      - 'esquema_padron_arca.py'
+      - 'validar_layout_cendeu.py'
+      - '.github/workflows/validar-bcra-deudores-v229.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validar-bcra-deudores-v229
+  cancel-in-progress: true
+
+jobs:
+  inspeccionar-deudores:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full poppler-utils
+          python -m pip install --disable-pip-version-check requests
+
+      - name: Compilar herramientas
+        run: python -m py_compile descargar_bcra_deudores.py inspeccionar_bcra_deudores.py esquema_padron_arca.py validar_layout_cendeu.py
+
+      - name: Descargar último DEUDORES BCRA
+        run: python descargar_bcra_deudores.py DEUDORES
+
+      - name: Inspeccionar estructura sin exponer datos personales
+        run: |
+          python inspeccionar_bcra_deudores.py --salida estado_bcra_deudores.json
+          cat estado_bcra_deudores.json
+
+      - name: Listar contenido y extraer documentación oficial
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARCHIVO="$(ls bcra_deudores/*DEUDORES.7Z | head -n 1)"
+          7z l -slt "$ARCHIVO" | sed -n 's/^Path = //p' > listado_deudores.txt
+          : > diseno_deudores_docs.txt
+          while IFS= read -r DOC; do
+            [ -n "$DOC" ] || continue
+            case "$DOC" in
+              *.pdf|*.PDF)
+                echo "===== $DOC =====" >> diseno_deudores_docs.txt
+                7z e -so "$ARCHIVO" "$DOC" > /tmp/deudores_doc.pdf
+                pdftotext -layout /tmp/deudores_doc.pdf - >> diseno_deudores_docs.txt
+                echo >> diseno_deudores_docs.txt
+                ;;
+            esac
+          done < listado_deudores.txt
+          rm -f /tmp/deudores_doc.pdf
+          echo '--- CONTENIDO DEL ARCHIVO ---'
+          cat listado_deudores.txt
+          echo '--- DOCUMENTACIÓN EXTRAÍDA ---'
+          cat diseno_deudores_docs.txt
+
+      - name: Contrastar layout CENDEU de 24 campos
+        run: python validar_layout_cendeu.py
+
+      - name: Publicar diagnóstico y diseño
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostico-bcra-deudores-v229
+          path: |
+            estado_bcra_deudores.json
+            listado_deudores.txt
+            diseno_deudores_docs.txt
+            diagnostico_layout_cendeu.json
+          if-no-files-found: error
+          retention-days: 7

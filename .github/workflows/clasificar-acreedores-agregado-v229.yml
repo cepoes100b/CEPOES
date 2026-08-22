@@ -1,12 +1,6 @@
 name: Clasificar acreedores sobre agregado BCRA v2.29
 
 on:
-  pull_request:
-    branches:
-      - endeudamiento-bcra-direct-v229
-    paths:
-      - clasificar_agregado_acreedores_pdf.py
-      - .github/workflows/clasificar-acreedores-agregado-v229.yml
   workflow_dispatch:
 
 permissions:

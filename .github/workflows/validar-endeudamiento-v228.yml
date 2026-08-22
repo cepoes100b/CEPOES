@@ -17,7 +17,7 @@ on:
 jobs:
   validar:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -32,7 +32,11 @@ jobs:
           construir_cpa_territorio.py verificar_cpa_territorio.py
       - name: Probar agregación, mora, territorialización y privacidad
         run: python test_endeudamiento_sintetico.py
-      - name: Construir cruce CPA desde fuentes territoriales oficiales disponibles
+      - name: Actualizar fuentes territoriales base desde BA Data
+        run: python descargar_territorio.py
+      - name: Actualizar segunda ampliación territorial desde BA Data
+        run: python descargar_oferta_extra_2.py
+      - name: Construir cruce CPA desde fuentes territoriales oficiales actualizadas
         run: >-
           python construir_cpa_territorio.py
           --badata badata --territorio territorio.json

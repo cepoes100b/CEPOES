@@ -1,13 +1,6 @@
 name: Validar fuente BCRA directa v2.29
 
 on:
-  push:
-    branches:
-      - endeudamiento-bcra-direct-v229
-    paths:
-      - 'descargar_bcra_deudores.py'
-      - 'inspeccionar_bcra_deudores.py'
-      - '.github/workflows/validar-bcra-direct-v229.yml'
   pull_request:
     branches:
       - endeudamiento-bcra-v228
@@ -20,10 +13,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: validar-bcra-direct-v229
+  cancel-in-progress: true
+
 jobs:
   inspeccionar-padron:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
 
@@ -36,6 +33,9 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq p7zip-full
           python -m pip install --disable-pip-version-check requests
+
+      - name: Compilar herramientas BCRA
+        run: python -m py_compile descargar_bcra_deudores.py inspeccionar_bcra_deudores.py
 
       - name: Descargar último PADRON BCRA
         run: python descargar_bcra_deudores.py PADRON

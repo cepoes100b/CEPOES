@@ -7,10 +7,11 @@ on:
       - "actualizar_legislatura.py"
       - "enriquecer_expedientes.py"
       - "completar_ciclo_legislativo.py"
+      - "actualizar_sesiones.py"
+      - "normalizar_sesiones.py"
       - "integrar_recinto.py"
       - "verificar_legislatura.py"
       - "verificar_ciclo_legislativo.py"
-      - "actualizar_sesiones.py"
       - "verificar_sesiones.py"
       - "verificar_integracion_recinto.py"
       - "legislatura_publica.json"
@@ -43,6 +44,8 @@ jobs:
         run: python completar_ciclo_legislativo.py
       - name: Actualizar sesiones, Labor y votaciones oficiales
         run: python actualizar_sesiones.py
+      - name: Normalizar ítems y sanciones de recinto
+        run: python normalizar_sesiones.py
       - name: Integrar actividad de recinto en expedientes
         run: python integrar_recinto.py
       - name: Verificar núcleo legislativo

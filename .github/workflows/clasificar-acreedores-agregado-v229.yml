@@ -46,7 +46,9 @@ jobs:
           import json
           x=json.load(open('diagnostico_bcra_entidades.json', encoding='utf-8'))
           assert len(x.get('entidades', [])) > 400
-          assert x.get('privacidad', {}).get('identificadores_personales_en_salida') is False
+          assert x.get('privacidad', {}).get('microdatos_publicados') is False
+          assert x.get('privacidad', {}).get('identificadores_en_salida') is False
+          assert x.get('privacidad', {}).get('nombres_de_personas_en_salida') is False
           print('Entrada agregada validada:', len(x['entidades']), 'entidades')
           PY
 

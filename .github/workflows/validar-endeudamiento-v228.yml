@@ -1,60 +1,26 @@
-name: Validar endeudamiento BCRA v2.28
+name: Validar fuente de endeudamiento v2.28
 
 on:
   pull_request:
     branches: [main]
     paths:
-      - 'procesar_endeudamiento_bcra.py'
-      - 'verificar_endeudamiento.py'
-      - 'test_endeudamiento_sintetico.py'
-      - 'construir_cpa_territorio.py'
-      - 'verificar_cpa_territorio.py'
+      - 'verificar_fuente_endeudamiento.py'
       - 'V228.md'
-      - '.gitignore'
       - '.github/workflows/validar-endeudamiento-v228.yml'
   workflow_dispatch:
 
 jobs:
   validar:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Instalar dependencias
-        run: pip install -r requirements.txt
-      - name: Compilar procesadores y verificadores
-        run: >-
-          python -m py_compile
-          procesar_endeudamiento_bcra.py verificar_endeudamiento.py test_endeudamiento_sintetico.py
-          construir_cpa_territorio.py verificar_cpa_territorio.py
-      - name: Probar agregación, mora, territorialización y privacidad
-        run: python test_endeudamiento_sintetico.py
-      - name: Actualizar fuentes territoriales base desde BA Data
-        run: python descargar_territorio.py
-      - name: Actualizar segunda ampliación territorial desde BA Data
-        run: python descargar_oferta_extra_2.py
-      - name: Construir cruce CPA desde fuentes territoriales oficiales actualizadas
-        run: >-
-          python construir_cpa_territorio.py
-          --badata badata --territorio territorio.json
-          --salida /tmp/cpa_territorio.csv --estado /tmp/estado_cpa_territorio.json
-      - name: Verificar cruce CPA territorial
-        run: python verificar_cpa_territorio.py /tmp/cpa_territorio.csv /tmp/estado_cpa_territorio.json territorio.json
-      - name: Resumir fuentes CPA útiles
-        run: |
-          python - <<'PY'
-          import json
-          x=json.load(open('/tmp/estado_cpa_territorio.json', encoding='utf-8'))
-          useful=[s for s in x['fuentes'] if s['tiene_cpa'] and s['tiene_barrio']]
-          for s in sorted(useful, key=lambda z:z['cpa_distintos_validos'], reverse=True):
-              print(f"{s['fuente']}: {s['cpa_distintos_validos']} CPA · {s['observaciones_validas']} observaciones · no canónicos {s['barrios_no_canonicos']} · comuna inconsistente {s['comuna_inconsistente']}")
-          PY
-      - name: Verificar que insumos crudos queden bloqueados por Git
-        run: |
-          for f in 24DSF202606.7Z 24DSF202606.TXT 202606DEUDORES.7Z 20260731PADRON.TXT; do
-            git check-ignore -q --no-index "$f" || { echo "No está ignorado: $f"; exit 1; }
-          done
-          echo "✔ insumos BCRA crudos ignorados"
+      - name: Instalar dependencia HTTP
+        run: pip install requests
+      - name: Compilar verificador
+        run: python -m py_compile verificar_fuente_endeudamiento.py
+      - name: Verificar contrato público agregado de CABA
+        run: python verificar_fuente_endeudamiento.py

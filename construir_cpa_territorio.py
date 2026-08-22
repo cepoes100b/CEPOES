@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import itertools
 import json
 import re
 import unicodedata
@@ -63,13 +64,9 @@ def cargar_barrios(path: Path) -> tuple[dict[str, tuple[str, int]], set[str]]:
     if len(nombres) != 48:
         raise ValueError(f"Se esperaban 48 barrios canónicos; obtenidos {len(nombres)}")
 
-    # Alias puramente nominales observados habitualmente en datos GCBA.
     aliases = {
         "villa_gral_mitre": "villa_general_mitre",
-        "villa_gral_mitre_": "villa_general_mitre",
         "paternal": "la_paternal",
-        "nueva_pompeya": "nueva_pompeya",
-        "parque_avellaneda": "parque_avellaneda",
         "v_sarsfield": "velez_sarsfield",
     }
     for alias, canonical in aliases.items():
@@ -123,8 +120,6 @@ def iter_rows(path: Path) -> Iterator[dict[str, object]]:
         yield from iter_csv(path)
     elif suffix in {".xlsx", ".xlsm"}:
         yield from iter_xlsx(path)
-    else:
-        return
 
 
 def pick_header(headers: Iterable[object], candidates: set[str]) -> str | None:
@@ -132,7 +127,6 @@ def pick_header(headers: Iterable[object], candidates: set[str]) -> str | None:
     for candidate in candidates:
         if candidate in mapping:
             return mapping[candidate]
-    # Tolerancia a prefijos/sufijos descriptivos, sin aceptar cualquier campo que contenga CP.
     for normalized, original in mapping.items():
         if candidates is CPA_HEADERS and ("codigo_postal_argentino" in normalized or normalized == "cpa"):
             return original
@@ -200,7 +194,7 @@ def construir(badata: Path, territorio: Path) -> tuple[list[dict], dict]:
                 continue
 
             seen_source: set[str] = set()
-            for row in (first, *rows):
+            for row in itertools.chain([first], rows):
                 stat["filas"] += 1
                 total_rows += 1
                 cpa = norm_cpa(row.get(cpa_h))
@@ -301,8 +295,7 @@ def main() -> None:
     if state["barrios_sin_cpa_observado"]:
         print("Barrios sin CPA observado:", ", ".join(state["barrios_sin_cpa_observado"]))
     if state["barrios_no_canonicos_mas_frecuentes"]:
-        vals = state["barrios_no_canonicos_mas_frecuentes"][:10]
-        print("Valores de barrio no canónicos más frecuentes:", vals)
+        print("Valores de barrio no canónicos más frecuentes:", state["barrios_no_canonicos_mas_frecuentes"][:10])
 
 
 if __name__ == "__main__":

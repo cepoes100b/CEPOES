@@ -5,8 +5,7 @@ on:
     branches:
       - endeudamiento-bcra-direct-v229
     paths:
-      - probar_geolocalizacion_cp_badata.py
-      - probar_geolocalizacion_cp_badata_v3.py
+      - diagnosticar_cp_barrio_aph.py
       - .github/workflows/probar-geolocalizacion-cp-badata-v229.yml
   workflow_dispatch:
 
@@ -21,18 +20,14 @@ concurrency:
 jobs:
   probar:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - name: Instalar dependencias livianas
-        run: |
-          python -m pip install --disable-pip-version-check requests pmtiles mapbox-vector-tile shapely
-
+      - name: Instalar requests
+        run: python -m pip install --disable-pip-version-check requests
       - name: Recuperar agregado CP ya calculado
         uses: actions/download-artifact@v4
         with:
@@ -41,7 +36,6 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
           run-id: 32600712276
-
       - name: Preparar entrada agregada
         run: |
           cp input/diagnostico_universo_territorial_integral.json ./diagnostico_universo_territorial_integral.json
@@ -53,34 +47,25 @@ jobs:
           assert len(x['agregado_cp_1000_1499']['filas']) > 300
           print('Entrada agregada:', len(x['agregado_cp_1000_1499']['filas']), 'CP')
           PY
-
-      - name: Probar CP → APH CSV BA Data → barrios de Mapa
-        run: python probar_geolocalizacion_cp_badata_v3.py
-
+      - name: Diagnosticar CP → barrio con APH oficial
+        run: python diagnosticar_cp_barrio_aph.py
       - name: Validar diagnóstico
         run: |
           python - <<'PY'
           import json
-          x=json.load(open('diagnostico_geolocalizacion_cp_badata.json', encoding='utf-8'))
+          x=json.load(open('diagnostico_cp_barrio_aph.json', encoding='utf-8'))
           assert x['privacidad']['microdatos_bcra_arca_leidos'] is False
           assert x['privacidad']['identificadores_personales_leidos'] is False
-          m=x['fuentes']['badata_mobiliario_urbano']
-          assert m['resource_id'] == 'juqdkmgo-94-resource'
-          assert m['filas_validas_cp_coord'] >= 1000
-          assert x['controles']['cp_badata_con_barrio_mapa'] >= 30
-          assert len(x['resultados']) == 4
-          print(json.dumps(x['ranking_exploratorio'], ensure_ascii=False, indent=2))
+          assert x['fuente_aph']['filas_cp_barrio_validas'] >= 1000
+          assert x['fuente_aph']['cp_distintos'] >= 30
+          assert len(x['resultados']) == 2
           print(json.dumps(x['controles'], ensure_ascii=False, indent=2))
+          print(json.dumps(x['resultados'], ensure_ascii=False, indent=2))
           PY
-
       - name: Publicar diagnóstico agregado
         uses: actions/upload-artifact@v4
         with:
-          name: diagnostico-geolocalizacion-cp-badata-v229
-          path: diagnostico_geolocalizacion_cp_badata.json
+          name: diagnostico-cp-barrio-aph-v229
+          path: diagnostico_cp_barrio_aph.json
           if-no-files-found: error
           retention-days: 7
-
-      - name: Limpiar insumos externos
-        if: always()
-        run: rm -f geo_admin_argentina.pmtiles

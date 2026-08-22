@@ -8,6 +8,7 @@ on:
       - 'descargar_bcra_deudores.py'
       - 'inspeccionar_bcra_deudores.py'
       - 'esquema_padron_arca.py'
+      - 'validar_layout_cendeu.py'
       - '.github/workflows/validar-bcra-deudores-v229.yml'
   workflow_dispatch:
 
@@ -36,7 +37,7 @@ jobs:
           python -m pip install --disable-pip-version-check requests
 
       - name: Compilar herramientas
-        run: python -m py_compile descargar_bcra_deudores.py inspeccionar_bcra_deudores.py esquema_padron_arca.py
+        run: python -m py_compile descargar_bcra_deudores.py inspeccionar_bcra_deudores.py esquema_padron_arca.py validar_layout_cendeu.py
 
       - name: Descargar último DEUDORES BCRA
         run: python descargar_bcra_deudores.py DEUDORES
@@ -70,6 +71,9 @@ jobs:
           echo '--- DOCUMENTACIÓN EXTRAÍDA ---'
           cat diseno_deudores_docs.txt
 
+      - name: Contrastar layout CENDEU de 24 campos
+        run: python validar_layout_cendeu.py
+
       - name: Publicar diagnóstico y diseño
         uses: actions/upload-artifact@v4
         with:
@@ -78,5 +82,6 @@ jobs:
             estado_bcra_deudores.json
             listado_deudores.txt
             diseno_deudores_docs.txt
+            diagnostico_layout_cendeu.json
           if-no-files-found: error
           retention-days: 7

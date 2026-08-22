@@ -50,14 +50,20 @@ jobs:
       - name: Verificar cruce presupuesto y territorio
         run: python verificar_presupuesto_territorial.py
 
+      - name: Generar diagnóstico presupuestario
+        run: python generar_diagnostico_presupuestario.py
+
+      - name: Verificar diagnóstico presupuestario
+        run: python verificar_diagnostico_presupuestario.py
+
       - name: Commitear resultado validado si cambió
         run: |
           git config user.name "cepoes-bot"
           git config user.email "actions@github.com"
-          git add presupuesto.json estado_presupuesto.json presupuesto_analitico.json presupuesto_historico.json presupuesto_territorial.json
+          git add presupuesto.json estado_presupuesto.json presupuesto_analitico.json presupuesto_historico.json presupuesto_territorial.json diagnostico_presupuestario.json
           if git diff --cached --quiet; then
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "presupuesto: validación territorial $(date -u +%F)"
+          git commit -m "presupuesto: validación diagnóstica $(date -u +%F)"
           git push

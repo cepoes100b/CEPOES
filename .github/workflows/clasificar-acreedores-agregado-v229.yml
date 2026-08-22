@@ -1,0 +1,74 @@
+name: Clasificar acreedores sobre agregado BCRA v2.29
+
+on:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-direct-v229
+    paths:
+      - clasificar_agregado_acreedores_api.py
+      - .github/workflows/clasificar-acreedores-agregado-v229.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  clasificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar requests
+        run: python -m pip install --disable-pip-version-check requests
+
+      - name: Descargar agregado por entidad ya calculado
+        uses: actions/download-artifact@v4
+        with:
+          name: diagnostico-bcra-entidades-v229
+          path: input
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: 32596819921
+
+      - name: Preparar entrada agregada
+        run: |
+          test -f input/diagnostico_bcra_entidades.json
+          cp input/diagnostico_bcra_entidades.json ./diagnostico_bcra_entidades.json
+          python - <<'PY'
+          import json
+          x=json.load(open('diagnostico_bcra_entidades.json', encoding='utf-8'))
+          assert len(x.get('entidades', [])) > 400
+          assert x.get('privacidad', {}).get('microdatos_publicados') is False
+          assert x.get('privacidad', {}).get('identificadores_en_salida') is False
+          assert x.get('privacidad', {}).get('nombres_de_personas_en_salida') is False
+          print('Entrada agregada validada:', len(x['entidades']), 'entidades')
+          PY
+
+      - name: Clasificar con endpoints oficiales vigentes BCRA
+        run: python clasificar_agregado_acreedores_api.py
+
+      - name: Validar salida
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('diagnostico_clasificacion_acreedores_agregado.json', encoding='utf-8'))
+          assert x['input']['cantidad_entidades'] > 400
+          assert x['privacidad']['microdatos_personales_leidos'] is False
+          assert x['fuentes_oficiales_bcra']['entidad_financiera']['codigos_unicos'] >= 60
+          assert x['fuentes_oficiales_bcra']['enf_emisora_tarjeta']['codigos_unicos'] >= 80
+          assert x['fuentes_oficiales_bcra']['otro_pnfc']['codigos_unicos'] >= 400
+          print(json.dumps(x['escenario_aditivo'], ensure_ascii=False, indent=2))
+          PY
+
+      - name: Publicar diagnóstico agregado
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostico-clasificacion-acreedores-api-v229
+          path: diagnostico_clasificacion_acreedores_agregado.json
+          retention-days: 7

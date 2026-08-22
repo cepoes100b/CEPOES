@@ -38,6 +38,9 @@ jobs:
       - name: Actualizar sesiones, Labor y votaciones oficiales
         run: python actualizar_sesiones.py
 
+      - name: Integrar actividad de recinto en expedientes
+        run: python integrar_recinto.py
+
       - name: Verificar núcleo legislativo
         run: python verificar_legislatura.py
 
@@ -46,6 +49,9 @@ jobs:
 
       - name: Verificar sesiones y votaciones
         run: python verificar_sesiones.py
+
+      - name: Verificar integración de recinto
+        run: python verificar_integracion_recinto.py
 
       - name: Commitear si cambió
         run: |

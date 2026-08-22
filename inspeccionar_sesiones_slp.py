@@ -20,15 +20,8 @@ from bs4 import BeautifulSoup
 URL = "https://parlamentaria.legislatura.gob.ar/pages/ExpedienteBusqueda.aspx"
 UA = "cepoes-legislatura-sesiones/2.24 (+https://github.com/cepoes100b/CEPOES)"
 KEYWORDS = (
-    "sesion",
-    "sesión",
-    "labor",
-    "taquig",
-    "asuntos considerados",
-    "informacion",
-    "información",
-    "presente",
-    "sanciones de la sesion",
+    "sesion", "sesión", "labor", "taquig", "asuntos considerados",
+    "informacion", "información", "presente", "sanciones de la sesion",
     "sanciones de la sesión",
 )
 NEEDLES = (
@@ -36,6 +29,11 @@ NEEDLES = (
     "txtFechaSesionDesde",
     "txtFechaSesionHasta",
     "sesiones-avanzado",
+    "GetSesionesAvanzado",
+    "getSancionesByIdSesion",
+    "GetAsuntosConsiderados",
+    "sesion_votaciones.aspx",
+    "InfoSesion/",
 )
 ALLOWED_HOST_SUFFIXES = ("legislatura.gob.ar",)
 
@@ -50,7 +48,6 @@ def relevant(text: str) -> bool:
 
 
 def context_text(tag) -> str:
-    """Texto cercano al control, limitado para no volcar toda la página."""
     node = tag
     pieces: list[str] = []
     for _ in range(4):
@@ -80,10 +77,7 @@ def control_record(tag) -> dict:
     }
     if tag.name == "select":
         rec["opciones"] = [
-            {
-                "value": clean(opt.get("value", "")),
-                "text": clean(opt.get_text(" ", strip=True)),
-            }
+            {"value": clean(opt.get("value", "")), "text": clean(opt.get_text(" ", strip=True))}
             for opt in tag.find_all("option")[:30]
         ]
     return rec
@@ -94,7 +88,7 @@ def allowed_official(url: str) -> bool:
     return any(host == suffix or host.endswith("." + suffix) for suffix in ALLOWED_HOST_SUFFIXES)
 
 
-def snippets(text: str, needle: str, radius: int = 850) -> list[str]:
+def snippets(text: str, needle: str, radius: int = 1000) -> list[str]:
     found: list[str] = []
     low = text.casefold()
     target = needle.casefold()
@@ -122,18 +116,17 @@ def inspect_script(session: requests.Session, src: str) -> dict:
         if r.ok:
             text = r.text
             for needle in NEEDLES:
-                hits = snippets(text, needle)
+                radius = 5000 if needle == "GetSesionesAvanzado" else 1300
+                hits = snippets(text, needle, radius=radius)
                 if hits:
                     rec["coincidencias"][needle] = hits
-            # También capturamos líneas que nombren sesiones/Labor si este JS
-            # ya resultó vinculado a alguno de los controles objetivo.
             if rec["coincidencias"]:
                 extra = []
                 for raw_line in text.splitlines():
                     line = clean(raw_line)
                     if line and relevant(line):
-                        extra.append(line[:1800])
-                rec["lineas_relevantes"] = list(dict.fromkeys(extra))[:120]
+                        extra.append(line[:6500])
+                rec["lineas_relevantes"] = list(dict.fromkeys(extra))[:160]
     except requests.RequestException as exc:
         rec["error"] = f"{type(exc).__name__}: {exc}"
     return rec
@@ -148,15 +141,13 @@ def main() -> None:
 
     forms = []
     for idx, form in enumerate(soup.find_all("form"), start=1):
-        forms.append(
-            {
-                "n": idx,
-                "id": clean(form.get("id", "")),
-                "name": clean(form.get("name", "")),
-                "method": clean(form.get("method", "GET")).upper(),
-                "action": urljoin(URL, clean(form.get("action", "")) or URL),
-            }
-        )
+        forms.append({
+            "n": idx,
+            "id": clean(form.get("id", "")),
+            "name": clean(form.get("name", "")),
+            "method": clean(form.get("method", "GET")).upper(),
+            "action": urljoin(URL, clean(form.get("action", "")) or URL),
+        })
 
     controls = [control_record(t) for t in soup.find_all(["input", "button", "select", "textarea"])]
     candidates = []
@@ -176,7 +167,7 @@ def main() -> None:
         for raw_line in text.splitlines():
             line = clean(raw_line)
             if line and relevant(line):
-                inline_scripts.append(line[:1800])
+                inline_scripts.append(line[:6500])
     inline_scripts = list(dict.fromkeys(inline_scripts))[:160]
     script_sources = list(dict.fromkeys(script_sources))
 
@@ -185,7 +176,7 @@ def main() -> None:
 
     inline_snippets = {}
     for needle in NEEDLES:
-        hits = snippets(html, needle)
+        hits = snippets(html, needle, radius=1300)
         if hits:
             inline_snippets[needle] = hits
 

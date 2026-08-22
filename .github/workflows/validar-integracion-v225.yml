@@ -10,7 +10,6 @@ on:
       - "verificar_sesiones.py"
       - "enriquecer_expedientes.py"
       - "completar_ciclo_legislativo.py"
-      - "inspeccionar_semantica_recinto.py"
       - ".github/workflows/validar-integracion-v225.yml"
   workflow_dispatch:
 
@@ -28,16 +27,14 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r requirements.txt
       - name: Validar sintaxis
-        run: python -m py_compile normalizar_sesiones.py integrar_recinto.py verificar_sesiones.py verificar_integracion_recinto.py inspeccionar_semantica_recinto.py
+        run: python -m py_compile normalizar_sesiones.py integrar_recinto.py verificar_sesiones.py verificar_integracion_recinto.py
       - name: Regenerar núcleo y sesiones
         run: |
           python actualizar_legislatura.py
           python enriquecer_expedientes.py
           python completar_ciclo_legislativo.py
           python actualizar_sesiones.py
-      - name: Auditar semántica de asuntos de sesión
-        run: python inspeccionar_semantica_recinto.py
-      - name: Normalizar ítems y sanciones de recinto
+      - name: Normalizar y auditar semántica de recinto
         run: python normalizar_sesiones.py
       - name: Integrar recinto
         run: python integrar_recinto.py

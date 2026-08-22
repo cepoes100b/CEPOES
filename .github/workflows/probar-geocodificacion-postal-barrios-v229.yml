@@ -1,0 +1,49 @@
+name: Probar geocodificacion postal barrios v2.29
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [endeudamiento-bcra-direct-v229]
+    paths:
+      - 'probar_geocodificacion_postal_barrios.py'
+      - '.github/workflows/probar-geocodificacion-postal-barrios-v229.yml'
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  probar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar dependencia espacial
+        run: pip install shapely==2.1.1
+      - name: Recuperar agregado integral ya calculado
+        uses: actions/download-artifact@v4
+        with:
+          name: diagnostico-universo-territorial-integral-v229
+          path: diagnostico
+          github-token: ${{ github.token }}
+          run-id: 32600712276
+      - name: Probar GeoNames contra 48 barrios
+        run: python probar_geocodificacion_postal_barrios.py
+      - name: Validar salida
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('diagnostico_geocodificacion_postal_barrios.json'))
+          assert len(d['estrategias'])==2
+          for v in d['estrategias'].values():
+              assert len(v['barrios'])==48
+              assert v['cobertura_deudores_pct'] >= 0
+          print('OK: diagnóstico espacial agregado, 48 barrios')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: diagnostico-geocodificacion-postal-barrios-v229
+          path: diagnostico_geocodificacion_postal_barrios.json
+          retention-days: 7

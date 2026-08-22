@@ -1,4 +1,4 @@
-name: Validar núcleo legislativo
+name: Validar núcleo legislativo y sesiones
 
 on:
   workflow_dispatch:

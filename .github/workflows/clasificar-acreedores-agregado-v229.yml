@@ -6,6 +6,7 @@ on:
       - endeudamiento-bcra-direct-v229
     paths:
       - clasificar_agregado_acreedores.py
+      - clasificar_agregado_acreedores_v2.py
       - .github/workflows/clasificar-acreedores-agregado-v229.yml
   workflow_dispatch:
 
@@ -53,7 +54,7 @@ jobs:
           PY
 
       - name: Clasificar contra registros oficiales BCRA
-        run: python clasificar_agregado_acreedores.py
+        run: python clasificar_agregado_acreedores_v2.py
 
       - name: Validar salida
         run: |

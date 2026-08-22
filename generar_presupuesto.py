@@ -29,19 +29,61 @@ def norm(value: object) -> str:
 
 
 def number(value: object) -> float:
+    """Convierte números monetarios tolerando formatos AR, US y notación científica.
+
+    BA Data ha publicado series con formatos distintos según recurso/exportación.
+    Debemos aceptar, entre otros: 11035922029; 11035922029.0;
+    11.035.922.029,00; 11,035,922,029.00 y 1.422609e+09.
+    """
     if value is None:
         return 0.0
-    s = str(value).strip().replace("\u00a0", "")
+    s = str(value).strip().replace("\u00a0", "").replace(" ", "")
     if not s:
         return 0.0
-    # Los CSV oficiales suelen usar punto decimal. Sólo tratamos coma como decimal
-    # cuando no hay punto y no parece separador de miles.
-    if "," in s and "." not in s:
-        s = s.replace(".", "").replace(",", ".")
-    else:
-        s = s.replace(",", "")
+    negative = s.startswith("(") and s.endswith(")")
+    if negative:
+        s = s[1:-1]
+    s = re.sub(r"[^0-9,\.eE+\-]", "", s)
+    if not s:
+        return 0.0
+
+    # La notación científica no admite separadores de miles: se prueba primero.
+    if "e" in s.lower():
+        try:
+            x = float(s.replace(",", "."))
+            return -x if negative else (x if math.isfinite(x) else 0.0)
+        except ValueError:
+            return 0.0
+
+    if "," in s and "." in s:
+        # El último separador es el decimal: 1.234.567,89 o 1,234,567.89.
+        if s.rfind(",") > s.rfind("."):
+            s = s.replace(".", "").replace(",", ".")
+        else:
+            s = s.replace(",", "")
+    elif "," in s:
+        parts = s.split(",")
+        if len(parts) > 2 and all(len(p) == 3 for p in parts[1:]):
+            s = "".join(parts)
+        elif len(parts) == 2 and len(parts[1]) == 3 and len(parts[0].lstrip("+-")) <= 3:
+            # 1,234 se interpreta como separador de miles.
+            s = "".join(parts)
+        else:
+            # Formato decimal argentino, p.ej. 1234567,89.
+            s = "".join(parts[:-1]) + "." + parts[-1]
+    elif "." in s:
+        parts = s.split(".")
+        if len(parts) > 2 and all(len(p) == 3 for p in parts[1:]):
+            s = "".join(parts)
+        elif len(parts) == 2 and len(parts[1]) == 3 and len(parts[0].lstrip("+-")) <= 3:
+            # 1.234 se interpreta como separador de miles.
+            s = "".join(parts)
+        # En cualquier otro caso se conserva el punto como decimal.
+
     try:
         x = float(s)
+        if negative:
+            x = -abs(x)
         return x if math.isfinite(x) else 0.0
     except ValueError:
         return 0.0
@@ -262,7 +304,7 @@ def main() -> int:
     OUT.write_text(json.dumps(output, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(f"presupuesto.json · {OUT.stat().st_size//1024} KB · {state['ejercicio']} T{state['trimestre']} · {rows_exec:,} filas")
     print(f"  vigente: {total['vigente']/1e12:.3f} billones · devengado: {total['devengado']/1e12:.3f} billones · ejecución: {total['ejecucion_pct']:.2f}%")
-    print(f"  control sancionado: diferencia {diff_pct:.4f}%")
+    print(f"  control sancionado: {sanc_check/1e12:.3f} billones · diferencia {diff_pct:.4f}%")
     return 0
 
 

@@ -3,10 +3,18 @@
 Descubre los CSV trimestrales oficiales en BA Data, desde 2024. Reutiliza los
 períodos ya procesados si el recurso y su `last_modified` no cambiaron, de modo
 que la actualización diaria normalmente sólo procesa un nuevo trimestre.
+
+Algunos recursos históricos fueron exportados desde tablas dinámicas y contienen
+filas sintéticas de subtotal con la jurisdicción vacía. Esas filas duplican
+agregados que ya están presentes al máximo nivel de desagregación. Antes de
+procesar cada período se eliminan únicamente esas filas sin jurisdicción cuando
+el archivo contiene, a la vez, filas detalladas con jurisdicción informada.
 """
 from __future__ import annotations
 
+import csv
 import datetime as dt
+import io
 import json
 import tempfile
 from pathlib import Path
@@ -14,13 +22,14 @@ from pathlib import Path
 import requests
 
 from descargar_presupuesto import package_show, is_csv, parse_exec_name, resource_url
-from generar_presupuesto import process_executed
+from generar_presupuesto import decode_csv, norm, process_executed
 
 BASE = Path(__file__).resolve().parent
 OUT = BASE / "presupuesto_historico.json"
 CURRENT = BASE / "presupuesto.json"
 SINCE_YEAR = 2024
 TIMEOUT = 120
+PARSER_REV = 2
 
 
 def discover() -> list[dict]:
@@ -66,14 +75,58 @@ def existing_map() -> dict[str,dict]:
         return {}
 
 
+def remove_synthetic_subtotals(path: Path) -> int:
+    """Quita subtotales de exportaciones históricas con `jur` vacío.
+
+    Sólo actúa cuando el CSV tiene una columna jurisdicción y coexistencia real
+    de filas con y sin jurisdicción. Las partidas detalladas del presupuesto
+    siempre están asignadas a una jurisdicción; las filas vacías observadas en
+    recursos 2024 son agregados de tabla dinámica y no nuevas partidas.
+    """
+    text=decode_csv(path)
+    sample=text[:65536]
+    try:
+        dialect=csv.Sniffer().sniff(sample,delimiters=",;\t|")
+        delim=dialect.delimiter
+    except csv.Error:
+        delim=","
+    reader=csv.DictReader(io.StringIO(text),delimiter=delim)
+    if not reader.fieldnames:
+        return 0
+    jur_field=None
+    for f in reader.fieldnames:
+        if norm(f)=="jur":
+            jur_field=f; break
+    if not jur_field:
+        return 0
+    rows=list(reader)
+    has_detail=any(str(r.get(jur_field) or "").strip() for r in rows)
+    has_blank=any(not str(r.get(jur_field) or "").strip() for r in rows)
+    if not (has_detail and has_blank):
+        return 0
+    kept=[r for r in rows if str(r.get(jur_field) or "").strip()]
+    removed=len(rows)-len(kept)
+    if not removed:
+        return 0
+    with path.open("w",encoding="utf-8",newline="") as fh:
+        writer=csv.DictWriter(fh,fieldnames=reader.fieldnames,delimiter=delim,extrasaction="ignore")
+        writer.writeheader(); writer.writerows(kept)
+    return removed
+
+
 def process(item: dict) -> dict:
     with tempfile.TemporaryDirectory(prefix="cepoes-presupuesto-") as td:
         path=Path(td)/"periodo.csv"
         download(item["resource"]["url"],path)
+        removed=remove_synthetic_subtotals(path)
         total,rows,groups=process_executed(path)
+    if removed:
+        print(f"     depuración: {removed:,} fila(s) sintética(s) sin jurisdicción descartadas")
     return {
         **item,
+        "parser_rev":PARSER_REV,
         "filas":rows,
+        "filas_sinteticas_descartadas":removed,
         "total":total,
         "jurisdicciones":groups["jurisdicciones"],
         "finalidades":groups["finalidades"],
@@ -90,7 +143,9 @@ def main() -> int:
         raise RuntimeError("No se descubrieron recursos trimestrales")
     for item in resources:
         prev=old.get(item["periodo"])
-        if prev and (prev.get("resource") or {}).get("id")==item["resource"].get("id") and (prev.get("resource") or {}).get("last_modified")==item["resource"].get("last_modified"):
+        if (prev and prev.get("parser_rev")==PARSER_REV
+                and (prev.get("resource") or {}).get("id")==item["resource"].get("id")
+                and (prev.get("resource") or {}).get("last_modified")==item["resource"].get("last_modified")):
             periods.append(prev); reused+=1
             print(f"  ↺ {item['periodo']} reutilizado")
         else:
@@ -98,7 +153,8 @@ def main() -> int:
             periods.append(process(item)); updated+=1
     current=json.loads(CURRENT.read_text(encoding="utf-8")) if CURRENT.exists() else {}
     output={
-        "version":1,
+        "version":2,
+        "parser_rev":PARSER_REV,
         "generado":dt.datetime.now(dt.timezone.utc).isoformat(),
         "desde":SINCE_YEAR,
         "hasta":periods[-1]["periodo"],
@@ -107,7 +163,8 @@ def main() -> int:
             "moneda":"pesos corrientes",
             "comparacion":"Las series nominales no corrigen inflación. Las comparaciones entre ejercicios deben leerse como evolución nominal hasta incorporar una serie homogénea a precios constantes.",
             "ejecucion":"Devengado / crédito vigente, acumulado al cierre de cada trimestre.",
-            "estructura":"Los cambios de estructura ministerial entre ejercicios pueden afectar la comparación nominal por jurisdicción; se conserva la denominación oficial de cada período."
+            "estructura":"Los cambios de estructura ministerial entre ejercicios pueden afectar la comparación nominal por jurisdicción; se conserva la denominación oficial de cada período.",
+            "depuracion":"En recursos históricos que incluyen subtotales sintéticos de tabla dinámica con jurisdicción vacía, CEPOES excluye esas filas para evitar doble contabilización y conserva las partidas detalladas con jurisdicción informada."
         },
         "periodos":periods,
         "actual":current.get("periodo"),

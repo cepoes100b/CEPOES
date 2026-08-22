@@ -41,20 +41,32 @@ def main() -> int:
 
     if int(leg.get("version") or 0) < 6:
         problems.append("legislatura_publica.json no fue elevado a schema 6")
+    if int(ses.get("version") or 0) < 2:
+        problems.append("sesiones_publicas.json no fue normalizado a schema 2")
 
     source_sessions = {clean(s.get("id_sesion")): s for s in ses.get("sesiones") or []}
     source_votes = {}
+    source_sanctions = {}
     for s in source_sessions.values():
+        sid = clean(s.get("id_sesion"))
         for vote in s.get("votaciones_nominales") or []:
             vid = clean(vote.get("id_votacion"))
             if vid:
-                source_votes[(clean(s.get("id_sesion")), vid)] = vote
+                source_votes[(sid, vid)] = vote
+        for item in s.get("sanciones") or []:
+            key = (
+                sid,
+                clean(item.get("id_expediente")),
+                norm_num(item.get("numero_expediente")),
+                clean(item.get("descripcion")),
+            )
+            source_sanctions[key] = item
 
     projects = leg.get("expedientes") or []
     main_ids = {pid(p) for p in projects if pid(p)}
     main_nums = {norm_num(p.get("numero")) for p in projects if norm_num(p.get("numero"))}
 
-    linked = with_vote = with_sanction = link_count = 0
+    linked = with_vote = with_any = with_initial = with_definitive = link_count = 0
     for project in projects:
         activity = project.get("actividad_recinto")
         if not activity:
@@ -66,7 +78,9 @@ def main() -> int:
             problems.append(f"{project.get('numero')}: total_sesiones inconsistente")
 
         project_vote = False
-        project_sanction = False
+        project_initial = False
+        project_definitive = False
+        project_any = False
         for row in rows:
             sid = clean(row.get("id_sesion"))
             source = source_sessions.get(sid)
@@ -75,6 +89,7 @@ def main() -> int:
                 continue
             if clean(row.get("fecha")) != clean(source.get("fecha")):
                 problems.append(f"{project.get('numero')}: fecha de sesión {sid} no coincide con fuente")
+
             for vote in row.get("votaciones_nominales") or []:
                 project_vote = True
                 key = (sid, clean(vote.get("id_votacion")))
@@ -86,23 +101,59 @@ def main() -> int:
                     problems.append(f"{project.get('numero')}: resultado de votación {key[1]} difiere de fuente")
                 if "detalle_nominal" in vote:
                     problems.append(f"{project.get('numero')}: detalle nominal fue duplicado en el núcleo")
-            if row.get("sanciones"):
-                project_sanction = True
+
+            for sanction in row.get("sanciones") or []:
+                project_any = True
+                alcance = sanction.get("alcance")
+                project_initial = project_initial or alcance == "inicial"
+                project_definitive = project_definitive or alcance == "definitiva"
+                matches = [
+                    src for key, src in source_sanctions.items()
+                    if key[0] == sid and clean(src.get("descripcion")) == clean(sanction.get("descripcion"))
+                ]
+                if not matches:
+                    problems.append(f"{project.get('numero')}: sanción de sesión {sid} no existe en fuente")
+                elif all(src.get("alcance") != alcance for src in matches):
+                    problems.append(f"{project.get('numero')}: alcance de sanción difiere de fuente")
 
         with_vote += int(project_vote)
-        with_sanction += int(project_sanction)
+        with_any += int(project_any)
+        with_initial += int(project_initial)
+        with_definitive += int(project_definitive)
+
+        if bool(activity.get("tuvo_votacion_nominal")) != project_vote:
+            problems.append(f"{project.get('numero')}: flag tuvo_votacion_nominal inconsistente")
+        if bool(activity.get("tuvo_sancion_expediente")) != project_any:
+            problems.append(f"{project.get('numero')}: flag tuvo_sancion_expediente inconsistente")
+        if bool(activity.get("tuvo_sancion_inicial")) != project_initial:
+            problems.append(f"{project.get('numero')}: flag tuvo_sancion_inicial inconsistente")
+        if bool(activity.get("tuvo_sancion_definitiva")) != project_definitive:
+            problems.append(f"{project.get('numero')}: flag tuvo_sancion_definitiva inconsistente")
+
         ficha = project.get("ficha_oficial") or {}
         hitos = ficha.get("hitos") or {}
         if rows and not hitos.get("tuvo_sesion"):
             problems.append(f"{project.get('numero')}: actividad de recinto sin hito tuvo_sesion")
-        if project_sanction and not hitos.get("tuvo_sancion"):
-            problems.append(f"{project.get('numero')}: sanción de recinto sin hito tuvo_sancion")
-        if project_sanction and not ficha.get("evidencia_sancion"):
-            problems.append(f"{project.get('numero')}: sanción de recinto sin evidencia_sancion")
-        if project_sanction and ficha.get("estado_actual") != "archivado" and ficha.get("etapa_ciclo") != "sancionado":
-            problems.append(f"{project.get('numero')}: sanción de recinto sin etapa_ciclo sancionado")
+        if project_initial and not hitos.get("tuvo_sancion_inicial"):
+            problems.append(f"{project.get('numero')}: sanción inicial sin hito específico")
+        if project_definitive and not hitos.get("tuvo_sancion_definitiva"):
+            problems.append(f"{project.get('numero')}: sanción definitiva sin hito específico")
+        if project_definitive and not hitos.get("tuvo_sancion"):
+            problems.append(f"{project.get('numero')}: sanción definitiva sin hito tuvo_sancion")
+        if project_definitive and not ficha.get("evidencia_sancion"):
+            problems.append(f"{project.get('numero')}: sanción definitiva sin evidencia_sancion")
+        if project_definitive and ficha.get("estado_actual") != "archivado" and ficha.get("etapa_ciclo") != "sancionado":
+            problems.append(f"{project.get('numero')}: sanción definitiva sin etapa_ciclo sancionado")
+        if project_initial and not project_definitive:
+            # Una primera lectura no debe activar el hito legado de sanción definitiva.
+            if hitos.get("tuvo_sancion"):
+                problems.append(f"{project.get('numero')}: sanción inicial activó tuvo_sancion definitivo")
+            if ficha.get("etapa_ciclo") == "sancionado":
+                problems.append(f"{project.get('numero')}: sanción inicial elevó indebidamente etapa_ciclo")
 
     discovered = leg.get("expedientes_descubiertos_recinto") or []
+    seen_ids = set()
+    seen_nums = set()
     for item in discovered:
         eid = clean(item.get("id_expediente"))
         num = norm_num(item.get("numero"))
@@ -110,6 +161,14 @@ def main() -> int:
             problems.append(f"descubierto {eid}: ya existe en expedientes principales")
         if num and num in main_nums:
             problems.append(f"descubierto {item.get('numero')}: ya existe en expedientes principales")
+        if eid and eid in seen_ids:
+            problems.append(f"descubierto {eid}: id duplicado")
+        if num and num in seen_nums:
+            problems.append(f"descubierto {item.get('numero')}: número duplicado")
+        if eid:
+            seen_ids.add(eid)
+        if num:
+            seen_nums.add(num)
         if not item.get("motivos"):
             problems.append(f"descubierto {item.get('numero') or eid}: sin motivo de descubrimiento")
 
@@ -118,7 +177,9 @@ def main() -> int:
         "expedientes_vinculados_recinto": linked,
         "vinculaciones_sesion_expediente": link_count,
         "expedientes_con_votacion_nominal": with_vote,
-        "expedientes_con_sancion_en_sesion": with_sanction,
+        "expedientes_con_sancion_expediente_en_sesion": with_any,
+        "expedientes_con_sancion_inicial_en_sesion": with_initial,
+        "expedientes_con_sancion_definitiva_en_sesion": with_definitive,
         "expedientes_descubiertos_solo_recinto": len(discovered),
     }
     for key, value in expected.items():
@@ -126,6 +187,8 @@ def main() -> int:
             problems.append(f"resumen.{key}={summary.get(key)}; esperado {value}")
 
     meta = leg.get("integracion_recinto") or {}
+    if meta.get("schema") != 2:
+        problems.append("integracion_recinto.schema debe ser 2")
     if meta.get("fuente") != "sesiones_publicas.json":
         problems.append("integracion_recinto no identifica sesiones_publicas.json")
     if meta.get("sesiones_fuente") != len(source_sessions):
@@ -136,7 +199,8 @@ def main() -> int:
     print(
         "Integración recinto · "
         f"{linked} expedientes vinculados · {link_count} vínculos de sesión · "
-        f"{with_vote} con votación nominal · {with_sanction} con sanción · "
+        f"{with_vote} con votación nominal · {with_any} con sanción de expediente "
+        f"({with_initial} inicial · {with_definitive} definitiva) · "
         f"{len(discovered)} descubiertos sólo en recinto"
     )
     if problems:

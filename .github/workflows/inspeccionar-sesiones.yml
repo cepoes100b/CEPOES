@@ -1,8 +1,10 @@
-name: Inspeccionar fuente oficial de sesiones
+name: Validar capa pública de sesiones
 
 on:
   pull_request:
     paths:
+      - "actualizar_sesiones.py"
+      - "verificar_sesiones.py"
       - "inspeccionar_sesiones_slp.py"
       - "sondear_datos_sesiones.py"
       - "sondear_votaciones_js.py"
@@ -13,7 +15,7 @@ permissions:
   contents: read
 
 jobs:
-  inspeccionar:
+  validar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -24,6 +26,12 @@ jobs:
 
       - name: Instalar dependencias
         run: pip install -r requirements.txt
+
+      - name: Generar capa pública de sesiones
+        run: python actualizar_sesiones.py
+
+      - name: Verificar capa pública de sesiones
+        run: python verificar_sesiones.py
 
       - name: Inspeccionar formulario oficial de sesiones
         run: python inspeccionar_sesiones_slp.py

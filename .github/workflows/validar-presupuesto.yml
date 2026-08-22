@@ -32,14 +32,26 @@ jobs:
       - name: Verificar resumen presupuestario
         run: python verificar_presupuesto.py
 
+      - name: Generar capa analítica
+        run: python generar_presupuesto_analitico.py
+
+      - name: Verificar capa analítica
+        run: python verificar_presupuesto_analitico.py
+
+      - name: Generar serie histórica trimestral
+        run: python generar_presupuesto_historico.py
+
+      - name: Verificar serie histórica trimestral
+        run: python verificar_presupuesto_historico.py
+
       - name: Commitear resultado validado si cambió
         run: |
           git config user.name "cepoes-bot"
           git config user.email "actions@github.com"
-          git add presupuesto.json estado_presupuesto.json
+          git add presupuesto.json estado_presupuesto.json presupuesto_analitico.json presupuesto_historico.json
           if git diff --cached --quiet; then
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "presupuesto: validación automática $(date -u +%F)"
+          git commit -m "presupuesto: validación analítica $(date -u +%F)"
           git push

@@ -55,7 +55,7 @@ TOPICS = {
     "infancias": ["niñez", "ninez", "niño", "nino", "adolesc", "infancia"],
     "mayores": ["personas mayores", "jubilad", "geriatr", "vejez", "adulto mayor"],
     "discapacidad": ["discapacidad", "accesibilidad", "inclusion"],
-    "generos": ["genero", "mujer", "diversidad", "violencia de genero"],
+    "generos": ["de genero", "generos", "mujer", "diversidad", "violencia de genero"],
     "cultura": ["cultura", "libro", "museo", "teatro", "patrimonio", "artistic"],
     "institucional": ["constitucional", "organismo de control", "defensor", "auditoria", "ministerio publico", "electoral"],
 }
@@ -134,7 +134,7 @@ def classify_project(number: str, summary: str) -> tuple[str, list[str], str]:
     s = norm(summary)
     if "informes" in s or s.startswith("informe"):
         typ = "pedido_informes"
-    elif any(k in s for k in ["modificase", "modifica la ley", "creacion", "crease", "crea ", "establece", "ley "]):
+    elif s.startswith("ley ") or any(k in s for k in ["modificase", "modifica la ley", "creacion", "crease", "crea ", "establece"]):
         typ = "ley"
     elif "resolucion" in s:
         typ = "resolucion"

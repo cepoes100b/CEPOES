@@ -16,7 +16,7 @@ from pathlib import Path
 from urllib.parse import urljoin
 
 import requests
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 
 BASE = Path(__file__).resolve().parent
 OUT = BASE / "legislatura_publica.json"
@@ -67,7 +67,7 @@ PRIORITY_COMMISSION_TERMS = [
 
 SESSION = requests.Session()
 SESSION.headers.update({
-    "User-Agent": "CEPOES-observatorio-legislativo/1.0 (+https://cepoes.org)",
+    "User-Agent": "CEPOES-observatorio-legislativo/1.1 (+https://cepoes.org)",
     "Accept-Language": "es-AR,es;q=0.9,en;q=0.5",
 })
 
@@ -110,6 +110,11 @@ def agenda_id_from_url(url: str) -> int | None:
     return int(m.group(1)) if m else None
 
 
+def detail_ids_from_url(url: str) -> tuple[int | None, int | None]:
+    m = re.search(r"/AgendaLCABADetalle/(\d+)/(\d+)(?:$|[/?#])", url or "", re.I)
+    return (int(m.group(1)), int(m.group(2))) if m else (None, None)
+
+
 def discover_anchor_ids(previous_state: dict) -> set[int]:
     ids = {int(previous_state.get("ultimo_agenda_id") or SEED_AGENDA_ID), SEED_AGENDA_ID}
     for url in (MAIN_AGENDA, HOME, CALENDAR):
@@ -125,49 +130,6 @@ def discover_anchor_ids(previous_state: dict) -> set[int]:
             if aid:
                 ids.add(aid)
     return ids
-
-
-def parse_meeting_block(h3: Tag, agenda_id: int, agenda_date: dt.date) -> dict:
-    parts: list[str] = []
-    detail_url = None
-    node = h3.next_sibling
-    while node is not None:
-        if isinstance(node, Tag) and node.name == "h3":
-            break
-        if isinstance(node, Tag):
-            parts.append(clean(node.get_text(" ", strip=True)))
-            for a in node.find_all("a", href=True):
-                u = urljoin(HOST, a["href"])
-                if "AgendaLCABADetalle" in u:
-                    detail_url = u
-        node = node.next_sibling
-    text = clean(" ".join(x for x in parts if x))
-    title = clean(h3.get_text(" ", strip=True))
-    commission = re.sub(r"^Comisión:\s*", "", title, flags=re.I).strip() if re.match(r"^Comisión:", title, re.I) else title
-    mtype = None
-    for pat, label in [
-        (r"Reunión de Asesores", "asesores"), (r"Reunión de Diputados", "diputados"),
-        (r"Reunión Especial", "especial"), (r"Audiencia Pública", "audiencia_publica"), (r"Otros", "otros")
-    ]:
-        if re.search(pat, text, re.I):
-            mtype = label; break
-    mt = re.search(r"Hora Reunión\s*:\s*(\d{1,2}:\d{2})", text, re.I)
-    mc = re.search(r"Esta reunión tratará\s+(\d+)\s+Expedientes?", text, re.I)
-    mid = None
-    if detail_url:
-        mm = re.search(r"AgendaLCABADetalle/\d+/(\d+)", detail_url)
-        mid = int(mm.group(1)) if mm else None
-    return {
-        "id": mid,
-        "agenda_id": agenda_id,
-        "fecha": agenda_date.isoformat(),
-        "comision": commission,
-        "tipo_reunion": mtype,
-        "hora": mt.group(1) if mt else None,
-        "expedientes_anunciados": int(mc.group(1)) if mc else None,
-        "url": detail_url,
-        "seguimiento_cepoes": any(k in norm(commission) for k in PRIORITY_COMMISSION_TERMS),
-    }
 
 
 def classify_project(number: str, summary: str) -> tuple[str, list[str], str]:
@@ -196,26 +158,77 @@ def classify_project(number: str, summary: str) -> tuple[str, list[str], str]:
 
 
 def parse_detail(meeting: dict) -> tuple[dict, list[dict]]:
+    """Completa una reunión desde su página de detalle oficial.
+
+    La agenda pública cambió su estructura HTML: los datos de la reunión y el enlace
+    al detalle no son necesariamente hermanos directos del encabezado H3. Por eso la
+    página de agenda se usa sólo para descubrir URLs/IDs y esta función toma el detalle
+    como fuente canónica de comisión, tipo, hora, cantidad y expedientes.
+    """
     url = meeting.get("url")
     if not url:
+        meeting["detalle_disponible"] = False
+        meeting["expedientes_detallados"] = 0
         return meeting, []
     r = get(url)
     if not r:
         meeting["detalle_disponible"] = False
+        meeting["expedientes_detallados"] = 0
         return meeting, []
+
     soup = BeautifulSoup(r.text, "html.parser")
     meeting["detalle_disponible"] = True
+    full_text = clean(soup.get_text(" ", strip=True))
+
+    aid, mid = detail_ids_from_url(r.url)
+    if aid:
+        meeting["agenda_id"] = aid
+    if mid:
+        meeting["id"] = mid
+
+    # Comisión / organismo: el primer H3 del cuerpo de detalle es el rótulo oficial.
+    detail_h3 = None
+    for h3 in soup.find_all("h3"):
+        t = clean(h3.get_text(" ", strip=True))
+        nt = norm(t)
+        if t and ("comision" in nt or "junta" in nt or "labor parlamentaria" in nt or "direccion general" in nt):
+            detail_h3 = h3
+            break
+    if detail_h3:
+        title = clean(detail_h3.get_text(" ", strip=True))
+        commission = re.sub(r"^Comisión:\s*", "", title, flags=re.I).strip()
+        meeting["comision"] = commission
+
+    for pat, label in [
+        (r"Reunión de Asesores", "asesores"),
+        (r"Reunión de Diputados", "diputados"),
+        (r"Reunión Especial", "especial"),
+        (r"Audiencia Pública", "audiencia_publica"),
+        (r"\bOtros\b", "otros"),
+    ]:
+        if re.search(pat, full_text, re.I):
+            meeting["tipo_reunion"] = label
+            break
+
+    mt = re.search(r"Hora Reunión\s*:\s*(\d{1,2}:\d{2})", full_text, re.I)
+    if mt:
+        meeting["hora"] = mt.group(1)
+    mc = re.search(r"Esta reunión tratará\s+(\d+)\s+Expedientes?", full_text, re.I)
+    meeting["expedientes_anunciados"] = int(mc.group(1)) if mc else 0
+    meeting["seguimiento_cepoes"] = any(k in norm(meeting.get("comision")) for k in PRIORITY_COMMISSION_TERMS)
+
     projects = []
     for table in soup.find_all("table"):
-        headers = [norm(th.get_text(" ", strip=True)) for th in table.find_all("th")]
-        if not headers:
-            first = table.find("tr")
-            headers = [norm(x.get_text(" ", strip=True)) for x in first.find_all(["td", "th"])] if first else []
+        first = table.find("tr")
+        if not first:
+            continue
+        headers = [norm(x.get_text(" ", strip=True)) for x in first.find_all(["td", "th"])]
         if not (any("numero" in h for h in headers) and any("sumario" in h for h in headers)):
             continue
         rows = table.find_all("tr")
         for tr in rows[1:]:
-            cells = [clean(td.get_text(" ", strip=True)) for td in tr.find_all(["td", "th"])]
+            tds = tr.find_all(["td", "th"])
+            cells = [clean(td.get_text(" ", strip=True)) for td in tds]
             if len(cells) < 2:
                 continue
             number, summary = cells[0], cells[1]
@@ -223,6 +236,11 @@ def parse_detail(meeting: dict) -> tuple[dict, list[dict]]:
             if not re.search(r"\d", number) or not summary:
                 continue
             typ, topics, prio = classify_project(number, summary)
+            project_url = None
+            if tds:
+                a = tds[0].find("a", href=True)
+                if a:
+                    project_url = urljoin(r.url, a["href"])
             projects.append({
                 "numero": number,
                 "sumario": summary,
@@ -230,32 +248,57 @@ def parse_detail(meeting: dict) -> tuple[dict, list[dict]]:
                 "tipo_estimado": typ,
                 "temas": topics,
                 "prioridad_tecnica": prio,
-                "fuente_reunion": url,
+                "url_expediente": project_url,
+                "fuente_reunion": r.url,
                 "reunion_id": meeting.get("id"),
                 "comision": meeting.get("comision"),
                 "fecha_reunion": meeting.get("fecha"),
             })
-        if projects:
-            break
+        break
+
     meeting["expedientes_detallados"] = len(projects)
     return meeting, projects
 
 
 def parse_agenda_page(agenda_id: int) -> tuple[dict | None, list[dict]]:
+    """Descubre las reuniones por sus enlaces de detalle, no por la jerarquía visual.
+
+    Esto evita depender de la estructura de tarjetas/divs de la agenda, que puede cambiar
+    sin que cambien las URLs estables AgendaLCABADetalle/<agenda>/<reunion>.
+    """
     r = get(AGENDA_TMPL.format(agenda_id))
     if not r:
         return None, []
     soup = BeautifulSoup(r.text, "html.parser")
     h2 = soup.find("h2")
-    adate = parse_spanish_date(h2.get_text(" ", strip=True) if h2 else soup.get_text(" ", strip=True)[:1200])
+    adate = parse_spanish_date(h2.get_text(" ", strip=True) if h2 else soup.get_text(" ", strip=True)[:1600])
     if not adate:
         return None, []
+
+    seen = set()
     meetings = []
-    for h3 in soup.find_all("h3"):
-        title = clean(h3.get_text(" ", strip=True))
-        if not (title.lower().startswith("comisión:") or "comision" in norm(title) or "junta" in norm(title)):
+    for a in soup.find_all("a", href=True):
+        u = urljoin(r.url, a["href"])
+        aid, mid = detail_ids_from_url(u)
+        if aid != agenda_id or not mid or mid in seen:
             continue
-        meetings.append(parse_meeting_block(h3, agenda_id, adate))
+        seen.add(mid)
+        # El detalle será la fuente canónica; aquí sólo guardamos una pista del H3 previo.
+        h3 = a.find_previous("h3")
+        title = clean(h3.get_text(" ", strip=True)) if h3 else ""
+        commission = re.sub(r"^Comisión:\s*", "", title, flags=re.I).strip() if title else "Sin identificar"
+        meetings.append({
+            "id": mid,
+            "agenda_id": agenda_id,
+            "fecha": adate.isoformat(),
+            "comision": commission,
+            "tipo_reunion": None,
+            "hora": None,
+            "expedientes_anunciados": None,
+            "url": u,
+            "seguimiento_cepoes": any(k in norm(commission) for k in PRIORITY_COMMISSION_TERMS),
+        })
+
     day = {
         "agenda_id": agenda_id,
         "fecha": adate.isoformat(),
@@ -268,7 +311,8 @@ def parse_agenda_page(agenda_id: int) -> tuple[dict | None, list[dict]]:
 def merge_previous(current_days: list[dict], current_meetings: list[dict], current_projects: list[dict], previous: dict) -> tuple[list, list, list]:
     cutoff = dt.date.today() - dt.timedelta(days=KEEP_DAYS)
     day_map = {x["agenda_id"]: x for x in previous.get("agendas") or [] if x.get("agenda_id")}
-    for x in current_days: day_map[x["agenda_id"]] = x
+    for x in current_days:
+        day_map[x["agenda_id"]] = x
     days = [x for x in day_map.values() if dt.date.fromisoformat(x["fecha"]) >= cutoff]
     days.sort(key=lambda x: x["fecha"])
 
@@ -295,12 +339,16 @@ def merge_previous(current_days: list[dict], current_meetings: list[dict], curre
 def main() -> int:
     previous = {}
     if OUT.exists():
-        try: previous = json.loads(OUT.read_text(encoding="utf-8"))
-        except Exception: previous = {}
+        try:
+            previous = json.loads(OUT.read_text(encoding="utf-8"))
+        except Exception:
+            previous = {}
     state = {}
     if STATE.exists():
-        try: state = json.loads(STATE.read_text(encoding="utf-8"))
-        except Exception: state = {}
+        try:
+            state = json.loads(STATE.read_text(encoding="utf-8"))
+        except Exception:
+            state = {}
 
     today = dt.date.today()
     lo, hi = today - dt.timedelta(days=PAST_DAYS), today + dt.timedelta(days=FUTURE_DAYS)
@@ -317,13 +365,15 @@ def main() -> int:
         max_seen = max(max_seen, aid)
         d = dt.date.fromisoformat(day["fecha"])
         if lo <= d <= hi:
-            days.append(day); meetings.extend(ms)
+            days.append(day)
+            meetings.extend(ms)
         time.sleep(0.03)
 
     parsed_meetings, projects = [], []
     for m in meetings:
         mm, pp = parse_detail(m)
-        parsed_meetings.append(mm); projects.extend(pp)
+        parsed_meetings.append(mm)
+        projects.extend(pp)
         time.sleep(0.04)
 
     days, parsed_meetings, projects = merge_previous(days, parsed_meetings, projects, previous)
@@ -331,7 +381,7 @@ def main() -> int:
     high_projects = [p for p in projects if p.get("prioridad_tecnica") == "alta" and p.get("fecha_reunion") >= today.isoformat()]
 
     out = {
-        "version": 1,
+        "version": 2,
         "generado": dt.datetime.now(dt.timezone.utc).isoformat(),
         "fuente": "Legislatura de la Ciudad Autónoma de Buenos Aires · fuentes oficiales",
         "alcance": "Agenda de comisiones y expedientes incluidos en reuniones oficiales detectadas. No sustituye el expediente parlamentario completo.",
@@ -342,6 +392,7 @@ def main() -> int:
             "agendas_en_ventana": len(days),
             "reuniones_total": len(parsed_meetings),
             "reuniones_proximas": len(upcoming),
+            "reuniones_con_expedientes_anunciados": sum(1 for m in parsed_meetings if (m.get("expedientes_anunciados") or 0) > 0),
             "expedientes_en_reuniones": len(projects),
             "expedientes_prioridad_tecnica_alta_proximos": len(high_projects),
         },
@@ -352,7 +403,7 @@ def main() -> int:
     }
     OUT.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     STATE.write_text(json.dumps({
-        "version": 1,
+        "version": 2,
         "actualizado": out["generado"],
         "ultimo_agenda_id": max_seen or anchor,
         "agendas_detectadas_en_corrida": len(days),
@@ -361,7 +412,7 @@ def main() -> int:
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(f"legislatura_publica.json · {OUT.stat().st_size//1024} KB")
     print(f"  agendas: {len(days)} · reuniones: {len(parsed_meetings)} · expedientes: {len(projects)}")
-    print(f"  próximas: {len(upcoming)} · prioridad técnica alta: {len(high_projects)}")
+    print(f"  con expedientes anunciados: {out['resumen']['reuniones_con_expedientes_anunciados']} · próximas: {len(upcoming)} · prioridad técnica alta: {len(high_projects)}")
     return 0
 
 

@@ -47,7 +47,6 @@ def number(value: object) -> float:
     if not s:
         return 0.0
 
-    # La notación científica no admite separadores de miles: se prueba primero.
     if "e" in s.lower():
         try:
             x = float(s.replace(",", "."))
@@ -56,7 +55,6 @@ def number(value: object) -> float:
             return 0.0
 
     if "," in s and "." in s:
-        # El último separador es el decimal: 1.234.567,89 o 1,234,567.89.
         if s.rfind(",") > s.rfind("."):
             s = s.replace(".", "").replace(",", ".")
         else:
@@ -66,19 +64,15 @@ def number(value: object) -> float:
         if len(parts) > 2 and all(len(p) == 3 for p in parts[1:]):
             s = "".join(parts)
         elif len(parts) == 2 and len(parts[1]) == 3 and len(parts[0].lstrip("+-")) <= 3:
-            # 1,234 se interpreta como separador de miles.
             s = "".join(parts)
         else:
-            # Formato decimal argentino, p.ej. 1234567,89.
             s = "".join(parts[:-1]) + "." + parts[-1]
     elif "." in s:
         parts = s.split(".")
         if len(parts) > 2 and all(len(p) == 3 for p in parts[1:]):
             s = "".join(parts)
         elif len(parts) == 2 and len(parts[1]) == 3 and len(parts[0].lstrip("+-")) <= 3:
-            # 1.234 se interpreta como separador de miles.
             s = "".join(parts)
-        # En cualquier otro caso se conserva el punto como decimal.
 
     try:
         x = float(s)
@@ -279,6 +273,7 @@ def main() -> int:
         "metodologia": {
             "moneda": "pesos corrientes",
             "ejecucion": "Devengado / crédito vigente",
+            "alcance_total": "Suma de los créditos distribuidos por BA Data. Incluye gastos corrientes y de capital y aplicaciones financieras; por eso no debe compararse sólo con el artículo 1 de la Ley de Presupuesto.",
             "criterio_geografico": "Clasificación geográfica presupuestaria informada por la fuente. No equivale necesariamente a gasto físicamente materializado en cada comuna.",
             "proyeccion": "No se anualiza ni se proyecta el cierre del ejercicio.",
         },

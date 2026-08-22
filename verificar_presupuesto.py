@@ -8,10 +8,15 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent
 PATH = BASE / "presupuesto.json"
 
-# Ley 6929: Presupuesto de la Administración Gubernamental GCBA 2026.
-# Art. 1: gastos corrientes + capital = $17.341.466.875.159.
-LEGAL_SANCTIONED = {
-    2026: 17_341_466_875_159.0,
+# Ley 6929, presupuesto 2026.
+# El dataset de BA Data distribuye créditos que incluyen no sólo los gastos
+# corrientes y de capital del art. 1, sino también aplicaciones financieras.
+# Por eso el control comparable es art. 1 + art. 4, no sólo el art. 1.
+LEGAL_SCOPE = {
+    2026: {
+        "gastos_corrientes_capital": 17_341_466_875_159.0,
+        "aplicaciones_financieras": 844_536_868_432.0,
+    }
 }
 
 
@@ -41,17 +46,23 @@ def main() -> int:
         if not finite_positive(total.get(key)):
             problems.append(f"total {key} no positivo")
 
-    # Control de escala independiente del cruce entre los dos CSV. Evita que un
-    # mismo error de parseo monetario haga coincidir ejecutado y sancionado.
     sanc = float(total.get("sancionado") or 0)
     if year >= 2024 and sanc < 1_000_000_000_000:
         problems.append(f"sancionado fuera de escala esperable: ${sanc:,.0f}")
 
-    legal = LEGAL_SANCTIONED.get(year)
-    if legal and sanc:
-        legal_diff = abs(sanc - legal) / legal * 100
+    legal_parts = LEGAL_SCOPE.get(year)
+    legal_total = None
+    legal_diff = None
+    if legal_parts and sanc:
+        legal_total = sum(legal_parts.values())
+        legal_diff = abs(sanc - legal_total) / legal_total * 100
+        # Tolerancia acotada porque BA Data puede incorporar adecuaciones técnicas
+        # de distribución; el control busca errores de escala/parseo, no reemplazar
+        # la contabilidad presupuestaria oficial.
         if legal_diff > 0.5:
-            problems.append(f"sancionado difiere {legal_diff:.3f}% del total legal de {year}")
+            problems.append(
+                f"sancionado difiere {legal_diff:.3f}% del alcance legal comparable de {year}"
+            )
 
     ep = total.get("ejecucion_pct")
     if ep is None or not (0 <= float(ep) <= 150):
@@ -93,8 +104,13 @@ def main() -> int:
             problems.append(f"fuente {k} sin trazabilidad de recurso")
 
     print(f"Presupuesto · {year} T{quarter} · {ctl.get('filas_ejecutado',0)} filas · ejecución {ep}%")
-    if legal and sanc:
-        print(f"  control legal: sancionado {sanc/1e12:.3f} billones · Ley 6929 {legal/1e12:.3f} billones")
+    if legal_total and sanc:
+        print(
+            "  control legal comparable: "
+            f"dataset {sanc/1e12:.3f} billones · "
+            f"Ley 6929 art.1 + art.4 {legal_total/1e12:.3f} billones · "
+            f"dif. {legal_diff:.3f}%"
+        )
     if problems:
         print(f"✘ {len(problems)} problema(s) — NO se publica")
         for x in problems:

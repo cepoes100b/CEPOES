@@ -11,8 +11,9 @@ from pathlib import Path
 from typing import Iterable, Iterator
 
 CPA_CABA_RE = re.compile(r"^C\d{4}[A-Z]{3}$", re.I)
-PERIODO_RE = re.compile(r"24DSF(\d{6})", re.I)
+PERIODO_DEUDORES_RE = re.compile(r"(?:^|[^0-9])(\d{6})DEUDORES(?:[^A-Z]|$)", re.I)
 MIN_CELDA_BARRIO = 30
+CAMPOS_DEUDORES = 24
 
 
 @dataclass(frozen=True)
@@ -23,7 +24,7 @@ class PadronPersona:
 
 
 def leer_lineas(path: Path) -> Iterator[str]:
-    """Lee en streaming. Los archivos del régimen BCRA se publican en ANSI."""
+    """Lee en streaming. Los archivos del régimen BCRA se publican en ANSI-1252."""
     with path.open("r", encoding="cp1252", errors="strict", newline="") as fh:
         for line in fh:
             line = line.rstrip("\r\n")
@@ -38,9 +39,9 @@ def normalizar_cpa(value: str) -> str:
 def cargar_padron(path: Path) -> dict[tuple[str, str], PadronPersona]:
     """Reconstruye el estado del padrón reteniendo sólo PH con CPA de CABA.
 
-    Layout vigente BCRA: tipo id tributaria; nro id tributaria; tipo id personal;
-    nro id personal; denominación; PEP; CPA; tipo movimiento. Los campos de
-    identificación personal son obligatorios sólo para personas humanas.
+    Diseño vigente BCRA PADRON.TXT: tipo id tributaria; número id tributaria;
+    tipo id personal; número id personal; denominación; PEP; CPA; movimiento.
+    Los campos de identificación personal distinguen a las personas humanas.
     """
     estado: dict[tuple[str, str], PadronPersona] = {}
     errores = 0
@@ -74,32 +75,31 @@ def cargar_padron(path: Path) -> dict[tuple[str, str], PadronPersona]:
     return estado
 
 
-def split_24dsf(line: str) -> list[str]:
-    """Acepta publicación delimitada o el diseño de ancho fijo documentado."""
-    if ";" in line:
-        return [x.strip() for x in line.split(";")]
-    widths = [5, 2, 11] + [w for _ in range(24) for w in (2, 12, 1)]
-    expected = sum(widths)
-    if len(line) < expected:
-        raise ValueError(f"registro 24DSF demasiado corto: {len(line)} < {expected}")
-    out, pos = [], 0
-    for width in widths:
-        out.append(line[pos:pos + width].strip())
-        pos += width
-    return out
+def split_deudores(line: str) -> list[str]:
+    """Parsea el diseño oficial deudores.txt: 24 campos delimitados por ';'."""
+    row = [x.strip() for x in line.split(";")]
+    if len(row) != CAMPOS_DEUDORES:
+        raise ValueError(f"deudores.txt debe tener {CAMPOS_DEUDORES} campos; obtuvo {len(row)}")
+    return row
 
 
 def monto_a_pesos(raw: str) -> int:
-    """Convierte el monto 24DSF (miles de pesos, un decimal) a pesos."""
+    """Convierte un campo BCRA expresado en miles de pesos con un decimal a pesos.
+
+    El diseño define once enteros y un decimal. Para tolerar exportaciones con el
+    separador decimal explícito, también se acepta coma o punto.
+    """
     s = (raw or "").strip().replace(" ", "")
     if not s:
         return 0
     if "," in s or "." in s:
         miles = float(s.replace(",", "."))
+        if miles < 0:
+            raise ValueError(f"monto negativo: {raw!r}")
         return int(round(miles * 1000))
     if not s.isdigit():
         raise ValueError(f"monto inválido: {raw!r}")
-    # Diseño de 12 posiciones: 11 enteras + 1 decimal implícito, en miles.
+    # Sin separador explícito, la última posición es el decimal de miles.
     return int(s) * 100
 
 
@@ -138,13 +138,13 @@ def cargar_territorio(path: Path | None) -> dict[str, tuple[str, int]]:
     return out
 
 
-def periodo_desde_archivo(path: Path) -> str:
-    m = PERIODO_RE.search(path.name)
+def periodo_desde_archivo(path: Path) -> tuple[str, str]:
+    m = PERIODO_DEUDORES_RE.search(path.name.upper())
     if not m:
-        raise ValueError("El archivo 24DSF debe conservar AAAAMM en el nombre")
+        raise ValueError("El archivo mensual debe conservar el nombre AAAAMMDEUDORES.TXT")
     raw = m.group(1)
     datetime.strptime(raw, "%Y%m")
-    return f"{raw[:4]}-{raw[4:]}"
+    return raw, f"{raw[:4]}-{raw[4:]}"
 
 
 def metricas(items: Iterable[dict]) -> dict:
@@ -169,28 +169,39 @@ def metricas(items: Iterable[dict]) -> dict:
     }
 
 
-def procesar(archivo_24dsf: Path, archivo_padron: Path, territorio_path: Path | None) -> dict:
+def procesar(archivo_deudores: Path, archivo_padron: Path, territorio_path: Path | None) -> dict:
     padron = cargar_padron(archivo_padron)
     territorio = cargar_territorio(territorio_path)
-    periodo = periodo_desde_archivo(archivo_24dsf)
+    periodo_raw, periodo = periodo_desde_archivo(archivo_deudores)
 
     por_persona: dict[tuple[str, str], dict] = {}
     registros = vinculados = 0
-    for n, line in enumerate(leer_lineas(archivo_24dsf), start=1):
+    for n, line in enumerate(leer_lineas(archivo_deudores), start=1):
         registros += 1
         try:
-            row = split_24dsf(line)
-            if len(row) < 6:
-                raise ValueError("faltan campos")
-            _entidad, tipo_trib, ident = row[:3]
+            row = split_deudores(line)
+            # Diseño BCRA deudores.txt:
+            # 1 entidad; 2 período; 3 tipo ID; 4 ID; 5 actividad; 6 situación;
+            # 7 préstamos/garantías afrontadas; 8 sin uso; 9 garantías otorgadas;
+            # 10 otros conceptos; 11..24 desagregaciones/atributos.
+            _entidad, periodo_fila, tipo_trib, ident = row[:4]
+            if periodo_fila != periodo_raw:
+                raise ValueError(f"período de fila {periodo_fila!r} no coincide con {periodo_raw}")
             key = (tipo_trib, ident)
             persona_padron = padron.get(key)
             if not persona_padron:
                 continue
-            situacion = situacion_valida(row[3])
-            monto = monto_a_pesos(row[4])
-            if situacion == 0 or monto <= 0:
+
+            situacion = situacion_valida(row[5])
+            if situacion == 0:
                 continue
+
+            # Equivale a 'Financiaciones y Otros conceptos' difundido por la CDSF:
+            # componentes 2.1 + 2.2/2.3 + 3.1/3.2 del RI DSF.
+            monto = sum(monto_a_pesos(row[i]) for i in (6, 8, 9))
+            if monto <= 0:
+                continue
+
             vinculados += 1
             p = por_persona.setdefault(key, {
                 "cpa": persona_padron.cpa,
@@ -205,7 +216,7 @@ def procesar(archivo_24dsf: Path, archivo_padron: Path, territorio_path: Path | 
                 p["en_mora"] = True
                 p["deuda_mora_pesos"] += monto
         except Exception as exc:
-            raise ValueError(f"24DSF línea {n}: {exc}") from exc
+            raise ValueError(f"DEUDORES línea {n}: {exc}") from exc
 
     personas = list(por_persona.values())
     caba = metricas(personas)
@@ -239,24 +250,26 @@ def procesar(archivo_24dsf: Path, archivo_padron: Path, territorio_path: Path | 
         "fuente": {
             "organismo": "Banco Central de la República Argentina",
             "base": "Central de Deudores del Sistema Financiero",
-            "archivo_deuda": archivo_24dsf.name,
+            "archivo_deuda": archivo_deudores.name,
             "archivo_padron": archivo_padron.name,
             "unidad_monto": "pesos corrientes",
+            "composicion_monto": "préstamos/garantías afrontadas + garantías otorgadas + otros conceptos",
             "definicion_mora": "situaciones BCRA 3, 4 o 5 (más de 90 días de atraso)",
         },
         "metodologia": {
-            "universo": "personas humanas con domicilio CPA de CABA presentes en el padrón BCRA y deuda positiva en 24DSF",
+            "universo": "personas humanas con domicilio CPA de CABA presentes en el padrón BCRA y monto positivo en el archivo mensual DEUDORES",
             "unidad_publica": "agregados; nunca registros individuales",
             "criterio_persona_humana": "tipo de identificación personal del PADRON distinto de 00",
             "territorializacion": "CPA BCRA vinculado a una tabla CPA→barrio/comuna; el CPA individual no se publica",
             "minimo_publicacion_barrio": MIN_CELDA_BARRIO,
             "advertencias": [
                 "El padrón aporta domicilio de la persona, no necesariamente el lugar donde contrajo la deuda.",
+                "La fuente observa personas humanas, no hogares individualizados.",
                 "Desde julio de 2024 el umbral mínimo de información a la Central de Deudores pasó de $1.000 a $25.000; las series de cantidad de deudores deben interpretar ese quiebre.",
             ],
         },
         "cobertura_procesamiento": {
-            "registros_24dsf_leidos": registros,
+            "registros_deudores_leidos": registros,
             "registros_entidad_vinculados_caba": vinculados,
             "personas_humanas_caba": len(personas),
             "personas_con_barrio_asignado": personas_mapeadas,
@@ -271,9 +284,9 @@ def procesar(archivo_24dsf: Path, archivo_padron: Path, territorio_path: Path | 
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Agrega 24DSF + PADRON BCRA sin publicar datos personales")
-    ap.add_argument("--deuda", required=True, type=Path, help="TXT extraído de 24DSFAAAAMM.7Z")
-    ap.add_argument("--padron", required=True, type=Path, help="PADRON.TXT extraído del .7Z")
+    ap = argparse.ArgumentParser(description="Agrega DEUDORES mensual + PADRON BCRA sin publicar datos personales")
+    ap.add_argument("--deuda", required=True, type=Path, help="TXT extraído de AAAAMMDEUDORES.7Z, conservando AAAAMMDEUDORES.TXT")
+    ap.add_argument("--padron", required=True, type=Path, help="PADRON.TXT extraído del .7Z, conservando AAAAMMDDPADRON.TXT")
     ap.add_argument("--territorio", type=Path, help="CSV cpa,barrio,comuna")
     ap.add_argument("--salida", type=Path, default=Path("endeudamiento_caba.json"))
     args = ap.parse_args()

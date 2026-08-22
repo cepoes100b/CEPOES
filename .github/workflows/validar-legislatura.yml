@@ -2,6 +2,19 @@ name: Validar núcleo legislativo
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - "actualizar_legislatura.py"
+      - "enriquecer_expedientes.py"
+      - "completar_ciclo_legislativo.py"
+      - "verificar_legislatura.py"
+      - "verificar_ciclo_legislativo.py"
+      - "actualizar_sesiones.py"
+      - "verificar_sesiones.py"
+      - "legislatura_publica.json"
+      - "sesiones_publicas.json"
+      - ".github/workflows/legislatura.yml"
+      - ".github/workflows/validar-legislatura.yml"
 
 permissions:
   contents: write
@@ -26,18 +39,23 @@ jobs:
         run: python enriquecer_expedientes.py
       - name: Completar hitos desde evidencia oficial
         run: python completar_ciclo_legislativo.py
+      - name: Actualizar sesiones, Labor y votaciones oficiales
+        run: python actualizar_sesiones.py
       - name: Verificar núcleo legislativo
         run: python verificar_legislatura.py
       - name: Verificar ciclo legislativo
         run: python verificar_ciclo_legislativo.py
+      - name: Verificar sesiones y votaciones
+        run: python verificar_sesiones.py
       - name: Commitear resultado validado si cambió
+        if: github.event_name == 'workflow_dispatch'
         run: |
           git config user.name "cepoes-bot"
           git config user.email "actions@github.com"
-          git add legislatura_publica.json estado_legislatura.json
+          git add legislatura_publica.json estado_legislatura.json sesiones_publicas.json
           if git diff --cached --quiet; then
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "legislatura: validación ciclo $(date -u +%F-%H%M)"
+          git commit -m "legislatura: validación integral $(date -u +%F-%H%M)"
           git push

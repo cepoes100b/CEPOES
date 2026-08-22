@@ -1,13 +1,6 @@
 name: Probar punto representativo CP Mobiliario v2.29
 
 on:
-  pull_request:
-    branches:
-      - endeudamiento-bcra-direct-v229
-    paths:
-      - probar_punto_representativo_cp_mobiliario.py
-      - probar_punto_representativo_cp_mobiliario_datastore.py
-      - .github/workflows/probar-punto-representativo-cp-mobiliario-v229.yml
   workflow_dispatch:
 
 permissions:

@@ -77,7 +77,6 @@ def main() -> int:
     if not LEG_PATH.exists() or not SES_PATH.exists():
         print("✘ faltan legislatura_publica.json o sesiones_publicas.json")
         return 1
-
     leg = json.loads(LEG_PATH.read_text(encoding="utf-8"))
     ses = json.loads(SES_PATH.read_text(encoding="utf-8"))
     if int(ses.get("version") or 0) < 2:
@@ -86,7 +85,6 @@ def main() -> int:
 
     projects = leg.get("expedientes") or []
     sessions = ses.get("sesiones") or []
-
     by_id: dict[str, int] = {}
     by_num: dict[str, int] = {}
     for i, project in enumerate(projects):
@@ -171,9 +169,8 @@ def main() -> int:
             eid, num = source_key(item)
             alcance = item.get("alcance") or "no_especificada"
             idx = resolve(eid, num)
-            kind = "sancion_" + alcance
             if idx is None:
-                discovery(eid, num, session, kind)
+                discovery(eid, num, session, "sancion_" + alcance)
                 continue
             bucket(idx, session)["sanciones"].append(compact_sanction(item, num))
 
@@ -187,7 +184,7 @@ def main() -> int:
                 continue
             bucket(idx, session)["votaciones_nominales"].append(compact_vote(vote))
 
-    linked_projects = with_vote = with_any_sanction = with_initial = with_definitive = linked_sessions = 0
+    linked_projects = with_vote = with_any = with_initial = with_definitive = linked_sessions = 0
     audit_rows: list[str] = []
 
     for i, project in enumerate(projects):
@@ -205,7 +202,7 @@ def main() -> int:
         has_initial = any(s.get("alcance") == "inicial" for s in sanctions)
         has_definitive = any(s.get("alcance") == "definitiva" for s in sanctions)
         with_vote += int(has_vote)
-        with_any_sanction += int(has_any)
+        with_any += int(has_any)
         with_initial += int(has_initial)
         with_definitive += int(has_definitive)
 
@@ -214,7 +211,7 @@ def main() -> int:
             "sesiones": session_rows,
             "total_sesiones": len(session_rows),
             "tuvo_votacion_nominal": has_vote,
-            "tuvo_sancion_en_sesion": has_any,
+            "tuvo_sancion_expediente": has_any,
             "tuvo_sancion_inicial": has_initial,
             "tuvo_sancion_definitiva": has_definitive,
         }
@@ -245,21 +242,16 @@ def main() -> int:
         hitos["tuvo_sesion"] = bool(existing)
         hitos["tuvo_sancion_inicial"] = bool(hitos.get("tuvo_sancion_inicial")) or has_initial
         hitos["tuvo_sancion_definitiva"] = bool(hitos.get("tuvo_sancion_definitiva")) or has_definitive
-        if has_any:
+        # Compatibilidad: tuvo_sancion / evidencia_sancion / etapa sancionado
+        # conservan significado de sanción definitiva.
+        if has_definitive:
             hitos["tuvo_sancion"] = True
             ficha["evidencia_sancion"] = True
-
-        if ficha.get("estado_actual") != "archivado":
-            if hitos.get("tuvo_sancion_definitiva"):
+            if ficha.get("estado_actual") != "archivado":
                 ficha["etapa_ciclo"] = "sancionado"
                 project["etapa_ciclo"] = "sancionado"
-            elif hitos.get("tuvo_sancion_inicial"):
-                ficha["etapa_ciclo"] = "sancion_inicial"
-                project["etapa_ciclo"] = "sancion_inicial"
 
-        detail = " | ".join(
-            f"{s.get('alcance')}: {s.get('descripcion')}" for s in sanctions
-        ) or "sin sanción"
+        detail = " | ".join(f"{s.get('alcance')}: {s.get('descripcion')}" for s in sanctions) or "sin sanción"
         audit_rows.append(
             f"{project.get('numero')}: sesiones={len(session_rows)} "
             f"votacion={'sí' if has_vote else 'no'} · {detail}"
@@ -301,7 +293,7 @@ def main() -> int:
         "expedientes_vinculados_recinto": linked_projects,
         "vinculaciones_sesion_expediente": linked_sessions,
         "expedientes_con_votacion_nominal": with_vote,
-        "expedientes_con_sancion_en_sesion": with_any_sanction,
+        "expedientes_con_sancion_expediente_en_sesion": with_any,
         "expedientes_con_sancion_inicial_en_sesion": with_initial,
         "expedientes_con_sancion_definitiva_en_sesion": with_definitive,
         "expedientes_descubiertos_solo_recinto": len(discovered),
@@ -316,7 +308,7 @@ def main() -> int:
         "expedientes_vinculados": linked_projects,
         "expedientes_descubiertos_solo_recinto": len(discovered),
         "regla": "cruce por id_expediente oficial; número de expediente como respaldo",
-        "regla_sancion": "sanción inicial y definitiva se conservan como hitos distintos; sólo la definitiva eleva etapa_ciclo a sancionado",
+        "regla_sancion": "sanción inicial es hito separado; sólo sanción definitiva activa tuvo_sancion y etapa_ciclo sancionado",
     }
     leg["expedientes_descubiertos_recinto"] = sorted(
         discovered.values(),
@@ -327,7 +319,7 @@ def main() -> int:
     print(
         "Integración recinto · "
         f"{linked_projects}/{len(projects)} expedientes vinculados · {with_vote} con votación nominal · "
-        f"{with_any_sanction} con sanción ({with_initial} inicial · {with_definitive} definitiva) · "
+        f"{with_any} con sanción de expediente ({with_initial} inicial · {with_definitive} definitiva) · "
         f"{len(discovered)} descubiertos sólo en recinto"
     )
     for row in audit_rows[:30]:

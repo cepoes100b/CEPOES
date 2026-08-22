@@ -10,6 +10,7 @@ import datetime as dt
 import json
 import re
 import time
+import unicodedata
 from collections import Counter
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -25,7 +26,7 @@ OFFICIAL_HOST = "parlamentaria.legislatura.gob.ar"
 
 SESSION = requests.Session()
 SESSION.headers.update({
-    "User-Agent": "CEPOES-observatorio-legislativo/1.3 (+https://cepoes.org)",
+    "User-Agent": "CEPOES-observatorio-legislativo/1.4 (+https://cepoes.org)",
     "Accept-Language": "es-AR,es;q=0.9,en;q=0.5",
 })
 
@@ -35,7 +36,6 @@ def clean(value: object) -> str:
 
 
 def norm(value: object) -> str:
-    import unicodedata
     s = unicodedata.normalize("NFKD", str(value or "")).encode("ascii", "ignore").decode("ascii").lower()
     return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9%+./ -]+", " ", s)).strip()
 
@@ -108,20 +108,49 @@ def cell_text(cell) -> str:
     return clean(" ".join(bits))
 
 
-def table_rows(soup: BeautifulSoup, required: set[str]) -> list[dict]:
-    """Devuelve filas de la primera tabla cuyos encabezados contienen required."""
+def _header_matches(headers: list[str], required: set[str], forbidden: set[str]) -> bool:
+    if not headers:
+        return False
+    if not all(any(req in h for h in headers) for req in required):
+        return False
+    return not any(any(term in h for h in headers) for term in forbidden)
+
+
+def table_rows(
+    soup: BeautifulSoup,
+    required: set[str],
+    forbidden: set[str] | None = None,
+) -> list[dict]:
+    """Devuelve filas de la primera tabla con un encabezado inequívoco.
+
+    El SLP inserta filas de controles/filtros antes de varios encabezados reales.
+    Por eso se inspeccionan las primeras filas de cada tabla y no se supone que
+    el primer <tr> sea el encabezado.
+    """
+    forbidden = forbidden or set()
     for table in soup.find_all("table"):
         trs = table.find_all("tr")
         if not trs:
             continue
-        headers = [norm(cell_text(x)) for x in trs[0].find_all(["th", "td"])]
-        if not headers or not all(any(req in h for h in headers) for req in required):
+        header_index = None
+        headers: list[str] = []
+        for idx, tr in enumerate(trs[:12]):
+            candidate = [norm(cell_text(x)) for x in tr.find_all(["th", "td"])]
+            if _header_matches(candidate, required, forbidden):
+                header_index = idx
+                headers = candidate
+                break
+        if header_index is None:
             continue
+
         out = []
-        for tr in trs[1:]:
+        for tr in trs[header_index + 1:]:
             cells = tr.find_all(["th", "td"])
             values = [cell_text(x) for x in cells]
             if not any(values):
+                continue
+            normalized_values = [norm(v) for v in values]
+            if _header_matches(normalized_values, required, forbidden):
                 continue
             row = {}
             for i, value in enumerate(values):
@@ -129,9 +158,12 @@ def table_rows(soup: BeautifulSoup, required: set[str]) -> list[dict]:
                 row[key] = value
                 a = cells[i].find("a", href=True) if i < len(cells) else None
                 if a:
-                    row[f"{key}_url"] = requests.compat.urljoin(SESSION.headers.get("Referer", ""), a["href"])
+                    row[f"{key}_url"] = requests.compat.urljoin(
+                        SESSION.headers.get("Referer", ""), a["href"]
+                    )
             out.append(row)
-        return out
+        if out:
+            return out
     return []
 
 
@@ -140,6 +172,16 @@ def pick(row: dict, *needles: str) -> str | None:
         if key.endswith("_url"):
             continue
         nk = norm(key)
+        if all(x in nk for x in needles):
+            return clean(value) or None
+    return None
+
+
+def pick_url(row: dict, *needles: str) -> str | None:
+    for key, value in row.items():
+        if not key.endswith("_url"):
+            continue
+        nk = norm(key[:-4])
         if all(x in nk for x in needles):
             return clean(value) or None
     return None
@@ -157,31 +199,38 @@ def parse_movements(soup: BeautifulSoup) -> list[dict]:
     return out
 
 
-def parse_sanctions(soup: BeautifulSoup) -> list[dict]:
-    rows = table_rows(soup, {"tipo", "aprobacion"})
+def parse_events(soup: BeautifulSoup) -> list[dict]:
+    rows = table_rows(soup, {"fecha", "tipo", "subtipo", "notas"})
     out = []
     for row in rows:
-        numero = pick(row, "nro") or pick(row, "numero")
+        fecha = iso_date(pick(row, "fecha"))
         tipo = pick(row, "tipo")
-        aprobacion = pick(row, "aprobacion")
-        fecha = iso_date(pick(row, "f", "aprob"))
-        if numero or (tipo and aprobacion):
-            out.append({"numero": numero, "tipo": tipo, "aprobacion": aprobacion, "fecha_aprobacion": fecha})
+        subtipo = pick(row, "subtipo")
+        notas = pick(row, "notas")
+        if fecha and tipo:
+            out.append({"fecha": fecha, "tipo": tipo, "subtipo": subtipo, "notas": notas})
     return out
 
 
 def parse_dictamenes(soup: BeautifulSoup) -> list[dict]:
-    rows = table_rows(soup, {"fecha", "tipo", "comision"})
+    rows = table_rows(
+        soup,
+        {"fecha", "tipo", "documento", "firmas", "comision"},
+        forbidden={"hora"},
+    )
     out = []
     for row in rows:
         fecha = iso_date(pick(row, "fecha"))
         tipo = pick(row, "tipo")
         comision = pick(row, "comision")
-        # Evita confundir la tabla de reuniones, que también tiene fecha/tipo/comisión.
-        if any("hora" in norm(k) for k in row):
-            continue
-        if fecha and (tipo or comision):
-            out.append({"fecha": fecha, "tipo": tipo, "comision": comision})
+        if fecha and tipo and comision:
+            out.append({
+                "fecha": fecha,
+                "tipo": tipo,
+                "comision": comision,
+                "documento_url": pick_url(row, "documento"),
+                "firmas_url": pick_url(row, "firmas"),
+            })
     return out
 
 
@@ -203,19 +252,6 @@ def parse_meetings(soup: BeautifulSoup) -> list[dict]:
     return out
 
 
-def parse_events(soup: BeautifulSoup) -> list[dict]:
-    rows = table_rows(soup, {"fecha", "tipo", "subtipo", "notas"})
-    out = []
-    for row in rows:
-        fecha = iso_date(pick(row, "fecha"))
-        tipo = pick(row, "tipo")
-        subtipo = pick(row, "subtipo")
-        notas = pick(row, "notas")
-        if fecha and tipo:
-            out.append({"fecha": fecha, "tipo": tipo, "subtipo": subtipo, "notas": notas})
-    return out
-
-
 def parse_sessions(soup: BeautifulSoup) -> list[dict]:
     rows = table_rows(soup, {"fecha sesion", "tipo sesion", "afirmativos", "negativos"})
     out = []
@@ -223,10 +259,12 @@ def parse_sessions(soup: BeautifulSoup) -> list[dict]:
         fecha = iso_date(pick(row, "fecha", "sesion"))
         if not fecha:
             continue
+
         def as_int(value: str | None) -> int | None:
             if value and re.fullmatch(r"\d+", value.strip()):
                 return int(value)
             return None
+
         out.append({
             "fecha": fecha,
             "tipo": pick(row, "tipo", "sesion"),
@@ -241,19 +279,66 @@ def parse_sessions(soup: BeautifulSoup) -> list[dict]:
     return out
 
 
-def derive_stage(ubicacion: str | None, ultimo: dict | None, sanctions: list[dict], dictamenes: list[dict]) -> str:
+def parse_sanctions(soup: BeautifulSoup) -> list[dict]:
+    rows = table_rows(soup, {"tipo", "aprobacion"}, forbidden={"fecha sesion"})
+    out = []
+    for row in rows:
+        numero = pick(row, "nro") or pick(row, "numero")
+        tipo = pick(row, "tipo")
+        aprobacion = pick(row, "aprobacion")
+        fecha = iso_date(pick(row, "fecha", "aprob")) or iso_date(pick(row, "f", "aprob"))
+        if numero or (tipo and aprobacion):
+            out.append({
+                "numero": numero,
+                "tipo": tipo,
+                "aprobacion": aprobacion,
+                "fecha_aprobacion": fecha,
+                "fuente": "tabla_sanciones",
+            })
+    return out
+
+
+def has_event(events: list[dict], needle: str) -> bool:
+    n = norm(needle)
+    return any(
+        n in norm(" ".join([
+            event.get("tipo") or "",
+            event.get("subtipo") or "",
+            event.get("notas") or "",
+        ]))
+        for event in events
+    )
+
+
+def sanction_evidence(sanctions: list[dict], events: list[dict]) -> bool:
+    return bool(sanctions) or has_event(events, "sancion")
+
+
+def dictamen_evidence(dictamenes: list[dict], events: list[dict]) -> bool:
+    return bool(dictamenes) or has_event(events, "dictamen")
+
+
+def derive_stage(
+    ubicacion: str | None,
+    ultimo: dict | None,
+    giros: list[str],
+    sanctions: list[dict],
+    dictamenes: list[dict],
+    events: list[dict],
+) -> str:
+    """Deriva etapa sólo a partir de evidencia parlamentaria suficientemente fuerte."""
     text = norm(" ".join([
         ubicacion or "",
         (ultimo or {}).get("oficina") or "",
         (ultimo or {}).get("descripcion") or "",
     ]))
-    if sanctions or "sancionad" in text:
+    if sanction_evidence(sanctions, events) or "sancionad" in text:
         return "sancionado"
-    if "archivo" in text:
+    if "archivad" in text or "archivo definitivo" in text:
         return "archivado"
-    if "despacho" in text or dictamenes:
+    if dictamen_evidence(dictamenes, events):
         return "con_dictamen"
-    if "comision" in text:
+    if giros or "comision" in text:
         return "en_comision"
     return "ingresado"
 
@@ -271,23 +356,32 @@ def parse_official_file(project: dict) -> dict | None:
 
     authors = capture(text, "Autor / Coautores", "Adherentes")
     adherents = capture(text, "Adherentes", "Giros")
-    giros = capture(text, "Giros", "Ubicación")
+    giros_raw = capture(text, "Giros", "Ubicación")
     ubicacion = capture(text, "Ubicación", "Origen")
     origen = capture(text, "Origen", "Proyecto de")
     tipo = capture(text, "Proyecto de", "Fecha Inicio")
     fecha_inicio_raw = capture(text, "Fecha Inicio", "Expedientes Hijos")
 
+    giros = split_giros(giros_raw)
     movements = parse_movements(soup)
-    sanctions = parse_sanctions(soup)
-    dictamenes = parse_dictamenes(soup)
-    meetings = parse_meetings(soup)
     events = parse_events(soup)
+    dictamenes = parse_dictamenes(soup)
+    sanctions = parse_sanctions(soup)
+    meetings = parse_meetings(soup)
     sessions = parse_sessions(soup)
 
     ultimo = None
-    m = re.search(r"Último Movimiento\s+(\d{1,2}/\d{1,2}/\d{4})\s+(.*?)\s+\[\s*(.*?)\s*\]\s+Sumario\s*:", text, re.I)
+    m = re.search(
+        r"Último Movimiento\s+(\d{1,2}/\d{1,2}/\d{4})\s+(.*?)\s+\[\s*(.*?)\s*\]\s+Sumario\s*:",
+        text,
+        re.I,
+    )
     if m:
-        ultimo = {"fecha": iso_date(m.group(1)), "oficina": clean(m.group(2)), "descripcion": clean(m.group(3))}
+        ultimo = {
+            "fecha": iso_date(m.group(1)),
+            "oficina": clean(m.group(2)),
+            "descripcion": clean(m.group(3)),
+        }
     elif movements:
         ultimo = movements[0]
 
@@ -300,7 +394,7 @@ def parse_official_file(project: dict) -> dict | None:
         "origen": clean(origen).upper() if origen else None,
         "fecha_inicio": iso_date(fecha_inicio_raw),
         "ubicacion": ubicacion,
-        "giros": split_giros(giros),
+        "giros": giros,
         "autores": split_people(authors),
         "adherentes": split_people(adherents),
         "ultimo_movimiento": ultimo,
@@ -310,8 +404,12 @@ def parse_official_file(project: dict) -> dict | None:
         "reuniones": meetings,
         "eventos_documentales": events,
         "sesiones": sessions,
+        "evidencia_dictamen": dictamen_evidence(dictamenes, events),
+        "evidencia_sancion": sanction_evidence(sanctions, events),
     }
-    result["etapa"] = derive_stage(ubicacion, ultimo, sanctions, dictamenes)
+    result["etapa"] = derive_stage(
+        ubicacion, ultimo, giros, sanctions, dictamenes, events
+    )
     return result
 
 
@@ -319,6 +417,7 @@ def main() -> int:
     if not DATA_PATH.exists():
         print("✘ falta legislatura_publica.json")
         return 1
+
     data = json.loads(DATA_PATH.read_text(encoding="utf-8"))
     projects = data.get("expedientes") or []
     enriched = failed = 0
@@ -343,21 +442,44 @@ def main() -> int:
     summary = data.setdefault("resumen", {})
     summary["expedientes_enriquecidos"] = enriched
     summary["expedientes_ficha_no_disponible"] = failed
-    summary["expedientes_con_dictamen"] = sum(1 for p in projects if (p.get("ficha_oficial") or {}).get("dictamenes"))
-    summary["expedientes_sancionados"] = sum(1 for p in projects if p.get("etapa") == "sancionado")
-    summary["expedientes_con_sesion"] = sum(1 for p in projects if (p.get("ficha_oficial") or {}).get("sesiones"))
+    summary["expedientes_con_dictamen"] = sum(
+        1 for p in projects if (p.get("ficha_oficial") or {}).get("evidencia_dictamen")
+    )
+    summary["dictamenes_detallados"] = sum(
+        len((p.get("ficha_oficial") or {}).get("dictamenes") or []) for p in projects
+    )
+    summary["expedientes_sancionados"] = sum(
+        1 for p in projects if (p.get("ficha_oficial") or {}).get("etapa") == "sancionado"
+    )
+    summary["expedientes_con_sesion"] = sum(
+        1 for p in projects if (p.get("ficha_oficial") or {}).get("sesiones")
+    )
+    summary["etapas_legislativas"] = dict(sorted(stages.items()))
+
     data["version"] = 4
     data["ciclo_legislativo"] = {
         "fuente": "Sistema de Consultas Parlamentarias de la Legislatura CABA",
         "actualizado": dt.datetime.now(dt.timezone.utc).isoformat(),
-        "campos": ["tipo oficial", "origen", "fecha de inicio", "giros", "ubicación", "movimientos", "dictámenes", "reuniones", "sanciones", "sesiones"],
+        "campos": [
+            "tipo oficial", "origen", "fecha de inicio", "giros", "ubicación",
+            "movimientos", "dictámenes", "reuniones", "sanciones", "sesiones",
+        ],
+        "regla_etapa": "basada en evidencia estructurada; despacho administrativo no implica dictamen",
     }
-    DATA_PATH.write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    DATA_PATH.write_text(
+        json.dumps(data, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8",
+    )
 
     print(f"Ciclo legislativo · {enriched}/{len(projects)} expedientes enriquecidos · fallas: {failed}")
     print("  etapas: " + " · ".join(f"{k} {v}" for k, v in sorted(stages.items())))
     print("  tipos oficiales: " + " · ".join(f"{k} {v}" for k, v in sorted(official_types.items())))
-    print(f"  con dictamen: {summary['expedientes_con_dictamen']} · sancionados: {summary['expedientes_sancionados']} · con sesión: {summary['expedientes_con_sesion']}")
+    print(
+        f"  con evidencia de dictamen: {summary['expedientes_con_dictamen']}"
+        f" · dictámenes detallados: {summary['dictamenes_detallados']}"
+        f" · sancionados: {summary['expedientes_sancionados']}"
+        f" · con sesión: {summary['expedientes_con_sesion']}"
+    )
     return 0
 
 

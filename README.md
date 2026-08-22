@@ -90,6 +90,35 @@ Cosas del formato de IDECBA que los parsers ya contemplan:
   índice del mismo mes del año anterior.
 - Las exportaciones se publican en dólares y el gráfico las muestra en millones.
 
+## Núcleo legislativo público
+
+El repositorio también mantiene una capa estructurada de actividad parlamentaria
+de la Legislatura de la Ciudad de Buenos Aires, obtenida exclusivamente de
+fuentes oficiales del Sistema de Consultas Parlamentarias.
+
+| Archivo | Contenido |
+|---|---|
+| `legislatura_publica.json` | agendas, reuniones de comisión, expedientes y ciclo oficial |
+| `estado_legislatura.json` | estado resumido y métricas de la actualización parlamentaria |
+| `sesiones_publicas.json` | sesiones, Labor Parlamentaria, documentos, presentismo, asuntos, sanciones y votaciones nominales |
+| `actualizar_legislatura.py` | agenda y expedientes anunciados oficialmente |
+| `enriquecer_expedientes.py` | ficha oficial y estado actual del expediente |
+| `completar_ciclo_legislativo.py` | hitos históricos respaldados por evidencia oficial |
+| `actualizar_sesiones.py` | sesiones del recinto y resultados de votación |
+| `verificar_legislatura.py` | control del núcleo de agendas y expedientes |
+| `verificar_ciclo_legislativo.py` | control del ciclo de cada expediente |
+| `verificar_sesiones.py` | coherencia de sesiones, quórum, votos, documentos y fuentes |
+
+El workflow legislativo corre dos veces por día hábil. Primero actualiza las
+fuentes, luego ejecuta todos los verificadores y **sólo versiona el resultado si
+la validación completa termina correctamente**. La información de sesiones se
+mantiene separada del núcleo de expedientes para que una variación de formato en
+el recinto no inutilice la agenda de comisiones y viceversa.
+
+Esta capa es deliberadamente pública y descriptiva. No debe contener posiciones
+políticas, recomendaciones, responsables, argumentos de estrategia ni notas
+internas de trabajo.
+
 ## Fuentes
 
 Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (IDECBA),
@@ -97,3 +126,6 @@ Banco de Datos — https://www.estadisticaciudad.gob.ar/eyc/arbol-tematico/
 
 Presupuesto: BA Data, Ministerio de Economía y Finanzas GCBA.
 Censo: INDEC, Censo Nacional 2022.
+
+Legislatura de la Ciudad Autónoma de Buenos Aires, Sistema de Consultas
+Parlamentarias — https://parlamentaria.legislatura.gob.ar/

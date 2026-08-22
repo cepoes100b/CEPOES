@@ -19,11 +19,10 @@ def norm(value) -> str:
     return re.sub(r"\s+", " ", s).strip()
 
 
-def item_key(item: dict) -> tuple[str, str, str, str]:
+def item_key(item: dict) -> tuple[str, str, str]:
     return (
         clean(item.get("id_expediente")),
         clean(item.get("numero_expediente")),
-        norm(item.get("tipo")),
         clean(item.get("descripcion")),
     )
 
@@ -55,14 +54,19 @@ def main() -> int:
     tipos = Counter()
 
     for sesion in sesiones:
-        # Schema 1: el colector guardó GetAsuntoConsideradoItemByIdSesion bajo
-        # la clave histórica `sanciones`. La contrastamos con el endpoint de
-        # asuntos considerados antes de reemplazar esa clave por sanciones reales.
         raw = list(sesion.get("sanciones") or [])
         asuntos = list(sesion.get("asuntos_considerados") or [])
-        if {item_key(x) for x in raw} != {item_key(x) for x in asuntos}:
-            print(f"✘ sesión {sesion.get('id_sesion')}: los dos endpoints de asuntos dejaron de coincidir")
+        raw_map = {item_key(x): x for x in raw}
+        asuntos_map = {item_key(x): x for x in asuntos}
+        if set(raw_map) != set(asuntos_map):
+            print(f"✘ sesión {sesion.get('id_sesion')}: los dos endpoints de asuntos dejaron de coincidir en identidad")
             return 1
+
+        # La identidad viene de expediente+número+descripción. La etiqueta de tipo
+        # se toma del endpoint especializado GetAsuntoConsideradoItemByIdSesion.
+        for key, asunto in asuntos_map.items():
+            asunto["tipo"] = clean(raw_map[key].get("tipo"))
+        sesion["asuntos_considerados"] = asuntos
 
         sanciones = []
         despachos = []
@@ -83,8 +87,6 @@ def main() -> int:
                 print(f"✘ sesión {sesion.get('id_sesion')}: tipo de item de recinto no reconocido: {item.get('tipo')!r}")
                 return 1
 
-        # `asuntos_considerados` queda como la lista canónica de los 662 ítems.
-        # No almacenamos una segunda copia idéntica.
         sesion["sanciones"] = sanciones
         sesion["sanciones_despacho"] = despachos
         sesion["cambios_giro"] = giros
@@ -114,6 +116,8 @@ def main() -> int:
         "regla": "Solo SANCION DE UN EXPEDIENTE alimenta sanciones del expediente",
         "lista_canonica_items": "asuntos_considerados",
         "igualdad_endpoints_verificada": True,
+        "clave_identidad_endpoints": ["id_expediente", "numero_expediente", "descripcion"],
+        "fuente_tipo_item": "GetAsuntoConsideradoItemByIdSesion",
         "tipos_oficiales_observados": dict(sorted(tipos.items())),
         "alcance_sancion": "inicial, definitiva o no_especificada según descripción oficial",
     }
@@ -123,7 +127,7 @@ def main() -> int:
         f"Normalización sesiones · items {total_items} · sanciones expediente {total_exp} · "
         f"sanciones despacho {total_despacho} · cambios giro {total_giro}"
     )
-    print("  endpoints de asuntos: igualdad verificada; se conserva una sola copia canónica")
+    print("  endpoints: identidad coincidente; tipo canónico tomado del servicio especializado")
     print("  alcance sanciones: " + " · ".join(f"{k} {v}" for k, v in sorted(alcances.items())))
     print("  tipos oficiales: " + " · ".join(f"{k} {v}" for k, v in sorted(tipos.items())))
     return 0

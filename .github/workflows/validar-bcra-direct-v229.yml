@@ -31,7 +31,7 @@ jobs:
       - name: Instalar dependencias
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq p7zip-full
+          sudo apt-get install -y -qq p7zip-full poppler-utils
           python -m pip install --disable-pip-version-check requests
 
       - name: Compilar herramientas BCRA
@@ -45,10 +45,26 @@ jobs:
           python inspeccionar_bcra_deudores.py --salida estado_bcra_deudores.json
           cat estado_bcra_deudores.json
 
-      - name: Publicar diagnóstico estructural
+      - name: Extraer diseño oficial del PADRON
+        shell: bash
+        run: |
+          set -euo pipefail
+          ARCHIVO="$(ls bcra_deudores/*PADRON.7Z | head -n 1)"
+          7z e -so "$ARCHIVO" 'LEAME PADRON.pdf' > /tmp/leame_padron.pdf
+          test -s /tmp/leame_padron.pdf
+          pdftotext -layout /tmp/leame_padron.pdf diseno_padron_leame.txt
+          test -s diseno_padron_leame.txt
+          echo '--- INICIO DISEÑO PADRON ---'
+          cat diseno_padron_leame.txt
+          echo '--- FIN DISEÑO PADRON ---'
+          rm -f /tmp/leame_padron.pdf
+
+      - name: Publicar diagnóstico y diseño
         uses: actions/upload-artifact@v4
         with:
           name: diagnostico-bcra-padron-v229
-          path: estado_bcra_deudores.json
+          path: |
+            estado_bcra_deudores.json
+            diseno_padron_leame.txt
           if-no-files-found: error
           retention-days: 7

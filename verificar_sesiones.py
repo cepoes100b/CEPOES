@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Verifica consistencia semántica y privacidad de sesiones_publicas.json."""
-
 from __future__ import annotations
 
 import json
@@ -16,6 +15,7 @@ PRIVATE_KEYS = {
     "notas_internas", "analisis_tecnico", "argumentos", "preguntas",
     "oportunidad", "modificaciones",
 }
+VALID_SANCTION_SCOPE = {"inicial", "definitiva", "no_especificada"}
 
 
 def norm(value) -> str:
@@ -46,9 +46,14 @@ def main() -> None:
         raise SystemExit("✘ falta sesiones_publicas.json")
     data = json.loads(PATH.read_text(encoding="utf-8"))
     issues = []
+    meta = data.get("normalizacion_recinto") or {}
 
-    if data.get("version") != 1:
-        issues.append("version debe ser 1")
+    if data.get("version") != 2:
+        issues.append("version debe ser 2 después de normalizar_sesiones.py")
+    if meta.get("schema") != 2 or not meta.get("igualdad_endpoints_verificada"):
+        issues.append("falta verificación permanente de igualdad entre endpoints de asuntos")
+    if meta.get("lista_canonica_items") != "asuntos_considerados":
+        issues.append("la lista canónica de items de recinto debe ser asuntos_considerados")
     if data.get("resumen", {}).get("fallas") != 0 or data.get("fallas"):
         issues.append("hay fallas de extracción")
 
@@ -60,7 +65,6 @@ def main() -> None:
     sesiones = data.get("sesiones", [])
     if not sesiones:
         issues.append("no hay sesiones")
-
     ids = [str(s.get("id_sesion", "")) for s in sesiones]
     if any(not re.fullmatch(r"\d+", x) for x in ids):
         issues.append("hay id_sesion inválidos")
@@ -68,15 +72,18 @@ def main() -> None:
     if dup:
         issues.append(f"id_sesion duplicados: {', '.join(dup)}")
 
+    alcances = Counter()
+    tipos_raw = Counter()
     for s in sesiones:
         sid = s.get("id_sesion", "?")
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(s.get("fecha", ""))):
             issues.append(f"sesión {sid}: fecha inválida")
-        tipo = s.get("tipo", {})
-        if not tipo.get("descripcion"):
+        if not (s.get("tipo") or {}).get("descripcion"):
             issues.append(f"sesión {sid}: falta tipo")
         if s.get("criterio_realizada") not in {"presentismo_quorum", "documento_labor"}:
             issues.append(f"sesión {sid}: criterio_realizada inválido")
+        if "items_recinto" in s:
+            issues.append(f"sesión {sid}: items_recinto duplica la lista canónica")
 
         for name, doc in (s.get("documentos") or {}).items():
             if doc is None:
@@ -85,7 +92,6 @@ def main() -> None:
                 issues.append(f"sesión {sid}: documento {name} sin id válido")
             if not official_url(doc.get("url", "")):
                 issues.append(f"sesión {sid}: documento {name} con URL no oficial")
-
         for name, url in (s.get("urls") or {}).items():
             if not official_url(url):
                 issues.append(f"sesión {sid}: URL {name} no oficial")
@@ -100,6 +106,41 @@ def main() -> None:
             esperada = p.get("presentes", 0) >= 30
             if s.get("criterio_realizada") == "presentismo_quorum" and bool(s.get("realizada")) != esperada:
                 issues.append(f"sesión {sid}: realizada incoherente con quórum")
+
+        raw = s.get("asuntos_considerados") or []
+        sanctions = s.get("sanciones") or []
+        despacho = s.get("sanciones_despacho") or []
+        giros = s.get("cambios_giro") or []
+        for item in raw:
+            tipos_raw[norm(item.get("tipo")) or "(vacio)"] += 1
+        if len(raw) != len(sanctions) + len(despacho) + len(giros):
+            issues.append(f"sesión {sid}: asuntos considerados no particionados completamente")
+
+        for item in sanctions:
+            if norm(item.get("tipo")) != "sancion de un expediente":
+                issues.append(f"sesión {sid}: sanción de expediente con tipo oficial inesperado")
+            alcance = item.get("alcance")
+            if alcance not in VALID_SANCTION_SCOPE:
+                issues.append(f"sesión {sid}: alcance de sanción inválido {alcance!r}")
+            else:
+                alcances[alcance] += 1
+            if "expediente" not in norm(item.get("descripcion")):
+                issues.append(f"sesión {sid}: sanción sin referencia de expediente en descripción")
+        for item in despacho:
+            if norm(item.get("tipo")) != "sancion de un despacho":
+                issues.append(f"sesión {sid}: sanción de despacho con tipo oficial inesperado")
+        for item in giros:
+            if norm(item.get("tipo")) != "cambio de giro":
+                issues.append(f"sesión {sid}: cambio de giro con tipo oficial inesperado")
+
+        expected_items = {
+            "total": len(raw),
+            "sanciones_expediente": len(sanctions),
+            "sanciones_despacho": len(despacho),
+            "cambios_giro": len(giros),
+        }
+        if (s.get("resumen_items_recinto") or {}) != expected_items:
+            issues.append(f"sesión {sid}: resumen_items_recinto incoherente")
 
         for v in s.get("votaciones_nominales", []):
             vid = v.get("id_votacion", "?")
@@ -128,24 +169,35 @@ def main() -> None:
         "sesiones_realizadas": sum(1 for s in sesiones if s.get("realizada")),
         "registros_presentismo": sum(len(s.get("presentismo", {}).get("registros", [])) for s in sesiones),
         "asuntos_considerados": sum(len(s.get("asuntos_considerados", [])) for s in sesiones),
-        "items_sanciones": sum(len(s.get("sanciones", [])) for s in sesiones),
         "votaciones_asuntos": sum(len(s.get("votaciones_nominales", [])) for s in sesiones),
         "votos_nominales": sum(len(v.get("detalle_nominal", [])) for s in sesiones for v in s.get("votaciones_nominales", [])),
         "expedientes_votados_unicos": len({v.get("id_expediente") for s in sesiones for v in s.get("votaciones_nominales", []) if v.get("id_expediente")}),
         "fallas": 0,
+        "items_recinto": sum(len(s.get("asuntos_considerados", [])) for s in sesiones),
+        "sanciones_expediente": sum(len(s.get("sanciones", [])) for s in sesiones),
+        "sanciones_despacho": sum(len(s.get("sanciones_despacho", [])) for s in sesiones),
+        "cambios_giro": sum(len(s.get("cambios_giro", [])) for s in sesiones),
+        "sanciones_por_alcance": dict(sorted(alcances.items())),
     }
     for key, value in expected.items():
         if resumen.get(key) != value:
             issues.append(f"resumen.{key}: {resumen.get(key)!r} != {value!r}")
+    if "items_sanciones" in resumen:
+        issues.append("resumen.items_sanciones es legado ambiguo y debe eliminarse")
+    if meta.get("tipos_oficiales_observados") != dict(sorted(tipos_raw.items())):
+        issues.append("tipos_oficiales_observados no coincide con asuntos_considerados")
 
     issues.extend(walk_private(data))
-
     print(
         "Sesiones públicas · "
         f"{len(sesiones)} sesiones · {expected['sesiones_realizadas']} realizadas · "
-        f"{expected['votaciones_asuntos']} asuntos votados · "
-        f"{expected['votos_nominales']} votos nominales"
+        f"{expected['votaciones_asuntos']} asuntos votados · {expected['votos_nominales']} votos nominales"
     )
+    print(
+        f"  recinto: {expected['items_recinto']} items canónicos · {expected['sanciones_expediente']} sanciones expediente · "
+        f"{expected['sanciones_despacho']} sanciones despacho · {expected['cambios_giro']} cambios giro"
+    )
+    print("  alcance sanciones: " + " · ".join(f"{k} {v}" for k, v in sorted(alcances.items())))
 
     if issues:
         print(f"✘ {len(issues)} problema(s) — NO se publica")

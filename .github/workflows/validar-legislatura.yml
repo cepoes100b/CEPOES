@@ -22,8 +22,12 @@ jobs:
         run: pip install -r requirements.txt
       - name: Actualizar agenda y expedientes oficiales
         run: python actualizar_legislatura.py
+      - name: Enriquecer fichas y ciclo oficial
+        run: python enriquecer_expedientes.py
       - name: Verificar núcleo legislativo
         run: python verificar_legislatura.py
+      - name: Verificar ciclo legislativo
+        run: python verificar_ciclo_legislativo.py
       - name: Commitear resultado validado si cambió
         run: |
           git config user.name "cepoes-bot"
@@ -33,5 +37,5 @@ jobs:
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "legislatura: validación $(date -u +%F-%H%M)"
+          git commit -m "legislatura: validación ciclo $(date -u +%F-%H%M)"
           git push

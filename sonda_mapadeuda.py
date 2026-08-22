@@ -7,57 +7,54 @@ import requests
 
 URLS = ["https://mapadeladeuda.ar/", "https://mapadeladeuda.ar/informe/"]
 
-PATTERNS = [
-    re.compile(r"https?://[^\"'\\)\s]+", re.I),
-    re.compile(r"(?:/|https?://)[A-Za-z0-9_./?=&%+-]*(?:api|json|csv|geojson|topojson|data|dataset)[A-Za-z0-9_./?=&%+-]*", re.I),
-]
+
+def contexts(text: str, needle: str, radius: int = 1400) -> None:
+    start = 0
+    count = 0
+    while True:
+        pos = text.find(needle, start)
+        if pos < 0:
+            break
+        count += 1
+        print(f"CONTEXT {needle!r} #{count} @ {pos}")
+        print(text[max(0, pos-radius):pos+radius])
+        start = pos + len(needle)
+        if count >= 8:
+            break
 
 
 def main() -> None:
     s = requests.Session()
     s.headers.update({"User-Agent": "CEPOES/1.0 (+https://cepoes.org)"})
-    all_assets: list[str] = []
+    assets = []
     for page in URLS:
         r = s.get(page, timeout=30)
-        print("PAGE", page, r.status_code, r.url, len(r.content), r.headers.get("content-type"))
+        print("PAGE", page, r.status_code, len(r.content))
         r.raise_for_status()
-        src = r.text
-        for attr in ("src", "href"):
-            for m in re.findall(rf'{attr}=[\"\']([^\"\']+)[\"\']', src, flags=re.I):
-                full = urljoin(r.url, m)
-                if any(x in full for x in (".js", "_next", "assets/")):
-                    all_assets.append(full)
-        print("HTML SIGNALS")
-        for pat in PATTERNS:
-            for x in sorted(set(pat.findall(src))):
-                if "mapadeladeuda" in x.lower() or any(k in x.lower() for k in ("api", "json", "csv", "geojson", "data")):
-                    print(" ", x[:1000])
-
-    assets = list(dict.fromkeys(all_assets))
-    print("ASSETS", len(assets))
-    for a in assets:
-        print("ASSET", a)
+        for m in re.findall(r'(?:src|href)=[\"\']([^\"\']+)[\"\']', r.text, flags=re.I):
+            full = urljoin(r.url, m)
+            if ".js" in full:
+                assets.append(full)
+    assets = list(dict.fromkeys(assets))
+    print("JS ASSETS", assets)
 
     for a in assets:
-        try:
-            r = s.get(a, timeout=45)
-            print("FETCH", a, r.status_code, len(r.content), r.headers.get("content-type"))
-            if not r.ok or len(r.content) > 15_000_000:
-                continue
-            text = r.text
-            hits = set()
-            for pat in PATTERNS:
-                hits.update(pat.findall(text))
-            for token in re.findall(r'[\"\']([^\"\']{4,300})[\"\']', text):
-                low = token.lower()
-                if any(k in low for k in ("supabase", "firebase", "api/", "/api", ".json", ".csv", "geojson", "topojson", "periodo", "deudores", "mora", "localidad", "barrio")):
-                    hits.add(token)
-            for h in sorted(hits):
-                low = h.lower()
-                if any(k in low for k in ("api", "json", "csv", "geojson", "topojson", "supabase", "firebase", "periodo", "deudores", "mora", "localidad", "barrio")):
-                    print(" HIT", h[:1200])
-        except Exception as exc:
-            print("ERROR", a, repr(exc))
+        r = s.get(a, timeout=60)
+        print("FETCH", a, r.status_code, len(r.content))
+        r.raise_for_status()
+        text = r.text
+
+        print("JSON-LIKE STRING LITERALS")
+        vals = set()
+        for token in re.findall(r'[\"\']([^\"\']{1,500})[\"\']', text):
+            low = token.lower()
+            if any(k in low for k in (".json", ".geojson", ".csv", "data/", "datos/", "assets/data", "barrio_caba")):
+                vals.add(token)
+        for v in sorted(vals):
+            print(" STRING", v[:1000])
+
+        for needle in ["async function $d", "function $d", "async function Bv", "barrio_caba", "deudores_unicos_total", "monto_mora", "source_geojson", "periodos"]:
+            contexts(text, needle)
 
 
 if __name__ == "__main__":

@@ -8,6 +8,13 @@ on:
       - 'descargar_bcra_deudores.py'
       - 'inspeccionar_bcra_deudores.py'
       - '.github/workflows/validar-bcra-direct-v229.yml'
+  pull_request:
+    branches:
+      - endeudamiento-bcra-v228
+    paths:
+      - 'descargar_bcra_deudores.py'
+      - 'inspeccionar_bcra_deudores.py'
+      - '.github/workflows/validar-bcra-direct-v229.yml'
   workflow_dispatch:
 
 permissions:

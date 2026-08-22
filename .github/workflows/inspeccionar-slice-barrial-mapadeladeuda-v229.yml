@@ -1,0 +1,40 @@
+name: Inspeccionar contrato slice barrial Mapa de la Deuda v2.29
+
+on:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-direct-v229
+    paths:
+      - 'inspeccionar_slice_barrial_mapa.py'
+      - '.github/workflows/inspeccionar-slice-barrial-mapadeladeuda-v229.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: inspeccionar-slice-barrial-mapadeladeuda-v229
+  cancel-in-progress: true
+
+jobs:
+  inspeccionar-slice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar requests
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Compilar inspector
+        run: python -m py_compile inspeccionar_slice_barrial_mapa.py
+      - name: Inspeccionar contrato público
+        run: python inspeccionar_slice_barrial_mapa.py
+      - name: Publicar estructura
+        uses: actions/upload-artifact@v4
+        with:
+          name: estructura-slice-barrial-mapadeladeuda-v229
+          path: estructura_slice_barrial_mapa.json
+          if-no-files-found: error
+          retention-days: 7

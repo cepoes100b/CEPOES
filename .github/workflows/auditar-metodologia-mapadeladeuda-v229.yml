@@ -1,0 +1,47 @@
+name: Auditar metodología territorial Mapa de la Deuda v2.29
+
+on:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-direct-v229
+    paths:
+      - 'auditar_metodologia_mapadeladeuda.py'
+      - '.github/workflows/auditar-metodologia-mapadeladeuda-v229.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auditar-metodologia-mapadeladeuda-v229
+  cancel-in-progress: true
+
+jobs:
+  auditar-metodologia:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --disable-pip-version-check requests playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Compilar auditor
+        run: python -m py_compile auditar_metodologia_mapadeladeuda.py
+
+      - name: Auditar recursos públicos de Mapa de la Deuda
+        run: python auditar_metodologia_mapadeladeuda.py
+
+      - name: Publicar diagnóstico metodológico
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostico-metodologia-mapadeladeuda-v229
+          path: diagnostico_metodologia_mapadeladeuda.json
+          if-no-files-found: error
+          retention-days: 7

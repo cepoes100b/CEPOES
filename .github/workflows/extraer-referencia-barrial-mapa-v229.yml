@@ -1,0 +1,36 @@
+name: Extraer referencia barrial Mapa de la Deuda v2.29
+
+on:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-direct-v229
+    paths:
+      - 'extraer_referencia_barrial_mapa.py'
+      - '.github/workflows/extraer-referencia-barrial-mapa-v229.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  referencia-barrial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar dependencias
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Compilar extractor
+        run: python -m py_compile extraer_referencia_barrial_mapa.py
+      - name: Extraer referencia pública
+        run: python extraer_referencia_barrial_mapa.py
+      - name: Publicar referencia de validación
+        uses: actions/upload-artifact@v4
+        with:
+          name: referencia-barrial-mapa-v229
+          path: referencia_barrial_mapa_2026_06.json
+          if-no-files-found: error
+          retention-days: 7

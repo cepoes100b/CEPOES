@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Segunda fase de auditoría pública de Mapa de la Deuda.
+"""Extrae la referencia barrial pública de Mapa de la Deuda.
 
-Extrae el slice barrial público de CABA como referencia de validación y busca
-indicios públicos del insumo/proceso postal en el bundle y sourcemaps.
+Contrato confirmado el 22/08/2026: `mobile-slices-v2`, con `columns` y `rows`.
 No accede a microdatos ni a recursos autenticados.
 """
-
 from __future__ import annotations
 
 import json
@@ -13,7 +11,6 @@ import re
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin
-
 import requests
 
 HOME = "https://mapadeladeuda.ar/"
@@ -26,41 +23,31 @@ OUT = Path("referencia_barrial_mapa_2026_06.json")
 NEEDLES = [
     "codigo_postal", "código postal", "postal", "pgeocode", "geonames",
     "nominatim", "georef", "geocod", "centroid", "centroide",
-    "postcode", "zip code", "codigo postal", "shapefile", "geojson",
-    "github.com", ".ipynb", ".py", "barrios_caba", "barrio_caba",
+    "postcode", "zip code", "shapefile", "geojson", "github.com",
+    ".ipynb", ".py", "barrios_caba", "barrio_caba",
 ]
-
-GEO_KEYS = ("geo_id", "id", "geography", "geography_id", "geo")
-METRIC_HINTS = (
-    "deud", "mora", "monto", "deuda", "tasa", "incid", "total",
-    "valor", "value", "metric", "situacion", "acreedor",
-)
 
 
 class Scripts(HTMLParser):
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
-        self.srcs: list[str] = []
+        self.srcs = []
 
     def handle_starttag(self, tag, attrs):
-        if tag != "script":
-            return
-        d = dict(attrs)
-        if d.get("src"):
-            self.srcs.append(d["src"])
+        if tag == "script":
+            src = dict(attrs).get("src")
+            if src:
+                self.srcs.append(src)
 
 
-def get_json(s: requests.Session, url: str):
+def get_json(s, url):
     r = s.get(url, timeout=(20, 90))
     r.raise_for_status()
     return r.json()
 
 
-def contexts(text: str, needle: str, radius: int = 180, limit: int = 20):
-    low = text.lower()
-    n = needle.lower()
-    out = []
-    start = 0
+def contexts(text, needle, radius=180, limit=20):
+    low = text.lower(); n = needle.lower(); out = []; start = 0
     while len(out) < limit:
         i = low.find(n, start)
         if i < 0:
@@ -72,110 +59,45 @@ def contexts(text: str, needle: str, radius: int = 180, limit: int = 20):
     return out
 
 
-def row_quality(row: dict) -> int:
-    keys = [str(k).lower() for k in row]
-    score = 0
-    if any(k in row for k in GEO_KEYS):
-        score += 8
-    score += sum(1 for k in keys if any(h in k for h in METRIC_HINTS))
-    return score
+def extract_records(obj):
+    if not isinstance(obj, dict):
+        raise RuntimeError("El slice no es un objeto JSON")
+    if obj.get("contract") != "mobile-slices-v2":
+        raise RuntimeError(f"Contrato inesperado: {obj.get('contract')!r}")
+    columns = obj.get("columns")
+    raw_rows = obj.get("rows")
+    if not isinstance(columns, list) or not isinstance(raw_rows, list):
+        raise RuntimeError("mobile-slices-v2 sin columns/rows")
+    if not columns or not raw_rows:
+        raise RuntimeError("mobile-slices-v2 vacío")
 
-
-def extract_records(slice_obj):
-    """Devuelve la colección territorial del contrato público vigente.
-
-    La inspección estructural del 22/08/2026 confirmó el contrato
-    `mobile-slices-v2`: el slice tiene una clave superior `rows` con exactamente
-    48 registros para `barrio_caba/02`. Se usa ese contrato explícito y se
-    conserva un fallback genérico sólo para detectar cambios futuros.
-    """
-    if isinstance(slice_obj, dict):
-        direct = slice_obj.get("rows")
-        if (
-            isinstance(direct, list)
-            and direct
-            and all(isinstance(x, dict) for x in direct)
-        ):
-            return {
-                "path": "$.rows",
-                "origin": "mobile-slices-v2",
-                "score": 1000,
-            }, [dict(x) for x in direct]
-
-    candidates = []
-
-    def add_candidate(path: str, rows: list[dict], origin: str) -> None:
-        if not rows:
-            return
-        quality = sum(row_quality(r) for r in rows[: min(20, len(rows))])
-        # Penalizar fuerte colecciones que no estén cerca del universo de 48.
-        if 40 <= len(rows) <= 60:
-            size_bonus = 200 - abs(len(rows) - 48) * 5
+    rows = []
+    for i, raw in enumerate(raw_rows):
+        if isinstance(raw, dict):
+            row = dict(raw)
+        elif isinstance(raw, list):
+            if len(raw) != len(columns):
+                raise RuntimeError(
+                    f"Fila {i} tiene {len(raw)} valores y columns tiene {len(columns)}"
+                )
+            row = dict(zip(columns, raw))
         else:
-            size_bonus = -100 - abs(len(rows) - 48)
-        explicit_geo = sum(
-            1 for r in rows[: min(20, len(rows))]
-            if any(k in r and str(r.get(k, "")).strip() for k in GEO_KEYS)
-        )
-        score = quality + size_bonus + explicit_geo * 3
-        candidates.append((score, -abs(len(rows) - 48), path, origin, rows))
-
-    def visit(node, path: str = "$", depth: int = 0) -> None:
-        if depth > 7:
-            return
-
-        if isinstance(node, list):
-            dict_rows = [x for x in node if isinstance(x, dict)]
-            if dict_rows and len(dict_rows) >= max(1, int(len(node) * 0.8)):
-                add_candidate(path, [dict(x) for x in dict_rows], "list")
-            for i, child in enumerate(node[:100]):
-                if isinstance(child, (dict, list)):
-                    visit(child, f"{path}[{i}]", depth + 1)
-            return
-
-        if not isinstance(node, dict):
-            return
-
-        dict_items = [(k, v) for k, v in node.items() if isinstance(v, dict)]
-        if len(dict_items) >= 2 and len(dict_items) >= int(len(node) * 0.7):
-            rows = []
-            for key, value in dict_items:
-                row = dict(value)
-                if not any(k in row for k in GEO_KEYS):
-                    row["geo_id"] = str(key)
-                rows.append(row)
-            add_candidate(path, rows, "dict_indexed")
-
-        for key, child in node.items():
-            if isinstance(child, (dict, list)):
-                visit(child, f"{path}.{key}", depth + 1)
-
-    visit(slice_obj)
-    if not candidates:
-        top = list(slice_obj.keys())[:100] if isinstance(slice_obj, dict) else []
-        raise RuntimeError(
-            "No se encontró una colección de geografías en el slice barrial; "
-            f"tipo={type(slice_obj).__name__}, claves_superiores={top}"
-        )
-
-    candidates.sort(reverse=True, key=lambda x: (x[0], x[1]))
-    score, _distance, path, origin, rows = candidates[0]
-    return {"path": path, "origin": origin, "score": score}, rows
+            raise RuntimeError(f"Tipo de fila no soportado en {i}: {type(raw).__name__}")
+        rows.append(row)
+    return {"path": "$.rows", "origin": "mobile-slices-v2", "columns": columns}, rows
 
 
-def collect_lookup_barrios(lookup_obj):
-    """Recupera barrios del lookup aunque estén anidados."""
-    encontrados = {}
-
-    def visit(node, depth: int = 0):
+def collect_lookup_barrios(obj):
+    found = {}
+    def visit(node, depth=0):
         if depth > 8:
             return
         if isinstance(node, dict):
             level = str(node.get("level") or node.get("nivel") or "")
             scope = str(node.get("scope") or node.get("scope_id") or "")
             gid = node.get("geo_id") or node.get("id")
-            if level == "barrio_caba" and (scope in ("", "02")) and gid is not None:
-                encontrados[str(gid)] = node
+            if level == "barrio_caba" and scope in ("", "02") and gid is not None:
+                found[str(gid)] = node
             for child in node.values():
                 if isinstance(child, (dict, list)):
                     visit(child, depth + 1)
@@ -183,151 +105,105 @@ def collect_lookup_barrios(lookup_obj):
             for child in node:
                 if isinstance(child, (dict, list)):
                     visit(child, depth + 1)
+    visit(obj)
+    return found
 
-    visit(lookup_obj)
-    return encontrados
+
+def audit_bundle(s):
+    home = s.get(HOME, timeout=(20, 60)); home.raise_for_status()
+    parser = Scripts(); parser.feed(home.text)
+    result = []
+    for raw_url in parser.srcs:
+        url = urljoin(HOME, raw_url)
+        try:
+            r = s.get(url, timeout=(20, 90)); r.raise_for_status()
+            text = r.text
+        except Exception as e:
+            result.append({"url": url, "error": str(e)})
+            continue
+        hits = {n: c for n in NEEDLES if (c := contexts(text, n))}
+        sourcemaps = []
+        candidates = []
+        m = re.search(r"sourceMappingURL\s*=\s*([^\s*]+)", text)
+        if m:
+            candidates.append(urljoin(url, m.group(1).strip()))
+        if url.endswith(".js"):
+            candidates.append(url + ".map")
+        for sm_url in dict.fromkeys(candidates):
+            try:
+                rr = s.get(sm_url, timeout=(15, 45), allow_redirects=True)
+                sourcemaps.append({
+                    "url": sm_url,
+                    "status": rr.status_code,
+                    "content_type": rr.headers.get("content-type", ""),
+                    "bytes": len(rr.content),
+                })
+            except Exception as e:
+                sourcemaps.append({"url": sm_url, "error": str(e)})
+        result.append({"url": url, "bytes": len(r.content), "indicios": hits, "sourcemaps": sourcemaps})
+    return result
 
 
 def main():
     s = requests.Session()
-    s.headers.update({"User-Agent": "CEPOES-public-method-audit/2.2"})
-
-    barrios = get_json(s, BARRIOS_URL)
+    s.headers.update({"User-Agent": "CEPOES-public-method-audit/3.0"})
+    slice_obj = get_json(s, BARRIOS_URL)
     lookup = get_json(s, LOOKUP_URL)
-    collection_meta, rows = extract_records(barrios)
+    collection, rows = extract_records(slice_obj)
     lookup_barrios = collect_lookup_barrios(lookup)
 
+    aliases = slice_obj.get("aliases") or {}
+    normalized = []
     ids = []
-    normalized_rows = []
     for row in rows:
-        gid = str(
-            row.get("geo_id") or row.get("id") or row.get("geography")
-            or row.get("geography_id") or row.get("geo") or ""
-        )
+        gid = str(row.get("geo_id") or "")
         ids.append(gid)
         geo = lookup_barrios.get(gid, {})
-        normalized_rows.append({
+        metrics_expanded = {}
+        for key, value in row.items():
+            if key == "geo_id":
+                continue
+            metrics_expanded[aliases.get(key, key)] = value
+        normalized.append({
             "geo_id": gid,
-            "nombre": (
-                geo.get("nombre") or geo.get("name")
-                or row.get("nombre") or row.get("name")
-            ),
+            "nombre": geo.get("nombre") or geo.get("name"),
             "bbox": geo.get("bbox"),
             "source": geo.get("source"),
             "source_layer": geo.get("source_layer"),
-            "metricas_publicas": row,
-        })
-
-    home = s.get(HOME, timeout=(20, 60))
-    home.raise_for_status()
-    parser = Scripts()
-    parser.feed(home.text)
-    js_urls = [urljoin(HOME, x) for x in parser.srcs if x]
-
-    bundle_audit = []
-    for url in js_urls:
-        try:
-            r = s.get(url, timeout=(20, 90))
-            r.raise_for_status()
-            text = r.text
-        except Exception as e:
-            bundle_audit.append({"url": url, "error": str(e)})
-            continue
-
-        found = {}
-        for n in NEEDLES:
-            cc = contexts(text, n)
-            if cc:
-                found[n] = cc
-
-        sm = re.search(r"sourceMappingURL\s*=\s*([^\s*]+)", text)
-        sm_urls = []
-        if sm:
-            sm_urls.append(urljoin(url, sm.group(1).strip()))
-        if url.endswith(".js"):
-            sm_urls.append(url + ".map")
-
-        sourcemaps = []
-        for sm_url in dict.fromkeys(sm_urls):
-            try:
-                rr = s.get(sm_url, timeout=(15, 45), allow_redirects=True)
-                ct = rr.headers.get("content-type", "")
-                entry = {
-                    "url": sm_url,
-                    "status": rr.status_code,
-                    "content_type": ct,
-                    "bytes": len(rr.content),
-                }
-                if rr.status_code == 200 and (
-                    "json" in ct.lower() or rr.text.lstrip().startswith("{")
-                ):
-                    sm_text = rr.text
-                    hits = {}
-                    for n in NEEDLES:
-                        cc = contexts(sm_text, n, radius=220, limit=30)
-                        if cc:
-                            hits[n] = cc
-                    entry["indicios"] = hits
-                    try:
-                        sm_obj = rr.json()
-                        entry["sources_count"] = (
-                            len(sm_obj.get("sources", []))
-                            if isinstance(sm_obj, dict) else None
-                        )
-                        entry["sources_relevantes"] = [
-                            x for x in sm_obj.get("sources", [])
-                            if isinstance(x, str)
-                            and any(
-                                n.lower() in x.lower()
-                                for n in ("postal", "geo", "barrio", "deuda", "data")
-                            )
-                        ][:200]
-                    except Exception:
-                        pass
-                sourcemaps.append(entry)
-            except Exception as e:
-                sourcemaps.append({"url": sm_url, "error": str(e)})
-
-        bundle_audit.append({
-            "url": url,
-            "bytes": len(r.content),
-            "indicios": found,
-            "sourcemaps": sourcemaps,
+            "metricas_publicas": metrics_expanded,
         })
 
     payload = {
-        "schema": "cepoes-mapadeladeuda-barrio-reference-v3",
+        "schema": "cepoes-mapadeladeuda-barrio-reference-v4",
         "period": PERIOD,
         "source_slice": BARRIOS_URL,
         "source_lookup": LOOKUP_URL,
-        "slice_contract": barrios.get("contract") if isinstance(barrios, dict) else None,
-        "slice_collection": collection_meta,
+        "slice_contract": slice_obj.get("contract"),
+        "slice_collection": collection,
+        "kpis_caba": slice_obj.get("kpis"),
+        "metricas": slice_obj.get("metrics"),
+        "aliases": aliases,
         "barrios_en_slice": len(rows),
         "barrios_en_lookup": len(lookup_barrios),
         "ids_unicos": len(set(ids)),
         "ids_vacios": sum(1 for x in ids if not x),
         "ids_sin_lookup": sorted(x for x in set(ids) - set(lookup_barrios) if x),
-        "barrios": normalized_rows,
-        "auditoria_bundle": bundle_audit,
-        "nota": (
-            "Los valores barriales son referencia pública para validar una futura "
-            "réplica; no se usan para asignar personas a barrios."
-        ),
+        "barrios": normalized,
+        "auditoria_bundle": audit_bundle(s),
+        "nota": "Referencia pública de validación; no se usa como mecanismo de asignación de personas a barrios.",
     }
-    OUT.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-
+    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps({
-        "slice_contract": payload["slice_contract"],
-        "slice_collection": collection_meta,
+        "contract": payload["slice_contract"],
         "barrios_en_slice": payload["barrios_en_slice"],
         "barrios_en_lookup": payload["barrios_en_lookup"],
         "ids_unicos": payload["ids_unicos"],
         "ids_vacios": payload["ids_vacios"],
         "ids_sin_lookup": payload["ids_sin_lookup"],
-        "bundles": len(bundle_audit),
+        "kpis_caba": payload["kpis_caba"],
     }, ensure_ascii=False, indent=2))
+    if len(rows) != 48 or len(set(ids)) != 48 or payload["ids_sin_lookup"]:
+        raise SystemExit("La referencia barrial no validó exactamente 48 barrios")
     print(f"OK -> {OUT}")
 
 

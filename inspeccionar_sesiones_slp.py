@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Inspección no destructiva del buscador oficial de sesiones del SLP.
 
-Objetivo de v2.24: descubrir, sin adivinar IDs ni parámetros ASP.NET, los
-controles reales que implementan la búsqueda de sesiones en
+Objetivo de v2.24: descubrir, sin adivinar IDs, endpoints ni payloads, los
+controles y JavaScript reales que implementan la búsqueda de sesiones en
 ExpedienteBusqueda.aspx. Este script NO publica datos ni envía formularios:
-solo hace GET a la fuente oficial y muestra una sonda estructural en stdout.
+solo hace GET a recursos oficiales y muestra una sonda estructural en stdout.
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 import requests
 from bs4 import BeautifulSoup
@@ -31,6 +31,13 @@ KEYWORDS = (
     "sanciones de la sesion",
     "sanciones de la sesión",
 )
+NEEDLES = (
+    "advanced-search-sesiones",
+    "txtFechaSesionDesde",
+    "txtFechaSesionHasta",
+    "sesiones-avanzado",
+)
+ALLOWED_HOST_SUFFIXES = ("legislatura.gob.ar",)
 
 
 def clean(value: str | None) -> str:
@@ -39,7 +46,7 @@ def clean(value: str | None) -> str:
 
 def relevant(text: str) -> bool:
     low = text.casefold()
-    return any(k.casefold() in low for k in KEYWORDS)
+    return any(k.casefold() in low for k in KEYWORDS) or any(n.casefold() in low for n in NEEDLES)
 
 
 def context_text(tag) -> str:
@@ -82,6 +89,56 @@ def control_record(tag) -> dict:
     return rec
 
 
+def allowed_official(url: str) -> bool:
+    host = (urlparse(url).hostname or "").lower()
+    return any(host == suffix or host.endswith("." + suffix) for suffix in ALLOWED_HOST_SUFFIXES)
+
+
+def snippets(text: str, needle: str, radius: int = 850) -> list[str]:
+    found: list[str] = []
+    low = text.casefold()
+    target = needle.casefold()
+    start = 0
+    while len(found) < 8:
+        pos = low.find(target, start)
+        if pos < 0:
+            break
+        a = max(0, pos - radius)
+        b = min(len(text), pos + len(needle) + radius)
+        found.append(clean(text[a:b]))
+        start = pos + len(target)
+    return found
+
+
+def inspect_script(session: requests.Session, src: str) -> dict:
+    rec: dict = {"src": src, "status": None, "bytes": 0, "coincidencias": {}}
+    if not allowed_official(src):
+        rec["omitido"] = "host no oficial"
+        return rec
+    try:
+        r = session.get(src, headers={"User-Agent": UA}, timeout=45)
+        rec["status"] = r.status_code
+        rec["bytes"] = len(r.content)
+        if r.ok:
+            text = r.text
+            for needle in NEEDLES:
+                hits = snippets(text, needle)
+                if hits:
+                    rec["coincidencias"][needle] = hits
+            # También capturamos líneas que nombren sesiones/Labor si este JS
+            # ya resultó vinculado a alguno de los controles objetivo.
+            if rec["coincidencias"]:
+                extra = []
+                for raw_line in text.splitlines():
+                    line = clean(raw_line)
+                    if line and relevant(line):
+                        extra.append(line[:1800])
+                rec["lineas_relevantes"] = list(dict.fromkeys(extra))[:120]
+    except requests.RequestException as exc:
+        rec["error"] = f"{type(exc).__name__}: {exc}"
+    return rec
+
+
 def main() -> None:
     session = requests.Session()
     r = session.get(URL, headers={"User-Agent": UA}, timeout=45)
@@ -104,20 +161,33 @@ def main() -> None:
     controls = [control_record(t) for t in soup.find_all(["input", "button", "select", "textarea"])]
     candidates = []
     for rec in controls:
-        searchable = " ".join(
-            str(rec.get(k, "")) for k in ("id", "name", "value", "contexto")
-        )
+        searchable = " ".join(str(rec.get(k, "")) for k in ("id", "name", "value", "contexto"))
         if relevant(searchable):
             candidates.append(rec)
 
-    scripts = []
+    inline_scripts = []
+    script_sources = []
     for script in soup.find_all("script"):
+        src = clean(script.get("src", ""))
+        if src:
+            script_sources.append(urljoin(URL, src))
+            continue
         text = script.string or script.get_text("\n", strip=False) or ""
         for raw_line in text.splitlines():
             line = clean(raw_line)
             if line and relevant(line):
-                scripts.append(line[:1000])
-    scripts = list(dict.fromkeys(scripts))[:120]
+                inline_scripts.append(line[:1800])
+    inline_scripts = list(dict.fromkeys(inline_scripts))[:160]
+    script_sources = list(dict.fromkeys(script_sources))
+
+    inspected_scripts = [inspect_script(session, src) for src in script_sources]
+    inspected_scripts = [x for x in inspected_scripts if x.get("coincidencias") or x.get("error")]
+
+    inline_snippets = {}
+    for needle in NEEDLES:
+        hits = snippets(html, needle)
+        if hits:
+            inline_snippets[needle] = hits
 
     links = []
     for a in soup.find_all("a", href=True):
@@ -137,7 +207,10 @@ def main() -> None:
         "formularios": forms,
         "controles_totales": len(controls),
         "controles_candidatos_sesiones": candidates,
-        "lineas_script_candidatas": scripts,
+        "script_src_totales": script_sources,
+        "lineas_script_inline_candidatas": inline_scripts,
+        "snippets_html_controles": inline_snippets,
+        "scripts_externos_con_coincidencias": inspected_scripts,
         "links_candidatos": links,
     }
 

@@ -1,0 +1,48 @@
+name: Diagnosticar fuente dinámica registros BCRA v2.29
+
+on:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-direct-v229
+    paths:
+      - diagnosticar_fuente_registros_bcra.py
+      - .github/workflows/diagnosticar-fuente-registros-bcra-v229.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnosticar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar Playwright
+        run: |
+          python -m pip install --disable-pip-version-check playwright
+          python -m playwright install --with-deps chromium
+      - name: Inspeccionar tráfico público BCRA
+        run: python diagnosticar_fuente_registros_bcra.py
+      - name: Mostrar endpoints dinámicos
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('diagnostico_fuentes_registros_bcra.json', encoding='utf-8'))
+          for k,v in x['paginas'].items():
+              print('\n', k)
+              for r in v['requests']:
+                  if r['resource_type'] in ('xhr','fetch'):
+                      print(r['method'], r['url'])
+              print('scripts:')
+              for s in v['scripts']:
+                  print(s)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: diagnostico-fuentes-registros-bcra-v229
+          path: diagnostico_fuentes_registros_bcra.json
+          retention-days: 7

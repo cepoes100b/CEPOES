@@ -6,6 +6,7 @@ on:
       - endeudamiento-bcra-direct-v229
     paths:
       - probar_geolocalizacion_cp_badata.py
+      - probar_geolocalizacion_cp_badata_v2.py
       - .github/workflows/probar-geolocalizacion-cp-badata-v229.yml
   workflow_dispatch:
 
@@ -30,7 +31,7 @@ jobs:
 
       - name: Instalar dependencias livianas
         run: |
-          python -m pip install --disable-pip-version-check requests pmtiles mapbox-vector-tile shapely
+          python -m pip install --disable-pip-version-check requests pmtiles mapbox-vector-tile shapely openpyxl
 
       - name: Recuperar agregado CP ya calculado
         uses: actions/download-artifact@v4
@@ -53,8 +54,8 @@ jobs:
           print('Entrada agregada:', len(x['agregado_cp_1000_1499']['filas']), 'CP')
           PY
 
-      - name: Probar CP → puntos oficiales BA Data → barrios de Mapa
-        run: python probar_geolocalizacion_cp_badata.py
+      - name: Probar CP → APH BA Data → barrios de Mapa
+        run: python probar_geolocalizacion_cp_badata_v2.py
 
       - name: Validar diagnóstico
         run: |
@@ -63,7 +64,9 @@ jobs:
           x=json.load(open('diagnostico_geolocalizacion_cp_badata.json', encoding='utf-8'))
           assert x['privacidad']['microdatos_bcra_arca_leidos'] is False
           assert x['privacidad']['identificadores_personales_leidos'] is False
-          assert x['fuentes']['badata_mobiliario_urbano']['filas_validas_cp_coord'] >= 500
+          m=x['fuentes']['badata_mobiliario_urbano']
+          assert m['dataset'] == 'Registro Acumulado de Áreas de Protección Histórica'
+          assert m['filas_validas_cp_coord'] >= 1000
           assert x['controles']['cp_badata_con_barrio_mapa'] >= 30
           assert len(x['resultados']) == 4
           print(json.dumps(x['ranking_exploratorio'], ensure_ascii=False, indent=2))

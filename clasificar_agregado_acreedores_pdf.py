@@ -119,7 +119,10 @@ def main() -> int:
     print(f"  {len(emisoras)} códigos", flush=True)
 
     print("Descargando registro PDF de otros PNFC...", flush=True)
-    opnfc = codigos_primera_columna_pdf(descargar(URL_OPNFC), 250, "otros PNFC")
+    # Control de integridad, no cardinalidad esperada exacta. La corrida del
+    # 22/08/2026 extrajo 91 códigos del PDF oficial vigente; un umbral 80 permite
+    # detectar respuestas truncadas sin asumir que el registro debe tener 250 filas.
+    opnfc = codigos_primera_columna_pdf(descargar(URL_OPNFC), 80, "otros PNFC")
     print(f"  {len(opnfc)} códigos", flush=True)
 
     ambos_pnfc = emisoras & opnfc

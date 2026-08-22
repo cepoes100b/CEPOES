@@ -1,9 +1,8 @@
 """Actualiza el núcleo público del seguimiento legislativo de CEPOES.
 
 Fuentes: sitios oficiales de la Legislatura de la Ciudad Autónoma de Buenos Aires.
-El archivo resultante contiene sólo información parlamentaria pública y clasificación
- temática descriptiva. No contiene recomendaciones políticas, posiciones de voto ni
-notas internas de CEPOES.
+El resultado contiene sólo información parlamentaria pública y clasificación temática
+descriptiva. No contiene recomendaciones políticas, posiciones de voto ni notas internas.
 """
 from __future__ import annotations
 
@@ -27,7 +26,7 @@ MAIN_AGENDA = f"{HOST}/AgendaLCABA"
 HOME = f"{HOST}/"
 CALENDAR = "https://parlamentaria.legislatura.gob.ar/pages/calendar.aspx"
 AGENDA_TMPL = f"{HOST}/AgendaLCABA/{{}}"
-SEED_AGENDA_ID = 4790  # agenda oficial del 20/08/2026; el estado luego avanza solo
+SEED_AGENDA_ID = 4790
 PAST_DAYS = 21
 FUTURE_DAYS = 35
 KEEP_DAYS = 180
@@ -39,15 +38,17 @@ MONTHS = {
     "diciembre": 12,
 }
 
+# Términos deliberadamente conservadores: se evita, por ejemplo, usar "fiscal" a secas
+# (puede referir a un fiscal judicial) o "colectivo" a secas (puede ser un grupo social).
 TOPICS = {
-    "presupuesto": ["presupuesto", "credito", "tribut", "impuesto", "fiscal", "hacienda", "financ"],
+    "presupuesto": ["presupuesto", "credito presupuest", "tribut", "impuesto", "hacienda", "financ", "agip", "deuda publica"],
     "salud": ["salud", "hospital", "cesac", "sanitari", "medic", "enfermed", "farmac", "vacun"],
-    "educacion": ["educacion", "escuela", "escolar", "docent", "univers", "jardin", "estudiant"],
+    "educacion": ["educacion", "escuela", "escolar", "docent", "univers", "jardin", "estudiant", "beca estudiantil"],
     "trabajo": ["trabajo", "empleo", "laboral", "licencia", "sindical", "formacion profesional"],
     "produccion": ["desarrollo econom", "pyme", "comerc", "industr", "productiv", "emprend", "economia"],
     "vivienda": ["vivienda", "alquiler", "inquilin", "habitacional", "urbaniz", "inmueble"],
     "urbanismo": ["planeamiento", "codigo urbanistico", "urbanismo", "uso del suelo", "edific"],
-    "movilidad": ["transporte", "subte", "colectivo", "movilidad", "transito", "biciclet", "ferrocarr"],
+    "movilidad": ["transporte", "subte", "movilidad", "transito", "biciclet", "ferrocarr", "linea de colectivo", "colectivos de pasajeros"],
     "ambiente": ["ambient", "residuo", "recicl", "arbol", "espacio verde", "higiene urbana"],
     "seguridad": ["seguridad", "policia", "delito", "emergencia", "bombero", "prevencion"],
     "desarrollo_social": ["promocion social", "desarrollo humano", "asistencia", "vulnerab", "pobreza"],
@@ -67,7 +68,7 @@ PRIORITY_COMMISSION_TERMS = [
 
 SESSION = requests.Session()
 SESSION.headers.update({
-    "User-Agent": "CEPOES-observatorio-legislativo/1.1 (+https://cepoes.org)",
+    "User-Agent": "CEPOES-observatorio-legislativo/1.2 (+https://cepoes.org)",
     "Accept-Language": "es-AR,es;q=0.9,en;q=0.5",
 })
 
@@ -94,13 +95,10 @@ def get(url: str) -> requests.Response | None:
 def parse_spanish_date(text: str) -> dt.date | None:
     t = norm(text)
     m = re.search(r"(?:lunes|martes|miercoles|jueves|viernes|sabado|domingo)?\s*(\d{1,2})\s+de\s+([a-z]+)\s+de\s+(20\d{2})", t)
-    if not m:
-        return None
-    month = MONTHS.get(m.group(2))
-    if not month:
+    if not m or m.group(2) not in MONTHS:
         return None
     try:
-        return dt.date(int(m.group(3)), month, int(m.group(1)))
+        return dt.date(int(m.group(3)), MONTHS[m.group(2)], int(m.group(1)))
     except ValueError:
         return None
 
@@ -144,27 +142,34 @@ def classify_project(number: str, summary: str) -> tuple[str, list[str], str]:
         typ = "declaracion"
     else:
         typ = "otro"
-    topics = []
-    for topic, terms in TOPICS.items():
-        if any(term in s for term in terms):
-            topics.append(topic)
+    topics = [topic for topic, terms in TOPICS.items() if any(term in s for term in terms)]
     if typ in {"ley", "pedido_informes"} and topics:
-        prio = "alta"
+        priority = "alta"
     elif typ in {"ley", "pedido_informes"} or topics:
-        prio = "media"
+        priority = "media"
     else:
-        prio = "baja"
-    return typ, topics, prio
+        priority = "baja"
+    return typ, topics, priority
+
+
+def is_parliamentary_meeting(meeting: dict) -> bool:
+    """Deja sólo actividad parlamentaria: comisiones/juntas/audiencias/Labor.
+
+    La agenda institucional incluye también protocolo, actos, programas y reuniones
+    administrativas. Esos eventos son reales, pero no pertenecen al radar legislativo.
+    """
+    name = norm(meeting.get("comision"))
+    kind = meeting.get("tipo_reunion")
+    if not name or name == "sin identificar":
+        return False
+    if name.startswith("direccion general") or name.startswith("programa la legislatura"):
+        return False
+    if "labor parlamentaria" in name or name.startswith("junta "):
+        return True
+    return kind in {"asesores", "diputados", "audiencia_publica"}
 
 
 def parse_detail(meeting: dict) -> tuple[dict, list[dict]]:
-    """Completa una reunión desde su página de detalle oficial.
-
-    La agenda pública cambió su estructura HTML: los datos de la reunión y el enlace
-    al detalle no son necesariamente hermanos directos del encabezado H3. Por eso la
-    página de agenda se usa sólo para descubrir URLs/IDs y esta función toma el detalle
-    como fuente canónica de comisión, tipo, hora, cantidad y expedientes.
-    """
     url = meeting.get("url")
     if not url:
         meeting["detalle_disponible"] = False
@@ -179,31 +184,29 @@ def parse_detail(meeting: dict) -> tuple[dict, list[dict]]:
     soup = BeautifulSoup(r.text, "html.parser")
     meeting["detalle_disponible"] = True
     full_text = clean(soup.get_text(" ", strip=True))
-
     aid, mid = detail_ids_from_url(r.url)
     if aid:
         meeting["agenda_id"] = aid
     if mid:
         meeting["id"] = mid
 
-    # Comisión / organismo: el primer H3 del cuerpo de detalle es el rótulo oficial.
     detail_h3 = None
     for h3 in soup.find_all("h3"):
         t = clean(h3.get_text(" ", strip=True))
         nt = norm(t)
-        if t and ("comision" in nt or "junta" in nt or "labor parlamentaria" in nt or "direccion general" in nt):
+        if t and ("comision" in nt or "junta" in nt or "labor parlamentaria" in nt or "direccion general" in nt or "programa la legislatura" in nt):
             detail_h3 = h3
             break
     if detail_h3:
         title = clean(detail_h3.get_text(" ", strip=True))
-        commission = re.sub(r"^Comisión:\s*", "", title, flags=re.I).strip()
-        meeting["comision"] = commission
+        meeting["comision"] = re.sub(r"^Comisión:\s*", "", title, flags=re.I).strip()
 
+    meeting["tipo_reunion"] = None
     for pat, label in [
         (r"Reunión de Asesores", "asesores"),
         (r"Reunión de Diputados", "diputados"),
-        (r"Reunión Especial", "especial"),
         (r"Audiencia Pública", "audiencia_publica"),
+        (r"Reunión Especial", "especial"),
         (r"\bOtros\b", "otros"),
     ]:
         if re.search(pat, full_text, re.I):
@@ -211,8 +214,7 @@ def parse_detail(meeting: dict) -> tuple[dict, list[dict]]:
             break
 
     mt = re.search(r"Hora Reunión\s*:\s*(\d{1,2}:\d{2})", full_text, re.I)
-    if mt:
-        meeting["hora"] = mt.group(1)
+    meeting["hora"] = mt.group(1) if mt else None
     mc = re.search(r"Esta reunión tratará\s+(\d+)\s+Expedientes?", full_text, re.I)
     meeting["expedientes_anunciados"] = int(mc.group(1)) if mc else 0
     meeting["seguimiento_cepoes"] = any(k in norm(meeting.get("comision")) for k in PRIORITY_COMMISSION_TERMS)
@@ -225,8 +227,7 @@ def parse_detail(meeting: dict) -> tuple[dict, list[dict]]:
         headers = [norm(x.get_text(" ", strip=True)) for x in first.find_all(["td", "th"])]
         if not (any("numero" in h for h in headers) and any("sumario" in h for h in headers)):
             continue
-        rows = table.find_all("tr")
-        for tr in rows[1:]:
+        for tr in table.find_all("tr")[1:]:
             tds = tr.find_all(["td", "th"])
             cells = [clean(td.get_text(" ", strip=True)) for td in tds]
             if len(cells) < 2:
@@ -235,19 +236,18 @@ def parse_detail(meeting: dict) -> tuple[dict, list[dict]]:
             author = cells[2] if len(cells) > 2 else ""
             if not re.search(r"\d", number) or not summary:
                 continue
-            typ, topics, prio = classify_project(number, summary)
+            typ, topics, priority = classify_project(number, summary)
             project_url = None
-            if tds:
-                a = tds[0].find("a", href=True)
-                if a:
-                    project_url = urljoin(r.url, a["href"])
+            a = tds[0].find("a", href=True) if tds else None
+            if a:
+                project_url = urljoin(r.url, a["href"])
             projects.append({
                 "numero": number,
                 "sumario": summary,
                 "autor": author,
                 "tipo_estimado": typ,
                 "temas": topics,
-                "prioridad_tecnica": prio,
+                "prioridad_tecnica": priority,
                 "url_expediente": project_url,
                 "fuente_reunion": r.url,
                 "reunion_id": meeting.get("id"),
@@ -255,17 +255,11 @@ def parse_detail(meeting: dict) -> tuple[dict, list[dict]]:
                 "fecha_reunion": meeting.get("fecha"),
             })
         break
-
     meeting["expedientes_detallados"] = len(projects)
     return meeting, projects
 
 
 def parse_agenda_page(agenda_id: int) -> tuple[dict | None, list[dict]]:
-    """Descubre las reuniones por sus enlaces de detalle, no por la jerarquía visual.
-
-    Esto evita depender de la estructura de tarjetas/divs de la agenda, que puede cambiar
-    sin que cambien las URLs estables AgendaLCABADetalle/<agenda>/<reunion>.
-    """
     r = get(AGENDA_TMPL.format(agenda_id))
     if not r:
         return None, []
@@ -275,60 +269,63 @@ def parse_agenda_page(agenda_id: int) -> tuple[dict | None, list[dict]]:
     if not adate:
         return None, []
 
-    seen = set()
-    meetings = []
+    seen, candidates = set(), []
     for a in soup.find_all("a", href=True):
         u = urljoin(r.url, a["href"])
         aid, mid = detail_ids_from_url(u)
         if aid != agenda_id or not mid or mid in seen:
             continue
         seen.add(mid)
-        # El detalle será la fuente canónica; aquí sólo guardamos una pista del H3 previo.
         h3 = a.find_previous("h3")
         title = clean(h3.get_text(" ", strip=True)) if h3 else ""
-        commission = re.sub(r"^Comisión:\s*", "", title, flags=re.I).strip() if title else "Sin identificar"
-        meetings.append({
+        candidates.append({
             "id": mid,
             "agenda_id": agenda_id,
             "fecha": adate.isoformat(),
-            "comision": commission,
+            "comision": re.sub(r"^Comisión:\s*", "", title, flags=re.I).strip() if title else "Sin identificar",
             "tipo_reunion": None,
             "hora": None,
             "expedientes_anunciados": None,
             "url": u,
-            "seguimiento_cepoes": any(k in norm(commission) for k in PRIORITY_COMMISSION_TERMS),
+            "seguimiento_cepoes": False,
         })
-
-    day = {
-        "agenda_id": agenda_id,
-        "fecha": adate.isoformat(),
-        "url": r.url,
-        "reuniones": len(meetings),
-    }
-    return day, meetings
+    return {"agenda_id": agenda_id, "fecha": adate.isoformat(), "url": r.url, "reuniones": 0}, candidates
 
 
 def merge_previous(current_days: list[dict], current_meetings: list[dict], current_projects: list[dict], previous: dict) -> tuple[list, list, list]:
+    """Reemplaza por completo los datos de las agendas refrescadas.
+
+    Esto impide que sobrevivan registros incompletos de corridas anteriores cuando el
+    parser mejora o cambia la estructura de la fuente.
+    """
     cutoff = dt.date.today() - dt.timedelta(days=KEEP_DAYS)
-    day_map = {x["agenda_id"]: x for x in previous.get("agendas") or [] if x.get("agenda_id")}
+    refreshed = {int(x["agenda_id"]) for x in current_days if x.get("agenda_id")}
+
+    day_map = {x["agenda_id"]: x for x in previous.get("agendas") or [] if x.get("agenda_id") and int(x["agenda_id"]) not in refreshed}
     for x in current_days:
         day_map[x["agenda_id"]] = x
     days = [x for x in day_map.values() if dt.date.fromisoformat(x["fecha"]) >= cutoff]
     days.sort(key=lambda x: x["fecha"])
 
+    previous_meetings = previous.get("reuniones") or []
+    previous_meeting_agenda = {x.get("id"): x.get("agenda_id") for x in previous_meetings if x.get("id")}
     meet_map = {}
-    for x in previous.get("reuniones") or []:
-        k = x.get("id") or f"{x.get('agenda_id')}:{x.get('comision')}:{x.get('hora')}"
-        meet_map[k] = x
+    for x in previous_meetings:
+        if not x.get("id") or not x.get("url") or int(x.get("agenda_id") or 0) in refreshed or not is_parliamentary_meeting(x):
+            continue
+        meet_map[x["id"]] = x
     for x in current_meetings:
-        k = x.get("id") or f"{x.get('agenda_id')}:{x.get('comision')}:{x.get('hora')}"
-        meet_map[k] = x
+        meet_map[x["id"]] = x
     meetings = [x for x in meet_map.values() if dt.date.fromisoformat(x["fecha"]) >= cutoff]
     meetings.sort(key=lambda x: (x["fecha"], x.get("hora") or "99:99", x.get("comision") or ""))
 
     proj_map = {}
     for x in previous.get("expedientes") or []:
-        proj_map[(x.get("numero"), x.get("reunion_id"), x.get("fecha_reunion"))] = x
+        rid = x.get("reunion_id")
+        old_agenda = previous_meeting_agenda.get(rid)
+        if not rid or (old_agenda is not None and int(old_agenda) in refreshed):
+            continue
+        proj_map[(x.get("numero"), rid, x.get("fecha_reunion"))] = x
     for x in current_projects:
         proj_map[(x.get("numero"), x.get("reunion_id"), x.get("fecha_reunion"))] = x
     projects = [x for x in proj_map.values() if x.get("fecha_reunion") and dt.date.fromisoformat(x["fecha_reunion"]) >= cutoff]
@@ -337,13 +334,12 @@ def merge_previous(current_days: list[dict], current_meetings: list[dict], curre
 
 
 def main() -> int:
-    previous = {}
+    previous, state = {}, {}
     if OUT.exists():
         try:
             previous = json.loads(OUT.read_text(encoding="utf-8"))
         except Exception:
             previous = {}
-    state = {}
     if STATE.exists():
         try:
             state = json.loads(STATE.read_text(encoding="utf-8"))
@@ -356,63 +352,71 @@ def main() -> int:
     anchor = max(anchors) if anchors else SEED_AGENDA_ID
     candidate_ids = sorted(set(range(max(1, anchor - 28), anchor + 46)) | anchors)
 
-    days, meetings = [], []
+    current_days, raw_candidates = [], []
     max_seen = int(state.get("ultimo_agenda_id") or 0)
     for aid in candidate_ids:
-        day, ms = parse_agenda_page(aid)
+        day, candidates = parse_agenda_page(aid)
         if not day:
             continue
         max_seen = max(max_seen, aid)
         d = dt.date.fromisoformat(day["fecha"])
         if lo <= d <= hi:
-            days.append(day)
-            meetings.extend(ms)
+            current_days.append(day)
+            raw_candidates.extend(candidates)
         time.sleep(0.03)
 
-    parsed_meetings, projects = [], []
-    for m in meetings:
-        mm, pp = parse_detail(m)
-        parsed_meetings.append(mm)
-        projects.extend(pp)
+    current_meetings, current_projects = [], []
+    counts_by_agenda: dict[int, int] = {}
+    for candidate in raw_candidates:
+        meeting, projects = parse_detail(candidate)
+        if is_parliamentary_meeting(meeting):
+            current_meetings.append(meeting)
+            current_projects.extend(projects)
+            aid = int(meeting.get("agenda_id") or 0)
+            counts_by_agenda[aid] = counts_by_agenda.get(aid, 0) + 1
         time.sleep(0.04)
+    for day in current_days:
+        day["reuniones"] = counts_by_agenda.get(int(day["agenda_id"]), 0)
 
-    days, parsed_meetings, projects = merge_previous(days, parsed_meetings, projects, previous)
-    upcoming = [m for m in parsed_meetings if m["fecha"] >= today.isoformat()]
+    days, meetings, projects = merge_previous(current_days, current_meetings, current_projects, previous)
+    upcoming = [m for m in meetings if m["fecha"] >= today.isoformat()]
     high_projects = [p for p in projects if p.get("prioridad_tecnica") == "alta" and p.get("fecha_reunion") >= today.isoformat()]
+    announced_meetings = sum(1 for m in meetings if int(m.get("expedientes_anunciados") or 0) > 0)
 
     out = {
-        "version": 2,
+        "version": 3,
         "generado": dt.datetime.now(dt.timezone.utc).isoformat(),
         "fuente": "Legislatura de la Ciudad Autónoma de Buenos Aires · fuentes oficiales",
-        "alcance": "Agenda de comisiones y expedientes incluidos en reuniones oficiales detectadas. No sustituye el expediente parlamentario completo.",
+        "alcance": "Agenda parlamentaria de comisiones, juntas, audiencias y Labor Parlamentaria; expedientes incluidos en reuniones oficiales detectadas. Se excluyen actos y eventos administrativos/protocolarios.",
         "privacidad": "Sólo datos públicos. Notas, posiciones y estrategia interna no se almacenan en este archivo.",
         "ventana_actualizacion": {"desde": lo.isoformat(), "hasta": hi.isoformat()},
         "fuentes": [MAIN_AGENDA, CALENDAR, "https://parlamentaria.legislatura.gob.ar/pages/ExpedienteBusqueda.aspx", f"{HOST}/InfoSesion/"],
         "resumen": {
             "agendas_en_ventana": len(days),
-            "reuniones_total": len(parsed_meetings),
+            "reuniones_parlamentarias": len(meetings),
             "reuniones_proximas": len(upcoming),
-            "reuniones_con_expedientes_anunciados": sum(1 for m in parsed_meetings if (m.get("expedientes_anunciados") or 0) > 0),
+            "reuniones_con_expedientes_anunciados": announced_meetings,
             "expedientes_en_reuniones": len(projects),
             "expedientes_prioridad_tecnica_alta_proximos": len(high_projects),
         },
         "agendas": days,
-        "reuniones": parsed_meetings,
+        "reuniones": meetings,
         "expedientes": projects,
         "taxonomia_tematica": sorted(TOPICS.keys()),
     }
     OUT.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     STATE.write_text(json.dumps({
-        "version": 2,
+        "version": 3,
         "actualizado": out["generado"],
         "ultimo_agenda_id": max_seen or anchor,
-        "agendas_detectadas_en_corrida": len(days),
-        "reuniones_detectadas_en_corrida": len(meetings),
-        "expedientes_detectados_en_corrida": len(projects),
+        "agendas_detectadas_en_corrida": len(current_days),
+        "reuniones_parlamentarias_detectadas_en_corrida": len(current_meetings),
+        "expedientes_detectados_en_corrida": len(current_projects),
     }, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
     print(f"legislatura_publica.json · {OUT.stat().st_size//1024} KB")
-    print(f"  agendas: {len(days)} · reuniones: {len(parsed_meetings)} · expedientes: {len(projects)}")
-    print(f"  con expedientes anunciados: {out['resumen']['reuniones_con_expedientes_anunciados']} · próximas: {len(upcoming)} · prioridad técnica alta: {len(high_projects)}")
+    print(f"  agendas: {len(days)} · reuniones parlamentarias: {len(meetings)} · expedientes: {len(projects)}")
+    print(f"  con expedientes anunciados: {announced_meetings} · próximas: {len(upcoming)} · prioridad técnica alta: {len(high_projects)}")
     return 0
 
 

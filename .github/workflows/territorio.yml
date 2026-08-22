@@ -57,6 +57,12 @@ jobs:
       - name: Verificar Oferta territorial total
         run: python verificar_oferta_total.py
 
+      - name: Generar resumen territorial para radiografías y mapas
+        run: python generar_resumen_territorial.py
+
+      - name: Verificar resumen territorial
+        run: python verificar_resumen_territorial.py
+
       - name: Commitear si cambió
         run: |
           git config user.name  "cepoes-bot"

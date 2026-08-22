@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "inspeccionar_sesiones_slp.py"
+      - "sondear_datos_sesiones.py"
       - ".github/workflows/inspeccionar-sesiones.yml"
   workflow_dispatch:
 
@@ -25,3 +26,6 @@ jobs:
 
       - name: Inspeccionar formulario oficial de sesiones
         run: python inspeccionar_sesiones_slp.py
+
+      - name: Sondear datos y página oficial de votaciones
+        run: python sondear_datos_sesiones.py

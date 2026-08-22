@@ -30,6 +30,12 @@ NEEDLES = [
     "github.com", ".ipynb", ".py", "barrios_caba", "barrio_caba",
 ]
 
+GEO_KEYS = ("geo_id", "id", "geography", "geography_id", "geo")
+METRIC_HINTS = (
+    "deud", "mora", "monto", "deuda", "tasa", "incid", "total",
+    "valor", "value", "metric", "situacion", "acreedor",
+)
+
 
 class Scripts(HTMLParser):
     def __init__(self) -> None:
@@ -66,45 +72,130 @@ def contexts(text: str, needle: str, radius: int = 180, limit: int = 20):
     return out
 
 
+def row_quality(row: dict) -> int:
+    keys = [str(k).lower() for k in row]
+    score = 0
+    if any(k in row for k in GEO_KEYS):
+        score += 8
+    score += sum(1 for k in keys if any(h in k for h in METRIC_HINTS))
+    return score
+
+
 def extract_records(slice_obj):
-    # Contrato actual: buscar de manera robusta la lista de objetos que contenga geo_id.
+    """Encuentra robustamente la colección territorial dentro del slice.
+
+    El contrato público puede representar las geografías como lista de objetos
+    o como diccionario indexado por geo_id. Recorremos sólo estructuras JSON
+    y priorizamos candidatos de tamaño cercano a los 48 barrios de CABA.
+    """
     candidates = []
-    if isinstance(slice_obj, dict):
-        for k, v in slice_obj.items():
-            if isinstance(v, list) and v and isinstance(v[0], dict):
-                score = sum(1 for row in v[:10] if any(x in row for x in ("geo_id", "id", "geography")))
-                if score:
-                    candidates.append((score, k, v))
+
+    def add_candidate(path: str, rows: list[dict], origin: str) -> None:
+        if not rows:
+            return
+        quality = sum(row_quality(r) for r in rows[: min(20, len(rows))])
+        # 48 es un criterio de ranking, no una condición rígida.
+        size_bonus = max(0, 60 - abs(len(rows) - 48))
+        explicit_geo = sum(
+            1 for r in rows[: min(20, len(rows))]
+            if any(k in r and str(r.get(k, "")).strip() for k in GEO_KEYS)
+        )
+        score = quality + size_bonus + explicit_geo * 3
+        candidates.append((score, -abs(len(rows) - 48), path, origin, rows))
+
+    def visit(node, path: str = "$", depth: int = 0) -> None:
+        if depth > 7:
+            return
+
+        if isinstance(node, list):
+            dict_rows = [x for x in node if isinstance(x, dict)]
+            if dict_rows and len(dict_rows) >= max(1, int(len(node) * 0.8)):
+                add_candidate(path, [dict(x) for x in dict_rows], "list")
+            for i, child in enumerate(node[:100]):
+                if isinstance(child, (dict, list)):
+                    visit(child, f"{path}[{i}]", depth + 1)
+            return
+
+        if not isinstance(node, dict):
+            return
+
+        # Caso frecuente en APIs agregadas: {"geo_id_1": {...}, ...}.
+        dict_items = [(k, v) for k, v in node.items() if isinstance(v, dict)]
+        if len(dict_items) >= 2 and len(dict_items) >= int(len(node) * 0.7):
+            rows = []
+            for key, value in dict_items:
+                row = dict(value)
+                if not any(k in row for k in GEO_KEYS):
+                    row["geo_id"] = str(key)
+                rows.append(row)
+            add_candidate(path, rows, "dict_indexed")
+
+        for key, child in node.items():
+            if isinstance(child, (dict, list)):
+                visit(child, f"{path}.{key}", depth + 1)
+
+    visit(slice_obj)
     if not candidates:
-        raise RuntimeError("No se encontró una lista de geografías en el slice barrial")
-    candidates.sort(reverse=True, key=lambda x: x[0])
-    return candidates[0][1], candidates[0][2]
+        top = list(slice_obj.keys())[:100] if isinstance(slice_obj, dict) else []
+        raise RuntimeError(
+            "No se encontró una colección de geografías en el slice barrial; "
+            f"tipo={type(slice_obj).__name__}, claves_superiores={top}"
+        )
+
+    candidates.sort(reverse=True, key=lambda x: (x[0], x[1]))
+    score, _distance, path, origin, rows = candidates[0]
+    return {"path": path, "origin": origin, "score": score}, rows
+
+
+def collect_lookup_barrios(lookup_obj):
+    """Recupera barrios del lookup aunque estén anidados."""
+    encontrados = {}
+
+    def visit(node, depth: int = 0):
+        if depth > 8:
+            return
+        if isinstance(node, dict):
+            level = str(node.get("level") or node.get("nivel") or "")
+            scope = str(node.get("scope") or node.get("scope_id") or "")
+            gid = node.get("geo_id") or node.get("id")
+            if level == "barrio_caba" and (scope in ("", "02")) and gid is not None:
+                encontrados[str(gid)] = node
+            for child in node.values():
+                if isinstance(child, (dict, list)):
+                    visit(child, depth + 1)
+        elif isinstance(node, list):
+            for child in node:
+                if isinstance(child, (dict, list)):
+                    visit(child, depth + 1)
+
+    visit(lookup_obj)
+    return encontrados
 
 
 def main():
     s = requests.Session()
-    s.headers.update({"User-Agent": "CEPOES-public-method-audit/2.0"})
+    s.headers.update({"User-Agent": "CEPOES-public-method-audit/2.1"})
 
     barrios = get_json(s, BARRIOS_URL)
     lookup = get_json(s, LOOKUP_URL)
-    list_key, rows = extract_records(barrios)
-
-    lookup_features = lookup.get("features", []) if isinstance(lookup, dict) else []
-    lookup_barrios = {
-        str(x.get("geo_id")): x
-        for x in lookup_features
-        if isinstance(x, dict) and x.get("level") == "barrio_caba" and x.get("scope") == "02"
-    }
+    collection_meta, rows = extract_records(barrios)
+    lookup_barrios = collect_lookup_barrios(lookup)
 
     ids = []
     normalized_rows = []
     for row in rows:
-        gid = str(row.get("geo_id") or row.get("id") or row.get("geography") or "")
+        gid = str(
+            row.get("geo_id") or row.get("id") or row.get("geography")
+            or row.get("geography_id") or row.get("geo") or ""
+        )
         ids.append(gid)
         geo = lookup_barrios.get(gid, {})
         normalized_rows.append({
             "geo_id": gid,
-            "nombre": geo.get("nombre") or row.get("nombre") or row.get("name"),
+            "nombre": (
+                geo.get("nombre") or geo.get("name")
+                or row.get("nombre") or row.get("name")
+            ),
             "bbox": geo.get("bbox"),
             "source": geo.get("source"),
             "source_layer": geo.get("source_layer"),
@@ -113,7 +204,8 @@ def main():
 
     home = s.get(HOME, timeout=(20, 60))
     home.raise_for_status()
-    parser = Scripts(); parser.feed(home.text)
+    parser = Scripts()
+    parser.feed(home.text)
     js_urls = [urljoin(HOME, x) for x in parser.srcs if x]
 
     bundle_audit = []
@@ -136,7 +228,6 @@ def main():
         sm_urls = []
         if sm:
             sm_urls.append(urljoin(url, sm.group(1).strip()))
-        # También probar convención .js.map, sin asumir que existe.
         if url.endswith(".js"):
             sm_urls.append(url + ".map")
 
@@ -145,8 +236,15 @@ def main():
             try:
                 rr = s.get(sm_url, timeout=(15, 45), allow_redirects=True)
                 ct = rr.headers.get("content-type", "")
-                entry = {"url": sm_url, "status": rr.status_code, "content_type": ct, "bytes": len(rr.content)}
-                if rr.status_code == 200 and ("json" in ct.lower() or rr.text.lstrip().startswith("{")):
+                entry = {
+                    "url": sm_url,
+                    "status": rr.status_code,
+                    "content_type": ct,
+                    "bytes": len(rr.content),
+                }
+                if rr.status_code == 200 and (
+                    "json" in ct.lower() or rr.text.lstrip().startswith("{")
+                ):
                     sm_text = rr.text
                     hits = {}
                     for n in NEEDLES:
@@ -156,10 +254,17 @@ def main():
                     entry["indicios"] = hits
                     try:
                         sm_obj = rr.json()
-                        entry["sources_count"] = len(sm_obj.get("sources", [])) if isinstance(sm_obj, dict) else None
+                        entry["sources_count"] = (
+                            len(sm_obj.get("sources", []))
+                            if isinstance(sm_obj, dict) else None
+                        )
                         entry["sources_relevantes"] = [
                             x for x in sm_obj.get("sources", [])
-                            if isinstance(x, str) and any(n.lower() in x.lower() for n in ("postal", "geo", "barrio", "deuda", "data"))
+                            if isinstance(x, str)
+                            and any(
+                                n.lower() in x.lower()
+                                for n in ("postal", "geo", "barrio", "deuda", "data")
+                            )
                         ][:200]
                     except Exception:
                         pass
@@ -175,25 +280,33 @@ def main():
         })
 
     payload = {
-        "schema": "cepoes-mapadeladeuda-barrio-reference-v1",
+        "schema": "cepoes-mapadeladeuda-barrio-reference-v2",
         "period": PERIOD,
         "source_slice": BARRIOS_URL,
         "source_lookup": LOOKUP_URL,
-        "slice_list_key": list_key,
+        "slice_collection": collection_meta,
         "barrios_en_slice": len(rows),
         "barrios_en_lookup": len(lookup_barrios),
         "ids_unicos": len(set(ids)),
-        "ids_sin_lookup": sorted(set(ids) - set(lookup_barrios)),
+        "ids_vacios": sum(1 for x in ids if not x),
+        "ids_sin_lookup": sorted(x for x in set(ids) - set(lookup_barrios) if x),
         "barrios": normalized_rows,
         "auditoria_bundle": bundle_audit,
-        "nota": "Los valores barriales son referencia pública para validar una futura réplica; no se usan para asignar personas a barrios.",
+        "nota": (
+            "Los valores barriales son referencia pública para validar una futura "
+            "réplica; no se usan para asignar personas a barrios."
+        ),
     }
-    OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    OUT.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
 
     print(json.dumps({
+        "slice_collection": collection_meta,
         "barrios_en_slice": payload["barrios_en_slice"],
         "barrios_en_lookup": payload["barrios_en_lookup"],
         "ids_unicos": payload["ids_unicos"],
+        "ids_vacios": payload["ids_vacios"],
         "ids_sin_lookup": payload["ids_sin_lookup"],
         "bundles": len(bundle_audit),
     }, ensure_ascii=False, indent=2))

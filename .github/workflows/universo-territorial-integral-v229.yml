@@ -1,12 +1,6 @@
 name: Universo territorial integral BCRA v2.29
 
 on:
-  pull_request:
-    branches:
-      - endeudamiento-bcra-direct-v229
-    paths:
-      - procesar_universo_territorial_integral.py
-      - .github/workflows/universo-territorial-integral-v229.yml
   workflow_dispatch:
 
 permissions:

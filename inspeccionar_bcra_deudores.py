@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Inspecciona los archivos BCRA descargados sin persistir datos personales derivados.
+"""Inspecciona archivos masivos del BCRA sin extraer ni persistir microdatos.
 
 Objetivo v2.29:
-- descomprimir temporalmente los .7z de Central de Deudores;
-- detectar nombres de archivos internos, codificación, delimitador y cantidad de campos;
-- producir un diagnóstico estructural JSON sin CUIT/CUIL, nombres ni filas individuales;
-- bloquear el pipeline si cambia el formato esperado.
+- listar el contenido interno del .7z;
+- leer únicamente una muestra acotada en streaming;
+- detectar codificación, delimitador y cantidad de campos;
+- producir un diagnóstico estructural JSON sin CUIT/CUIL, nombres ni filas individuales.
 
-Este script NO publica ni conserva registros individuales. El contenido extraído vive en
-un directorio temporal y se elimina al finalizar.
+Nunca se escribe el contenido descomprimido a disco. La muestra sólo existe en memoria y el
+JSON resultante conserva exclusivamente metadatos derivados.
 """
 
 from __future__ import annotations
@@ -16,29 +16,84 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import os
 import re
 import shutil
 import subprocess
-import tempfile
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
 ARCHIVE_RE = re.compile(r"(?P<periodo>\d{6})(?:\d{2})?(?P<tipo>DEUDORES|PADRON)\.7Z$", re.I)
 SENSITIVE_RE = re.compile(r"(?:^|[^0-9])(?:20|23|24|27|30|33|34)[0-9]{9}(?:[^0-9]|$)")
+MAX_SAMPLE_BYTES = 256_000
+MAX_SAMPLE_LINES = 40
 
 
-def extraer_7z(archivo: Path, destino: Path) -> None:
-    seven = shutil.which("7z") or shutil.which("7zz")
-    if not seven:
+def sevenzip() -> str:
+    exe = shutil.which("7z") or shutil.which("7zz")
+    if not exe:
         raise RuntimeError("No se encontró 7z/7zz. En Ubuntu: sudo apt-get install p7zip-full")
-    subprocess.run([seven, "x", "-y", f"-o{destino}", str(archivo)], check=True,
-                   stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    return exe
 
 
-def detectar_encoding(path: Path) -> str:
-    muestra = path.read_bytes()[:200_000]
+def listar_internos(archivo: Path) -> list[dict]:
+    """Obtiene nombres y tamaños declarados por 7z sin descomprimir."""
+    r = subprocess.run(
+        [sevenzip(), "l", "-slt", str(archivo)],
+        check=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        text=True,
+        errors="replace",
+    )
+    bloques: list[dict] = []
+    actual: dict[str, str] = {}
+    for linea in r.stdout.splitlines() + [""]:
+        if not linea.strip():
+            if actual:
+                bloques.append(actual)
+                actual = {}
+            continue
+        if " = " in linea:
+            k, v = linea.split(" = ", 1)
+            actual[k.strip()] = v.strip()
+
+    internos = []
+    for b in bloques:
+        nombre = b.get("Path")
+        if not nombre or b.get("Type") == "7z" or b.get("Folder") == "+":
+            continue
+        try:
+            size = int(b.get("Size", "0") or 0)
+        except ValueError:
+            size = 0
+        internos.append({"nombre": nombre, "bytes_declarados": size})
+    return internos
+
+
+def muestra_stream(archivo: Path, interno: str) -> bytes:
+    """Lee sólo MAX_SAMPLE_BYTES del archivo interno y corta 7z inmediatamente."""
+    proc = subprocess.Popen(
+        [sevenzip(), "x", "-so", str(archivo), interno],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+    )
+    assert proc.stdout is not None
+    try:
+        data = proc.stdout.read(MAX_SAMPLE_BYTES)
+    finally:
+        proc.stdout.close()
+        if proc.poll() is None:
+            proc.terminate()
+            try:
+                proc.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                proc.kill()
+                proc.wait(timeout=5)
+    return data
+
+
+def detectar_encoding_bytes(muestra: bytes) -> str:
     for enc in ("utf-8-sig", "cp1252", "latin-1"):
         try:
             muestra.decode(enc)
@@ -55,24 +110,16 @@ def detectar_separador(linea: str) -> str | None:
     return sep if n > 0 else None
 
 
-def estructura_archivo(path: Path) -> dict:
-    enc = detectar_encoding(path)
-    lineas = []
-    with path.open("r", encoding=enc, errors="replace", newline="") as f:
-        for _ in range(25):
-            linea = f.readline()
-            if not linea:
-                break
-            linea = linea.rstrip("\r\n")
-            if linea:
-                lineas.append(linea)
-
+def estructura_muestra(nombre: str, bytes_declarados: int, muestra: bytes) -> dict:
+    enc = detectar_encoding_bytes(muestra)
+    texto = muestra.decode(enc, errors="replace")
+    lineas = [x.rstrip("\r") for x in texto.split("\n") if x.strip()][:MAX_SAMPLE_LINES]
     if not lineas:
         return {
-            "nombre": path.name,
-            "bytes": path.stat().st_size,
+            "nombre": nombre,
+            "bytes_declarados": bytes_declarados,
             "encoding": enc,
-            "vacio": True,
+            "vacio_en_muestra": True,
         }
 
     sep = detectar_separador(lineas[0])
@@ -80,29 +127,23 @@ def estructura_archivo(path: Path) -> dict:
     campos = []
     if sep:
         for linea in lineas:
-            campos.append(len(next(csv.reader([linea], delimiter=sep))))
+            try:
+                campos.append(len(next(csv.reader([linea], delimiter=sep))))
+            except csv.Error:
+                pass
 
-    # No copiar muestras de contenido al JSON: podrían contener identificadores o nombres.
     return {
-        "nombre": path.name,
-        "bytes": path.stat().st_size,
+        "nombre": nombre,
+        "bytes_declarados": bytes_declarados,
         "encoding": enc,
         "separador": sep,
         "campos_por_fila_muestra": sorted(Counter(campos).items()) if campos else None,
         "longitud_fila_min": min(longitudes),
         "longitud_fila_max": max(longitudes),
         "filas_muestreadas": len(lineas),
+        "bytes_muestreados_max": MAX_SAMPLE_BYTES,
         "posible_identificador_en_muestra": any(SENSITIVE_RE.search(x) for x in lineas),
     }
-
-
-def contar_lineas(path: Path) -> int:
-    # Conteo binario rápido y sin parsear contenido.
-    total = 0
-    with path.open("rb") as f:
-        for chunk in iter(lambda: f.read(8 * 1024 * 1024), b""):
-            total += chunk.count(b"\n")
-    return total
 
 
 def inspeccionar_archivo_7z(archivo: Path) -> dict:
@@ -110,15 +151,11 @@ def inspeccionar_archivo_7z(archivo: Path) -> dict:
     if not m:
         raise ValueError(f"Nombre no reconocido: {archivo.name}")
 
-    with tempfile.TemporaryDirectory(prefix="cepoes-bcra-") as tmp:
-        tmpdir = Path(tmp)
-        extraer_7z(archivo, tmpdir)
-        internos = [p for p in tmpdir.rglob("*") if p.is_file()]
-        detalle = []
-        for p in internos:
-            d = estructura_archivo(p)
-            d["filas"] = contar_lineas(p)
-            detalle.append(d)
+    internos = listar_internos(archivo)
+    detalle = []
+    for item in internos:
+        muestra = muestra_stream(archivo, item["nombre"])
+        detalle.append(estructura_muestra(item["nombre"], item["bytes_declarados"], muestra))
 
     return {
         "archivo": archivo.name,
@@ -136,27 +173,24 @@ def main() -> int:
     args = ap.parse_args()
 
     directorio = Path(args.directorio)
-    archivos = sorted(
-        p for p in directorio.glob("*.7Z")
-        if ARCHIVE_RE.search(p.name.upper())
-    )
+    archivos = sorted(p for p in directorio.glob("*.7Z") if ARCHIVE_RE.search(p.name.upper()))
     if not archivos:
         raise SystemExit("No hay archivos DEUDORES/PADRON .7Z para inspeccionar")
 
     resultado = {
-        "schema": "cepoes-bcra-structural-v1",
+        "schema": "cepoes-bcra-structural-v2",
         "generado_utc": datetime.now(timezone.utc).isoformat(),
         "archivos": [inspeccionar_archivo_7z(p) for p in archivos],
         "privacidad": {
             "contiene_filas_individuales": False,
             "contiene_identificadores": False,
             "contiene_nombres": False,
-            "nota": "El JSON conserva únicamente metadatos estructurales y conteos.",
+            "microdatos_descomprimidos_en_disco": False,
+            "nota": "El JSON conserva sólo metadatos derivados de una muestra en memoria.",
         },
     }
 
-    Path(args.salida).write_text(json.dumps(resultado, ensure_ascii=False, indent=2) + "\n",
-                                 encoding="utf-8")
+    Path(args.salida).write_text(json.dumps(resultado, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"OK -> {args.salida}")
     for a in resultado["archivos"]:
         print(f"  {a['archivo']} · {len(a['internos'])} archivo(s) interno(s)")

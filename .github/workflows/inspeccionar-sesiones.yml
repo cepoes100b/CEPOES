@@ -5,6 +5,7 @@ on:
     paths:
       - "inspeccionar_sesiones_slp.py"
       - "sondear_datos_sesiones.py"
+      - "sondear_votaciones_js.py"
       - ".github/workflows/inspeccionar-sesiones.yml"
   workflow_dispatch:
 
@@ -29,3 +30,6 @@ jobs:
 
       - name: Sondear datos y página oficial de votaciones
         run: python sondear_datos_sesiones.py
+
+      - name: Identificar servicios oficiales de votaciones
+        run: python sondear_votaciones_js.py

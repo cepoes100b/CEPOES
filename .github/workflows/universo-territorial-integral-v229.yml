@@ -2,6 +2,14 @@ name: Universo territorial integral BCRA v2.29
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - endeudamiento-universo-territorial-v229
+    paths:
+      - procesar_universo_territorial_integral.py
+      - reconstruir_matriz_cp_barrio.py
+      - .github/workflows/universo-territorial-integral-v229.yml
+      - badata/**
 
 permissions:
   contents: read
@@ -25,11 +33,11 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq p7zip-full
-          python -m pip install --disable-pip-version-check requests
+          python -m pip install --disable-pip-version-check requests numpy
 
       - name: Compilar herramientas
         run: |
-          python -m py_compile descargar_bcra_deudores.py reconciliar_bcra_entidades.py procesar_universo_territorial_integral.py
+          python -m py_compile descargar_bcra_deudores.py reconciliar_bcra_entidades.py procesar_universo_territorial_integral.py reconstruir_matriz_cp_barrio.py
 
       - name: Descargar PADRON ARCA con reintentos
         shell: bash
@@ -91,11 +99,28 @@ jobs:
           print('Celdas CP×sexo×edad:', len(x['agregado_cp_sexo_edad_1000_1499']['filas']))
           PY
 
-      - name: Publicar sólo diagnóstico agregado
+      - name: Reconstruir y validar matriz CP4 → barrio
+        run: python reconstruir_matriz_cp_barrio.py
+
+      - name: Resumir validación territorial
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('diagnostico_reconstruccion_cp_barrio_v229.json', encoding='utf-8'))
+          print('Estado:', d['estado'])
+          print('Soporte:', json.dumps(d['soporte_geografico'], ensure_ascii=False, indent=2))
+          print('Checks:', json.dumps(d['checks'], ensure_ascii=False, indent=2))
+          print('Validación:', json.dumps(d['resultado_validacion']['modelo'], ensure_ascii=False, indent=2))
+          PY
+
+      - name: Publicar diagnósticos y matriz candidata
         uses: actions/upload-artifact@v4
         with:
-          name: diagnostico-universo-territorial-integral-v229
-          path: diagnostico_universo_territorial_integral.json
+          name: diagnostico-reconstruccion-territorial-v229
+          path: |
+            diagnostico_universo_territorial_integral.json
+            diagnostico_reconstruccion_cp_barrio_v229.json
+            matriz_cp_barrio_v229.json
           if-no-files-found: error
           retention-days: 7
 

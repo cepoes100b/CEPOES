@@ -68,6 +68,8 @@ def main() -> None:
     if dup:
         issues.append(f"id_sesion duplicados: {', '.join(dup)}")
 
+    tipos_sancion = Counter()
+
     for s in sesiones:
         sid = s.get("id_sesion", "?")
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(s.get("fecha", ""))):
@@ -100,6 +102,18 @@ def main() -> None:
             esperada = p.get("presentes", 0) >= 30
             if s.get("criterio_realizada") == "presentismo_quorum" and bool(s.get("realizada")) != esperada:
                 issues.append(f"sesión {sid}: realizada incoherente con quórum")
+
+        # Contrato semántico del endpoint GetAsuntoConsideradoItemByIdSesion:
+        # sólo aceptamos como sanción un registro que el SLP tipa expresamente como tal.
+        for item in s.get("sanciones", []):
+            tipo_item = norm(item.get("tipo"))
+            tipos_sancion[tipo_item or "(vacio)"] += 1
+            if tipo_item != "sancion de un expediente":
+                issues.append(
+                    f"sesión {sid}: item tratado como sanción con tipo oficial inesperado {item.get('tipo')!r}"
+                )
+            if "expediente" not in norm(item.get("descripcion")):
+                issues.append(f"sesión {sid}: sanción sin referencia de expediente en descripción")
 
         for v in s.get("votaciones_nominales", []):
             vid = v.get("id_votacion", "?")
@@ -146,6 +160,10 @@ def main() -> None:
         f"{expected['votaciones_asuntos']} asuntos votados · "
         f"{expected['votos_nominales']} votos nominales"
     )
+    if tipos_sancion:
+        print("  tipos oficiales de sanción: " + " · ".join(
+            f"{k} {v}" for k, v in sorted(tipos_sancion.items())
+        ))
 
     if issues:
         print(f"✘ {len(issues)} problema(s) — NO se publica")

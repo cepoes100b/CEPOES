@@ -24,6 +24,8 @@ jobs:
         run: python actualizar_legislatura.py
       - name: Enriquecer fichas y ciclo oficial
         run: python enriquecer_expedientes.py
+      - name: Completar hitos desde evidencia oficial
+        run: python completar_ciclo_legislativo.py
       - name: Verificar núcleo legislativo
         run: python verificar_legislatura.py
       - name: Verificar ciclo legislativo

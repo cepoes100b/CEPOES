@@ -1,16 +1,16 @@
-# CEPOES v2.29 — Cierre de la decisión territorial de Endeudamiento
+# CEPOES v2.29 — Decisión territorial de Endeudamiento
 
-Fecha de cierre: 22/08/2026
+Fecha de actualización: 22/08/2026
 
 ## Decisión ejecutiva
 
-La investigación territorial queda **cerrada**. Con los microdatos oficiales vigentes distribuidos por BCRA/ARCA, CEPOES puede construir de forma reproducible indicadores propios para CABA, sexo, edad y tipo de acreedor, pero **no puede atribuir de manera exacta a una persona deudora a uno de los 48 barrios**.
+La investigación sobre una asignación **exacta** de deudores a los 48 barrios queda cerrada: con los microdatos oficiales vigentes distribuidos por BCRA/ARCA no es posible determinar de manera unívoca el barrio de residencia.
 
-La causa no es técnica sino informacional: `Padron_ARCA.txt` aporta provincia y, mayoritariamente, código postal numérico tradicional de 4 dígitos; no aporta calle, altura, coordenadas ni CPA completo de precisión suficiente. `DEUDORES/CENDEU` tampoco incorpora esas variables territoriales.
+Sin embargo, se habilita una segunda vía metodológica distinta: construir una **estimación territorial probabilística** `CP4 -> barrios` y validarla empíricamente contra la única referencia barrial pública disponible, Mapa de la Deuda.
 
-Por lo tanto, queda prohibido para producción fabricar una relación determinística `CP de 4 dígitos -> barrio` o usar centroides, puntos representativos, códigos modales u otras heurísticas como si fueran observaciones exactas.
+La estimación sólo podrá pasar a producción si demuestra capacidad predictiva fuera de muestra. No se adoptará una matriz porque reproduzca los mismos datos con los que fue calibrada.
 
-## Evidencia que cierra la cuestión
+## Límite de la fuente primaria
 
 El procesamiento completo del `Padron_ARCA.txt` vigente confirmó que, entre registros con sexo `M/F` y provincia ARCA `00`, el campo postal se distribuye así:
 
@@ -20,9 +20,58 @@ El procesamiento completo del `Padron_ARCA.txt` vigente confirmó que, entre reg
 - código vacío: 1.411.096;
 - otros formatos: residuales.
 
-Un CP tradicional de 4 dígitos no identifica de manera unívoca un barrio. La cartografía oficial de los 48 barrios permite resolver barrio sólo cuando existe una localización suficientemente precisa, como coordenadas o dirección normalizada; esas variables no están en el padrón masivo.
+El padrón no aporta calle, altura ni coordenadas y no contiene de manera general un CPA completo con precisión suficiente. `DEUDORES/CENDEU` tampoco agrega esas variables.
 
-La documentación de CENDEU confirma, a su vez, que los archivos de deuda contienen identificación, entidad, situación, monto y variables crediticias, pero no domicilio, calle, altura, coordenadas ni una geografía barrial adicional.
+Por lo tanto sigue prohibido presentar como dato observado cualquier relación determinística `CP4 -> barrio único`, así como centroides, CP modales, puntos representativos o heurísticas equivalentes.
+
+## Nueva hipótesis de trabajo
+
+La existencia de resultados para 48 barrios en Mapa de la Deuda no demuestra por sí sola que esa fuente conozca el barrio exacto de cada deudor. Su documentación pública indica una territorialización a partir de código postal y cartografía, pero no publica el procedimiento de resolución de códigos postales que pueden corresponder a más de un barrio.
+
+La hipótesis a testear es que esos resultados pueden reproducirse mediante una matriz estable de ponderadores:
+
+`w(cp,barrio) >= 0`
+
+con:
+
+`sum_barrio w(cp,barrio) = 1`
+
+De ese modo, para una magnitud agregada por CP:
+
+`valor_barrio = sum_cp valor_cp * w(cp,barrio)`
+
+La matriz representa una distribución territorial estimada. No equivale a geolocalizar personas individualmente.
+
+## Cómo se reconstruye
+
+El pipeline `reconstruir_matriz_cp_barrio.py` implementa tres capas separadas:
+
+1. **Agregados CEPOES BCRA/ARCA por CP4.** Se utilizan únicamente estadísticas agregadas por CP, sexo y edad producidas por el pipeline directo.
+2. **Referencia barrial agregada.** Se leen los 48 resultados públicos de Mapa de la Deuda para el mismo período y segmentaciones comparables. La referencia se usa para calibración y validación, no como fuente final de los datos CEPOES.
+3. **Restricción geográfica BA Data.** Los datasets georreferenciados ya existentes en `badata/` se utilizan sólo para determinar en qué barrios se observó cada CP. La frecuencia de equipamientos o puntos públicos **no se utiliza como ponderador poblacional**.
+
+Esto evita que la optimización coloque peso en barrios geográficamente incompatibles sin convertir una muestra de equipamientos en una estimación de población.
+
+## Validación fuera de muestra
+
+La reconstrucción debe separar segmentos completos antes del ajuste.
+
+- Los segmentos de entrenamiento se usan para estimar los ponderadores.
+- Determinadas combinaciones `sexo x edad` se reservan y no participan de la estimación.
+- La matriz obtenida se aplica luego a esos segmentos reservados.
+- Se compara la distribución predicha de los 48 barrios con la referencia pública.
+
+El diagnóstico compara además el modelo contra un baseline que usa sólo la compatibilidad territorial de BA Data con pesos uniformes.
+
+La matriz sólo se considera **candidata validada** si, simultáneamente:
+
+- el soporte geográfico observado cubre al menos 90% de los deudores del agregado por CP;
+- la distancia de variación total media fuera de muestra es <= 10%;
+- la correlación media fuera de muestra entre 48 barrios es >= 0,90;
+- el ajuste mejora al menos 10% la distancia de variación total respecto del baseline territorial;
+- existen al menos tres segmentos completos de validación.
+
+Estos umbrales son gates de investigación. Superarlos autoriza una segunda auditoría; no convierte la estimación en observación exacta.
 
 ## Sensibilidad del agregado propio CABA
 
@@ -35,76 +84,41 @@ Aplicando situaciones 1–5, deuda positiva y exclusión documentada de SGR/FGCP
 | Provincia 00, CP 4 dígitos | 1.985.628 | 324.404 | 16,3376% | $13,838 billones | $1,734 billones |
 | Provincia 00, CP 1000–1499 | 1.965.396 | 318.200 | 16,1901% | $13,775 billones | $1,718 billones |
 
-El filtro postal reduce parte de la diferencia frente al benchmark v2.28, pero no transforma el CP en una variable barrial y tampoco explica por sí solo la brecha de mora.
+El filtro postal acota el universo pero no transforma el CP4 en barrio observado.
 
-## Arquitectura productiva definitiva
+## Arquitectura mientras se valida
 
-La página pública de Endeudamiento se resuelve con **dos capas explícitamente separadas**:
+Hasta que la matriz probabilística supere todos los gates:
 
-### A. Capa territorial — 48 barrios
+- el mapa/ranking/ficha de 48 barrios continúa con la capa agregada de v2.28 y atribución visible a Mapa de la Deuda;
+- los indicadores directos CABA, sexo, edad, acreedores y evolución continúan como elaboración propia CEPOES sobre BCRA/ARCA;
+- no se cambia el rotulado público.
 
-Para mapa, ranking, ficha barrial y evolución por barrio se mantiene la capa pública agregada de **Mapa de la Deuda — CEC + FES**, elaborada sobre la Central de Deudores del BCRA.
+Si la matriz supera la validación y la auditoría posterior, CEPOES podrá reemplazar la capa barrial externa por una capa propia calculada directamente sobre BCRA/ARCA, rotulada explícitamente como **estimación territorial CEPOES**.
 
-CEPOES la consume en tiempo de lectura mediante su contrato público `mobile-slices-v2`, sin republicar microdatos ni presentar esos agregados como elaboración propia. La validación v2.28 exige 48 barrios, correspondencia de `geo_id`, métricas consistentes, filtros y CORS.
+## Rotulado si se adopta
 
-Esta es la única capa actualmente disponible que satisface simultáneamente granularidad barrial y trazabilidad suficiente para una publicación pública.
+La formulación pública deberá dejar claro el carácter estimado, por ejemplo:
 
-### B. Capa CEPOES — elaboración propia sobre BCRA/ARCA
+> Estimación territorial CEPOES sobre datos del BCRA. La fuente primaria identifica residencia mediante código postal y no permite determinar de manera unívoca el barrio en todos los casos. Los registros agregados se distribuyen entre barrios mediante una matriz de correspondencia postal-territorial validada empíricamente. Los valores barriales deben interpretarse como estimaciones y no como geolocalizaciones individuales exactas.
 
-El pipeline directo continúa para producir indicadores propios cuya geografía sí está respaldada por la fuente:
+No se podrá afirmar que CEPOES y Mapa de la Deuda son dos fuentes independientes que confirman un dato si la referencia externa fue utilizada para calibrar la matriz.
 
-- total CABA;
-- deudores y personas en mora;
-- monto total y monto en mora;
-- sexo;
-- franja etaria;
-- tipo de acreedor/informante;
-- evolución mensual;
-- controles de universo y calidad.
+## Qué sigue descartado
 
-Estos indicadores deberán rotularse como **CEPOES — elaboración propia sobre BCRA/ARCA** y no se desagregarán a barrio salvo que aparezca una nueva fuente territorial verificable.
-
-## Regla de interfaz
-
-No se mezclarán procedencias de forma silenciosa.
-
-- Todo componente barrial debe mostrar: `Fuente territorial: Mapa de la Deuda — CEC + FES, sobre Central de Deudores BCRA.`
-- Todo componente construido por el pipeline directo debe mostrar: `Fuente: BCRA/ARCA · Elaboración propia CEPOES.`
-- Si una misma pantalla incluye ambas capas, la procedencia debe figurar junto al bloque correspondiente, no sólo en una nota al pie genérica.
-
-## Qué se abandona definitivamente
-
-No se harán nuevas pruebas de producción basadas en:
+No se retomarán como método productivo:
 
 - CP modal por barrio;
 - centroide de CP;
-- punto representativo obtenido de mobiliario/equipamiento;
-- una muestra no representativa de domicilios públicos;
+- un único punto representativo por CP;
+- frecuencia de equipamientos públicos usada como peso poblacional;
 - GeoNames como asignador de barrio;
-- intersección espacial de un único punto por CP;
 - cualquier tabla `CP4 -> barrio único` presentada como exacta.
 
-Esas vías pueden existir como antecedentes de investigación, pero no son gates de publicación y no deben bloquear nuevamente el producto.
+## Estado
 
-## Única alternativa futura para reemplazar la capa externa
+**Barrio exacto observado desde BCRA/ARCA: descartado por insuficiencia de la fuente.**
 
-CEPOES sólo reemplazará la capa barrial externa si ocurre una de estas dos condiciones:
+**Estimación probabilística CP4→barrio: en validación empírica.**
 
-1. obtiene una fuente primaria con dirección, coordenadas o CPA suficientemente preciso y con condiciones de uso compatibles; o
-2. decide producir una **estimación barrial**, no una observación exacta, con un modelo probabilístico documentado, ponderaciones reproducibles, cobertura e incertidumbre publicadas.
-
-Una estimación nunca se etiquetará como dato observado por barrio.
-
-## Gate de publicación desde este cierre
-
-La territorialización deja de ser un gate de v2.29. Los gates pendientes del pipeline propio son exclusivamente los necesarios para la capa CABA: universo de personas físicas, universo de acreedores, consistencia de mora y montos, privacidad/supresión, actualización mensual y JSON agregado.
-
-El mapa de 48 barrios no debe esperar esos trabajos: continúa operando con la capa agregada validada de v2.28.
-
-## Resultado
-
-**Mapa barrial: resuelto con fuente agregada territorial validada.**
-
-**Elaboración propia BCRA/ARCA: continúa a nivel CABA y segmentaciones compatibles con la fuente.**
-
-**Asignación exacta BCRA/ARCA a 48 barrios: descartada por insuficiencia de la fuente, no por falta de implementación.**
+**Mapa público actual: se mantiene sin cambios hasta que esa validación concluya.**

@@ -29,8 +29,14 @@ jobs:
       - name: Actualizar agenda y expedientes oficiales
         run: python actualizar_legislatura.py
 
+      - name: Enriquecer fichas y ciclo oficial
+        run: python enriquecer_expedientes.py
+
       - name: Verificar núcleo legislativo
         run: python verificar_legislatura.py
+
+      - name: Verificar ciclo legislativo
+        run: python verificar_ciclo_legislativo.py
 
       - name: Commitear si cambió
         run: |
@@ -41,7 +47,7 @@ jobs:
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "legislatura: actualización automática $(date -u +%F-%H%M)"
+          git commit -m "legislatura: actualización automática ciclo $(date -u +%F-%H%M)"
           for intento in 1 2 3; do
             if git push; then
               echo "Push OK (intento $intento)"

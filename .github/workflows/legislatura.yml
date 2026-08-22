@@ -1,0 +1,54 @@
+name: Actualizar núcleo legislativo
+
+on:
+  schedule:
+    # 10:30 y 17:30 de Buenos Aires. Permite captar cambios antes de reuniones y recinto.
+    - cron: "30 13,20 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-legislatura
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Actualizar agenda y expedientes oficiales
+        run: python actualizar_legislatura.py
+
+      - name: Verificar núcleo legislativo
+        run: python verificar_legislatura.py
+
+      - name: Commitear si cambió
+        run: |
+          git config user.name "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add legislatura_publica.json estado_legislatura.json
+          if git diff --cached --quiet; then
+            echo "Sin cambios"
+            exit 0
+          fi
+          git commit -m "legislatura: actualización automática $(date -u +%F-%H%M)"
+          for intento in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $intento)"
+              exit 0
+            fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" || exit 1
+            sleep 3
+          done
+          echo "No pude empujar después de 3 intentos"
+          exit 1

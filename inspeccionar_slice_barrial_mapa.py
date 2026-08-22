@@ -3,6 +3,8 @@
 
 No procesa microdatos: descarga únicamente dos JSON públicos y conserva una
 copia temporal del slice agregado para poder documentar su contrato real.
+La salida sirve para ajustar el parser contra la estructura vigente, sin
+inferir ni fabricar correspondencias territoriales.
 """
 from __future__ import annotations
 
@@ -68,7 +70,7 @@ def candidates(node, path="$", depth=0, out=None):
 
 def main():
     s = requests.Session()
-    s.headers.update({"User-Agent": "CEPOES-public-slice-inspector/1.0"})
+    s.headers.update({"User-Agent": "CEPOES-public-slice-inspector/1.1"})
     r = s.get(SLICE_URL, timeout=(20, 90)); r.raise_for_status()
     slice_obj = r.json()
     lr = s.get(LOOKUP_URL, timeout=(20, 90)); lr.raise_for_status()

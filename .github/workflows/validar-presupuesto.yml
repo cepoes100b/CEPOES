@@ -44,14 +44,20 @@ jobs:
       - name: Verificar serie histórica trimestral
         run: python verificar_presupuesto_historico.py
 
+      - name: Generar cruce presupuesto y territorio
+        run: python generar_presupuesto_territorial.py
+
+      - name: Verificar cruce presupuesto y territorio
+        run: python verificar_presupuesto_territorial.py
+
       - name: Commitear resultado validado si cambió
         run: |
           git config user.name "cepoes-bot"
           git config user.email "actions@github.com"
-          git add presupuesto.json estado_presupuesto.json presupuesto_analitico.json presupuesto_historico.json
+          git add presupuesto.json estado_presupuesto.json presupuesto_analitico.json presupuesto_historico.json presupuesto_territorial.json
           if git diff --cached --quiet; then
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "presupuesto: validación analítica $(date -u +%F)"
+          git commit -m "presupuesto: validación territorial $(date -u +%F)"
           git push

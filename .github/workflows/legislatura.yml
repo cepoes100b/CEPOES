@@ -35,22 +35,28 @@ jobs:
       - name: Completar hitos desde evidencia oficial
         run: python completar_ciclo_legislativo.py
 
+      - name: Actualizar sesiones, Labor y votaciones oficiales
+        run: python actualizar_sesiones.py
+
       - name: Verificar núcleo legislativo
         run: python verificar_legislatura.py
 
       - name: Verificar ciclo legislativo
         run: python verificar_ciclo_legislativo.py
 
+      - name: Verificar sesiones y votaciones
+        run: python verificar_sesiones.py
+
       - name: Commitear si cambió
         run: |
           git config user.name "cepoes-bot"
           git config user.email "actions@github.com"
-          git add legislatura_publica.json estado_legislatura.json
+          git add legislatura_publica.json estado_legislatura.json sesiones_publicas.json
           if git diff --cached --quiet; then
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "legislatura: actualización automática ciclo $(date -u +%F-%H%M)"
+          git commit -m "legislatura: actualización automática $(date -u +%F-%H%M)"
           for intento in 1 2 3; do
             if git push; then
               echo "Push OK (intento $intento)"

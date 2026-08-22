@@ -1,12 +1,6 @@
 name: Diagnosticar fuente dinámica registros BCRA v2.29
 
 on:
-  pull_request:
-    branches:
-      - endeudamiento-bcra-direct-v229
-    paths:
-      - diagnosticar_fuente_registros_bcra.py
-      - .github/workflows/diagnosticar-fuente-registros-bcra-v229.yml
   workflow_dispatch:
 
 permissions:

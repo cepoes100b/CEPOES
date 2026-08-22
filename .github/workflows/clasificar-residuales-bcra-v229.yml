@@ -6,6 +6,7 @@ on:
       - endeudamiento-bcra-direct-v229
     paths:
       - clasificar_residuales_bcra.py
+      - clasificar_residuales_bcra_v2.py
       - .github/workflows/clasificar-residuales-bcra-v229.yml
   workflow_dispatch:
 
@@ -37,7 +38,7 @@ jobs:
           test -f input/diagnostico_bcra_entidades.json
           cp input/diagnostico_bcra_entidades.json ./diagnostico_bcra_entidades.json
       - name: Clasificar residuales contra registros oficiales
-        run: python clasificar_residuales_bcra.py
+        run: python clasificar_residuales_bcra_v2.py
       - name: Validar salida
         run: |
           python - <<'PY'

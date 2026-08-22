@@ -6,6 +6,7 @@ on:
       - endeudamiento-bcra-direct-v229
     paths:
       - probar_punto_representativo_cp_mobiliario.py
+      - probar_punto_representativo_cp_mobiliario_datastore.py
       - .github/workflows/probar-punto-representativo-cp-mobiliario-v229.yml
   workflow_dispatch:
 
@@ -47,8 +48,8 @@ jobs:
           assert len(x['agregado_cp_1000_1499']['filas']) > 300
           print('Entrada agregada:', len(x['agregado_cp_1000_1499']['filas']), 'CP')
           PY
-      - name: Probar puntos representativos contra barrios oficiales
-        run: python probar_punto_representativo_cp_mobiliario.py
+      - name: Probar puntos representativos desde DataStore contra barrios oficiales
+        run: python probar_punto_representativo_cp_mobiliario_datastore.py
       - name: Validar diagnóstico
         run: |
           python - <<'PY'

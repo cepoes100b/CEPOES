@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "descargado": "2026-08-22T00:34:51.422384+00:00",
+  "ejercicio": 2026,
+  "trimestre": 2,
+  "fuente": "BA Data · Ministerio de Hacienda y Finanzas GCBA",
+  "dataset_ejecutado": {
+    "url": "https://data.buenosaires.gob.ar/dataset/presupuesto-ejecutado",
+    "updated": "2026-08-21T16:25:45.342659",
+    "resource": {
+      "id": "4caa5b54-79b4-4eaa-a116-a4a0cf007541",
+      "name": "Presupuesto Ejecutado 2026 Segundo Trimestre (CSV)",
+      "url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-economia-y-finanzas/presupuesto-ejecutado/presupuesto-ejecutado-2026-2.csv",
+      "last_modified": "2026-08-21T16:25:45.373260",
+      "format": "CSV"
+    },
+    "bytes": 23816947
+  },
+  "dataset_sancionado": {
+    "url": "https://data.buenosaires.gob.ar/dataset/presupuesto-sancionado",
+    "updated": "2026-06-22T14:20:32.587844",
+    "resource": {
+      "id": "9d5e02c0-09dc-41be-b9ad-01c6eb017737",
+      "name": "2026 Presupuesto Sancionado (CSV)",
+      "url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-economia-y-finanzas/presupuesto-sancionado/presupuesto-sancionado-2026.csv",
+      "last_modified": "2026-06-22T14:20:30.057904",
+      "format": "CSV"
+    },
+    "bytes": 16426606
+  }
+}

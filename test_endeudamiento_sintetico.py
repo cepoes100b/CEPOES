@@ -12,28 +12,45 @@ def padron_line(tipo_trib: str, ident: str, tipo_personal: str, cpa: str, mov: s
     return f"{tipo_trib};{ident};{tipo_personal};12345678;PERSONA TEST;N;{cpa};{mov}"
 
 
-def deuda_line(entidad: int, tipo_trib: str, ident: str, situacion: int, miles: str) -> str:
-    # Para el fixture basta el primer triplete mensual; el parser también acepta
-    # el diseño completo de ancho fijo oficial.
-    return f"{entidad:05d};{tipo_trib};{ident};{situacion};{miles};0"
+def deuda_line(
+    entidad: int,
+    tipo_trib: str,
+    ident: str,
+    situacion: int,
+    prestamos: str,
+    garantias: str = "0.0",
+    otros: str = "0.0",
+    periodo: str = "202606",
+) -> str:
+    # Diseño oficial deudores.txt: 24 campos.
+    row = [
+        f"{entidad:05d}", periodo, tipo_trib, ident, "001", str(situacion),
+        prestamos, "", garantias, otros,
+        "0.0", "0.0", "0.0", "0.0", "0.0", "0.0", "0.0",
+        "0", "0", "0", "0", "0", "0", "0",
+    ]
+    assert len(row) == 24
+    return ";".join(row)
 
 
 def main() -> None:
     with tempfile.TemporaryDirectory() as td:
         root = Path(td)
         padron = root / "20260731PADRON.TXT"
-        deuda = root / "24DSF202606.TXT"
+        deuda = root / "202606DEUDORES.TXT"
         territorio = root / "cpa_territorio.csv"
 
         padron_rows: list[str] = []
         deuda_rows: list[str] = []
 
-        # Barrio publicable: 30 personas. Una tiene dos entidades y peor situación 3.
+        # Barrio publicable: 30 personas. Se prueba que el monto difundido sume
+        # préstamos + garantías otorgadas + otros conceptos. Una persona tiene
+        # además una segunda entidad y peor situación 3.
         ids_a = [f"20{100000000 + i:09d}" for i in range(30)]
-        for i, ident in enumerate(ids_a):
+        for ident in ids_a:
             padron_rows.append(padron_line("11", ident, "01", "C1000AAA"))
-            deuda_rows.append(deuda_line(1, "11", ident, 1, "100.0"))
-        deuda_rows.append(deuda_line(2, "11", ids_a[0], 3, "50.0"))
+            deuda_rows.append(deuda_line(1, "11", ident, 1, "80.0", "10.0", "10.0"))
+        deuda_rows.append(deuda_line(2, "11", ids_a[0], 3, "25.0", "15.0", "10.0"))
 
         # Barrio con 29 deudores: debe procesarse pero suprimirse del JSON público.
         ids_b = [f"23{200000000 + i:09d}" for i in range(29)]
@@ -69,6 +86,7 @@ def main() -> None:
         verificar(data)
 
         assert data["periodo"] == "2026-06"
+        assert data["fuente"]["archivo_deuda"] == "202606DEUDORES.TXT"
         assert data["caba"]["deudores"] == 60
         assert data["caba"]["deudores_en_mora"] == 30  # 1 en sit.3 + 29 en sit.4
         assert data["caba"]["deuda_pesos"] == 9_150_000
@@ -78,6 +96,7 @@ def main() -> None:
         }
 
         cov = data["cobertura_procesamiento"]
+        assert cov["registros_deudores_leidos"] == len(deuda_rows)
         assert cov["personas_con_barrio_asignado"] == 59
         assert cov["celdas_barrio_suprimidas"] == 1
         assert cov["personas_en_celdas_suprimidas"] == 29
@@ -96,7 +115,7 @@ def main() -> None:
         out = root / "endeudamiento_caba.json"
         out.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
         print(
-            "✔ fixture sintético · 60 PH CABA · 30 en mora · "
+            "✔ fixture mensual sintético · 60 PH CABA · 30 en mora · "
             "1 barrio publicado · 1 celda suprimida · identificadores ausentes"
         )
 

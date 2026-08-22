@@ -80,7 +80,7 @@ def main() -> int:
             by_num[pnum] = i
 
     links: dict[int, dict[str, dict]] = defaultdict(dict)
-    discovered: dict[tuple[str, str], dict] = {}
+    discovered: dict[str, dict] = {}
 
     def resolve(eid: str, num: str) -> int | None:
         if eid and eid in by_id:
@@ -92,7 +92,7 @@ def main() -> int:
     def discovery(eid: str, num: str, session: dict, kind: str, basic: dict | None = None):
         if not eid and not num:
             return
-        key = (eid, num)
+        key = f"id:{eid}" if eid else f"num:{num}"
         row = discovered.setdefault(key, {
             "id_expediente": eid or None,
             "numero": num or None,
@@ -102,6 +102,11 @@ def main() -> int:
             "motivos": [],
             "datos_basicos": basic or None,
         })
+        if eid and not row.get("id_expediente"):
+            row["id_expediente"] = eid
+            row["url_ficha"] = f"https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id={eid}"
+        if num and not row.get("numero"):
+            row["numero"] = num
         row["primera_sesion"] = min(row["primera_sesion"], clean(session.get("fecha")))
         row["ultima_sesion"] = max(row["ultima_sesion"], clean(session.get("fecha")))
         if kind not in row["motivos"]:

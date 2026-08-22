@@ -1,0 +1,26 @@
+name: Validar endeudamiento BCRA v2.28
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'procesar_endeudamiento_bcra.py'
+      - 'verificar_endeudamiento.py'
+      - 'test_endeudamiento_sintetico.py'
+      - 'V228.md'
+      - '.github/workflows/validar-endeudamiento-v228.yml'
+  workflow_dispatch:
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compilar procesador y verificadores
+        run: python -m py_compile procesar_endeudamiento_bcra.py verificar_endeudamiento.py test_endeudamiento_sintetico.py
+      - name: Probar agregación, mora, territorialización y privacidad
+        run: python test_endeudamiento_sintetico.py

@@ -15,7 +15,7 @@ permissions:
 
 concurrency:
   group: probar-geolocalizacion-cp-badata-v229
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   probar:

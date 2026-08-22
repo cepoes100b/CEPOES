@@ -1,7 +1,12 @@
 name: Diagnosticar fuente dinámica registros BCRA v2.29
 
 on:
-  workflow_dispatch:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-direct-v229
+    paths:
+      - diagnosticar_respuesta_registros_bcra_api.py
+      - .github/workflows/diagnosticar-fuente-registros-bcra-v229.yml
 
 permissions:
   contents: read
@@ -19,24 +24,25 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check playwright
           python -m playwright install --with-deps chromium
-      - name: Inspeccionar tráfico público BCRA
-        run: python diagnosticar_fuente_registros_bcra.py
-      - name: Mostrar endpoints dinámicos
+      - name: Inspeccionar esquema mínimo de endpoints BCRA
+        run: python diagnosticar_respuesta_registros_bcra_api.py
+      - name: Mostrar candidatos de código
         run: |
           python - <<'PY'
           import json
-          x=json.load(open('diagnostico_fuentes_registros_bcra.json', encoding='utf-8'))
-          for k,v in x['paginas'].items():
-              print('\n', k)
-              for r in v['requests']:
-                  if r['resource_type'] in ('xhr','fetch'):
-                      print(r['method'], r['url'])
-              print('scripts:')
-              for s in v['scripts']:
-                  print(s)
+          x=json.load(open('diagnostico_esquema_registros_bcra_api.json', encoding='utf-8'))
+          for k,v in x['registros'].items():
+              print(k, json.dumps({
+                  'endpoint':v.get('endpoint'),
+                  'status':v.get('status'),
+                  'shape':v.get('shape'),
+                  'candidato_codigo':v.get('candidato_codigo'),
+                  'campos_5_digitos':v.get('campos_5_digitos'),
+                  'error':v.get('error'),
+              }, ensure_ascii=False))
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: diagnostico-fuentes-registros-bcra-v229
-          path: diagnostico_fuentes_registros_bcra.json
+          name: diagnostico-esquema-registros-bcra-api-v229
+          path: diagnostico_esquema_registros_bcra_api.json
           retention-days: 7

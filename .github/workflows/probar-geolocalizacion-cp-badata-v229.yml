@@ -1,6 +1,12 @@
 name: Probar geolocalización CP con BA Data v2.29
 
 on:
+  pull_request:
+    branches:
+      - endeudamiento-bcra-direct-v229
+    paths:
+      - diagnosticar_cp_barrio_aph.py
+      - .github/workflows/probar-geolocalizacion-cp-badata-v229.yml
   workflow_dispatch:
 
 permissions:

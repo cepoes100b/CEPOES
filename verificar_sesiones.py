@@ -46,11 +46,14 @@ def main() -> None:
         raise SystemExit("✘ falta sesiones_publicas.json")
     data = json.loads(PATH.read_text(encoding="utf-8"))
     issues = []
+    meta = data.get("normalizacion_recinto") or {}
 
     if data.get("version") != 2:
         issues.append("version debe ser 2 después de normalizar_sesiones.py")
-    if not data.get("normalizacion_recinto"):
-        issues.append("falta metadata normalizacion_recinto")
+    if meta.get("schema") != 2 or not meta.get("igualdad_endpoints_verificada"):
+        issues.append("falta verificación permanente de igualdad entre endpoints de asuntos")
+    if meta.get("lista_canonica_items") != "asuntos_considerados":
+        issues.append("la lista canónica de items de recinto debe ser asuntos_considerados")
     if data.get("resumen", {}).get("fallas") != 0 or data.get("fallas"):
         issues.append("hay fallas de extracción")
 
@@ -71,7 +74,6 @@ def main() -> None:
 
     alcances = Counter()
     tipos_raw = Counter()
-
     for s in sesiones:
         sid = s.get("id_sesion", "?")
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", str(s.get("fecha", ""))):
@@ -80,6 +82,8 @@ def main() -> None:
             issues.append(f"sesión {sid}: falta tipo")
         if s.get("criterio_realizada") not in {"presentismo_quorum", "documento_labor"}:
             issues.append(f"sesión {sid}: criterio_realizada inválido")
+        if "items_recinto" in s:
+            issues.append(f"sesión {sid}: items_recinto duplica la lista canónica")
 
         for name, doc in (s.get("documentos") or {}).items():
             if doc is None:
@@ -103,14 +107,14 @@ def main() -> None:
             if s.get("criterio_realizada") == "presentismo_quorum" and bool(s.get("realizada")) != esperada:
                 issues.append(f"sesión {sid}: realizada incoherente con quórum")
 
-        raw = s.get("items_recinto") or []
+        raw = s.get("asuntos_considerados") or []
         sanctions = s.get("sanciones") or []
         despacho = s.get("sanciones_despacho") or []
         giros = s.get("cambios_giro") or []
         for item in raw:
             tipos_raw[norm(item.get("tipo")) or "(vacio)"] += 1
         if len(raw) != len(sanctions) + len(despacho) + len(giros):
-            issues.append(f"sesión {sid}: items_recinto no particionados completamente")
+            issues.append(f"sesión {sid}: asuntos considerados no particionados completamente")
 
         for item in sanctions:
             if norm(item.get("tipo")) != "sancion de un expediente":
@@ -129,14 +133,13 @@ def main() -> None:
             if norm(item.get("tipo")) != "cambio de giro":
                 issues.append(f"sesión {sid}: cambio de giro con tipo oficial inesperado")
 
-        resumen_items = s.get("resumen_items_recinto") or {}
         expected_items = {
             "total": len(raw),
             "sanciones_expediente": len(sanctions),
             "sanciones_despacho": len(despacho),
             "cambios_giro": len(giros),
         }
-        if resumen_items != expected_items:
+        if (s.get("resumen_items_recinto") or {}) != expected_items:
             issues.append(f"sesión {sid}: resumen_items_recinto incoherente")
 
         for v in s.get("votaciones_nominales", []):
@@ -170,7 +173,7 @@ def main() -> None:
         "votos_nominales": sum(len(v.get("detalle_nominal", [])) for s in sesiones for v in s.get("votaciones_nominales", [])),
         "expedientes_votados_unicos": len({v.get("id_expediente") for s in sesiones for v in s.get("votaciones_nominales", []) if v.get("id_expediente")}),
         "fallas": 0,
-        "items_recinto": sum(len(s.get("items_recinto", [])) for s in sesiones),
+        "items_recinto": sum(len(s.get("asuntos_considerados", [])) for s in sesiones),
         "sanciones_expediente": sum(len(s.get("sanciones", [])) for s in sesiones),
         "sanciones_despacho": sum(len(s.get("sanciones_despacho", [])) for s in sesiones),
         "cambios_giro": sum(len(s.get("cambios_giro", [])) for s in sesiones),
@@ -181,10 +184,8 @@ def main() -> None:
             issues.append(f"resumen.{key}: {resumen.get(key)!r} != {value!r}")
     if "items_sanciones" in resumen:
         issues.append("resumen.items_sanciones es legado ambiguo y debe eliminarse")
-
-    metadata_types = (data.get("normalizacion_recinto") or {}).get("tipos_oficiales_observados") or {}
-    if metadata_types != dict(sorted(tipos_raw.items())):
-        issues.append("tipos_oficiales_observados no coincide con items_recinto")
+    if meta.get("tipos_oficiales_observados") != dict(sorted(tipos_raw.items())):
+        issues.append("tipos_oficiales_observados no coincide con asuntos_considerados")
 
     issues.extend(walk_private(data))
     print(
@@ -193,7 +194,7 @@ def main() -> None:
         f"{expected['votaciones_asuntos']} asuntos votados · {expected['votos_nominales']} votos nominales"
     )
     print(
-        f"  recinto: {expected['items_recinto']} items · {expected['sanciones_expediente']} sanciones expediente · "
+        f"  recinto: {expected['items_recinto']} items canónicos · {expected['sanciones_expediente']} sanciones expediente · "
         f"{expected['sanciones_despacho']} sanciones despacho · {expected['cambios_giro']} cambios giro"
     )
     print("  alcance sanciones: " + " · ".join(f"{k} {v}" for k, v in sorted(alcances.items())))

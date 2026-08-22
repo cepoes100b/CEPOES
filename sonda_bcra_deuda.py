@@ -64,7 +64,7 @@ def main() -> None:
     first.raise_for_status()
     inspect("STEP1", first)
 
-    m = re.search(r'href=[\"']([^\"']*human\.aspx[^\"']*language=es[^\"']*)[\"']', first.text, flags=re.I)
+    m = re.search(r'''href=["']([^"']*human\.aspx[^"']*language=es[^"']*)["']''', first.text, flags=re.I)
     if not m:
         raise SystemExit("No se encontró enlace de idioma español")
     es_url = urljoin(first.url, htmlmod.unescape(m.group(1)))

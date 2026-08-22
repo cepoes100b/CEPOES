@@ -8,10 +8,11 @@ from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Iterator
 
 CPA_CABA_RE = re.compile(r"^C\d{4}[A-Z]{3}$", re.I)
 PERIODO_RE = re.compile(r"24DSF(\d{6})", re.I)
+MIN_CELDA_BARRIO = 30
 
 
 @dataclass(frozen=True)
@@ -21,21 +22,13 @@ class PadronPersona:
     cpa: str
 
 
-def leer_lineas(path: Path) -> Iterable[str]:
-    # Los regímenes BCRA usan ANSI/Windows-1252. utf-8-sig queda como tolerancia
-    # para fixtures o futuras publicaciones que cambien de codificación.
-    data = path.read_bytes()
-    for enc in ("cp1252", "utf-8-sig"):
-        try:
-            text = data.decode(enc)
-            break
-        except UnicodeDecodeError:
-            continue
-    else:
-        raise ValueError(f"No se pudo decodificar {path}")
-    for line in text.splitlines():
-        if line.strip():
-            yield line.rstrip("\r\n")
+def leer_lineas(path: Path) -> Iterator[str]:
+    """Lee en streaming. Los archivos del régimen BCRA se publican en ANSI."""
+    with path.open("r", encoding="cp1252", errors="strict", newline="") as fh:
+        for line in fh:
+            line = line.rstrip("\r\n")
+            if line.strip():
+                yield line
 
 
 def normalizar_cpa(value: str) -> str:
@@ -43,16 +36,15 @@ def normalizar_cpa(value: str) -> str:
 
 
 def cargar_padron(path: Path) -> dict[tuple[str, str], PadronPersona]:
-    """Reconstruye el estado del padrón sin conservar denominaciones ni documentos personales.
+    """Reconstruye el estado del padrón reteniendo sólo PH con CPA de CABA.
 
-    Layout BCRA vigente: tipo id tributaria; nro id tributaria; tipo id personal;
-    nro id personal; denominación; PEP; CPA; tipo movimiento.
-    Tipo de identificación personal distinto de 00 identifica persona humana según
-    la especificación del padrón. Movimientos 10/30 actualizan; 20 elimina.
+    Layout vigente BCRA: tipo id tributaria; nro id tributaria; tipo id personal;
+    nro id personal; denominación; PEP; CPA; tipo movimiento. Los campos de
+    identificación personal son obligatorios sólo para personas humanas.
     """
     estado: dict[tuple[str, str], PadronPersona] = {}
     errores = 0
-    for n, line in enumerate(leer_lineas(path), start=1):
+    for line in leer_lineas(path):
         row = [x.strip() for x in line.split(";")]
         if len(row) != 8:
             errores += 1
@@ -67,13 +59,11 @@ def cargar_padron(path: Path) -> dict[tuple[str, str], PadronPersona]:
         if mov not in {"10", "30", ""}:
             errores += 1
             continue
-        # La identificación personal sólo es obligatoria para personas humanas.
         if not tipo_personal or tipo_personal == "00":
             estado.pop(key, None)
             continue
         cpa_n = normalizar_cpa(cpa)
         if not CPA_CABA_RE.fullmatch(cpa_n):
-            # No es un domicilio de CABA bajo el esquema CPA.
             estado.pop(key, None)
             continue
         estado[key] = PadronPersona(tipo_trib, ident, cpa_n)
@@ -85,7 +75,7 @@ def cargar_padron(path: Path) -> dict[tuple[str, str], PadronPersona]:
 
 
 def split_24dsf(line: str) -> list[str]:
-    """Acepta publicación delimitada o diseño de ancho fijo documentado por BCRA."""
+    """Acepta publicación delimitada o el diseño de ancho fijo documentado."""
     if ";" in line:
         return [x.strip() for x in line.split(";")]
     widths = [5, 2, 11] + [w for _ in range(24) for w in (2, 12, 1)]
@@ -100,7 +90,7 @@ def split_24dsf(line: str) -> list[str]:
 
 
 def monto_a_pesos(raw: str) -> int:
-    """BCRA expresa montos en miles de pesos con un decimal."""
+    """Convierte el monto 24DSF (miles de pesos, un decimal) a pesos."""
     s = (raw or "").strip().replace(" ", "")
     if not s:
         return 0
@@ -109,7 +99,7 @@ def monto_a_pesos(raw: str) -> int:
         return int(round(miles * 1000))
     if not s.isdigit():
         raise ValueError(f"monto inválido: {raw!r}")
-    # Campo de 12 posiciones: once enteros y un decimal implícito.
+    # Diseño de 12 posiciones: 11 enteras + 1 decimal implícito, en miles.
     return int(s) * 100
 
 
@@ -140,8 +130,8 @@ def cargar_territorio(path: Path | None) -> dict[str, tuple[str, int]]:
             comuna = int(str(row["comuna"]).replace("Comuna", "").strip())
             if not barrio or not 1 <= comuna <= 15:
                 continue
-            prev = out.get(cpa)
             current = (barrio, comuna)
+            prev = out.get(cpa)
             if prev and prev != current:
                 raise ValueError(f"CPA con asignación territorial conflictiva: {cpa}: {prev} vs {current}")
             out[cpa] = current
@@ -157,11 +147,8 @@ def periodo_desde_archivo(path: Path) -> str:
     return f"{raw[:4]}-{raw[4:]}"
 
 
-def métricas(items: Iterable[dict]) -> dict:
-    total = 0
-    mora = 0
-    deuda = 0
-    deuda_mora = 0
+def metricas(items: Iterable[dict]) -> dict:
+    total = mora = deuda = deuda_mora = 0
     sit = {str(i): 0 for i in range(1, 6)}
     for item in items:
         total += 1
@@ -188,8 +175,7 @@ def procesar(archivo_24dsf: Path, archivo_padron: Path, territorio_path: Path | 
     periodo = periodo_desde_archivo(archivo_24dsf)
 
     por_persona: dict[tuple[str, str], dict] = {}
-    registros = 0
-    vinculados = 0
+    registros = vinculados = 0
     for n, line in enumerate(leer_lineas(archivo_24dsf), start=1):
         registros += 1
         try:
@@ -222,10 +208,10 @@ def procesar(archivo_24dsf: Path, archivo_padron: Path, territorio_path: Path | 
             raise ValueError(f"24DSF línea {n}: {exc}") from exc
 
     personas = list(por_persona.values())
-    caba = métricas(personas)
+    caba = metricas(personas)
 
     barrio_items: dict[tuple[str, int], list[dict]] = defaultdict(list)
-    cpa_mapeados = set()
+    cpa_mapeados: set[str] = set()
     personas_mapeadas = 0
     for p in personas:
         destino = territorio.get(p["cpa"])
@@ -235,10 +221,15 @@ def procesar(archivo_24dsf: Path, archivo_padron: Path, territorio_path: Path | 
             personas_mapeadas += 1
 
     barrios = []
+    celdas_suprimidas = 0
+    personas_en_celdas_suprimidas = 0
     for (barrio, comuna), items in sorted(barrio_items.items(), key=lambda x: (x[0][1], x[0][0])):
-        barrios.append({"barrio": barrio, "comuna": comuna, **métricas(items)})
+        if len(items) < MIN_CELDA_BARRIO:
+            celdas_suprimidas += 1
+            personas_en_celdas_suprimidas += len(items)
+            continue
+        barrios.append({"barrio": barrio, "comuna": comuna, **metricas(items)})
 
-    # Nunca se publican los CPA ni identificadores individuales. Sólo métricas de cobertura.
     cobertura = round((personas_mapeadas / len(personas) * 100) if personas else 0, 2)
     return {
         "schema": 1,
@@ -258,6 +249,7 @@ def procesar(archivo_24dsf: Path, archivo_padron: Path, territorio_path: Path | 
             "unidad_publica": "agregados; nunca registros individuales",
             "criterio_persona_humana": "tipo de identificación personal del PADRON distinto de 00",
             "territorializacion": "CPA BCRA vinculado a una tabla CPA→barrio/comuna; el CPA individual no se publica",
+            "minimo_publicacion_barrio": MIN_CELDA_BARRIO,
             "advertencias": [
                 "El padrón aporta domicilio de la persona, no necesariamente el lugar donde contrajo la deuda.",
                 "Desde julio de 2024 el umbral mínimo de información a la Central de Deudores pasó de $1.000 a $25.000; las series de cantidad de deudores deben interpretar ese quiebre.",
@@ -270,6 +262,8 @@ def procesar(archivo_24dsf: Path, archivo_padron: Path, territorio_path: Path | 
             "personas_con_barrio_asignado": personas_mapeadas,
             "porcentaje_personas_con_barrio_asignado": cobertura,
             "cpa_territoriales_distintos_mapeados": len(cpa_mapeados),
+            "celdas_barrio_suprimidas": celdas_suprimidas,
+            "personas_en_celdas_suprimidas": personas_en_celdas_suprimidas,
         },
         "caba": caba,
         "barrios": barrios,
@@ -290,7 +284,8 @@ def main() -> None:
     print(
         f"Endeudamiento {data['periodo']} · {c['deudores']} deudores PH CABA · "
         f"{c['deudores_en_mora']} en mora ({c['porcentaje_deudores_en_mora']}%) · "
-        f"territorializados {cov['porcentaje_personas_con_barrio_asignado']}%"
+        f"territorializados {cov['porcentaje_personas_con_barrio_asignado']}% · "
+        f"barrios publicados {len(data['barrios'])}"
     )
 
 

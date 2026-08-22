@@ -8,6 +8,7 @@ on:
       - 'verificar_endeudamiento.py'
       - 'test_endeudamiento_sintetico.py'
       - 'V228.md'
+      - '.gitignore'
       - '.github/workflows/validar-endeudamiento-v228.yml'
   workflow_dispatch:
 
@@ -24,3 +25,9 @@ jobs:
         run: python -m py_compile procesar_endeudamiento_bcra.py verificar_endeudamiento.py test_endeudamiento_sintetico.py
       - name: Probar agregación, mora, territorialización y privacidad
         run: python test_endeudamiento_sintetico.py
+      - name: Verificar que insumos crudos queden bloqueados por Git
+        run: |
+          for f in 24DSF202606.7Z 24DSF202606.TXT 202606DEUDORES.7Z 20260731PADRON.TXT; do
+            git check-ignore -q --no-index "$f" || { echo "No está ignorado: $f"; exit 1; }
+          done
+          echo "✔ insumos BCRA crudos ignorados"

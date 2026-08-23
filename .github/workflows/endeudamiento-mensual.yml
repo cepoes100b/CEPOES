@@ -56,10 +56,19 @@ jobs:
           sudo apt-get install -y -qq p7zip-full
           python -m pip install --disable-pip-version-check requests
 
-      - name: Verificar herramientas y matriz territorial
+      - name: Verificar herramientas y matriz territorial productiva
         run: |
           python -m py_compile descargar_bcra_deudores.py procesar_universo_territorial_integral.py procesar_endeudamiento_productivo.py generar_endeudamiento_barrios.py
           test -s datos/endeudamiento/matriz_cp_barrio.json || { echo "Falta matriz territorial congelada y validada" >&2; exit 1; }
+          python - <<'PY'
+          import json
+          m=json.load(open('datos/endeudamiento/matriz_cp_barrio.json', encoding='utf-8'))
+          assert m.get('estado_validacion') in {'VALIDADA','VALIDADA_TEMPORAL'}, m.get('estado_validacion')
+          assert len(m.get('barrios') or []) == 48
+          soporte=sum(1 for r in m.get('filas',[]) if r.get('soporte_badata_observado') is True)
+          assert soporte >= 250, soporte
+          print('Matriz productiva:', m['estado_validacion'], '· CP con soporte:', soporte)
+          PY
 
       - name: Descargar PADRON ARCA con reintentos
         shell: bash
@@ -98,7 +107,7 @@ jobs:
       - name: Procesar BCRA y ARCA
         run: python procesar_endeudamiento_productivo.py
 
-      - name: Validar agregado antes de territorializar
+      - name: Validar agregado y calidad demográfica
         run: |
           python - <<'PY'
           import json
@@ -110,14 +119,22 @@ jobs:
           c=d['cobertura_territorial_cp4_sobre_caba']
           assert c['deudores_pct'] >= 90
           assert c['deuda_total_pct'] >= 90
+          edades=d['resumen_edad_territorial']
+          conocidos=sum(r['deudores'] for r in edades if r['franja_edad']!='desconocida')
+          total=sum(r['deudores'] for r in edades)
+          cobertura=conocidos/total*100 if total else 0
+          con_datos=[r for r in edades if r['franja_edad']!='desconocida' and r['deudores']>0]
+          assert cobertura >= 80, cobertura
+          assert len(con_datos) == 7, con_datos
           print('Período:', d['periodo_deuda'])
           print('Cobertura territorial:', c)
+          print('Cobertura etaria:', round(cobertura,4), '%')
           PY
 
       - name: Generar 48 barrios
         run: python generar_endeudamiento_barrios.py
 
-      - name: Verificar salida pública
+      - name: Verificar salida pública compacta
         run: |
           python - <<'PY'
           import json, pathlib
@@ -126,11 +143,18 @@ jobs:
           x=json.load(open(pathlib.Path('datos/endeudamiento')/f'{p}.json', encoding='utf-8'))
           assert x['periodo'] == p
           assert x['titulo'] == 'Endeudamiento por barrio'
-          assert len(x['segmentos'][0]['barrios']) == 48
-          assert len({b['barrio'] for b in x['segmentos'][0]['barrios']}) == 48
+          assert x['schema'] == 'cepoes-endeudamiento-barrios-v2-compact'
+          assert len(x['barrios']) == 48 and len(set(x['barrios'])) == 48
+          assert len(x['segmentos'][0]['datos']) == 48
+          assert x['metricas_segmento'] == ['deudores','personas_mora','deuda_total_pesos','deuda_mora_pesos']
+          assert len([e for e in x['filtros']['edades'] if e != 'desconocida']) == 7
           assert x['fuente']['principal'].startswith('Banco Central')
           assert x['metodologia']['naturaleza'] == 'estimacion territorial agregada'
-          print('OK:', p, '· segmentos:', len(x['segmentos']), '· barrios: 48')
+          assert x['metodologia']['matriz_estado_validacion'] in {'VALIDADA','VALIDADA_TEMPORAL'}
+          c=x['caba']['cobertura_mapa_sobre_caba']
+          assert c['deudores_pct'] >= 90 and c['deuda_total_pct'] >= 90
+          assert 'Mapa de la Deuda' not in json.dumps(x, ensure_ascii=False)
+          print('OK:', p, '· segmentos:', len(x['segmentos']), '· barrios: 48 · cobertura:', c)
           PY
 
       - name: Versionar únicamente agregados públicos

@@ -1,0 +1,183 @@
+name: Actualizar Endeudamiento BCRA
+
+on:
+  schedule:
+    # Chequeo liviano diario: 09:17 de Buenos Aires (12:17 UTC).
+    # Los microdatos sólo se descargan cuando aparece un AAAAMMDEUDORES nuevo.
+    - cron: "17 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: endeudamiento-bcra-mensual
+  cancel-in-progress: false
+
+jobs:
+  detectar:
+    runs-on: ubuntu-latest
+    outputs:
+      nueva: ${{ steps.estado.outputs.nueva }}
+      periodo: ${{ steps.estado.outputs.periodo }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --disable-pip-version-check requests
+      - name: Detectar publicación BCRA
+        run: python detectar_novedad_bcra.py
+      - id: estado
+        name: Exponer estado
+        shell: bash
+        run: |
+          NUEVA=$(python -c "import json; x=json.load(open('novedad_bcra.json')); print(str(bool(x['hay_novedad'])).lower())")
+          PERIODO=$(python -c "import json; print(json.load(open('novedad_bcra.json'))['periodo'])")
+          echo "nueva=$NUEVA" >> "$GITHUB_OUTPUT"
+          echo "periodo=$PERIODO" >> "$GITHUB_OUTPUT"
+          echo "Nueva publicación: $NUEVA · período: $PERIODO"
+
+  actualizar:
+    needs: detectar
+    if: needs.detectar.outputs.nueva == 'true' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+          python -m pip install --disable-pip-version-check requests
+
+      - name: Verificar herramientas y matriz territorial productiva
+        run: |
+          python -m py_compile descargar_bcra_deudores.py procesar_universo_territorial_integral.py procesar_endeudamiento_productivo.py generar_endeudamiento_barrios.py
+          test -s datos/endeudamiento/matriz_cp_barrio.json || { echo "Falta matriz territorial congelada y validada" >&2; exit 1; }
+          python - <<'PY'
+          import json
+          m=json.load(open('datos/endeudamiento/matriz_cp_barrio.json', encoding='utf-8'))
+          assert m.get('estado_validacion') in {'VALIDADA','VALIDADA_TEMPORAL'}, m.get('estado_validacion')
+          assert len(m.get('barrios') or []) == 48
+          soporte=sum(1 for r in m.get('filas',[]) if r.get('soporte_badata_observado') is True)
+          assert soporte >= 250, soporte
+          print('Matriz productiva:', m['estado_validacion'], '· CP con soporte:', soporte)
+          PY
+
+      - name: Descargar PADRON ARCA con reintentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            echo "PADRON intento $intento/3"
+            python descargar_bcra_deudores.py PADRON || true
+            ARCHIVO="$(find bcra_deudores -maxdepth 1 -type f -name '*PADRON.7Z' -print -quit 2>/dev/null || true)"
+            if [ -n "$ARCHIVO" ] && 7z t "$ARCHIVO" >/dev/null; then
+              echo "PADRON íntegro: $ARCHIVO"
+              break
+            fi
+            rm -f bcra_deudores/*PADRON.7Z bcra_deudores/*PADRON.7Z.part 2>/dev/null || true
+            if [ "$intento" -eq 3 ]; then exit 1; fi
+            sleep $((intento * 15))
+          done
+
+      - name: Descargar DEUDORES BCRA con reintentos
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            echo "DEUDORES intento $intento/3"
+            python descargar_bcra_deudores.py DEUDORES || true
+            ARCHIVO="$(find bcra_deudores -maxdepth 1 -type f -name '*DEUDORES.7Z' -print -quit 2>/dev/null || true)"
+            if [ -n "$ARCHIVO" ] && 7z t "$ARCHIVO" >/dev/null; then
+              echo "DEUDORES íntegro: $ARCHIVO"
+              break
+            fi
+            rm -f bcra_deudores/*DEUDORES.7Z bcra_deudores/*DEUDORES.7Z.part 2>/dev/null || true
+            if [ "$intento" -eq 3 ]; then exit 1; fi
+            sleep $((intento * 15))
+          done
+
+      - name: Procesar BCRA y ARCA
+        run: python procesar_endeudamiento_productivo.py
+
+      - name: Validar agregado y calidad demográfica
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('diagnostico_endeudamiento_productivo.json', encoding='utf-8'))
+          assert d['privacidad']['microdatos_publicados'] is False
+          assert d['privacidad']['identificadores_personales_en_salida'] is False
+          assert d['controles']['cendeu_registros_leidos'] > 30_000_000
+          assert len(d['agregado_cp_caba_1000_1499']['filas']) >= 300
+          c=d['cobertura_territorial_cp4_sobre_caba']
+          assert c['deudores_pct'] >= 90
+          assert c['deuda_total_pct'] >= 90
+          edades=d['resumen_edad_territorial']
+          conocidos=sum(r['deudores'] for r in edades if r['franja_edad']!='desconocida')
+          total=sum(r['deudores'] for r in edades)
+          cobertura=conocidos/total*100 if total else 0
+          con_datos=[r for r in edades if r['franja_edad']!='desconocida' and r['deudores']>0]
+          assert cobertura >= 80, cobertura
+          assert len(con_datos) == 7, con_datos
+          print('Período:', d['periodo_deuda'])
+          print('Cobertura territorial:', c)
+          print('Cobertura etaria:', round(cobertura,4), '%')
+          PY
+
+      - name: Generar 48 barrios
+        run: python generar_endeudamiento_barrios.py
+
+      - name: Verificar salida pública compacta
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          m=json.load(open('datos/endeudamiento/manifest.json', encoding='utf-8'))
+          p=m['ultimo_periodo']
+          x=json.load(open(pathlib.Path('datos/endeudamiento')/f'{p}.json', encoding='utf-8'))
+          assert x['periodo'] == p
+          assert x['titulo'] == 'Endeudamiento por barrio'
+          assert x['schema'] == 'cepoes-endeudamiento-barrios-v2-compact'
+          assert len(x['barrios']) == 48 and len(set(x['barrios'])) == 48
+          assert len(x['segmentos'][0]['datos']) == 48
+          assert x['metricas_segmento'] == ['deudores','personas_mora','deuda_total_pesos','deuda_mora_pesos']
+          assert len([e for e in x['filtros']['edades'] if e != 'desconocida']) == 7
+          assert x['fuente']['principal'].startswith('Banco Central')
+          assert x['metodologia']['naturaleza'] == 'estimacion territorial agregada'
+          assert x['metodologia']['matriz_estado_validacion'] in {'VALIDADA','VALIDADA_TEMPORAL'}
+          c=x['caba']['cobertura_mapa_sobre_caba']
+          assert c['deudores_pct'] >= 90 and c['deuda_total_pct'] >= 90
+          assert 'Mapa de la Deuda' not in json.dumps(x, ensure_ascii=False)
+          print('OK:', p, '· segmentos:', len(x['segmentos']), '· barrios: 48 · cobertura:', c)
+          PY
+
+      - name: Versionar únicamente agregados públicos
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add datos/endeudamiento/*.json
+          if git diff --cached --quiet; then
+            echo "Sin cambios públicos"
+            exit 0
+          fi
+          git commit -m "endeudamiento: actualización BCRA ${PERIODO:-${{ needs.detectar.outputs.periodo }}}"
+          for intento in 1 2 3; do
+            if git push origin HEAD:${GITHUB_REF_NAME}; then exit 0; fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || exit 1
+            sleep 3
+          done
+          exit 1
+
+      - name: Eliminar archivos crudos y diagnósticos locales
+        if: always()
+        run: |
+          rm -rf bcra_deudores
+          rm -f *.part diagnostico_endeudamiento_productivo.json novedad_bcra.json

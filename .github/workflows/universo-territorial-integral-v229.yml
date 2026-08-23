@@ -107,6 +107,14 @@ jobs:
           print('Celdas CP×sexo×edad:', len(x['agregado_cp_sexo_edad_1000_1499']['filas']))
           PY
 
+      - name: Conservar agregado BCRA para iteración metodológica
+        uses: actions/upload-artifact@v4
+        with:
+          name: agregado-universo-territorial-v229
+          path: diagnostico_universo_territorial_integral.json
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Reconstruir y validar matriz CP4 → barrio
         run: python reconstruir_matriz_cp_barrio.py
 
@@ -118,7 +126,7 @@ jobs:
           print('Estado:', d['estado'])
           print('Soporte:', json.dumps(d['soporte_geografico'], ensure_ascii=False, indent=2))
           print('Checks:', json.dumps(d['checks'], ensure_ascii=False, indent=2))
-          print('Validación:', json.dumps(d['resultado_validacion']['modelo'], ensure_ascii=False, indent=2))
+          print('Validación mora:', json.dumps(d['resultado_validacion']['modelo'], ensure_ascii=False, indent=2))
           PY
 
       - name: Publicar diagnósticos y matriz candidata

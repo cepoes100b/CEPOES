@@ -1,0 +1,60 @@
+name: Validar Endeudamiento productivo
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .gitignore
+      - descargar_bcra_deudores.py
+      - reconciliar_bcra_entidades.py
+      - procesar_universo_territorial_integral.py
+      - procesar_endeudamiento_productivo.py
+      - detectar_novedad_bcra.py
+      - generar_endeudamiento_barrios.py
+      - datos/endeudamiento/**
+      - .github/workflows/endeudamiento-mensual.yml
+      - .github/workflows/validar-endeudamiento-main.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Compilar pipeline
+        run: python -m py_compile descargar_bcra_deudores.py reconciliar_bcra_entidades.py procesar_universo_territorial_integral.py procesar_endeudamiento_productivo.py detectar_novedad_bcra.py generar_endeudamiento_barrios.py
+      - name: Verificar artefactos públicos y privacidad
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          base=pathlib.Path('datos/endeudamiento')
+          matriz=json.load(open(base/'matriz_cp_barrio.json', encoding='utf-8'))
+          assert matriz.get('estado_validacion') in {'VALIDADA','VALIDADA_TEMPORAL'}, matriz.get('estado_validacion')
+          assert len(matriz.get('barrios') or []) == 48
+          assert len(set(matriz.get('barrios') or [])) == 48
+          manifest=json.load(open(base/'manifest.json', encoding='utf-8'))
+          p=manifest['ultimo_periodo']
+          assert p in manifest.get('periodos', [])
+          archivo=base/manifest['archivos'][p]
+          assert archivo.exists(), archivo
+          x=json.load(open(archivo, encoding='utf-8'))
+          assert x['schema'] == 'cepoes-endeudamiento-barrios-v2-compact'
+          assert x['titulo'] == 'Endeudamiento por barrio'
+          assert len(x['barrios']) == 48 and len(set(x['barrios'])) == 48
+          assert len(x['segmentos']) > 50
+          assert x['fuente']['principal'].startswith('Banco Central')
+          assert x['metodologia']['matriz_estado_validacion'] in {'VALIDADA','VALIDADA_TEMPORAL'}
+          assert x['caba']['cobertura_mapa_sobre_caba']['deudores_pct'] >= 90
+          raw=json.dumps(x, ensure_ascii=False).lower()
+          for forbidden in ('cuit','cuil','mapa de la deuda','datos.mapadeladeuda.ar'):
+              assert forbidden not in raw, forbidden
+          print('OK:', p, '· 48 barrios ·', len(x['segmentos']), 'segmentos')
+          PY

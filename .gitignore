@@ -2,3 +2,20 @@ __pycache__/
 *.pyc
 *.parcial
 badata/presupuesto/*.csv
+
+# BCRA Central de Deudores: insumos individuales/identificables, nunca públicos.
+datos_privados_bcra/
+bcra_deudores/
+estado_bcra_deudores.json
+24DSF*.7Z
+24DSF*.7z
+24DSF*.TXT
+24DSF*.txt
+*DEUDORES*.7Z
+*DEUDORES*.7z
+*DEUDORES*.TXT
+*DEUDORES*.txt
+*PADRON*.7Z
+*PADRON*.7z
+*PADRON*.TXT
+*PADRON*.txt

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Reconstruye y valida una matriz probabilística CP4 -> barrio CABA.
 
-Infere una regla territorial reproducible a partir de agregados propios BCRA/ARCA,
-resultados agregados públicos de Mapa de la Deuda y BA Data local usado únicamente
-como restricción de soporte geográfico CP4-barrio. La referencia externa sirve para
-calibrar/validar la distribución; la salida nunca contiene identificadores personales.
+La matriz se calibra exclusivamente con métricas de stock (deudores totales y
+monto total) y se valida con métricas de mora que el ajuste no vio. BA Data se
+usa sólo para restringir el soporte geográfico CP4-barrio; la frecuencia de
+puntos/equipamientos nunca se interpreta como población.
+
+La salida es agregada. No lee ni escribe identificadores personales.
 """
 from __future__ import annotations
 
 import csv
-import hashlib
 import json
 import re
 import unicodedata
@@ -27,12 +28,16 @@ INPUT = Path("diagnostico_universo_territorial_integral.json")
 BADATA = Path("badata")
 OUT_MATRIX = Path("matriz_cp_barrio_v229.json")
 OUT_DIAG = Path("diagnostico_reconstruccion_cp_barrio_v229.json")
+
 METRICS = {
     "deudores_unicos_total": "deudores",
     "deudores_unicos_mora": "personas_mora",
     "monto_total": "deuda_total_pesos",
     "monto_mora": "deuda_mora_pesos",
 }
+TRAIN_METRICS = {"deudores_unicos_total", "monto_total"}
+VALIDATION_METRICS = {"deudores_unicos_mora", "monto_mora"}
+
 AGES_OURS_TO_REF = {
     "le25": "<=25", "26_35": "26_35", "36_45": "36_45", "46_55": "46_55",
     "56_65": "56_65", "66_75": "66_75", "gt75": ">75",
@@ -50,11 +55,7 @@ def norm_text(v: Any) -> str:
 
 def norm_barrio(v: Any) -> str:
     s = norm_text(v)
-    return {
-        "LA BOCA": "BOCA",
-        "VILLA GRAL MITRE": "VILLA GENERAL MITRE",
-        "PATERNAL": "LA PATERNAL",
-    }.get(s, s)
+    return {"LA BOCA": "BOCA", "VILLA GRAL MITRE": "VILLA GENERAL MITRE", "PATERNAL": "LA PATERNAL"}.get(s, s)
 
 
 def cp4_value(v: Any, allow_cpa: bool = True) -> int | None:
@@ -75,7 +76,6 @@ def get_json(session: requests.Session, path_or_url: str) -> dict:
     parsed = urlparse(url)
     if parsed.scheme != "https" or parsed.netloc != "datos.mapadeladeuda.ar":
         raise ValueError(f"Origen externo no autorizado: {url}")
-    last = None
     for attempt in range(3):
         try:
             r = session.get(url, timeout=60)
@@ -84,11 +84,10 @@ def get_json(session: requests.Session, path_or_url: str) -> dict:
             if not isinstance(x, dict):
                 raise ValueError(f"JSON raíz no objeto: {url}")
             return x
-        except Exception as exc:
-            last = exc
+        except Exception:
             if attempt == 2:
                 raise
-    raise last
+    raise RuntimeError("No alcanzable")
 
 
 def period_key(v: Any) -> str:
@@ -97,12 +96,10 @@ def period_key(v: Any) -> str:
 
 def feature_name(x: dict) -> str:
     for k in ("name", "nombre", "label", "geo_name", "barrio", "BARRIO"):
-        if x.get(k):
-            return str(x[k])
+        if x.get(k): return str(x[k])
     props = x.get("properties") if isinstance(x.get("properties"), dict) else {}
     for k in ("name", "nombre", "label", "geo_name", "barrio", "BARRIO"):
-        if props.get(k):
-            return str(props[k])
+        if props.get(k): return str(props[k])
     raise ValueError(f"Feature sin nombre reconocible: {x}")
 
 
@@ -117,64 +114,56 @@ def decode_rows(layer: dict) -> list[dict]:
 
 
 def flatten_values(x: Any) -> list[str]:
-    out = []
+    out: list[str] = []
     if isinstance(x, dict):
         for v in x.values(): out.extend(flatten_values(v))
     elif isinstance(x, (list, tuple)):
         for v in x: out.extend(flatten_values(v))
-    elif x is not None:
-        out.append(str(x))
+    elif x is not None: out.append(str(x))
     return out
 
 
 def segment_from_filters(filters: Any, category_ids: set[str]):
     vals = set(flatten_values(filters or {}))
-    if vals & category_ids:
-        return None
+    if vals & category_ids: return None
     sex, age = sorted(vals & SEXES), sorted(vals & AGES_REF)
-    if len(sex) > 1 or len(age) > 1:
-        return None
+    if len(sex) > 1 or len(age) > 1: return None
     return (sex[0] if sex else None, age[0] if age else None)
 
 
 def load_reference():
-    s = requests.Session()
-    s.headers.update({"User-Agent": "CEPOES-reconstruccion-territorial/1.0 (+https://cepoes.org)"})
-    manifest = get_json(s, "manifest.json")
-    if manifest.get("dataset") != "mapa-de-la-deuda":
-        raise ValueError("Manifest externo inesperado")
-    filters_meta = get_json(s, (manifest.get("dimensions") or {})["filters"])
+    session = requests.Session()
+    session.headers.update({"User-Agent": "CEPOES-reconstruccion-territorial/2.0 (+https://cepoes.org)"})
+    manifest = get_json(session, "manifest.json")
+    if manifest.get("dataset") != "mapa-de-la-deuda": raise ValueError("Manifest externo inesperado")
+    filters_meta = get_json(session, (manifest.get("dimensions") or {})["filters"])
     category_ids = {str(x.get("id")) for x in filters_meta.get("categorias", []) if x.get("id") not in (None, "__ALL__")}
-    lookup = get_json(s, (manifest.get("geo") or {})["lookup"])
+    lookup = get_json(session, (manifest.get("geo") or {})["lookup"])
     features = [x for x in lookup.get("features", []) if x.get("level") == "barrio_caba" and str(x.get("scope")) == "02"]
-    if len(features) != 48:
-        raise ValueError(f"Referencia externa: se esperaban 48 barrios, hay {len(features)}")
+    if len(features) != 48: raise ValueError(f"Referencia externa: se esperaban 48 barrios, hay {len(features)}")
     geo_to_name = {str(x["geo_id"]): feature_name(x) for x in features}
     own = json.loads(INPUT.read_text(encoding="utf-8"))
     want = period_key(own.get("periodo_deuda"))
-    p = next((p for p in manifest.get("periods") or [] if period_key(p.get("id")) == want), None)
-    if not p:
-        raise ValueError(f"Referencia externa no publica el período {own.get('periodo_deuda')}")
-    idx = get_json(s, p["index"])
+    period = next((p for p in manifest.get("periods") or [] if period_key(p.get("id")) == want), None)
+    if not period: raise ValueError(f"Referencia externa no publica el período {own.get('periodo_deuda')}")
+    idx = get_json(session, period["index"])
     descriptors, duplicates = {}, Counter()
     for d in idx.get("availableSlices", []):
-        if d.get("level") != "barrio_caba" or str(d.get("scope")) != "02":
-            continue
+        if d.get("level") != "barrio_caba" or str(d.get("scope")) != "02": continue
         seg = segment_from_filters(d.get("filters"), category_ids)
-        if seg is None:
-            continue
+        if seg is None: continue
         duplicates[seg] += 1
         prev = descriptors.get(seg)
         if prev is None or len(json.dumps(d.get("filters") or {}, sort_keys=True)) < len(json.dumps(prev.get("filters") or {}, sort_keys=True)):
             descriptors[seg] = d
     layers = {}
     for seg, d in descriptors.items():
-        layer = get_json(s, d["path"])
-        if len(decode_rows(layer)) == 48:
-            layers[seg] = layer
+        layer = get_json(session, d["path"])
+        if len(decode_rows(layer)) == 48: layers[seg] = layer
     meta = {
         "manifest_version": manifest.get("version"), "contract": manifest.get("contract"),
-        "periodo_referencia": p.get("id"), "segmentos_disponibles_sin_categoria": len(layers),
+        "periodo_referencia": period.get("id"), "segmentos_disponibles_sin_categoria": len(layers),
+        "segmentos": [{"sexo": s[0], "edad": s[1]} for s in sorted(layers, key=str)],
         "duplicados_descriptor": {str(k): v for k, v in duplicates.items() if v > 1},
     }
     return meta, geo_to_name, layers
@@ -184,8 +173,7 @@ def point_in_ring(x: float, y: float, ring: list) -> bool:
     inside, j = False, len(ring) - 1
     for i in range(len(ring)):
         xi, yi, xj, yj = ring[i][0], ring[i][1], ring[j][0], ring[j][1]
-        if ((yi > y) != (yj > y)) and (yj - yi) and x < (xj - xi) * (y - yi) / (yj - yi) + xi:
-            inside = not inside
+        if ((yi > y) != (yj > y)) and (yj - yi) and x < (xj - xi) * (y - yi) / (yj - yi) + xi: inside = not inside
         j = i
     return inside
 
@@ -210,14 +198,12 @@ def load_local_polygons(official_norm_to_name: dict[str, str]):
         geom, pts, stack = f.get("geometry") or {}, [], [(f.get("geometry") or {}).get("coordinates")]
         while stack:
             q = stack.pop()
-            if isinstance(q, list) and len(q) >= 2 and all(isinstance(z, (int, float)) for z in q[:2]):
-                pts.append((float(q[0]), float(q[1])))
+            if isinstance(q, list) and len(q) >= 2 and all(isinstance(z, (int, float)) for z in q[:2]): pts.append((float(q[0]), float(q[1])))
             elif isinstance(q, list): stack.extend(q)
         if pts:
             xs, ys = [p[0] for p in pts], [p[1] for p in pts]
             out.append((name, (min(xs), min(ys), max(xs), max(ys)), geom))
-    if len(out) != 48:
-        raise ValueError(f"BA Data local: se esperaban 48 polígonos compatibles, hay {len(out)}")
+    if len(out) != 48: raise ValueError(f"BA Data local: se esperaban 48 polígonos compatibles, hay {len(out)}")
     return out
 
 
@@ -304,13 +290,13 @@ def load_cp_data():
             age_ours, cells = age_rev.get(age_ref) if age_ref else None, {}
             for cp in cp_list:
                 ac = {k: 0.0 for k in METRICS.values()}
-                for s in ("F", "M"):
-                    if sex and s != sex: continue
+                for sx in ("F", "M"):
+                    if sex and sx != sex: continue
                     ages = [age_ours] if age_ours else list(AGES_OURS_TO_REF) + ["desconocida"]
-                    for a in ages:
-                        r = cross.get((cp, s, a))
-                        if r:
-                            for k in ac: ac[k] += r[k]
+                    for age in ages:
+                        row = cross.get((cp, sx, age))
+                        if row:
+                            for k in ac: ac[k] += row[k]
                 cells[cp] = ac
             segs[(sex, age_ref)] = cells
     return root, cp_list, segs
@@ -318,11 +304,11 @@ def load_cp_data():
 
 def reference_targets(layer: dict, geo_to_name: dict[str, str], barrio_names: list[str]):
     by_name = {name: {} for name in barrio_names}
-    for r in decode_rows(layer):
-        name = geo_to_name.get(str(r.get("geo_id")))
-        if name in by_name: by_name[name] = r
+    for row in decode_rows(layer):
+        name = geo_to_name.get(str(row.get("geo_id")))
+        if name in by_name: by_name[name] = row
     if any(not by_name[n] for n in barrio_names): raise ValueError("Slice externo no cubre los mismos 48 barrios")
-    return {m: np.array([float(by_name[n].get(m, 0) or 0) for n in barrio_names], dtype=float) for m in METRICS}
+    return {metric: np.array([float(by_name[n].get(metric, 0) or 0) for n in barrio_names], dtype=float) for metric in METRICS}
 
 
 def make_samples(cp_list, segs, layers, geo_to_name, barrio_names):
@@ -338,18 +324,14 @@ def make_samples(cp_list, segs, layers, geo_to_name, barrio_names):
     return samples
 
 
-def split_segments(samples):
+def split_by_metric(samples):
     segments = sorted({s["segment"] for s in samples}, key=str)
-    if len(segments) < 4: raise ValueError(f"Muy pocos segmentos comparables: {len(segments)}")
-    validation = set()
-    for s in [s for s in segments if s[0] is not None and s[1] is not None]:
-        h = int(hashlib.sha256(f"{s[0]}|{s[1]}".encode()).hexdigest()[:8], 16)
-        if h % 3 == 0: validation.add(s)
-    if len(validation) < 3:
-        candidates = [s for s in segments if s != (None, None)]
-        validation = set(candidates[::max(1, len(candidates)//4)][:max(3, len(candidates)//4)])
-    training = set(segments) - validation; training.add((None, None)); validation.discard((None, None))
-    return training, validation
+    if len(segments) < 3: raise ValueError(f"Referencia insuficiente: sólo {len(segments)} segmentos comparables")
+    train = [s for s in samples if s["metric"] in TRAIN_METRICS]
+    validation = [s for s in samples if s["metric"] in VALIDATION_METRICS]
+    if len(train) < 6 or len(validation) < 6:
+        raise ValueError(f"Muestras insuficientes: entrenamiento={len(train)}, validación={len(validation)}")
+    return segments, train, validation
 
 
 def simplex_projection(v: np.ndarray) -> np.ndarray:
@@ -381,15 +363,14 @@ def corr(a, b):
     return 0.0 if np.std(a) == 0 or np.std(b) == 0 else float(np.corrcoef(a, b)[0,1])
 
 
-def eval_samples(samples, W, P, subset_segments):
+def eval_samples(samples, W, P):
     rows = []
-    for s in samples:
-        if s["segment"] not in subset_segments: continue
-        y, pred, base = s["y"], s["x"]@W, s["x"]@P
-        def m(z):
+    for sample in samples:
+        y, pred, base = sample["y"], sample["x"]@W, sample["x"]@P
+        def metrics(z):
             d = np.abs(z-y)
             return {"mae_share_pp": float(d.mean()*100), "max_abs_share_pp": float(d.max()*100), "tv_distance": float(0.5*d.sum()), "correlacion": corr(z,y)}
-        rows.append({"segmento": {"sexo": s["segment"][0], "edad": s["segment"][1]}, "metrica": s["metric"], "modelo": m(pred), "prior_badata": m(base)})
+        rows.append({"segmento": {"sexo": sample["segment"][0], "edad": sample["segment"][1]}, "metrica": sample["metric"], "modelo": metrics(pred), "prior_badata": metrics(base)})
     def agg(which):
         if not rows: return {}
         return {"n": len(rows), "mae_share_pp_media": float(np.mean([r[which]["mae_share_pp"] for r in rows])), "max_abs_share_pp_media": float(np.mean([r[which]["max_abs_share_pp"] for r in rows])), "tv_distance_media": float(np.mean([r[which]["tv_distance"] for r in rows])), "correlacion_media": float(np.mean([r[which]["correlacion"] for r in rows]))}
@@ -408,28 +389,28 @@ def main() -> int:
     td = sum(total_cells[cp]["deudores"] for cp in cp_list); cd = sum(total_cells[cp]["deudores"] for cp,ok in zip(cp_list,observed) if ok)
     tm = sum(total_cells[cp]["deuda_total_pesos"] for cp in cp_list); cm = sum(total_cells[cp]["deuda_total_pesos"] for cp,ok in zip(cp_list,observed) if ok)
     support_meta["cobertura_deudores_pct"] = round(cd/td*100,4) if td else 0; support_meta["cobertura_deuda_pct"] = round(cm/tm*100,4) if tm else 0
-    samples = make_samples(cp_list,segs,layers,geo_to_name,barrio_names); train_segments,val_segments = split_segments(samples)
-    train = [s for s in samples if s["segment"] in train_segments]
+    samples = make_samples(cp_list,segs,layers,geo_to_name,barrio_names); segments, train, validation = split_by_metric(samples)
     X,Y = np.vstack([s["x"] for s in train]), np.vstack([s["y"] for s in train]); W,fit_meta = fit_weights(X,Y,P,support_idx)
-    train_eval,val_eval = eval_samples(samples,W,P,train_segments), eval_samples(samples,W,P,val_segments)
+    train_eval,val_eval = eval_samples(train,W,P), eval_samples(validation,W,P)
     vm,vb = val_eval["modelo"],val_eval["prior_badata"]; improvement = None if not vb.get("tv_distance_media") else 1-vm.get("tv_distance_media",1)/vb["tv_distance_media"]
     checks = {
         "soporte_cubre_90pct_deudores": support_meta["cobertura_deudores_pct"] >= 90.0,
-        "validacion_tv_menor_10pct": vm.get("tv_distance_media",1) <= 0.10,
-        "validacion_correlacion_mayor_090": vm.get("correlacion_media",0) >= 0.90,
-        "mejora_vs_prior_10pct": improvement is not None and improvement >= 0.10,
-        "hay_al_menos_3_segmentos_validacion": len(val_segments) >= 3,
+        "mora_fuera_objetivo_tv_menor_10pct": vm.get("tv_distance_media",1) <= 0.10,
+        "mora_fuera_objetivo_correlacion_mayor_090": vm.get("correlacion_media",0) >= 0.90,
+        "mejora_mora_vs_prior_10pct": improvement is not None and improvement >= 0.10,
+        "hay_al_menos_3_segmentos_comparables": len(segments) >= 3,
+        "hay_al_menos_6_muestras_mora_no_usadas": len(validation) >= 6,
     }
     status = "VALIDADA_CANDIDATA" if all(checks.values()) else "NO_VALIDADA"
     matrix_rows=[]
     for i,cp in enumerate(cp_list):
         weights=[{"barrio":barrio_names[j],"peso":round(float(W[i,j]),10)} for j in support_idx[i] if W[i,j]>1e-9]; weights.sort(key=lambda x:(-x["peso"],norm_text(x["barrio"])))
         matrix_rows.append({"cp4":cp,"soporte_badata_observado":observed[i],"barrios_candidatos":len(support_idx[i]),"pesos":weights})
-    matrix={"schema":"cepoes-cp4-barrio-probabilistic-v1","generado_utc":datetime.now(timezone.utc).isoformat(),"periodo_calibracion":own.get("periodo_deuda"),"estado_validacion":status,"interpretacion":"ponderadores territoriales estimados; no geolocalizacion individual exacta","fuente_primaria_futura":"Central de Deudores BCRA + PADRON ARCA distribuido por BCRA","referencia_calibracion":"Mapa de la Deuda, capa agregada barrio_caba","restriccion_geografica":"compatibilidades CP4-barrio observadas en datasets BA Data locales; frecuencia de puntos no se usa como peso","barrios":barrio_names,"filas":matrix_rows}
+    matrix={"schema":"cepoes-cp4-barrio-probabilistic-v2","generado_utc":datetime.now(timezone.utc).isoformat(),"periodo_calibracion":own.get("periodo_deuda"),"estado_validacion":status,"interpretacion":"ponderadores territoriales estimados; no geolocalizacion individual exacta","fuente_primaria_futura":"Central de Deudores BCRA + PADRON ARCA distribuido por BCRA","referencia_calibracion":"Mapa de la Deuda, capa agregada barrio_caba","restriccion_geografica":"compatibilidades CP4-barrio observadas en datasets BA Data locales; frecuencia de puntos no se usa como peso","calibracion":sorted(TRAIN_METRICS),"validacion_no_usada_en_ajuste":sorted(VALIDATION_METRICS),"barrios":barrio_names,"filas":matrix_rows}
     OUT_MATRIX.write_text(json.dumps(matrix,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    diag={"schema":"cepoes-diagnostico-reconstruccion-cp4-barrio-v1","generado_utc":datetime.now(timezone.utc).isoformat(),"estado":status,"periodo":own.get("periodo_deuda"),"referencia":ref_meta,"universo_cp":{"cantidad":C,"min":min(cp_list),"max":max(cp_list)},"soporte_geografico":support_meta,"segmentos":{"comparables":len({s["segment"] for s in samples}),"entrenamiento":[{"sexo":s[0],"edad":s[1]} for s in sorted(train_segments,key=str)],"validacion_fuera_muestra":[{"sexo":s[0],"edad":s[1]} for s in sorted(val_segments,key=str)],"muestras_metrica_entrenamiento":len(train),"muestras_metrica_totales":len(samples)},"ajuste":fit_meta,"resultado_entrenamiento":train_eval,"resultado_validacion":val_eval,"mejora_tv_vs_prior":improvement,"checks":checks,"criterio":{"adoptar_solo_si":"todos los checks son true","si_falla":"no usar la matriz en produccion; revisar soporte/universo antes de modificar el mapa publico"},"privacidad":{"identificadores_personales":False,"microdatos":False,"salida_solo_agregada":True}}
+    diag={"schema":"cepoes-diagnostico-reconstruccion-cp4-barrio-v2","generado_utc":datetime.now(timezone.utc).isoformat(),"estado":status,"periodo":own.get("periodo_deuda"),"referencia":ref_meta,"universo_cp":{"cantidad":C,"min":min(cp_list),"max":max(cp_list)},"soporte_geografico":support_meta,"validacion":{"diseno":"ajuste sólo con deudores totales y monto total; prueba con deudores en mora y monto en mora","segmentos_comparables":[{"sexo":s[0],"edad":s[1]} for s in segments],"metricas_entrenamiento":sorted(TRAIN_METRICS),"metricas_fuera_objetivo":sorted(VALIDATION_METRICS),"muestras_entrenamiento":len(train),"muestras_fuera_objetivo":len(validation),"segunda_etapa_requerida_si_aprueba":"validación temporal con otro período BCRA/ARCA sin recalibrar la matriz"},"ajuste":fit_meta,"resultado_entrenamiento":train_eval,"resultado_validacion":val_eval,"mejora_tv_vs_prior":improvement,"checks":checks,"criterio":{"adoptar_solo_si":"todos los checks son true","si_aprueba":"candidata únicamente; falta validación temporal antes de producción","si_falla":"no usar la matriz en producción ni relajar umbrales para forzar aprobación"},"privacidad":{"identificadores_personales":False,"microdatos":False,"salida_solo_agregada":True}}
     OUT_DIAG.write_text(json.dumps(diag,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print(json.dumps({"estado":status,"soporte":support_meta,"segmentos_train":len(train_segments),"segmentos_validacion":len(val_segments),"validacion_modelo":vm,"validacion_prior":vb,"mejora_tv_vs_prior":improvement,"checks":checks},ensure_ascii=False,indent=2),flush=True)
+    print(json.dumps({"estado":status,"soporte":support_meta,"segmentos_comparables":len(segments),"muestras_entrenamiento":len(train),"muestras_validacion_mora":len(validation),"validacion_modelo":vm,"validacion_prior":vb,"mejora_tv_vs_prior":improvement,"checks":checks},ensure_ascii=False,indent=2),flush=True)
     return 0
 
 

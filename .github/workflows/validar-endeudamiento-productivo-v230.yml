@@ -1,0 +1,131 @@
+name: Validar Endeudamiento productivo v2.30
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - endeudamiento-productivo-v230
+    paths:
+      - detectar_novedad_bcra.py
+      - procesar_endeudamiento_productivo.py
+      - generar_endeudamiento_barrios.py
+      - recalibrar_matriz_cp_barrio_productiva.py
+      - .github/workflows/validar-endeudamiento-productivo-v230.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validar-endeudamiento-productivo-v230
+  cancel-in-progress: true
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+          python -m pip install --disable-pip-version-check requests numpy
+
+      - name: Compilar
+        run: |
+          python -m py_compile descargar_bcra_deudores.py procesar_universo_territorial_integral.py reconstruir_matriz_cp_barrio.py procesar_endeudamiento_productivo.py recalibrar_matriz_cp_barrio_productiva.py generar_endeudamiento_barrios.py
+
+      - name: Detectar período actual
+        run: python detectar_novedad_bcra.py
+
+      - name: Descargar PADRON
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            python descargar_bcra_deudores.py PADRON || true
+            A="$(find bcra_deudores -maxdepth 1 -type f -name '*PADRON.7Z' -print -quit 2>/dev/null || true)"
+            if [ -n "$A" ] && 7z t "$A" >/dev/null; then break; fi
+            rm -f bcra_deudores/*PADRON.7Z bcra_deudores/*PADRON.7Z.part 2>/dev/null || true
+            if [ "$intento" -eq 3 ]; then exit 1; fi
+            sleep $((intento * 15))
+          done
+
+      - name: Descargar DEUDORES
+        shell: bash
+        run: |
+          set -euo pipefail
+          for intento in 1 2 3; do
+            python descargar_bcra_deudores.py DEUDORES || true
+            A="$(find bcra_deudores -maxdepth 1 -type f -name '*DEUDORES.7Z' -print -quit 2>/dev/null || true)"
+            if [ -n "$A" ] && 7z t "$A" >/dev/null; then break; fi
+            rm -f bcra_deudores/*DEUDORES.7Z bcra_deudores/*DEUDORES.7Z.part 2>/dev/null || true
+            if [ "$intento" -eq 3 ]; then exit 1; fi
+            sleep $((intento * 15))
+          done
+
+      - name: Procesar base territorial productiva
+        run: python procesar_endeudamiento_productivo.py
+
+      - name: Recalibrar matriz sobre provincia 00 + CP4
+        run: python recalibrar_matriz_cp_barrio_productiva.py
+
+      - name: Exigir validación fuera de muestra
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('diagnostico_matriz_cp_barrio_productiva.json', encoding='utf-8'))
+          assert d['estado'] == 'VALIDADA_CANDIDATA', d['estado']
+          assert all(d['checks'].values()), d['checks']
+          v=d['resultado_validacion']['modelo']
+          assert v['tv_distance_media'] <= 0.10
+          assert v['correlacion_media'] >= 0.90
+          p=json.load(open('diagnostico_endeudamiento_productivo.json', encoding='utf-8'))
+          c=p['cobertura_territorial_cp4_sobre_caba']
+          assert c['deudores_pct'] >= 90
+          assert c['deuda_total_pct'] >= 90
+          print('Matriz candidata OK:', v)
+          print('Cobertura:', c)
+          PY
+
+      - name: Generar JSON público de prueba
+        run: |
+          mkdir -p datos/endeudamiento
+          cp matriz_cp_barrio_productiva_candidata.json datos/endeudamiento/matriz_cp_barrio.json
+          python generar_endeudamiento_barrios.py
+
+      - name: Verificar 48 barrios y fuente
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          m=json.load(open('datos/endeudamiento/manifest.json', encoding='utf-8'))
+          p=m['ultimo_periodo']
+          x=json.load(open(pathlib.Path('datos/endeudamiento')/f'{p}.json', encoding='utf-8'))
+          assert len(x['segmentos'][0]['barrios']) == 48
+          assert len({r['barrio'] for r in x['segmentos'][0]['barrios']}) == 48
+          assert x['fuente']['principal'].startswith('Banco Central')
+          assert 'Mapa de la Deuda' not in json.dumps(x, ensure_ascii=False)
+          print('Salida pública de prueba:', p, '·', len(x['segmentos']), 'segmentos')
+          PY
+
+      - name: Publicar diagnósticos agregados
+        uses: actions/upload-artifact@v4
+        with:
+          name: endeudamiento-productivo-v230
+          path: |
+            novedad_bcra.json
+            diagnostico_endeudamiento_productivo.json
+            diagnostico_matriz_cp_barrio_productiva.json
+            matriz_cp_barrio_productiva_candidata.json
+            datos/endeudamiento/manifest.json
+            datos/endeudamiento/*.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Destruir crudos
+        if: always()
+        run: rm -rf bcra_deudores

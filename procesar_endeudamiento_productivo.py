@@ -43,6 +43,68 @@ def parse_padron(path: Path) -> str:
     return datetime.strptime(m.group(1), "%Y%m%d").date().isoformat()
 
 
+def fecha_nacimiento_arca(raw: bytes, fecha_corte: date) -> date | None:
+    """Interpreta el campo fijo de 10 posiciones del PADRON ARCA.
+
+    El layout reserva 10 bytes para fecha. Según la publicación puede venir con
+    padding o separadores; por eso no se exige longitud 8. No se serializa el valor.
+    """
+    s = raw.decode("ascii", errors="ignore").strip()
+    if not s:
+        return None
+
+    normalizado = re.sub(r"[^0-9]", "", s)
+    if normalizado == "19010101":
+        return None
+
+    candidatos: list[date] = []
+    formatos = ("%Y%m%d", "%Y-%m-%d", "%Y/%m/%d", "%d/%m/%Y", "%d-%m-%Y")
+    for fmt in formatos:
+        try:
+            candidatos.append(datetime.strptime(s, fmt).date())
+        except ValueError:
+            pass
+
+    if len(normalizado) == 8:
+        for fmt in ("%Y%m%d", "%d%m%Y"):
+            try:
+                candidatos.append(datetime.strptime(normalizado, fmt).date())
+            except ValueError:
+                pass
+
+    for nac in candidatos:
+        if nac > fecha_corte:
+            continue
+        edad = fecha_corte.year - nac.year - (
+            (fecha_corte.month, fecha_corte.day) < (nac.month, nac.day)
+        )
+        if 0 <= edad <= 120:
+            return nac
+    return None
+
+
+def banda_edad_arca(raw: bytes, fecha_corte: date) -> int:
+    nac = fecha_nacimiento_arca(raw, fecha_corte)
+    if nac is None:
+        return 0
+    edad = fecha_corte.year - nac.year - (
+        (fecha_corte.month, fecha_corte.day) < (nac.month, nac.day)
+    )
+    if edad <= 25:
+        return 1
+    if edad <= 35:
+        return 2
+    if edad <= 45:
+        return 3
+    if edad <= 55:
+        return 4
+    if edad <= 65:
+        return 5
+    if edad <= 75:
+        return 6
+    return 7
+
+
 def categoria_codigo(codigo: str, por_categoria: dict[str, set[str]]) -> str:
     if codigo in por_categoria["entidad_financiera"]:
         return "entidad_financiera"
@@ -85,6 +147,7 @@ def main() -> int:
     personas: dict[int, int] = {}
     padron_leidos = padron_mf = duplicados = conflictos = 0
     guardados_prov00 = guardados_cp_rango = 0
+    fechas_nacimiento_interpretables = fechas_nacimiento_desconocidas = 0
 
     print(f"[1/3] PADRON: período deuda {periodo}; corte edad {fecha_corte}", flush=True)
     for raw in base.stream_lineas(padron, p_int):
@@ -108,7 +171,12 @@ def main() -> int:
         guardados_prov00 += int(prov00)
         guardados_cp_rango += int(cp_rango)
         ident = int(ident_b)
-        valor = base.pack(cp, prov00, sexo_b == b"M", base.banda_edad(raw[189:199]))
+        edad = banda_edad_arca(raw[189:199], fecha_corte)
+        if edad:
+            fechas_nacimiento_interpretables += 1
+        else:
+            fechas_nacimiento_desconocidas += 1
+        valor = base.pack(cp, prov00, sexo_b == b"M", edad)
         anterior = personas.get(ident)
         if anterior is not None:
             duplicados += 1
@@ -256,6 +324,10 @@ def main() -> int:
     edad_rows = [{"franja_edad": e, "deudores": edad_unique_d[e], "personas_mora": edad_unique_m[e]}
                  for e in ["le25", "26_35", "36_45", "46_55", "56_65", "66_75", "gt75", "desconocida"]]
     sexo_rows = [{"sexo": s, "deudores": sexo_unique_d[s], "personas_mora": sexo_unique_m[s]} for s in ("F", "M")]
+    edad_total = sum(edad_unique_d.values())
+    edad_conocida = edad_total - edad_unique_d["desconocida"]
+    cobertura_edad_pct = ratio_pct(edad_conocida, edad_total)
+    franjas_edad_con_datos = sum(1 for e in base.EDAD_LABELS.values() if e != "desconocida" and edad_unique_d[e] > 0)
 
     salida = {
         "schema": "cepoes-bcra-endeudamiento-productivo-v1",
@@ -273,6 +345,7 @@ def main() -> int:
             "mora": [3, 4, 5],
             "deuda": "campo 7 + campo 10; deuda positiva",
             "edad_fecha_corte": fecha_corte.isoformat(),
+            "edad_campo_padron": "posiciones 190-199 del registro fijo; admite YYYYMMDD con padding o separadores equivalentes",
             "umbral_publicacion_celda": base.UMBRAL_PUBLICACION_CELDA,
         },
         "escenarios": escenarios_out,
@@ -283,12 +356,20 @@ def main() -> int:
         "agregado_cp_sexo_edad_categoria_caba_1000_1499": {"filas": cat_cross_rows, "celdas_suprimidas": cat_cross_sup},
         "resumen_edad_territorial": edad_rows,
         "resumen_sexo_territorial": sexo_rows,
+        "calidad_demografica": {
+            "deudores_territoriales_con_edad": edad_conocida,
+            "deudores_territoriales_edad_desconocida": edad_unique_d["desconocida"],
+            "cobertura_edad_pct": cobertura_edad_pct,
+            "franjas_edad_con_datos": franjas_edad_con_datos,
+        },
         "controles": {
             "padron_registros_leidos": padron_leidos,
             "padron_registros_mf": padron_mf,
             "personas_guardadas_unicas": len(personas),
             "filas_guardables_prov00": guardados_prov00,
             "filas_guardables_cp1000_1499": guardados_cp_rango,
+            "fechas_nacimiento_interpretables_en_universo_guardado": fechas_nacimiento_interpretables,
+            "fechas_nacimiento_desconocidas_en_universo_guardado": fechas_nacimiento_desconocidas,
             "ids_duplicados_guardados": duplicados,
             "ids_duplicados_con_conflicto_atributos": conflictos,
             "cendeu_registros_leidos": cendeu_leidos,
@@ -315,6 +396,7 @@ def main() -> int:
         "caba": caba,
         "territorializable": territorial,
         "cobertura": cobertura,
+        "calidad_demografica": salida["calidad_demografica"],
         "cp_publicados": len(cp_rows),
         "segmentos": len(cross_rows),
         "segmentos_categoria": len(cat_cross_rows),

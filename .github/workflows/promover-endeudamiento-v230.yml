@@ -1,0 +1,98 @@
+name: Promover Endeudamiento v2.30
+
+on:
+  push:
+    branches:
+      - endeudamiento-productivo-v230
+    paths:
+      - .github/workflows/promover-endeudamiento-v230.yml
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: promover-endeudamiento-v230
+  cancel-in-progress: false
+
+jobs:
+  promover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: endeudamiento-productivo-v230
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Descargar artifact validado de corrida 8
+        uses: actions/download-artifact@v4
+        with:
+          name: endeudamiento-productivo-v230
+          path: artifact-v230
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 32615739868
+
+      - name: Promover matriz candidata
+        run: |
+          set -euo pipefail
+          cp artifact-v230/diagnostico_endeudamiento_productivo.json diagnostico_endeudamiento_productivo.json
+          mkdir -p datos/endeudamiento
+          cp artifact-v230/matriz_cp_barrio_productiva_candidata.json datos/endeudamiento/matriz_cp_barrio.json
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('datos/endeudamiento/matriz_cp_barrio.json')
+          m=json.loads(p.read_text(encoding='utf-8'))
+          assert m.get('estado_validacion') == 'VALIDADA_CANDIDATA'
+          assert len(m.get('barrios') or []) == 48
+          soportados=sum(1 for r in m.get('filas',[]) if r.get('soporte_badata_observado') is True)
+          assert soportados >= 250, soportados
+          m['estado_validacion']='VALIDADA'
+          m['promocion_productiva']={
+            'fecha':'2026-08-23',
+            'criterio':'supera gates de cobertura, calidad demografica y validacion fuera de muestra',
+            'auditoria_temporal_pendiente':True,
+            'auditoria_temporal_regla':'aplicar esta misma matriz al primer periodo posterior disponible sin recalibrar',
+            'tratamiento_cp_sin_soporte':'no se distribuyen entre barrios; permanecen en el total CABA'
+          }
+          p.write_text(json.dumps(m, ensure_ascii=False, separators=(',',':')), encoding='utf-8')
+          print('Matriz promovida · CP con soporte:', soportados)
+          PY
+
+      - name: Generar dataset inicial compacto
+        run: python generar_endeudamiento_barrios.py
+
+      - name: Gate final de promoción
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          mat=json.load(open('datos/endeudamiento/matriz_cp_barrio.json', encoding='utf-8'))
+          assert mat['estado_validacion']=='VALIDADA'
+          man=json.load(open('datos/endeudamiento/manifest.json', encoding='utf-8'))
+          assert man['ultimo_periodo']=='2026-06'
+          p=pathlib.Path('datos/endeudamiento/2026-06.json')
+          x=json.load(open(p, encoding='utf-8'))
+          assert x['schema']=='cepoes-endeudamiento-barrios-v2-compact'
+          assert x['metodologia']['matriz_estado_validacion']=='VALIDADA'
+          assert len(x['barrios'])==48 and len(set(x['barrios']))==48
+          assert len(x['segmentos'][0]['datos'])==48
+          assert len(x['segmentos'])>50
+          assert x['caba']['cobertura_mapa_sobre_caba']['deudores_pct']>=90
+          assert x['caba']['cobertura_mapa_sobre_caba']['deuda_total_pct']>=90
+          assert p.stat().st_size < 400_000
+          assert 'Mapa de la Deuda' not in json.dumps(x, ensure_ascii=False)
+          print('Promoción OK ·', p.stat().st_size, 'bytes · cobertura', x['caba']['cobertura_mapa_sobre_caba'])
+          PY
+
+      - name: Versionar únicamente agregados productivos
+        run: |
+          set -euo pipefail
+          rm -f diagnostico_endeudamiento_productivo.json
+          rm -rf artifact-v230
+          git config user.name "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add datos/endeudamiento/matriz_cp_barrio.json datos/endeudamiento/2026-06.json datos/endeudamiento/manifest.json
+          git commit -m "endeudamiento: promover matriz y datos BCRA 2026-06"
+          git push origin HEAD:endeudamiento-productivo-v230

@@ -11,6 +11,15 @@ on:
       - generar_endeudamiento_barrios.py
       - recalibrar_matriz_cp_barrio_productiva.py
       - .github/workflows/validar-endeudamiento-productivo-v230.yml
+  pull_request:
+    branches:
+      - endeudamiento-universo-territorial-v229
+    paths:
+      - detectar_novedad_bcra.py
+      - procesar_endeudamiento_productivo.py
+      - generar_endeudamiento_barrios.py
+      - recalibrar_matriz_cp_barrio_productiva.py
+      - .github/workflows/validar-endeudamiento-productivo-v230.yml
 
 permissions:
   contents: read

@@ -80,6 +80,20 @@ jobs:
       - name: Procesar base territorial productiva
         run: python procesar_endeudamiento_productivo.py
 
+      - name: Verificar calidad demográfica
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('diagnostico_endeudamiento_productivo.json', encoding='utf-8'))
+          q=p['calidad_demografica']
+          assert q['cobertura_edad_pct'] >= 80, q
+          assert q['franjas_edad_con_datos'] >= 7, q
+          edades={r['franja_edad']: r['deudores'] for r in p['resumen_edad_territorial']}
+          assert edades.get('desconocida', 0) < sum(edades.values()) * 0.20, edades
+          print('Calidad etaria OK:', q)
+          print('Distribución:', edades)
+          PY
+
       - name: Recalibrar matriz sobre provincia 00 + CP4
         run: python recalibrar_matriz_cp_barrio_productiva.py
 
@@ -107,7 +121,7 @@ jobs:
           cp matriz_cp_barrio_productiva_candidata.json datos/endeudamiento/matriz_cp_barrio.json
           python generar_endeudamiento_barrios.py
 
-      - name: Verificar 48 barrios y fuente
+      - name: Verificar 48 barrios, filtros y fuente
         run: |
           python - <<'PY'
           import json, pathlib
@@ -118,7 +132,11 @@ jobs:
           assert len({r['barrio'] for r in x['segmentos'][0]['barrios']}) == 48
           assert x['fuente']['principal'].startswith('Banco Central')
           assert 'Mapa de la Deuda' not in json.dumps(x, ensure_ascii=False)
-          print('Salida pública de prueba:', p, '·', len(x['segmentos']), 'segmentos')
+          edades={s['filtros']['edad'] for s in x['segmentos'] if s['filtros']['edad'] is not None}
+          esperadas={'le25','26_35','36_45','46_55','56_65','66_75','gt75'}
+          assert esperadas <= edades, (esperadas, edades)
+          assert len(x['segmentos']) > 50, len(x['segmentos'])
+          print('Salida pública de prueba:', p, '·', len(x['segmentos']), 'segmentos · edades:', sorted(edades))
           PY
 
       - name: Publicar diagnósticos agregados

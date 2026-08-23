@@ -115,31 +115,40 @@ jobs:
           print('Cobertura:', c)
           PY
 
-      - name: Generar JSON público de prueba
+      - name: Generar JSON público compacto de prueba
         run: |
           mkdir -p datos/endeudamiento
           cp matriz_cp_barrio_productiva_candidata.json datos/endeudamiento/matriz_cp_barrio.json
           python generar_endeudamiento_barrios.py
 
-      - name: Verificar 48 barrios, filtros y fuente
+      - name: Verificar 48 barrios, filtros, cobertura y fuente
         run: |
           python - <<'PY'
           import json, pathlib
           m=json.load(open('datos/endeudamiento/manifest.json', encoding='utf-8'))
           p=m['ultimo_periodo']
-          x=json.load(open(pathlib.Path('datos/endeudamiento')/f'{p}.json', encoding='utf-8'))
-          assert len(x['segmentos'][0]['barrios']) == 48
-          assert len({r['barrio'] for r in x['segmentos'][0]['barrios']}) == 48
+          path=pathlib.Path('datos/endeudamiento')/f'{p}.json'
+          x=json.load(open(path, encoding='utf-8'))
+          assert x['schema'] == 'cepoes-endeudamiento-barrios-v2-compact'
+          assert len(x['barrios']) == 48 and len(set(x['barrios'])) == 48
+          assert len(x['segmentos'][0]['datos']) == 48
+          assert x['metricas_segmento'] == ['deudores','personas_mora','deuda_total_pesos','deuda_mora_pesos']
           assert x['fuente']['principal'].startswith('Banco Central')
           assert 'Mapa de la Deuda' not in json.dumps(x, ensure_ascii=False)
           edades={s['filtros']['edad'] for s in x['segmentos'] if s['filtros']['edad'] is not None}
           esperadas={'le25','26_35','36_45','46_55','56_65','66_75','gt75'}
           assert esperadas <= edades, (esperadas, edades)
           assert len(x['segmentos']) > 50, len(x['segmentos'])
-          print('Salida pública de prueba:', p, '·', len(x['segmentos']), 'segmentos · edades:', sorted(edades))
+          soporte=x['metodologia']['soporte_cp4']
+          assert soporte['cp4_con_soporte'] >= 250
+          assert soporte['cp4_sin_soporte'] > 0
+          c=x['caba']['cobertura_mapa_sobre_caba']
+          assert c['deudores_pct'] >= 90 and c['deuda_total_pct'] >= 90, c
+          assert path.stat().st_size < 400_000, path.stat().st_size
+          print('Salida pública de prueba:', p, '·', len(x['segmentos']), 'segmentos ·', path.stat().st_size, 'bytes · cobertura:', c)
           PY
 
-      - name: Publicar diagnósticos agregados
+      - name: Publicar diagnósticos y salida candidata
         uses: actions/upload-artifact@v4
         with:
           name: endeudamiento-productivo-v230

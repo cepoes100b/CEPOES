@@ -1,0 +1,2 @@
+# Una ruta relativa por línea. Se aplican sobre la copia descargada de producción.
+# Ejemplo: assets/archivo-obsoleto.js

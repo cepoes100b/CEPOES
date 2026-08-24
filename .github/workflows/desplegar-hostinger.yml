@@ -1,0 +1,133 @@
+name: Desplegar sitio en Hostinger
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "deploy/site-overlay/**"
+      - "deploy/delete-paths.txt"
+      - "validar_sitio_despliegue.py"
+      - "notificar_indexnow.py"
+      - ".github/workflows/desplegar-hostinger.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cepoes-hostinger-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # El push automático se habilita con la variable de repositorio
+    # HOSTINGER_DEPLOY_ENABLED=true. workflow_dispatch siempre permite probarlo.
+    if: github.event_name == 'workflow_dispatch' || vars.HOSTINGER_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      SFTP_HOST: ${{ secrets.HOSTINGER_SFTP_HOST }}
+      SFTP_PORT: ${{ secrets.HOSTINGER_SFTP_PORT }}
+      SFTP_USER: ${{ secrets.HOSTINGER_SFTP_USER }}
+      SFTP_PASSWORD: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+      REMOTE_DIR: ${{ secrets.HOSTINGER_REMOTE_DIR }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Verificar configuración de producción
+        shell: bash
+        run: |
+          set -euo pipefail
+          for v in SFTP_HOST SFTP_USER SFTP_PASSWORD REMOTE_DIR; do
+            if [ -z "${!v:-}" ]; then
+              echo "Falta configurar el secreto $v" >&2
+              exit 1
+            fi
+          done
+          echo "SFTP_PORT=${SFTP_PORT:-65002}" >> "$GITHUB_ENV"
+
+      - name: Instalar cliente SFTP
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+      - name: Descargar producción como respaldo y base
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _rollback _site
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set net:max-retries 3
+          set net:timeout 20
+          mirror --verbose --parallel=4 "$REMOTE_DIR" _rollback
+          bye
+          EOF
+          cp -a _rollback/. _site/
+
+      - name: Aplicar versión GitHub sobre la copia de producción
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d deploy/site-overlay
+          cp -a deploy/site-overlay/. _site/
+          if [ -s deploy/delete-paths.txt ]; then
+            while IFS= read -r rel; do
+              rel="${rel%%#*}"
+              rel="$(echo "$rel" | xargs)"
+              [ -z "$rel" ] && continue
+              case "$rel" in
+                /*|*".."*) echo "Ruta de borrado no permitida: $rel" >&2; exit 1;;
+              esac
+              rm -rf -- "_site/$rel"
+            done < deploy/delete-paths.txt
+          fi
+
+      - name: Validar sitio antes de publicar
+        run: python validar_sitio_despliegue.py _site
+
+      - name: Publicar en Hostinger por SFTP
+        id: publish
+        shell: bash
+        run: |
+          set -euo pipefail
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set net:max-retries 3
+          set net:timeout 20
+          mirror -R --verbose --parallel=4 --no-perms --no-umask _site "$REMOTE_DIR"
+          bye
+          EOF
+
+      - name: Smoke test de producción
+        id: smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          for url in \
+            https://cepoes.org/ \
+            https://cepoes.org/observatorio/ \
+            https://cepoes.org/territorio/ \
+            https://cepoes.org/territorio/endeudamiento/ \
+            https://cepoes.org/legislatura/; do
+            echo "Probando $url"
+            curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS "$url" >/dev/null
+          done
+
+      - name: Restaurar versión anterior si falla publicación o smoke test
+        if: failure() && steps.publish.outcome == 'success'
+        shell: bash
+        run: |
+          echo "Fallo posterior a la publicación: restaurando respaldo previo"
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set net:max-retries 3
+          mirror -R --verbose --parallel=4 --no-perms --no-umask _rollback "$REMOTE_DIR"
+          bye
+          EOF
+
+      - name: Avisar cambios a IndexNow
+        if: success()
+        continue-on-error: true
+        run: python notificar_indexnow.py --sitemap _site/sitemap.xml --key-file _site/indexnow-key.txt

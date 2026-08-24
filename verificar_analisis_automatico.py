@@ -7,6 +7,7 @@ ROOT = Path(__file__).resolve().parent
 SCRIPT = ROOT / 'automatizar_analisis_legislativo.py'
 COPILOT = ROOT / 'automatizar_analisis_legislativo_copilot.py'
 HARDENED = ROOT / 'automatizar_analisis_legislativo_hardened.py'
+GROUNDED = ROOT / 'automatizar_analisis_legislativo_hardened_v2.py'
 WORKFLOW = ROOT / '.github/workflows/analizar-legislatura.yml'
 EDGE = ROOT / 'supabase/functions/legislative-analysis-ingest-v2/index.ts'
 MIGRATION = ROOT / 'infra/supabase/004_analisis_legislativo_automatico.sql'
@@ -16,13 +17,14 @@ UI = ROOT / 'deploy/site-overlay/assets/legislativa-auto-ui.js'
 CONFIG = ROOT / 'deploy/site-overlay/assets/legislativa-config.js'
 DOC = ROOT / 'docs/ANALISIS-LEGISLATIVO-AUTOMATICO.md'
 
-required = [SCRIPT, COPILOT, HARDENED, WORKFLOW, EDGE, MIGRATION, FOCUS_MIGRATION, GUARD_MIGRATION, UI, CONFIG, DOC]
+required = [SCRIPT, COPILOT, HARDENED, GROUNDED, WORKFLOW, EDGE, MIGRATION, FOCUS_MIGRATION, GUARD_MIGRATION, UI, CONFIG, DOC]
 for path in required:
     assert path.is_file() and path.stat().st_size > 100, f'Falta o está vacío: {path.relative_to(ROOT)}'
 
 script = SCRIPT.read_text(encoding='utf-8')
 copilot = COPILOT.read_text(encoding='utf-8')
 hardened = HARDENED.read_text(encoding='utf-8')
+grounded = GROUNDED.read_text(encoding='utf-8')
 workflow = WORKFLOW.read_text(encoding='utf-8')
 edge = EDGE.read_text(encoding='utf-8')
 migration = MIGRATION.read_text(encoding='utf-8').lower()
@@ -36,13 +38,13 @@ assert re.search(r'^\s*id-token:\s*write\s*$', workflow, re.M), 'Falta permiso i
 assert 'models: read' not in workflow, 'GitHub Models fue retirado y no debe configurarse'
 assert 'COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}' in workflow
 assert 'npm install -g @github/copilot@latest' in workflow
-assert 'automatizar_analisis_legislativo_hardened.py' in workflow, 'Producción no usa el pipeline endurecido'
+assert 'automatizar_analisis_legislativo_hardened_v2.py' in workflow, 'Producción no usa grounded-v2'
 assert 'legislative-analysis-ingest-v2' in workflow
 for forbidden in ['SUPABASE_SERVICE_ROLE', 'SUPABASE_SECRET_KEY', 'OPENAI_API_KEY']:
     assert forbidden not in workflow, f'Secreto prohibido en workflow: {forbidden}'
 
 # Copilot no puede usar herramientas externas.
-for text in [copilot, hardened]:
+for text in [copilot, hardened, grounded]:
     assert 'COPILOT_GITHUB_TOKEN' in text
 assert '--no-ask-user' in hardened and '--no-custom-instructions' in hardened
 assert '--deny-tool=shell,write,read,url,memory' in hardened
@@ -53,8 +55,16 @@ for token in ['BANNED_ASSET_TERMS', 'strict-v2', 'documentos_primarios_del_exped
     assert token in hardened, f'Falta guardrail de evidencia: {token}'
 assert 'p.path == base.path and p.query == base.query' in hardened, 'No se excluyen anchors de la ficha'
 assert 'relevance < 2' in hardened, 'No se descartan adjuntos de baja relevancia'
-assert 'unsupported_acronyms' in hardened and 'unsupported_numbers' in hardened
-assert 'confidence < 0.75' in hardened and 'recommendation"] = "sin_definir"' in hardened
+assert 'unsupported_acronyms' in hardened
+
+# Grounded-v2: cifras no sustentadas se sanejan y bajan la confianza; entidades siguen siendo error duro.
+assert 'unsupported_numbers' in grounded
+assert 'sanitize_value' in grounded
+assert '"a definir"' in grounded
+assert 'Salida con entidades/siglas no respaldadas' in grounded
+assert 'result["confidence"] = min' in grounded
+assert 'result["recommendation"] = "sin_definir"' in grounded
+assert 'confidence < 0.75' in grounded
 
 # OIDC del receptor exacto.
 for required_token in [
@@ -106,6 +116,7 @@ assert 'analysis-gaps' in ui and 'analysis-actors' in ui
 assert 'legislativa-auto-ui.js' in config
 
 print('Análisis legislativo automático · validación estática OK')
-print('  Evidencia: selector strict-v2 + grounding verificable')
+print('  Evidencia: selector strict-v2 + grounded-v2')
+print('  Cifras no sustentadas: saneadas a “a definir”')
 print('  Recomendación: umbral 0.75 + documento primario')
 print('  Copilot CLI + OIDC Supabase: verificados')

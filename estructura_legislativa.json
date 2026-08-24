@@ -1,0 +1,3329 @@
+{
+  "schema": "cepoes-estructura-legislativa-v1",
+  "actualizado_en": "2026-08-23T22:22:51-03:00",
+  "fuente": {
+    "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
+    "comisiones": "https://www.legislatura.gob.ar/seccion/comisiones-y-juntas.html",
+    "bloque_fuerza_por_buenos_aires": "https://www.legislatura.gob.ar/bloque/fuerzaporbuenosaires",
+    "resolucion_60_2026": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=223084"
+  },
+  "marco_normativo": {
+    "resolucion": "60/2026",
+    "comisiones_permanentes": 27,
+    "criterio_integracion": "artículo 132 del Reglamento Interno, texto según Resolución 60/2026"
+  },
+  "comisiones": [
+    {
+      "nombre": "Asuntos Constitucionales",
+      "nombre_fuente": "Asuntos Constitucionales",
+      "slug": "asuntosconstitucionales",
+      "url": "https://www.legislatura.gob.ar/comision/asuntosconstitucionales",
+      "integrantes_normativos": 15,
+      "frecuencia_minima": "semanal",
+      "autoridades": [
+        {
+          "nombre": "Pakgojz, Nicolás",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alonso, Laura",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Peñafort, Graciana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Pakgojz, Nicolás",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alonso, Laura",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Peñafort, Graciana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ramírez, María Del Pilar",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Pelayo, Solana",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Negri, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mochi, Federico",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Caporiccio, Francisco",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Lospennato, Silvia",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Neira, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ocaña, María Graciela",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Thourte, Manuela",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ferrario, Emmanuel",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Nieto, Darío Hugo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Crucitta, Aldana Belén",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Legislación General",
+      "nombre_fuente": "Legislacion General",
+      "slug": "legislaciongeneral",
+      "url": "https://www.legislatura.gob.ar/comision/legislaciongeneral",
+      "integrantes_normativos": 9,
+      "frecuencia_minima": "semanal",
+      "autoridades": [
+        {
+          "nombre": "Villafruela, Gimena",
+          "bloque": "Vamos por más",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Arenaza, Juan Pablo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Caporiccio, Francisco",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Villafruela, Gimena",
+          "bloque": "Vamos por más",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Arenaza, Juan Pablo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Caporiccio, Francisco",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rodríguez Larreta, Horacio",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Vartabedian, Diego",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mochi, Federico",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Casielles, Eugenio",
+          "bloque": "Transformación",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Del Gaiso, Juan Facundo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Legislación del Trabajo y Políticas de Empleo",
+      "nombre_fuente": "Legislacion Del Trabajo Y Políticas De Empleo",
+      "slug": "legislaciondeltrabajoypoliticasdeempleo",
+      "url": "https://www.legislatura.gob.ar/comision/legislaciondeltrabajoypoliticasdeempleo",
+      "integrantes_normativos": 9,
+      "frecuencia_minima": "semanal",
+      "autoridades": [
+        {
+          "nombre": "Barroetaveña, Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ocaña, María Graciela",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Glize, Patricia Inés",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Barroetaveña, Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ocaña, María Graciela",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Glize, Patricia Inés",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mollard, María Fernanda",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Vartabedian, Diego",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mochi, Federico",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Bielli, María",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Villafruela, Gimena",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Saifert, Leonardo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Presupuesto, Hacienda, Administración Financiera y Política Tributaria",
+      "nombre_fuente": "Presupuesto, Hacienda, Administración Financiera Y Política Tributaria",
+      "slug": "presupuestohaciendaadministracionfinancieraypoliticatributaria",
+      "url": "https://www.legislatura.gob.ar/comision/presupuestohaciendaadministracionfinancieraypoliticatributaria",
+      "integrantes_normativos": 23,
+      "frecuencia_minima": "semanal",
+      "autoridades": [
+        {
+          "nombre": "Wolff, Waldo",
+          "bloque": "Vamos por más",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Neira, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Pakgojz, Nicolás",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Wolff, Waldo",
+          "bloque": "Vamos por más",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Neira, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Pakgojz, Nicolás",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Vartabedian, Diego",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Negri, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Caporiccio, Francisco",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Parera, Ignacio José",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Arenaza, Juan Pablo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Barroetaveña, Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Bielli, María",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Casielles, Eugenio",
+          "bloque": "Transformación",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "López, Matías Damián",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ferrario, Emmanuel",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Modarelli, Juan Pablo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Iañez, Berenice",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Siciliano, Sergio Hernán",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Nagata, Sebastián",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Lammens , Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ramírez, María Del Pilar",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Pelayo, Solana",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Thourte, Manuela",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Derechos Humanos, Garantías y Antidiscriminación",
+      "nombre_fuente": "Derechos Humanos, Garantías Y Antidiscriminación",
+      "slug": "derechoshumanosgarantiasyantidiscriminacion",
+      "url": "https://www.legislatura.gob.ar/comision/derechoshumanosgarantiasyantidiscriminacion",
+      "integrantes_normativos": 13,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "La Blunda, Andrés",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "La Blunda, Andrés",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Peñafort, Graciana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Martín, Amanda",
+          "bloque": "Frente de Izquierda de los Trabajadores / PO",
+          "cargo": "Vocal",
+          "integrante_desde": "25/6/2026"
+        },
+        {
+          "nombre": "Imas, Silvia",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Velázquez, Delfina",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ernst, Marcelo Gregorio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Wolff, Waldo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alifraco, Edgardo Nestor",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Salvatierra, Alejandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Lospennato, Silvia",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alonso, Laura",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Biasi, Vanina",
+          "bloque": "Frente de Izquierda de los Trabajadores / PO",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Justicia",
+      "nombre_fuente": "Justicia",
+      "slug": "justicia",
+      "url": "https://www.legislatura.gob.ar/comision/justicia",
+      "integrantes_normativos": 13,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Pelayo, Solana",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mochi, Federico",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Villafruela, Gimena",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Pelayo, Solana",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mochi, Federico",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Villafruela, Gimena",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Modarelli, Juan Pablo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Crucitta, Aldana Belén",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Peñafort, Graciana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Figueroa, Rocío",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Tagliaferri, Guadalupe",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ramírez, María Del Pilar",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Vartabedian, Diego",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Neira, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Barroetaveña, Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alonso, Laura",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Seguridad",
+      "nombre_fuente": "Seguridad",
+      "slug": "seguridad",
+      "url": "https://www.legislatura.gob.ar/comision/seguridad",
+      "integrantes_normativos": 13,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Crucitta, Aldana Belén",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Fleitas, Rebeca",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Siciliano, Sergio Hernán",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Crucitta, Aldana Belén",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Fleitas, Rebeca",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Siciliano, Sergio Hernán",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Salvatierra, Alejandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Caporiccio, Francisco",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Parera, Ignacio José",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ferreño, Claudio Américo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Arenaza, Juan Pablo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ocaña, María Graciela",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Villafruela, Gimena",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freire, Victoria",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Peñafort, Graciana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ramírez, María Del Pilar",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Salud",
+      "nombre_fuente": "Salud",
+      "slug": "salud",
+      "url": "https://www.legislatura.gob.ar/comision/salud",
+      "integrantes_normativos": 15,
+      "frecuencia_minima": "semanal",
+      "autoridades": [
+        {
+          "nombre": "Del Gaiso, Juan Facundo",
+          "bloque": "Vamos por más",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Negri, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freguia, Andrea",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Del Gaiso, Juan Facundo",
+          "bloque": "Vamos por más",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Negri, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freguia, Andrea",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Arenaza, Juan Pablo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ocaña, María Graciela",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "González, Andrea Mariana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Geminiani, Noemí",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Lospennato, Silvia",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Velázquez, Delfina",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Iañez, Berenice",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Saifert, Leonardo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alifraco, Edgardo Nestor",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Educación, Ciencia y Tecnología",
+      "nombre_fuente": "Educación, Ciencia Y Tecnología",
+      "slug": "educacioncienciaytecnologia",
+      "url": "https://www.legislatura.gob.ar/comision/educacioncienciaytecnologia",
+      "integrantes_normativos": 15,
+      "frecuencia_minima": "semanal",
+      "autoridades": [
+        {
+          "nombre": "Bielli, María",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Kienast, Marina",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Siciliano, Sergio Hernán",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Bielli, María",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Kienast, Marina",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Siciliano, Sergio Hernán",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Fernández, Juan Ignacio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Negri, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mochi, Federico",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alonso, Laura",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Figueroa, Rocío",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Tagliaferri, Guadalupe",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freire, Victoria",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alifraco, Edgardo Nestor",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Pelayo, Solana",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Martín, Amanda",
+          "bloque": "Frente de Izquierda de los Trabajadores / PO",
+          "cargo": "Vocal",
+          "integrante_desde": "18/8/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Cultura",
+      "nombre_fuente": "Cultura",
+      "slug": "cultura",
+      "url": "https://www.legislatura.gob.ar/comision/cultura",
+      "integrantes_normativos": 13,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Rey, Sandra Mónica",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Modarelli, Juan Pablo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Tagliaferri, Guadalupe",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Rey, Sandra Mónica",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Modarelli, Juan Pablo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Tagliaferri, Guadalupe",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Imas, Silvia",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Grillo, Alejandro Omar",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Arenaza, Juan Pablo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Siciliano, Sergio Hernán",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Glize, Patricia Inés",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Nagata, Sebastián",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Figueroa, Rocío",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Salvatierra, Alejandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rossen, Bárbara",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Comunicación Social",
+      "nombre_fuente": "Comunicación Social",
+      "slug": "comunicacionsocial",
+      "url": "https://www.legislatura.gob.ar/comision/comunicacionsocial",
+      "integrantes_normativos": 7,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Glize, Patricia Inés",
+          "bloque": "Vamos por más",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Salvatierra, Alejandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Glize, Patricia Inés",
+          "bloque": "Vamos por más",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Salvatierra, Alejandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ernst, Marcelo Gregorio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Imas, Silvia",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Modarelli, Juan Pablo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Siciliano, Sergio Hernán",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Políticas de Promoción e Integración Social",
+      "nombre_fuente": "Políticas De Promoción E Integración Social",
+      "slug": "politicasdepromocioneintegracionsocial",
+      "url": "https://www.legislatura.gob.ar/comision/politicasdepromocioneintegracionsocial",
+      "integrantes_normativos": 11,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Iañez, Berenice",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Iañez, Berenice",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Casielles, Eugenio",
+          "bloque": "Transformación",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Del Gaiso, Juan Facundo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "La Blunda, Andrés",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "González, Andrea Mariana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Salvatierra, Alejandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Tagliaferri, Guadalupe",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Biasi, Vanina",
+          "bloque": "Frente de Izquierda de los Trabajadores / PO",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ernst, Marcelo Gregorio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Obras y Servicios Públicos",
+      "nombre_fuente": "Obras Y Servicios Públicos",
+      "slug": "obrasyserviciospublicos",
+      "url": "https://www.legislatura.gob.ar/comision/obrasyserviciospublicos",
+      "integrantes_normativos": 15,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Saifert, Leonardo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alonso, Laura",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Iañez, Berenice",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Saifert, Leonardo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alonso, Laura",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Iañez, Berenice",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Parera, Ignacio José",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "22/4/2026"
+        },
+        {
+          "nombre": "Pakgojz, Nicolás",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Caporiccio, Francisco",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ferreño, Claudio Américo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Neira, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Santoro, Leandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Thourte, Manuela",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ferrario, Emmanuel",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rodríguez Larreta, Horacio",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ernst, Marcelo Gregorio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "22/4/2026"
+        },
+        {
+          "nombre": "Glize, Patricia Inés",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mollard, María Fernanda",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Planeamiento Urbano",
+      "nombre_fuente": "Planeamiento Urbano",
+      "slug": "planeamientourbano",
+      "url": "https://www.legislatura.gob.ar/comision/planeamientourbano",
+      "integrantes_normativos": 15,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Alifraco, Edgardo Nestor",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rossen, Bárbara",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Nieto, Darío Hugo",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Alifraco, Edgardo Nestor",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rossen, Bárbara",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Nieto, Darío Hugo",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Modarelli, Juan Pablo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Imas, Silvia",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Grillo, Alejandro Omar",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freire, Victoria",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Neira, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Barroetaveña, Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Thourte, Manuela",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Villafruela, Gimena",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Nagata, Sebastián",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mollard, María Fernanda",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Parera, Ignacio José",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Fernández, Juan Ignacio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Desarrollo Económico y Mercosur",
+      "nombre_fuente": "Desarrollo Económico Y Mercosur",
+      "slug": "desarrolloeconomicoymercosur",
+      "url": "https://www.legislatura.gob.ar/comision/desarrolloeconomicoymercosur",
+      "integrantes_normativos": 13,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Imas, Silvia",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Caporiccio, Francisco",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Imas, Silvia",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Caporiccio, Francisco",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rodríguez Larreta, Horacio",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Lammens , Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Grillo, Alejandro Omar",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Pelayo, Solana",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "22/4/2026"
+        },
+        {
+          "nombre": "Pakgojz, Nicolás",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rossen, Bárbara",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Crucitta, Aldana Belén",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Iañez, Berenice",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Glize, Patricia Inés",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Parera, Ignacio José",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Descentralización y Participación Ciudadana",
+      "nombre_fuente": "Descentralización Y Participación Ciudadana",
+      "slug": "descentralizacionyparticipacionciudadana",
+      "url": "https://www.legislatura.gob.ar/comision/descentralizacionyparticipacionciudadana",
+      "integrantes_normativos": 13,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Fleitas, Rebeca",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Velázquez, Delfina",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Fleitas, Rebeca",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Velázquez, Delfina",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alifraco, Edgardo Nestor",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freguia, Andrea",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Santoro, Leandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Montenegro, Lucía",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Nagata, Sebastián",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Lospennato, Silvia",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Wolff, Waldo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freire, Victoria",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "La Blunda, Andrés",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Discapacidad",
+      "nombre_fuente": "Discapacidad",
+      "slug": "discapacidad",
+      "url": "https://www.legislatura.gob.ar/comision/discapacidad",
+      "integrantes_normativos": 7,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Nagata, Sebastián",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Negri, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Nagata, Sebastián",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Negri, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "González, Andrea Mariana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Figueroa, Rocío",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rey, Sandra Mónica",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Montenegro, Lucía",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Mujeres, Géneros y Diversidades",
+      "nombre_fuente": "Mujeres, Géneros Y Diversidades",
+      "slug": "mujeresgenerosydiversidades",
+      "url": "https://www.legislatura.gob.ar/comision/mujeresgenerosydiversidades",
+      "integrantes_normativos": 13,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Velázquez, Delfina",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Tagliaferri, Guadalupe",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Lospennato, Silvia",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Velázquez, Delfina",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Tagliaferri, Guadalupe",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Lospennato, Silvia",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alonso, Laura",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Biasi, Vanina",
+          "bloque": "Frente de Izquierda de los Trabajadores / PO",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Peñafort, Graciana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freguia, Andrea",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Casielles, Eugenio",
+          "bloque": "Transformación",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Martín, Amanda",
+          "bloque": "Frente de Izquierda de los Trabajadores / PO",
+          "cargo": "Vocal",
+          "integrante_desde": "25/6/2026"
+        },
+        {
+          "nombre": "Glize, Patricia Inés",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mollard, María Fernanda",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Crucitta, Aldana Belén",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freire, Victoria",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Niñez, Adolescencia y Juventud",
+      "nombre_fuente": "Niñez, Adolescencia Y Juventud",
+      "slug": "ninezadolescenciayjuventud",
+      "url": "https://www.legislatura.gob.ar/comision/ninezadolescenciayjuventud",
+      "integrantes_normativos": 13,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Peñafort, Graciana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Crucitta, Aldana Belén",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Montenegro, Lucía",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Peñafort, Graciana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Crucitta, Aldana Belén",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Montenegro, Lucía",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Siciliano, Sergio Hernán",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "González, Andrea Mariana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Geminiani, Noemí",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Bielli, María",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Del Gaiso, Juan Facundo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Villafruela, Gimena",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Kienast, Marina",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Velázquez, Delfina",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alifraco, Edgardo Nestor",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freguia, Andrea",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Defensa de los Consumidores y Usuarios",
+      "nombre_fuente": "Defensa De Consumidores Y Usuarios",
+      "slug": "defensadeconsumidoresyusuarios",
+      "url": "https://www.legislatura.gob.ar/comision/defensadeconsumidoresyusuarios",
+      "integrantes_normativos": 7,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Santoro, Leandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Santoro, Leandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Arenaza, Juan Pablo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "López, Matías Damián",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Iañez, Berenice",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Montenegro, Lucía",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Siciliano, Sergio Hernán",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Asuntos Metropolitanos y Relaciones Interjurisdiccionales",
+      "nombre_fuente": "Relaciones Interjurisdiccionales",
+      "slug": "relacionesinterjurisdiccionales",
+      "url": "https://www.legislatura.gob.ar/comision/relacionesinterjurisdiccionales",
+      "integrantes_normativos": 9,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Kienast, Marina",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Barroetaveña, Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Kienast, Marina",
+          "bloque": "La Libertad avanza",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Barroetaveña, Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Lammens , Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Caporiccio, Francisco",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rodríguez Larreta, Horacio",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Nieto, Darío Hugo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mollard, María Fernanda",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Imas, Silvia",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Protección y Uso del Espacio Público",
+      "nombre_fuente": "Protección Y Uso Del Espacio Público",
+      "slug": "proteccionyusodelespaciopublico",
+      "url": "https://www.legislatura.gob.ar/comision/proteccionyusodelespaciopublico",
+      "integrantes_normativos": 9,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Parera, Ignacio José",
+          "bloque": "Vamos por más",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "González, Andrea Mariana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Parera, Ignacio José",
+          "bloque": "Vamos por más",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "González, Andrea Mariana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rossen, Bárbara",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Figueroa, Rocío",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "La Blunda, Andrés",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Fernández, Juan Ignacio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ferrario, Emmanuel",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Saifert, Leonardo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mollard, María Fernanda",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Ambiente",
+      "nombre_fuente": "Ambiente",
+      "slug": "ambiente",
+      "url": "https://www.legislatura.gob.ar/comision/ambiente",
+      "integrantes_normativos": 11,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Grillo, Alejandro Omar",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "López, Matías Damián",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rey, Sandra Mónica",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Grillo, Alejandro Omar",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "López, Matías Damián",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rey, Sandra Mónica",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Freguia, Andrea",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Fernández, Juan Ignacio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "González, Andrea Mariana",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rossen, Bárbara",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mollard, María Fernanda",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Casielles, Eugenio",
+          "bloque": "Transformación",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Del Gaiso, Juan Facundo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Velázquez, Delfina",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Vivienda",
+      "nombre_fuente": "Vivienda",
+      "slug": "vivienda",
+      "url": "https://www.legislatura.gob.ar/comision/vivienda",
+      "integrantes_normativos": 13,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Freire, Victoria",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Figueroa, Rocío",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ernst, Marcelo Gregorio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Freire, Victoria",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Figueroa, Rocío",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ernst, Marcelo Gregorio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Wolff, Waldo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Alifraco, Edgardo Nestor",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Fernández, Juan Ignacio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Salvatierra, Alejandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rossen, Bárbara",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Suárez, Guillermo",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Bielli, María",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Iañez, Berenice",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Nagata, Sebastián",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Parera, Ignacio José",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Tránsito y Transporte",
+      "nombre_fuente": "Tránsito Y Transporte",
+      "slug": "transitoytransporte",
+      "url": "https://www.legislatura.gob.ar/comision/transitoytransporte",
+      "integrantes_normativos": 9,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Fernández, Juan Ignacio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Modarelli, Juan Pablo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Fernández, Juan Ignacio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Modarelli, Juan Pablo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rodríguez Larreta, Horacio",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Grillo, Alejandro Omar",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Barroetaveña, Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Del Gaiso, Juan Facundo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Kienast, Marina",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "22/4/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Turismo y Deportes",
+      "nombre_fuente": "Turismo Y Deportes",
+      "slug": "turismoydeportes",
+      "url": "https://www.legislatura.gob.ar/comision/turismoydeportes",
+      "integrantes_normativos": 9,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Ferreño, Claudio Américo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Montenegro, Lucía",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Ferreño, Claudio Américo",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Montenegro, Lucía",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Loupias, Francisco",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Lammens , Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Vartabedian, Diego",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Geminiani, Noemí",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Glize, Patricia Inés",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Nagata, Sebastián",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Del Gaiso, Juan Facundo",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    },
+    {
+      "nombre": "Personas Mayores",
+      "nombre_fuente": "Personas Mayores",
+      "slug": "personasmayores",
+      "url": "https://www.legislatura.gob.ar/comision/personasmayores",
+      "integrantes_normativos": 11,
+      "frecuencia_minima": "dos_reuniones_mensuales",
+      "autoridades": [
+        {
+          "nombre": "Ocaña, María Graciela",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Geminiani, Noemí",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        }
+      ],
+      "integrantes": [
+        {
+          "nombre": "Ocaña, María Graciela",
+          "bloque": "Confianza y Desarrollo",
+          "cargo": "Presidente",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Geminiani, Noemí",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vicepresidente 1",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Donati, Pablo Alejandro",
+          "bloque": "Vamos por más",
+          "cargo": "Vicepresidente 2",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "La Blunda, Andrés",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Velázquez, Delfina",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Rey, Sandra Mónica",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Santoro, Leandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Saifert, Leonardo",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Glize, Patricia Inés",
+          "bloque": "Vamos por más",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Mollard, María Fernanda",
+          "bloque": "Ciudadanos Unidos / UCR",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        },
+        {
+          "nombre": "Ernst, Marcelo Gregorio",
+          "bloque": "La Libertad avanza",
+          "cargo": "Vocal",
+          "integrante_desde": "25/3/2026"
+        }
+      ]
+    }
+  ],
+  "bloques": {
+    "fuerza_por_buenos_aires": {
+      "nombre": "Fuerza por Buenos Aires",
+      "url": "https://www.legislatura.gob.ar/bloque/fuerzaporbuenosaires",
+      "integrantes_informados": 20,
+      "integrantes": [
+        {
+          "nombre": "Barroetaveña, Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Legislación del Trabajo y Políticas de Empleo",
+              "cargo": "Presidente"
+            },
+            {
+              "nombre": "Presupuesto, Hacienda, Administración Financiera y Política Tributaria",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Justicia",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Planeamiento Urbano",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Asuntos Metropolitanos y Relaciones Interjurisdiccionales",
+              "cargo": "Vicepresidente 2"
+            },
+            {
+              "nombre": "Tránsito y Transporte",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Bielli, María",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Legislación del Trabajo y Políticas de Empleo",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Presupuesto, Hacienda, Administración Financiera y Política Tributaria",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Educación, Ciencia y Tecnología",
+              "cargo": "Presidente"
+            },
+            {
+              "nombre": "Niñez, Adolescencia y Juventud",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Vivienda",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Caporiccio, Francisco",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Asuntos Constitucionales",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Legislación General",
+              "cargo": "Vicepresidente 2"
+            },
+            {
+              "nombre": "Presupuesto, Hacienda, Administración Financiera y Política Tributaria",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Seguridad",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Obras y Servicios Públicos",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Desarrollo Económico y Mercosur",
+              "cargo": "Vicepresidente 1"
+            },
+            {
+              "nombre": "Asuntos Metropolitanos y Relaciones Interjurisdiccionales",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Ferreño, Claudio Américo",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Seguridad",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Obras y Servicios Públicos",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Turismo y Deportes",
+              "cargo": "Presidente"
+            }
+          ]
+        },
+        {
+          "nombre": "Freire, Victoria",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Seguridad",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Educación, Ciencia y Tecnología",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Planeamiento Urbano",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Descentralización y Participación Ciudadana",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Mujeres, Géneros y Diversidades",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Vivienda",
+              "cargo": "Presidente"
+            }
+          ]
+        },
+        {
+          "nombre": "Geminiani, Noemí",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Salud",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Niñez, Adolescencia y Juventud",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Turismo y Deportes",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Personas Mayores",
+              "cargo": "Vicepresidente 1"
+            }
+          ]
+        },
+        {
+          "nombre": "González, Andrea Mariana",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Salud",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Políticas de Promoción e Integración Social",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Discapacidad",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Niñez, Adolescencia y Juventud",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Protección y Uso del Espacio Público",
+              "cargo": "Vicepresidente 1"
+            },
+            {
+              "nombre": "Ambiente",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Grillo, Alejandro Omar",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Cultura",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Planeamiento Urbano",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Desarrollo Económico y Mercosur",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Ambiente",
+              "cargo": "Presidente"
+            },
+            {
+              "nombre": "Tránsito y Transporte",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Iañez, Berenice",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Presupuesto, Hacienda, Administración Financiera y Política Tributaria",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Salud",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Políticas de Promoción e Integración Social",
+              "cargo": "Presidente"
+            },
+            {
+              "nombre": "Obras y Servicios Públicos",
+              "cargo": "Vicepresidente 2"
+            },
+            {
+              "nombre": "Desarrollo Económico y Mercosur",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Defensa de los Consumidores y Usuarios",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Vivienda",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "La Blunda, Andrés",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Derechos Humanos, Garantías y Antidiscriminación",
+              "cargo": "Presidente"
+            },
+            {
+              "nombre": "Políticas de Promoción e Integración Social",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Descentralización y Participación Ciudadana",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Protección y Uso del Espacio Público",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Personas Mayores",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Lammens , Matías",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Presupuesto, Hacienda, Administración Financiera y Política Tributaria",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Desarrollo Económico y Mercosur",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Asuntos Metropolitanos y Relaciones Interjurisdiccionales",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Turismo y Deportes",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Mochi, Federico",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Asuntos Constitucionales",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Legislación General",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Legislación del Trabajo y Políticas de Empleo",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Justicia",
+              "cargo": "Vicepresidente 1"
+            },
+            {
+              "nombre": "Educación, Ciencia y Tecnología",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Modarelli, Juan Pablo",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Presupuesto, Hacienda, Administración Financiera y Política Tributaria",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Justicia",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Cultura",
+              "cargo": "Vicepresidente 1"
+            },
+            {
+              "nombre": "Comunicación Social",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Planeamiento Urbano",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Tránsito y Transporte",
+              "cargo": "Vicepresidente 2"
+            }
+          ]
+        },
+        {
+          "nombre": "Negri, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Asuntos Constitucionales",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Presupuesto, Hacienda, Administración Financiera y Política Tributaria",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Salud",
+              "cargo": "Vicepresidente 1"
+            },
+            {
+              "nombre": "Educación, Ciencia y Tecnología",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Discapacidad",
+              "cargo": "Vicepresidente 2"
+            }
+          ]
+        },
+        {
+          "nombre": "Neira, Claudia",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Asuntos Constitucionales",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Presupuesto, Hacienda, Administración Financiera y Política Tributaria",
+              "cargo": "Vicepresidente 1"
+            },
+            {
+              "nombre": "Justicia",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Obras y Servicios Públicos",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Planeamiento Urbano",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Peñafort, Graciana",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Asuntos Constitucionales",
+              "cargo": "Vicepresidente 2"
+            },
+            {
+              "nombre": "Derechos Humanos, Garantías y Antidiscriminación",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Justicia",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Seguridad",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Mujeres, Géneros y Diversidades",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Niñez, Adolescencia y Juventud",
+              "cargo": "Presidente"
+            }
+          ]
+        },
+        {
+          "nombre": "Rossen, Bárbara",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Cultura",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Planeamiento Urbano",
+              "cargo": "Vicepresidente 1"
+            },
+            {
+              "nombre": "Desarrollo Económico y Mercosur",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Protección y Uso del Espacio Público",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Ambiente",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Vivienda",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Salvatierra, Alejandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Derechos Humanos, Garantías y Antidiscriminación",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Seguridad",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Cultura",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Comunicación Social",
+              "cargo": "Vicepresidente 1"
+            },
+            {
+              "nombre": "Políticas de Promoción e Integración Social",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Vivienda",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Santoro, Leandro",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Obras y Servicios Públicos",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Descentralización y Participación Ciudadana",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Defensa de los Consumidores y Usuarios",
+              "cargo": "Presidente"
+            },
+            {
+              "nombre": "Personas Mayores",
+              "cargo": "Vocal"
+            }
+          ]
+        },
+        {
+          "nombre": "Velázquez, Delfina",
+          "bloque": "Fuerza por Buenos Aires",
+          "comisiones": [
+            {
+              "nombre": "Derechos Humanos, Garantías y Antidiscriminación",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Salud",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Descentralización y Participación Ciudadana",
+              "cargo": "Vicepresidente 2"
+            },
+            {
+              "nombre": "Mujeres, Géneros y Diversidades",
+              "cargo": "Presidente"
+            },
+            {
+              "nombre": "Niñez, Adolescencia y Juventud",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Ambiente",
+              "cargo": "Vocal"
+            },
+            {
+              "nombre": "Personas Mayores",
+              "cargo": "Vocal"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "referentes": {
+    "claudia_negri": {
+      "nombre": "Negri, Claudia",
+      "bloque": "Fuerza por Buenos Aires",
+      "comisiones": [
+        {
+          "comision": "Asuntos Constitucionales",
+          "cargo": "Vocal",
+          "url": "https://www.legislatura.gob.ar/comision/asuntosconstitucionales"
+        },
+        {
+          "comision": "Presupuesto, Hacienda, Administración Financiera y Política Tributaria",
+          "cargo": "Vocal",
+          "url": "https://www.legislatura.gob.ar/comision/presupuestohaciendaadministracionfinancieraypoliticatributaria"
+        },
+        {
+          "comision": "Salud",
+          "cargo": "Vicepresidente 1",
+          "url": "https://www.legislatura.gob.ar/comision/salud"
+        },
+        {
+          "comision": "Educación, Ciencia y Tecnología",
+          "cargo": "Vocal",
+          "url": "https://www.legislatura.gob.ar/comision/educacioncienciaytecnologia"
+        },
+        {
+          "comision": "Discapacidad",
+          "cargo": "Vicepresidente 2",
+          "url": "https://www.legislatura.gob.ar/comision/discapacidad"
+        }
+      ]
+    }
+  }
+}

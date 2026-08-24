@@ -1,0 +1,70 @@
+{
+  "schema": "cepoes-migraciones-v1",
+  "generated": "2026-08-24",
+  "updated_at": "2026-08-24T13:19:00-03:00",
+  "scope": "Ciudad Autónoma de Buenos Aires",
+  "status": "VALIDADO",
+  "latest": {
+    "place_birth_commune_eah": 2025,
+    "countries": 2024,
+    "activity": 2024,
+    "schooling": 2024,
+    "poverty_multidimensional": 2025,
+    "recent_migration": 2022,
+    "census": 2022
+  },
+  "headline": {
+    "eah": {
+      "year": 2025,
+      "nacida_caba_pct": 63.6,
+      "prov_ba_pct": 12.0,
+      "otra_provincia_pct": 10.4,
+      "pais_limitrofe_pct": 6.3,
+      "pais_no_limitrofe_pct": 7.6,
+      "migracion_interna_pct": 22.4,
+      "migracion_internacional_pct": 13.9
+    },
+    "censo2022": {
+      "total": 3095454,
+      "nacida_caba": 2051723,
+      "otra_provincia": 624640,
+      "otro_pais": 419091,
+      "otra_provincia_pct": 20.18,
+      "otro_pais_pct": 13.54
+    }
+  },
+  "communes": {
+    "1": {"censo2022": {"total": 221001,"nacida_caba": 110628,"otra_provincia": 56104,"otro_pais": 54269,"otra_provincia_pct": 25.39,"otro_pais_pct": 24.56},"eah": {"year": 2025,"nacida_caba_pct": 47.9,"prov_ba_pct": 10.8,"otra_provincia_pct": 15.8,"pais_limitrofe_pct": 10.3,"pais_no_limitrofe_pct": 15.1,"migracion_interna_pct": 26.6,"migracion_internacional_pct": 25.4}},
+    "2": {"censo2022": {"total": 160609,"nacida_caba": 93683,"otra_provincia": 46733,"otro_pais": 20193,"otra_provincia_pct": 29.1,"otro_pais_pct": 12.57},"eah": {"year": 2025,"nacida_caba_pct": 55.6,"prov_ba_pct": 14.9,"otra_provincia_pct": 15.2,"pais_limitrofe_pct": 3.9,"pais_no_limitrofe_pct": 10.4,"migracion_interna_pct": 30.1,"migracion_internacional_pct": 14.3}},
+    "3": {"censo2022": {"total": 193537,"nacida_caba": 104957,"otra_provincia": 49314,"otro_pais": 39266,"otra_provincia_pct": 25.48,"otro_pais_pct": 20.29},"eah": {"year": 2025,"nacida_caba_pct": 51.0,"prov_ba_pct": 12.0,"otra_provincia_pct": 14.0,"pais_limitrofe_pct": 6.7,"pais_no_limitrofe_pct": 16.3,"migracion_interna_pct": 26.0,"migracion_internacional_pct": 23.0}},
+    "4": {"censo2022": {"total": 227024,"nacida_caba": 147991,"otra_provincia": 41546,"otro_pais": 37487,"otra_provincia_pct": 18.3,"otro_pais_pct": 16.51},"eah": {"year": 2025,"nacida_caba_pct": 65.5,"prov_ba_pct": 9.4,"otra_provincia_pct": 9.1,"pais_limitrofe_pct": 12.3,"pais_no_limitrofe_pct": 3.7,"migracion_interna_pct": 18.5,"migracion_internacional_pct": 16.0}},
+    "5": {"censo2022": {"total": 192449,"nacida_caba": 122727,"otra_provincia": 44718,"otro_pais": 25004,"otra_provincia_pct": 23.24,"otro_pais_pct": 12.99},"eah": {"year": 2025,"nacida_caba_pct": 58.2,"prov_ba_pct": 15.3,"otra_provincia_pct": 13.3,"pais_limitrofe_pct": 3.1,"pais_no_limitrofe_pct": 10.1,"migracion_interna_pct": 28.6,"migracion_internacional_pct": 13.2}},
+    "6": {"censo2022": {"total": 201764,"nacida_caba": 140265,"otra_provincia": 42196,"otro_pais": 19303,"otra_provincia_pct": 20.91,"otro_pais_pct": 9.57},"eah": {"year": 2025,"nacida_caba_pct": 67.8,"prov_ba_pct": 12.9,"otra_provincia_pct": 9.2,"pais_limitrofe_pct": 1.6,"pais_no_limitrofe_pct": 8.6,"migracion_interna_pct": 22.1,"migracion_internacional_pct": 10.2}},
+    "7": {"censo2022": {"total": 213262,"nacida_caba": 149967,"otra_provincia": 33083,"otro_pais": 30212,"otra_provincia_pct": 15.51,"otro_pais_pct": 14.17},"eah": {"year": 2025,"nacida_caba_pct": 65.9,"prov_ba_pct": 8.0,"otra_provincia_pct": 7.3,"pais_limitrofe_pct": 10.8,"pais_no_limitrofe_pct": 8.1,"migracion_interna_pct": 15.3,"migracion_internacional_pct": 18.9}},
+    "8": {"censo2022": {"total": 203888,"nacida_caba": 136369,"otra_provincia": 26367,"otro_pais": 41152,"otra_provincia_pct": 12.93,"otro_pais_pct": 20.18},"eah": {"year": 2025,"nacida_caba_pct": 70.7,"prov_ba_pct": 5.1,"otra_provincia_pct": 4.8,"pais_limitrofe_pct": 15.5,"pais_no_limitrofe_pct": 3.9,"migracion_interna_pct": 9.9,"migracion_internacional_pct": 19.4}},
+    "9": {"censo2022": {"total": 167908,"nacida_caba": 124890,"otra_provincia": 22847,"otro_pais": 20171,"otra_provincia_pct": 13.61,"otro_pais_pct": 12.01},"eah": {"year": 2025,"nacida_caba_pct": 69.0,"prov_ba_pct": 13.6,"otra_provincia_pct": 6.4,"pais_limitrofe_pct": 6.5,"pais_no_limitrofe_pct": 4.6,"migracion_interna_pct": 20.0,"migracion_internacional_pct": 11.1}},
+    "10": {"censo2022": {"total": 171896,"nacida_caba": 130011,"otra_provincia": 24971,"otro_pais": 16914,"otra_provincia_pct": 14.53,"otro_pais_pct": 9.84},"eah": {"year": 2025,"nacida_caba_pct": 73.5,"prov_ba_pct": 9.6,"otra_provincia_pct": 5.3,"pais_limitrofe_pct": 5.7,"pais_no_limitrofe_pct": 6.0,"migracion_interna_pct": 14.9,"migracion_internacional_pct": 11.7}},
+    "11": {"censo2022": {"total": 201905,"nacida_caba": 152964,"otra_provincia": 33134,"otro_pais": 15807,"otra_provincia_pct": 16.41,"otro_pais_pct": 7.83},"eah": {"year": 2025,"nacida_caba_pct": 73.0,"prov_ba_pct": 12.1,"otra_provincia_pct": 9.2,"pais_limitrofe_pct": 3.0,"pais_no_limitrofe_pct": 2.7,"migracion_interna_pct": 21.3,"migracion_internacional_pct": 5.7}},
+    "12": {"censo2022": {"total": 235364,"nacida_caba": 174499,"otra_provincia": 43071,"otro_pais": 17794,"otra_provincia_pct": 18.3,"otro_pais_pct": 7.56},"eah": {"year": 2025,"nacida_caba_pct": 69.0,"prov_ba_pct": 15.4,"otra_provincia_pct": 8.3,"pais_limitrofe_pct": 1.5,"pais_no_limitrofe_pct": 5.8,"migracion_interna_pct": 23.7,"migracion_internacional_pct": 7.3}},
+    "13": {"censo2022": {"total": 262330,"nacida_caba": 177741,"otra_provincia": 57719,"otro_pais": 26870,"otra_provincia_pct": 22.0,"otro_pais_pct": 10.24},"eah": {"year": 2025,"nacida_caba_pct": 63.1,"prov_ba_pct": 15.7,"otra_provincia_pct": 13.3,"pais_limitrofe_pct": 2.7,"pais_no_limitrofe_pct": 5.2,"migracion_interna_pct": 29.0,"migracion_internacional_pct": 7.9}},
+    "14": {"censo2022": {"total": 247252,"nacida_caba": 151559,"otra_provincia": 64756,"otro_pais": 30937,"otra_provincia_pct": 26.19,"otro_pais_pct": 12.51},"eah": {"year": 2025,"nacida_caba_pct": 61.5,"prov_ba_pct": 15.1,"otra_provincia_pct": 12.8,"pais_limitrofe_pct": 2.4,"pais_no_limitrofe_pct": 7.9,"migracion_interna_pct": 27.9,"migracion_internacional_pct": 10.3}},
+    "15": {"censo2022": {"total": 195265,"nacida_caba": 133472,"otra_provincia": 38081,"otro_pais": 23712,"otra_provincia_pct": 19.5,"otro_pais_pct": 12.14},"eah": {"year": 2025,"nacida_caba_pct": 65.7,"prov_ba_pct": 12.7,"otra_provincia_pct": 12.3,"pais_limitrofe_pct": 4.0,"pais_no_limitrofe_pct": 5.2,"migracion_interna_pct": 25.0,"migracion_internacional_pct": 9.2}}
+  },
+  "countries": {"year": 2024,"rows": [
+    {"pais":"Venezuela","pct_2024":23.35,"pct_2015":2.2,"cambio_pp":21.15},{"pais":"Paraguay","pct_2024":16.72,"pct_2015":22.4,"cambio_pp":-5.68},{"pais":"Bolivia","pct_2024":16.28,"pct_2015":21.9,"cambio_pp":-5.62},{"pais":"Perú","pct_2024":13.58,"pct_2015":19.2,"cambio_pp":-5.62},{"pais":"Otros países","pct_2024":11.91,"pct_2015":12.3,"cambio_pp":-0.39},{"pais":"Uruguay","pct_2024":4.91,"pct_2015":6.8,"cambio_pp":-1.89},{"pais":"Brasil","pct_2024":4.23,"pct_2015":1.9,"cambio_pp":2.33},{"pais":"Colombia","pct_2024":3.78,"pct_2015":2.9,"cambio_pp":0.88},{"pais":"España","pct_2024":2.0,"pct_2015":4.6,"cambio_pp":-2.6},{"pais":"Chile","pct_2024":1.69,"pct_2015":2.2,"cambio_pp":-0.51},{"pais":"Italia","pct_2024":1.54,"pct_2015":3.6,"cambio_pp":-2.06}],"base_year":2015},
+  "recent_migration": {"definition":"Población de 5 años y más que residía fuera de CABA cinco años antes del censo.","years":[1980,1991,2001,2010,2022],"prov_ba":[51.6,50.1,49.5,48.4,20.2],"otra_provincia":[36.7,34.9,25.0,18.7,21.6],"exterior":[11.7,15.0,25.4,32.9,58.2]},
+  "socioeconomic": {
+    "activity":{"year":2024,"values":{"caba":65.52,"resto_pais":70.04,"exterior":72.95}},
+    "schooling":{"year":2024,"unit":"años promedio","values":{"total":13.8,"caba":14.3,"resto_pais":13.5,"exterior":12.8}},
+    "poverty_multidimensional":{"year":2025,"values":{"total":20.7,"caba":19.0,"prov_ba":15.0,"otra_provincia":19.4,"pais_limitrofe":45.2,"otro_pais":25.4}}
+  },
+  "automation":{"mode":"daily-source-check","publication_rule":"Sólo se publica una actualización cuando las fuentes oficiales superan controles de estructura, cobertura y consistencia.","fallback":"Ante un cambio de formato o error de descarga se conserva el último dato validado."},
+  "sources":[
+    {"name":"INDEC · Censo 2022 · Migraciones internacionales e internas","url":"https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_migraciones.pdf","coverage":"Censo 2022, población por lugar de nacimiento y comuna"},
+    {"name":"IDECBA · EAH 2025 · Lugar de nacimiento por comuna","url":"https://www.estadisticaciudad.gob.ar/eyc/banco-datos/distribucion-porcentual-de-la-poblacion-por-lugar-de-nacimiento-segun-comuna-ciudad-de-buenos-aires-anos-2006-20082016/","download":"https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2024/01/M01.xlsx"},
+    {"name":"IDECBA · EAH 2024 · País de nacimiento","url":"https://www.estadisticaciudad.gob.ar/eyc/banco-datos/distribucion-porcentual-de-la-poblacion-extranjera-por-principales-paises-de-nacimiento-segun-sexo-ciudad-de-buenos-aires-anos-2015-2021-2022/","download":"https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2023/12/PEPN.xlsx"},
+    {"name":"IDECBA · Inmigrantes recientes por residencia anterior","url":"https://www.estadisticaciudad.gob.ar/eyc/banco-datos/distribucion-porcentual-de-inmigrantes-recientes-segun-lugar-de-residencia-anterior-ciudad-de-buenos-aires-anos-1980-2022/","download":"https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2024/07/PB_2211.xlsx"},
+    {"name":"IDECBA · EAH 2024 · Condición de actividad por lugar de nacimiento","url":"https://www.estadisticaciudad.gob.ar/eyc/banco-datos/distribucion-porcentual-de-poblacion-de-15-anos-y-mas-por-condicion-de-actividad-segun-lugar-de-nacimiento-y-grupo-de-edad-ciudad-de-buenos-aires-anos-2015-2021-2022/","download":"https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2023/12/PCA15.xlsx"},
+    {"name":"IDECBA · EAH 2025 · Pobreza multidimensional por lugar de nacimiento","url":"https://www.estadisticaciudad.gob.ar/si/demog/principal-indicador?annio=2025&cortante=%7B%22annio%22%3Atrue%2C%22l_nac%22%3Atrue%7D&indicador=b211b"}
+  ]
+}

@@ -12,6 +12,13 @@ on:
       - "verificar_migraciones.py"
       - ".github/workflows/migraciones.yml"
       - "deploy/site-overlay/assets/data/migraciones.json"
+  pull_request:
+    branches: [main]
+    paths:
+      - "actualizar_migraciones.py"
+      - "verificar_migraciones.py"
+      - ".github/workflows/migraciones.yml"
+      - "deploy/site-overlay/assets/data/migraciones.json"
 
 permissions:
   contents: write

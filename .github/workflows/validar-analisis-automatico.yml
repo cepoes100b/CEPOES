@@ -4,11 +4,15 @@ on:
   pull_request:
     paths:
       - "automatizar_analisis_legislativo.py"
+      - "verificar_analisis_automatico.py"
       - "requirements.txt"
       - ".github/workflows/analizar-legislatura.yml"
       - ".github/workflows/validar-analisis-automatico.yml"
       - "supabase/functions/legislative-analysis-ingest/**"
       - "infra/supabase/004_analisis_legislativo_automatico.sql"
+      - "deploy/site-overlay/assets/legislativa-auto-ui.js"
+      - "deploy/site-overlay/assets/legislativa-config.js"
+      - "docs/ANALISIS-LEGISLATIVO-AUTOMATICO.md"
   workflow_dispatch:
 
 permissions:
@@ -24,10 +28,16 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
       - name: Instalar dependencias
         run: pip install -r requirements.txt
-      - name: Compilar script
-        run: python -m py_compile automatizar_analisis_legislativo.py
+      - name: Compilar y validar estructura
+        run: |
+          python -m py_compile automatizar_analisis_legislativo.py verificar_analisis_automatico.py
+          node --check deploy/site-overlay/assets/legislativa-auto-ui.js
+          python verificar_analisis_automatico.py
       - name: Probar salida estructurada del modelo
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

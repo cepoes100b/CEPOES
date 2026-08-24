@@ -1,0 +1,29 @@
+name: Bootstrap estructura legislativa
+
+on:
+  push:
+    branches:
+      - estructura-bootstrap-v2332
+
+permissions:
+  contents: write
+
+jobs:
+  generar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python actualizar_estructura_legislativa.py
+      - run: python verificar_estructura_legislativa.py
+      - name: Publicar archivo bootstrap en la rama
+        run: |
+          git config user.name "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add estructura_legislativa.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "legislatura: bootstrap estructura institucional"
+          git push

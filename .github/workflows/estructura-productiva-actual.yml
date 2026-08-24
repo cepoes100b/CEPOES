@@ -6,14 +6,12 @@ on:
       - main
       - feat/estructura-productiva-actual-2026
     paths:
-      - "generar_estructura_actual.py"
       - "generar_estructura_actual_v2.py"
       - "verificar_estructura_actual.py"
       - ".github/workflows/estructura-productiva-actual.yml"
   pull_request:
     branches: [main]
     paths:
-      - "generar_estructura_actual.py"
       - "generar_estructura_actual_v2.py"
       - "verificar_estructura_actual.py"
       - ".github/workflows/estructura-productiva-actual.yml"
@@ -39,6 +37,12 @@ jobs:
 
       - name: Instalar dependencias
         run: pip install "requests>=2.31" "openpyxl>=3.1"
+
+      - name: Conservar versión previa
+        shell: bash
+        run: |
+          p=deploy/site-overlay/assets/data/estructura-productiva/actual.json
+          if [ -f "$p" ]; then cp "$p" /tmp/estructura-actual-prev.json; fi
 
       - name: Generar panorama actual
         id: generar
@@ -81,6 +85,29 @@ jobs:
           fi
           exit 0
 
+      - name: Detectar cambio sustantivo
+        id: cambios
+        if: steps.generar.outputs.rc == '0' && steps.verificar.outputs.rc == '0'
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          new=Path('deploy/site-overlay/assets/data/estructura-productiva/actual.json')
+          old=Path('/tmp/estructura-actual-prev.json')
+          if not old.exists():
+              print('changed=true')
+              raise SystemExit
+          a=json.loads(old.read_text(encoding='utf-8'))
+          b=json.loads(new.read_text(encoding='utf-8'))
+          a.pop('generado',None); b.pop('generado',None)
+          print('changed=' + ('true' if a != b else 'false'))
+          PY
+          if [ "$(tail -n 1 "$GITHUB_OUTPUT" | cut -d= -f2)" = "false" ]; then
+            cp /tmp/estructura-actual-prev.json deploy/site-overlay/assets/data/estructura-productiva/actual.json
+            echo "Sin cambios sustantivos: se conserva fecha de la última modificación real."
+          fi
+
       - name: Fallar PR si la actualización no valida
         if: github.event_name == 'pull_request'
         shell: bash
@@ -104,8 +131,15 @@ jobs:
             git add diagnostico_estructura_actual.txt
             mensaje="territorio: diagnosticar panorama productivo actual $(date -u +%F)"
           else
-            git add deploy/site-overlay/assets/data/estructura-productiva/actual.json
-            if git ls-files --error-unmatch diagnostico_estructura_actual.txt >/dev/null 2>&1; then git rm diagnostico_estructura_actual.txt; fi
+            if [ "${{ steps.cambios.outputs.changed }}" != "true" ]; then
+              if git ls-files --error-unmatch diagnostico_estructura_actual.txt >/dev/null 2>&1; then
+                git rm diagnostico_estructura_actual.txt
+              fi
+              if git diff --cached --quiet; then exit 0; fi
+            else
+              git add deploy/site-overlay/assets/data/estructura-productiva/actual.json
+              if git ls-files --error-unmatch diagnostico_estructura_actual.txt >/dev/null 2>&1; then git rm diagnostico_estructura_actual.txt; fi
+            fi
             mensaje="territorio: actualizar panorama productivo actual $(date -u +%F)"
           fi
           if git diff --cached --quiet; then

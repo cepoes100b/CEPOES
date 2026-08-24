@@ -1,12 +1,12 @@
-Fecha UTC: 2026-08-24T22:15:30Z
-Commit: cc150efb49851e1493a77425af7906e25619b037
+Fecha UTC: 2026-08-24T22:20:13Z
+Commit: 2a7aa970a249bff2639b172aa9b235803d165780
 Fase: verificar RUS 2017
 Exit code: 1
 
 Traceback (most recent call last):
-  File "/home/runner/work/CEPOES/CEPOES/verificar_estructura_productiva.py", line 57, in <module>
+  File "/home/runner/work/CEPOES/CEPOES/verificar_estructura_productiva.py", line 72, in <module>
     main()
-  File "/home/runner/work/CEPOES/CEPOES/verificar_estructura_productiva.py", line 19, in main
-    assert m.get("periodo_rus") == "2022-2024"
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError
+  File "/home/runner/work/CEPOES/CEPOES/verificar_estructura_productiva.py", line 18, in main
+    assert int(m.get("schema", 0)) >= 3, m.get("schema")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2

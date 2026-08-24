@@ -1,12 +1,16 @@
-Fecha UTC: 2026-08-24T21:52:52Z
-Commit: fd50066c20545a09c57306d84baa2b535d053c94
-Fase: preparar SHP 2022-2024
+Fecha UTC: 2026-08-24T22:00:06Z
+Commit: 457ee61aec2b7b0716d6270e34b0a311904b36bf
+Fase: generar desde RUS 2017
 Exit code: 1
 
-SHP descargado: 83.7 MB · application/zip
-ZIP: ['Usos_del_Suelo_Ciudad_Autónoma_de_Buenos_Aires_2022-2024.cpg', 'Usos_del_Suelo_Ciudad_Autónoma_de_Buenos_Aires_2022-2024.dbf', 'Usos_del_Suelo_Ciudad_Autónoma_de_Buenos_Aires_2022-2024.prj', 'Usos_del_Suelo_Ciudad_Autónoma_de_Buenos_Aires_2022-2024.sbn', 'Usos_del_Suelo_Ciudad_Autónoma_de_Buenos_Aires_2022-2024.sbx', 'Usos_del_Suelo_Ciudad_Autónoma_de_Buenos_Aires_2022-2024.shp', 'Usos_del_Suelo_Ciudad_Autónoma_de_Buenos_Aires_2022-2024.shp.xml', 'Usos_del_Suelo_Ciudad_Autónoma_de_Buenos_Aires_2022-2024.shx']
-DBF: Usos_del_Suelo_Ciudad_Autónoma_de_Buenos_Aires_2022-2024.dbf encoding: utf-8
-DBF columnas: ['OBJECTID', 'SMP', 'BARRIO', 'TIPO1', 'TIPO2', 'ESTADO', 'PISOS', 'GP_Q', 'OBS', 'CALLE', 'PUERTA', 'UNIFICADO', 'SMP_IDEM', 'AÑO']
+Descargando RUS 2022-2024…
+RUS: 99.0 MB
+Descargando manzanas oficiales…
+Manzanas: 7.3 MB
+RUS: separador ',' · 19 columnas · ['x', 'y', 'smp', 'calle', 'num', 'tipo1_16', 'tipo2_16', 'pisos_16', 'nombre', 'observacio', 'barrio', 'comuna', '5_dig', '4_dig', '3_dig', '2_dig', 'rama', 'subrama', 'ssrama']
 Traceback (most recent call last):
-  File "<stdin>", line 38, in <module>
-RuntimeError: El SHP no contiene ClaNAE: ['OBJECTID', 'SMP', 'BARRIO', 'TIPO1', 'TIPO2', 'ESTADO', 'PISOS', 'GP_Q', 'OBS', 'CALLE', 'PUERTA', 'UNIFICADO', 'SMP_IDEM', 'AÑO']
+  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 340, in <module>
+    main()
+  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 244, in main
+    raise RuntimeError(f"RUS económico inesperadamente pequeño: {rows_total}")
+RuntimeError: RUS económico inesperadamente pequeño: 0

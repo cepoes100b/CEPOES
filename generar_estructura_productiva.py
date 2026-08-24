@@ -86,11 +86,16 @@ def sm_norm(v: str, seccion: str = "", manzana: str = "") -> str:
     return s
 
 
+def header_key(v: Any) -> str:
+    return re.sub(r"[^a-z0-9_]+", "", str(v or "").strip().lower())
+
+
 def first_value(row: dict[str, Any], *names: str) -> str:
-    lower = {str(k).strip().lower(): v for k, v in row.items()}
+    lower = {header_key(k): v for k, v in row.items()}
     for name in names:
-        if name.lower() in lower:
-            val = clean(lower[name.lower()])
+        key = header_key(name)
+        if key in lower:
+            val = clean(lower[key])
             if val:
                 return val
     return ""
@@ -106,12 +111,28 @@ def csv_rows(content: bytes):
             continue
     if text is None:
         raise RuntimeError("No pude decodificar el CSV RUS")
-    sample = text[:12000]
-    try:
-        dialect = csv.Sniffer().sniff(sample, delimiters=",;\t|")
-    except csv.Error:
-        dialect = csv.excel
-    yield from csv.DictReader(io.StringIO(text), dialect=dialect)
+
+    # Algunos CSV públicos incluyen la directiva de Excel `sep=;`. En vez de
+    # confiar ciegamente en Sniffer, resolvemos el separador desde el encabezado
+    # y verificamos que las columnas económicas esperadas existan.
+    lines = text.splitlines()
+    while lines and not lines[0].strip():
+        lines.pop(0)
+    if not lines:
+        raise RuntimeError("El CSV RUS está vacío")
+    first = lines[0].strip()
+    if first.lower().startswith("sep=") and len(first) >= 5:
+        delimiter = first[4]
+        text = "\n".join(lines[1:])
+    else:
+        counts = {d: first.count(d) for d in (",", ";", "\t", "|")}
+        delimiter = max(counts, key=counts.get)
+    reader = csv.DictReader(io.StringIO(text), delimiter=delimiter)
+    fields = [header_key(x) for x in (reader.fieldnames or [])]
+    print(f"RUS: separador {delimiter!r} · {len(fields)} columnas · {fields[:24]}")
+    if not ({"d21", "rama"} & set(fields)):
+        raise RuntimeError(f"Encabezado RUS inesperado: {reader.fieldnames}")
+    yield from reader
 
 
 def get_bytes(url: str) -> bytes:
@@ -153,6 +174,7 @@ def main() -> None:
     ramas_global = Counter()
     d21_global = Counter()
     comuna_total = Counter()
+    comuna_sector = defaultdict(Counter)
     barrio_total = Counter()
     rows_total = 0
     skipped = 0
@@ -214,6 +236,7 @@ def main() -> None:
         rows_total += 1
         sector_global[sector] += 1
         comuna_total[comuna] += 1
+        comuna_sector[comuna][sector] += 1
         if barrio:
             barrio_total[(comuna, barrio)] += 1
 
@@ -239,6 +262,8 @@ def main() -> None:
                 "t": b["total"],
                 "s": top_sector,
                 "r": top_rama,
+                "sc": dict(b["sectores"]),
+                "rc": dict(b["ramas"]),
             },
             "geometry": geom,
         })
@@ -268,11 +293,11 @@ def main() -> None:
         for (c, b), n in sorted(barrio_total.items(), key=lambda x: (x[0][0], x[0][1]))
     ]
     comunas = [
-        {"comuna": c, "total": comuna_total.get(c, 0), "manzanas": len(comuna_blocks.get(c, {}))}
+        {"comuna": c, "total": comuna_total.get(c, 0), "manzanas": len(comuna_blocks.get(c, {})), "sectores": dict(comuna_sector.get(c, {}))}
         for c in range(1, 16)
     ]
     manifest = {
-        "schema": 1,
+        "schema": 2,
         "generado": generated_at,
         "periodo_rus": "2022-2024",
         "unidad": "establecimientos y actividades económicas relevadas",

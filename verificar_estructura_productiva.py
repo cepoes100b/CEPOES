@@ -15,7 +15,7 @@ def load(name: str):
 
 def main() -> None:
     m = load("manifest.json")
-    assert m.get("schema") == 1
+    assert m.get("schema") in {1, 2}
     assert m.get("periodo_rus") == "2022-2024"
     total = int(m.get("total", 0))
     blocks = int(m.get("manzanas_actividad", 0))

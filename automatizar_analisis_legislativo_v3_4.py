@@ -2,7 +2,7 @@
 """CEPOES · análisis legislativo automático v3.4.
 
 Arquitectura estable de generación:
-1. una única inferencia de Copilot sobre evidencia suministrada;
+1. una única inferencia sobre la evidencia suministrada, independiente del proveedor;
 2. saneamiento determinístico de siglas, cifras/placeholders, instituciones y
    referencias jurídicas externas;
 3. neutralización determinística cuando la confianza queda por debajo de 0,75;
@@ -16,7 +16,6 @@ import argparse
 import hashlib
 import json
 import os
-import re
 
 import automatizar_analisis_legislativo as pipeline
 import automatizar_analisis_legislativo_hardened as strict
@@ -24,14 +23,20 @@ import automatizar_analisis_legislativo_v3 as v3
 import automatizar_analisis_legislativo_v3_1 as v31
 import automatizar_analisis_legislativo_v3_2 as v32
 import automatizar_analisis_legislativo_v3_3 as v33
+import proveedor_modelo_legislativo as provider
 
-MODEL_LABEL = f"github-copilot-cli-v3.4:{os.getenv('COPILOT_MODEL', '').strip() or 'auto'}"
 STRING_FIELDS = [
     "executive_summary", "legal_impact", "fiscal_impact", "territorial_impact",
     "affected_actors", "risks", "arguments_for", "arguments_against", "rationale",
     "proposed_amendments", "intervention_arguments",
 ]
-LIST_FIELDS = ["committee_questions", "evidence_gaps", "tags"]
+
+
+def model_label() -> str:
+    p = provider.provider_name()
+    if p == "openai":
+        return f"openai-v3.4:{provider.OPENAI_MODEL}"
+    return f"github-copilot-cli-v3.4:{os.getenv('COPILOT_MODEL', '').strip() or 'auto'}"
 
 
 def add_flag(result: dict, flag: str) -> None:
@@ -71,8 +76,6 @@ def apply_entity_guardrail(result: dict, material: str) -> dict:
 
 
 def apply_numeric_guardrail(result: dict, material: str) -> dict:
-    # normalize_v3 elimina unidades textuales con cifras/placeholders no respaldados,
-    # fija el modo preliminar cuando corresponde y aplica el umbral 0,75.
     return v3.normalize_v3(result, material)
 
 
@@ -105,13 +108,9 @@ def final_assertions(result: dict, material: str) -> None:
     if v3.PLACEHOLDER_RE.search(rendered):
         raise RuntimeError("Control final: persiste placeholder 'a definir'")
 
-    # Ninguna referencia jurídica externa concreta puede sobrevivir en campos sustantivos.
     for key in STRING_FIELDS:
         if v33.unsupported_external_reference(str(result.get(key) or ""), material):
             raise RuntimeError(f"Control final: referencia jurídica externa no respaldada en {key}")
-
-    # Ninguna referencia institucional no evidenciada puede sobrevivir.
-    for key in STRING_FIELDS:
         if v32.has_unsupported_institution(str(result.get(key) or ""), material):
             raise RuntimeError(f"Control final: institución no respaldada en {key}")
 
@@ -126,9 +125,7 @@ def final_assertions(result: dict, material: str) -> None:
             raise RuntimeError("Control final: confianza baja conserva enmiendas")
 
 
-def call_copilot_v34(material: str) -> dict:
-    # Una sola llamada al modelo. Todo lo posterior es determinístico.
-    result = strict.run_copilot(v3.build_prompt_v3(material))
+def guardrail_cascade(result: dict, material: str) -> dict:
     result = apply_entity_guardrail(result, material)
     result = apply_numeric_guardrail(result, material)
     result = apply_institution_guardrail(result, material)
@@ -140,7 +137,14 @@ def call_copilot_v34(material: str) -> dict:
     return result
 
 
+def call_model_v34(material: str) -> dict:
+    # Una sola llamada al proveedor. Todo lo posterior es determinístico.
+    result, _provider_label = provider.call_provider(v3.build_prompt_v3(material))
+    return guardrail_cascade(result, material)
+
+
 def self_test() -> None:
+    """Prueba determinística: no consume créditos de ningún proveedor."""
     material = (
         "CONTROL DE CALIDAD V3.4:\n"
         "- analysis_mode=full\n- documentos_primarios_del_expediente=1\n"
@@ -148,16 +152,32 @@ def self_test() -> None:
         "DOCUMENTO PRIMARIO: Proyecto que crea un registro administrativo bajo el Ministerio de Educación. "
         "No informa costo fiscal ni plazo de implementación."
     )
-    result = call_copilot_v34(material)
+    synthetic = {
+        "executive_summary": "El proyecto crea un registro administrativo.",
+        "legal_impact": "Requiere implementación administrativa.",
+        "fiscal_impact": "No surge cuantificación fiscal de la evidencia suministrada.",
+        "territorial_impact": "No surge de la evidencia suministrada.",
+        "affected_actors": "Ministerio de Educación.",
+        "risks": "La evidencia no precisa el procedimiento de implementación.",
+        "arguments_for": "Ordena el registro.",
+        "arguments_against": "Falta detalle de implementación.",
+        "internal_priority": "media",
+        "recommendation": "sin_definir",
+        "rationale": "La evidencia disponible no alcanza para formular una posición técnica preliminar.",
+        "proposed_amendments": "Agregar un plazo de 30 días.",
+        "committee_questions": ["¿Cuál es el procedimiento de implementación?"],
+        "intervention_arguments": "Conviene acompañar con cambios.",
+        "evidence_gaps": ["No surge el plazo de implementación."],
+        "tags": ["educacion"],
+        "confidence": 0.68,
+    }
+    result = guardrail_cascade(synthetic, material)
     assert "single_pass_deterministic_guardrails" in result.get("quality_flags", [])
+    assert result["recommendation"] == "sin_definir"
+    assert result["proposed_amendments"] == ""
     final_assertions(result, material)
-    print("Self-test Copilot v3.4 OK")
-    print(json.dumps({
-        "analysis_mode": result.get("analysis_mode"),
-        "recommendation": result.get("recommendation"),
-        "confidence": result.get("confidence"),
-        "quality_flags": result.get("quality_flags"),
-    }, ensure_ascii=False))
+    provider.static_self_test()
+    print("Self-test determinístico v3.4 OK")
 
 
 def main() -> None:
@@ -166,11 +186,10 @@ def main() -> None:
     ap.add_argument("--self-test", action="store_true")
     args = ap.parse_args()
 
-    # Conserva la resolución de NormativaBA → texto actualizado/PDF implementada en v3.2.
     v3.fetch_supplement = v32.fetch_supplement_resolved
     pipeline.collect_source = collect_source_v34
-    pipeline.call_model = call_copilot_v34
-    pipeline.MODEL_ID = MODEL_LABEL
+    pipeline.call_model = call_model_v34
+    pipeline.MODEL_ID = model_label()
     if args.self_test:
         self_test()
         return

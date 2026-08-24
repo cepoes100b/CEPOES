@@ -11,11 +11,13 @@ on:
       - "automatizar_analisis_legislativo_v3_1.py"
       - "automatizar_analisis_legislativo_v3_2.py"
       - "automatizar_analisis_legislativo_v3_3.py"
+      - "automatizar_analisis_legislativo_v3_4.py"
       - "normativa_referencia_caba.json"
       - "verificar_analisis_automatico.py"
       - "verificar_analisis_v3_1.py"
       - "verificar_analisis_v3_2.py"
       - "verificar_analisis_v3_3.py"
+      - "verificar_analisis_v3_4.py"
       - "requirements.txt"
       - ".github/workflows/analizar-legislatura.yml"
       - ".github/workflows/validar-analisis-automatico.yml"
@@ -48,14 +50,15 @@ jobs:
         run: pip install -r requirements.txt
       - name: Compilar y validar estructura
         run: |
-          python -m py_compile automatizar_analisis_legislativo.py automatizar_analisis_legislativo_copilot.py automatizar_analisis_legislativo_hardened.py automatizar_analisis_legislativo_hardened_v2.py automatizar_analisis_legislativo_v3.py automatizar_analisis_legislativo_v3_1.py automatizar_analisis_legislativo_v3_2.py automatizar_analisis_legislativo_v3_3.py verificar_analisis_automatico.py verificar_analisis_v3_1.py verificar_analisis_v3_2.py verificar_analisis_v3_3.py
+          python -m py_compile automatizar_analisis_legislativo.py automatizar_analisis_legislativo_copilot.py automatizar_analisis_legislativo_hardened.py automatizar_analisis_legislativo_hardened_v2.py automatizar_analisis_legislativo_v3.py automatizar_analisis_legislativo_v3_1.py automatizar_analisis_legislativo_v3_2.py automatizar_analisis_legislativo_v3_3.py automatizar_analisis_legislativo_v3_4.py verificar_analisis_automatico.py verificar_analisis_v3_1.py verificar_analisis_v3_2.py verificar_analisis_v3_3.py verificar_analisis_v3_4.py
           python -m json.tool normativa_referencia_caba.json >/dev/null
           node --check deploy/site-overlay/assets/legislativa-auto-ui.js
           python verificar_analisis_automatico.py
           python verificar_analisis_v3_1.py
           python verificar_analisis_v3_2.py
           python verificar_analisis_v3_3.py
-      - name: Probar Copilot CLI v3.3 si la credencial está configurada
+          python verificar_analisis_v3_4.py
+      - name: Probar Copilot CLI v3.4 si la credencial está configurada
         env:
           COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
         shell: bash
@@ -65,4 +68,4 @@ jobs:
             exit 0
           fi
           npm install -g @github/copilot@latest
-          python automatizar_analisis_legislativo_v3_3.py --self-test
+          python automatizar_analisis_legislativo_v3_4.py --self-test

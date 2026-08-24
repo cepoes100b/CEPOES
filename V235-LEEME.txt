@@ -1,0 +1,9 @@
+CEPOES v2.35 · Migraciones automáticas
+Base: v2.34
+
+- /territorio/migraciones/ con años dinámicos y fichas rápidas por comunidad
+- trabajo, educación y pobreza con actualización desde IDECBA
+- navegación de Territorio incorpora Migraciones vía common.js sin reescribir 72 páginas
+- pipeline GitHub diario: actualizar_migraciones.py + verificar_migraciones.py
+- despliegue a Hostinger sólo cuando cambia un conjunto validado
+- ante falla de fuente/formato se conserva el último dato validado

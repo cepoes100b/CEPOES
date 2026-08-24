@@ -43,9 +43,9 @@ assert 'legislative-analysis-ingest-v2' in workflow
 for forbidden in ['SUPABASE_SERVICE_ROLE', 'SUPABASE_SECRET_KEY', 'OPENAI_API_KEY']:
     assert forbidden not in workflow, f'Secreto prohibido en workflow: {forbidden}'
 
-# Copilot no puede usar herramientas externas.
-for text in [copilot, hardened, grounded]:
-    assert 'COPILOT_GITHUB_TOKEN' in text
+# Copilot no puede usar herramientas externas. grounded-v2 delega la ejecución a HARDENED.
+assert 'COPILOT_GITHUB_TOKEN' in copilot and 'COPILOT_GITHUB_TOKEN' in hardened
+assert 'import automatizar_analisis_legislativo_hardened as strict' in grounded
 assert '--no-ask-user' in hardened and '--no-custom-instructions' in hardened
 assert '--deny-tool=shell,write,read,url,memory' in hardened
 assert 'No uses memoria, conocimiento general ni web' in hardened

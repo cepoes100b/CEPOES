@@ -29,7 +29,7 @@ permissions:
 
 concurrency:
   group: analisis-legislativo-privado
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   analizar:

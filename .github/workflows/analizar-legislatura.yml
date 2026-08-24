@@ -16,7 +16,7 @@ on:
       max_items:
         description: "Máximo de borradores nuevos a generar"
         required: false
-        default: "10"
+        default: "3"
 
 permissions:
   contents: read
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     env:
-      ANALYSIS_MAX_ITEMS: ${{ inputs.max_items || '10' }}
+      ANALYSIS_MAX_ITEMS: ${{ inputs.max_items || '3' }}
       LEGISLATIVE_ANALYSIS_FUNCTION_URL: https://nriexnijkjamrmfivfmd.supabase.co/functions/v1/legislative-analysis-ingest-v2
       COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
     steps:

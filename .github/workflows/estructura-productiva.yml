@@ -8,8 +8,6 @@ on:
       - "verificar_estructura_productiva.py"
       - ".github/workflows/estructura-productiva.yml"
   schedule:
-    # Lunes 09:20 de Buenos Aires. El RUS es estructural y la cartografía cambia
-    # poco; una consulta semanal alcanza para detectar reemplazos de fuente.
     - cron: "20 12 * * 1"
   workflow_dispatch:
 
@@ -31,55 +29,75 @@ jobs:
           python-version: "3.12"
 
       - name: Instalar dependencias
-        run: pip install "requests>=2.31"
+        run: pip install "requests>=2.31" "openpyxl>=3.1"
 
-      - name: Resolver archivo RUS 2022-2024 desde CKAN
+      - name: Preparar RUS 2022-2024 desde XLSX oficial
         id: resolver
         shell: bash
         run: |
           set +e
           python - <<'PY' 2>&1 | tee /tmp/estructura-productiva-resolver.log
-          import pathlib, requests, sys
+          import csv, io, pathlib, requests
+          from openpyxl import load_workbook
 
-          RESOURCE_ID = "3c7e5f10-577a-44ea-b614-82cc05f842aa"
+          RESOURCE_ID = "dca28a61-18a1-492a-81f1-b0e39d0e48a8"
           API = f"https://data.buenosaires.gob.ar/api/3/action/resource_show?id={RESOURCE_ID}"
-          FALLBACK = "https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download"
+          ORIGINAL = "https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download"
+          LOCAL_URL = "http://127.0.0.1:8765/rus-2022-2024.csv"
 
-          r = requests.get(API, timeout=60, headers={"User-Agent": "CEPOES-data/1.0"})
-          r.raise_for_status()
-          payload = r.json()
+          meta_r = requests.get(API, timeout=60, headers={"User-Agent":"CEPOES-data/1.0"})
+          meta_r.raise_for_status()
+          payload = meta_r.json()
           if not payload.get("success"):
               raise RuntimeError(f"CKAN no devolvió success: {payload}")
           meta = payload.get("result") or {}
-          url = meta.get("url") or meta.get("download_url")
+          url = meta.get("url")
           if not url:
-              raise RuntimeError(f"CKAN no devolvió URL para {RESOURCE_ID}")
-
+              raise RuntimeError("CKAN no devolvió URL para el XLSX 2022-2024")
           print("CKAN resource:", meta.get("name"))
-          print("CKAN format:", meta.get("format"))
           print("CKAN URL:", url)
 
-          probe = requests.get(url, timeout=90, allow_redirects=True, stream=True,
-                               headers={"User-Agent": "CEPOES-data/1.0"})
-          print("HTTP:", probe.status_code, "final:", probe.url,
-                "content-type:", probe.headers.get("content-type"),
-                "length:", probe.headers.get("content-length"))
-          probe.raise_for_status()
-          probe.close()
+          r = requests.get(url, timeout=180, headers={"User-Agent":"CEPOES-data/1.0"})
+          r.raise_for_status()
+          print(f"XLSX descargado: {len(r.content)/1024/1024:.1f} MB · {r.headers.get('content-type')}")
+          wb = load_workbook(io.BytesIO(r.content), read_only=True, data_only=True)
+          ws = wb.active
+          rows = ws.iter_rows(values_only=True)
+          header = [str(x or '').strip() for x in next(rows)]
+          keys = {h.lower() for h in header}
+          print("XLSX columnas:", header)
+          if not ({"d21","rama"} & keys):
+              raise RuntimeError(f"El XLSX tampoco contiene ClaNAE: {header}")
 
-          p = pathlib.Path("generar_estructura_productiva.py")
-          src = p.read_text(encoding="utf-8")
-          if FALLBACK not in src:
-              raise RuntimeError("No encontré la URL RUS esperada en el generador")
-          p.write_text(src.replace(FALLBACK, url), encoding="utf-8")
+          out = pathlib.Path('/tmp/rus-2022-2024.csv')
+          with out.open('w', encoding='utf-8', newline='') as f:
+              w = csv.writer(f)
+              w.writerow(header)
+              n = 0
+              for row in rows:
+                  w.writerow(['' if v is None else v for v in row])
+                  n += 1
+          wb.close()
+          print(f"CSV normalizado: {n:,} filas · {out.stat().st_size/1024/1024:.1f} MB")
+
+          p = pathlib.Path('generar_estructura_productiva.py')
+          src = p.read_text(encoding='utf-8')
+          if ORIGINAL not in src:
+              raise RuntimeError('No encontré la URL RUS esperada en el generador')
+          p.write_text(src.replace(ORIGINAL, LOCAL_URL), encoding='utf-8')
+          pathlib.Path('/tmp/rus-source-url.txt').write_text(url, encoding='utf-8')
           PY
           rc=${PIPESTATUS[0]}
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
-          if [ "$rc" -ne 0 ]; then
+          if [ "$rc" -eq 0 ]; then
+            python -m http.server 8765 --directory /tmp >/tmp/rus-http.log 2>&1 &
+            echo $! >/tmp/rus-http.pid
+            sleep 1
+          else
             {
               echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
               echo "Commit: $GITHUB_SHA"
-              echo "Fase: resolver recurso CKAN"
+              echo "Fase: preparar XLSX 2022-2024"
               echo "Exit code: $rc"
               echo
               cat /tmp/estructura-productiva-resolver.log
@@ -96,7 +114,16 @@ jobs:
           python generar_estructura_productiva.py 2>&1 | tee /tmp/estructura-productiva.log
           rc=${PIPESTATUS[0]}
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
-          if [ "$rc" -ne 0 ]; then
+          if [ "$rc" -eq 0 ]; then
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('deploy/site-overlay/assets/data/estructura-productiva/manifest.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          d['fuentes']['rus']['url']='https://data.buenosaires.gob.ar/dataset/juqdkmgo-180/resource/dca28a61-18a1-492a-81f1-b0e39d0e48a8'
+          p.write_text(json.dumps(d,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
+          PY
+          else
             {
               echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
               echo "Commit: $GITHUB_SHA"
@@ -122,7 +149,7 @@ jobs:
               echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
               echo "Commit: $GITHUB_SHA"
               echo "Fase: verificar"
-              echo "Exit code verificación: $rc"
+              echo "Exit code: $rc"
               echo
               cat /tmp/estructura-productiva-verificacion.log
             } > diagnostico_estructura_productiva.txt
@@ -133,42 +160,23 @@ jobs:
         shell: bash
         run: |
           set -e
-          git config user.name  "cepoes-bot"
+          git config user.name "cepoes-bot"
           git config user.email "actions@github.com"
-
           fallo=0
-          if [ "${{ steps.resolver.outputs.rc }}" != "0" ]; then
-            fallo=1
-          elif [ "${{ steps.generar.outputs.rc }}" != "0" ]; then
-            fallo=1
-          elif [ "${{ steps.verificar.outputs.rc }}" != "0" ]; then
-            fallo=1
-          fi
-
+          if [ "${{ steps.resolver.outputs.rc }}" != "0" ] || [ "${{ steps.generar.outputs.rc }}" != "0" ] || [ "${{ steps.verificar.outputs.rc }}" != "0" ]; then fallo=1; fi
           if [ "$fallo" -eq 1 ]; then
             git add diagnostico_estructura_productiva.txt
             mensaje="territorio: diagnosticar estructura productiva $(date -u +%F)"
           else
             git add deploy/site-overlay/assets/data/estructura-productiva/
-            if git ls-files --error-unmatch diagnostico_estructura_productiva.txt >/dev/null 2>&1; then
-              git rm diagnostico_estructura_productiva.txt
-            fi
+            if git ls-files --error-unmatch diagnostico_estructura_productiva.txt >/dev/null 2>&1; then git rm diagnostico_estructura_productiva.txt; fi
             mensaje="territorio: actualizar estructura productiva $(date -u +%F)"
           fi
-
-          if git diff --cached --quiet; then
-            echo "Sin cambios"
-            [ "$fallo" -eq 0 ] && exit 0 || exit 1
-          fi
-
+          if git diff --cached --quiet; then [ "$fallo" -eq 0 ] && exit 0 || exit 1; fi
           git commit -m "$mensaje"
           push_ok=0
           for intento in 1 2 3; do
-            if git push; then
-              echo "Push OK (intento $intento)"
-              push_ok=1
-              break
-            fi
+            if git push; then push_ok=1; break; fi
             git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" || exit 1
             sleep 3
           done

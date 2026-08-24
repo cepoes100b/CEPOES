@@ -9,6 +9,7 @@ on:
     branches-ignore: [main]
     paths:
       - "actualizar_migraciones.py"
+      - "diagnosticar_migraciones_m01.py"
       - "verificar_migraciones.py"
       - ".github/workflows/migraciones.yml"
       - "deploy/site-overlay/assets/data/migraciones.json"
@@ -16,6 +17,7 @@ on:
     branches: [main]
     paths:
       - "actualizar_migraciones.py"
+      - "diagnosticar_migraciones_m01.py"
       - "verificar_migraciones.py"
       - ".github/workflows/migraciones.yml"
       - "deploy/site-overlay/assets/data/migraciones.json"
@@ -37,6 +39,8 @@ jobs:
           python-version: "3.12"
       - name: Instalar dependencias
         run: pip install -r requirements.txt
+      - name: Diagnóstico temporal de estructura M01
+        run: python diagnosticar_migraciones_m01.py
       - name: Consultar fuentes oficiales y reconstruir datos
         run: python actualizar_migraciones.py
       - name: Validar conjunto de migraciones

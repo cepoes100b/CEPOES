@@ -13,6 +13,7 @@ on:
       - "automatizar_analisis_legislativo_v3_2.py"
       - "automatizar_analisis_legislativo_v3_3.py"
       - "automatizar_analisis_legislativo_v3_4.py"
+      - "proveedor_modelo_legislativo.py"
       - "normativa_referencia_caba.json"
       - ".github/workflows/analizar-legislatura.yml"
       - "infra/supabase/007_analisis_legislativo_v3.sql"
@@ -40,8 +41,11 @@ jobs:
     timeout-minutes: 45
     env:
       ANALYSIS_MAX_ITEMS: ${{ inputs.max_items || '3' }}
+      ANALYSIS_MODEL_PROVIDER: auto
+      OPENAI_ANALYSIS_MODEL: gpt-5.6-terra
       LEGISLATIVE_ANALYSIS_FUNCTION_URL: https://nriexnijkjamrmfivfmd.supabase.co/functions/v1/legislative-analysis-ingest-v2
       COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
@@ -50,16 +54,23 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: "22"
-      - name: Verificar credencial de Copilot
+      - name: Verificar proveedor disponible
         shell: bash
         run: |
-          if [ -z "${COPILOT_GITHUB_TOKEN:-}" ]; then
-            echo "Falta el secreto COPILOT_GITHUB_TOKEN (fine-grained PAT con Copilot Requests)." >&2
+          if [ -n "${OPENAI_API_KEY:-}" ]; then
+            echo "Proveedor resuelto: OpenAI API (${OPENAI_ANALYSIS_MODEL})."
+          elif [ -n "${COPILOT_GITHUB_TOKEN:-}" ]; then
+            echo "Proveedor resuelto: GitHub Copilot CLI."
+          else
+            echo "Falta un proveedor: configurar OPENAI_API_KEY o COPILOT_GITHUB_TOKEN." >&2
             exit 21
           fi
       - name: Instalar dependencias
+        shell: bash
         run: |
           pip install -r requirements.txt
-          npm install -g @github/copilot@latest
+          if [ -z "${OPENAI_API_KEY:-}" ]; then
+            npm install -g @github/copilot@latest
+          fi
       - name: Generar y guardar borradores privados
         run: python automatizar_analisis_legislativo_v3_4.py --max-items "$ANALYSIS_MAX_ITEMS"

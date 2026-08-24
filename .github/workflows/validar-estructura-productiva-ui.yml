@@ -7,6 +7,7 @@ on:
       - "deploy/site-overlay/assets/estructura-productiva.*"
       - "deploy/site-overlay/assets/common.js"
       - "deploy/site-overlay/assets/data/estructura-productiva/actual.json"
+      - "validar_sitio_despliegue.py"
       - ".github/workflows/validar-estructura-productiva-ui.yml"
   push:
     branches: [main]
@@ -14,16 +15,18 @@ on:
       - "deploy/site-overlay/territorio/estructura-productiva/**"
       - "deploy/site-overlay/assets/estructura-productiva.*"
       - "deploy/site-overlay/assets/common.js"
+      - "validar_sitio_despliegue.py"
 
 jobs:
   validar:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Sintaxis JavaScript
+      - name: Sintaxis JavaScript y Python
         run: |
           node --check deploy/site-overlay/assets/estructura-productiva.js
           node --check deploy/site-overlay/assets/common.js
+          python -m py_compile generar_estructura_actual_v2.py verificar_estructura_actual.py validar_sitio_despliegue.py
       - name: HTML, datos y criterio temporal
         run: |
           python - <<'PY'
@@ -49,5 +52,8 @@ jobs:
           assert o['periodo']>=2024 and o['empresas']>80000
           assert e['periodo']['anio']>=2026 and e['locales_ocupados']==11605 and e['locales_relevados']==12896
           assert len(e['comunas'])==15 and len(e['rubros'])>=15
-          print('OK interfaz actual-primero y criterios temporales')
+          validator=Path('validar_sitio_despliegue.py').read_text(encoding='utf-8')
+          assert '/territorio/estructura-productiva/' in validator
+          assert 'data-cepoes-estructura-productiva-access' in validator
+          print('OK interfaz actual-primero, criterios temporales e integración de despliegue')
           PY

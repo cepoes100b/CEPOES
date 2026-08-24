@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "automatizar_analisis_legislativo.py"
+      - "automatizar_analisis_legislativo_copilot.py"
       - ".github/workflows/analizar-legislatura.yml"
       - "supabase/functions/legislative-analysis-ingest/**"
   schedule:
@@ -19,7 +20,6 @@ on:
 
 permissions:
   contents: read
-  models: read
   id-token: write
 
 concurrency:
@@ -32,16 +32,26 @@ jobs:
     timeout-minutes: 45
     env:
       ANALYSIS_MAX_ITEMS: ${{ inputs.max_items || '10' }}
-      GITHUB_MODEL: openai/gpt-4.1
       LEGISLATIVE_ANALYSIS_FUNCTION_URL: https://nriexnijkjamrmfivfmd.supabase.co/functions/v1/legislative-analysis-ingest
+      COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+      - name: Verificar credencial de Copilot
+        shell: bash
+        run: |
+          if [ -z "${COPILOT_GITHUB_TOKEN:-}" ]; then
+            echo "Falta el secreto COPILOT_GITHUB_TOKEN (fine-grained PAT con Copilot Requests)." >&2
+            exit 21
+          fi
       - name: Instalar dependencias
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          npm install -g @github/copilot@latest
       - name: Generar y guardar borradores privados
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python automatizar_analisis_legislativo.py --max-items "$ANALYSIS_MAX_ITEMS"
+        run: python automatizar_analisis_legislativo_copilot.py --max-items "$ANALYSIS_MAX_ITEMS"

@@ -7,7 +7,7 @@ on:
       - "automatizar_analisis_legislativo.py"
       - "automatizar_analisis_legislativo_copilot.py"
       - ".github/workflows/analizar-legislatura.yml"
-      - "supabase/functions/legislative-analysis-ingest/**"
+      - "supabase/functions/legislative-analysis-ingest-v2/**"
   schedule:
     # 11:15 y 18:15 de Buenos Aires, después de la actualización del núcleo legislativo.
     - cron: "15 14,21 * * 1-5"
@@ -32,7 +32,7 @@ jobs:
     timeout-minutes: 45
     env:
       ANALYSIS_MAX_ITEMS: ${{ inputs.max_items || '10' }}
-      LEGISLATIVE_ANALYSIS_FUNCTION_URL: https://nriexnijkjamrmfivfmd.supabase.co/functions/v1/legislative-analysis-ingest
+      LEGISLATIVE_ANALYSIS_FUNCTION_URL: https://nriexnijkjamrmfivfmd.supabase.co/functions/v1/legislative-analysis-ingest-v2
       COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v5

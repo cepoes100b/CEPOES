@@ -1,0 +1,53 @@
+name: Validar interfaz estructura productiva
+
+on:
+  pull_request:
+    paths:
+      - "deploy/site-overlay/territorio/estructura-productiva/**"
+      - "deploy/site-overlay/assets/estructura-productiva.*"
+      - "deploy/site-overlay/assets/common.js"
+      - "validar_sitio_despliegue.py"
+      - ".github/workflows/validar-estructura-productiva-ui.yml"
+  push:
+    branches: [main]
+    paths:
+      - "deploy/site-overlay/territorio/estructura-productiva/**"
+      - "deploy/site-overlay/assets/estructura-productiva.*"
+      - "validar_sitio_despliegue.py"
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Sintaxis JavaScript
+        run: |
+          node --check deploy/site-overlay/assets/estructura-productiva.js
+          node --check deploy/site-overlay/assets/common.js
+      - name: Sintaxis Python
+        run: python -m py_compile validar_sitio_despliegue.py
+      - name: Estructura HTML y dependencias
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          p=Path('deploy/site-overlay/territorio/estructura-productiva/index.html')
+          s=p.read_text(encoding='utf-8')
+          class P(HTMLParser):
+              def __init__(self):
+                  super().__init__();self.ids=[]
+              def handle_starttag(self,tag,attrs):
+                  a=dict(attrs)
+                  if a.get('id'):self.ids.append(a['id'])
+          x=P();x.feed(s)
+          assert len(x.ids)==len(set(x.ids)), 'IDs HTML duplicados'
+          required=['productive-map','prod-comuna','prod-barrio','prod-sector','prod-rama','prod-year','prod-rubro','prod-selection','prod-status']
+          missing=[i for i in required if i not in x.ids]
+          assert not missing, f'IDs faltantes: {missing}'
+          for token in ['/assets/estructura-productiva.js','/assets/estructura-productiva.css','RUS 2017','2024–2026']:
+              assert token in s, token
+          print(f'OK HTML: {len(x.ids)} IDs únicos')
+          PY

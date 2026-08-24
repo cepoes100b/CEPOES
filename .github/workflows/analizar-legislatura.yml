@@ -11,6 +11,7 @@ on:
       - "automatizar_analisis_legislativo_v3.py"
       - "automatizar_analisis_legislativo_v3_1.py"
       - "automatizar_analisis_legislativo_v3_2.py"
+      - "automatizar_analisis_legislativo_v3_3.py"
       - "normativa_referencia_caba.json"
       - ".github/workflows/analizar-legislatura.yml"
       - "infra/supabase/007_analisis_legislativo_v3.sql"
@@ -60,4 +61,4 @@ jobs:
           pip install -r requirements.txt
           npm install -g @github/copilot@latest
       - name: Generar y guardar borradores privados
-        run: python automatizar_analisis_legislativo_v3_2.py --max-items "$ANALYSIS_MAX_ITEMS"
+        run: python automatizar_analisis_legislativo_v3_3.py --max-items "$ANALYSIS_MAX_ITEMS"

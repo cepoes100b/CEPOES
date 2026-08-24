@@ -11,6 +11,7 @@ const JWKS = createRemoteJWKSet(new URL(`${ISSUER}/.well-known/jwks`));
 const KINDS = new Set(["proyecto", "dictamen", "despacho", "sesion", "otro"]);
 const PRIORITIES = new Set(["critica", "alta", "media", "baja"]);
 const RECOMMENDATIONS = new Set(["acompanar", "acompanar_con_modificaciones", "abstenerse", "rechazar", "sin_definir"]);
+const MODES = new Set(["full", "preliminary_insufficient_evidence"]);
 
 const respond = (status:number, body:unknown) => new Response(JSON.stringify(body), {
   status, headers:{"content-type":"application/json; charset=utf-8","cache-control":"no-store"}
@@ -78,11 +79,23 @@ Deno.serve(async (req:Request) => {
   if (action !== "ingest") return respond(400,{error:"unknown_action"});
 
   const a = body?.analysis || {};
+  const evidence = typeof body?.source_evidence === "object" && body.source_evidence ? body.source_evidence : {};
   const priority = text(a.internal_priority,20);
-  const recommendation = text(a.recommendation,50);
+  let recommendation = text(a.recommendation,50);
+  let mode = text(a.analysis_mode || evidence.analysis_mode || "full",60);
+  if (!MODES.has(mode)) mode = "full";
   if (!PRIORITIES.has(priority) || !RECOMMENDATIONS.has(recommendation)) return respond(400,{error:"invalid_classification"});
   const rawConfidence = Number(a.confidence);
-  const confidence = Number.isFinite(rawConfidence) ? Math.max(0,Math.min(1,rawConfidence)) : null;
+  let confidence = Number.isFinite(rawConfidence) ? Math.max(0,Math.min(1,rawConfidence)) : null;
+  const qualityFlags = list(a.quality_flags,20,120);
+
+  if (mode === "preliminary_insufficient_evidence") {
+    recommendation = "sin_definir";
+    confidence = Math.min(confidence ?? 0, 0.20);
+    if (!qualityFlags.includes("no_primary_document")) qualityFlags.push("no_primary_document");
+  } else if ((confidence ?? 0) < 0.75) {
+    recommendation = "sin_definir";
+  }
 
   const {data:duplicate,error:dupError} = await db.from("expediente_analyses")
     .select("id,version").eq("expediente_numero",expediente).eq("document_kind",kind)
@@ -96,21 +109,22 @@ Deno.serve(async (req:Request) => {
   if (versionError) return respond(500,{error:"version_lookup_failed"});
   const version = Number(latest?.[0]?.version || 0) + 1;
 
-  const evidence = typeof body?.source_evidence === "object" && body.source_evidence ? body.source_evidence : {};
   evidence.github = {
     run_id:jwt.run_id || null, run_number:jwt.run_number || null, run_attempt:jwt.run_attempt || null,
     workflow_sha:jwt.workflow_sha || null, repository:jwt.repository || null, ref:jwt.ref || null
   };
 
+  const preliminary = mode === "preliminary_insufficient_evidence";
   const row = {
     expediente_numero:expediente, document_kind:kind,
     title:text(body?.title || a.title || `Análisis ${expediente}`,500), source_url:text(body?.source_url,2000) || null,
     executive_summary:text(a.executive_summary), legal_impact:text(a.legal_impact), fiscal_impact:text(a.fiscal_impact),
     territorial_impact:text(a.territorial_impact), affected_actors:text(a.affected_actors), risks:text(a.risks),
-    arguments_for:text(a.arguments_for), arguments_against:text(a.arguments_against), internal_priority:priority,
-    recommendation, rationale:text(a.rationale), proposed_amendments:text(a.proposed_amendments),
-    committee_questions:list(a.committee_questions,20), intervention_arguments:text(a.intervention_arguments),
+    arguments_for:preliminary ? "" : text(a.arguments_for), arguments_against:preliminary ? "" : text(a.arguments_against), internal_priority:priority,
+    recommendation, rationale:text(a.rationale), proposed_amendments:preliminary ? "" : text(a.proposed_amendments),
+    committee_questions:list(a.committee_questions,20), intervention_arguments:preliminary ? "" : text(a.intervention_arguments),
     evidence_gaps:list(a.evidence_gaps,20), tags:list(a.tags,20,120),
+    analysis_mode:mode, quality_flags:qualityFlags,
     review_status:"borrador", review_required:true, analysis_origin:"automatic", is_current:true,
     automation_source_hash:sourceHash, automation_model:text(body?.model,200), automation_confidence:confidence,
     automation_generated_at:new Date().toISOString(), source_evidence:evidence, version,
@@ -124,5 +138,5 @@ Deno.serve(async (req:Request) => {
     .eq("expediente_numero",expediente).eq("document_kind",kind).eq("analysis_origin","automatic")
     .eq("is_current",true).neq("id",inserted.id);
   if (supersedeError) console.error("supersede_failed",supersedeError);
-  return respond(201,{inserted:true,id:inserted.id,version:inserted.version});
+  return respond(201,{inserted:true,id:inserted.id,version:inserted.version,analysis_mode:mode});
 });

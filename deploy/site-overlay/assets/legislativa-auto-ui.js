@@ -15,6 +15,13 @@
     const d = new Date(value);
     return Number.isNaN(d.getTime()) ? esc(value) : new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'short',year:'numeric'}).format(d);
   };
+  const isPreliminary = a => a?.analysis_mode === 'preliminary_insufficient_evidence';
+  const evidenceCounts = a => {
+    const ev = a?.source_evidence || {};
+    const primary = Number(ev.primary_document_count || 0);
+    const supplementary = arr(ev.supplementary_documents).length;
+    return { primary:Number.isFinite(primary) ? primary : 0, supplementary };
+  };
 
   let client = null;
   let current = [];
@@ -29,8 +36,11 @@
       .auto-chip{display:inline-flex;align-items:center;border-radius:999px;padding:5px 8px;border:1px solid #c9d8d3;background:#f2f8f6;color:#225f53;font:700 .6rem Poppins,sans-serif}
       .auto-chip.review{border-color:#e0c6a5;background:#fff8ed;color:#8a5521}
       .auto-chip.valid{border-color:#b9d7ce;background:#edf8f4;color:#28775d}
+      .auto-chip.insufficient{border-color:#dfbcbc;background:#fff3f2;color:#8b3434}
+      .auto-chip.norm{border-color:#c8cce2;background:#f4f5fb;color:#4d547e}
       .auto-confidence{font-size:.64rem;color:var(--muted)}
       .analysis-auto-note{padding:10px 12px;border:1px solid #d7e4df;background:#f5faf8;border-radius:10px;color:#50635d;font-size:.7rem;line-height:1.45}
+      .analysis-auto-note.insufficient{border-color:#e4c9c7;background:#fff7f6;color:#73433f}
     `;
     document.head.appendChild(style);
   }
@@ -66,21 +76,30 @@
     gaps.value = arr(a?.evidence_gaps).join('\n');
     if (a?.analysis_origin === 'automatic') {
       const confidence = Number.isFinite(Number(a.automation_confidence)) ? `${Math.round(Number(a.automation_confidence)*100)}%` : 'sin estimar';
+      const counts = evidenceCounts(a);
       note.hidden = false;
-      note.innerHTML = `<strong>Origen automático.</strong> Este análisis fue generado como borrador técnico y requiere revisión humana. Confianza declarada: ${esc(confidence)}${a.automation_model ? ` · Modelo: ${esc(a.automation_model)}` : ''}.`;
+      note.classList.toggle('insufficient', isPreliminary(a));
+      if (isPreliminary(a)) {
+        note.innerHTML = `<strong>Ficha preliminar por evidencia insuficiente.</strong> No se encontró un documento primario del expediente; por seguridad no se genera posición, argumentos de voto ni enmiendas. Fuentes: ${counts.primary} primaria(s) · ${counts.supplementary} normativa(s) complementaria(s). Confianza: ${esc(confidence)}.`;
+      } else {
+        note.innerHTML = `<strong>Origen automático.</strong> Este análisis fue generado como borrador técnico y requiere revisión humana. Fuentes: ${counts.primary} primaria(s) · ${counts.supplementary} normativa(s) complementaria(s). Confianza declarada: ${esc(confidence)}${a.automation_model ? ` · Modelo: ${esc(a.automation_model)}` : ''}.`;
+      }
     } else {
       note.hidden = true;
+      note.classList.remove('insufficient');
       note.textContent = '';
     }
   }
 
   function originLabel(a){
     if (a.analysis_origin !== 'automatic') return `${esc(a.document_kind || 'proyecto')} · ${esc(a.expediente_numero)}`;
+    if (isPreliminary(a)) return `FICHA PRELIMINAR · ${esc(a.document_kind || 'proyecto')} · ${esc(a.expediente_numero)}`;
     return `${a.review_required ? 'BORRADOR AUTOMÁTICO' : 'ORIGEN AUTOMÁTICO'} · ${esc(a.document_kind || 'proyecto')} · ${esc(a.expediente_numero)}`;
   }
 
   function reviewChip(a){
     if (a.review_status === 'validado') return '<span class="auto-chip valid">VALIDADO</span>';
+    if (isPreliminary(a)) return '<span class="auto-chip insufficient">EVIDENCIA INSUFICIENTE</span><span class="auto-chip review">REVISIÓN REQUERIDA</span>';
     if (a.analysis_origin === 'automatic' && a.review_required) return '<span class="auto-chip review">REVISIÓN REQUERIDA</span>';
     return `<span class="auto-chip">${esc(String(a.review_status || 'borrador').toUpperCase())}</span>`;
   }
@@ -89,6 +108,19 @@
     if (a.analysis_origin !== 'automatic' || a.automation_confidence === null || a.automation_confidence === undefined) return '';
     const n = Number(a.automation_confidence);
     return Number.isFinite(n) ? `<span class="auto-confidence">Confianza ${Math.round(n*100)}%</span>` : '';
+  }
+
+  function evidenceChip(a){
+    if (a.analysis_origin !== 'automatic') return '';
+    const counts = evidenceCounts(a);
+    if (!counts.supplementary) return `<span class="auto-confidence">${counts.primary} fuente(s) primaria(s)</span>`;
+    return `<span class="auto-chip norm">${counts.primary} primaria(s) · ${counts.supplementary} norma(s) complementaria(s)</span>`;
+  }
+
+  function positionBlock(a){
+    if (isPreliminary(a)) return '<div class="position"><strong>Posición:</strong> No corresponde hasta recuperar el texto primario.</div>';
+    const label = a.analysis_origin === 'automatic' && a.review_required ? 'Posición técnica preliminar:' : 'Posición sugerida:';
+    return `<div class="position"><strong>${label}</strong> ${esc(positionText(a.recommendation))}</div>`;
   }
 
   function renderAnalyses(){
@@ -101,8 +133,8 @@
           <span class="internal-priority ${esc(a.internal_priority)}">${esc(a.internal_priority)}</span>
         </header>
         <p>${esc(a.executive_summary || 'Sin resumen ejecutivo cargado.')}</p>
-        <div class="position"><strong>${a.analysis_origin === 'automatic' && a.review_required ? 'Posición técnica preliminar:' : 'Posición sugerida:'}</strong> ${esc(positionText(a.recommendation))}</div>
-        <div class="auto-meta">${reviewChip(a)}${confidence(a)}<span class="auto-confidence">Actualizado ${displayDate(a.updated_at)}</span></div>
+        ${positionBlock(a)}
+        <div class="auto-meta">${reviewChip(a)}${confidence(a)}${evidenceChip(a)}<span class="auto-confidence">Actualizado ${displayDate(a.updated_at)}</span></div>
         <div class="card-actions"><button data-open-analysis="${esc(a.id)}">Ver ficha</button><button data-edit-analysis="${esc(a.id)}">Editar / revisar</button></div>
       </article>`).join('') || '<div class="empty">Todavía no hay análisis internos.</div>';
   }
@@ -114,7 +146,7 @@
       <article class="list-item">
         <div class="list-item-head"><strong>${esc(a.expediente_numero)}</strong><span class="internal-priority ${esc(a.internal_priority)}">${esc(a.internal_priority)}</span></div>
         <p>${esc(a.title)}</p>
-        <div class="auto-meta">${a.analysis_origin === 'automatic' ? reviewChip(a) : ''}<span class="auto-confidence">${esc(positionText(a.recommendation))}</span></div>
+        <div class="auto-meta">${a.analysis_origin === 'automatic' ? reviewChip(a) : ''}<span class="auto-confidence">${isPreliminary(a) ? 'Sin posición: falta texto primario' : esc(positionText(a.recommendation))}</span></div>
       </article>`).join('') || '<div class="empty">Todavía no hay análisis internos cargados.</div>';
   }
 
@@ -124,7 +156,10 @@
       const strong = cards[3].querySelector('strong');
       const small = cards[3].querySelector('small');
       if (strong) strong.textContent = String(current.length);
-      if (small) small.textContent = 'análisis vigentes en la capa privada';
+      if (small) {
+        const prelim = current.filter(isPreliminary).length;
+        small.textContent = prelim ? `${prelim} ficha(s) esperando evidencia primaria` : 'análisis vigentes en la capa privada';
+      }
     }
   }
 

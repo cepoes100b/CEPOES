@@ -23,6 +23,8 @@ jobs:
           python-version: "3.12"
       - name: Instalar dependencias
         run: pip install -r requirements.txt
+      - name: Actualizar estructura institucional oficial
+        run: python actualizar_estructura_legislativa.py
       - name: Actualizar agenda y expedientes oficiales
         run: python actualizar_legislatura.py
       - name: Actualizar sesiones, Labor y votaciones oficiales
@@ -37,6 +39,8 @@ jobs:
         run: python completar_ciclo_legislativo.py
       - name: Integrar actividad de recinto en expedientes
         run: python integrar_recinto.py
+      - name: Verificar estructura institucional
+        run: python verificar_estructura_legislativa.py
       - name: Verificar núcleo legislativo
         run: python verificar_legislatura.py
       - name: Verificar universo temprano
@@ -51,7 +55,7 @@ jobs:
         run: |
           git config user.name "cepoes-bot"
           git config user.email "actions@github.com"
-          git add legislatura_publica.json estado_legislatura.json sesiones_publicas.json
+          git add legislatura_publica.json estado_legislatura.json sesiones_publicas.json estructura_legislativa.json
           if git diff --cached --quiet; then
             echo "Sin cambios"
             exit 0

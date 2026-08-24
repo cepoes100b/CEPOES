@@ -1,0 +1,1376 @@
+=== OEDE_empresas ===
+URL: https://www.argentina.gob.ar/sites/default/files/provinciales_serie_empresas1_2.xlsx
+Descarga: 0.57 MB · application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Hojas: Carátula, Indice, Metodología, Partidos de GBA, Capital Federal, Resto de Buenos Aires, Catamarca, Cordoba, Corrientes, Chaco, Chubut, Entre Rios, Formosa, Jujuy, La Pampa, La Rioja, Mendoza, Misiones, Neuquen, Rio Negro, San Juan, Salta, San Luis, Santa Cruz, Santa Fe, Santiago del Estero, Tucuman, Tierra del Fuego, Hoja1
+
+-- Hoja: Carátula · 47 filas × 69 columnas --
+
+-- Hoja: Indice · 22 filas × 84 columnas --
+R1:  | Índice Boletin Anual de Empresas por Provincias (a 2 dígitos)
+R3:  | Partidos de GBA | Formosa | Salta
+R4: 
+R5:  | Capital Federal | Jujuy | San Juan
+R7:  | Resto de Bueno Aires | La Pampa | San Luis
+R9:  | Catamarca | La Rioja | Santa Cruz
+R11:  | Córdoba | Mendoza | Santa Fe
+R13:  | Corrientes | Misiones | Santiago del Estero
+R15:  | Chaco | Neuquén | Tucumán
+R17:  | Chubut | Río Negro | Tierra del Fuego
+R19:  | Entre Ríos
+Coincidencias relevantes:
+HIT R1:  | Índice Boletin Anual de Empresas por Provincias (a 2 dígitos)
+HIT R5:  | Capital Federal | Jujuy | San Juan
+
+-- Hoja: Metodología · 130 filas × 7 columnas --
+R1: Nota metodológica
+R4: ESTADÍSTICAS SOBRE EMPRESAS Y EMPLEO ASALARIADO REGISTRADO PORPROVINCIA
+R6: El Boletín Provincial recopila una serie de tablas estadísticas elaboradas por el Observatorio de Empleo y Dinámica Empresarial[1] del Ministerio de Trabajo, Empleo y Seguridad Social.
+R8: Tiene como fuente los registros administrativos del Sistema Integrado Previsional Argentino (SIPA) que contienen las declaraciones mensuales que realizan las empresas sobre el personal que tienen en relación de dependencia para el pago de los aportes y contribuciones patronales. La unidad de análisis es la empresa, definida como una unidad legal independiente[2] y está identificada por su Código Único de Identificación Tributaria (CUIT). Los indicadores se refieren al empleo asalariado registrado y a las empresas privadas de industria, comercio y servicios radicadas en todo el país.
+R10: Las empresas se encuentran clasificadas según las provincias donde declaran sus ocupados. Es decir, las empresas que informan sobre sus trabajadores en diferentes provincias se contabilizan en cada una de las provincias donde declararon ocupados, por ello, la suma de las empresas desagregadas por provincia supera al total de empresas que operan efectivamente en el país. Asimismo, el empleo se encuentra clasificado por provincia de acuerdo a las zonas donde las empresas declaran que trabajan sus empleados.
+R12: CONSTRUCCIÓN DE LA BASE LONGITUDINAL
+R14: El grado de desagregación alcanzado y la frecuencia con que se actualiza la información permiten el tratamiento de series longitudinales que registran la evolución del empleo al nivel de cada empresa. Esto posibilita calcular por un lado el empleo creado por las empresas que expanden sus dotaciones de personal y el creado por empresas nuevas; y por otro lado, el empleo destruido por las empresas que contraen sus dotaciones y el destruido por las empresas que cierran[3].
+R16: La construcción de esta base longitudinal involucra varios procesos cuyo objetivo final es el de consolidar, a partir del registro administrativo, un sistema de información estadístico. Una de las principales dificultades estadísticas que presenta el registro, y que se deben resolver es la discontinuidad de la información.
+R18: Es frecuente encontrar en un registro administrativo vacíos de información producidos por distintas causas (declaraciones tardías, errores de carga, etc.) y que no reflejan cambios reales en la información. Podría citarse como ejemplo el caso de empresas que aparecen en el registro con meses de falta de declaración seguidos y antecedidos por meses de declaración positiva de empleo. En estos casos, los valores nulos se completan utilizando la información de los períodos anterior y posterior. Sin embargo, cuando el período sin declaraciones de una firma es prolongado, se respetan los datos consignados porque se entiende que reflejan discontinuidades reales en el empleo[4]
+R20: TOTAL DE FIRMAS Y FIRMAS LOCALES
+R22: Se considera que son “firmas locales” a aquellas firmas que declaran una mayor proporción de su empleo en la provincia de referencia. Es decir, una misma firma diversificada en el territorio nacional será “firma local” en la provincia donde declara más empleo y “firma no local” en el resto de las provincias donde declare la otra parte del empleo.
+R24: Esta distinción es particularmente importante para analizar demografía de empresas. La entrada y salida de las firmas no locales es muy volátil, mientras que la movilidad de las firmas locales suele ser más estable reflejando de mejor manera los procesos de expansión del tejido productivo en las regiones.
+R26: COBERTURA
+R28: Cobertura geográfica: todo el país.
+R29: Cobertura de sector económico: la cobertura de esta base incluye todas las ramas de la actividad económica privada, excepto los trabajadores en casas particulares.
+R30: Quedan excluidos del registro:
+R31: O | Trabajadores del sector público.
+R32: O | Trabajadores en casas particulares.
+R33: O | Asalariados no registrados.
+R34: O | Trabajadores por cuenta propia, patrones y trabajo familiar.
+R38: DEFINICIONES
+R40: A continuación se presentan las definiciones que se utilizaron para el análisis de la demografía (movilidad) de las empresas:
+R42: Empresas que abren: Son empresas que inician actividades durante el período de referencia. Se identifica el inicio de actividades de una firma, a partir de la fecha de las primeras declaraciones de personal ocupado de las nuevas firmas. Para el análisis de la antigüedad de las firmas se toma en cuenta también la fecha de ingreso al padrón de empleadores de AFIP.
+R44: Empresas que cierran: Se definen a partir de un criterio empírico que considera como cerrada (dada de baja) a toda empresa que no declara personal ocupado a lo largo de un año (4 trimestres) [5]. Para poder medir el impacto de los cierres en los flujos de empleo, se considera que el momento en que se produce el cierre de la empresa es el primer período de empleo nulo[6]
+R46: Cambio neto de empresas: Es la diferencia entre las aperturas y los cierres de empresas.
+R48: Tasas de entrada y tasa de salida de empresas: Es la cantidad de empresas creadas/destruidas en el período dividido por el total de empresas existentes a lo largo del período. Es decir, en el denominador se incluyen a las empresas activas (aperturas, sobrevivientes de periodos anteriores) así como a los cierres del periodo.
+R50: Tasa de cambio neto: Es la diferencia entre la tasa de entrada y de salida de empresas.
+R54: RAMA DE ACTIVIDAD ECONOMICA
+R56: Es la rama de actividad principal, codificada con la revisión 3 del código CIIU. La información original de rama surge del padrón de contribuyentes de AFIP y se mejora incorporando información de otras fuentes: principalmente la Encuesta de Indicadores Laborales (EIL), guías de empresas, consultas a Cámaras y Organismos Reguladores, y otras bases de registros de empresas.
+R58: ESTRATIFICACION DE LAS EMPRESAS POR TAMAÑO
+R60: La estratificación por tamaño para una empresa en determinado trimestre se realiza a partir del empleo promedio declarado por la firma durante los últimos cuatro trimestres. Por ejemplo: para calcular el tamaño de una empresa en el 4to trimestre del año 2015, se toma en cuenta el promedio del empleo declarardo por la misma en cada trimestre del año 2015.
+R62: Los rangos de empleo utilizados en cada estrato de tamaño varían según rama de actividad, atendiendo a diferencias sectoriales en la productividad media del trabajo y a las pautas establecidas por el país para la aplicación de políticas orientadas a la pequeña y mediana empresa. Estos tramos se determinaron a partir del nivel de ventas de las empresas definido por la SEPyME en la Resolución 24/2001 que establece el nivel máximo de ventas para cada categoría de empresa (micro, pequeña, mediana y gran empresa) según el sector en el que desarrollan su actividad.
+R64: El tamaño es una característica de la empresa en su conjunto y no de cada local de cada empresa. Es decir que cada empresa, y por ende la cantidad de ocupados que emplea, es clasificada en los estratos de tamaño, según el empleo total de la firma [7].
+R67: CORTES POR TAMAÑO ($)
+R68:  | Agropecuario | Industria y Minería | Comercio | Servicios
+Coincidencias relevantes:
+HIT R4: ESTADÍSTICAS SOBRE EMPRESAS Y EMPLEO ASALARIADO REGISTRADO PORPROVINCIA
+HIT R8: Tiene como fuente los registros administrativos del Sistema Integrado Previsional Argentino (SIPA) que contienen las declaraciones mensuales que realizan las empresas sobre el personal que tienen en relación de dependencia para el pago de los aportes y contribuciones patronales. La unidad de análisis es la empresa, definida como una unidad legal independiente[2] y está identificada por su Código Único de Identificación Tributaria (CUIT). Los indicadores se refieren al empleo asalariado registrado y a las empresas privadas de industria, comercio y servicios radicadas en todo el país.
+HIT R10: Las empresas se encuentran clasificadas según las provincias donde declaran sus ocupados. Es decir, las empresas que informan sobre sus trabajadores en diferentes provincias se contabilizan en cada una de las provincias donde declararon ocupados, por ello, la suma de las empresas desagregadas por provincia supera al total de empresas que operan efectivamente en el país. Asimismo, el empleo se encuentra clasificado por provincia de acuerdo a las zonas donde las empresas declaran que trabajan sus empleados.
+HIT R14: El grado de desagregación alcanzado y la frecuencia con que se actualiza la información permiten el tratamiento de series longitudinales que registran la evolución del empleo al nivel de cada empresa. Esto posibilita calcular por un lado el empleo creado por las empresas que expanden sus dotaciones de personal y el creado por empresas nuevas; y por otro lado, el empleo destruido por las empresas que contraen sus dotaciones y el destruido por las empresas que cierran[3].
+HIT R18: Es frecuente encontrar en un registro administrativo vacíos de información producidos por distintas causas (declaraciones tardías, errores de carga, etc.) y que no reflejan cambios reales en la información. Podría citarse como ejemplo el caso de empresas que aparecen en el registro con meses de falta de declaración seguidos y antecedidos por meses de declaración positiva de empleo. En estos casos, los valores nulos se completan utilizando la información de los períodos anterior y posterior. Sin embargo, cuando el período sin declaraciones de una firma es prolongado, se respetan los datos consignados porque se entiende que reflejan discontinuidades reales en el empleo[4]
+HIT R24: Esta distinción es particularmente importante para analizar demografía de empresas. La entrada y salida de las firmas no locales es muy volátil, mientras que la movilidad de las firmas locales suele ser más estable reflejando de mejor manera los procesos de expansión del tejido productivo en las regiones.
+HIT R29: Cobertura de sector económico: la cobertura de esta base incluye todas las ramas de la actividad económica privada, excepto los trabajadores en casas particulares.
+HIT R40: A continuación se presentan las definiciones que se utilizaron para el análisis de la demografía (movilidad) de las empresas:
+HIT R42: Empresas que abren: Son empresas que inician actividades durante el período de referencia. Se identifica el inicio de actividades de una firma, a partir de la fecha de las primeras declaraciones de personal ocupado de las nuevas firmas. Para el análisis de la antigüedad de las firmas se toma en cuenta también la fecha de ingreso al padrón de empleadores de AFIP.
+HIT R44: Empresas que cierran: Se definen a partir de un criterio empírico que considera como cerrada (dada de baja) a toda empresa que no declara personal ocupado a lo largo de un año (4 trimestres) [5]. Para poder medir el impacto de los cierres en los flujos de empleo, se considera que el momento en que se produce el cierre de la empresa es el primer período de empleo nulo[6]
+HIT R46: Cambio neto de empresas: Es la diferencia entre las aperturas y los cierres de empresas.
+HIT R48: Tasas de entrada y tasa de salida de empresas: Es la cantidad de empresas creadas/destruidas en el período dividido por el total de empresas existentes a lo largo del período. Es decir, en el denominador se incluyen a las empresas activas (aperturas, sobrevivientes de periodos anteriores) así como a los cierres del periodo.
+HIT R50: Tasa de cambio neto: Es la diferencia entre la tasa de entrada y de salida de empresas.
+HIT R54: RAMA DE ACTIVIDAD ECONOMICA
+HIT R56: Es la rama de actividad principal, codificada con la revisión 3 del código CIIU. La información original de rama surge del padrón de contribuyentes de AFIP y se mejora incorporando información de otras fuentes: principalmente la Encuesta de Indicadores Laborales (EIL), guías de empresas, consultas a Cámaras y Organismos Reguladores, y otras bases de registros de empresas.
+HIT R58: ESTRATIFICACION DE LAS EMPRESAS POR TAMAÑO
+HIT R62: Los rangos de empleo utilizados en cada estrato de tamaño varían según rama de actividad, atendiendo a diferencias sectoriales en la productividad media del trabajo y a las pautas establecidas por el país para la aplicación de políticas orientadas a la pequeña y mediana empresa. Estos tramos se determinaron a partir del nivel de ventas de las empresas definido por la SEPyME en la Resolución 24/2001 que establece el nivel máximo de ventas para cada categoría de empresa (micro, pequeña, mediana y gran empresa) según el sector en el que desarrollan su actividad.
+HIT R74: A partir de las estimaciones realizadas se definieron tramos ocupacionales, que ponen en evidencia las fuertes diferencias entre los distintos sectores (industria, comercio y servicios) y entre las distintas ramas de actividad al interior de cada sector. Se presentan a continuación los resultados que surgieron de las estimaciones realizadas para definir los tramos de empleo que permiten clasificar a las firmas según su tamaño económico.
+HIT R79: Rama de actividad |  | Micro | Pequeña | Mediana
+HIT R107: Rama de actividad |  | Micro | Pequeña | Mediana
+HIT R118: [3]En el enfoque tradicional de estática comparada, se calcula solamente el crecimiento promedio como la diferencia del empleo total registrado en dos momentos; no se identifican comportamientos diferentes de la media (empresas que expanden y contraen sus dotaciones); no siempre se identifican los cambios en la composición de las empresas (entrada y salida de firmas). Estos problemas se resuelven en el análisis de series longitudinales
+HIT R124: [6]Este criterio coincide con los estudios de dinámica del empleo y difiere del que habitualmente se utiliza en demografía de empresas, particularmente en los estudios de OECD, que consideran el momento del cierre con el último período de empleo positivo.
+HIT R126: [7] Las estadísticas tradicionales de Argentina no siempre pueden agrupar el empleo de todos los “locales” de las empresas, por ello solamente suelen clasificar por estratos a los locales. Esta forma de clasificación de las estadísticas tradicionales lleva a subestimar la importancia del empleo en las grandes empresas (generalmente multiplanta), lo que queda contemplado clasificando a las empresas a partir de su empleo total y no a cada local por separado.
+
+-- Hoja: Partidos de GBA · 95 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: PARTIDOS DE GBA
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 1271 | 1270 | 1264 | 1328 | 1006 | 1009 | 993 | 1108 | 1261 | 1344 | 1436 | 1538 | 1511 | 1487 | 1468 | 1478 | 1434 | 1381
+R7: 1 | Agricultura y ganaderia | 1238 | 1232 | 1230 | 1290 | 971 | 976 | 963 | 1076 | 1226 | 1305 | 1399 | 1496 | 1470 | 1440 | 1421 | 1434 | 1391 | 1335
+R8: 2 | Silvicultura, extracción de madera | 33 | 38 | 34 | 38 | 35 | 33 | 30 | 32 | 35 | 39 | 37 | 42 | 41 | 47 | 47 | 44 | 43 | 46
+R9: B | PESCA Y SERVICIOS CONEXOS | 4 | 6 | 8 | 11 | s.d. | s.d. | 5 | s.d. | 7 | 9 | 11 | 11 | 9 | 9 | 7 | 8 | 9 | 14
+R10: 5 | Pesca y actividades relacionadas con la pesca | 4 | 6 | 8 | 11 | s.d. | s.d. | 5 | s.d. | 7 | 9 | 11 | 11 | 9 | 9 | 7 | 8 | 9 | 14
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 52 | 53 | 56 | 58 | 56 | 53 | 46 | 51 | 54 | 58 | 64 | 74 | 70 | 71 | 72 | 66 | 63 | 74
+R12: 11 | Extraccion de petroleo crudo y gas natural | 19 | 17 | 18 | 18 | 19 | 16 | 14 | 18 | s.d. | s.d. | s.d. | 21 | 23 | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 29 | 32 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 37 | 39 | 42 | 49 | s.d. | 44 | 48 | 44 | 40 | 44
+R15: D | INDUSTRIA MANUFACTURERA | 15570 | 15445 | 15019 | 15544 | 14185 | 13219 | 12399 | 13334 | 14894 | 15955 | 16910 | 17669 | 17992 | 17919 | 18014 | 18186 | 18233 | 18198
+R16: 15 | Alimentos | 2270 | 2220 | 2077 | 2104 | 1873 | 1787 | 1692 | 1797 | 2065 | 2127 | 2230 | 2301 | 2372 | 2403 | 2406 | 2453 | 2489 | 2514
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 6 | 6 | 7 | 6 | 5 | 5 | 4 | 5 | 5 | 5 | 5 | 4
+R18: 17 | Productos textiles | 954 | 948 | 929 | 953 | 818 | 795 | 724 | 791 | 876 | 947 | 1008 | 1080 | 1078 | 1060 | 1079 | 1088 | 1102 | 1110
+R19: 18 | Confecciones | 642 | 600 | 615 | 608 | 536 | 457 | 395 | 443 | 547 | 609 | 710 | 759 | 782 | 775 | 785 | 806 | 780 | 778
+R20: 19 | Calzado y cuero | 703 | 671 | 616 | 626 | 567 | 504 | 472 | 552 | 654 | 717 | 779 | 840 | 852 | 858 | 884 | 919 | 942 | 955
+R21: 20 | Madera | 641 | 625 | 596 | 613 | 568 | 506 | 448 | 474 | 545 | 588 | 630 | 654 | 666 | 642 | 628 | 625 | 612 | 596
+R22: 21 | Papel | 340 | 346 | 338 | 359 | 328 | 306 | 305 | 338 | 363 | 383 | 406 | 416 | 431 | 434 | 437 | 439 | 440 | 439
+R23: 22 | Edición e impresión | 633 | 645 | 688 | 724 | 670 | 637 | 597 | 622 | 694 | 767 | 822 | 862 | 883 | 906 | 905 | 886 | 860 | 862
+R24: 23 | Productos de petróleo | 48 | 43 | 41 | 43 | 36 | 34 | 28 | 31 | 33 | 34 | 31 | 31 | 30 | 30 | 31 | 32 | 32 | 33
+R25: 24 | Productos químicos | 912 | 919 | 912 | 987 | 913 | 898 | 886 | 942 | 1001 | 1044 | 1060 | 1049 | 1046 | 1045 | 1046 | 1042 | 1050 | 1049
+R26: 25 | Productos de caucho y plástico | 1312 | 1307 | 1303 | 1401 | 1337 | 1254 | 1195 | 1270 | 1348 | 1433 | 1494 | 1525 | 1552 | 1558 | 1543 | 1568 | 1575 | 1581
+R27: 26 | Otros minerales no metálicos | 491 | 460 | 437 | 456 | 422 | 378 | 357 | 367 | 399 | 416 | 431 | 466 | 460 | 454 | 454 | 460 | 461 | 459
+R28: 27 | Metales comunes | 475 | 477 | 438 | 459 | 434 | 397 | 379 | 399 | 447 | 483 | 496 | 513 | 524 | 510 | 513 | 528 | 523 | 511
+R29: 28 | Otros productos de metal | 2628 | 2651 | 2589 | 2705 | 2464 | 2299 | 2148 | 2319 | 2599 | 2804 | 2995 | 3154 | 3228 | 3203 | 3206 | 3229 | 3251 | 3262
+R30: 29 | Maquinaria y equipo | 932 | 952 | 951 | 998 | 933 | 856 | 799 | 881 | 965 | 1056 | 1097 | 1146 | 1149 | 1127 | 1137 | 1136 | 1147 | 1125
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 11 | 12 | 14 | 15 | 20 | 21 | 20 | 20 | 19 | 20 | 18 | 19
+R32: 31 | Aparatos eléctricos | 397 | 401 | 372 | 389 | 351 | 324 | 301 | 324 | 359 | 379 | 398 | 419 | 427 | 441 | 453 | 468 | 480 | 466
+R33: 32 | Radio y televisión | 54 | 53 | 48 | 48 | 42 | 37 | 34 | 36 | 40 | 42 | 42 | 46 | 47 | 48 | 49 | 52 | 58 | 56
+R34: 33 | Instrumentos médicos | 118 | 125 | 125 | 137 | 120 | 115 | 116 | 134 | 146 | 152 | 158 | 165 | 182 | 180 | 191 | 188 | 182 | 191
+R35: 34 | Automotores | 574 | 585 | 556 | 566 | 534 | 518 | 497 | 526 | 575 | 614 | 634 | 655 | 655 | 636 | 640 | 638 | 631 | 610
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 2270 | 2220 | 2077 | 2104 | 1873 | 1787 | 1692 | 1797 | 2065 | 2127 | 2230 | 2301 | 2372 | 2403 | 2406 | 2453 | 2489 | 2514 | 2522 | 2534 | 2539 | 2561 | 2536 | 2517 | 2468 | 2536 | 2817 | 2915
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 5214 | 5385 | 5610 | 5869 | 5276 | 5091 | 4750 | 5193 | 6189 | 6680 | 7187 | 7538 | 7628 | 7517 | 7469 | 7476 | 7296 | 7170 | 6993 | 6882 | 6839 | 6869 | 6628 | 6428 | 6049 | 5896 | 6423 | 6404
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Capital Federal · 87 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: CAPITAL FEDERAL
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 2417 | 2401 | 2239 | 2175 | 1443 | 1443 | 1445 | 1510 | 1687 | 1799 | 1909 | 1984 | 1967 | 1913 | 1931 | 1959 | 1969 | 1956
+R7: 1 | Agricultura y ganaderia | 2373 | 2363 | 2197 | 2130 | 1411 | 1410 | 1409 | 1473 | 1649 | 1759 | 1868 | 1941 | 1928 | 1868 | 1888 | 1921 | 1932 | 1919
+R8: 2 | Silvicultura, extracción de madera | 44 | 38 | 42 | 45 | 32 | 33 | 36 | 37 | 38 | 40 | 41 | 43 | 39 | 45 | 43 | 38 | 37 | 37
+R9: B | PESCA Y SERVICIOS CONEXOS | 74 | 78 | 75 | 61 | 49 | 50 | 57 | 61 | 63 | 59 | 62 | 61 | 56 | 54 | 52 | 48 | 45 | 41
+R10: 5 | Pesca y actividades relacionadas con la pesca | 74 | 78 | 75 | 61 | 49 | 50 | 57 | 61 | 63 | 59 | 62 | 61 | 56 | 54 | 52 | 48 | 45 | 41
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 159 | 175 | 163 | 163 | 139 | 136 | 116 | 125 | 137 | 144 | 164 | 176 | 187 | 194 | 199 | 206 | 210 | 201
+R12: 11 | Extraccion de petroleo crudo y gas natural | 88 | 100 | 85 | 89 | 88 | 86 | 72 | 75 | 78 | 85 | 97 | 110 | 121 | 126 | 126 | 131 | 130 | 123
+R13: 13 | Extraccion de minerales metaliferos | 10 | 10 | 11 | 10 | 7 | 7 | 5 | 5 | 6 | 7 | 12 | 14 | 15 | 16 | 17 | 18 | 19 | 16
+R14: 14 | Explotacion de otras minas y canteras | 61 | 65 | 67 | 64 | 44 | 43 | 39 | 45 | 53 | 52 | 55 | 52 | 51 | 52 | 56 | 57 | 61 | 62
+R15: D | INDUSTRIA MANUFACTURERA | 13269 | 13381 | 13293 | 13034 | 10941 | 10178 | 9474 | 10109 | 11119 | 11645 | 12459 | 12951 | 13073 | 12831 | 12749 | 12720 | 12501 | 12416
+R16: 15 | Alimentos | 1992 | 1992 | 1956 | 1811 | 1536 | 1435 | 1383 | 1427 | 1605 | 1622 | 1654 | 1719 | 1728 | 1719 | 1745 | 1767 | 1738 | 1727
+R17: 16 | Tabaco | 6 | 6 | 7 | 6 | 6 | 6 | 7 | 8 | 9 | 9 | 7 | 7 | 6 | 6 | 7 | 10 | 9 | 8
+R18: 17 | Productos textiles | 1089 | 1156 | 1117 | 1106 | 972 | 866 | 813 | 876 | 983 | 1030 | 1134 | 1175 | 1208 | 1198 | 1190 | 1230 | 1224 | 1215
+R19: 18 | Confecciones | 1613 | 1589 | 1555 | 1535 | 1439 | 1317 | 1196 | 1381 | 1575 | 1663 | 1933 | 2030 | 2095 | 2069 | 2037 | 2004 | 1975 | 1959
+R20: 19 | Calzado y productos de cuero | 529 | 521 | 500 | 481 | 376 | 343 | 319 | 370 | 421 | 454 | 503 | 529 | 528 | 506 | 516 | 507 | 492 | 485
+R21: 20 | Madera | 247 | 251 | 241 | 246 | 183 | 174 | 156 | 163 | 185 | 201 | 210 | 208 | 215 | 196 | 194 | 180 | 172 | 155
+R22: 21 | Papel | 306 | 318 | 306 | 311 | 272 | 262 | 256 | 271 | 283 | 299 | 296 | 301 | 298 | 288 | 285 | 277 | 275 | 281
+R23: 22 | Edición | 1544 | 1592 | 1646 | 1639 | 1509 | 1424 | 1285 | 1321 | 1408 | 1496 | 1578 | 1644 | 1650 | 1628 | 1579 | 1581 | 1540 | 1503
+R24: 23 | Productos de petróleo | 35 | 33 | 32 | 33 | 30 | 27 | 25 | 26 | 28 | 26 | 27 | 29 | 28 | 28 | 28 | 26 | 29 | 29
+R25: 24 | Productos químicos | 822 | 850 | 834 | 839 | 711 | 692 | 679 | 712 | 776 | 811 | 814 | 823 | 805 | 806 | 807 | 793 | 788 | 803
+R26: 25 | Productos de caucho y plástico | 717 | 731 | 734 | 719 | 546 | 511 | 486 | 511 | 553 | 587 | 610 | 635 | 633 | 629 | 634 | 624 | 596 | 609
+R27: 26 | Otros minerales no metálicos | 272 | 281 | 274 | 262 | 200 | 202 | 190 | 207 | 209 | 228 | 223 | 239 | 238 | 231 | 230 | 226 | 225 | 223
+R28: 27 | Metales comunes | 225 | 211 | 223 | 225 | 149 | 133 | 124 | 137 | 138 | 153 | 169 | 161 | 162 | 154 | 155 | 156 | 147 | 149
+R29: 28 | Otros productos de metal | 1145 | 1181 | 1192 | 1182 | 884 | 794 | 728 | 763 | 820 | 873 | 943 | 984 | 995 | 985 | 975 | 957 | 938 | 928
+R30: 29 | Maquinaria y equipo | 633 | 647 | 640 | 641 | 483 | 450 | 419 | 445 | 497 | 494 | 518 | 543 | 535 | 511 | 507 | 506 | 492 | 494
+R31: 30 | Maquinaria de oficina | 71 | 67 | 70 | 72 | 64 | 54 | 47 | 62 | 63 | 66 | 75 | 82 | 84 | 76 | 76 | 74 | 73 | 63
+R32: 31 | Aparatos eléctricos | 307 | 306 | 309 | 308 | 251 | 253 | 235 | 244 | 269 | 269 | 293 | 304 | 307 | 301 | 303 | 307 | 299 | 300
+R33: 32 | Radio y televisión | 93 | 91 | 80 | 71 | 65 | 64 | 60 | 60 | 64 | 64 | 67 | 67 | 71 | 73 | 70 | 68 | 74 | 76
+R34: 33 | Instrumentos médicos | 197 | 197 | 202 | 211 | 186 | 185 | 173 | 182 | 201 | 209 | 220 | 226 | 222 | 220 | 224 | 229 | 226 | 236
+R35: 34 | Automotores | 299 | 296 | 286 | 296 | 233 | 226 | 221 | 229 | 241 | 248 | 260 | 269 | 269 | 253 | 240 | 245 | 247 | 232
+Coincidencias relevantes:
+HIT R2: CAPITAL FEDERAL
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 1992 | 1992 | 1956 | 1811 | 1536 | 1435 | 1383 | 1427 | 1605 | 1622 | 1654 | 1719 | 1728 | 1719 | 1745 | 1767 | 1738 | 1727 | 1731 | 1737 | 1734 | 1750 | 1742 | 1713 | 1747 | 1787 | 1970 | 1990
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 11306 | 11900 | 12091 | 12441 | 11839 | 11603 | 10946 | 11718 | 13737 | 14656 | 15410 | 16184 | 16488 | 16346 | 16484 | 16409 | 16256 | 16137 | 15854 | 15864 | 15661 | 15687 | 15416 | 14938 | 14253 | 13911 | 14130 | 13783
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Resto de Buenos Aires · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: RESTO DE BUENOS AIRES
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 15965 | 16204 | 16171 | 16280 | 15514 | 14975 | 14834 | 15724 | 16817 | 17805 | 18507 | 18968 | 19290 | 18666 | 18874 | 19300 | 19024 | 18551
+R7: 1 | Agricultura y ganaderia | 15912 | 16156 | 16108 | 16216 | 15466 | 14931 | 14793 | 15686 | 16770 | 17757 | 18458 | 18908 | 19231 | 18602 | 18806 | 19226 | 18951 | 18481
+R8: 2 | Silvicultura, extracción de madera | 53 | 48 | 63 | 64 | 48 | 44 | 41 | 38 | 47 | 48 | 49 | 60 | 59 | 64 | 68 | 74 | 73 | 70
+R9: B | PESCA Y SERVICIOS CONEXOS | 84 | 96 | 113 | 134 | 168 | 178 | 167 | 165 | 175 | 185 | 195 | 194 | 201 | 205 | 198 | 197 | 197 | 188
+R10: 5 | Pesca y actividades relacionadas con la pesca | 84 | 96 | 113 | 134 | 168 | 178 | 167 | 165 | 175 | 185 | 195 | 194 | 201 | 205 | 198 | 197 | 197 | 188
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 96 | 101 | 94 | 106 | 96 | 88 | 79 | 79 | 94 | 99 | 112 | 113 | 110 | 108 | 106 | 111 | 116 | 109
+R12: 11 | Extraccion de petroleo crudo y gas natural | 17 | 12 | 15 | 17 | 17 | 17 | 16 | 13 | 15 | 14 | 22 | 21 | 22 | 21 | 18 | 19 | 20 | 19
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R15: D | INDUSTRIA MANUFACTURERA | 5886 | 5892 | 5808 | 5826 | 5483 | 5171 | 4903 | 5433 | 6142 | 6590 | 7061 | 7382 | 7659 | 7744 | 7766 | 7844 | 7995 | 8070
+R16: 15 | Alimentos | 1931 | 1899 | 1847 | 1786 | 1690 | 1590 | 1532 | 1652 | 1850 | 1944 | 2055 | 2162 | 2324 | 2418 | 2455 | 2474 | 2523 | 2562
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 329 | 337 | 316 | 303 | 292 | 274 | 258 | 285 | 326 | 347 | 380 | 406 | 417 | 412 | 415 | 425 | 416 | 414
+R19: 18 | Confecciones | 355 | 346 | 326 | 309 | 294 | 254 | 231 | 301 | 370 | 410 | 464 | 457 | 452 | 446 | 422 | 438 | 450 | 441
+R20: 19 | Calzado y cuero | 65 | 69 | 64 | 66 | 55 | 53 | 54 | 75 | 86 | 91 | 97 | 90 | 84 | 88 | 95 | 92 | 98 | 97
+R21: 20 | Madera | 324 | 320 | 308 | 297 | 279 | 264 | 236 | 255 | 299 | 339 | 350 | 361 | 363 | 356 | 346 | 344 | 341 | 335
+R22: 21 | Papel | 63 | 62 | 60 | 65 | 64 | 61 | 63 | 67 | 75 | 76 | 81 | 84 | 84 | 88 | 84 | 85 | 84 | 89
+R23: 22 | Edición | 391 | 387 | 401 | 412 | 394 | 371 | 348 | 375 | 418 | 443 | 480 | 496 | 519 | 521 | 515 | 511 | 516 | 499
+R24: 23 | Productos de petróleo | 16 | 16 | 16 | 18 | 16 | 15 | 15 | 18 | 17 | 17 | 18 | 19 | 19 | 21 | 21 | 22 | 22 | 20
+R25: 24 | Productos químicos | 274 | 272 | 275 | 314 | 321 | 315 | 297 | 317 | 327 | 340 | 358 | 361 | 374 | 364 | 371 | 379 | 391 | 414
+R26: 25 | Productos de caucho y plástico | 181 | 179 | 200 | 229 | 216 | 217 | 216 | 228 | 254 | 265 | 281 | 292 | 302 | 297 | 293 | 293 | 306 | 315
+R27: 26 | Otros minerales no metálicos | 357 | 361 | 361 | 354 | 325 | 286 | 268 | 276 | 294 | 318 | 342 | 357 | 365 | 366 | 352 | 351 | 366 | 374
+R28: 27 | Metales comunes | 135 | 140 | 139 | 136 | 112 | 106 | 103 | 113 | 120 | 138 | 138 | 135 | 140 | 129 | 136 | 134 | 134 | 138
+R29: 28 | Otros productos de metal | 615 | 647 | 633 | 666 | 639 | 609 | 567 | 636 | 750 | 816 | 874 | 957 | 989 | 967 | 985 | 1028 | 1069 | 1068
+R30: 29 | Maquinaria y equipo | 263 | 269 | 269 | 276 | 243 | 233 | 228 | 264 | 299 | 326 | 351 | 356 | 350 | 354 | 355 | 364 | 374 | 385
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | 5 | 7 | 7 | 10 | 10 | 11 | 11 | 9 | 9 | 11 | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | 83 | 86 | 83 | 86 | 78 | 75 | 63 | 71 | 78 | 80 | 93 | 98 | 104 | 107 | 110 | 113 | 110 | 112
+R33: 32 | Radio y televisión | 16 | 13 | 12 | 13 | 11 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 10 | 9
+R34: 33 | Instrumentos médicos | 33 | 29 | 28 | 29 | 27 | 27 | 26 | 34 | 38 | 43 | 44 | 46 | 43 | 40 | 36 | 38 | 40 | 41
+R35: 34 | Automotores | 132 | 137 | 145 | 146 | 142 | 144 | 135 | 146 | 163 | 176 | 190 | 195 | 198 | 198 | 207 | 201 | 197 | 203
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 1931 | 1899 | 1847 | 1786 | 1690 | 1590 | 1532 | 1652 | 1850 | 1944 | 2055 | 2162 | 2324 | 2418 | 2455 | 2474 | 2523 | 2562 | 2646 | 2684 | 2689 | 2710 | 2668 | 2593 | 2552 | 2649 | 2789 | 2809
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 5358 | 5543 | 5782 | 5917 | 5866 | 5666 | 5451 | 5858 | 6868 | 7540 | 7971 | 8276 | 8470 | 8282 | 8245 | 8221 | 8065 | 7899 | 7680 | 7561 | 7399 | 7341 | 7172 | 6837 | 6520 | 6461 | 6540 | 6331
+HIT R74: 92 | Servicios culturales, deportivos y de esparcimiento | 1163 | 1153 | 1132 | 1135 | 1144 | 1117 | 1099 | 1186 | 1485 | 1626 | 1755 | 1858 | 2012 | 2078 | 2151 | 2232 | 2261 | 2274 | 2292 | 2342 | 2344 | 2323 | 2271 | 2180 | 2025 | 1977 | 2065 | 2009
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Catamarca · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: CATAMARCA
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 263 | 278 | 298 | 312 | 298 | 297 | 266 | 266 | 271 | 285 | 310 | 324 | 328 | 320 | 320 | 322 | 302 | 309
+R7: 1 | Agricultura y ganaderia | 257 | 272 | 290 | 304 | 291 | 290 | 259 | 260 | 265 | 278 | 303 | 317 | 321 | 314 | 314 | 316 | 295 | 301
+R8: 2 | Silvicultura, extracción de madera | 6 | 6 | 8 | 8 | 7 | 7 | 7 | 6 | 6 | 7 | 7 | 7 | 7 | 6 | 6 | 6 | 7 | 8
+R9: B | PESCA Y SERVICIOS CONEXOS | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+R10: 5 | Pesca y actividades relacionadas con la pesca | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 19 | 19 | 19 | 22 | 14 | 17 | 11 | 16 | 15 | 17 | 20 | 22 | 24 | 22 | 22 | 18 | 19 | 21
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | 7 | 8 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | 4 | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 13 | 14 | s.d. | s.d. | 9 | 11 | 9 | 13 | 12 | 14 | 16 | 17 | s.d. | 18 | s.d. | 15 | 16 | 15
+R15: D | INDUSTRIA MANUFACTURERA | 253 | 268 | 253 | 256 | 229 | 226 | 208 | 226 | 209 | 222 | 236 | 266 | 257 | 247 | 260 | 256 | 263 | 261
+R16: 15 | Alimentos | 90 | 98 | 104 | 105 | 92 | 88 | 91 | 103 | 95 | 104 | 103 | 117 | 118 | 119 | 126 | 123 | 125 | 124
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 14 | 17 | 15 | 15 | 13 | 13 | 13 | 14 | 13 | 15 | 14 | 14 | 14 | 12 | 12 | 12 | 9 | 10
+R19: 18 | Confecciones | 15 | 16 | 14 | 14 | 14 | 16 | 13 | 15 | 14 | 12 | 13 | 13 | 14 | 9 | 11 | 12 | 14 | 14
+R20: 19 | Calzado y productos de cuero | 6 | 8 | 5 | 5 | 6 | 5 | 5 | 6 | 7 | 6 | 7 | 10 | 9 | 7 | 9 | 10 | 11 | 6
+R21: 20 | Madera | 11 | 10 | 11 | 7 | 7 | 7 | 7 | 8 | 7 | 6 | 9 | 11 | 12 | 9 | 9 | 8 | 9 | 9
+R22: 21 | Papel | 5 | 7 | 6 | 5 | 4 | s.d. | s.d. | 6 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | 4
+R23: 22 | Edición | 18 | 17 | 17 | 18 | 18 | 15 | 12 | 15 | 13 | 12 | 12 | 16 | 20 | 19 | 20 | 19 | 18 | 22
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 28 | 24 | 20 | 23 | 21 | 25 | 20 | 20 | 18 | 22 | 23 | 25 | 21 | 19 | 22 | 19 | 22 | 22
+R26: 25 | Productos de caucho y plástico | 8 | 8 | 5 | 7 | 5 | 4 | 4 | s.d. | s.d. | s.d. | 4 | 5 | s.d. | 6 | 5 | 4 | 5 | s.d.
+R27: 26 | Otros minerales no metálicos | 9 | 11 | 10 | 10 | 9 | 10 | 7 | 9 | 7 | 8 | 7 | 9 | 7 | 8 | 9 | 12 | 11 | 12
+R28: 27 | Metales comunes | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R29: 28 | Otros productos de metal | 13 | 12 | 11 | 11 | 10 | 11 | 8 | 7 | 7 | 9 | 11 | 9 | 8 | 9 | 9 | 9 | 9 | 9
+R30: 29 | Maquinaria y equipo | 13 | 13 | 12 | 13 | 13 | 16 | 14 | 11 | 11 | 9 | 11 | 10 | 10 | 9 | 9 | 12 | 11 | 8
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 90 | 98 | 104 | 105 | 92 | 88 | 91 | 103 | 95 | 104 | 103 | 117 | 118 | 119 | 126 | 123 | 125 | 124 | 123 | 133 | 123 | 125 | 116 | 111 | 109 | 109 | 122 | 129
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 119 | 123 | 126 | 133 | 150 | 152 | 139 | 146 | 160 | 180 | 203 | 220 | 231 | 236 | 241 | 252 | 253 | 260 | 264 | 256 | 239 | 267 | 252 | 238 | 226 | 226 | 257 | 328
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Cordoba · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: CORDOBA
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 7134 | 7115 | 7035 | 6922 | 6764 | 6785 | 6975 | 7611 | 8159 | 8648 | 8910 | 9151 | 9254 | 9123 | 9085 | 9317 | 9151 | 8978
+R7: 1 | Agricultura y ganaderia | 7118 | 7098 | 7018 | 6906 | 6750 | 6770 | 6959 | 7590 | 8133 | 8620 | 8882 | 9119 | 9222 | 9095 | 9062 | 9296 | 9131 | 8957
+R8: 2 | Silvicultura, extracción de madera | 16 | 17 | 17 | 16 | 14 | 15 | 16 | 21 | 26 | 28 | 28 | 32 | 32 | 28 | 23 | 21 | 20 | 21
+R9: B | PESCA Y SERVICIOS CONEXOS | 10 | 12 | 10 | 7 | 4 | 4 | 4 | 4 | s.d. | 4 | 5 | 4 | 4 | 9 | s.d. | 4 | 4 | 4
+R10: 5 | Pesca y actividades relacionadas con la pesca | 10 | 12 | 10 | 7 | 4 | 4 | 4 | 4 | s.d. | 4 | 5 | 4 | 4 | 9 | s.d. | 4 | 4 | 4
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 90 | 92 | 96 | 88 | 80 | 71 | 63 | 73 | 89 | 107 | 116 | 131 | 133 | 128 | 119 | 122 | 129 | 124
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 82 | 85 | 84 | 78 | 74 | 66 | 59 | 66 | 83 | 101 | 109 | 125 | 128 | 122 | 111 | 117 | 123 | 116
+R15: D | INDUSTRIA MANUFACTURERA | 4158 | 4275 | 4234 | 4188 | 4134 | 3948 | 3727 | 4086 | 4587 | 4986 | 5251 | 5511 | 5701 | 5739 | 5807 | 5874 | 5890 | 5851
+R16: 15 | Alimentos | 1264 | 1279 | 1223 | 1182 | 1161 | 1122 | 1105 | 1204 | 1334 | 1420 | 1458 | 1494 | 1589 | 1645 | 1649 | 1690 | 1686 | 1698
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 75 | 82 | 75 | 75 | 92 | 85 | 76 | 87 | 107 | 120 | 130 | 135 | 132 | 138 | 141 | 153 | 160 | 158
+R19: 18 | Confecciones | 178 | 169 | 156 | 142 | 139 | 125 | 123 | 137 | 161 | 183 | 199 | 211 | 206 | 212 | 213 | 203 | 207 | 182
+R20: 19 | Calzado y cuero | 131 | 131 | 121 | 113 | 114 | 106 | 91 | 111 | 132 | 143 | 149 | 155 | 142 | 134 | 131 | 138 | 142 | 135
+R21: 20 | Madera | 175 | 180 | 183 | 186 | 170 | 170 | 159 | 183 | 206 | 220 | 231 | 236 | 250 | 235 | 237 | 233 | 244 | 235
+R22: 21 | Papel | 46 | 46 | 38 | 41 | 45 | 39 | 39 | 45 | 54 | 53 | 58 | 58 | 61 | 56 | 58 | 63 | 66 | 63
+R23: 22 | Edición | 234 | 246 | 257 | 263 | 264 | 248 | 219 | 230 | 271 | 294 | 307 | 323 | 326 | 331 | 327 | 315 | 317 | 317
+R24: 23 | Productos de petróleo | 14 | 15 | 13 | 17 | 15 | 12 | 11 | 10 | 12 | 11 | 10 | 11 | 12 | 12 | 11 | 13 | 14 | 14
+R25: 24 | Productos químicos | 168 | 169 | 175 | 189 | 190 | 196 | 196 | 195 | 199 | 215 | 214 | 229 | 223 | 226 | 232 | 233 | 226 | 222
+R26: 25 | Productos de caucho y plástico | 161 | 153 | 169 | 174 | 185 | 181 | 171 | 185 | 203 | 204 | 218 | 236 | 240 | 234 | 249 | 252 | 251 | 254
+R27: 26 | Otros minerales no metálicos | 185 | 183 | 193 | 195 | 189 | 178 | 168 | 169 | 191 | 207 | 217 | 234 | 242 | 249 | 252 | 250 | 255 | 268
+R28: 27 | Metales comunes | 92 | 92 | 90 | 87 | 80 | 71 | 59 | 68 | 75 | 90 | 98 | 101 | 105 | 97 | 93 | 93 | 89 | 91
+R29: 28 | Otros productos de metal | 489 | 529 | 534 | 517 | 529 | 493 | 464 | 535 | 611 | 696 | 758 | 830 | 866 | 865 | 874 | 898 | 889 | 888
+R30: 29 | Maquinaria y equipo | 289 | 301 | 308 | 314 | 295 | 283 | 264 | 295 | 329 | 360 | 388 | 403 | 412 | 413 | 421 | 426 | 425 | 414
+R31: 30 | Maquinaria de oficina | 7 | 7 | 9 | 9 | 10 | 11 | 9 | 10 | 12 | 14 | 17 | 17 | 25 | 24 | 27 | 28 | 29 | 31
+R32: 31 | Aparatos eléctricos | 68 | 66 | 65 | 68 | 62 | 60 | 57 | 60 | 71 | 78 | 85 | 95 | 99 | 106 | 108 | 109 | 107 | 112
+R33: 32 | Radio y televisión | 18 | 18 | 14 | 15 | 17 | 15 | 13 | 12 | 17 | 19 | 17 | 19 | 19 | 16 | 18 | 15 | 19 | 18
+R34: 33 | Instrumentos médicos | 43 | 43 | 44 | 44 | 43 | 46 | 47 | 51 | 63 | 65 | 66 | 65 | 69 | 67 | 71 | 70 | 74 | 71
+R35: 34 | Automotores | 237 | 255 | 254 | 254 | 245 | 232 | 217 | 233 | 242 | 256 | 265 | 280 | 287 | 286 | 291 | 293 | 293 | 286
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 1264 | 1279 | 1223 | 1182 | 1161 | 1122 | 1105 | 1204 | 1334 | 1420 | 1458 | 1494 | 1589 | 1645 | 1649 | 1690 | 1686 | 1698 | 1730 | 1768 | 1793 | 1781 | 1765 | 1730 | 1687 | 1684 | 1774 | 1801
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 2698 | 2898 | 3036 | 3117 | 3269 | 3285 | 3117 | 3501 | 4087 | 4435 | 4694 | 5013 | 5284 | 5195 | 5231 | 5247 | 5173 | 5042 | 4946 | 4865 | 4752 | 4658 | 4532 | 4276 | 3962 | 3902 | 3955 | 4103
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Corrientes · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: Corrientes
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 1669 | 1587 | 1620 | 1648 | 1519 | 1477 | 1442 | 1478 | 1588 | 1755 | 1796 | 1839 | 1962 | 1967 | 1984 | 2033 | 2042 | 2037
+R7: 1 | Agricultura y ganaderia | 1623 | 1538 | 1570 | 1592 | 1461 | 1417 | 1379 | 1411 | 1510 | 1655 | 1688 | 1723 | 1840 | 1838 | 1858 | 1909 | 1918 | 1906
+R8: 2 | Silvicultura, extracción de madera | 46 | 49 | 50 | 56 | 58 | 60 | 63 | 67 | 78 | 100 | 108 | 116 | 122 | 129 | 126 | 124 | 124 | 131
+R9: B | PESCA Y SERVICIOS CONEXOS | 4 | 6 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 7 | 8 | 7 | 7 | 7 | 5 | 5 | 4
+R10: 5 | Pesca y actividades relacionadas con la pesca | 4 | 6 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 7 | 8 | 7 | 7 | 7 | 5 | 5 | 4
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 19 | 21 | 20 | 21 | 17 | 19 | 11 | 12 | 13 | 16 | 13 | 15 | 13 | 18 | 20 | 19 | 19 | 22
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 13 | 16 | 17 | 16 | 13 | 14 | 10 | 11 | 13 | 16 | 13 | 13 | 13 | 16 | 18 | 18 | 18 | 20
+R15: D | INDUSTRIA MANUFACTURERA | 506 | 502 | 500 | 521 | 459 | 449 | 395 | 420 | 445 | 500 | 544 | 574 | 596 | 608 | 608 | 637 | 629 | 630
+R16: 15 | Alimentos | 202 | 191 | 187 | 199 | 172 | 173 | 152 | 156 | 167 | 194 | 199 | 209 | 215 | 219 | 220 | 219 | 223 | 223
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 5 | 4 | 4 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 5
+R18: 17 | Productos textiles | 23 | 19 | 19 | 17 | 15 | 13 | 10 | 11 | 11 | 12 | 12 | 12 | 10 | 10 | 11 | 14 | 15 | 14
+R19: 18 | Confecciones | 16 | 15 | 16 | 17 | 17 | 17 | 16 | 15 | 11 | 13 | 15 | 12 | 14 | 18 | 19 | 21 | 20 | 18
+R20: 19 | Calzado y productos de cuero | 4 | 5 | 6 | 6 | 6 | 7 | 7 | 4 | s.d. | 4 | 5 | 5 | 4 | 4 | 5 | s.d. | 4 | 4
+R21: 20 | Madera | 52 | 58 | 62 | 63 | 61 | 64 | 55 | 81 | 94 | 96 | 110 | 130 | 140 | 135 | 130 | 136 | 134 | 137
+R22: 21 | Papel | 8 | 8 | 8 | 9 | 9 | 6 | 5 | 5 | 6 | 6 | 4 | 4 | 5 | s.d. | s.d. | s.d. | s.d. | s.d.
+R23: 22 | Edición | 31 | 34 | 33 | 35 | 31 | 30 | 30 | 27 | 24 | 26 | 27 | 32 | 30 | 32 | 33 | 35 | 30 | 29
+R24: 23 | Productos de petróleo | 5 | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 52 | 52 | 56 | 63 | 55 | 57 | 51 | 44 | 46 | 47 | 48 | 55 | 53 | 55 | 53 | 54 | 51 | 47
+R26: 25 | Productos de caucho y plástico | 7 | 7 | 5 | 6 | s.d. | 4 | s.d. | 4 | 4 | 6 | 8 | 7 | 6 | 5 | 9 | 8 | 8 | 9
+R27: 26 | Otros minerales no metálicos | 17 | 16 | 14 | 17 | 19 | 12 | 9 | 10 | 9 | 11 | 10 | 13 | 12 | 12 | 15 | 20 | 16 | 20
+R28: 27 | Metales comunes | 5 | 8 | 5 | 7 | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R29: 28 | Otros productos de metal | 28 | 31 | 38 | 33 | 29 | 25 | 24 | 25 | 30 | 39 | 45 | 43 | 49 | 46 | 44 | 52 | 53 | 57
+R30: 29 | Maquinaria y equipo | 11 | 16 | 12 | 9 | 9 | 7 | 6 | 8 | 8 | 7 | 10 | 9 | 11 | 10 | 8 | 11 | 11 | 13
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | 6 | 5 | 5 | 5 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 6 | 5 | 6 | 6 | s.d.
+R33: 32 | Radio y televisión | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | 4 | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | 10 | 5 | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | s.d. | 5 | 6 | 6 | 6 | 7 | 6 | 7 | 7 | 7
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 202 | 191 | 187 | 199 | 172 | 173 | 152 | 156 | 167 | 194 | 199 | 209 | 215 | 219 | 220 | 219 | 223 | 223 | 224 | 238 | 246 | 225 | 227 | 218 | 206 | 214 | 251 | 260
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 501 | 516 | 535 | 519 | 500 | 525 | 469 | 491 | 552 | 659 | 668 | 679 | 709 | 682 | 693 | 714 | 710 | 697 | 688 | 712 | 689 | 700 | 651 | 624 | 576 | 575 | 648 | 770
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Chaco · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: CHACO
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 3531 | 3298 | 3110 | 3040 | 3160 | 2743 | 2328 | 2182 | 2132 | 2142 | 2201 | 2230 | 2433 | 2388 | 2029 | 2268 | 2326 | 2380
+R7: 1 | Agricultura y ganaderia | 3328 | 3118 | 2922 | 2851 | 2923 | 2542 | 2181 | 2040 | 1998 | 2013 | 2077 | 2097 | 2268 | 2195 | 1888 | 1947 | 1964 | 2032
+R8: 2 | Silvicultura, extracción de madera | 203 | 180 | 188 | 189 | 237 | 201 | 147 | 142 | 134 | 129 | 124 | 133 | 165 | 193 | 141 | 321 | 362 | 348
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 5 | 5 | 7 | 7 | 7 | 8 | 7 | 8 | 6 | 6 | 6 | 6 | 8 | 25 | 5 | 8 | 6 | 8
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+R14: 14 | Explotacion de otras minas y canteras | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R15: D | INDUSTRIA MANUFACTURERA | 588 | 579 | 564 | 574 | 610 | 519 | 440 | 492 | 540 | 556 | 579 | 613 | 674 | 754 | 668 | 696 | 699 | 712
+R16: 15 | Alimentos | 182 | 174 | 171 | 165 | 173 | 135 | 119 | 129 | 142 | 146 | 147 | 157 | 170 | 166 | 166 | 170 | 176 | 182
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 60 | 61 | 64 | 56 | 50 | 43 | 37 | 42 | 40 | 44 | 42 | 43 | 48 | 48 | 44 | 47 | 50 | 49
+R19: 18 | Confecciones | 12 | 11 | 11 | 19 | 17 | 17 | 13 | 13 | 12 | 15 | 13 | 14 | 15 | 18 | 16 | 18 | 18 | 21
+R20: 19 | Calzado | 8 | 11 | 8 | 8 | 9 | 4 | 7 | 8 | 8 | 8 | 8 | 10 | 10 | 13 | 11 | 12 | 11 | 10
+R21: 20 | Madera | 77 | 79 | 79 | 81 | 97 | 79 | 64 | 82 | 91 | 91 | 105 | 116 | 122 | 136 | 105 | 114 | 117 | 111
+R22: 21 | Papel | 8 | 6 | 5 | 5 | 6 | 5 | 6 | 6 | 7 | 7 | 6 | 5 | 6 | 6 | 5 | 5 | 6 | 4
+R23: 22 | Edición | 31 | 28 | 28 | 28 | 30 | 31 | 26 | 27 | 28 | 34 | 34 | 33 | 32 | 31 | 34 | 36 | 33 | 37
+R24: 23 | Productos de petróleo | 5 | 4 | 4 | 5 | 5 | 4 | 4 | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 54 | 56 | 49 | 57 | 60 | 56 | 49 | 50 | 49 | 47 | 49 | 48 | 43 | 50 | 51 | 52 | 52 | 54
+R26: 25 | Productos de caucho y plástico | 12 | 12 | 11 | 14 | 14 | 15 | 14 | 14 | 15 | 12 | 12 | 13 | 14 | 13 | 15 | 16 | 18 | 18
+R27: 26 | Otros minerales no metálicos | 25 | 24 | 25 | 24 | 46 | 35 | 22 | 26 | 29 | 31 | 33 | 37 | 43 | 94 | 45 | 39 | 37 | 38
+R28: 27 | Metales comunes | 6 | 8 | 7 | 5 | 5 | 4 | s.d. | 4 | 5 | 5 | 4 | 4 | 8 | 8 | 7 | 7 | 7 | 7
+R29: 28 | Otros productos de metal | 23 | 24 | 24 | 22 | 19 | 21 | 22 | 22 | 26 | 27 | 27 | 28 | 34 | 38 | 38 | 42 | 42 | 41
+R30: 29 | Maquinaria y equipo | 19 | 23 | 19 | 19 | 15 | 11 | 10 | 9 | 12 | 11 | 12 | 12 | 15 | 17 | 19 | 18 | 17 | 23
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | 5 | 6 | 7 | 6 | 5 | 5 | 4 | 4 | 8 | 8 | 8 | 8 | 7 | 10 | 10 | 9 | 10 | 10
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | 5 | 5 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | 6 | 6 | 6 | 7 | 6 | 4 | 5 | 7 | 9 | 11 | 11 | 12 | 12 | 12 | 11 | 12 | 11 | 11
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 182 | 174 | 171 | 165 | 173 | 135 | 119 | 129 | 142 | 146 | 147 | 157 | 170 | 166 | 166 | 170 | 176 | 182 | 171 | 168 | 176 | 181 | 187 | 168 | 164 | 164 | 189 | 214
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 438 | 446 | 476 | 492 | 542 | 508 | 465 | 463 | 507 | 528 | 573 | 586 | 619 | 612 | 632 | 661 | 633 | 632 | 629 | 634 | 598 | 608 | 594 | 542 | 500 | 472 | 512 | 610
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Chubut · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: CHUBUT
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 668 | 648 | 806 | 868 | 905 | 872 | 853 | 879 | 939 | 970 | 963 | 965 | 963 | 901 | 928 | 884 | 833 | 783
+R7: 1 | Agricultura y ganaderia | 664 | 644 | 800 | 859 | 891 | 860 | 844 | 872 | 931 | 960 | 950 | 952 | 948 | 888 | 900 | 871 | 822 | 773
+R8: 2 | Silvicultura, extracción de madera | 4 | 4 | 6 | 9 | 14 | 12 | 9 | 7 | 8 | 10 | 13 | 13 | 15 | 13 | 28 | 13 | 11 | 10
+R9: B | PESCA Y SERVICIOS CONEXOS | 70 | 82 | 75 | 85 | 94 | 96 | 104 | 115 | 105 | 103 | 87 | 82 | 86 | 90 | 93 | 90 | 87 | 92
+R10: 5 | Pesca y actividades relacionadas con la pesca | 70 | 82 | 75 | 85 | 94 | 96 | 104 | 115 | 105 | 103 | 87 | 82 | 86 | 90 | 93 | 90 | 87 | 92
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 94 | 101 | 93 | 95 | 107 | 105 | 112 | 116 | 129 | 133 | 140 | 165 | 174 | 165 | 180 | 170 | 167 | 162
+R12: 11 | Extraccion de petroleo crudo y gas natural | 76 | 84 | 76 | 76 | 89 | 85 | 87 | 91 | 99 | 101 | 108 | 132 | 140 | 136 | 139 | 143 | 140 | 135
+R13: 13 | Extraccion de minerales metaliferos | 4 | 4 | s.d. | s.d. | s.d. | s.d. | 5 | 4 | 5 | 5 | 5 | 5 | 4 | s.d. | 4 | s.d. | 4 | 4
+R14: 14 | Explotacion de otras minas y canteras | 14 | 13 | s.d. | s.d. | s.d. | s.d. | 20 | 21 | 25 | 27 | 27 | 28 | 30 | s.d. | 37 | s.d. | 23 | 23
+R15: D | INDUSTRIA MANUFACTURERA | 338 | 364 | 430 | 462 | 485 | 459 | 447 | 466 | 517 | 545 | 572 | 594 | 608 | 607 | 624 | 616 | 617 | 632
+R16: 15 | Alimentos | 113 | 130 | 166 | 167 | 172 | 157 | 147 | 146 | 162 | 168 | 181 | 192 | 198 | 206 | 204 | 205 | 212 | 221
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 27 | 25 | 28 | 32 | 28 | 27 | 29 | 31 | 31 | 29 | 30 | 29 | 28 | 27 | 26 | 28 | 25 | 22
+R19: 18 | Confecciones | 7 | 8 | 8 | 14 | 13 | 14 | 14 | 13 | 13 | 13 | 12 | 9 | 11 | 13 | 17 | 16 | 16 | 16
+R20: 19 | Cuero | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 4 | 5 | 6 | s.d. | 5 | 4 | s.d. | 4 | 5 | 4 | 4 | 4
+R21: 20 | Madera | 19 | 23 | 29 | 31 | 36 | 27 | 27 | 32 | 39 | 39 | 35 | 37 | 36 | 35 | 37 | 35 | 32 | 31
+R22: 21 | Papel | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R23: 22 | Edición | 30 | 29 | 29 | 29 | 41 | 41 | 38 | 40 | 43 | 47 | 49 | 54 | 49 | 47 | 46 | 46 | 52 | 49
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 40 | 38 | 39 | 38 | 39 | 44 | 42 | 39 | 40 | 39 | 38 | 39 | 42 | 38 | 41 | 38 | 40 | 39
+R26: 25 | Productos de caucho y plástico | s.d. | 4 | 5 | 6 | 5 | 4 | s.d. | 4 | 5 | 6 | 6 | 6 | 7 | 7 | 8 | 9 | 9 | 10
+R27: 26 | Otros minerales no metálicos | 20 | 20 | 27 | 29 | 31 | 23 | 27 | 29 | 31 | 35 | 36 | 37 | 40 | 43 | 50 | 49 | 45 | 46
+R28: 27 | Metales comunes | 7 | 10 | 9 | 9 | 8 | 10 | 12 | 14 | 15 | 17 | 17 | 16 | 17 | 16 | 17 | 15 | 15 | 15
+R29: 28 | Otros productos de metal | 39 | 38 | 47 | 51 | 52 | 53 | 52 | 56 | 65 | 81 | 89 | 90 | 97 | 92 | 86 | 86 | 86 | 90
+R30: 29 | Maquinaria y equipo | 10 | 11 | 15 | 14 | 14 | 13 | 14 | 13 | 16 | 17 | 21 | 23 | 26 | 24 | 25 | 22 | 22 | 23
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 5 | s.d. | s.d. | s.d. | 4 | 5 | 4 | 5
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | s.d. | 4 | s.d. | 4 | 5 | s.d. | s.d. | s.d. | 4 | 4 | 4 | 6 | 6 | 4 | 4 | 4 | s.d. | 4
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 113 | 130 | 166 | 167 | 172 | 157 | 147 | 146 | 162 | 168 | 181 | 192 | 198 | 206 | 204 | 205 | 212 | 221 | 225 | 227 | 224 | 233 | 232 | 230 | 223 | 239 | 257 | 270
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 432 | 445 | 525 | 587 | 635 | 644 | 618 | 688 | 772 | 829 | 859 | 894 | 913 | 909 | 908 | 894 | 863 | 861 | 886 | 884 | 848 | 849 | 832 | 804 | 772 | 762 | 772 | 736
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Entre Rios · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: ENTRE RIOS
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 3302 | 3302 | 3256 | 3285 | 3170 | 3070 | 2970 | 3188 | 3453 | 3754 | 4015 | 4169 | 4288 | 4210 | 4295 | 4451 | 4347 | 4262
+R7: 1 | Agricultura y ganaderia | 3222 | 3227 | 3185 | 3210 | 3089 | 2985 | 2889 | 3101 | 3362 | 3647 | 3891 | 4043 | 4160 | 4093 | 4170 | 4308 | 4210 | 4129
+R8: 2 | Silvicultura, extracción de madera | 80 | 75 | 71 | 75 | 81 | 85 | 81 | 87 | 91 | 107 | 124 | 126 | 128 | 117 | 125 | 143 | 137 | 133
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 5 | 6 | 7 | 5 | 8 | 11 | 11 | 12 | 9 | 6
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 5 | 6 | 7 | 5 | 8 | 11 | 11 | 12 | 9 | 6
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 37 | 37 | 34 | 36 | 35 | 37 | 30 | 32 | 38 | 44 | 40 | 40 | 41 | 34 | 33 | 33 | 33 | 39
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 30 | 31 | 31 | 29 | 29 | 32 | 27 | 28 | 35 | 40 | 38 | 38 | 38 | 32 | 31 | 32 | 32 | 37
+R15: D | INDUSTRIA MANUFACTURERA | 1180 | 1242 | 1187 | 1129 | 1075 | 985 | 925 | 1019 | 1119 | 1210 | 1311 | 1375 | 1459 | 1472 | 1496 | 1551 | 1563 | 1558
+R16: 15 | Alimentos | 482 | 530 | 492 | 446 | 432 | 411 | 389 | 421 | 444 | 475 | 503 | 521 | 551 | 570 | 588 | 604 | 618 | 627
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 16 | 19 | 17 | 16 | 14 | 12 | 10 | 14 | 16 | 19 | 18 | 20 | 24 | 21 | 23 | 21 | 24 | 22
+R19: 18 | Confecciones | 28 | 30 | 26 | 35 | 27 | 21 | 18 | 19 | 16 | 20 | 26 | 28 | 31 | 33 | 28 | 28 | 32 | 26
+R20: 19 | Calzado | 18 | 18 | 20 | 16 | 12 | 10 | 9 | 11 | 14 | 15 | 17 | 15 | 17 | 15 | 17 | 16 | 17 | 19
+R21: 20 | Madera | 164 | 162 | 151 | 144 | 138 | 115 | 114 | 141 | 163 | 186 | 216 | 225 | 234 | 234 | 234 | 227 | 236 | 236
+R22: 21 | Papel | 13 | 12 | 10 | 9 | 11 | 10 | 9 | 10 | 12 | 13 | 13 | 13 | 13 | 13 | 11 | 14 | 13 | 14
+R23: 22 | Edición | 78 | 79 | 77 | 80 | 84 | 78 | 68 | 68 | 75 | 82 | 82 | 86 | 85 | 82 | 79 | 76 | 71 | 68
+R24: 23 | Productos de petróleo | 5 | 5 | 4 | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 70 | 69 | 79 | 83 | 82 | 79 | 77 | 73 | 70 | 65 | 71 | 70 | 67 | 66 | 62 | 62 | 65 | 63
+R26: 25 | Productos de caucho y plástico | 29 | 33 | 32 | 31 | 28 | 32 | 35 | 36 | 36 | 35 | 36 | 39 | 42 | 41 | 42 | 46 | 43 | 43
+R27: 26 | Otros minerales no metálicos | 43 | 39 | 40 | 35 | 31 | 29 | 27 | 31 | 32 | 38 | 41 | 45 | 53 | 49 | 51 | 60 | 62 | 60
+R28: 27 | Metales comunes | 13 | 19 | 14 | 11 | 10 | 9 | 11 | 9 | 10 | 11 | 11 | 12 | 13 | 14 | 16 | 16 | 13 | 14
+R29: 28 | Otros productos de metal | 93 | 95 | 96 | 92 | 89 | 83 | 76 | 92 | 120 | 128 | 146 | 159 | 172 | 170 | 173 | 195 | 184 | 180
+R30: 29 | Maquinaria y equipo | 36 | 40 | 42 | 34 | 36 | 33 | 29 | 31 | 36 | 36 | 41 | 41 | 44 | 47 | 46 | 55 | 55 | 56
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | 13 | 11 | 12 | 12 | 9 | 7 | 6 | 5 | 5 | 7 | 6 | 6 | 9 | 8 | 8 | 9 | 10 | 10
+R33: 32 | Radio y televisión | s.d. | 4 | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 5 | 5 | 6 | 7 | 7
+R35: 34 | Automotores | 18 | 16 | 17 | 20 | 18 | 15 | 16 | 18 | 24 | 27 | 28 | 32 | 36 | 36 | 39 | 38 | 35 | 34
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 482 | 530 | 492 | 446 | 432 | 411 | 389 | 421 | 444 | 475 | 503 | 521 | 551 | 570 | 588 | 604 | 618 | 627 | 624 | 617 | 614 | 627 | 615 | 596 | 579 | 583 | 616 | 644
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 918 | 945 | 970 | 976 | 971 | 952 | 897 | 955 | 1063 | 1147 | 1230 | 1314 | 1361 | 1310 | 1322 | 1354 | 1322 | 1279 | 1231 | 1228 | 1164 | 1169 | 1142 | 1084 | 1028 | 1022 | 1039 | 1058
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Formosa · 95 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: FORMOSA
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 386 | 372 | 367 | 413 | 528 | 434 | 383 | 358 | 359 | 401 | 421 | 444 | 481 | 469 | 463 | 467 | 476 | 459
+R7: 1 | Agricultura y ganaderia | s.d. | s.d. | s.d. | 409 | 523 | 430 | 379 | 354 | 354 | 393 | 415 | 434 | 472 | 460 | 452 | 457 | 467 | 451
+R8: 2 | Silvicultura, extracción de madera | s.d. | s.d. | s.d. | 4 | 5 | 4 | 4 | 4 | 5 | 8 | 6 | 10 | 9 | 9 | 11 | 10 | 9 | 8
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | 4 | 4
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | 4 | 4
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 7 | 4 | 7 | 8 | 7 | 12 | 7 | 5 | 7 | 7 | 8 | 8 | 4 | 5 | 5 | 5 | 5 | 7
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+R14: 14 | Explotacion de otras minas y canteras | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R15: D | INDUSTRIA MANUFACTURERA | 141 | 137 | 138 | 132 | 121 | 122 | 116 | 130 | 134 | 155 | 171 | 166 | 171 | 174 | 175 | 179 | 177 | 163
+R16: 15 | Alimentos | 59 | 58 | 57 | 54 | 51 | 51 | 50 | 52 | 49 | 53 | 55 | 56 | 60 | 64 | 68 | 71 | 72 | 65
+R17: 16 | Tabaco | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+R18: 17 | Productos textiles | 5 | 5 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R19: 18 | Confecciones | s.d. | s.d. | s.d. | 4 | s.d. | 6 | 4 | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d.
+R20: 19 | Calzado y productos de cuero | 4 | 5 | 5 | s.d. | s.d. | s.d. | 5 | 4 | 4 | s.d. | s.d. | 4 | 4 | 5 | 5 | 4 | 4 | s.d.
+R21: 20 | Madera | 17 | 14 | 13 | 11 | 12 | 9 | 9 | 10 | 16 | 24 | 29 | 28 | 28 | 27 | 27 | 26 | 22 | 21
+R22: 21 | Papel | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R23: 22 | Edición | 15 | 17 | 20 | 20 | 20 | 20 | 16 | 19 | 14 | 17 | 20 | 16 | 15 | 13 | 15 | 15 | 14 | 15
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 11 | 8 | 8 | 9 | 5 | 11 | 8 | 10 | 10 | 12 | 13 | 14 | 11 | 11 | 12 | 14 | 13 | 13
+R26: 25 | Productos de caucho y plástico | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R27: 26 | Otros minerales no metálicos | 4 | 4 | 6 | 7 | 7 | 4 | 4 | 4 | 4 | 6 | 7 | 7 | 8 | 7 | 7 | 10 | 8 | 8
+R28: 27 | Metales comunes | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R29: 28 | Otros productos de metal | 4 | 4 | 5 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | 7 | 7 | 5 | 6 | 10 | 9
+R30: 29 | Maquinaria y equipo | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R31: 30 | Maquinaria de oficina | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 59 | 58 | 57 | 54 | 51 | 51 | 50 | 52 | 49 | 53 | 55 | 56 | 60 | 64 | 68 | 71 | 72 | 65 | 68 | 75 | 77 | 72 | 66 | 65 | 64 | 66 | 67 | 67
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 147 | 141 | 150 | 153 | 157 | 165 | 146 | 160 | 176 | 196 | 206 | 208 | 210 | 204 | 222 | 206 | 195 | 193 | 202 | 203 | 203 | 190 | 179 | 169 | 159 | 160 | 171 | 171
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Jujuy · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: JUJUY
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 705 | 724 | 716 | 705 | 687 | 660 | 643 | 658 | 673 | 685 | 717 | 748 | 777 | 811 | 866 | 852 | 849 | 922
+R7: 1 | Agricultura y ganaderia | 696 | 713 | 704 | 692 | 673 | 646 | 628 | 642 | 657 | 670 | 701 | 729 | 760 | 795 | 848 | 833 | 827 | 901
+R8: 2 | Silvicultura, extracción de madera | 9 | 11 | 12 | 13 | 14 | 14 | 15 | 16 | 16 | 15 | 16 | 19 | 17 | 16 | 18 | 19 | 22 | 21
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 12 | 12 | 13 | 11 | 14 | 12 | 11 | 13 | 11 | 13 | 17 | 22 | 22 | 23 | 30 | 24 | 25 | 23
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | s.d. | s.d. | 4 | 4 | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | 4 | 4 | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | 4 | 6 | 7 | 5 | 6 | 6 | 8 | 6
+R14: 14 | Explotacion de otras minas y canteras | 6 | s.d. | s.d. | 5 | 9 | 6 | 6 | s.d. | 6 | 7 | 9 | 12 | s.d. | s.d. | 20 | 14 | s.d. | s.d.
+R15: D | INDUSTRIA MANUFACTURERA | 269 | 252 | 253 | 253 | 252 | 233 | 201 | 213 | 233 | 241 | 264 | 284 | 307 | 349 | 345 | 340 | 353 | 344
+R16: 15 | Alimentos | 97 | 88 | 92 | 98 | 102 | 88 | 75 | 86 | 94 | 96 | 109 | 113 | 117 | 129 | 130 | 128 | 141 | 145
+R17: 16 | Tabaco | 5 | 5 | 4 | 4 | 4 | 5 | 4 | 4 | 6 | 7 | 7 | 5 | 4 | 4 | 4 | 4 | 4 | 4
+R18: 17 | Productos textiles | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | 5 | s.d.
+R19: 18 | Confecciones | 8 | 6 | 6 | 5 | 4 | 4 | 4 | 5 | 5 | 4 | 5 | 8 | 9 | 12 | 9 | 9 | 7 | 8
+R20: 19 | Calzado | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d.
+R21: 20 | Madera | 27 | 29 | 25 | 23 | 19 | 19 | 15 | 17 | 16 | 16 | 16 | 18 | 23 | 25 | 29 | 26 | 29 | 29
+R22: 21 | Papel | 4 | 5 | s.d. | s.d. | s.d. | 4 | 4 | 4 | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 4
+R23: 22 | Edición | 18 | 16 | 20 | 19 | 26 | 22 | 19 | 18 | 17 | 20 | 22 | 23 | 21 | 27 | 24 | 26 | 24 | 20
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 31 | 28 | 28 | 29 | 29 | 30 | 25 | 23 | 24 | 23 | 24 | 26 | 26 | 30 | 31 | 28 | 28 | 27
+R26: 25 | Productos de caucho y plástico | 4 | 5 | 5 | 5 | 5 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 6 | 5 | 4 | 4 | 4 | 5
+R27: 26 | Otros minerales no metálicos | 16 | 16 | 13 | 13 | 14 | 15 | 11 | 11 | 12 | 12 | 16 | 18 | 18 | 23 | 24 | 22 | 25 | 20
+R28: 27 | Metales comunes | 9 | 8 | 7 | 6 | 4 | 4 | s.d. | 4 | 5 | 5 | 6 | 6 | 5 | 6 | 5 | 6 | 6 | 5
+R29: 28 | Otros productos de metal | 23 | 21 | 24 | 21 | 19 | 15 | 17 | 16 | 20 | 22 | 26 | 25 | 32 | 38 | 38 | 37 | 36 | 39
+R30: 29 | Maquinaria y equipo | 8 | 6 | 9 | 5 | s.d. | s.d. | s.d. | s.d. | 6 | 6 | 4 | 7 | 10 | 10 | 9 | 10 | 8 | 10
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | s.d. | s.d. | 4 | 5 | 5 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 97 | 88 | 92 | 98 | 102 | 88 | 75 | 86 | 94 | 96 | 109 | 113 | 117 | 129 | 130 | 128 | 141 | 145 | 139 | 139 | 143 | 144 | 145 | 139 | 133 | 136 | 151 | 143
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 231 | 229 | 254 | 267 | 311 | 306 | 282 | 282 | 310 | 318 | 359 | 383 | 414 | 415 | 420 | 417 | 401 | 400 | 401 | 399 | 389 | 417 | 411 | 388 | 379 | 387 | 405 | 401
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: La Pampa · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: LA PAMPA
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 1937 | 1917 | 1877 | 1845 | 1778 | 1737 | 1756 | 1869 | 1968 | 2076 | 2124 | 2099 | 2072 | 1913 | 1876 | 1927 | 1934 | 1894
+R7: 1 | Agricultura y ganaderia | 1932 | s.d. | 1873 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 2072 | 2119 | s.d. | s.d. | s.d. | 1872 | 1922 | 1927 | 1888
+R8: 2 | Silvicultura, extracción de madera | 5 | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 5 | s.d. | s.d. | s.d. | 4 | 5 | 7 | 6
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 22 | 18 | 14 | 18 | 18 | 19 | 14 | 15 | 15 | 17 | 19 | 24 | 24 | 28 | 32 | 30 | 28 | 28
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 16 | 15 | 11 | 13 | 12 | 10 | 9 | 10 | 9 | 10 | 9 | 11 | 10 | 10 | 11 | 10 | 8 | 8
+R15: D | INDUSTRIA MANUFACTURERA | 428 | 393 | 380 | 355 | 298 | 294 | 277 | 300 | 329 | 331 | 341 | 381 | 380 | 377 | 377 | 401 | 389 | 398
+R16: 15 | Alimentos | 159 | 150 | 138 | 126 | 106 | 109 | 100 | 121 | 132 | 124 | 123 | 135 | 142 | 143 | 151 | 157 | 153 | 157
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 7 | 6 | 7 | 7 | 5 | 5 | s.d. | 4 | 5 | 5 | 7 | 4 | 5 | 6 | 6 | 9 | 9 | 9
+R19: 18 | Confecciones | 14 | 15 | 12 | 12 | 11 | 10 | 10 | 10 | 9 | 12 | 11 | 11 | 10 | 10 | 10 | 13 | 11 | 13
+R20: 19 | Calzado | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R21: 20 | Madera | 21 | 19 | 20 | 17 | 18 | 17 | 15 | 16 | 17 | 21 | 24 | 26 | 27 | 25 | 24 | 25 | 25 | 23
+R22: 21 | Papel | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R23: 22 | Edición | 36 | 30 | 31 | 31 | 30 | 23 | 23 | 23 | 25 | 25 | 24 | 28 | 26 | 24 | 22 | 24 | 23 | 26
+R24: 23 | Productos de petróleo | 4 | 4 | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 36 | 33 | 33 | 35 | 33 | 39 | 37 | 31 | 35 | 28 | 28 | 32 | 28 | 27 | 30 | 28 | 28 | 33
+R26: 25 | Productos de caucho y plástico | 11 | 13 | 9 | 11 | 11 | 12 | 12 | 14 | 16 | 17 | 18 | 18 | 20 | 20 | 19 | 19 | 19 | 23
+R27: 26 | Otros minerales no metálicos | 19 | 20 | 20 | 16 | 15 | 16 | 16 | 16 | 18 | 17 | 17 | 23 | 21 | 20 | 18 | 23 | 27 | 25
+R28: 27 | Metales comunes | 9 | 8 | 13 | 10 | 8 | 7 | 7 | 7 | 9 | 10 | 9 | 10 | 10 | 11 | 11 | 11 | 12 | 10
+R29: 28 | Otros productos de metal | 60 | 47 | 42 | 41 | 33 | 28 | 25 | 27 | 31 | 34 | 37 | 40 | 42 | 45 | 41 | 50 | 44 | 42
+R30: 29 | Maquinaria y equipo | 20 | 18 | 19 | 19 | 11 | 12 | 12 | 12 | 10 | 11 | 12 | 16 | 15 | 13 | 12 | 10 | 13 | 12
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d.
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | 6 | 7 | 7 | 6 | s.d. | s.d. | 5 | 5 | 7 | 8 | 10 | 11 | 9 | 6 | 7 | 7 | 6 | 9
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 159 | 150 | 138 | 126 | 106 | 109 | 100 | 121 | 132 | 124 | 123 | 135 | 142 | 143 | 151 | 157 | 153 | 157 | 159 | 172 | 179 | 173 | 174 | 168 | 161 | 157 | 158 | 181
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 395 | 403 | 392 | 390 | 386 | 398 | 371 | 398 | 466 | 507 | 525 | 540 | 555 | 550 | 533 | 547 | 545 | 555 | 524 | 530 | 512 | 503 | 498 | 496 | 477 | 498 | 523 | 529
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: La Rioja · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: LA RIOJA
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 294 | 297 | 313 | 328 | 309 | 292 | 266 | 264 | 262 | 271 | 263 | 268 | 265 | 263 | 274 | 288 | 292 | 285
+R7: 1 | Agricultura y ganaderia | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R8: 2 | Silvicultura, extracción de madera | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 12 | 10 | 10 | 9 | 9 | 7 | s.d. | s.d. | 4 | s.d. | 5 | 8 | 11 | 10 | 10 | 16 | 16 | 13
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 11 | 10 | 8 | 7 | 7 | 5 | s.d. | s.d. | 4 | s.d. | 5 | 8 | 11 | 10 | 10 | 16 | 16 | 13
+R15: D | INDUSTRIA MANUFACTURERA | 174 | 184 | 183 | 191 | 189 | 193 | 173 | 177 | 189 | 194 | 201 | 210 | 211 | 212 | 220 | 221 | 211 | 221
+R16: 15 | Alimentos | 72 | 74 | 69 | 76 | 74 | 76 | 72 | 73 | 81 | 90 | 90 | 100 | 105 | 108 | 104 | 109 | 105 | 109
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 13 | 14 | 19 | 16 | 17 | 15 | 16 | 16 | 17 | 17 | 17 | 16 | 13 | 12 | 13 | 13 | 13 | 13
+R19: 18 | Confecciones | 10 | 13 | 13 | 16 | 13 | 13 | 12 | 12 | 11 | 11 | 10 | 11 | 11 | 12 | 14 | 10 | 11 | 13
+R20: 19 | Cuero y calzado | 6 | 6 | 5 | 5 | 6 | 5 | 6 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 4 | s.d.
+R21: 20 | Madera | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | 4 | s.d. | s.d.
+R22: 21 | Papel | 7 | 6 | 6 | 6 | 6 | 7 | 7 | 6 | 6 | 5 | 4 | 4 | 4 | 5 | 4 | 5 | 5 | 5
+R23: 22 | Edición | 13 | 13 | 14 | 12 | 15 | 12 | 11 | 12 | 12 | 11 | 12 | 11 | 13 | 11 | 12 | 12 | 11 | 12
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 15 | 12 | 10 | 13 | 15 | 19 | 13 | 16 | 16 | 14 | 16 | 14 | 16 | 16 | 18 | 16 | 14 | 14
+R26: 25 | Productos de caucho y plástico | 7 | 9 | 9 | 9 | 7 | 9 | 6 | 6 | 7 | 7 | 8 | 7 | 8 | 10 | 10 | 9 | 9 | 9
+R27: 26 | Otros minerales no metálicos | 9 | 10 | 10 | 10 | 8 | 7 | 5 | 5 | 5 | 6 | 6 | 8 | 9 | 6 | 5 | 5 | 4 | 7
+R28: 27 | Metales comunes | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R29: 28 | Otros productos de metal | 6 | 9 | 10 | 9 | 7 | 7 | 4 | 6 | 8 | 9 | 13 | 13 | 9 | 11 | 11 | 11 | 10 | 10
+R30: 29 | Maquinaria y equipo | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | 5
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 72 | 74 | 69 | 76 | 74 | 76 | 72 | 73 | 81 | 90 | 90 | 100 | 105 | 108 | 104 | 109 | 105 | 109 | 110 | 112 | 111 | 112 | 111 | 105 | 104 | 100 | 105 | 115
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 127 | 131 | 142 | 157 | 159 | 164 | 142 | 151 | 173 | 175 | 181 | 211 | 227 | 230 | 229 | 220 | 218 | 211 | 206 | 218 | 218 | 209 | 206 | 196 | 176 | 166 | 225 | 281
+HIT R76:  | TOTAL | 1783 | 1892 | 1976 | 2026 | 2007 | 2026 | 1863 | 1930 | 2094 | 2244 | 2346 | 2522 | 2574 | 2626 | 2739 | 2795 | 2754 | 2797 | 2796 | 2816 | 2861 | 2858 | 2823 | 2683 | 2561 | 2604 | 3017 | 3388
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Mendoza · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: MENDOZA
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 4347 | 4308 | 4209 | 4206 | 4081 | 3956 | 3826 | 4045 | 4331 | 4597 | 4861 | 5073 | 5113 | 5088 | 5144 | 5234 | 5398 | 5366
+R7: 1 | Agricultura y ganaderia | 4328 | 4287 | 4192 | 4189 | 4064 | 3940 | 3804 | 4024 | 4309 | 4575 | 4837 | 5048 | 5087 | 5063 | 5121 | 5210 | 5378 | 5344
+R8: 2 | Silvicultura, extracción de madera | 19 | 21 | 17 | 17 | 17 | 16 | 22 | 21 | 22 | 22 | 24 | 25 | 26 | 25 | 23 | 24 | 20 | 22
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | 4 | 4 | 4 | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | 4 | 4 | 4 | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 97 | 93 | 93 | 90 | 83 | 83 | 83 | 91 | 112 | 111 | 116 | 129 | 135 | 134 | 128 | 133 | 125 | 125
+R12: 11 | Extraccion de petroleo crudo y gas natural | 43 | 35 | 36 | 37 | 41 | 46 | 46 | 50 | 61 | 53 | 57 | 60 | 62 | 63 | 61 | 68 | 66 | 69
+R13: 13 | Extraccion de minerales metaliferos | 8 | 8 | 6 | 4 | s.d. | 4 | s.d. | 4 | 4 | 5 | 5 | 4 | 6 | 4 | 4 | 5 | 5 | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 46 | 50 | 51 | 49 | s.d. | 33 | s.d. | 37 | 47 | 53 | 54 | 65 | 67 | 67 | 63 | 60 | 54 | s.d.
+R15: D | INDUSTRIA MANUFACTURERA | 2301 | 2340 | 2359 | 2361 | 2264 | 2161 | 2010 | 2122 | 2321 | 2434 | 2562 | 2679 | 2739 | 2730 | 2752 | 2830 | 2824 | 2827
+R16: 15 | Alimentos | 1014 | 1020 | 996 | 987 | 977 | 975 | 937 | 985 | 1045 | 1073 | 1106 | 1159 | 1183 | 1208 | 1224 | 1243 | 1271 | 1275
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 47 | 52 | 55 | 51 | 41 | 44 | 43 | 42 | 45 | 47 | 49 | 51 | 60 | 56 | 56 | 59 | 57 | 59
+R19: 18 | Confecciones | 72 | 68 | 67 | 78 | 68 | 63 | 57 | 61 | 69 | 70 | 68 | 71 | 75 | 69 | 59 | 72 | 70 | 70
+R20: 19 | Calzado | 14 | 16 | 16 | 15 | 13 | 19 | 14 | 13 | 13 | 15 | 13 | 14 | 13 | 11 | 11 | 14 | 15 | 16
+R21: 20 | Madera | 146 | 154 | 162 | 159 | 145 | 132 | 117 | 127 | 148 | 166 | 180 | 185 | 196 | 191 | 187 | 196 | 180 | 172
+R22: 21 | Papel | 18 | 17 | 17 | 21 | 24 | 23 | 23 | 23 | 28 | 30 | 31 | 30 | 30 | 28 | 27 | 26 | 25 | 26
+R23: 22 | Edición | 113 | 118 | 122 | 125 | 128 | 121 | 110 | 116 | 129 | 132 | 143 | 158 | 151 | 157 | 164 | 161 | 162 | 166
+R24: 23 | Productos de petróleo | 8 | 9 | 10 | 7 | 6 | 7 | 8 | 8 | 8 | 7 | 8 | 8 | 8 | 7 | 6 | 6 | 6 | 6
+R25: 24 | Productos químicos | 125 | 122 | 128 | 149 | 147 | 138 | 130 | 131 | 127 | 135 | 135 | 141 | 146 | 148 | 154 | 151 | 149 | 148
+R26: 25 | Productos de caucho y plástico | 57 | 62 | 68 | 68 | 59 | 61 | 58 | 61 | 63 | 66 | 67 | 73 | 78 | 80 | 79 | 78 | 79 | 78
+R27: 26 | Otros minerales no metálicos | 107 | 112 | 121 | 106 | 95 | 79 | 71 | 71 | 80 | 87 | 97 | 91 | 91 | 94 | 81 | 112 | 100 | 100
+R28: 27 | Metales comunes | 33 | 30 | 28 | 29 | 26 | 24 | 20 | 21 | 21 | 22 | 26 | 27 | 24 | 22 | 24 | 26 | 24 | 22
+R29: 28 | Otros productos de metal | 226 | 233 | 235 | 244 | 237 | 212 | 188 | 215 | 245 | 272 | 294 | 316 | 325 | 308 | 315 | 319 | 322 | 320
+R30: 29 | Maquinaria y equipo | 103 | 108 | 116 | 119 | 115 | 102 | 100 | 105 | 124 | 124 | 137 | 143 | 146 | 141 | 142 | 139 | 137 | 134
+R31: 30 | Maquinaria de oficina | 7 | 8 | 8 | 6 | 7 | 4 | s.d. | s.d. | 4 | 6 | 9 | 10 | 7 | 6 | 7 | 7 | 5 | 6
+R32: 31 | Aparatos eléctricos | 30 | 31 | 31 | 27 | 27 | 29 | 26 | 26 | 31 | 30 | 32 | 29 | 30 | 29 | 36 | 38 | 36 | 39
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | 5 | 7 | 5 | s.d. | s.d. | s.d. | s.d. | 4 | 5 | 4 | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | 12 | 13 | 13 | 11 | 10 | 9 | 6 | 6 | 8 | 9 | 10 | 11 | 11 | 12 | 11 | 10 | 11 | 14
+R35: 34 | Automotores | 41 | 41 | 40 | 38 | 33 | 30 | 27 | 28 | 36 | 36 | 42 | 41 | 41 | 39 | 38 | 40 | 36 | 40
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 1014 | 1020 | 996 | 987 | 977 | 975 | 937 | 985 | 1045 | 1073 | 1106 | 1159 | 1183 | 1208 | 1224 | 1243 | 1271 | 1275 | 1300 | 1325 | 1365 | 1383 | 1368 | 1287 | 1245 | 1262 | 1313 | 1272
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 1444 | 1504 | 1527 | 1560 | 1585 | 1536 | 1457 | 1585 | 1786 | 1899 | 1966 | 2066 | 2099 | 2123 | 2105 | 2141 | 2118 | 2162 | 2148 | 2140 | 2120 | 2157 | 2145 | 1942 | 1845 | 1911 | 1977 | 1777
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Misiones · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: MISIONES
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 1389 | 1338 | 1281 | 1276 | 1253 | 1169 | 1056 | 1116 | 1227 | 1321 | 1420 | 1470 | 1488 | 1504 | 1458 | 1414 | 1390 | 1409
+R7: 1 | Agricultura y ganaderia | 1153 | 1093 | 1031 | 1013 | 993 | 904 | 803 | 855 | 942 | 1021 | 1102 | 1148 | 1168 | 1198 | 1168 | 1131 | 1113 | 1147
+R8: 2 | Silvicultura, extracción de madera | 236 | 245 | 250 | 263 | 260 | 265 | 253 | 261 | 285 | 300 | 318 | 322 | 320 | 306 | 290 | 283 | 277 | 262
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 20 | 22 | 18 | 18 | 21 | 22 | 12 | 15 | 15 | 18 | 20 | 22 | 24 | 24 | 26 | 25 | 28 | 38
+R12: 11 | Extraccion de petroleo crudo y gas natural | 6 | 4 | s.d. | s.d. | 4 | 6 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+R14: 14 | Explotacion de otras minas y canteras | 14 | 18 | s.d. | s.d. | 17 | 16 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R15: D | INDUSTRIA MANUFACTURERA | 914 | 936 | 895 | 897 | 856 | 815 | 761 | 890 | 982 | 1034 | 1090 | 1114 | 1151 | 1123 | 1143 | 1177 | 1181 | 1175
+R16: 15 | Alimentos | 300 | 308 | 287 | 270 | 277 | 286 | 262 | 281 | 300 | 311 | 322 | 327 | 348 | 351 | 355 | 355 | 371 | 373
+R17: 16 | Tabaco | 5 | 5 | 5 | 6 | 6 | 6 | 5 | 5 | 6 | 7 | 6 | 6 | 7 | 7 | 7 | 7 | 7 | 6
+R18: 17 | Productos textiles | 5 | 6 | 8 | 8 | 7 | 5 | 6 | 4 | 6 | 6 | 7 | 7 | 10 | 9 | 12 | 10 | 9 | 8
+R19: 18 | Confecciones | 10 | 12 | 9 | 11 | 8 | 5 | 6 | 6 | s.d. | 5 | 5 | 8 | 11 | 14 | 18 | 13 | 10 | 12
+R20: 19 | Calzado | 9 | 6 | 6 | 7 | 6 | 5 | 4 | 6 | 5 | 6 | 5 | 7 | 6 | 7 | 7 | 6 | 7 | 8
+R21: 20 | Madera | 331 | 331 | 315 | 320 | 306 | 272 | 265 | 344 | 399 | 410 | 436 | 430 | 443 | 418 | 424 | 444 | 433 | 421
+R22: 21 | Papel | 13 | 13 | 11 | 11 | 11 | 12 | 11 | 8 | 11 | 10 | 11 | 10 | 10 | 8 | 8 | 8 | 10 | 10
+R23: 22 | Edición | 29 | 29 | 37 | 37 | 32 | 29 | 26 | 26 | 29 | 34 | 40 | 41 | 36 | 36 | 39 | 45 | 45 | 45
+R24: 23 | Productos de petróleo | 4 | 4 | 4 | 4 | 4 | 4 | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 32 | 33 | 33 | 42 | 42 | 42 | 38 | 38 | 40 | 37 | 38 | 35 | 35 | 35 | 39 | 36 | 35 | 32
+R26: 25 | Productos de caucho y plástico | 11 | 15 | 13 | 13 | 12 | 12 | 12 | 12 | 12 | 13 | 12 | 14 | 14 | 13 | 14 | 15 | 16 | 18
+R27: 26 | Otros minerales no metálicos | 25 | 26 | 25 | 27 | 24 | 23 | 21 | 27 | 27 | 34 | 37 | 45 | 47 | 47 | 48 | 49 | 48 | 47
+R28: 27 | Metales comunes | 4 | 5 | 4 | 4 | 5 | 5 | 6 | 5 | 5 | 4 | 5 | 6 | 5 | 5 | s.d. | 4 | s.d. | 4
+R29: 28 | Otros productos de metal | 55 | 61 | 64 | 64 | 57 | 54 | 47 | 59 | 67 | 68 | 76 | 82 | 87 | 89 | 78 | 86 | 85 | 89
+R30: 29 | Maquinaria y equipo | 29 | 28 | 24 | 26 | 24 | 22 | 18 | 23 | 22 | 28 | 34 | 34 | 29 | 29 | 30 | 32 | 31 | 34
+R31: 30 | Maquinaria de oficina | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 5 | 4 | 5 | 5 | 4 | s.d. | s.d. | s.d. | s.d. | 4
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | 4 | 5 | s.d.
+R35: 34 | Automotores | 8 | 10 | 7 | 8 | 4 | 6 | 6 | 5 | 6 | 7 | 6 | 5 | 4 | 5 | 5 | 5 | 6 | 7
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 300 | 308 | 287 | 270 | 277 | 286 | 262 | 281 | 300 | 311 | 322 | 327 | 348 | 351 | 355 | 355 | 371 | 373 | 384 | 383 | 380 | 379 | 367 | 363 | 353 | 353 | 369 | 382
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 528 | 558 | 560 | 570 | 582 | 572 | 502 | 560 | 648 | 718 | 799 | 787 | 808 | 798 | 796 | 818 | 810 | 825 | 802 | 809 | 788 | 789 | 788 | 747 | 716 | 686 | 711 | 752
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Neuquen · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: NEUQUEN
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 425 | 391 | 494 | 465 | 361 | 353 | 356 | 354 | 392 | 404 | 423 | 426 | 428 | 415 | 411 | 404 | 403 | 395
+R7: 1 | Agricultura y ganaderia | 415 | 380 | 467 | 441 | 353 | 345 | 346 | 343 | 381 | 394 | 411 | 413 | 414 | 402 | 400 | 394 | 392 | 384
+R8: 2 | Silvicultura, extracción de madera | 10 | 11 | 27 | 24 | 8 | 8 | 10 | 11 | 11 | 10 | 12 | 13 | 14 | 13 | 11 | 10 | 11 | 11
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | 8 | 9 | 8 | 7 | 5 | s.d. | s.d. | 4 | 5
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | 8 | 9 | 8 | 7 | 5 | s.d. | s.d. | 4 | 5
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 110 | 114 | 116 | 119 | 121 | 121 | 113 | 119 | 132 | 152 | 164 | 169 | 175 | 174 | 180 | 179 | 190 | 209
+R12: 11 | Extraccion de petroleo crudo y gas natural | 79 | 85 | 84 | 89 | 101 | 100 | 92 | 98 | 109 | 123 | 134 | 142 | 146 | 142 | 148 | 150 | 160 | 174
+R13: 13 | Extraccion de minerales metaliferos | 7 | 4 | 4 | 6 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 24 | 25 | 28 | 24 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R15: D | INDUSTRIA MANUFACTURERA | 427 | 421 | 506 | 498 | 380 | 367 | 339 | 355 | 409 | 441 | 474 | 505 | 525 | 532 | 523 | 528 | 516 | 546
+R16: 15 | Alimentos | 149 | 146 | 184 | 181 | 133 | 121 | 108 | 113 | 126 | 131 | 136 | 153 | 152 | 158 | 163 | 163 | 163 | 174
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 8 | 6 | 8 | 5 | 4 | 6 | 4 | 6 | 7 | 7 | 9 | 7 | 8 | 10 | 10 | 9 | 10 | 10
+R19: 18 | Confecciones | 8 | 10 | 7 | 14 | 10 | 11 | 12 | 12 | 12 | 11 | 14 | 12 | 12 | 14 | 17 | 17 | 14 | 16
+R20: 19 | Calzado | s.d. | 4 | s.d. | 5 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R21: 20 | Madera | 36 | 37 | 62 | 57 | 27 | 24 | 23 | 25 | 32 | 28 | 30 | 30 | 31 | 30 | 29 | 29 | 27 | 29
+R22: 21 | Papel | 8 | 5 | 7 | 8 | 5 | 4 | 4 | 4 | 4 | 5 | 6 | 6 | 5 | 6 | 5 | 6 | 7 | 7
+R23: 22 | Edición | 31 | 27 | 30 | 33 | 32 | 31 | 28 | 30 | 29 | 39 | 40 | 43 | 47 | 43 | 48 | 48 | 46 | 45
+R24: 23 | Productos de petróleo | 4 | 4 | 5 | s.d. | 4 | 7 | 6 | 7 | 6 | 6 | 7 | 5 | 5 | 6 | 5 | 5 | 6 | 6
+R25: 24 | Productos químicos | 45 | 48 | 49 | 55 | 53 | 51 | 45 | 41 | 45 | 44 | 46 | 49 | 46 | 49 | 47 | 48 | 46 | 47
+R26: 25 | Productos de caucho y plástico | 11 | 12 | 10 | 12 | 7 | 7 | 7 | 9 | 13 | 13 | 16 | 14 | 14 | 14 | 14 | 16 | 13 | 15
+R27: 26 | Otros minerales no metálicos | 26 | 23 | 33 | 32 | 24 | 20 | 19 | 18 | 22 | 27 | 22 | 22 | 25 | 24 | 23 | 22 | 23 | 24
+R28: 27 | Metales comunes | s.d. | s.d. | 5 | 4 | s.d. | 4 | 6 | 8 | 10 | 8 | 11 | 12 | 9 | 8 | 8 | 9 | 7 | 6
+R29: 28 | Otros productos de metal | 43 | 49 | 45 | 40 | 38 | 41 | 40 | 45 | 55 | 67 | 69 | 78 | 94 | 92 | 80 | 82 | 79 | 83
+R30: 29 | Maquinaria y equipo | 17 | 12 | 20 | 19 | 18 | 18 | 18 | 20 | 19 | 24 | 27 | 27 | 26 | 27 | 28 | 28 | 26 | 25
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | 6 | 5 | 4 | s.d. | 4 | 4 | s.d. | s.d. | s.d. | s.d. | 4 | 6 | 6 | 5 | 4 | 4 | 5 | 6
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | 5 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | 6 | 6 | 7 | 5 | 6 | 5 | 6 | 7 | 8 | 9
+R35: 34 | Automotores | 4 | s.d. | 6 | 6 | s.d. | s.d. | s.d. | s.d. | 4 | 5 | 5 | 5 | 5 | 7 | 5 | 7 | 7 | 10
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 149 | 146 | 184 | 181 | 133 | 121 | 108 | 113 | 126 | 131 | 136 | 153 | 152 | 158 | 163 | 163 | 163 | 174 | 183 | 188 | 193 | 204 | 193 | 198 | 195 | 198 | 215 | 232
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 549 | 567 | 619 | 622 | 609 | 636 | 593 | 674 | 787 | 841 | 918 | 980 | 1016 | 1004 | 995 | 1018 | 993 | 1005 | 1007 | 1032 | 1023 | 1021 | 991 | 982 | 953 | 955 | 931 | 933
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Rio Negro · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: RIO NEGRO
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 1856 | 1774 | 1704 | 1660 | 1617 | 1549 | 1512 | 1602 | 1673 | 1728 | 1766 | 1785 | 1759 | 1699 | 1643 | 1623 | 1587 | 1577
+R7: 1 | Agricultura y ganaderia | 1843 | 1766 | 1694 | 1648 | 1609 | 1539 | 1504 | 1592 | 1657 | 1709 | 1751 | 1766 | 1734 | 1676 | 1621 | 1600 | 1570 | 1562
+R8: 2 | Silvicultura, extracción de madera | 13 | 8 | 10 | 12 | 8 | 10 | 8 | 10 | 16 | 19 | 15 | 19 | 25 | 23 | 22 | 23 | 17 | 15
+R9: B | PESCA Y SERVICIOS CONEXOS | 13 | 14 | 12 | 14 | 10 | 15 | 16 | 24 | 25 | 19 | 19 | 22 | 20 | 25 | 23 | 21 | 17 | 14
+R10: 5 | Pesca y actividades relacionadas con la pesca | 13 | 14 | 12 | 14 | 10 | 15 | 16 | 24 | 25 | 19 | 19 | 22 | 20 | 25 | 23 | 21 | 17 | 14
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 57 | 59 | 51 | 59 | 56 | 58 | 56 | 58 | 75 | 77 | 82 | 88 | 90 | 92 | 97 | 99 | 98 | 105
+R12: 11 | Extraccion de petroleo crudo y gas natural | 28 | 28 | 26 | 32 | 30 | 33 | 34 | 33 | 45 | 45 | 47 | 52 | 53 | 53 | 55 | 59 | 63 | 66
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | 4 | s.d. | s.d. | s.d. | 4 | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 28 | s.d. | 32 | s.d. | s.d. | s.d. | 36 | s.d. | s.d.
+R15: D | INDUSTRIA MANUFACTURERA | 513 | 507 | 481 | 514 | 488 | 466 | 440 | 477 | 539 | 554 | 593 | 610 | 657 | 644 | 642 | 645 | 657 | 702
+R16: 15 | Alimentos | 228 | 230 | 221 | 241 | 222 | 207 | 200 | 215 | 232 | 244 | 256 | 265 | 294 | 294 | 296 | 302 | 304 | 326
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 9 | 10 | 8 | 9 | 10 | 6 | 5 | 8 | 10 | 10 | 9 | 10 | 10 | 8 | 11 | 8 | 10 | 10
+R19: 18 | Confecciones | 20 | 19 | 12 | 17 | 14 | 10 | 9 | 10 | 11 | 10 | 13 | 13 | 15 | 18 | 17 | 14 | 12 | 17
+R20: 19 | Calzado | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d.
+R21: 20 | Madera | 63 | 55 | 57 | 59 | 52 | 50 | 48 | 58 | 73 | 69 | 69 | 74 | 76 | 76 | 74 | 71 | 73 | 74
+R22: 21 | Papel | 8 | 7 | 6 | 9 | 9 | 9 | 10 | 8 | 12 | 12 | 13 | 11 | 11 | 8 | 8 | 9 | 9 | 11
+R23: 22 | Edición | 28 | 27 | 31 | 31 | 32 | 32 | 31 | 34 | 33 | 37 | 40 | 38 | 44 | 41 | 42 | 46 | 41 | 44
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 31 | 31 | 28 | 34 | 36 | 38 | 36 | 34 | 33 | 30 | 31 | 35 | 36 | 35 | 35 | 36 | 36 | 38
+R26: 25 | Productos de caucho y plástico | 8 | 9 | 9 | 8 | 8 | 11 | 10 | 10 | 13 | 12 | 11 | 9 | 11 | 10 | 11 | 10 | 11 | 11
+R27: 26 | Otros minerales no metálicos | 25 | 25 | 22 | 19 | 20 | 20 | 15 | 17 | 24 | 25 | 30 | 27 | 30 | 30 | 32 | 35 | 37 | 39
+R28: 27 | Metales comunes | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 5
+R29: 28 | Otros productos de metal | 40 | 45 | 45 | 41 | 41 | 39 | 37 | 40 | 43 | 40 | 47 | 52 | 56 | 52 | 48 | 51 | 54 | 56
+R30: 29 | Maquinaria y equipo | 21 | 21 | 17 | 19 | 16 | 15 | 13 | 12 | 12 | 14 | 17 | 20 | 19 | 19 | 19 | 19 | 20 | 22
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d.
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | s.d. | s.d. | s.d. | 4 | 4 | 4 | s.d. | 5 | 7 | 8 | 10 | 10 | 10 | 9 | 9 | 9 | 10 | 11
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 228 | 230 | 221 | 241 | 222 | 207 | 200 | 215 | 232 | 244 | 256 | 265 | 294 | 294 | 296 | 302 | 304 | 326 | 340 | 348 | 359 | 355 | 356 | 352 | 339 | 352 | 391 | 378
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 625 | 655 | 679 | 697 | 686 | 662 | 633 | 698 | 834 | 893 | 945 | 954 | 990 | 972 | 979 | 1005 | 980 | 961 | 958 | 977 | 960 | 949 | 918 | 877 | 852 | 847 | 875 | 847
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: San Juan · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: SAN JUAN
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 1428 | 1474 | 1531 | 1547 | 1520 | 1439 | 1381 | 1373 | 1447 | 1483 | 1526 | 1548 | 1593 | 1594 | 1586 | 1577 | 1556 | 1512
+R7: 1 | Agricultura y ganaderia | 1413 | 1460 | 1516 | 1532 | 1506 | 1425 | 1371 | 1364 | 1438 | 1475 | 1519 | 1543 | 1588 | 1589 | 1580 | 1572 | 1551 | 1507
+R8: 2 | Silvicultura, extracción de madera | 15 | 14 | 15 | 15 | 14 | 14 | 10 | 9 | 9 | 8 | 7 | 5 | 5 | 5 | 6 | 5 | 5 | 5
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 46 | 48 | 42 | 43 | 51 | 46 | 39 | 37 | 44 | 49 | 53 | 62 | 64 | 54 | 64 | 68 | 66 | 65
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | 7 | s.d. | s.d. | s.d. | 7 | 7 | 6 | 7 | 6 | 5 | 7 | 8 | 9 | 9
+R14: 14 | Explotacion de otras minas y canteras | 36 | 39 | 32 | 35 | 40 | 36 | 33 | 30 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R15: D | INDUSTRIA MANUFACTURERA | 629 | 647 | 697 | 722 | 679 | 638 | 588 | 625 | 667 | 702 | 723 | 751 | 778 | 808 | 812 | 840 | 830 | 830
+R16: 15 | Alimentos | 285 | 284 | 300 | 316 | 310 | 289 | 267 | 290 | 309 | 318 | 318 | 323 | 338 | 367 | 363 | 374 | 368 | 367
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 16 | 17 | 23 | 20 | 21 | 19 | 16 | 21 | 19 | 19 | 19 | 23 | 24 | 24 | 24 | 23 | 21 | 21
+R19: 18 | Confecciones | 27 | 29 | 31 | 30 | 30 | 30 | 25 | 20 | 25 | 25 | 24 | 26 | 30 | 32 | 30 | 29 | 31 | 28
+R20: 19 | Calzado | 6 | 8 | 7 | 7 | 7 | 6 | 6 | 6 | 5 | 6 | 7 | 6 | 6 | 7 | 8 | 10 | 11 | 12
+R21: 20 | Madera | 17 | 23 | 23 | 27 | 26 | 24 | 25 | 27 | 29 | 28 | 31 | 34 | 37 | 37 | 35 | 33 | 30 | 32
+R22: 21 | Papel | 13 | 13 | 13 | 14 | 11 | 13 | 13 | 14 | 13 | 14 | 15 | 13 | 14 | 12 | 14 | 14 | 13 | 14
+R23: 22 | Edición | 28 | 28 | 32 | 37 | 31 | 24 | 25 | 26 | 26 | 34 | 36 | 42 | 41 | 41 | 40 | 44 | 42 | 38
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 56 | 56 | 59 | 64 | 62 | 61 | 54 | 53 | 55 | 53 | 51 | 47 | 46 | 47 | 49 | 48 | 50 | 51
+R26: 25 | Productos de caucho y plástico | 23 | 25 | 28 | 25 | 23 | 21 | 19 | 20 | 19 | 20 | 22 | 23 | 22 | 23 | 24 | 25 | 26 | 23
+R27: 26 | Otros minerales no metálicos | 37 | 37 | 35 | 43 | 34 | 34 | 29 | 32 | 37 | 41 | 50 | 53 | 61 | 57 | 56 | 63 | 59 | 59
+R28: 27 | Metales comunes | 5 | 5 | 7 | 6 | 4 | s.d. | s.d. | s.d. | 4 | 9 | 7 | 8 | 7 | 7 | 7 | 7 | 6 | 5
+R29: 28 | Otros productos de metal | 43 | 51 | 57 | 58 | 52 | 51 | 47 | 52 | 63 | 68 | 70 | 75 | 75 | 76 | 85 | 86 | 86 | 89
+R30: 29 | Maquinaria y equipo | 20 | 18 | 21 | 18 | 17 | 13 | 16 | 15 | 17 | 15 | 16 | 18 | 19 | 20 | 23 | 26 | 25 | 27
+R31: 30 | Maquinaria de oficina | s.d. | 4 | 5 | 5 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | 7 | 4 | 5 | 6 | 5 | 7 | 6 | 5 | 7 | 8 | 9 | 8 | 9 | 9 | 8 | 9 | 11 | 11
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 5 | 5 | 5 | 4 | 4 | 5 | 5 | 5 | 4 | 4 | 4
+R35: 34 | Automotores | 9 | 9 | 12 | 11 | 9 | 8 | 9 | 9 | 10 | 9 | 10 | 10 | 9 | 8 | 9 | 9 | 8 | 9
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 285 | 284 | 300 | 316 | 310 | 289 | 267 | 290 | 309 | 318 | 318 | 323 | 338 | 367 | 363 | 374 | 368 | 367 | 364 | 367 | 377 | 371 | 360 | 348 | 340 | 330 | 338 | 342
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 284 | 307 | 350 | 370 | 375 | 376 | 349 | 381 | 409 | 462 | 511 | 550 | 556 | 573 | 622 | 639 | 652 | 666 | 663 | 649 | 625 | 637 | 631 | 606 | 556 | 567 | 607 | 591
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Salta · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: SALTA
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 1119 | 1108 | 1046 | 1100 | 1172 | 1158 | 1116 | 1183 | 1278 | 1326 | 1429 | 1544 | 1606 | 1698 | 1781 | 1836 | 1800 | 1884
+R7: 1 | Agricultura y ganaderia | 1098 | 1087 | 1029 | 1080 | 1150 | 1140 | 1101 | 1167 | 1258 | 1306 | 1406 | 1518 | 1586 | 1672 | 1752 | 1807 | 1774 | 1862
+R8: 2 | Silvicultura, extracción de madera | 21 | 21 | 17 | 20 | 22 | 18 | 15 | 16 | 20 | 20 | 23 | 26 | 20 | 26 | 29 | 29 | 26 | 22
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 57 | 61 | 64 | 70 | 73 | 69 | 63 | 66 | 72 | 78 | 83 | 90 | 94 | 95 | 118 | 109 | 97 | 95
+R12: 11 | Extraccion de petroleo crudo y gas natural | 23 | 23 | 28 | 37 | 39 | 41 | 37 | 36 | 38 | 39 | 36 | 39 | 41 | 44 | 44 | 41 | 35 | 35
+R13: 13 | Extraccion de minerales metaliferos | 4 | 5 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 6 | 5 | 5 | 7
+R14: 14 | Explotacion de otras minas y canteras | 30 | 33 | 32 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 47 | 68 | 63 | 57 | 53
+R15: D | INDUSTRIA MANUFACTURERA | 498 | 474 | 486 | 523 | 533 | 492 | 450 | 452 | 477 | 519 | 567 | 606 | 635 | 647 | 684 | 730 | 713 | 733
+R16: 15 | Alimentos | 212 | 203 | 212 | 215 | 225 | 208 | 198 | 195 | 207 | 225 | 242 | 256 | 278 | 293 | 311 | 332 | 327 | 343
+R17: 16 | Tabaco | 5 | 4 | s.d. | 6 | 5 | 5 | 5 | 5 | 5 | 6 | 7 | 6 | 6 | 6 | 6 | 6 | 5 | 6
+R18: 17 | Productos textiles | 5 | 7 | 6 | 7 | 6 | 6 | 5 | 7 | 7 | 10 | 10 | 10 | 8 | 9 | 9 | 9 | 12 | 10
+R19: 18 | Confecciones | 16 | 11 | 11 | 16 | 16 | 11 | 6 | 6 | 6 | 6 | 8 | 10 | 15 | 15 | 15 | 17 | 15 | 15
+R20: 19 | Cuero y calzado | 12 | 10 | 9 | 11 | 12 | 13 | 11 | 9 | 10 | 10 | 10 | 10 | 11 | 11 | 12 | 11 | 10 | 10
+R21: 20 | Madera | 52 | 50 | 46 | 46 | 49 | 45 | 44 | 48 | 52 | 54 | 60 | 67 | 64 | 64 | 65 | 71 | 64 | 63
+R22: 21 | Papel | 4 | 5 | 5 | 4 | 5 | 4 | 4 | 4 | 6 | 7 | 6 | 5 | 5 | s.d. | s.d. | 4 | s.d. | 5
+R23: 22 | Edición | 25 | 26 | 24 | 26 | 28 | 26 | 22 | 27 | 27 | 26 | 31 | 36 | 37 | 38 | 36 | 42 | 41 | 44
+R24: 23 | Productos de petróleo | 4 | s.d. | s.d. | 5 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 48 | 43 | 47 | 60 | 58 | 61 | 49 | 45 | 42 | 44 | 51 | 53 | 50 | 45 | 45 | 51 | 52 | 48
+R26: 25 | Productos de caucho y plástico | 7 | 9 | 9 | 13 | 13 | 12 | 9 | 10 | 10 | 10 | 10 | 9 | 11 | 11 | 13 | 11 | 11 | 11
+R27: 26 | Otros minerales no metálicos | 21 | 21 | 18 | 22 | 23 | 17 | 17 | 17 | 16 | 21 | 23 | 21 | 27 | 28 | 41 | 33 | 32 | 27
+R28: 27 | Metales comunes | 4 | s.d. | 4 | 6 | 5 | 5 | 5 | 7 | 7 | 8 | 8 | 8 | 8 | 10 | 9 | 8 | 8 | 9
+R29: 28 | Otros productos de metal | 34 | 32 | 32 | 32 | 34 | 29 | 31 | 30 | 36 | 41 | 44 | 55 | 54 | 50 | 52 | 58 | 55 | 59
+R30: 29 | Maquinaria y equipo | 14 | 12 | 16 | 14 | 12 | 11 | 10 | 9 | 11 | 11 | 12 | 12 | 14 | 14 | 15 | 19 | 17 | 19
+R31: 30 | Maquinaria de oficina | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 4 | 4 | 4
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d.
+R35: 34 | Automotores | 5 | 4 | s.d. | 4 | 4 | s.d. | s.d. | 4 | 5 | 6 | 7 | 6 | 6 | 7 | 7 | 5 | 4 | 7
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 212 | 203 | 212 | 215 | 225 | 208 | 198 | 195 | 207 | 225 | 242 | 256 | 278 | 293 | 311 | 332 | 327 | 343 | 347 | 345 | 353 | 350 | 338 | 333 | 314 | 314 | 333 | 348
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 485 | 531 | 545 | 606 | 670 | 661 | 603 | 629 | 693 | 761 | 836 | 884 | 927 | 935 | 943 | 1000 | 959 | 996 | 965 | 978 | 943 | 937 | 911 | 852 | 794 | 795 | 832 | 822
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: San Luis · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: SAN LUIS
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 598 | 569 | 682 | 696 | 566 | 561 | 583 | 630 | 675 | 701 | 705 | 718 | 732 | 735 | 748 | 743 | 709 | 716
+R7: 1 | Agricultura y ganaderia | 592 | 563 | 677 | 691 | 559 | 555 | 579 | 626 | 668 | 695 | 698 | 708 | 720 | 723 | 735 | 730 | 697 | 703
+R8: 2 | Silvicultura, extracción de madera | 6 | 6 | 5 | 5 | 7 | 6 | 4 | 4 | 7 | 6 | 7 | 10 | 12 | 12 | 13 | 13 | 12 | 13
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 34 | 27 | 26 | 28 | 23 | 20 | 18 | 19 | 17 | 23 | 29 | 37 | 38 | 33 | 34 | 33 | 29 | 31
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | 8 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 24 | 21 | 18 | s.d. | 19 | 16 | 16 | 15 | 13 | 19 | 26 | 33 | 34 | 28 | 28 | 29 | 26 | 25
+R15: D | INDUSTRIA MANUFACTURERA | 639 | 653 | 711 | 733 | 607 | 553 | 505 | 503 | 516 | 520 | 530 | 550 | 550 | 558 | 544 | 544 | 553 | 583
+R16: 15 | Alimentos | 108 | 112 | 134 | 146 | 118 | 110 | 96 | 102 | 110 | 114 | 125 | 132 | 133 | 146 | 143 | 151 | 158 | 175
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 76 | 78 | 75 | 74 | 62 | 56 | 51 | 51 | 48 | 49 | 49 | 49 | 47 | 46 | 44 | 43 | 42 | 42
+R19: 18 | Confecciones | 37 | 38 | 33 | 34 | 28 | 25 | 17 | 22 | 24 | 25 | 24 | 27 | 26 | 24 | 23 | 22 | 23 | 22
+R20: 19 | Cuero y calzado | 15 | 15 | 13 | 13 | 11 | 10 | 8 | 8 | 8 | 7 | 6 | 6 | 6 | 6 | 5 | 6 | 5 | 5
+R21: 20 | Madera | 13 | 11 | 12 | 12 | 9 | 10 | 10 | 10 | 14 | 17 | 16 | 16 | 20 | 19 | 17 | 20 | 22 | 21
+R22: 21 | Papel | 14 | 14 | 17 | 12 | 12 | 12 | 12 | 11 | 10 | 9 | 10 | 8 | 9 | 7 | 7 | 7 | 8 | 10
+R23: 22 | Edición | 21 | 20 | 33 | 31 | 23 | 18 | 17 | 23 | 16 | 19 | 17 | 18 | 15 | 16 | 17 | 21 | 19 | 21
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 82 | 83 | 79 | 81 | 80 | 75 | 66 | 62 | 64 | 64 | 67 | 68 | 64 | 64 | 62 | 58 | 58 | 61
+R26: 25 | Productos de caucho y plástico | 60 | 63 | 69 | 71 | 56 | 49 | 51 | 49 | 49 | 46 | 43 | 45 | 41 | 40 | 41 | 40 | 41 | 40
+R27: 26 | Otros minerales no metálicos | 28 | 32 | 42 | 43 | 33 | 29 | 32 | 32 | 34 | 38 | 38 | 43 | 41 | 39 | 40 | 36 | 39 | 44
+R28: 27 | Metales comunes | 24 | 24 | 25 | 27 | 26 | 23 | 21 | 19 | 20 | 20 | 18 | 16 | 17 | 16 | 16 | 15 | 13 | 14
+R29: 28 | Otros productos de metal | 66 | 66 | 73 | 80 | 69 | 63 | 55 | 53 | 60 | 57 | 61 | 66 | 68 | 67 | 67 | 67 | 67 | 73
+R30: 29 | Maquinaria y equipo | 34 | 34 | 41 | 40 | 30 | 28 | 24 | 23 | 20 | 19 | 17 | 17 | 18 | 19 | 19 | 18 | 17 | 15
+R31: 30 | Maquinaria de oficina | 5 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 4 | 4 | 4 | 4
+R32: 31 | Aparatos eléctricos | 10 | 14 | 13 | 11 | 10 | 10 | 8 | 7 | 6 | 4 | 4 | 5 | 5 | 5 | 4 | 4 | 4 | 4
+R33: 32 | Radio y televisión | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | 17 | 15 | 15 | 19 | 13 | 13 | 12 | 9 | 11 | 9 | 10 | 8 | 8 | 8 | 7 | 7 | 7 | 6
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 108 | 112 | 134 | 146 | 118 | 110 | 96 | 102 | 110 | 114 | 125 | 132 | 133 | 146 | 143 | 151 | 158 | 175 | 175 | 184 | 161 | 167 | 163 | 148 | 139 | 141 | 156 | 160
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 283 | 285 | 344 | 358 | 348 | 347 | 346 | 362 | 386 | 413 | 453 | 474 | 481 | 494 | 509 | 511 | 503 | 505 | 490 | 501 | 485 | 474 | 471 | 453 | 430 | 410 | 433 | 439
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Santa Cruz · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: SANTA CRUZ
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 404 | 384 | 407 | 408 | 358 | 316 | 331 | 334 | 364 | 389 | 401 | 394 | 381 | 360 | 358 | 338 | 344 | 332
+R7: 1 | Agricultura y ganaderia | s.d. | s.d. | s.d. | 404 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 390 | s.d. | s.d. | s.d. | s.d. | 339 | 328
+R8: 2 | Silvicultura, extracción de madera | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | 5 | 4
+R9: B | PESCA Y SERVICIOS CONEXOS | 50 | 47 | 34 | 32 | 35 | 30 | 38 | 38 | 51 | 62 | 65 | 53 | 47 | 38 | 40 | 45 | 48 | 50
+R10: 5 | Pesca y actividades relacionadas con la pesca | 50 | 47 | 34 | 32 | 35 | 30 | 38 | 38 | 51 | 62 | 65 | 53 | 47 | 38 | 40 | 45 | 48 | 50
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 84 | 88 | 82 | 87 | 87 | 88 | 88 | 91 | 99 | 109 | 110 | 123 | 127 | 131 | 129 | 137 | 135 | 137
+R12: 11 | Extraccion de petroleo crudo y gas natural | 73 | 74 | 69 | 73 | 75 | 76 | 75 | 78 | 83 | 90 | 89 | 101 | 104 | 103 | 104 | 108 | 108 | 112
+R13: 13 | Extraccion de minerales metaliferos | 4 | 5 | 5 | 5 | 4 | 4 | 5 | 4 | 6 | 7 | 8 | 8 | 8 | 9 | 8 | 10 | 11 | 10
+R14: 14 | Explotacion de otras minas y canteras | 7 | 9 | 8 | 9 | 8 | 8 | 8 | 9 | 10 | 12 | 13 | 14 | 15 | 19 | 17 | 19 | 16 | 15
+R15: D | INDUSTRIA MANUFACTURERA | 139 | 144 | 137 | 148 | 140 | 137 | 126 | 146 | 163 | 180 | 201 | 241 | 249 | 247 | 239 | 246 | 246 | 261
+R16: 15 | Alimentos | 49 | 53 | 55 | 62 | 62 | 58 | 59 | 69 | 69 | 73 | 73 | 91 | 96 | 100 | 98 | 105 | 110 | 118
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 4 | 5 | 4 | 5 | s.d. | 4 | 4
+R19: 18 | Confecciones | s.d. | 4 | s.d. | 5 | 4 | 4 | s.d. | 5 | 4 | 6 | 6 | 6 | 6 | 6 | s.d. | s.d. | s.d. | s.d.
+R20: 19 | Cuero y calzado | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R21: 20 | Madera | 6 | 6 | 6 | 6 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 9 | 7 | 8 | 6 | 5 | s.d. | 5
+R22: 21 | Papel | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R23: 22 | Edición | 15 | 13 | 18 | 15 | 12 | 13 | 10 | 12 | 12 | 14 | 17 | 17 | 16 | 17 | 18 | 20 | 20 | 22
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 12 | 12 | 9 | 8 | 7 | 9 | 8 | 5 | 9 | 10 | 14 | 15 | 15 | 14 | 15 | 15 | 15 | 15
+R26: 25 | Productos de caucho y plástico | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R27: 26 | Otros minerales no metálicos | 6 | s.d. | 4 | 5 | 4 | 7 | 6 | 4 | 5 | 7 | 8 | 10 | 11 | 8 | 10 | 10 | 9 | 10
+R28: 27 | Metales comunes | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R29: 28 | Otros productos de metal | 21 | 22 | 19 | 22 | 24 | 16 | 13 | 18 | 25 | 23 | 30 | 34 | 41 | 38 | 36 | 39 | 35 | 37
+R30: 29 | Maquinaria y equipo | 8 | 8 | 6 | 6 | 5 | 5 | 7 | 7 | 8 | 8 | 11 | 12 | 12 | 13 | 10 | 10 | 11 | 11
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 49 | 53 | 55 | 62 | 62 | 58 | 59 | 69 | 69 | 73 | 73 | 91 | 96 | 100 | 98 | 105 | 110 | 118 | 129 | 133 | 138 | 142 | 136 | 137 | 128 | 133 | 137 | 149
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 246 | 249 | 300 | 294 | 296 | 287 | 262 | 296 | 343 | 385 | 406 | 439 | 455 | 451 | 459 | 472 | 471 | 478 | 487 | 502 | 472 | 460 | 433 | 422 | 394 | 396 | 397 | 392
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Santa Fe · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: SANTA FE
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 7184 | 7223 | 7070 | 7031 | 6786 | 6606 | 6609 | 7055 | 7553 | 8041 | 8356 | 8544 | 8674 | 8439 | 8519 | 8918 | 8785 | 8612
+R7: 1 | Agricultura y ganaderia | 7169 | 7208 | 7054 | 7016 | 6772 | 6594 | 6593 | 7039 | 7538 | 8023 | 8339 | 8519 | 8653 | 8418 | 8496 | 8894 | 8759 | 8588
+R8: 2 | Silvicultura, extracción de madera | 15 | 15 | 16 | 15 | 14 | 12 | 16 | 16 | 15 | 18 | 17 | 25 | 21 | 21 | 23 | 24 | 26 | 24
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | 4 | 5 | 8 | 8 | 7 | 6 | 8 | 9 | 5 | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | 4 | 5 | 8 | 8 | 7 | 6 | 8 | 9 | 5 | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 38 | 41 | 34 | 41 | 46 | 43 | 39 | 47 | 45 | 44 | 43 | 44 | 40 | 38 | 42 | 40 | 36 | 36
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 29 | 32 | 27 | 33 | 37 | 37 | 34 | 40 | 39 | 39 | 38 | 37 | 35 | 33 | 36 | 37 | 33 | 31
+R15: D | INDUSTRIA MANUFACTURERA | 5227 | 5321 | 5296 | 5224 | 5039 | 4743 | 4364 | 4819 | 5292 | 5671 | 6016 | 6226 | 6392 | 6301 | 6342 | 6433 | 6404 | 6363
+R16: 15 | Alimentos | 1230 | 1224 | 1190 | 1166 | 1148 | 1094 | 1057 | 1124 | 1208 | 1245 | 1286 | 1341 | 1385 | 1405 | 1430 | 1424 | 1444 | 1411
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 104 | 110 | 104 | 101 | 99 | 102 | 88 | 101 | 114 | 130 | 141 | 138 | 144 | 141 | 140 | 143 | 144 | 143
+R19: 18 | Confecciones | 212 | 214 | 199 | 187 | 181 | 164 | 139 | 156 | 184 | 207 | 211 | 233 | 233 | 228 | 223 | 219 | 208 | 202
+R20: 19 | Cuero y calzado | 109 | 105 | 109 | 106 | 98 | 85 | 72 | 92 | 97 | 104 | 114 | 119 | 120 | 111 | 110 | 117 | 117 | 126
+R21: 20 | Madera | 224 | 230 | 220 | 204 | 198 | 179 | 160 | 178 | 195 | 203 | 221 | 213 | 223 | 212 | 202 | 205 | 198 | 182
+R22: 21 | Papel | 81 | 86 | 84 | 78 | 77 | 76 | 75 | 77 | 82 | 92 | 99 | 98 | 95 | 95 | 97 | 97 | 101 | 102
+R23: 22 | Edición | 253 | 260 | 258 | 259 | 252 | 233 | 217 | 236 | 250 | 262 | 271 | 285 | 294 | 295 | 292 | 298 | 294 | 287
+R24: 23 | Productos de petróleo | 13 | 15 | 14 | 16 | 13 | 12 | 12 | 13 | 13 | 12 | 12 | 12 | 13 | 14 | 14 | 13 | 13 | 13
+R25: 24 | Productos químicos | 241 | 238 | 241 | 273 | 293 | 290 | 282 | 280 | 293 | 302 | 312 | 315 | 320 | 320 | 327 | 335 | 325 | 320
+R26: 25 | Productos de caucho y plástico | 219 | 225 | 233 | 248 | 243 | 227 | 224 | 252 | 270 | 292 | 312 | 328 | 329 | 324 | 334 | 343 | 341 | 351
+R27: 26 | Otros minerales no metálicos | 214 | 219 | 219 | 216 | 204 | 186 | 163 | 181 | 197 | 210 | 226 | 226 | 229 | 247 | 247 | 232 | 230 | 227
+R28: 27 | Metales comunes | 158 | 162 | 159 | 158 | 148 | 141 | 133 | 141 | 160 | 178 | 184 | 189 | 189 | 184 | 187 | 183 | 182 | 177
+R29: 28 | Otros productos de metal | 729 | 783 | 793 | 776 | 756 | 717 | 668 | 777 | 885 | 980 | 1056 | 1074 | 1123 | 1069 | 1100 | 1135 | 1128 | 1135
+R30: 29 | Maquinaria y equipo | 499 | 514 | 524 | 519 | 477 | 450 | 422 | 478 | 524 | 558 | 593 | 626 | 644 | 617 | 623 | 641 | 643 | 655
+R31: 30 | Maquinaria de oficina | 7 | 6 | 8 | 7 | 8 | 7 | s.d. | 12 | 16 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 20 | 17 | s.d.
+R32: 31 | Aparatos eléctricos | 98 | 98 | 96 | 90 | 84 | 83 | 71 | 85 | 92 | 95 | 101 | 110 | 112 | 112 | 111 | 111 | 111 | 109
+R33: 32 | Radio y televisión | 13 | 12 | 12 | 15 | 14 | 14 | 10 | 9 | 11 | 13 | 12 | 13 | 12 | 12 | 10 | s.d. | s.d. | 14
+R34: 33 | Instrumentos médicos | 47 | 47 | 52 | 50 | 47 | 47 | 44 | 45 | 54 | 57 | 52 | 60 | 65 | 64 | 64 | 67 | 67 | 63
+R35: 34 | Automotores | 216 | 221 | 228 | 228 | 217 | 208 | 203 | 222 | 245 | 262 | 284 | 296 | 304 | 289 | 285 | 290 | 276 | 272
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 1230 | 1224 | 1190 | 1166 | 1148 | 1094 | 1057 | 1124 | 1208 | 1245 | 1286 | 1341 | 1385 | 1405 | 1430 | 1424 | 1444 | 1411 | 1421 | 1455 | 1464 | 1441 | 1433 | 1443 | 1384 | 1386 | 1428 | 1435
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 2667 | 2796 | 2835 | 2921 | 3013 | 2986 | 2825 | 3018 | 3339 | 3642 | 3854 | 3993 | 4083 | 4039 | 4089 | 4121 | 4094 | 4091 | 3994 | 3999 | 3921 | 3870 | 3853 | 3709 | 3528 | 3484 | 3499 | 3391
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Santiago del Estero · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: SANTIAGO DEL ESTERO
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 638 | 637 | 596 | 671 | 663 | 623 | 561 | 610 | 663 | 714 | 732 | 795 | 834 | 856 | 862 | 912 | 887 | 880
+R7: 1 | Agricultura y ganaderia | 588 | 588 | 552 | 608 | 591 | 565 | 515 | 564 | 614 | 663 | 681 | 743 | 782 | 802 | 811 | 866 | 852 | 845
+R8: 2 | Silvicultura, extracción de madera | 50 | 49 | 44 | 63 | 72 | 58 | 46 | 46 | 49 | 51 | 51 | 52 | 52 | 54 | 51 | 46 | 35 | 35
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 7 | 9 | 10 | 7 | 6 | 6 | 5 | 6 | 8 | 9 | 11 | 13 | 17 | 27 | 27 | 22 | 12 | 13
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 6 | 9 | 8 | 6 | 5 | 4 | 4 | 6 | 7 | 8 | 10 | 12 | 17 | 27 | 26 | 21 | 11 | 11
+R15: D | INDUSTRIA MANUFACTURERA | 348 | 342 | 317 | 318 | 318 | 296 | 264 | 284 | 288 | 296 | 318 | 333 | 355 | 372 | 383 | 384 | 398 | 405
+R16: 15 | Alimentos | 169 | 166 | 160 | 144 | 144 | 136 | 128 | 144 | 140 | 140 | 148 | 159 | 168 | 175 | 181 | 189 | 189 | 190
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 10 | 11 | 11 | 11 | 12 | 11 | 10 | 11 | 10 | 9 | 13 | 13 | 13 | 15 | 16 | 14 | 16 | 16
+R19: 18 | Confecciones | 7 | 8 | 6 | 9 | 7 | 6 | 6 | 4 | s.d. | 4 | 4 | 4 | 5 | 7 | 7 | 5 | 7 | 10
+R20: 19 | Cuero y calzado | 5 | 7 | 4 | 5 | 7 | 8 | 7 | 8 | 10 | 9 | 9 | 9 | 9 | 9 | 8 | 7 | 7 | 8
+R21: 20 | Madera | 16 | 19 | 13 | 14 | 17 | 16 | 14 | 16 | 21 | 18 | 20 | 20 | 18 | 18 | 19 | 18 | 20 | 22
+R22: 21 | Papel | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R23: 22 | Edición | 23 | 23 | 28 | 27 | 30 | 28 | 25 | 25 | 24 | 28 | 27 | 28 | 35 | 37 | 37 | 38 | 38 | 31
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | 4 | 5 | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 29 | 26 | 19 | 27 | 29 | 26 | 23 | 20 | 22 | 23 | 20 | 24 | 25 | 24 | 25 | 24 | 25 | 24
+R26: 25 | Productos de caucho y plástico | 8 | 6 | s.d. | 6 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 4 | 6 | 5 | 7 | 9 | 9 | 9
+R27: 26 | Otros minerales no metálicos | 19 | 20 | 22 | 22 | 24 | 16 | 12 | 11 | 12 | 13 | 14 | 17 | 17 | 25 | 19 | 17 | 20 | 19
+R28: 27 | Metales comunes | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R29: 28 | Otros productos de metal | 21 | 16 | 16 | 13 | 13 | 11 | 10 | 11 | 13 | 12 | 16 | 17 | 21 | 19 | 20 | 19 | 19 | 22
+R30: 29 | Maquinaria y equipo | s.d. | 5 | 4 | 5 | s.d. | s.d. | 4 | s.d. | s.d. | 5 | 5 | 4 | 5 | 4 | 4 | 4 | 4 | 7
+R31: 30 | Maquinaria de oficina | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R33: 32 | Radio y televisión | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4
+R35: 34 | Automotores | 6 | 5 | 5 | 6 | 4 | 5 | s.d. | 4 | 5 | 5 | 6 | s.d. | 4 | 4 | 4 | 4 | 4 | 6
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 169 | 166 | 160 | 144 | 144 | 136 | 128 | 144 | 140 | 140 | 148 | 159 | 168 | 175 | 181 | 189 | 189 | 190 | 196 | 192 | 198 | 211 | 204 | 199 | 189 | 179 | 186 | 176
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 233 | 233 | 231 | 240 | 252 | 252 | 211 | 233 | 246 | 283 | 301 | 336 | 360 | 374 | 399 | 400 | 415 | 408 | 414 | 422 | 397 | 420 | 412 | 363 | 329 | 336 | 370 | 355
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Tucuman · 94 filas × 127 columnas --
+R1:  |  |  | Volver al índice
+R2: TUCUMAN
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 1444 | 1357 | 1277 | 1261 | 1244 | 1196 | 1204 | 1287 | 1381 | 1399 | 1495 | 1578 | 1759 | 1735 | 1712 | 1719 | 1679 | 1641
+R7: 1 | Agricultura y ganaderia | s.d. | s.d. | s.d. | 1257 | s.d. | 1191 | 1198 | 1282 | 1375 | 1392 | 1484 | 1567 | 1748 | 1725 | 1702 | 1708 | 1668 | 1630
+R8: 2 | Silvicultura, extracción de madera | s.d. | s.d. | s.d. | 4 | s.d. | 5 | 6 | 5 | 6 | 7 | 11 | 11 | 11 | 10 | 10 | 11 | 11 | 11
+R9: B | PESCA Y SERVICIOS CONEXOS | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R10: 5 | Pesca y actividades relacionadas con la pesca | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 14 | 14 | 12 | 13 | 14 | 12 | 11 | 12 | 18 | 14 | 15 | 18 | 22 | 21 | 21 | 18 | 19 | 22
+R12: 11 | Extraccion de petroleo crudo y gas natural | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | 10 | 9 | 8 | 9 | 9 | 8 | 8 | 10 | 14 | 12 | 13 | 15 | 20 | 18 | 16 | 16 | 17 | 19
+R15: D | INDUSTRIA MANUFACTURERA | 712 | 712 | 745 | 760 | 745 | 685 | 640 | 653 | 690 | 725 | 749 | 862 | 937 | 949 | 955 | 985 | 963 | 942
+R16: 15 | Alimentos | 268 | 273 | 282 | 278 | 273 | 260 | 243 | 253 | 263 | 268 | 277 | 311 | 364 | 376 | 373 | 374 | 369 | 362
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 15 | 15 | 17 | 21 | 21 | 17 | 13 | 14 | 13 | 16 | 16 | 18 | 16 | 17 | 17 | 19 | 22 | 19
+R19: 18 | Confecciones | 24 | 23 | 19 | 24 | 25 | 21 | 19 | 17 | 14 | 17 | 20 | 24 | 25 | 24 | 20 | 22 | 23 | 21
+R20: 19 | Calzado | 8 | 11 | 11 | 7 | 8 | 7 | 8 | 7 | 7 | 7 | 7 | 7 | 8 | 8 | 8 | 9 | 8 | 7
+R21: 20 | Madera | 29 | 27 | 33 | 27 | 26 | 24 | 21 | 24 | 26 | 26 | 33 | 39 | 43 | 39 | 39 | 41 | 40 | 38
+R22: 21 | Papel | 10 | 8 | 12 | 13 | 15 | 14 | 13 | 13 | 15 | 12 | 12 | 13 | 13 | 12 | 11 | 10 | 8 | 9
+R23: 22 | Edición | 34 | 39 | 48 | 45 | 47 | 41 | 37 | 39 | 43 | 48 | 47 | 60 | 57 | 59 | 59 | 63 | 65 | 60
+R24: 23 | Productos de petróleo | 7 | 5 | 5 | 7 | 6 | 5 | 5 | 5 | 4 | s.d. | 4 | 4 | 5 | 4 | 4 | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 80 | 76 | 77 | 95 | 96 | 92 | 85 | 76 | 80 | 83 | 83 | 82 | 80 | 84 | 90 | 91 | 87 | 85
+R26: 25 | Productos de caucho y plástico | 19 | 18 | 18 | 21 | 24 | 23 | 25 | 25 | 28 | 28 | 29 | 27 | 26 | 27 | 29 | 28 | 29 | 30
+R27: 26 | Otros minerales no metálicos | 41 | 40 | 41 | 39 | 36 | 28 | 26 | 28 | 28 | 29 | 33 | 44 | 52 | 48 | 47 | 51 | 47 | 50
+R28: 27 | Metales comunes | 8 | 10 | 11 | 10 | 10 | 11 | 13 | 13 | 17 | 20 | 18 | 24 | 22 | 21 | 23 | 23 | 21 | 16
+R29: 28 | Otros productos de metal | 78 | 77 | 76 | 73 | 75 | 69 | 66 | 72 | 76 | 89 | 87 | 113 | 121 | 121 | 128 | 130 | 123 | 129
+R30: 29 | Maquinaria y equipo | 23 | 24 | 23 | 27 | 20 | 18 | 20 | 19 | 23 | 22 | 20 | 22 | 25 | 27 | 26 | 30 | 27 | 25
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R32: 31 | Aparatos eléctricos | 11 | 10 | 11 | 10 | 8 | 8 | 7 | 8 | 9 | 8 | 8 | 7 | 7 | 8 | 7 | 10 | 11 | 10
+R33: 32 | Radio y televisión | 8 | 5 | 5 | 5 | 7 | 4 | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d. | s.d.
+R34: 33 | Instrumentos médicos | 4 | 5 | 5 | 4 | s.d. | 4 | 4 | 5 | 5 | 5 | 6 | 6 | 6 | 4 | 5 | 6 | 6 | 7
+R35: 34 | Automotores | 10 | 9 | 11 | 13 | 8 | 7 | 7 | 9 | 9 | 12 | 11 | 11 | 10 | 11 | 12 | 13 | 13 | 11
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 268 | 273 | 282 | 278 | 273 | 260 | 243 | 253 | 263 | 268 | 277 | 311 | 364 | 376 | 373 | 374 | 369 | 362 | 355 | 350 | 354 | 352 | 349 | 338 | 328 | 334 | 334 | 335
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 604 | 633 | 661 | 685 | 739 | 716 | 684 | 748 | 837 | 890 | 958 | 1116 | 1220 | 1183 | 1169 | 1183 | 1162 | 1157 | 1144 | 1139 | 1109 | 1108 | 1078 | 1034 | 952 | 900 | 907 | 887
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Tierra del Fuego · 87 filas × 128 columnas --
+R1:  |  |  | Volver al índice
+R2: TIERRA DEL FUEGO
+R3: Empresas del sector privado por rama de actividad - Activas en cada año
+R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013
+R5:  |  |  | 2º Trim 1996 |  | 3º Trim 1996 |  | 4º Trim 1996 |  | 1º Trim 1997 |  | 2º Trim 1997 |  | 3º Trim 1997 |  | 4º Trim 1997 |  | 1º Trim 1998
+R6: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 62 | 63 | 53 | 54 | 58 | 57 | 57 | 64 | 65 | 65 | 69 | 72 | 71 | 69 | 71 | 67 | 70 | 64
+R7: 1 | Agricultura y ganaderia | 58 | 56 | 49 | 46 | 49 | 50 | 49 | 52 | 53 | 53 | 55 | 54 | 51 | 53 | 55 | 51 | 55 | 52
+R8: 2 | Silvicultura, extracción de madera | 4 | 7 | 4 | 8 | 9 | 7 | 8 | 12 | 12 | 12 | 14 | 18 | 20 | 16 | 16 | 16 | 15 | 12
+R9: B | PESCA Y SERVICIOS CONEXOS | 12 | 8 | 10 | 10 | 9 | 9 | 13 | 10 | 11 | 11 | 9 | 11 | 14 | 12 | 13 | 13 | 12 | 10
+R10: 5 | Pesca y actividades relacionadas con la pesca | 12 | 8 | 10 | 10 | 9 | 9 | 13 | 10 | 11 | 11 | 9 | 11 | 14 | 12 | 13 | 13 | 12 | 10
+R11: C | EXPLOTACION DE MINAS Y CANTERAS | 23 | 16 | 24 | 24 | 22 | 21 | 20 | 24 | 32 | 35 | 26 | 36 | 36 | 35 | 41 | 33 | 32 | 33
+R12: 11 | Extraccion de petroleo crudo y gas natural | 18 | 14 | 17 | 17 | 15 | 17 | 14 | 17 | 21 | 23 | 18 | 28 | 26 | 25 | 27 | 23 | 21 | 20
+R13: 13 | Extraccion de minerales metaliferos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R14: 14 | Explotacion de otras minas y canteras | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R15: D | INDUSTRIA MANUFACTURERA | 136 | 128 | 138 | 152 | 160 | 174 | 150 | 157 | 165 | 168 | 189 | 197 | 196 | 206 | 202 | 213 | 220 | 224
+R16: 15 | Alimentos | 38 | 34 | 37 | 37 | 40 | 50 | 34 | 41 | 40 | 41 | 45 | 46 | 43 | 51 | 51 | 55 | 62 | 56
+R17: 16 | Tabaco | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R18: 17 | Productos textiles | 11 | 12 | 14 | 13 | 16 | 16 | 16 | 16 | 17 | 17 | 17 | 17 | 15 | 15 | 15 | 14 | 14 | 14
+R19: 18 | Confecciones | 4 | 4 | 4 | 4 | 5 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | 5 | 6 | 6 | 5 | 9
+R20: 19 | Cuero y calzado | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R21: 20 | Madera | 14 | 11 | 11 | 13 | 12 | 10 | 9 | 11 | 13 | 14 | 17 | 20 | 22 | 20 | 18 | 20 | 20 | 21
+R22: 21 | Papel | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R23: 22 | Edición | 10 | 12 | 10 | 14 | 16 | 20 | 18 | 19 | 15 | 14 | 17 | 14 | 14 | 14 | 14 | 14 | 13 | 18
+R24: 23 | Productos de petróleo | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R25: 24 | Productos químicos | 7 | 4 | 4 | 8 | 7 | 16 | 12 | 12 | 16 | 17 | 19 | 18 | 20 | 17 | 15 | 18 | 13 | 15
+R26: 25 | Productos de caucho y plástico | 9 | 9 | 11 | 13 | 13 | 13 | 13 | 11 | 12 | 13 | 14 | 15 | 15 | 15 | 14 | 15 | 15 | 14
+R27: 26 | Otros minerales no metálicos | s.d. | s.d. | s.d. | 4 | 5 | s.d. | s.d. | s.d. | 5 | 5 | 6 | 5 | 6 | 5 | 7 | 5 | 9 | 8
+R28: 27 | Metales comunes | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R29: 28 | Otros productos de metal | 8 | 8 | 7 | 7 | 7 | 7 | 8 | 7 | 6 | 7 | 14 | 16 | 14 | 18 | 17 | 18 | 14 | 14
+R30: 29 | Maquinaria y equipo | 5 | 4 | 6 | 4 | s.d. | 4 | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 5 | 5 | 5 | 6 | 7 | 6
+R31: 30 | Maquinaria de oficina | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | 4 | s.d.
+R32: 31 | Aparatos eléctricos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R33: 32 | Radio y televisión | 15 | 15 | 16 | 16 | 17 | 16 | 14 | 14 | 15 | 14 | 14 | 16 | 16 | 17 | 18 | 18 | 20 | 21
+R34: 33 | Instrumentos médicos | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d. | s.d.
+R35: 34 | Automotores | 5 | 4 | 4 | 5 | 5 | 5 | 5 | 5 | 6 | 6 | 6 | 6 | 5 | 5 | 5 | 5 | 5 | 5
+Coincidencias relevantes:
+HIT R3: Empresas del sector privado por rama de actividad - Activas en cada año
+HIT R4:  | Ramas de actividad | 1996 | 1997 | 1998 | 1999 | 2000 | 2001 | 2002 | 2003 | 2004 | 2005 | 2006 | 2007 | 2008 | 2009 | 2010 | 2011 | 2012 | 2013 | 2014 | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023
+HIT R16: 15 | Alimentos | 38 | 34 | 37 | 37 | 40 | 50 | 34 | 41 | 40 | 41 | 45 | 46 | 43 | 51 | 51 | 55 | 62 | 56 | 63 | 67 | 66 | 70 | 64 | 67 | 61 | 70 | 75 | 79
+HIT R65: 74 | Servicios jurídicos, contables y otros servicios a empresas | 135 | 154 | 160 | 195 | 214 | 208 | 194 | 222 | 228 | 243 | 254 | 264 | 280 | 255 | 261 | 264 | 277 | 281 | 280 | 291 | 285 | 271 | 272 | 254 | 232 | 240 | 258 | 260
+HIT R79: 1 - Las empresas se encuentran clasificadas por provincia según las zonas donde declaran que trabajan las personas.
+
+-- Hoja: Hoja1 · 125 filas × 112 columnas --
+R3:  |  |  | Empleo. Asalariados registrados del sector privado por rama de actividad - Trimestres corridos 1° 1996 - 1° 2017
+R4: Empleo. Asalariados registrados del sector privado por rama de actividad - Trimestres corridos 1° 1996 - 2° 2013 |  | 1er trim 1996 | 2do trim 1996 | 3er trim 1996 | 4to trim 1996 | 1er trim 1997 | 2do trim 1997 | 3er trim 1997 | 4to trim 1997 | 1er trim 1998 | 2do trim 1998 | 3er trim 1998 | 4to trim 1998 | 1er trim 1999 | 2do trim 1999 | 3er trim 1999 | 4to trim 1999 | 1er trim 2000 | 2do trim 2000
+R5:  | Ramas de actividad
+R6: 
+R7: A | AGRICULTURA, GANADERIA, CAZA Y SILVICULTURA | 60436 | 60039 | 59422 | 59524 | 56760 | 54777 | 53746 | 56748 | 60618 | 64103 | 66755 | 68674 | 70029 | 68623 | 64633 | 64161 | #REF! | #REF!
+R8: 1 | Agricultura y ganaderia
+R9: 2 | Silvicultura, extracción de madera
+R10: B | PESCA Y SERVICIOS CONEXOS | #VALUE! | #VALUE! | #VALUE! | #VALUE!
+R11: 5 | Pesca y actividades relacionadas con la pesca
+R12: C | EXPLOTACION DE MINAS Y CANTERAS | 1211 | 1240 | 1198 | 1241 | 1202 | 1173 | #VALUE! | #VALUE! | 1281 | #VALUE! | 1476 | 1635 | 1683 | 1689 | 1734 | 1737 | #REF! | #REF!
+R13: 11 | Extraccion de petroleo crudo y gas natural
+R14: 13 | Extraccion de minerales metaliferos
+R15: 14 | Explotacion de otras minas y canteras
+R16: D | INDUSTRIA MANUFACTURERA | 55243 | 55539 | 55010 | 55315 | 50670 | 47523 | 44322 | 47888 | 52966 | 56374 | 59912 | 62650 | 64252 | 64150 | 64814 | 64137 | #REF! | #REF!
+R17: 15 | Alimentos
+R18: 16 | Tabaco
+R19: 17 | Productos textiles
+R20: 18 | Confecciones
+R21: 19 | Calzado y cuero
+R22: 20 | Madera
+R23: 21 | Papel
+R24: 22 | Edición
+R25: 23 | Productos de petróleo
+R26: 24 | Productos químicos
+R27: 25 | Productos de caucho y plástico
+R28: 26 | Otros minerales no metálicos
+R29: 27 | Metales comunes
+R30: 28 | Otros productos de metal
+R31: 29 | Maquinaria y equipo
+R32: 30 | Maquinaria de oficina
+R33: 31 | Aparatos eléctricos
+R34: 32 | Radio y televisión
+R35: 33 | Instrumentos médicos
+R36: 34 | Automotores
+R37: 35 | Otros equipo de transporte
+Coincidencias relevantes:
+HIT R3:  |  |  | Empleo. Asalariados registrados del sector privado por rama de actividad - Trimestres corridos 1° 1996 - 1° 2017
+HIT R4: Empleo. Asalariados registrados del sector privado por rama de actividad - Trimestres corridos 1° 1996 - 2° 2013 |  | 1er trim 1996 | 2do trim 1996 | 3er trim 1996 | 4to trim 1996 | 1er trim 1997 | 2do trim 1997 | 3er trim 1997 | 4to trim 1997 | 1er trim 1998 | 2do trim 1998 | 3er trim 1998 | 4to trim 1998 | 1er trim 1999 | 2do trim 1999 | 3er trim 1999 | 4to trim 1999 | 1er trim 2000 | 2do trim 2000 | 3er trim 2000 | 4to trim 2000 | 1er trim 2001 | 2do trim 2001 | 3er trim 2001 | 4to trim 2001 | 1er trim 2002 | 2do trim 2002 | 3er trim 2002 | 4to trim 2002
+HIT R5:  | Ramas de actividad
+HIT R17: 15 | Alimentos
+HIT R58: 65 | Intermediacion financiera y otros servicios financieros | 1933 | 2026 | 2171 | 2142 | 2102 | 2070 | 1934 | 1937 | 2036 | 2170 | 2256 | 2350 | 2420 | 2380 | 2409 | 2422 | #REF! | #REF! | #REF! | #REF! | #REF! | #REF! | #REF! | #REF! | #REF! | #REF! | #REF! | #REF!
+HIT R66: 74 | Servicios jurídicos, contables y otros servicios a empresas
+HIT R122: 
+
+=== IDECBA_ejes ===
+URL: https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2026/06/AC_EJ_2026_08.xlsx
+Descarga: 0.03 MB · application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Hojas: AC_EJ_2026_08, 1er. cuatr. de 2026, 3er. cuatr. de 2025, 2do. cuatr. de 2025, 1er. cuatr. de 2025, Ficha Técnica
+
+-- Hoja: AC_EJ_2026_08 · 8 filas × 11 columnas --
+R1: Locales ocupados por comuna según rubro de actividad. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2025/1er. cuatrimestre de 2026
+R2: 1er. cuatrimestre de 2026
+R3: 3er. cuatrimestre de 2025
+R4: 2do. cuatrimestre de 2025
+R5: 1er. cuatrimestre de 2025
+R6: Ficha Técnica
+Coincidencias relevantes:
+HIT R1: Locales ocupados por comuna según rubro de actividad. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2025/1er. cuatrimestre de 2026
+HIT R2: 1er. cuatrimestre de 2026
+HIT R3: 3er. cuatrimestre de 2025
+HIT R4: 2do. cuatrimestre de 2025
+HIT R5: 1er. cuatrimestre de 2025
+
+-- Hoja: 1er. cuatr. de 2026 · 24 filas × 36 columnas --
+R1: Locales ocupados por comuna según rubro de actividad. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2026
+R2: Rubro | Total | Comuna
+R3:  |  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
+R4: Total | 11605 | 1657 | 672 | 1161 | 625 | 707 | 354 | 1109 | 442 | 481 | 1058 | 453 | 365 | 772 | 630 | 1119
+R5: Indumentaria, textiles y calzado | 3417 | 247 | 238 | 331 | 115 | 101 | 93 | 632 | 108 | 117 | 535 | 145 | 91 | 200 | 224 | 240
+R6: Alimentos y bebidas | 1613 | 205 | 69 | 134 | 136 | 156 | 53 | 82 | 96 | 80 | 118 | 68 | 60 | 119 | 83 | 154
+R7: Alojamiento y comidas | 1264 | 315 | 90 | 110 | 64 | 109 | 37 | 73 | 31 | 24 | 43 | 38 | 35 | 80 | 109 | 106
+R8: Bienes culturales y deportivos | 877 | 153 | 67 | 109 | 42 | 43 | 33 | 61 | 30 | 36 | 44 | 48 | 32 | 73 | 37 | 69
+R9: Hogar, electro y muebles | 847 | 129 | 42 | 217 | 36 | 56 | 27 | 43 | 19 | 29 | 43 | 25 | 24 | 76 | 29 | 52
+R10: Otras ventas por menor | 760 | 260 | 32 | 60 | 37 | 41 | 15 | 36 | 35 | 30 | 43 | 28 | 22 | 41 | 32 | 48
+R11: Farmacia y perfumería | 464 | 49 | 45 | 53 | 33 | 32 | 25 | 30 | 16 | 20 | 17 | 23 | 16 | 45 | 22 | 38
+R12: Servicios personales y de asociaciones | 370 | 43 | 14 | 22 | 33 | 28 | 16 | 15 | 38 | 19 | 30 | 25 | 18 | 15 | 19 | 35
+R13: Materiales para la casa y construcción | 353 | 29 | 8 | 21 | 20 | 21 | 8 | 9 | 9 | 57 | 79 | 5 | 13 | 23 | 6 | 45
+R14: Automotores, motocicletas y combustible | 260 | 11 | 0 | 5 | 7 | 9 | 1 | 0 | 2 | 7 | 11 | 2 | 1 | 6 | 6 | 192
+R15: Servicios artísticos, deportivos y de entretenimiento | 256 | 54 | 9 | 11 | 19 | 30 | 10 | 15 | 12 | 5 | 16 | 11 | 10 | 19 | 7 | 28
+R16: Intermediacion financiera y seguros | 246 | 39 | 23 | 19 | 20 | 20 | 11 | 20 | 2 | 8 | 8 | 9 | 13 | 24 | 9 | 21
+R17: Servicios inmobiliarios | 140 | 9 | 3 | 3 | 15 | 12 | 2 | 5 | 15 | 12 | 13 | 7 | 10 | 8 | 8 | 18
+R18: Salud | 126 | 15 | 8 | 19 | 13 | 5 | 7 | 7 | 11 | 11 | 4 | 2 | 4 | 5 | 3 | 12
+R19: Servicios profesionales, administrativos y técnicos | 115 | 26 | 6 | 6 | 13 | 6 | 0 | 5 | 5 | 6 | 10 | 8 | 5 | 6 | 8 | 5
+R20: Transporte terrestre y almacenamiento | 112 | 30 | 8 | 8 | 8 | 9 | 5 | 3 | 1 | 4 | 3 | 3 | 4 | 7 | 7 | 12
+R21: Enseñanza | 111 | 15 | 7 | 5 | 4 | 16 | 5 | 3 | 4 | 6 | 5 | 4 | 3 | 15 | 9 | 10
+R22: Telecomunicaciones | 17 | 2 | 0 | 0 | 2 | 0 | 1 | 2 | 0 | 1 | 1 | 0 | 1 | 3 | 2 | 2
+R23: Otros | 257 | 26 | 3 | 28 | 8 | 13 | 5 | 68 | 8 | 9 | 35 | 2 | 3 | 7 | 10 | 32
+R24: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+Coincidencias relevantes:
+HIT R1: Locales ocupados por comuna según rubro de actividad. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2026
+HIT R2: Rubro | Total | Comuna
+HIT R5: Indumentaria, textiles y calzado | 3417 | 247 | 238 | 331 | 115 | 101 | 93 | 632 | 108 | 117 | 535 | 145 | 91 | 200 | 224 | 240
+HIT R6: Alimentos y bebidas | 1613 | 205 | 69 | 134 | 136 | 156 | 53 | 82 | 96 | 80 | 118 | 68 | 60 | 119 | 83 | 154
+HIT R24: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+
+-- Hoja: 3er. cuatr. de 2025 · 24 filas × 17 columnas --
+R1: Locales ocupados por comuna según rubro de actividad. 48 ejes comerciales. Ciudad de Buenos Aires. 3er. cuatrimestre de 2025
+R2: Rubro | Total | Comuna
+R3:  |  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
+R4: Total | 11781 | 1679 | 685 | 1173 | 637 | 726 | 354 | 1135 | 449 | 478 | 1076 | 447 | 366 | 786 | 637 | 1153
+R5: Indumentaria, textiles y calzado | 3555 | 266 | 247 | 337 | 118 | 105 | 94 | 657 | 116 | 115 | 547 | 147 | 91 | 218 | 237 | 260
+R6: Alimentos y bebidas | 1624 | 205 | 73 | 140 | 136 | 158 | 54 | 83 | 94 | 81 | 120 | 65 | 61 | 115 | 80 | 159
+R7: Alojamiento y comidas | 1220 | 305 | 85 | 108 | 66 | 111 | 34 | 69 | 30 | 22 | 40 | 35 | 35 | 78 | 103 | 99
+R8: Bienes culturales y deportivos | 911 | 157 | 67 | 108 | 43 | 44 | 33 | 67 | 31 | 39 | 50 | 49 | 33 | 77 | 40 | 73
+R9: Hogar, electro y muebles | 827 | 120 | 36 | 214 | 36 | 58 | 27 | 41 | 18 | 28 | 43 | 27 | 22 | 77 | 32 | 48
+R10: Otras ventas por menor | 760 | 267 | 34 | 60 | 38 | 41 | 12 | 35 | 35 | 29 | 44 | 28 | 21 | 41 | 28 | 47
+R11: Farmacia y perfumería | 464 | 49 | 49 | 55 | 35 | 31 | 26 | 30 | 17 | 18 | 16 | 24 | 15 | 43 | 19 | 37
+R12: Servicios personales y de asociaciones | 376 | 45 | 14 | 20 | 31 | 30 | 17 | 16 | 39 | 20 | 30 | 23 | 18 | 14 | 20 | 39
+R13: Materiales para la casa y construcción | 359 | 31 | 9 | 21 | 22 | 22 | 8 | 9 | 9 | 56 | 79 | 4 | 13 | 22 | 5 | 49
+R14: Automotores, motocicletas y combustible | 270 | 11 | 0 | 5 | 9 | 9 | 1 | 0 | 2 | 7 | 13 | 0 | 1 | 6 | 6 | 200
+R15: Servicios artísticos, deportivos y de entretenimiento | 253 | 53 | 9 | 12 | 18 | 31 | 10 | 14 | 12 | 4 | 16 | 11 | 12 | 17 | 7 | 27
+R16: Intermediacion financiera y seguros | 263 | 44 | 25 | 20 | 21 | 21 | 12 | 20 | 2 | 8 | 9 | 9 | 14 | 25 | 11 | 22
+R17: Servicios inmobiliarios | 140 | 9 | 3 | 3 | 15 | 12 | 2 | 5 | 15 | 12 | 13 | 6 | 10 | 9 | 8 | 18
+R18: Salud | 124 | 13 | 8 | 19 | 13 | 5 | 7 | 7 | 11 | 12 | 4 | 2 | 4 | 5 | 3 | 11
+R19: Servicios profesionales, administrativos y técnicos | 122 | 29 | 6 | 9 | 13 | 7 | 1 | 6 | 6 | 6 | 8 | 8 | 5 | 6 | 8 | 4
+R20: Transporte terrestre y almacenamiento | 115 | 30 | 8 | 8 | 8 | 11 | 5 | 3 | 1 | 4 | 3 | 3 | 4 | 8 | 7 | 12
+R21: Enseñanza | 118 | 16 | 7 | 6 | 5 | 17 | 5 | 5 | 4 | 5 | 6 | 4 | 3 | 15 | 9 | 11
+R22: Telecomunicaciones | 21 | 3 | 2 | 0 | 2 | 0 | 2 | 2 | 0 | 1 | 1 | 0 | 1 | 3 | 2 | 2
+R23: Otros | 259 | 26 | 3 | 28 | 8 | 13 | 4 | 66 | 7 | 11 | 34 | 2 | 3 | 7 | 12 | 35
+R24: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+Coincidencias relevantes:
+HIT R1: Locales ocupados por comuna según rubro de actividad. 48 ejes comerciales. Ciudad de Buenos Aires. 3er. cuatrimestre de 2025
+HIT R2: Rubro | Total | Comuna
+HIT R5: Indumentaria, textiles y calzado | 3555 | 266 | 247 | 337 | 118 | 105 | 94 | 657 | 116 | 115 | 547 | 147 | 91 | 218 | 237 | 260
+HIT R6: Alimentos y bebidas | 1624 | 205 | 73 | 140 | 136 | 158 | 54 | 83 | 94 | 81 | 120 | 65 | 61 | 115 | 80 | 159
+HIT R24: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+
+-- Hoja: 2do. cuatr. de 2025 · 25 filas × 17 columnas --
+R1: Locales ocupados por comuna según rubro de actividad. 48 ejes comerciales. Ciudad de Buenos Aires. 2do. cuatrimestre de 2025
+R2: Rubro | Total | Comuna
+R3:  |  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
+R4: Total | 11819 | 1692 | 696 | 1178 | 640 | 719 | 352 | 1124 | 446 | 478 | 1077 | 453 | 371 | 794 | 644 | 1155
+R5: Indumentaria, textiles y calzado | 3589 | 269 | 254 | 341 | 117 | 102 | 94 | 652 | 122 | 121 | 548 | 148 | 94 | 226 | 241 | 260
+R6: Alimentos y bebidas | 1636 | 213 | 73 | 142 | 136 | 157 | 54 | 81 | 93 | 82 | 121 | 66 | 63 | 116 | 79 | 160
+R7: Alojamiento y comidas | 1220 | 310 | 88 | 108 | 64 | 109 | 33 | 68 | 28 | 22 | 40 | 37 | 35 | 77 | 105 | 96
+R8: Bienes culturales y deportivos | 907 | 158 | 63 | 105 | 43 | 45 | 33 | 70 | 30 | 38 | 51 | 49 | 33 | 73 | 42 | 74
+R9: Hogar, electro y muebles | 814 | 114 | 36 | 211 | 33 | 55 | 27 | 41 | 16 | 28 | 43 | 27 | 23 | 78 | 32 | 50
+R10: Otras ventas por menor | 757 | 267 | 32 | 61 | 41 | 41 | 11 | 35 | 34 | 29 | 42 | 28 | 21 | 42 | 27 | 46
+R11: Farmacia y perfumería | 466 | 49 | 50 | 56 | 37 | 31 | 26 | 31 | 16 | 17 | 16 | 24 | 14 | 43 | 19 | 37
+R12: Servicios personales y de asociaciones | 377 | 48 | 14 | 21 | 31 | 30 | 17 | 15 | 37 | 18 | 30 | 24 | 18 | 16 | 19 | 39
+R13: Materiales para la casa y construcción | 354 | 30 | 9 | 19 | 22 | 22 | 8 | 8 | 9 | 56 | 78 | 4 | 13 | 21 | 6 | 49
+R14: Automotores, motocicletas y combustible | 265 | 11 | 0 | 5 | 9 | 9 | 1 | 0 | 2 | 6 | 12 | 0 | 1 | 6 | 6 | 197
+R15: Servicios artísticos, deportivos y de entretenimiento | 253 | 53 | 10 | 13 | 18 | 32 | 10 | 13 | 12 | 4 | 16 | 11 | 12 | 17 | 7 | 25
+R16: Intermediacion financiera y seguros | 267 | 46 | 25 | 20 | 21 | 21 | 12 | 20 | 2 | 9 | 9 | 10 | 14 | 25 | 11 | 22
+R17: Servicios inmobiliarios | 139 | 9 | 3 | 3 | 15 | 12 | 2 | 5 | 15 | 11 | 12 | 6 | 10 | 9 | 8 | 19
+R18: Salud | 123 | 13 | 8 | 19 | 13 | 5 | 7 | 7 | 10 | 11 | 5 | 2 | 4 | 5 | 3 | 11
+R19: Servicios profesionales, administrativos y técnicos | 118 | 25 | 6 | 8 | 14 | 7 | 1 | 6 | 6 | 6 | 8 | 8 | 5 | 6 | 8 | 4
+R20: Transporte terrestre y almacenamiento | 116 | 30 | 9 | 9 | 8 | 11 | 5 | 3 | 1 | 4 | 3 | 2 | 4 | 8 | 7 | 12
+R21: Enseñanza | 120 | 17 | 7 | 6 | 6 | 17 | 5 | 5 | 4 | 5 | 6 | 4 | 3 | 15 | 9 | 11
+R22: Telecomunicaciones | 23 | 3 | 4 | 0 | 2 | 0 | 2 | 2 | 0 | 1 | 1 | 0 | 1 | 3 | 2 | 2
+R23: Otros | 275 | 27 | 5 | 31 | 10 | 13 | 4 | 62 | 9 | 10 | 36 | 3 | 3 | 8 | 13 | 41
+R24: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+Coincidencias relevantes:
+HIT R1: Locales ocupados por comuna según rubro de actividad. 48 ejes comerciales. Ciudad de Buenos Aires. 2do. cuatrimestre de 2025
+HIT R2: Rubro | Total | Comuna
+HIT R5: Indumentaria, textiles y calzado | 3589 | 269 | 254 | 341 | 117 | 102 | 94 | 652 | 122 | 121 | 548 | 148 | 94 | 226 | 241 | 260
+HIT R6: Alimentos y bebidas | 1636 | 213 | 73 | 142 | 136 | 157 | 54 | 81 | 93 | 82 | 121 | 66 | 63 | 116 | 79 | 160
+HIT R24: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+
+-- Hoja: 1er. cuatr. de 2025 · 26 filas × 17 columnas --
+R1: Locales ocupados por comuna según rubro de actividad. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2025
+R2: Rubro | Total | Comuna
+R3:  |  | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15
+R4: Total | 11843 | 1657 | 710 | 1173 | 641 | 723 | 352 | 1129 | 454 | 478 | 1084 | 452 | 371 | 801 | 647 | 1171
+R5: Indumentaria, textiles y calzado | 3634 | 281 | 255 | 342 | 118 | 103 | 94 | 654 | 123 | 121 | 555 | 154 | 95 | 229 | 245 | 265
+R6: Alimentos y bebidas | 1639 | 208 | 77 | 142 | 138 | 161 | 54 | 81 | 93 | 83 | 121 | 63 | 66 | 118 | 77 | 157
+R7: Alojamiento y comidas | 1217 | 296 | 88 | 107 | 63 | 107 | 33 | 74 | 31 | 22 | 42 | 37 | 34 | 79 | 104 | 100
+R8: Bienes culturales y deportivos | 896 | 151 | 67 | 109 | 41 | 45 | 33 | 71 | 32 | 36 | 46 | 48 | 32 | 72 | 43 | 70
+R9: Hogar, electro y muebles | 803 | 97 | 37 | 206 | 32 | 57 | 27 | 37 | 15 | 27 | 49 | 29 | 23 | 80 | 30 | 57
+R10: Otras ventas por menor | 748 | 260 | 34 | 59 | 41 | 41 | 10 | 36 | 35 | 28 | 40 | 26 | 21 | 40 | 29 | 48
+R11: Farmacia y perfumería | 466 | 51 | 49 | 55 | 37 | 31 | 26 | 30 | 17 | 17 | 17 | 23 | 14 | 44 | 20 | 35
+R12: Servicios personales y de asociaciones | 377 | 45 | 15 | 21 | 31 | 31 | 18 | 14 | 38 | 21 | 29 | 23 | 17 | 15 | 19 | 40
+R13: Materiales para la casa y construcción | 353 | 30 | 9 | 18 | 24 | 24 | 8 | 8 | 10 | 54 | 74 | 4 | 13 | 22 | 6 | 49
+R14: Automotores, motocicletas y combustible | 267 | 11 | 0 | 5 | 9 | 9 | 1 | 0 | 2 | 6 | 12 | 0 | 1 | 6 | 5 | 200
+R15: Servicios artísticos, deportivos y de entretenimiento | 250 | 54 | 10 | 13 | 18 | 31 | 10 | 13 | 11 | 5 | 16 | 10 | 12 | 15 | 7 | 25
+R16: Intermediacion financiera y seguros | 269 | 46 | 27 | 20 | 21 | 21 | 12 | 20 | 2 | 9 | 9 | 10 | 14 | 25 | 11 | 22
+R17: Servicios inmobiliarios | 141 | 9 | 3 | 3 | 14 | 12 | 2 | 5 | 15 | 13 | 12 | 6 | 10 | 9 | 8 | 20
+R18: Salud | 125 | 15 | 8 | 20 | 12 | 5 | 7 | 6 | 10 | 12 | 5 | 2 | 4 | 5 | 3 | 11
+R19: Servicios profesionales, administrativos y técnicos | 116 | 24 | 7 | 8 | 14 | 6 | 1 | 6 | 6 | 4 | 8 | 8 | 4 | 6 | 9 | 5
+R20: Transporte terrestre y almacenamiento | 119 | 30 | 9 | 9 | 8 | 11 | 5 | 4 | 1 | 4 | 4 | 2 | 4 | 8 | 7 | 13
+R21: Enseñanza | 117 | 17 | 6 | 6 | 6 | 14 | 5 | 6 | 4 | 6 | 6 | 4 | 3 | 16 | 8 | 10
+R22: Telecomunicaciones | 23 | 3 | 4 | 0 | 2 | 0 | 2 | 2 | 0 | 1 | 1 | 0 | 1 | 3 | 2 | 2
+R23: Otros | 283 | 29 | 5 | 30 | 12 | 14 | 4 | 62 | 9 | 9 | 38 | 3 | 3 | 9 | 14 | 42
+R24: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+Coincidencias relevantes:
+HIT R1: Locales ocupados por comuna según rubro de actividad. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2025
+HIT R2: Rubro | Total | Comuna
+HIT R5: Indumentaria, textiles y calzado | 3634 | 281 | 255 | 342 | 118 | 103 | 94 | 654 | 123 | 121 | 555 | 154 | 95 | 229 | 245 | 265
+HIT R6: Alimentos y bebidas | 1639 | 208 | 77 | 142 | 138 | 161 | 54 | 81 | 93 | 83 | 121 | 63 | 66 | 118 | 77 | 157
+HIT R24: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+
+-- Hoja: Ficha Técnica · 15 filas × 4 columnas --
+R1: FICHA TÉCNICA
+R2: Archivo | AC_EJ_2026_08
+R3: Área Temática | COMERCIO INTERIOR
+R4: Tema | LOCALES COMERCIALES
+R5: Subtema | EJES COMERCIALES
+R6: Serie 1 | Locales ocupados
+R7: Objetivo | Presentar información sobre el estado de ocupación de los locales comerciales en los ejes comerciales de la Ciudad de Buenos Aires
+R8: Variable 1 | Locales ocupados por rubro de actividad según comuna
+R9: Definición operativa | Corresponde a los comercios que se encuentran abiertos o prestando servicios el día del relevamiento clasificados por rubro principal de actividad, desagregados por comuna
+R10: Unidad de medida | Unidades
+R11: Método de cálculo (fórmula) | No corresponde
+R12: Periodicidad de recepción (información secundaria) | No corresponde
+R13: Periodicidad de recolección (información primaria) | Cuatrimestral
+R14: Periodicidad de difusión | Cuatrimestral
+R15: Fuente | Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA)
+Coincidencias relevantes:
+HIT R2: Archivo | AC_EJ_2026_08
+HIT R7: Objetivo | Presentar información sobre el estado de ocupación de los locales comerciales en los ejes comerciales de la Ciudad de Buenos Aires
+HIT R8: Variable 1 | Locales ocupados por rubro de actividad según comuna
+HIT R9: Definición operativa | Corresponde a los comercios que se encuentran abiertos o prestando servicios el día del relevamiento clasificados por rubro principal de actividad, desagregados por comuna
+HIT R15: Fuente | Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA)

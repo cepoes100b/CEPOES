@@ -1,0 +1,61 @@
+name: Actualizar estructura productiva
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "generar_estructura_productiva.py"
+      - "verificar_estructura_productiva.py"
+      - ".github/workflows/estructura-productiva.yml"
+  schedule:
+    # Lunes 09:20 de Buenos Aires. El RUS es estructural y la cartografía cambia
+    # poco; una consulta semanal alcanza para detectar reemplazos de fuente.
+    - cron: "20 12 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-estructura-productiva
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install "requests>=2.31"
+
+      - name: Generar mapa y detalle por comuna
+        run: python generar_estructura_productiva.py
+
+      - name: Verificar datos generados
+        run: python verificar_estructura_productiva.py
+
+      - name: Commitear si cambió la fuente o el resultado
+        run: |
+          git config user.name  "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add deploy/site-overlay/assets/data/estructura-productiva/
+          if git diff --cached --quiet; then
+            echo "Sin cambios"
+            exit 0
+          fi
+          git commit -m "territorio: actualizar estructura productiva $(date -u +%F)"
+          for intento in 1 2 3; do
+            if git push; then
+              echo "Push OK (intento $intento)"
+              exit 0
+            fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" || exit 1
+            sleep 3
+          done
+          echo "No pude empujar después de 3 intentos"
+          exit 1

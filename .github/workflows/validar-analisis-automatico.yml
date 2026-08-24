@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "automatizar_analisis_legislativo.py"
+      - "automatizar_analisis_legislativo_copilot.py"
       - "verificar_analisis_automatico.py"
       - "requirements.txt"
       - ".github/workflows/analizar-legislatura.yml"
@@ -17,12 +18,11 @@ on:
 
 permissions:
   contents: read
-  models: read
 
 jobs:
   validar:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v6
@@ -31,15 +31,21 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: "22"
-      - name: Instalar dependencias
+      - name: Instalar dependencias de análisis
         run: pip install -r requirements.txt
       - name: Compilar y validar estructura
         run: |
-          python -m py_compile automatizar_analisis_legislativo.py verificar_analisis_automatico.py
+          python -m py_compile automatizar_analisis_legislativo.py automatizar_analisis_legislativo_copilot.py verificar_analisis_automatico.py
           node --check deploy/site-overlay/assets/legislativa-auto-ui.js
           python verificar_analisis_automatico.py
-      - name: Probar salida estructurada del modelo
+      - name: Probar Copilot CLI si la credencial está configurada
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_MODEL: openai/gpt-4.1
-        run: python automatizar_analisis_legislativo.py --self-test
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          if [ -z "${COPILOT_GITHUB_TOKEN:-}" ]; then
+            echo "::notice::Self-test de Copilot pendiente: falta configurar COPILOT_GITHUB_TOKEN."
+            exit 0
+          fi
+          npm install -g @github/copilot@latest
+          python automatizar_analisis_legislativo_copilot.py --self-test

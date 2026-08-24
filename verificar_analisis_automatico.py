@@ -6,46 +6,58 @@ import re
 ROOT = Path(__file__).resolve().parent
 SCRIPT = ROOT / 'automatizar_analisis_legislativo.py'
 COPILOT = ROOT / 'automatizar_analisis_legislativo_copilot.py'
+HARDENED = ROOT / 'automatizar_analisis_legislativo_hardened.py'
 WORKFLOW = ROOT / '.github/workflows/analizar-legislatura.yml'
 EDGE = ROOT / 'supabase/functions/legislative-analysis-ingest-v2/index.ts'
 MIGRATION = ROOT / 'infra/supabase/004_analisis_legislativo_automatico.sql'
 FOCUS_MIGRATION = ROOT / 'infra/supabase/005_focus_analisis_rls.sql'
+GUARD_MIGRATION = ROOT / 'infra/supabase/006_guardrails_analisis_automatico.sql'
 UI = ROOT / 'deploy/site-overlay/assets/legislativa-auto-ui.js'
 CONFIG = ROOT / 'deploy/site-overlay/assets/legislativa-config.js'
 DOC = ROOT / 'docs/ANALISIS-LEGISLATIVO-AUTOMATICO.md'
 
-for path in [SCRIPT, COPILOT, WORKFLOW, EDGE, MIGRATION, FOCUS_MIGRATION, UI, CONFIG, DOC]:
+required = [SCRIPT, COPILOT, HARDENED, WORKFLOW, EDGE, MIGRATION, FOCUS_MIGRATION, GUARD_MIGRATION, UI, CONFIG, DOC]
+for path in required:
     assert path.is_file() and path.stat().st_size > 100, f'Falta o está vacío: {path.relative_to(ROOT)}'
 
 script = SCRIPT.read_text(encoding='utf-8')
 copilot = COPILOT.read_text(encoding='utf-8')
+hardened = HARDENED.read_text(encoding='utf-8')
 workflow = WORKFLOW.read_text(encoding='utf-8')
 edge = EDGE.read_text(encoding='utf-8')
 migration = MIGRATION.read_text(encoding='utf-8').lower()
 focus_migration = FOCUS_MIGRATION.read_text(encoding='utf-8').lower()
+guard_migration = GUARD_MIGRATION.read_text(encoding='utf-8').lower()
 ui = UI.read_text(encoding='utf-8')
 config = CONFIG.read_text(encoding='utf-8')
 
-# Repositorio personal: Copilot se autentica con un PAT de Copilot Requests; OIDC se usa sólo para Supabase.
+# Autenticación: Copilot usa PAT de Copilot Requests; Supabase recibe OIDC efímero.
 assert re.search(r'^\s*id-token:\s*write\s*$', workflow, re.M), 'Falta permiso id-token: write'
-assert 'models: read' not in workflow, 'GitHub Models fue retirado y no debe seguir configurado'
-assert 'COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}' in workflow, 'Falta credencial Copilot de repositorio personal'
-assert 'npm install -g @github/copilot@latest' in workflow, 'No se instala Copilot CLI vigente'
-assert 'automatizar_analisis_legislativo_copilot.py' in workflow, 'El workflow no usa el adaptador Copilot'
-assert 'legislative-analysis-ingest-v2' in workflow, 'El workflow no usa el receptor RLS vigente'
+assert 'models: read' not in workflow, 'GitHub Models fue retirado y no debe configurarse'
+assert 'COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}' in workflow
+assert 'npm install -g @github/copilot@latest' in workflow
+assert 'automatizar_analisis_legislativo_hardened.py' in workflow, 'Producción no usa el pipeline endurecido'
+assert 'legislative-analysis-ingest-v2' in workflow
 for forbidden in ['SUPABASE_SERVICE_ROLE', 'SUPABASE_SECRET_KEY', 'OPENAI_API_KEY']:
-    assert forbidden not in workflow, f'Secreto/variable administrativa prohibida en workflow: {forbidden}'
+    assert forbidden not in workflow, f'Secreto prohibido en workflow: {forbidden}'
 
-# El adaptador de Copilot debe ser no interactivo, sin herramientas y exigir JSON.
-assert 'COPILOT_GITHUB_TOKEN' in copilot
-assert '--no-ask-user' in copilot and '--no-custom-instructions' in copilot
-assert '--deny-tool=shell,write,read,url,memory' in copilot, 'Copilot podría usar herramientas externas'
-assert 'Devolvé SOLAMENTE un objeto JSON válido' in copilot
-assert 'recommendation debe ser "sin_definir"' in copilot
-assert 'pipeline.call_model = call_copilot' in copilot
+# Copilot no puede usar herramientas externas.
+for text in [copilot, hardened]:
+    assert 'COPILOT_GITHUB_TOKEN' in text
+assert '--no-ask-user' in hardened and '--no-custom-instructions' in hardened
+assert '--deny-tool=shell,write,read,url,memory' in hardened
+assert 'No uses memoria, conocimiento general ni web' in hardened
 
-# El receptor debe verificar el origen exacto del token OIDC antes de tocar la base.
-for required in [
+# Selección estricta: sin manuales, guías ni anchors de la propia ficha.
+for token in ['BANNED_ASSET_TERMS', 'strict-v2', 'documentos_primarios_del_expediente', 'download.aspx', 'document_relevance']:
+    assert token in hardened, f'Falta guardrail de evidencia: {token}'
+assert 'p.path == base.path and p.query == base.query' in hardened, 'No se excluyen anchors de la ficha'
+assert 'relevance < 2' in hardened, 'No se descartan adjuntos de baja relevancia'
+assert 'unsupported_acronyms' in hardened and 'unsupported_numbers' in hardened
+assert 'confidence < 0.75' in hardened and 'recommendation"] = "sin_definir"' in hardened
+
+# OIDC del receptor exacto.
+for required_token in [
     'https://token.actions.githubusercontent.com',
     'cepoes-supabase-legislative-analysis',
     'cepoes100b/CEPOES',
@@ -53,21 +65,20 @@ for required in [
     '.github/workflows/analizar-legislatura.yml@refs/heads/main',
     'jwtVerify',
 ]:
-    assert required in edge, f'Falta verificación OIDC: {required}'
+    assert required_token in edge, f'Falta verificación OIDC: {required_token}'
 assert 'analysis_origin:"automatic"' in edge
 assert 'review_status:"borrador"' in edge
 assert 'review_required:true' in edge
 assert 'is_current:true' in edge
 
-# Evidencia: únicamente dominio legislativo oficial y hash de fuente antes de inferir.
-assert 'allowed_official_url' in script, 'No se valida el dominio oficial'
-assert 'legislatura.gob.ar' in script, 'No se detecta dominio oficial permitido'
-assert 'source_hash' in script and 'sha256' in script, 'No se versiona evidencia con hash'
+# Deduplicación antes de inferencia y fuentes oficiales.
+assert 'allowed_official_url' in script and 'legislatura.gob.ar' in script
+assert 'source_hash' in script and 'sha256' in script
 check_pos = script.find('"action": "check"')
 model_pos = script.find('analysis = call_model(material)')
-assert 0 <= check_pos < model_pos, 'La inferencia se ejecuta antes de deduplicar evidencia'
+assert 0 <= check_pos < model_pos, 'La inferencia ocurre antes de deduplicar evidencia'
 
-# La base conserva procedencia y versiones. El foco es inaccesible a clientes aunque use el schema public.
+# Base privada, foco protegido y guardrail server-side.
 for field in [
     'analysis_origin', 'automation_source_hash', 'automation_model', 'automation_confidence',
     'review_required', 'source_evidence', 'affected_actors', 'arguments_for',
@@ -77,17 +88,24 @@ for field in [
 assert 'enable row level security' in focus_migration
 assert 'revoke all on public.analysis_focus_commissions from public, anon, authenticated' in focus_migration
 assert 'grant select on public.analysis_focus_commissions to service_role' in focus_migration
-for private_name in ['salud', 'discapacidad', 'asuntos constitucionales', 'educación, ciencia y tecnología']:
-    assert private_name not in migration + focus_migration, 'La lista estratégica concreta no debe versionarse'
+assert 'guard_automatic_analysis_insert' in guard_migration
+assert "new.review_status := 'borrador'" in guard_migration
+assert 'new.review_required := true' in guard_migration
+assert "new.recommendation := 'sin_definir'" in guard_migration
+assert '< 0.75' in guard_migration
+assert 'primary_document_count' in guard_migration
 
-# La UI muestra sólo versiones vigentes en su capa ampliada y exige revisión visualmente.
-assert ".eq('is_current', true)" in ui, 'La UI automática no filtra versiones vigentes'
-assert 'REVISIÓN REQUERIDA' in ui, 'No se identifica la revisión humana obligatoria'
-assert 'automation_confidence' in ui, 'No se muestra la confianza de la salida automática'
-assert 'analysis-gaps' in ui and 'analysis-actors' in ui, 'Faltan campos ampliados de revisión'
-assert 'legislativa-auto-ui.js' in config, 'La capa UI automática no se carga'
+for private_name in ['salud', 'discapacidad', 'asuntos constitucionales', 'educación, ciencia y tecnología']:
+    assert private_name not in migration + focus_migration + guard_migration, 'El foco concreto no debe versionarse'
+
+# UI privada: sólo versión vigente, origen y revisión visibles.
+assert ".eq('is_current', true)" in ui
+assert 'REVISIÓN REQUERIDA' in ui
+assert 'automation_confidence' in ui
+assert 'analysis-gaps' in ui and 'analysis-actors' in ui
+assert 'legislativa-auto-ui.js' in config
 
 print('Análisis legislativo automático · validación estática OK')
+print('  Evidencia: selector strict-v2 + grounding verificable')
+print('  Recomendación: umbral 0.75 + documento primario')
 print('  Copilot CLI + OIDC Supabase: verificados')
-print('  Foco privado: RLS sin acceso de cliente')
-print('  Revisión humana y evidencia oficial: verificadas')

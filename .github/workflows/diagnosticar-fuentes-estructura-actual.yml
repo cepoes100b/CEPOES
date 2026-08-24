@@ -1,0 +1,37 @@
+name: Diagnosticar fuentes estructura actual
+
+on:
+  push:
+    paths:
+      - "diagnosticar_fuentes_estructura_actual.py"
+      - ".github/workflows/diagnosticar-fuentes-estructura-actual.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  diagnosticar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install "requests>=2.31" "openpyxl>=3.1"
+      - name: Inspeccionar XLSX oficiales
+        run: python diagnosticar_fuentes_estructura_actual.py
+      - name: Guardar diagnóstico en la rama
+        shell: bash
+        run: |
+          set -e
+          git config user.name "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add diagnostico_fuentes_estructura_actual.txt
+          if git diff --cached --quiet; then
+            echo "Sin cambios"
+            exit 0
+          fi
+          git commit -m "territorio: diagnosticar fuentes productivas actuales $(date -u +%F)"
+          git push

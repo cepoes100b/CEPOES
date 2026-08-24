@@ -1,0 +1,156 @@
+name: Actualizar panorama productivo actual
+
+on:
+  push:
+    branches:
+      - main
+      - feat/estructura-productiva-actual-2026
+    paths:
+      - "generar_estructura_actual_v2.py"
+      - "verificar_estructura_actual.py"
+      - ".github/workflows/estructura-productiva-actual.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "generar_estructura_actual_v2.py"
+      - "verificar_estructura_actual.py"
+      - ".github/workflows/estructura-productiva-actual.yml"
+  schedule:
+    - cron: "35 12 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-estructura-productiva-actual-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install "requests>=2.31" "openpyxl>=3.1"
+
+      - name: Conservar versión previa
+        shell: bash
+        run: |
+          p=deploy/site-overlay/assets/data/estructura-productiva/actual.json
+          if [ -f "$p" ]; then cp "$p" /tmp/estructura-actual-prev.json; fi
+
+      - name: Generar panorama actual
+        id: generar
+        shell: bash
+        run: |
+          set +e
+          python generar_estructura_actual_v2.py 2>&1 | tee /tmp/estructura-actual.log
+          rc=${PIPESTATUS[0]}
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          if [ "$rc" -ne 0 ]; then
+            {
+              echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              echo "Commit: $GITHUB_SHA"
+              echo "Fase: generar panorama productivo actual"
+              echo "Exit code: $rc"
+              echo
+              cat /tmp/estructura-actual.log
+            } > diagnostico_estructura_actual.txt
+          fi
+          exit 0
+
+      - name: Verificar panorama actual
+        id: verificar
+        if: steps.generar.outputs.rc == '0'
+        shell: bash
+        run: |
+          set +e
+          python verificar_estructura_actual.py 2>&1 | tee /tmp/estructura-actual-verificacion.log
+          rc=${PIPESTATUS[0]}
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          if [ "$rc" -ne 0 ]; then
+            {
+              echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              echo "Commit: $GITHUB_SHA"
+              echo "Fase: verificar panorama productivo actual"
+              echo "Exit code: $rc"
+              echo
+              cat /tmp/estructura-actual-verificacion.log
+            } > diagnostico_estructura_actual.txt
+          fi
+          exit 0
+
+      - name: Detectar cambio sustantivo
+        id: cambios
+        if: steps.generar.outputs.rc == '0' && steps.verificar.outputs.rc == '0'
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          from pathlib import Path
+          new=Path('deploy/site-overlay/assets/data/estructura-productiva/actual.json')
+          old=Path('/tmp/estructura-actual-prev.json')
+          if not old.exists():
+              print('changed=true')
+              raise SystemExit
+          a=json.loads(old.read_text(encoding='utf-8'))
+          b=json.loads(new.read_text(encoding='utf-8'))
+          a.pop('generado',None); b.pop('generado',None)
+          print('changed=' + ('true' if a != b else 'false'))
+          PY
+          if [ "$(tail -n 1 "$GITHUB_OUTPUT" | cut -d= -f2)" = "false" ]; then
+            cp /tmp/estructura-actual-prev.json deploy/site-overlay/assets/data/estructura-productiva/actual.json
+            echo "Sin cambios sustantivos: se conserva fecha de la última modificación real."
+          fi
+
+      - name: Fallar PR si la actualización no valida
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          if [ "${{ steps.generar.outputs.rc }}" != "0" ] || [ "${{ steps.verificar.outputs.rc }}" != "0" ]; then
+            cat /tmp/estructura-actual.log || true
+            cat /tmp/estructura-actual-verificacion.log || true
+            exit 1
+          fi
+
+      - name: Commitear resultado o diagnóstico
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: |
+          set -e
+          git config user.name "cepoes-bot"
+          git config user.email "actions@github.com"
+          fallo=0
+          if [ "${{ steps.generar.outputs.rc }}" != "0" ] || [ "${{ steps.verificar.outputs.rc }}" != "0" ]; then fallo=1; fi
+          if [ "$fallo" -eq 1 ]; then
+            git add diagnostico_estructura_actual.txt
+            mensaje="territorio: diagnosticar panorama productivo actual $(date -u +%F)"
+          else
+            if [ "${{ steps.cambios.outputs.changed }}" != "true" ]; then
+              if git ls-files --error-unmatch diagnostico_estructura_actual.txt >/dev/null 2>&1; then
+                git rm diagnostico_estructura_actual.txt
+              fi
+              if git diff --cached --quiet; then exit 0; fi
+            else
+              git add deploy/site-overlay/assets/data/estructura-productiva/actual.json
+              if git ls-files --error-unmatch diagnostico_estructura_actual.txt >/dev/null 2>&1; then git rm diagnostico_estructura_actual.txt; fi
+            fi
+            mensaje="territorio: actualizar panorama productivo actual $(date -u +%F)"
+          fi
+          if git diff --cached --quiet; then
+            [ "$fallo" -eq 0 ] && exit 0 || exit 1
+          fi
+          git commit -m "$mensaje"
+          push_ok=0
+          for intento in 1 2 3; do
+            if git push; then push_ok=1; break; fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || exit 1
+            sleep 3
+          done
+          [ "$push_ok" -eq 1 ] || exit 1
+          [ "$fallo" -eq 0 ] && exit 0 || exit 1

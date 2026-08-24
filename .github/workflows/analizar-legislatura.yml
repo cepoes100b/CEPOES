@@ -1,0 +1,47 @@
+name: Analizar expedientes legislativos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "automatizar_analisis_legislativo.py"
+      - ".github/workflows/analizar-legislatura.yml"
+      - "supabase/functions/legislative-analysis-ingest/**"
+  schedule:
+    # 11:15 y 18:15 de Buenos Aires, después de la actualización del núcleo legislativo.
+    - cron: "15 14,21 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      max_items:
+        description: "Máximo de borradores nuevos a generar"
+        required: false
+        default: "10"
+
+permissions:
+  contents: read
+  models: read
+  id-token: write
+
+concurrency:
+  group: analisis-legislativo-privado
+  cancel-in-progress: false
+
+jobs:
+  analizar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      ANALYSIS_MAX_ITEMS: ${{ inputs.max_items || '10' }}
+      GITHUB_MODEL: openai/gpt-4.1
+      LEGISLATIVE_ANALYSIS_FUNCTION_URL: https://nriexnijkjamrmfivfmd.supabase.co/functions/v1/legislative-analysis-ingest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Generar y guardar borradores privados
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python automatizar_analisis_legislativo.py --max-items "$ANALYSIS_MAX_ITEMS"

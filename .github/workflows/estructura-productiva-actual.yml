@@ -9,6 +9,12 @@ on:
       - "generar_estructura_actual.py"
       - "verificar_estructura_actual.py"
       - ".github/workflows/estructura-productiva-actual.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "generar_estructura_actual.py"
+      - "verificar_estructura_actual.py"
+      - ".github/workflows/estructura-productiva-actual.yml"
   schedule:
     - cron: "35 12 * * 1"
   workflow_dispatch:
@@ -17,7 +23,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: actualizar-estructura-productiva-actual-${{ github.ref_name }}
+  group: actualizar-estructura-productiva-actual-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -73,7 +79,18 @@ jobs:
           fi
           exit 0
 
+      - name: Fallar PR si la actualización no valida
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: |
+          if [ "${{ steps.generar.outputs.rc }}" != "0" ] || [ "${{ steps.verificar.outputs.rc }}" != "0" ]; then
+            cat /tmp/estructura-actual.log || true
+            cat /tmp/estructura-actual-verificacion.log || true
+            exit 1
+          fi
+
       - name: Commitear resultado o diagnóstico
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           set -e

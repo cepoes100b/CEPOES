@@ -24,7 +24,6 @@ def patch_territorio_navigation(site_root: Path) -> None:
         if rel.startswith('territorio/'):
             structure='/territorio/estructura-productiva/'
             migrations='/territorio/migraciones/'
-            debt='/territorio/endeudamiento/'
             if f'href="{structure}"' not in s:
                 anchor=re.search(r'<a\b[^>]*href="/territorio/migraciones/"[^>]*>',s,re.I) or re.search(r'<a\b[^>]*href="/territorio/endeudamiento/"[^>]*>',s,re.I)
                 if anchor:s=s[:anchor.start()]+'<a href="/territorio/estructura-productiva/">Estructura productiva</a>'+s[anchor.start():]
@@ -89,27 +88,35 @@ assert 'data-cepoes-migraciones-access="1"' in territorio, 'Falta acceso visible
 assert 'href="/territorio/estructura-productiva/"' in territorio, 'Territorio no enlaza Estructura productiva'
 assert 'data-cepoes-estructura-productiva-access="1"' in territorio, 'Falta acceso visible a Estructura productiva'
 
-# Validación específica de la base estructural.
+# Validación específica de la base estructural. RUS 2017 usa ClaNAE 2004;
+# no aceptar una regresión que vuelva a interpretar esos códigos con ClaNAE 2010.
 ep=root/'assets'/'data'/'estructura-productiva'
 m=json.loads((ep/'manifest.json').read_text(encoding='utf-8'))
 assert str(m.get('periodo_rus'))=='2017', f"periodo_rus={m.get('periodo_rus')}"
-assert m.get('base_tipo')=='stock_estructural', m.get('base_tipo')
-assert int(m.get('total',0))>=10000, m.get('total')
+assert int(m.get('schema',0))>=3, f"schema stock={m.get('schema')}"
+assert m.get('clasificacion_economica')=='ClaNAE 2004', m.get('clasificacion_economica')
+assert int(m.get('total',0))>=50000, m.get('total')
 assert int(m.get('manzanas_actividad',0))>=1000, m.get('manzanas_actividad')
 assert float(m.get('join_cartografia',0))>=.75, m.get('join_cartografia')
 assert len(m.get('comunas',[]))==15
 assert len(m.get('sectores',[]))>=8
+assert int(m.get('registros_excluidos_sin_actividad_clanae',0))>0, 'No se documentaron usos no económicos excluidos'
+# El stock publicado no debe volver a contener la enorme categoría residual de
+# edificios/lotes/locales cerrados que aparecía al contar códigos 00/0.
+sector_z=next((int(x.get('total',0)) for x in m.get('sectores',[]) if x.get('id')=='Z'),0)
+assert sector_z < int(m['total'])*.10, f'Sector residual Z demasiado grande: {sector_z}'
 geo=json.loads((ep/'mapa.json').read_text(encoding='utf-8'))
 assert geo.get('type')=='FeatureCollection'
 assert len(geo.get('features',[]))==int(m['manzanas_actividad'])
 
 # Dinámica reciente: flujo separado y sin campos personales/fiscales.
 d=json.loads((ep/'dinamica.json').read_text(encoding='utf-8'))
-assert d.get('schema')==1
+assert int(d.get('schema',0))>=1
 assert d.get('lectura')=='flujo_administrativo'
 assert {'2024','2025','2026'}.issubset(set(d.get('anios',{})))
 assert len(d.get('comunas',[]))==15
 assert len(d.get('manzanas',{}))>=500
+assert sum(int(x.get('total',0)) for x in d.get('anios',{}).values())>=1000
 serialized=json.dumps(d,ensure_ascii=False).lower()
 for bad in ('"cuit"','"titular"','"telefono"','"razon_social"'):
     assert bad not in serialized, f'Campo no publicable en dinámica: {bad}'
@@ -148,4 +155,4 @@ assert not blocked, f'Archivos no publicables: {blocked[:10]}'
 
 key=(root/'indexnow-key.txt').read_text(encoding='utf-8').strip()
 assert re.fullmatch(r'[A-Za-z0-9_-]{8,128}',key), 'IndexNow key inválida'
-print(f"OK sitio: {len(html)} HTML · {len(barrios)} barrios · {len(urls)} URLs · estructura productiva {m['total']:,} registros / {m['manzanas_actividad']:,} manzanas · sin crudos")
+print(f"OK sitio: {len(html)} HTML · {len(barrios)} barrios · {len(urls)} URLs · estructura productiva {m['total']:,} registros / {m['manzanas_actividad']:,} manzanas · ClaNAE 2004 · sin crudos")

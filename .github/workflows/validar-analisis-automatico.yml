@@ -1,0 +1,35 @@
+name: Validar análisis legislativo automático
+
+on:
+  pull_request:
+    paths:
+      - "automatizar_analisis_legislativo.py"
+      - "requirements.txt"
+      - ".github/workflows/analizar-legislatura.yml"
+      - ".github/workflows/validar-analisis-automatico.yml"
+      - "supabase/functions/legislative-analysis-ingest/**"
+      - "infra/supabase/004_analisis_legislativo_automatico.sql"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  models: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Compilar script
+        run: python -m py_compile automatizar_analisis_legislativo.py
+      - name: Probar salida estructurada del modelo
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_MODEL: openai/gpt-4.1
+        run: python automatizar_analisis_legislativo.py --self-test

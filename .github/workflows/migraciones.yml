@@ -1,0 +1,55 @@
+name: Actualizar Migraciones CABA
+
+on:
+  schedule:
+    # 15:35 de Buenos Aires. Consulta liviana diaria; sólo commitea si cambia una fuente oficial.
+    - cron: "35 18 * * *"
+  workflow_dispatch:
+  push:
+    branches-ignore: [main]
+    paths:
+      - "actualizar_migraciones.py"
+      - "verificar_migraciones.py"
+      - ".github/workflows/migraciones.yml"
+      - "deploy/site-overlay/assets/data/migraciones.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: migraciones-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+      - name: Consultar fuentes oficiales y reconstruir datos
+        run: python actualizar_migraciones.py
+      - name: Validar conjunto de migraciones
+        run: python verificar_migraciones.py datos/migraciones/migraciones.json
+      - name: Commitear sólo si cambió un dato validado
+        if: github.ref_name == 'main'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add datos/migraciones/migraciones.json deploy/site-overlay/assets/data/migraciones.json
+          if git diff --cached --quiet; then
+            echo "Sin cambios en las fuentes oficiales"
+            exit 0
+          fi
+          git commit -m "migraciones: actualización automática $(date -u +%F)"
+          for intento in 1 2 3; do
+            if git push origin HEAD:${GITHUB_REF_NAME}; then exit 0; fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || exit 1
+            sleep 3
+          done
+          exit 1

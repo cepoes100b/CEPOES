@@ -51,7 +51,7 @@ COMMISSION_REGISTRY = [
     ("Mujeres, Géneros y Diversidades", "mujeresgenerosydiversidades", 13, False),
     ("Niñez, Adolescencia y Juventud", "ninezadolescenciayjuventud", 13, False),
     ("Defensa de los Consumidores y Usuarios", "defensadeconsumidoresyusuarios", 7, False),
-    ("Asuntos Metropolitanos y Relaciones Interjurisdiccionales", "asuntosmetropolitanosyrelacionesinterjurisdiccionales", 9, False),
+    ("Asuntos Metropolitanos y Relaciones Interjurisdiccionales", "relacionesinterjurisdiccionales", 9, False),
     ("Protección y Uso del Espacio Público", "proteccionyusodelespaciopublico", 9, False),
     ("Ambiente", "ambiente", 11, False),
     ("Vivienda", "vivienda", 13, False),

@@ -12,12 +12,14 @@ OUT = Path("diagnostico_fuentes_estructura_actual.txt")
 SOURCES = {
     "OEDE_empresas_provincial": "https://www.argentina.gob.ar/sites/default/files/provinciales_serie_empresas1_2.xlsx",
     "OEDE_empresas_dinamica": "https://www.argentina.gob.ar/sites/default/files/dinamica_estadisticas_bel_150184.xlsx",
-    "IDECBA_ejes": "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2026/06/AC_EJ_2026_08.xlsx",
+    "IDECBA_ejes_rubro_comuna": "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2026/06/AC_EJ_2026_08.xlsx",
+    "IDECBA_ejes_indicadores_comuna": "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2026/06/AC_EJ_2026_04.xlsx",
 }
 TIMEOUT = 180
 TERMS = (
     "ciudad autonoma", "ciudad de buenos aires", "capital federal", "caba",
-    "comuna", "indumentaria", "alimentos", "empresas", "rama", "2024", "2025", "2026",
+    "comuna", "indumentaria", "alimentos", "empresas", "rama", "relevados",
+    "ocupados", "densidad", "tasa de ocupacion", "2024", "2025", "2026",
 )
 
 

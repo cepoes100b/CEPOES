@@ -29,63 +29,71 @@ jobs:
           python-version: "3.12"
 
       - name: Instalar dependencias
-        run: pip install "requests>=2.31" "openpyxl>=3.1"
+        run: pip install "requests>=2.31" "pyshp>=2.3"
 
-      - name: Preparar RUS 2022-2024 desde XLSX oficial
+      - name: Preparar RUS 2022-2024 desde SHP oficial
         id: resolver
         shell: bash
         run: |
           set +e
           python - <<'PY' 2>&1 | tee /tmp/estructura-productiva-resolver.log
-          import csv, io, pathlib, requests
-          from openpyxl import load_workbook
+          import csv, io, pathlib, re, requests, zipfile
+          import shapefile
 
-          RESOURCE_ID = "dca28a61-18a1-492a-81f1-b0e39d0e48a8"
-          API = f"https://data.buenosaires.gob.ar/api/3/action/resource_show?id={RESOURCE_ID}"
+          RESOURCE_ID = "613ef164-131b-422a-b9e2-257cee4b46b4"
+          DOWNLOAD = f"https://data.buenosaires.gob.ar/dataset/relevamiento-usos-suelo/resource/{RESOURCE_ID}/download"
           ORIGINAL = "https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download"
           LOCAL_URL = "http://127.0.0.1:8765/rus-2022-2024.csv"
 
-          meta_r = requests.get(API, timeout=60, headers={"User-Agent":"CEPOES-data/1.0"})
-          meta_r.raise_for_status()
-          payload = meta_r.json()
-          if not payload.get("success"):
-              raise RuntimeError(f"CKAN no devolvió success: {payload}")
-          meta = payload.get("result") or {}
-          url = meta.get("url")
-          if not url:
-              raise RuntimeError("CKAN no devolvió URL para el XLSX 2022-2024")
-          print("CKAN resource:", meta.get("name"))
-          print("CKAN URL:", url)
-
-          r = requests.get(url, timeout=180, headers={"User-Agent":"CEPOES-data/1.0"})
+          r = requests.get(DOWNLOAD, timeout=180, headers={"User-Agent":"CEPOES-data/1.0"})
           r.raise_for_status()
-          print(f"XLSX descargado: {len(r.content)/1024/1024:.1f} MB · {r.headers.get('content-type')}")
-          wb = load_workbook(io.BytesIO(r.content), read_only=True, data_only=True)
-          ws = wb.active
-          rows = ws.iter_rows(values_only=True)
-          header = [str(x or '').strip() for x in next(rows)]
-          keys = {h.lower() for h in header}
-          print("XLSX columnas:", header)
-          if not ({"d21","rama"} & keys):
-              raise RuntimeError(f"El XLSX tampoco contiene ClaNAE: {header}")
+          print(f"SHP descargado: {len(r.content)/1024/1024:.1f} MB · {r.headers.get('content-type')}")
+          bio = io.BytesIO(r.content)
+          if not zipfile.is_zipfile(bio):
+              raise RuntimeError("El recurso SHP no es un ZIP válido")
+          z = zipfile.ZipFile(bio)
+          names = z.namelist()
+          print("ZIP:", names)
+          dbfs = [n for n in names if n.lower().endswith('.dbf')]
+          if not dbfs:
+              raise RuntimeError("El ZIP SHP no contiene DBF")
+          dbf_name = next((n for n in dbfs if '2022-2024' in n), dbfs[0])
+          stem = re.sub(r'\.dbf$', '', dbf_name, flags=re.I)
+          cpg_name = next((n for n in names if n.lower() == (stem + '.cpg').lower()), None)
+          encoding = 'latin1'
+          if cpg_name:
+              cpg = z.read(cpg_name).decode('ascii', 'ignore').strip().upper().replace('-', '')
+              if 'UTF8' in cpg or cpg == '65001': encoding = 'utf-8'
+              elif '1252' in cpg or 'ANSI' in cpg: encoding = 'cp1252'
+          print('DBF:', dbf_name, 'encoding:', encoding)
+
+          dbf_path = pathlib.Path('/tmp/rus-2022-2024.dbf')
+          dbf_path.write_bytes(z.read(dbf_name))
+          reader = shapefile.Reader(dbf=str(dbf_path), encoding=encoding, encodingErrors='replace')
+          fields = [f[0] for f in reader.fields if f[0] != 'DeletionFlag']
+          keys = {str(h).strip().lower() for h in fields}
+          print('DBF columnas:', fields)
+          if not ({'d21','rama'} & keys):
+              raise RuntimeError(f"El SHP no contiene ClaNAE: {fields}")
 
           out = pathlib.Path('/tmp/rus-2022-2024.csv')
           with out.open('w', encoding='utf-8', newline='') as f:
               w = csv.writer(f)
-              w.writerow(header)
+              w.writerow(fields)
               n = 0
-              for row in rows:
-                  w.writerow(['' if v is None else v for v in row])
+              for rec in reader.iterRecords():
+                  w.writerow(['' if v is None else v for v in rec])
                   n += 1
-          wb.close()
-          print(f"CSV normalizado: {n:,} filas · {out.stat().st_size/1024/1024:.1f} MB")
+          reader.close()
+          print(f"CSV normalizado desde DBF: {n:,} filas · {out.stat().st_size/1024/1024:.1f} MB")
+          if n < 10000:
+              raise RuntimeError(f"El SHP 2022-2024 tiene pocas filas: {n}")
 
           p = pathlib.Path('generar_estructura_productiva.py')
           src = p.read_text(encoding='utf-8')
           if ORIGINAL not in src:
               raise RuntimeError('No encontré la URL RUS esperada en el generador')
           p.write_text(src.replace(ORIGINAL, LOCAL_URL), encoding='utf-8')
-          pathlib.Path('/tmp/rus-source-url.txt').write_text(url, encoding='utf-8')
           PY
           rc=${PIPESTATUS[0]}
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
@@ -97,7 +105,7 @@ jobs:
             {
               echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
               echo "Commit: $GITHUB_SHA"
-              echo "Fase: preparar XLSX 2022-2024"
+              echo "Fase: preparar SHP 2022-2024"
               echo "Exit code: $rc"
               echo
               cat /tmp/estructura-productiva-resolver.log
@@ -120,7 +128,8 @@ jobs:
           from pathlib import Path
           p=Path('deploy/site-overlay/assets/data/estructura-productiva/manifest.json')
           d=json.loads(p.read_text(encoding='utf-8'))
-          d['fuentes']['rus']['url']='https://data.buenosaires.gob.ar/dataset/juqdkmgo-180/resource/dca28a61-18a1-492a-81f1-b0e39d0e48a8'
+          d['fuentes']['rus']['nombre']='Relevamiento Usos del Suelo 2022-2024 (SHP) · Buenos Aires Data'
+          d['fuentes']['rus']['url']='https://data.buenosaires.gob.ar/dataset/juqdkmgo-180/resource/613ef164-131b-422a-b9e2-257cee4b46b4'
           p.write_text(json.dumps(d,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
           PY
           else

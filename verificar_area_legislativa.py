@@ -38,9 +38,9 @@ assert not missing, f'IDs DOM referenciados por JS que no existen: {missing}'
 robots = re.search(r'<meta\s+name=["\']robots["\']\s+content=["\']([^"\']+)', html, re.I)
 assert robots and 'noindex' in robots.group(1).lower() and 'nofollow' in robots.group(1).lower(), 'Falta noindex/nofollow'
 
-# Debe fallar cerrada cuando no existe configuración de autenticación.
+# Debe fallar cerrada cuando no existe configuración de autenticación y validar perfil activo.
 assert 'failClosed' in js and 'supabaseUrl' in js and 'supabaseAnonKey' in js, 'No se detecta fail-closed de autenticación'
-assert 'profiles' in js and '.active' not in js, 'Revisar validación de perfil'
+assert "from('profiles')" in js, 'No se consulta el perfil autorizado'
 assert "!data.active" in js, 'No se valida profiles.active'
 
 # No aceptar secretos administrativos en archivos servidos al navegador.

@@ -29,83 +29,38 @@ jobs:
           python-version: "3.12"
 
       - name: Instalar dependencias
-        run: pip install "requests>=2.31" "pyshp>=2.3"
+        run: pip install "requests>=2.31"
 
-      - name: Preparar RUS 2022-2024 desde SHP oficial
+      - name: Preparar base estructural RUS 2017
         id: resolver
         shell: bash
         run: |
           set +e
           python - <<'PY' 2>&1 | tee /tmp/estructura-productiva-resolver.log
-          import csv, io, pathlib, re, requests, zipfile
-          import shapefile
+          from pathlib import Path
+          import requests
 
-          RESOURCE_ID = "613ef164-131b-422a-b9e2-257cee4b46b4"
-          DOWNLOAD = f"https://data.buenosaires.gob.ar/dataset/relevamiento-usos-suelo/resource/{RESOURCE_ID}/download"
-          ORIGINAL = "https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download"
-          LOCAL_URL = "http://127.0.0.1:8765/rus-2022-2024.csv"
-
-          r = requests.get(DOWNLOAD, timeout=180, headers={"User-Agent":"CEPOES-data/1.0"})
+          original = "https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download"
+          rus2017 = "https://data.buenosaires.gob.ar/dataset/relevamiento-usos-suelo/resource/juqdkmgo-1807-resource/download"
+          r = requests.get(rus2017, timeout=180, headers={"User-Agent":"CEPOES-data/1.0"})
           r.raise_for_status()
-          print(f"SHP descargado: {len(r.content)/1024/1024:.1f} MB · {r.headers.get('content-type')}")
-          bio = io.BytesIO(r.content)
-          if not zipfile.is_zipfile(bio):
-              raise RuntimeError("El recurso SHP no es un ZIP válido")
-          z = zipfile.ZipFile(bio)
-          names = z.namelist()
-          print("ZIP:", names)
-          dbfs = [n for n in names if n.lower().endswith('.dbf')]
-          if not dbfs:
-              raise RuntimeError("El ZIP SHP no contiene DBF")
-          dbf_name = next((n for n in dbfs if '2022-2024' in n), dbfs[0])
-          stem = re.sub(r'\.dbf$', '', dbf_name, flags=re.I)
-          cpg_name = next((n for n in names if n.lower() == (stem + '.cpg').lower()), None)
-          encoding = 'latin1'
-          if cpg_name:
-              cpg = z.read(cpg_name).decode('ascii', 'ignore').strip().upper().replace('-', '')
-              if 'UTF8' in cpg or cpg == '65001': encoding = 'utf-8'
-              elif '1252' in cpg or 'ANSI' in cpg: encoding = 'cp1252'
-          print('DBF:', dbf_name, 'encoding:', encoding)
-
-          dbf_path = pathlib.Path('/tmp/rus-2022-2024.dbf')
-          dbf_path.write_bytes(z.read(dbf_name))
-          reader = shapefile.Reader(dbf=str(dbf_path), encoding=encoding, encodingErrors='replace')
-          fields = [f[0] for f in reader.fields if f[0] != 'DeletionFlag']
-          keys = {str(h).strip().lower() for h in fields}
-          print('DBF columnas:', fields)
-          if not ({'d21','rama'} & keys):
-              raise RuntimeError(f"El SHP no contiene ClaNAE: {fields}")
-
-          out = pathlib.Path('/tmp/rus-2022-2024.csv')
-          with out.open('w', encoding='utf-8', newline='') as f:
-              w = csv.writer(f)
-              w.writerow(fields)
-              n = 0
-              for rec in reader.iterRecords():
-                  w.writerow(['' if v is None else v for v in rec])
-                  n += 1
-          reader.close()
-          print(f"CSV normalizado desde DBF: {n:,} filas · {out.stat().st_size/1024/1024:.1f} MB")
-          if n < 10000:
-              raise RuntimeError(f"El SHP 2022-2024 tiene pocas filas: {n}")
-
-          p = pathlib.Path('generar_estructura_productiva.py')
-          src = p.read_text(encoding='utf-8')
-          if ORIGINAL not in src:
+          head = r.content[:2000].decode('utf-8-sig','replace').lower()
+          print(f"RUS 2017 descargable: {len(r.content)/1024/1024:.1f} MB · {r.headers.get('content-type')}")
+          if not ('d21' in head or 'rama' in head):
+              raise RuntimeError(f"RUS 2017 sin esquema ClaNAE esperado. Encabezado: {head[:500]}")
+          p=Path('generar_estructura_productiva.py')
+          src=p.read_text(encoding='utf-8')
+          if original not in src:
               raise RuntimeError('No encontré la URL RUS esperada en el generador')
-          p.write_text(src.replace(ORIGINAL, LOCAL_URL), encoding='utf-8')
+          p.write_text(src.replace(original, rus2017),encoding='utf-8')
           PY
           rc=${PIPESTATUS[0]}
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
-          if [ "$rc" -eq 0 ]; then
-            python -m http.server 8765 --directory /tmp >/tmp/rus-http.log 2>&1 &
-            echo $! >/tmp/rus-http.pid
-            sleep 1
-          else
+          if [ "$rc" -ne 0 ]; then
             {
               echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
               echo "Commit: $GITHUB_SHA"
-              echo "Fase: preparar SHP 2022-2024"
+              echo "Fase: preparar RUS 2017"
               echo "Exit code: $rc"
               echo
               cat /tmp/estructura-productiva-resolver.log
@@ -122,21 +77,11 @@ jobs:
           python generar_estructura_productiva.py 2>&1 | tee /tmp/estructura-productiva.log
           rc=${PIPESTATUS[0]}
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
-          if [ "$rc" -eq 0 ]; then
-            python - <<'PY'
-          import json
-          from pathlib import Path
-          p=Path('deploy/site-overlay/assets/data/estructura-productiva/manifest.json')
-          d=json.loads(p.read_text(encoding='utf-8'))
-          d['fuentes']['rus']['nombre']='Relevamiento Usos del Suelo 2022-2024 (SHP) · Buenos Aires Data'
-          d['fuentes']['rus']['url']='https://data.buenosaires.gob.ar/dataset/juqdkmgo-180/resource/613ef164-131b-422a-b9e2-257cee4b46b4'
-          p.write_text(json.dumps(d,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
-          PY
-          else
+          if [ "$rc" -ne 0 ]; then
             {
               echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
               echo "Commit: $GITHUB_SHA"
-              echo "Fase: generar"
+              echo "Fase: generar desde RUS 2017"
               echo "Exit code: $rc"
               echo
               cat /tmp/estructura-productiva.log
@@ -153,11 +98,24 @@ jobs:
           python verificar_estructura_productiva.py 2>&1 | tee /tmp/estructura-productiva-verificacion.log
           rc=${PIPESTATUS[0]}
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
-          if [ "$rc" -ne 0 ]; then
+          if [ "$rc" -eq 0 ]; then
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('deploy/site-overlay/assets/data/estructura-productiva/manifest.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          d['periodo_rus']='2017'
+          d['base_tipo']='stock_estructural'
+          d['fuentes']['rus']['nombre']='Relevamiento Usos del Suelo 2017 · Buenos Aires Data'
+          d['fuentes']['rus']['url']='https://data.buenosaires.gob.ar/dataset/juqdkmgo-180/resource/juqdkmgo-1807-resource'
+          d['nota']='Base estructural RUS 2017, último recurso descargable validado con detalle ClaNAE y localización por manzana. La dinámica reciente se publica separadamente mediante habilitaciones AGC para no presentar un flujo administrativo como stock de establecimientos.'
+          p.write_text(json.dumps(d,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
+          PY
+          else
             {
               echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
               echo "Commit: $GITHUB_SHA"
-              echo "Fase: verificar"
+              echo "Fase: verificar RUS 2017"
               echo "Exit code: $rc"
               echo
               cat /tmp/estructura-productiva-verificacion.log
@@ -179,7 +137,7 @@ jobs:
           else
             git add deploy/site-overlay/assets/data/estructura-productiva/
             if git ls-files --error-unmatch diagnostico_estructura_productiva.txt >/dev/null 2>&1; then git rm diagnostico_estructura_productiva.txt; fi
-            mensaje="territorio: actualizar estructura productiva $(date -u +%F)"
+            mensaje="territorio: actualizar base estructural RUS 2017 $(date -u +%F)"
           fi
           if git diff --cached --quiet; then [ "$fallo" -eq 0 ] && exit 0 || exit 1; fi
           git commit -m "$mensaje"

@@ -108,6 +108,52 @@ jobs:
             done < deploy/delete-paths.txt
           fi
 
+      - name: Ajustar texto público de seguimiento institucional
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path("_site")
+          old = re.compile(
+              r"CEPOES\s+prioriza\s+editorialmente\s+el\s+seguimiento\s+de\s+la\s+legisladora\s+Claudia\s+Negri\s+y,\s+en\s+segundo\s+término,\s+de\s+los\s+proyectos\s+impulsados\s+por\s+integrantes\s+del\s+bloque\s+Fuerza\s+por\s+Buenos\s+Aires\.\s+Los\s+estados,\s+fechas\s+y\s+movimientos\s+provienen\s+de\s+fuentes\s+oficiales\."
+          )
+          new = (
+              "CEPOES realiza un seguimiento sistemático de la actividad legislativa de la Ciudad de Buenos Aires, "
+              "con especial atención a las iniciativas vinculadas con sus áreas de estudio y trabajo. El monitoreo "
+              "comprende proyectos de ley, tratamiento en comisiones, estados parlamentarios y principales movimientos "
+              "legislativos, a partir de información proveniente de fuentes oficiales."
+          )
+
+          extensions = {".html", ".htm", ".js", ".json", ".xml", ".txt"}
+          replacements = 0
+          already_present = False
+
+          for path in root.rglob("*"):
+              if not path.is_file() or path.suffix.lower() not in extensions:
+                  continue
+              try:
+                  text = path.read_text(encoding="utf-8")
+              except UnicodeDecodeError:
+                  continue
+              if new in text:
+                  already_present = True
+              updated, count = old.subn(new, text)
+              if count:
+                  path.write_text(updated, encoding="utf-8")
+                  replacements += count
+                  print(f"Actualizado: {path} ({count})")
+
+          if replacements:
+              print(f"Texto institucional actualizado en {replacements} ocurrencia(s).")
+          elif already_present:
+              print("El texto institucional público ya estaba actualizado.")
+          else:
+              raise SystemExit("No se encontró ni el texto anterior ni el nuevo; se aborta para evitar un despliegue sin el cambio solicitado.")
+          PY
+
       - name: Validar sitio antes de publicar
         run: python validar_sitio_despliegue.py _site
 

@@ -1,0 +1,53 @@
+name: Validar interfaz estructura productiva
+
+on:
+  pull_request:
+    paths:
+      - "deploy/site-overlay/territorio/estructura-productiva/**"
+      - "deploy/site-overlay/assets/estructura-productiva.*"
+      - "deploy/site-overlay/assets/common.js"
+      - "deploy/site-overlay/assets/data/estructura-productiva/actual.json"
+      - ".github/workflows/validar-estructura-productiva-ui.yml"
+  push:
+    branches: [main]
+    paths:
+      - "deploy/site-overlay/territorio/estructura-productiva/**"
+      - "deploy/site-overlay/assets/estructura-productiva.*"
+      - "deploy/site-overlay/assets/common.js"
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Sintaxis JavaScript
+        run: |
+          node --check deploy/site-overlay/assets/estructura-productiva.js
+          node --check deploy/site-overlay/assets/common.js
+      - name: HTML, datos y criterio temporal
+        run: |
+          python - <<'PY'
+          import json
+          from html.parser import HTMLParser
+          from pathlib import Path
+          html=Path('deploy/site-overlay/territorio/estructura-productiva/index.html').read_text(encoding='utf-8')
+          class P(HTMLParser):
+              def __init__(self): super().__init__(); self.ids=[]
+              def handle_starttag(self,tag,attrs):
+                  a=dict(attrs)
+                  if a.get('id'): self.ids.append(a['id'])
+          p=P();p.feed(html)
+          assert len(p.ids)==len(set(p.ids)), 'IDs HTML duplicados'
+          required=['productive-map','prod-selection','prod-status','prod-company-bars','prod-rubro-bars','prod-comuna-cards','prod-year']
+          missing=[x for x in required if x not in p.ids]
+          assert not missing, f'IDs faltantes: {missing}'
+          for token in ['Panorama vigente','2024–2026','Histórico por manzana · RUS 2017','no representa todos los locales','/assets/estructura-productiva.js','/assets/estructura-productiva.css']:
+              assert token in html, token
+          assert 'Estructura existente' not in html, 'RUS 2017 no debe presentarse como estructura existente/vigente'
+          data=json.loads(Path('deploy/site-overlay/assets/data/estructura-productiva/actual.json').read_text(encoding='utf-8'))
+          o=data['panorama']['empresas_registradas']; e=data['panorama']['ejes_comerciales']
+          assert o['periodo']>=2024 and o['empresas']>80000
+          assert e['periodo']['anio']>=2026 and e['locales_ocupados']==11605 and e['locales_relevados']==12896
+          assert len(e['comunas'])==15 and len(e['rubros'])>=15
+          print('OK interfaz actual-primero y criterios temporales')
+          PY

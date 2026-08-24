@@ -38,25 +38,100 @@ jobs:
           set +e
           python - <<'PY' 2>&1 | tee /tmp/estructura-productiva-resolver.log
           from pathlib import Path
-          import requests
+          import csv, io, re, requests
 
           original = "https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download"
           rus2017 = "https://data.buenosaires.gob.ar/dataset/relevamiento-usos-suelo/resource/juqdkmgo-1807-resource/download"
+          local_url = "http://127.0.0.1:8766/rus-2017-normalizado.csv"
+
           r = requests.get(rus2017, timeout=180, headers={"User-Agent":"CEPOES-data/1.0"})
           r.raise_for_status()
-          head = r.content[:2000].decode('utf-8-sig','replace').lower()
           print(f"RUS 2017 descargable: {len(r.content)/1024/1024:.1f} MB · {r.headers.get('content-type')}")
-          if not ('d21' in head or 'rama' in head):
-              raise RuntimeError(f"RUS 2017 sin esquema ClaNAE esperado. Encabezado: {head[:500]}")
+
+          text = None
+          for enc in ('utf-8-sig','utf-8','cp1252','latin-1'):
+              try:
+                  text = r.content.decode(enc)
+                  print('Encoding:', enc)
+                  break
+              except UnicodeDecodeError:
+                  pass
+          if text is None:
+              raise RuntimeError('No pude decodificar el RUS 2017')
+          first = next((x for x in text.splitlines() if x.strip()), '')
+          counts = {d:first.count(d) for d in (',',';','\t','|')}
+          delim = max(counts, key=counts.get)
+          reader = csv.DictReader(io.StringIO(text), delimiter=delim)
+          fields = [str(x or '').strip() for x in (reader.fieldnames or [])]
+          lower = {x.lower() for x in fields}
+          print('Columnas originales:', fields)
+          required = {'smp','comuna','barrio','rama'}
+          if not required.issubset(lower) or not ({'2_dig','d21'} & lower):
+              raise RuntimeError(f'RUS 2017 sin esquema esperado: {fields}')
+
+          def clean(v):
+              return re.sub(r'\s+',' ',str(v or '').strip())
+
+          def man_norm(v):
+              s = re.sub(r'\s+','',clean(v).upper())
+              m = re.fullmatch(r'0*(\d+)([A-Z]*)', s)
+              return f"{int(m.group(1)):03d}{m.group(2)}" if m else s
+
+          def sm_from_smp(v):
+              s = clean(v).upper().replace('–','-').replace('—','-')
+              s = re.sub(r'\s+','',s)
+              parts = [p for p in re.split(r'[-_/.:]+', s) if p]
+              if len(parts) >= 2 and re.fullmatch(r'\d+', parts[0]):
+                  return f"{int(parts[0]):03d}-{man_norm(parts[1])}"
+              # Respaldo para nomenclaturas compactas poco frecuentes: sólo se
+              # acepta si puede separarse inequívocamente una sección de 3 dígitos.
+              m = re.fullmatch(r'0*(\d{1,3})([A-Z0-9]+)', s)
+              if m and len(m.group(2)) >= 3:
+                  return f"{int(m.group(1)):03d}-{man_norm(m.group(2)[:3])}"
+              return ''
+
+          out_fields = list(fields)
+          for extra in ('sm','d21','d51','ss_rama','numero'):
+              if extra not in out_fields:
+                  out_fields.append(extra)
+
+          out = Path('/tmp/rus-2017-normalizado.csv')
+          n = 0
+          samples = []
+          with out.open('w',encoding='utf-8',newline='') as f:
+              w = csv.DictWriter(f, fieldnames=out_fields, extrasaction='ignore')
+              w.writeheader()
+              for row in reader:
+                  low = {str(k or '').strip().lower():v for k,v in row.items()}
+                  row['d21'] = clean(low.get('d21') or low.get('2_dig'))
+                  row['d51'] = clean(low.get('d51') or low.get('5_dig'))
+                  row['ss_rama'] = clean(low.get('ss_rama') or low.get('ssrama'))
+                  row['numero'] = clean(low.get('numero') or low.get('num'))
+                  row['sm'] = clean(low.get('sm')) or sm_from_smp(low.get('smp'))
+                  if len(samples) < 5:
+                      samples.append((clean(low.get('smp')), row['sm']))
+                  w.writerow(row)
+                  n += 1
+          print(f"Normalizado: {n:,} filas · {out.stat().st_size/1024/1024:.1f} MB")
+          print('Muestras SMP→SM:', samples)
+          if n < 100000:
+              raise RuntimeError(f'RUS 2017 inesperadamente pequeño: {n}')
+          if not all(sm for _, sm in samples):
+              raise RuntimeError(f'No pude derivar SM desde SMP: {samples}')
+
           p=Path('generar_estructura_productiva.py')
           src=p.read_text(encoding='utf-8')
           if original not in src:
               raise RuntimeError('No encontré la URL RUS esperada en el generador')
-          p.write_text(src.replace(original, rus2017),encoding='utf-8')
+          p.write_text(src.replace(original, local_url),encoding='utf-8')
           PY
           rc=${PIPESTATUS[0]}
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
-          if [ "$rc" -ne 0 ]; then
+          if [ "$rc" -eq 0 ]; then
+            python -m http.server 8766 --directory /tmp >/tmp/rus2017-http.log 2>&1 &
+            echo $! >/tmp/rus2017-http.pid
+            sleep 1
+          else
             {
               echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
               echo "Commit: $GITHUB_SHA"
@@ -74,8 +149,14 @@ jobs:
         shell: bash
         run: |
           set +e
+          dyn="deploy/site-overlay/assets/data/estructura-productiva/dinamica.json"
+          if [ -f "$dyn" ]; then cp "$dyn" /tmp/dinamica-productiva.json; fi
           python generar_estructura_productiva.py 2>&1 | tee /tmp/estructura-productiva.log
           rc=${PIPESTATUS[0]}
+          if [ -f /tmp/dinamica-productiva.json ]; then
+            mkdir -p "$(dirname "$dyn")"
+            cp /tmp/dinamica-productiva.json "$dyn"
+          fi
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
           if [ "$rc" -ne 0 ]; then
             {

@@ -180,12 +180,19 @@ jobs:
             https://cepoes.org/ \
             https://cepoes.org/observatorio/ \
             https://cepoes.org/territorio/ \
+            https://cepoes.org/territorio/estructura-productiva/ \
+            https://cepoes.org/assets/data/estructura-productiva/actual.json \
             https://cepoes.org/territorio/endeudamiento/ \
             https://cepoes.org/territorio/migraciones/ \
             https://cepoes.org/legislatura/; do
             echo "Probando $url"
             curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS "$url" >/dev/null
           done
+
+          # Además de responder 200, el dataset productivo debe seguir siendo JSON válido.
+          curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
+            https://cepoes.org/assets/data/estructura-productiva/actual.json \
+            | python -c 'import json,sys; d=json.load(sys.stdin); assert d["panorama"]["empresas_registradas"]["periodo"] >= 2024; assert d["panorama"]["ejes_comerciales"]["periodo"]["anio"] >= 2026; print("Estructura productiva: JSON público válido")'
 
       - name: Restaurar versión anterior si falla publicación o smoke test
         if: failure() && steps.publish.outcome == 'success'

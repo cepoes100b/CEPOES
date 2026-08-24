@@ -1,0 +1,16 @@
+Fecha UTC: 2026-08-24T21:34:56Z
+Commit: 065addf56e79333f0d258a1bcdba793bdbc49b04
+Exit code: 1
+
+Descargando RUS 2022-2024…
+Traceback (most recent call last):
+  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 340, in <module>
+    main()
+  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 155, in main
+    rus_raw = get_bytes(RUS_URL)
+              ^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 140, in get_bytes
+    r.raise_for_status()
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://cdn.buenosaires.gob.ar/datosabiertos/datasets/subsecretaria-de-planeamiento/relevamiento-usos-suelo/relevamiento-usos-del-suelo-2022-2024.csv

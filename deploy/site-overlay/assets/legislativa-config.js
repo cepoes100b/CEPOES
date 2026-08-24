@@ -23,7 +23,7 @@ if (window.supabase?.createClient) {
 window.addEventListener('load', () => {
   if (document.querySelector('script[data-legislativa-auto-ui]')) return;
   const script = document.createElement('script');
-  script.src = '/assets/legislativa-auto-ui.js?v=1';
+  script.src = '/assets/legislativa-auto-ui.js?v=2';
   script.defer = true;
   script.dataset.legislativaAutoUi = '1';
   document.head.appendChild(script);

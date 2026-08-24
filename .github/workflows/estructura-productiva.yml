@@ -33,15 +33,63 @@ jobs:
       - name: Instalar dependencias
         run: pip install "requests>=2.31"
 
-      - name: Usar archivo físico RUS 2022-2024
+      - name: Resolver archivo RUS 2022-2024 desde CKAN
+        id: resolver
+        shell: bash
         run: |
-          # El endpoint /resource/.../download de BA Data devuelve actualmente
-          # un CSV legado. La metadata oficial conserva la URL física del recurso
-          # bajo el CDN y la organización vigente `subsecretaria-de-planeamiento`.
-          sed -i 's#https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download#https://cdn.buenosaires.gob.ar/datosabiertos/datasets/subsecretaria-de-planeamiento/relevamiento-usos-suelo/relevamiento-usos-del-suelo-2022-2024.csv#' generar_estructura_productiva.py
+          set +e
+          python - <<'PY' 2>&1 | tee /tmp/estructura-productiva-resolver.log
+          import pathlib, requests, sys
+
+          RESOURCE_ID = "3c7e5f10-577a-44ea-b614-82cc05f842aa"
+          API = f"https://data.buenosaires.gob.ar/api/3/action/resource_show?id={RESOURCE_ID}"
+          FALLBACK = "https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download"
+
+          r = requests.get(API, timeout=60, headers={"User-Agent": "CEPOES-data/1.0"})
+          r.raise_for_status()
+          payload = r.json()
+          if not payload.get("success"):
+              raise RuntimeError(f"CKAN no devolvió success: {payload}")
+          meta = payload.get("result") or {}
+          url = meta.get("url") or meta.get("download_url")
+          if not url:
+              raise RuntimeError(f"CKAN no devolvió URL para {RESOURCE_ID}")
+
+          print("CKAN resource:", meta.get("name"))
+          print("CKAN format:", meta.get("format"))
+          print("CKAN URL:", url)
+
+          probe = requests.get(url, timeout=90, allow_redirects=True, stream=True,
+                               headers={"User-Agent": "CEPOES-data/1.0"})
+          print("HTTP:", probe.status_code, "final:", probe.url,
+                "content-type:", probe.headers.get("content-type"),
+                "length:", probe.headers.get("content-length"))
+          probe.raise_for_status()
+          probe.close()
+
+          p = pathlib.Path("generar_estructura_productiva.py")
+          src = p.read_text(encoding="utf-8")
+          if FALLBACK not in src:
+              raise RuntimeError("No encontré la URL RUS esperada en el generador")
+          p.write_text(src.replace(FALLBACK, url), encoding="utf-8")
+          PY
+          rc=${PIPESTATUS[0]}
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          if [ "$rc" -ne 0 ]; then
+            {
+              echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              echo "Commit: $GITHUB_SHA"
+              echo "Fase: resolver recurso CKAN"
+              echo "Exit code: $rc"
+              echo
+              cat /tmp/estructura-productiva-resolver.log
+            } > diagnostico_estructura_productiva.txt
+          fi
+          exit 0
 
       - name: Generar mapa y detalle por comuna
         id: generar
+        if: steps.resolver.outputs.rc == '0'
         shell: bash
         run: |
           set +e
@@ -52,6 +100,7 @@ jobs:
             {
               echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
               echo "Commit: $GITHUB_SHA"
+              echo "Fase: generar"
               echo "Exit code: $rc"
               echo
               cat /tmp/estructura-productiva.log
@@ -61,7 +110,7 @@ jobs:
 
       - name: Verificar datos generados
         id: verificar
-        if: steps.generar.outputs.rc == '0'
+        if: steps.resolver.outputs.rc == '0' && steps.generar.outputs.rc == '0'
         shell: bash
         run: |
           set +e
@@ -72,6 +121,7 @@ jobs:
             {
               echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
               echo "Commit: $GITHUB_SHA"
+              echo "Fase: verificar"
               echo "Exit code verificación: $rc"
               echo
               cat /tmp/estructura-productiva-verificacion.log
@@ -87,7 +137,9 @@ jobs:
           git config user.email "actions@github.com"
 
           fallo=0
-          if [ "${{ steps.generar.outputs.rc }}" != "0" ]; then
+          if [ "${{ steps.resolver.outputs.rc }}" != "0" ]; then
+            fallo=1
+          elif [ "${{ steps.generar.outputs.rc }}" != "0" ]; then
             fallo=1
           elif [ "${{ steps.verificar.outputs.rc }}" != "0" ]; then
             fallo=1

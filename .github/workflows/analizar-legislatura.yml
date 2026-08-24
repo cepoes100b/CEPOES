@@ -6,7 +6,10 @@ on:
     paths:
       - "automatizar_analisis_legislativo.py"
       - "automatizar_analisis_legislativo_copilot.py"
+      - "automatizar_analisis_legislativo_hardened.py"
+      - "automatizar_analisis_legislativo_hardened_v2.py"
       - ".github/workflows/analizar-legislatura.yml"
+      - "infra/supabase/006_guardrails_analisis_automatico.sql"
       - "supabase/functions/legislative-analysis-ingest-v2/**"
   schedule:
     # 11:15 y 18:15 de Buenos Aires, después de la actualización del núcleo legislativo.
@@ -54,4 +57,4 @@ jobs:
           pip install -r requirements.txt
           npm install -g @github/copilot@latest
       - name: Generar y guardar borradores privados
-        run: python automatizar_analisis_legislativo_copilot.py --max-items "$ANALYSIS_MAX_ITEMS"
+        run: python automatizar_analisis_legislativo_hardened_v2.py --max-items "$ANALYSIS_MAX_ITEMS"

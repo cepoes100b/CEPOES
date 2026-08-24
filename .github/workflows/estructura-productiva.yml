@@ -33,6 +33,13 @@ jobs:
       - name: Instalar dependencias
         run: pip install "requests>=2.31"
 
+      - name: Usar archivo físico RUS 2022-2024
+        run: |
+          # El endpoint /resource/.../download de BA Data devuelve actualmente
+          # un CSV legado. La metadata oficial conserva la URL física del recurso
+          # bajo el CDN y la organización vigente `subsecretaria-de-planeamiento`.
+          sed -i 's#https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download#https://cdn.buenosaires.gob.ar/datosabiertos/datasets/subsecretaria-de-planeamiento/relevamiento-usos-suelo/relevamiento-usos-del-suelo-2022-2024.csv#' generar_estructura_productiva.py
+
       - name: Generar mapa y detalle por comuna
         run: python generar_estructura_productiva.py
 

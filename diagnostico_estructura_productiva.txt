@@ -1,16 +1,19 @@
-Fecha UTC: 2026-08-24T21:34:56Z
-Commit: 065addf56e79333f0d258a1bcdba793bdbc49b04
+Fecha UTC: 2026-08-24T21:37:35Z
+Commit: 1aa62ad3e035f6f1d3c34b3bc94355b085297d25
+Fase: generar
 Exit code: 1
 
 Descargando RUS 2022-2024…
+RUS: 37.7 MB
+Descargando manzanas oficiales…
+Manzanas: 7.3 MB
+RUS: separador ',' · 14 columnas · ['objectid', 'smp', 'barrio', 'tipo1', 'tipo2', 'estado', 'pisos', 'gp_q', 'obs', 'calle', 'puerta', 'unificado', 'smp_idem', 'ao']
 Traceback (most recent call last):
   File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 340, in <module>
     main()
-  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 155, in main
-    rus_raw = get_bytes(RUS_URL)
-              ^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 140, in get_bytes
-    r.raise_for_status()
-  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/site-packages/requests/models.py", line 1167, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://cdn.buenosaires.gob.ar/datosabiertos/datasets/subsecretaria-de-planeamiento/relevamiento-usos-suelo/relevamiento-usos-del-suelo-2022-2024.csv
+  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 182, in main
+    for row in csv_rows(rus_raw):
+               ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 134, in csv_rows
+    raise RuntimeError(f"Encabezado RUS inesperado: {reader.fieldnames}")
+RuntimeError: Encabezado RUS inesperado: ['OBJECTID', 'SMP', 'BARRIO', 'TIPO1', 'TIPO2', 'ESTADO', 'PISOS', 'GP_Q', 'OBS', 'CALLE', 'PUERTA', 'UNIFICADO', 'SMP_IDEM', 'AÑO']

@@ -1,19 +1,12 @@
-Fecha UTC: 2026-08-24T21:37:35Z
-Commit: 1aa62ad3e035f6f1d3c34b3bc94355b085297d25
-Fase: generar
+Fecha UTC: 2026-08-24T21:41:31Z
+Commit: 2ed36d011121ab1a6cf7c73db9b8310265fae40a
+Fase: preparar XLSX 2022-2024
 Exit code: 1
 
-Descargando RUS 2022-2024…
-RUS: 37.7 MB
-Descargando manzanas oficiales…
-Manzanas: 7.3 MB
-RUS: separador ',' · 14 columnas · ['objectid', 'smp', 'barrio', 'tipo1', 'tipo2', 'estado', 'pisos', 'gp_q', 'obs', 'calle', 'puerta', 'unificado', 'smp_idem', 'ao']
+CKAN resource: Relevamiento Usos del Suelo 2022-2024 (XLSX)
+CKAN URL: https://cdn.buenosaires.gob.ar/datosabiertos/datasets/secretaria-de-desarrollo-urbano/relevamiento-usos-suelo/relevamiento-usos-del-suelo-2022-2024.xlsx
+XLSX descargado: 19.4 MB · application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+XLSX columnas: ['OBJECTID', 'SMP', 'BARRIO', 'TIPO1', 'TIPO2', 'ESTADO', 'PISOS', 'GP_Q', 'OBS', 'CALLE', 'PUERTA', 'UNIFICADO', 'SMP_IDEM', 'AÑO']
 Traceback (most recent call last):
-  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 340, in <module>
-    main()
-  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 182, in main
-    for row in csv_rows(rus_raw):
-               ^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/CEPOES/CEPOES/generar_estructura_productiva.py", line 134, in csv_rows
-    raise RuntimeError(f"Encabezado RUS inesperado: {reader.fieldnames}")
-RuntimeError: Encabezado RUS inesperado: ['OBJECTID', 'SMP', 'BARRIO', 'TIPO1', 'TIPO2', 'ESTADO', 'PISOS', 'GP_Q', 'OBS', 'CALLE', 'PUERTA', 'UNIFICADO', 'SMP_IDEM', 'AÑO']
+  File "<stdin>", line 31, in <module>
+RuntimeError: El XLSX tampoco contiene ClaNAE: ['OBJECTID', 'SMP', 'BARRIO', 'TIPO1', 'TIPO2', 'ESTADO', 'PISOS', 'GP_Q', 'OBS', 'CALLE', 'PUERTA', 'UNIFICADO', 'SMP_IDEM', 'AÑO']

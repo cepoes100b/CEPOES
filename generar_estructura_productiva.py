@@ -13,43 +13,48 @@ from typing import Any
 
 import requests
 
+# El workflow normaliza el recurso descargable RUS 2017 y reemplaza esta URL
+# por un servidor local temporal antes de ejecutar el generador.
 RUS_URL = "https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download"
 MANZANAS_URL = "https://data.buenosaires.gob.ar/es_AR/dataset/manzanas/resource/78a97854-6930-4d1c-b345-deb43168d88d/download"
 OUT = Path("deploy/site-overlay/assets/data/estructura-productiva")
 TIMEOUT = 180
 
+# El RUS 2017 clasifica actividad con ClaNAE 2004. Estos rangos siguen las
+# secciones/ramas de esa versión del clasificador, no los rangos de ClaNAE 2010.
+# Fuente metodológica: INDEC, Clasificador Nacional de Actividades Económicas 2004.
 SECTORES = [
-    ("A", "Agricultura y actividades primarias", [(1, 3)]),
-    ("B", "Minería", [(5, 9)]),
-    ("C", "Industria manufacturera", [(10, 33)]),
-    ("D", "Electricidad y energía", [(35, 35)]),
-    ("E", "Agua, saneamiento y residuos", [(36, 39)]),
-    ("F", "Construcción", [(41, 43)]),
-    ("G", "Comercio", [(45, 47)]),
-    ("H", "Transporte y logística", [(49, 53)]),
-    ("I", "Alojamiento y gastronomía", [(55, 56)]),
-    ("J", "Información y comunicaciones", [(58, 63)]),
-    ("K", "Finanzas y seguros", [(64, 66)]),
-    ("L", "Actividades inmobiliarias", [(68, 68)]),
-    ("M", "Servicios profesionales, científicos y técnicos", [(69, 75)]),
-    ("N", "Servicios administrativos y de apoyo", [(77, 82)]),
-    ("O", "Administración pública", [(84, 84)]),
-    ("P", "Educación", [(85, 85)]),
-    ("Q", "Salud y servicios sociales", [(86, 88)]),
-    ("R", "Cultura, deporte y entretenimiento", [(90, 93)]),
-    ("S", "Otros servicios", [(94, 96)]),
-    ("T", "Hogares como empleadores", [(97, 98)]),
-    ("U", "Organizaciones extraterritoriales", [(99, 99)]),
+    ("A", "Agricultura, ganadería, silvicultura y pesca", [(1, 5)]),
+    ("C", "Explotación de minas y canteras", [(10, 14)]),
+    ("D", "Industria manufacturera", [(15, 38)]),
+    ("E", "Electricidad, gas y agua", [(40, 41)]),
+    ("F", "Construcción", [(45, 45)]),
+    ("G", "Comercio y reparación", [(50, 52)]),
+    ("H", "Hoteles y restaurantes", [(55, 55)]),
+    ("I", "Transporte, almacenamiento y comunicaciones", [(60, 64)]),
+    ("J", "Intermediación financiera", [(65, 67)]),
+    ("K", "Servicios inmobiliarios, empresariales y alquiler", [(70, 74)]),
+    ("L", "Administración pública", [(75, 75)]),
+    ("X", "Obras sociales", [(77, 77)]),
+    ("M", "Enseñanza", [(80, 80)]),
+    ("N", "Salud y servicios sociales", [(85, 85)]),
+    ("O", "Servicios comunitarios, sociales y personales", [(90, 93)]),
+    ("P", "Hogares privados con servicio doméstico", [(95, 95)]),
+    ("Q", "Organizaciones extraterritoriales", [(99, 99)]),
 ]
 SECTOR_NAME = {k: n for k, n, _ in SECTORES}
-SECTOR_NAME["Z"] = "Sin clasificación sectorial"
+SECTOR_NAME["Z"] = "Otra actividad clasificada"
+
+
+def d21_number(v: str) -> int | None:
+    m = re.search(r"\d+", v or "")
+    return int(m.group()) if m else None
 
 
 def sector_for(d21: str) -> str:
-    m = re.search(r"\d+", d21 or "")
-    if not m:
+    n = d21_number(d21)
+    if n is None:
         return "Z"
-    n = int(m.group())
     for code, _, ranges in SECTORES:
         if any(a <= n <= b for a, b in ranges):
             return code
@@ -112,9 +117,6 @@ def csv_rows(content: bytes):
     if text is None:
         raise RuntimeError("No pude decodificar el CSV RUS")
 
-    # Algunos CSV públicos incluyen la directiva de Excel `sep=;`. En vez de
-    # confiar ciegamente en Sniffer, resolvemos el separador desde el encabezado
-    # y verificamos que las columnas económicas esperadas existan.
     lines = text.splitlines()
     while lines and not lines[0].strip():
         lines.pop(0)
@@ -130,8 +132,8 @@ def csv_rows(content: bytes):
     reader = csv.DictReader(io.StringIO(text), delimiter=delimiter)
     fields = [header_key(x) for x in (reader.fieldnames or [])]
     print(f"RUS: separador {delimiter!r} · {len(fields)} columnas · {fields[:24]}")
-    if not ({"d21", "rama"} & set(fields)):
-        raise RuntimeError(f"Encabezado RUS inesperado: {reader.fieldnames}")
+    if "d21" not in set(fields):
+        raise RuntimeError(f"El RUS normalizado no contiene d21: {reader.fieldnames}")
     yield from reader
 
 
@@ -151,7 +153,7 @@ def dump_json(path: Path, obj: Any):
 
 
 def main() -> None:
-    print("Descargando RUS 2022-2024…")
+    print("Descargando base RUS normalizada…")
     rus_raw = get_bytes(RUS_URL)
     print(f"RUS: {len(rus_raw)/1024/1024:.1f} MB")
     print("Descargando manzanas oficiales…")
@@ -177,19 +179,23 @@ def main() -> None:
     comuna_sector = defaultdict(Counter)
     barrio_total = Counter()
     rows_total = 0
+    rows_non_economic = 0
     skipped = 0
 
     for row in csv_rows(rus_raw):
         d21 = first_value(row, "d21")
+        code2 = d21_number(d21)
+        # d21=00/0 y d21 vacío corresponden a usos sin actividad económica
+        # clasificada (p.ej. edificios, lotes o locales cerrados). No forman parte
+        # del stock productivo que se presenta en este módulo.
+        if code2 is None or code2 <= 0:
+            rows_non_economic += 1
+            continue
+
         rama = first_value(row, "rama")
         subrama = first_value(row, "subrama")
         ss_rama = first_value(row, "ss_rama")
         d51 = first_value(row, "d51")
-        # Sólo usos con actividad económica identificable. La existencia de un
-        # ClaNAE o una rama evita contar usos puramente residenciales/edilicios.
-        if not (d21 or d51 or rama or subrama or ss_rama):
-            continue
-
         sm = sm_norm(first_value(row, "sm"), first_value(row, "seccion"), first_value(row, "manzana"))
         comuna_s = first_value(row, "comuna")
         cm = re.search(r"\d+", comuna_s)
@@ -214,8 +220,6 @@ def main() -> None:
             "d21": Counter(),
             "establecimientos": [],
         })
-        # En bordes o inconsistencias del RUS, conservar la moda implícita del
-        # primer registro y actualizar barrio sólo si estaba vacío.
         if not b["barrio"] and barrio:
             b["barrio"] = barrio
         b["total"] += 1
@@ -223,12 +227,10 @@ def main() -> None:
         if rama:
             b["ramas"][rama] += 1
             ramas_global[rama] += 1
-        if d21:
-            b["d21"][d21] += 1
-            d21_global[d21] += 1
-        # Arreglo compacto: nombre, calle, numero, d21, sector, rama, subrama,
-        # sub-subrama, tipo general, d51. Mantiene trazabilidad por manzana sin
-        # publicar identificadores personales ni una base fiscal de empresas.
+        b["d21"][d21] += 1
+        d21_global[d21] += 1
+        # nombre, calle, número, d21, sector, rama, subrama, sub-subrama,
+        # tipo general y d51. No se incluyen identificadores personales/fiscales.
         b["establecimientos"].append([
             nombre, calle, numero, d21, sector, rama, subrama, ss_rama, tipo, d51
         ])
@@ -281,58 +283,58 @@ def main() -> None:
         raise RuntimeError(f"Join RUS↔manzanas insuficiente: {matched}/{len(blocks)} ({ratio:.1%})")
 
     OUT.mkdir(parents=True, exist_ok=True)
-    # Limpiar sólo los JSON que gestiona este generador.
-    for p in OUT.glob("*.json"):
+    # Limpiar sólo los JSON gestionados por el stock. dinamica.json pertenece a
+    # otro pipeline y debe sobrevivir a cada regeneración de la base estructural.
+    for name in ("manifest.json", "mapa.json"):
+        p=OUT/name
+        if p.exists(): p.unlink()
+    for p in OUT.glob("comuna-*.json"):
         p.unlink()
 
     generated_at = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
-    sectors = [{"id": k, "nombre": SECTOR_NAME[k], "total": sector_global.get(k, 0)} for k in [x[0] for x in SECTORES] + ["Z"]]
-    sectors = [x for x in sectors if x["total"]]
-    barrios = [
+    sector_ids=[x[0] for x in SECTORES]+["Z"]
+    sectors=[{"id":k,"nombre":SECTOR_NAME[k],"total":sector_global.get(k,0)} for k in sector_ids]
+    sectors=[x for x in sectors if x["total"]]
+    barrios=[
         {"comuna": c, "barrio": b, "total": n}
         for (c, b), n in sorted(barrio_total.items(), key=lambda x: (x[0][0], x[0][1]))
     ]
-    comunas = [
-        {"comuna": c, "total": comuna_total.get(c, 0), "manzanas": len(comuna_blocks.get(c, {})), "sectores": dict(comuna_sector.get(c, {}))}
-        for c in range(1, 16)
+    comunas=[
+        {"comuna":c,"total":comuna_total.get(c,0),"manzanas":len(comuna_blocks.get(c,{})),"sectores":dict(comuna_sector.get(c,{}))}
+        for c in range(1,16)
     ]
-    manifest = {
+    manifest={
         "schema": 2,
         "generado": generated_at,
-        "periodo_rus": "2022-2024",
-        "unidad": "establecimientos y actividades económicas relevadas",
+        "periodo_rus": "2017",
+        "base_tipo": "stock_estructural",
+        "clanae_version": "2004",
+        "unidad": "usos y establecimientos con actividad económica clasificada",
         "total": rows_total,
+        "registros_no_economicos_excluidos": rows_non_economic,
         "manzanas_actividad": matched,
         "manzanas_rus": len(blocks),
-        "join_cartografia": round(ratio, 5),
+        "join_cartografia": round(ratio,5),
         "registros_omitidos_sin_clave": skipped,
         "comunas": comunas,
         "barrios": barrios,
         "sectores": sectors,
-        "ramas": [[k, v] for k, v in ramas_global.most_common()],
-        "clanae_2": [[k, v] for k, v in sorted(d21_global.items(), key=lambda kv: (-kv[1], kv[0]))],
+        "ramas": [[k,v] for k,v in ramas_global.most_common()],
+        "clanae_2": [[k,v] for k,v in sorted(d21_global.items(),key=lambda kv:(-kv[1],kv[0]))],
         "fuentes": {
-            "rus": {"nombre": "Relevamiento de Usos del Suelo 2022-2024 · Buenos Aires Data", "url": RUS_URL},
-            "manzanas": {"nombre": "Manzanas Catastrales · Buenos Aires Data", "url": MANZANAS_URL},
+            "rus": {"nombre":"Relevamiento de Usos del Suelo 2017 · Buenos Aires Data","url":"https://data.buenosaires.gob.ar/dataset/relevamiento-usos-suelo/resource/juqdkmgo-1807-resource"},
+            "manzanas": {"nombre":"Manzanas Catastrales · Buenos Aires Data","url":MANZANAS_URL},
+            "clanae": {"nombre":"Clasificador Nacional de Actividades Económicas 2004 · INDEC","url":"https://www.indec.gob.ar/indec/web/Institucional-Indec-Clasificadores"},
         },
-        "nota": "El RUS observa usos y establecimientos físicos; no equivale a un padrón de personas jurídicas ni a una base fiscal de empresas.",
-        "hash_fuentes": {
-            "rus_sha256": hashlib.sha256(rus_raw).hexdigest(),
-            "manzanas_sha256": hashlib.sha256(manz_raw).hexdigest(),
-        },
+        "nota": "Base estructural RUS 2017. Se incluyen sólo usos con d21 ClaNAE mayor que cero; edificios, lotes, locales cerrados y otros usos sin actividad económica clasificada quedan fuera. Las habilitaciones recientes se publican como flujo separado.",
+        "hash_fuentes": {"rus_sha256":hashlib.sha256(rus_raw).hexdigest(),"manzanas_sha256":hashlib.sha256(manz_raw).hexdigest()},
     }
-    dump_json(OUT / "manifest.json", manifest)
-    dump_json(OUT / "mapa.json", {"type": "FeatureCollection", "features": map_features})
+    dump_json(OUT/"manifest.json",manifest)
+    dump_json(OUT/"mapa.json",{"type":"FeatureCollection","features":map_features})
+    for c in range(1,16):
+        dump_json(OUT/f"comuna-{c:02d}.json",{"comuna":c,"total":comuna_total.get(c,0),"manzanas":comuna_blocks.get(c,{})})
 
-    for c in range(1, 16):
-        data = {
-            "comuna": c,
-            "total": comuna_total.get(c, 0),
-            "manzanas": comuna_blocks.get(c, {}),
-        }
-        dump_json(OUT / f"comuna-{c:02d}.json", data)
-
-    print(f"OK: {rows_total:,} registros económicos · {matched:,} manzanas con actividad · join {ratio:.1%}")
+    print(f"OK: {rows_total:,} registros económicos · {rows_non_economic:,} usos no económicos excluidos · {matched:,} manzanas · join {ratio:.1%}")
     print(f"Salida: {OUT}")
 
 

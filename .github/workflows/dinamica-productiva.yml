@@ -1,0 +1,87 @@
+name: Actualizar dinámica productiva
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "generar_dinamica_productiva.py"
+      - "verificar_dinamica_productiva.py"
+      - ".github/workflows/dinamica-productiva.yml"
+  schedule:
+    # Martes 09:20 de Buenos Aires. La fuente declara actualización trimestral.
+    - cron: "20 12 * * 2"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizar-dinamica-productiva
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias
+        run: pip install "requests>=2.31"
+
+      - name: Generar y verificar
+        id: generar
+        shell: bash
+        run: |
+          set +e
+          {
+            python generar_dinamica_productiva.py
+            rc1=$?
+            if [ "$rc1" -eq 0 ]; then
+              python verificar_dinamica_productiva.py
+              rc2=$?
+            else
+              rc2=1
+            fi
+            [ "$rc1" -eq 0 ] && [ "$rc2" -eq 0 ]
+          } 2>&1 | tee /tmp/dinamica-productiva.log
+          rc=${PIPESTATUS[0]}
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          if [ "$rc" -ne 0 ]; then
+            {
+              echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              echo "Commit: $GITHUB_SHA"
+              echo "Exit code: $rc"
+              echo
+              cat /tmp/dinamica-productiva.log
+            } > diagnostico_dinamica_productiva.txt
+          fi
+          exit 0
+
+      - name: Commitear resultado o diagnóstico
+        shell: bash
+        run: |
+          set -e
+          git config user.name "cepoes-bot"
+          git config user.email "actions@github.com"
+          fallo=0
+          [ "${{ steps.generar.outputs.rc }}" = "0" ] || fallo=1
+          if [ "$fallo" -eq 1 ]; then
+            git add diagnostico_dinamica_productiva.txt
+            mensaje="territorio: diagnosticar dinámica productiva $(date -u +%F)"
+          else
+            git add deploy/site-overlay/assets/data/estructura-productiva/dinamica.json
+            if git ls-files --error-unmatch diagnostico_dinamica_productiva.txt >/dev/null 2>&1; then git rm diagnostico_dinamica_productiva.txt; fi
+            mensaje="territorio: actualizar dinámica productiva $(date -u +%F)"
+          fi
+          if git diff --cached --quiet; then [ "$fallo" -eq 0 ] && exit 0 || exit 1; fi
+          git commit -m "$mensaje"
+          push_ok=0
+          for intento in 1 2 3; do
+            if git push; then push_ok=1; break; fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" || exit 1
+            sleep 3
+          done
+          [ "$push_ok" -eq 1 ] || exit 1
+          [ "$fallo" -eq 0 ] && exit 0 || exit 1

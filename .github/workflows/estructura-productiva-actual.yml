@@ -7,12 +7,14 @@ on:
       - feat/estructura-productiva-actual-2026
     paths:
       - "generar_estructura_actual.py"
+      - "generar_estructura_actual_v2.py"
       - "verificar_estructura_actual.py"
       - ".github/workflows/estructura-productiva-actual.yml"
   pull_request:
     branches: [main]
     paths:
       - "generar_estructura_actual.py"
+      - "generar_estructura_actual_v2.py"
       - "verificar_estructura_actual.py"
       - ".github/workflows/estructura-productiva-actual.yml"
   schedule:
@@ -43,7 +45,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          python generar_estructura_actual.py 2>&1 | tee /tmp/estructura-actual.log
+          python generar_estructura_actual_v2.py 2>&1 | tee /tmp/estructura-actual.log
           rc=${PIPESTATUS[0]}
           echo "rc=$rc" >> "$GITHUB_OUTPUT"
           if [ "$rc" -ne 0 ]; then

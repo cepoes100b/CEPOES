@@ -20,8 +20,6 @@ concurrency:
 
 jobs:
   deploy:
-    # El push automático se habilita con la variable de repositorio
-    # HOSTINGER_DEPLOY_ENABLED=true. workflow_dispatch siempre permite probarlo.
     if: github.event_name == 'workflow_dispatch' || vars.HOSTINGER_DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     environment: production
@@ -46,11 +44,35 @@ jobs:
             fi
           done
           echo "SFTP_PORT=${SFTP_PORT:-65002}" >> "$GITHUB_ENV"
+          echo "Configuración presente. Puerto: ${SFTP_PORT:-65002}"
 
       - name: Instalar cliente SFTP
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq lftp
+
+      - name: Diagnosticar acceso SFTP
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "1/2 · Probando conectividad TCP al servidor SFTP..."
+          if ! timeout 15 bash -c "cat < /dev/null > /dev/tcp/$SFTP_HOST/$SFTP_PORT"; then
+            echo "ERROR SFTP-TCP: GitHub no puede abrir una conexión con el host/puerto configurados." >&2
+            echo "Revisar HOSTINGER_SFTP_HOST y HOSTINGER_SFTP_PORT en Hostinger > Acceso SSH." >&2
+            exit 31
+          fi
+          echo "TCP OK"
+          echo "2/2 · Probando autenticación y ruta remota..."
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set cmd:fail-exit yes
+          set net:max-retries 1
+          set net:timeout 15
+          pwd
+          cls -1 "$REMOTE_DIR"
+          bye
+          EOF
+          echo "SFTP OK: autenticación y ruta remota accesibles"
 
       - name: Descargar producción como respaldo y base
         shell: bash
@@ -59,11 +81,13 @@ jobs:
           mkdir -p _rollback _site
           lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
           set sftp:auto-confirm yes
+          set cmd:fail-exit yes
           set net:max-retries 3
-          set net:timeout 20
-          mirror --verbose --parallel=4 "$REMOTE_DIR" _rollback
+          set net:timeout 30
+          mirror --verbose --parallel=2 "$REMOTE_DIR" _rollback
           bye
           EOF
+          test -s _rollback/index.html || { echo "El respaldo no contiene index.html; revisar HOSTINGER_REMOTE_DIR" >&2; exit 32; }
           cp -a _rollback/. _site/
 
       - name: Aplicar versión GitHub sobre la copia de producción
@@ -94,9 +118,10 @@ jobs:
           set -euo pipefail
           lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
           set sftp:auto-confirm yes
+          set cmd:fail-exit yes
           set net:max-retries 3
-          set net:timeout 20
-          mirror -R --verbose --parallel=4 --no-perms --no-umask _site "$REMOTE_DIR"
+          set net:timeout 30
+          mirror -R --verbose --parallel=2 --no-perms --no-umask _site "$REMOTE_DIR"
           bye
           EOF
 
@@ -122,8 +147,9 @@ jobs:
           echo "Fallo posterior a la publicación: restaurando respaldo previo"
           lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
           set sftp:auto-confirm yes
+          set cmd:fail-exit yes
           set net:max-retries 3
-          mirror -R --verbose --parallel=4 --no-perms --no-umask _rollback "$REMOTE_DIR"
+          mirror -R --verbose --parallel=2 --no-perms --no-umask _rollback "$REMOTE_DIR"
           bye
           EOF
 

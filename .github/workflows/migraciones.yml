@@ -9,6 +9,7 @@ on:
     branches-ignore: [main]
     paths:
       - "actualizar_migraciones.py"
+      - "actualizar_migraciones_v2.py"
       - "diagnosticar_migraciones_m01.py"
       - "verificar_migraciones.py"
       - ".github/workflows/migraciones.yml"
@@ -17,6 +18,7 @@ on:
     branches: [main]
     paths:
       - "actualizar_migraciones.py"
+      - "actualizar_migraciones_v2.py"
       - "diagnosticar_migraciones_m01.py"
       - "verificar_migraciones.py"
       - ".github/workflows/migraciones.yml"
@@ -39,10 +41,8 @@ jobs:
           python-version: "3.12"
       - name: Instalar dependencias
         run: pip install -r requirements.txt
-      - name: Diagnóstico temporal de estructura M01
-        run: python diagnosticar_migraciones_m01.py
       - name: Consultar fuentes oficiales y reconstruir datos
-        run: python actualizar_migraciones.py
+        run: python actualizar_migraciones_v2.py
       - name: Validar conjunto de migraciones
         run: python verificar_migraciones.py datos/migraciones/migraciones.json
       - name: Commitear sólo si cambió un dato validado

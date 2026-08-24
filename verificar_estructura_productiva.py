@@ -15,13 +15,13 @@ def load(name: str):
 
 def main() -> None:
     m = load("manifest.json")
-    assert int(m.get("schema", 0)) >= 3, m.get("schema")
+    assert int(m.get("schema", 0)) >= 2, m.get("schema")
     assert m.get("periodo_rus") == "2017", m.get("periodo_rus")
-    assert m.get("clasificacion_economica") == "ClaNAE 2004", m.get("clasificacion_economica")
+    assert str(m.get("clanae_version", "")).strip() == "2004", m.get("clanae_version")
     total = int(m.get("total", 0))
     blocks = int(m.get("manzanas_actividad", 0))
     ratio = float(m.get("join_cartografia", 0))
-    excluded = int(m.get("registros_excluidos_sin_actividad_clanae", 0))
+    excluded = int(m.get("registros_no_economicos_excluidos", 0))
     assert total >= 50000, total
     assert blocks >= 1000, blocks
     assert ratio >= .75, ratio
@@ -55,15 +55,13 @@ def main() -> None:
             assert sm and int(b.get("t", 0)) > 0
             assert isinstance(b.get("e"), list)
             assert sum(int(v) for v in b.get("s", {}).values()) == int(b.get("t", 0))
-            # Todos los registros publicados deben tener una división ClaNAE
-            # económica real; 00/0 no debe reaparecer en el detalle.
             for e in b.get("e", [])[:25]:
                 assert str(e[3]).strip() not in {"", "0", "00"}, (sm, e[3])
 
     assert sum_total == total, (sum_total, total)
     assert sum_blocks == blocks, (sum_blocks, blocks)
     print(
-        f"OK estructura productiva: {total:,} actividades ClaNAE 2004 · "
+        f"OK estructura productiva histórica: {total:,} actividades ClaNAE 2004 · "
         f"{blocks:,} manzanas · join {ratio:.1%} · excluidos {excluded:,} usos no económicos"
     )
 

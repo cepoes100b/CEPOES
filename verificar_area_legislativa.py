@@ -43,6 +43,12 @@ assert 'failClosed' in js and 'supabaseUrl' in js and 'supabaseAnonKey' in js, '
 assert "from('profiles')" in js, 'No se consulta el perfil autorizado'
 assert "!data.active" in js, 'No se valida profiles.active'
 
+# El acceso debe ser passwordless y volver únicamente a la ruta privada.
+assert 'signInWithOtp' in js, 'El acceso no usa Magic Link/OTP'
+assert 'signInWithPassword' not in js, 'No debe quedar login por contraseña en el frontend'
+assert "new URL('/legislativa/',window.location.origin)" in js, 'El Magic Link no vuelve a /legislativa/'
+assert 'shouldCreateUser:true' in js, 'El primer Magic Link no puede crear el usuario autorizado'
+
 # No aceptar secretos administrativos en archivos servidos al navegador.
 for forbidden in ['service_role', 'sftp_password', 'database_password', 'jwt_secret']:
     assert forbidden not in html.lower(), f'Secreto prohibido en HTML: {forbidden}'
@@ -71,3 +77,4 @@ for rel in ['deploy/site-overlay/sitemap.xml','deploy/site-overlay/sitemap.txt']
 print('Área Legislativa · validación estática OK')
 print(f'  HTML IDs: {len(parser.ids)} · referencias JS: {len(refs)}')
 print(f'  Tablas privadas con RLS: {len(tables)}')
+print('  Acceso: passwordless por Magic Link')

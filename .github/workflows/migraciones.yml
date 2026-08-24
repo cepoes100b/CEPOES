@@ -10,7 +10,7 @@ on:
     paths:
       - "actualizar_migraciones.py"
       - "actualizar_migraciones_v2.py"
-      - "diagnosticar_migraciones_m01.py"
+      - "actualizar_migraciones_v3.py"
       - "verificar_migraciones.py"
       - ".github/workflows/migraciones.yml"
       - "deploy/site-overlay/assets/data/migraciones.json"
@@ -19,7 +19,7 @@ on:
     paths:
       - "actualizar_migraciones.py"
       - "actualizar_migraciones_v2.py"
-      - "diagnosticar_migraciones_m01.py"
+      - "actualizar_migraciones_v3.py"
       - "verificar_migraciones.py"
       - ".github/workflows/migraciones.yml"
       - "deploy/site-overlay/assets/data/migraciones.json"
@@ -42,7 +42,7 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r requirements.txt
       - name: Consultar fuentes oficiales y reconstruir datos
-        run: python actualizar_migraciones_v2.py
+        run: python actualizar_migraciones_v3.py
       - name: Validar conjunto de migraciones
         run: python verificar_migraciones.py datos/migraciones/migraciones.json
       - name: Commitear sólo si cambió un dato validado

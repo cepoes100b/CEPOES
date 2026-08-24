@@ -1,0 +1,39 @@
+name: Validar Área Legislativa privada
+
+on:
+  pull_request:
+    paths:
+      - "deploy/site-overlay/legislativa/**"
+      - "deploy/site-overlay/assets/legislativa*"
+      - "infra/supabase/legislativa.sql"
+      - "docs/AREA-LEGISLATIVA.md"
+      - "verificar_area_legislativa.py"
+      - ".github/workflows/validar-area-legislativa.yml"
+  push:
+    branches:
+      - "feature/area-legislativa-privada"
+    paths:
+      - "deploy/site-overlay/legislativa/**"
+      - "deploy/site-overlay/assets/legislativa*"
+      - "infra/supabase/legislativa.sql"
+      - "verificar_area_legislativa.py"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+      - name: Validar JavaScript
+        run: node --check deploy/site-overlay/assets/legislativa.js
+      - name: Validar seguridad y estructura
+        run: python verificar_area_legislativa.py

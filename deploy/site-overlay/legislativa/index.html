@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+  <meta name="referrer" content="same-origin">
+  <title>CEPOES · Área Legislativa</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/legislativa.css?v=1">
+</head>
+<body>
+  <noscript><div class="fatal">Esta aplicación requiere JavaScript.</div></noscript>
+
+  <main id="auth-view" class="auth-shell">
+    <section class="auth-brand">
+      <a class="brand" href="/" aria-label="CEPOES">
+        <span class="brand-mark">CE</span>
+        <span><strong>CEPOES</strong><small>Centro de Estudios en Política, Economía y Sociedad</small></span>
+      </a>
+      <div class="auth-copy">
+        <span class="eyebrow">ACCESO RESTRINGIDO</span>
+        <h1>Área Legislativa</h1>
+        <p>Inteligencia legislativa, análisis técnico y herramientas de trabajo para equipos autorizados.</p>
+      </div>
+      <p class="security-note">El contenido interno no se almacena en la web pública ni en el repositorio público de CEPOES.</p>
+    </section>
+
+    <section class="auth-card-wrap">
+      <form id="login-form" class="auth-card" autocomplete="on">
+        <div>
+          <span class="eyebrow">CEPOES · INTELIGENCIA LEGISLATIVA</span>
+          <h2>Ingresar</h2>
+          <p>Usá tu cuenta institucional autorizada.</p>
+        </div>
+        <label>Correo electrónico
+          <input id="login-email" type="email" autocomplete="username" required>
+        </label>
+        <label>Contraseña
+          <input id="login-password" type="password" autocomplete="current-password" required minlength="8">
+        </label>
+        <button class="primary-btn" type="submit">Ingresar</button>
+        <p id="login-message" class="form-message" role="alert" aria-live="polite"></p>
+        <p class="auth-help">El acceso es personal. No compartas credenciales ni materiales internos.</p>
+      </form>
+    </section>
+  </main>
+
+  <div id="app-view" class="app-shell" hidden>
+    <aside class="sidebar">
+      <a class="side-brand" href="/">
+        <span class="brand-mark">CE</span>
+        <span><strong>CEPOES</strong><small>Área Legislativa</small></span>
+      </a>
+      <nav class="side-nav" aria-label="Área Legislativa">
+        <button data-view="inicio" class="active"><span>01</span> Inicio</button>
+        <button data-view="expedientes"><span>02</span> Expedientes</button>
+        <button data-view="analisis"><span>03</span> Análisis</button>
+        <button data-view="sesiones"><span>04</span> Carpeta de sesión</button>
+        <button data-view="proyectos"><span>05</span> Banco de proyectos</button>
+      </nav>
+      <div class="side-footer">
+        <div id="user-summary" class="user-summary"></div>
+        <button id="logout-btn" class="text-btn">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <section class="workspace">
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">USO INTERNO · NO DISTRIBUIR</span>
+          <h1 id="view-title">Inicio</h1>
+        </div>
+        <div class="top-actions">
+          <span id="data-status" class="status-chip">Cargando información…</span>
+          <button id="new-analysis-btn" class="primary-btn compact" hidden>Nuevo análisis</button>
+        </div>
+      </header>
+
+      <div id="global-message" class="global-message" hidden></div>
+
+      <section id="view-inicio" class="view active">
+        <div id="kpi-grid" class="kpi-grid"></div>
+        <div class="dashboard-grid">
+          <article class="panel panel-wide">
+            <div class="panel-head"><div><span class="eyebrow">PRÓXIMOS DÍAS</span><h2>Agenda legislativa</h2></div></div>
+            <div id="agenda-list" class="stack-list loading-block">Cargando agenda…</div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><span class="eyebrow">ATENCIÓN</span><h2>Expedientes a revisar</h2></div></div>
+            <div id="priority-list" class="stack-list loading-block">Cargando expedientes…</div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><span class="eyebrow">INTERNO</span><h2>Últimos análisis</h2></div></div>
+            <div id="latest-analysis-list" class="stack-list loading-block">Cargando análisis…</div>
+          </article>
+        </div>
+      </section>
+
+      <section id="view-expedientes" class="view">
+        <div class="filterbar">
+          <input id="exp-search" type="search" placeholder="Buscar por expediente, tema, autor o comisión…">
+          <select id="exp-topic"><option value="">Todos los temas</option></select>
+          <select id="exp-priority"><option value="">Toda prioridad técnica</option><option value="alta">Alta</option><option value="media">Media</option><option value="baja">Baja</option></select>
+        </div>
+        <div id="expedientes-table" class="table-shell loading-block">Cargando expedientes…</div>
+      </section>
+
+      <section id="view-analisis" class="view">
+        <div class="section-intro"><div><span class="eyebrow">CAPA PRIVADA</span><h2>Análisis y recomendaciones</h2><p>Evaluaciones técnicas, posición sugerida, riesgos, modificaciones y argumentos de trabajo.</p></div></div>
+        <div id="analisis-list" class="analysis-grid loading-block">Cargando análisis…</div>
+      </section>
+
+      <section id="view-sesiones" class="view">
+        <div class="section-intro"><div><span class="eyebrow">RECINTO</span><h2>Carpetas de sesión</h2><p>Briefings consolidados para preparar cada sesión y ordenar los asuntos que requieren definición.</p></div></div>
+        <div id="briefs-list" class="analysis-grid loading-block">Cargando carpetas…</div>
+      </section>
+
+      <section id="view-proyectos" class="view">
+        <div class="section-intro"><div><span class="eyebrow">AGENDA PROPIA</span><h2>Banco de proyectos</h2><p>Iniciativas originadas en diagnósticos, datos y líneas de trabajo de CEPOES.</p></div></div>
+        <div id="project-bank-list" class="analysis-grid loading-block">Cargando proyectos…</div>
+      </section>
+    </section>
+  </div>
+
+  <dialog id="analysis-dialog" class="editor-dialog">
+    <form id="analysis-form" class="editor-form">
+      <header><div><span class="eyebrow">ANÁLISIS INTERNO</span><h2 id="analysis-form-title">Nuevo análisis</h2></div><button type="button" class="icon-btn" data-close-dialog aria-label="Cerrar">×</button></header>
+      <input id="analysis-id" type="hidden">
+      <div class="form-grid two">
+        <label>Expediente<input id="analysis-expediente" required placeholder="Ej. 1234-D-2026"></label>
+        <label>Tipo de documento<select id="analysis-kind"><option value="proyecto">Proyecto</option><option value="dictamen">Dictamen</option><option value="despacho">Despacho</option><option value="sesion">Asunto de sesión</option><option value="otro">Otro</option></select></label>
+      </div>
+      <label>Título<input id="analysis-title" required></label>
+      <label>Fuente oficial / documento<input id="analysis-source" type="url" placeholder="https://…"></label>
+      <label>Resumen ejecutivo<textarea id="analysis-summary" rows="4"></textarea></label>
+      <div class="form-grid two">
+        <label>Prioridad interna<select id="analysis-priority"><option value="media">Media</option><option value="critica">Crítica</option><option value="alta">Alta</option><option value="baja">Baja</option></select></label>
+        <label>Posición sugerida<select id="analysis-position"><option value="sin_definir">Sin definir</option><option value="acompanar">Acompañar</option><option value="acompanar_con_modificaciones">Acompañar con modificaciones</option><option value="abstenerse">Abstenerse</option><option value="rechazar">Rechazar</option></select></label>
+      </div>
+      <div class="form-grid two">
+        <label>Impacto fiscal<textarea id="analysis-fiscal" rows="3"></textarea></label>
+        <label>Impacto territorial<textarea id="analysis-territorial" rows="3"></textarea></label>
+      </div>
+      <label>Impacto jurídico / normativo<textarea id="analysis-legal" rows="3"></textarea></label>
+      <label>Riesgos y observaciones<textarea id="analysis-risks" rows="3"></textarea></label>
+      <label>Fundamento de la posición<textarea id="analysis-rationale" rows="4"></textarea></label>
+      <label>Modificaciones propuestas<textarea id="analysis-amendments" rows="4"></textarea></label>
+      <label>Preguntas para comisión<textarea id="analysis-questions" rows="4" placeholder="Una pregunta por línea"></textarea></label>
+      <label>Argumentos para intervención<textarea id="analysis-arguments" rows="4"></textarea></label>
+      <div class="form-grid two">
+        <label>Estado de revisión<select id="analysis-status"><option value="borrador">Borrador</option><option value="revision">En revisión</option><option value="validado">Validado</option></select></label>
+        <label>Etiquetas<input id="analysis-tags" placeholder="salud, presupuesto, comuna 8"></label>
+      </div>
+      <footer><button type="button" class="secondary-btn" data-close-dialog>Cancelar</button><button type="submit" class="primary-btn">Guardar análisis</button></footer>
+      <p id="analysis-form-message" class="form-message" role="alert"></p>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" crossorigin="anonymous"></script>
+  <script src="/assets/legislativa-config.js?v=1"></script>
+  <script src="/assets/legislativa.js?v=1"></script>
+</body>
+</html>

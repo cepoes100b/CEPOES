@@ -181,6 +181,7 @@ jobs:
             https://cepoes.org/observatorio/ \
             https://cepoes.org/territorio/ \
             https://cepoes.org/territorio/endeudamiento/ \
+            https://cepoes.org/territorio/migraciones/ \
             https://cepoes.org/legislatura/; do
             echo "Probando $url"
             curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS "$url" >/dev/null

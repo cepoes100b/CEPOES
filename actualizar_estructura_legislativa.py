@@ -87,21 +87,49 @@ def request(session: requests.Session, url: str) -> requests.Response:
     raise RuntimeError(f"no se pudo descargar {url}: {last}")
 
 
+def row_cells(tr) -> list[str]:
+    """Devuelve todas las celdas preservando columnas vacías (incluida imagen)."""
+    return [clean(cell.get_text(" ", strip=True)) for cell in tr.find_all(["th", "td"], recursive=False)]
+
+
 def parse_member_table(soup: BeautifulSoup) -> list[dict]:
-    candidates = []
+    """Lee la tabla Integrantes por nombre de columna, nunca por posición fija.
+
+    La web oficial antepone una columna de imagen sin encabezado, por lo que
+    asumir que Diputado es la columna 0 genera un corrimiento silencioso.
+    """
+    best: list[dict] = []
     for table in soup.find_all("table"):
-        headers = [norm(x.get_text(" ", strip=True)) for x in table.find_all("th")]
-        hay = " ".join(headers) + " " + norm(table.get_text(" ", strip=True)[:500])
-        if "diputado" not in hay or "bloque" not in hay or "cargo" not in hay:
+        trs = table.find_all("tr")
+        header_index = None
+        positions: dict[str, int] = {}
+        for i, tr in enumerate(trs):
+            cells = row_cells(tr)
+            normalized = [norm(x) for x in cells]
+            if "diputado" in normalized and "bloque" in normalized and "cargo" in normalized:
+                positions = {
+                    "nombre": normalized.index("diputado"),
+                    "bloque": normalized.index("bloque"),
+                    "cargo": normalized.index("cargo"),
+                }
+                if "integrante desde" in normalized:
+                    positions["desde"] = normalized.index("integrante desde")
+                header_index = i
+                break
+        if header_index is None:
             continue
-        rows = []
-        for tr in table.find_all("tr"):
-            cells = [clean(td.get_text(" ", strip=True)) for td in tr.find_all("td")]
-            if len(cells) < 3:
+
+        rows: list[dict] = []
+        need = max(positions.values())
+        for tr in trs[header_index + 1:]:
+            cells = row_cells(tr)
+            if len(cells) <= need:
                 continue
-            name, block, role = cells[0], cells[1], cells[2]
-            since = cells[3] if len(cells) > 3 else ""
-            if not name or norm(name) in {"diputado", "nombre"} or not block:
+            name = cells[positions["nombre"]]
+            block = cells[positions["bloque"]]
+            role = cells[positions["cargo"]]
+            since = cells[positions["desde"]] if "desde" in positions and len(cells) > positions["desde"] else ""
+            if not name or not block or norm(name) in {"diputado", "nombre"}:
                 continue
             rows.append({
                 "nombre": name,
@@ -109,9 +137,9 @@ def parse_member_table(soup: BeautifulSoup) -> list[dict]:
                 "cargo": role or "Vocal",
                 "integrante_desde": since or None,
             })
-        if len(rows) > len(candidates):
-            candidates = rows
-    return candidates
+        if len(rows) > len(best):
+            best = rows
+    return best
 
 
 def parse_commission(session: requests.Session, official_name: str, slug: str, expected: int, weekly: bool) -> dict:

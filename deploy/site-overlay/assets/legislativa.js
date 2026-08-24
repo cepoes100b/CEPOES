@@ -53,13 +53,38 @@
     el('new-analysis-btn').hidden=!writerRoles.has(p.role);
   }
 
+  function preparePasswordlessUi(){
+    const password=el('login-password');
+    if(password){
+      password.required=false;
+      password.disabled=true;
+      const label=password.closest('label');
+      if(label)label.hidden=true;
+    }
+    const submit=el('login-form')?.querySelector('button[type="submit"]');
+    if(submit)submit.textContent='Recibir enlace de acceso';
+  }
+
   async function login(ev){
     ev.preventDefault();
-    const msg=el('login-message'); msg.textContent='Verificando acceso…';
-    const email=el('login-email').value.trim(), password=el('login-password').value;
-    const {data,error}=await state.client.auth.signInWithPassword({email,password});
-    if(error){msg.textContent='No se pudo iniciar sesión. Verificá tus credenciales.';return;}
-    msg.textContent=''; await bootSession(data.session);
+    const msg=el('login-message');
+    const submit=el('login-form')?.querySelector('button[type="submit"]');
+    const email=el('login-email').value.trim().toLowerCase();
+    if(!email){msg.textContent='Ingresá tu correo electrónico.';return;}
+    msg.textContent='Enviando enlace seguro…';
+    if(submit)submit.disabled=true;
+    const redirectTo=new URL('/legislativa/',window.location.origin).href;
+    const {error}=await state.client.auth.signInWithOtp({
+      email,
+      options:{shouldCreateUser:true,emailRedirectTo:redirectTo}
+    });
+    if(submit)submit.disabled=false;
+    if(error){
+      console.error(error);
+      msg.textContent='No se pudo enviar el enlace. Si tu correo está autorizado, revisaremos la configuración de acceso.';
+      return;
+    }
+    msg.textContent='Te enviamos un enlace de acceso. Abrilo desde este dispositivo para ingresar.';
   }
 
   async function logout(){await state.client.auth.signOut(); state.profile=null; showAuth();}
@@ -126,7 +151,6 @@
     const meetings=arr(state.legislative?.reuniones).filter(m=>String(m.fecha||'')>=today && meetingMatchesProfile(m)).sort((a,b)=>`${a.fecha}${a.hora||''}`.localeCompare(`${b.fecha}${b.hora||''}`));
     const exp=uniqueExpedientes();
     const high=exp.filter(x=>x.prioridad_tecnica==='alta' && String(x.fecha_reunion||'')>=today);
-    const sessions=arr(state.sessions?.sesiones).filter(x=>x.realizada);
     el('kpi-grid').innerHTML=[
       ['Próximas reuniones',meetings.length,'según agenda oficial'],
       ['Expedientes detectados',exp.length,'en el universo reciente'],
@@ -213,6 +237,7 @@
 
   async function init(){
     bind();
+    preparePasswordlessUi();
     if(!configured()){failClosed();return;}
     state.client=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
     const {data}=await state.client.auth.getSession(); await bootSession(data.session);

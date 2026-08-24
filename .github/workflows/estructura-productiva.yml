@@ -41,28 +41,84 @@ jobs:
           sed -i 's#https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download#https://cdn.buenosaires.gob.ar/datosabiertos/datasets/subsecretaria-de-planeamiento/relevamiento-usos-suelo/relevamiento-usos-del-suelo-2022-2024.csv#' generar_estructura_productiva.py
 
       - name: Generar mapa y detalle por comuna
-        run: python generar_estructura_productiva.py
+        id: generar
+        shell: bash
+        run: |
+          set +e
+          python generar_estructura_productiva.py 2>&1 | tee /tmp/estructura-productiva.log
+          rc=${PIPESTATUS[0]}
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          if [ "$rc" -ne 0 ]; then
+            {
+              echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              echo "Commit: $GITHUB_SHA"
+              echo "Exit code: $rc"
+              echo
+              cat /tmp/estructura-productiva.log
+            } > diagnostico_estructura_productiva.txt
+          fi
+          exit 0
 
       - name: Verificar datos generados
-        run: python verificar_estructura_productiva.py
-
-      - name: Commitear si cambió la fuente o el resultado
+        id: verificar
+        if: steps.generar.outputs.rc == '0'
+        shell: bash
         run: |
+          set +e
+          python verificar_estructura_productiva.py 2>&1 | tee /tmp/estructura-productiva-verificacion.log
+          rc=${PIPESTATUS[0]}
+          echo "rc=$rc" >> "$GITHUB_OUTPUT"
+          if [ "$rc" -ne 0 ]; then
+            {
+              echo "Fecha UTC: $(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+              echo "Commit: $GITHUB_SHA"
+              echo "Exit code verificación: $rc"
+              echo
+              cat /tmp/estructura-productiva-verificacion.log
+            } > diagnostico_estructura_productiva.txt
+          fi
+          exit 0
+
+      - name: Commitear resultado o diagnóstico
+        shell: bash
+        run: |
+          set -e
           git config user.name  "cepoes-bot"
           git config user.email "actions@github.com"
-          git add deploy/site-overlay/assets/data/estructura-productiva/
+
+          fallo=0
+          if [ "${{ steps.generar.outputs.rc }}" != "0" ]; then
+            fallo=1
+          elif [ "${{ steps.verificar.outputs.rc }}" != "0" ]; then
+            fallo=1
+          fi
+
+          if [ "$fallo" -eq 1 ]; then
+            git add diagnostico_estructura_productiva.txt
+            mensaje="territorio: diagnosticar estructura productiva $(date -u +%F)"
+          else
+            git add deploy/site-overlay/assets/data/estructura-productiva/
+            if git ls-files --error-unmatch diagnostico_estructura_productiva.txt >/dev/null 2>&1; then
+              git rm diagnostico_estructura_productiva.txt
+            fi
+            mensaje="territorio: actualizar estructura productiva $(date -u +%F)"
+          fi
+
           if git diff --cached --quiet; then
             echo "Sin cambios"
-            exit 0
+            [ "$fallo" -eq 0 ] && exit 0 || exit 1
           fi
-          git commit -m "territorio: actualizar estructura productiva $(date -u +%F)"
+
+          git commit -m "$mensaje"
+          push_ok=0
           for intento in 1 2 3; do
             if git push; then
               echo "Push OK (intento $intento)"
-              exit 0
+              push_ok=1
+              break
             fi
             git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" || exit 1
             sleep 3
           done
-          echo "No pude empujar después de 3 intentos"
-          exit 1
+          [ "$push_ok" -eq 1 ] || exit 1
+          [ "$fallo" -eq 0 ] && exit 0 || exit 1

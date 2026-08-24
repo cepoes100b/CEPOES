@@ -10,21 +10,21 @@ from openpyxl import load_workbook
 
 OUT = Path("diagnostico_fuentes_estructura_actual.txt")
 SOURCES = {
-    "OEDE_empresas": "https://www.argentina.gob.ar/sites/default/files/provinciales_serie_empresas1_2.xlsx",
+    "OEDE_empresas_provincial": "https://www.argentina.gob.ar/sites/default/files/provinciales_serie_empresas1_2.xlsx",
+    "OEDE_empresas_dinamica": "https://www.argentina.gob.ar/sites/default/files/dinamica_estadisticas_bel_150184.xlsx",
     "IDECBA_ejes": "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2026/06/AC_EJ_2026_08.xlsx",
 }
 TIMEOUT = 180
 TERMS = (
     "ciudad autonoma", "ciudad de buenos aires", "capital federal", "caba",
-    "comuna", "indumentaria", "alimentos", "empresas", "rama", "2025", "2026",
+    "comuna", "indumentaria", "alimentos", "empresas", "rama", "2024", "2025", "2026",
 )
 
 
 def clean(v):
     if v is None:
         return ""
-    s = re.sub(r"\s+", " ", str(v).strip())
-    return s
+    return re.sub(r"\s+", " ", str(v).strip())
 
 
 def norm(v):
@@ -34,7 +34,7 @@ def norm(v):
     return s
 
 
-def fmt_row(values, max_cols=20):
+def fmt_row(values, max_cols=30):
     vals = [clean(v) for v in values[:max_cols]]
     while vals and not vals[-1]:
         vals.pop()
@@ -56,12 +56,12 @@ def inspect_book(name: str, url: str) -> list[str]:
         for i, row in enumerate(ws.iter_rows(values_only=True), start=1):
             vals = list(row)
             text = " ".join(norm(v) for v in vals if v is not None)
-            if text and shown < 35:
+            if text and shown < 45:
                 lines.append(f"R{i}: {fmt_row(vals)}")
                 shown += 1
-            if text and any(t in text for t in TERMS) and len(hits) < 80:
-                hits.append((i, fmt_row(vals, 30)))
-            if i >= 5000 and len(hits) >= 20:
+            if text and any(t in text for t in TERMS) and len(hits) < 140:
+                hits.append((i, fmt_row(vals, 60)))
+            if i >= 12000 and len(hits) >= 30:
                 break
         if hits:
             lines.append("Coincidencias relevantes:")
@@ -79,7 +79,7 @@ def main():
             out.extend([f"=== {name} ===", f"ERROR: {type(e).__name__}: {e}"])
         out.append("")
     OUT.write_text("\n".join(out), encoding="utf-8")
-    print(OUT.read_text(encoding="utf-8")[:10000])
+    print(OUT.read_text(encoding="utf-8")[:12000])
 
 
 if __name__ == "__main__":

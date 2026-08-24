@@ -85,6 +85,7 @@ HIT R54: RAMA DE ACTIVIDAD ECONOMICA
 HIT R56: Es la rama de actividad principal, codificada con la revisión 3 del código CIIU. La información original de rama surge del padrón de contribuyentes de AFIP y se mejora incorporando información de otras fuentes: principalmente la Encuesta de Indicadores Laborales (EIL), guías de empresas, consultas a Cámaras y Organismos Reguladores, y otras bases de registros de empresas.
 HIT R58: ESTRATIFICACION DE LAS EMPRESAS POR TAMAÑO
 HIT R62: Los rangos de empleo utilizados en cada estrato de tamaño varían según rama de actividad, atendiendo a diferencias sectoriales en la productividad media del trabajo y a las pautas establecidas por el país para la aplicación de políticas orientadas a la pequeña y mediana empresa. Estos tramos se determinaron a partir del nivel de ventas de las empresas definido por la SEPyME en la Resolución 24/2001 que establece el nivel máximo de ventas para cada categoría de empresa (micro, pequeña, mediana y gran empresa) según el sector en el que desarrollan su actividad.
+HIT R64: El tamaño es una característica de la empresa en su conjunto y no de cada local de cada empresa. Es decir que cada empresa, y por ende la cantidad de ocupados que emplea, es clasificada en los estratos de tamaño, según el empleo total de la firma [7].
 HIT R74: A partir de las estimaciones realizadas se definieron tramos ocupacionales, que ponen en evidencia las fuertes diferencias entre los distintos sectores (industria, comercio y servicios) y entre las distintas ramas de actividad al interior de cada sector. Se presentan a continuación los resultados que surgieron de las estimaciones realizadas para definir los tramos de empleo que permiten clasificar a las firmas según su tamaño económico.
 HIT R79: Rama de actividad |  | Micro | Pequeña | Mediana
 HIT R107: Rama de actividad |  | Micro | Pequeña | Mediana
@@ -1521,7 +1522,7 @@ HIT R2: Empresas del sector privado 1 2 según rama de actividad
 HIT R32: 1. Los datos sobre la cantidad de empresas activas en los últimos dos años son provisorios y, por lo tanto, se encuentran sujetos a modificaciones en futuras actualizaciones del boletin.
 HIT R33: 2. Las empresas con participación accionaria privada y estatal se contabilizan dentro del sector privado.
 
-=== IDECBA_ejes ===
+=== IDECBA_ejes_rubro_comuna ===
 URL: https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2026/06/AC_EJ_2026_08.xlsx
 Descarga: 0.03 MB · application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 Hojas: AC_EJ_2026_08, 1er. cuatr. de 2026, 3er. cuatr. de 2025, 2do. cuatr. de 2025, 1er. cuatr. de 2025, Ficha Técnica
@@ -1686,7 +1687,195 @@ R14: Periodicidad de difusión | Cuatrimestral
 R15: Fuente | Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA)
 Coincidencias relevantes:
 HIT R2: Archivo | AC_EJ_2026_08
+HIT R6: Serie 1 | Locales ocupados
 HIT R7: Objetivo | Presentar información sobre el estado de ocupación de los locales comerciales en los ejes comerciales de la Ciudad de Buenos Aires
 HIT R8: Variable 1 | Locales ocupados por rubro de actividad según comuna
 HIT R9: Definición operativa | Corresponde a los comercios que se encuentran abiertos o prestando servicios el día del relevamiento clasificados por rubro principal de actividad, desagregados por comuna
 HIT R15: Fuente | Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA)
+
+=== IDECBA_ejes_indicadores_comuna ===
+URL: https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2026/06/AC_EJ_2026_04.xlsx
+Descarga: 0.03 MB · application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+Hojas: AC_EJ_2026_04, 1er. cuatr. de 2026 , 3er. cuatr. de 2025, 2do. cuatr. de 2025, 1er. cuatr. de 2025, Ficha Técnica
+
+-- Hoja: AC_EJ_2026_04 · 8 filas × 11 columnas --
+R1: Locales relevados, ocupados, densidad comercial, tasa de ocupación y variación respecto del relevamiento previo e interanual por comuna. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2025/1er. cuatrimestre de 2026
+R2: 1er. cuatrimestre de 2026
+R3: 3er. cuatrimestre de 2025
+R4: 2do. cuatrimestre de 2025
+R5: 1er. cuatrimestre de 2025
+R6: Ficha Técnica
+Coincidencias relevantes:
+HIT R1: Locales relevados, ocupados, densidad comercial, tasa de ocupación y variación respecto del relevamiento previo e interanual por comuna. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2025/1er. cuatrimestre de 2026
+HIT R2: 1er. cuatrimestre de 2026
+HIT R3: 3er. cuatrimestre de 2025
+HIT R4: 2do. cuatrimestre de 2025
+HIT R5: 1er. cuatrimestre de 2025
+
+-- Hoja: 1er. cuatr. de 2026  · 19 filas × 7 columnas --
+R1: Locales relevados, ocupados, densidad comercial, tasa de ocupación y variación respecto del relevamiento previo e interanual por comuna. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2026
+R2: Comuna | Locales Relevados | Locales Ocupados | Tasa de ocupación (%) | Variación interrelevamiento (p.p.) | Variación interanual (p.p.) | Densidad comercial (relevados por frente)
+R3: Total | 12896 | 11605 | 89.98914392059554 | -1.3505986751557515 | -1.5615672729727947 | 13.807280513918629
+R4: 1 | 1908 | 1657 | 86.84486373165619 | -1.0148955566745315 | -0.5496510362763019 | 11.223529411764705
+R5: 2 | 746 | 672 | 90.0804289544236 | -1.9894635186946772 | -4.586237712243076 | 12.03225806451613
+R6: 3 | 1251 | 1161 | 92.80575539568345 | -1.3354966107370956 | -1.1093767100011007 | 14.546511627906977
+R7: 4 | 706 | 625 | 88.52691218130312 | -0.5639969096059758 | -0.25425125359993217 | 13.074074074074074
+R8: 5 | 770 | 707 | 91.81818181818183 | -2.101611196048438 | -1.9561372479660264 | 14
+R9: 6 | 368 | 354 | 96.19565217391305 | -0.26211349366188585 | 0.020788785934911402 | 12.689655172413794
+R10: 7 | 1201 | 1109 | 92.33971690258119 | -2.0077477690730205 | -0.35322234208220493 | 19.370967741935484
+R11: 8 | 507 | 442 | 87.17948717948718 | -1.2063395921663584 | -1.6659139946811052 | 14.083333333333334
+R12: 9 | 535 | 481 | 89.90654205607477 | 0.5607476635513962 | 0.7274375784628262 | 15.285714285714286
+R13: 10 | 1165 | 1058 | 90.81545064377683 | -1.8632745930879366 | -2.471984812333332 | 17.651515151515152
+R14: 11 | 487 | 453 | 93.01848049281314 | 1.0431718508378367 | 0.7735825336294653 | 15.709677419354838
+R15: 12 | 396 | 365 | 92.17171717171718 | -0.019718596544791467 | -1.0443632302928734 | 15.84
+R16: 13 | 844 | 772 | 91.4691943127962 | -1.3289166671329582 | -3.3237050954878242 | 14.305084745762711
+R17: 14 | 718 | 630 | 87.74373259052925 | -1.3471765003798453 | -2.117378520581866 | 11.770491803278688
+R18: 15 | 1294 | 1119 | 86.47604327666151 | -2.903801684578795 | -3.4625127909268087 | 12.563106796116505
+R19: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+Coincidencias relevantes:
+HIT R1: Locales relevados, ocupados, densidad comercial, tasa de ocupación y variación respecto del relevamiento previo e interanual por comuna. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2026
+HIT R2: Comuna | Locales Relevados | Locales Ocupados | Tasa de ocupación (%) | Variación interrelevamiento (p.p.) | Variación interanual (p.p.) | Densidad comercial (relevados por frente)
+HIT R19: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+
+-- Hoja: 3er. cuatr. de 2025 · 20 filas × 7 columnas --
+R1: Locales relevados, ocupados, densidad comercial, tasa de ocupación y variación respecto del relevamiento previo e interanual por comuna. 48 ejes comerciales. Ciudad de Buenos Aires. 3er. cuatrimestre de 2025
+R2: Comuna | Locales Relevados | Locales Ocupados | Tasa de ocupación (%) | Variación interrelevamiento (p.p.) | Variación interanual (p.p.) | Densidad comercial (relevados por frente)
+R3: Total | 12898 | 11781 | 91.33974259575129 | -0.14566649163937484 | . | 13.809421841541756
+R4: 1 | 1911 | 1679 | 87.85975928833072 | -0.9591383494645527 | . | 11.241176470588234
+R5: 2 | 744 | 685 | 92.06989247311827 | -1.1027982899339435 | . | 12
+R6: 3 | 1246 | 1173 | 94.14125200642054 | 0.12688648367513622 | . | 14.488372093023257
+R7: 4 | 715 | 637 | 89.0909090909091 | -0.045581159787289494 | . | 13.24074074074074
+R8: 5 | 773 | 726 | 93.91979301423027 | 0.9055627425614432 | . | 14.054545454545455
+R9: 6 | 367 | 354 | 96.45776566757493 | 0.28290227959679726 | . | 12.655172413793103
+R10: 7 | 1203 | 1135 | 94.34746467165421 | 0.9143807148794707 | . | 19.403225806451612
+R11: 8 | 508 | 449 | 88.38582677165354 | 1.2764517716535408 | . | 14.11111111111111
+R12: 9 | 535 | 478 | 89.34579439252337 | 0.16668991491143004 | . | 15.285714285714286
+R13: 10 | 1161 | 1076 | 92.67872523686476 | -0.16610234934213963 | . | 17.59090909090909
+R14: 11 | 486 | 447 | 91.9753086419753 | -1.0431718508378367 | . | 15.67741935483871
+R15: 12 | 397 | 366 | 92.19143576826197 | -1.2594458438287006 | . | 15.88
+R16: 13 | 847 | 786 | 92.79811097992916 | -1.0553169160519218 | . | 14.35593220338983
+R17: 14 | 715 | 637 | 89.0909090909091 | -0.6026842238541406 | . | 11.721311475409836
+R18: 15 | 1290 | 1153 | 89.37984496124031 | 0.3967941137826898 | . | 12.524271844660195
+R19: . Dato no registrado
+R20: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+Coincidencias relevantes:
+HIT R1: Locales relevados, ocupados, densidad comercial, tasa de ocupación y variación respecto del relevamiento previo e interanual por comuna. 48 ejes comerciales. Ciudad de Buenos Aires. 3er. cuatrimestre de 2025
+HIT R2: Comuna | Locales Relevados | Locales Ocupados | Tasa de ocupación (%) | Variación interrelevamiento (p.p.) | Variación interanual (p.p.) | Densidad comercial (relevados por frente)
+HIT R20: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+
+-- Hoja: 2do. cuatr. de 2025 · 20 filas × 11 columnas --
+R1: Locales relevados, ocupados, densidad comercial, tasa de ocupación y variación respecto del relevamiento previo e interanual por comuna. 48 ejes comerciales. Ciudad de Buenos Aires. 2do. cuatrimestre de 2025
+R2: Comuna | Locales Relevados | Locales Ocupados | Tasa de ocupación (%) | Variación interrelevamiento (p.p.) | Variación interanual (p.p.) | Densidad comercial (relevados por frente)
+R3: Total | 12919 | 11819 | 91.48540908739066 | -0.0653021061776684 | . | 13.831905781584583
+R4: 1 | 1905 | 1692 | 88.81889763779527 | 1.4243828698627823 | . | 11.205882352941176
+R5: 2 | 747 | 696 | 93.17269076305222 | -1.493975903614455 | . | 12.048387096774194
+R6: 3 | 1253 | 1178 | 94.01436552274541 | 0.09923341706085864 | . | 14.569767441860465
+R7: 4 | 718 | 640 | 89.13649025069638 | 0.35532681579333314 | . | 13.296296296296296
+R8: 5 | 773 | 719 | 93.01423027166882 | -0.7600887944790315 | . | 14.054545454545455
+R9: 6 | 366 | 352 | 96.17486338797814 | 0 | . | 12.620689655172415
+R10: 7 | 1203 | 1124 | 93.43308395677474 | 0.7401447121113449 | . | 19.403225806451612
+R11: 8 | 512 | 446 | 87.109375 | -1.7360261741682876 | . | 14.222222222222221
+R12: 9 | 536 | 478 | 89.17910447761194 | 0 | . | 15.314285714285715
+R13: 10 | 1160 | 1077 | 92.8448275862069 | -0.44260786990325585 | . | 17.575757575757574
+R14: 11 | 487 | 453 | 93.01848049281314 | 0.7735825336294653 | . | 15.709677419354838
+R15: 12 | 397 | 371 | 93.45088161209067 | 0.23480121008061872 | . | 15.88
+R16: 13 | 846 | 794 | 93.85342789598108 | -0.9394715123029442 | . | 14.338983050847459
+R17: 14 | 718 | 644 | 89.69359331476323 | -0.16751779634788022 | . | 11.770491803278688
+R18: 15 | 1298 | 1155 | 88.98305084745762 | -0.9555052201307035 | . | 12.601941747572816
+R19: . Dato no registrado
+R20: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+Coincidencias relevantes:
+HIT R1: Locales relevados, ocupados, densidad comercial, tasa de ocupación y variación respecto del relevamiento previo e interanual por comuna. 48 ejes comerciales. Ciudad de Buenos Aires. 2do. cuatrimestre de 2025
+HIT R2: Comuna | Locales Relevados | Locales Ocupados | Tasa de ocupación (%) | Variación interrelevamiento (p.p.) | Variación interanual (p.p.) | Densidad comercial (relevados por frente)
+HIT R20: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+
+-- Hoja: 1er. cuatr. de 2025 · 20 filas × 7 columnas --
+R1: Locales relevados, ocupados, densidad comercial, tasa de ocupación y variación respecto del relevamiento previo e interanual por comuna. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2025
+R2: Comuna | Locales Relevados | Locales Ocupados | Tasa de ocupación (%) | Variación interrelevamiento (p.p.) | Variación interanual (p.p.) | Densidad comercial (relevados por frente)
+R3: Total | 12936 | 11843 | 91.55071119356833 | . | . | 13.850107066381156
+R4: 1 | 1896 | 1657 | 87.39451476793249 | . | . | 11.152941176470588
+R5: 2 | 750 | 710 | 94.66666666666667 | . | . | 12.096774193548388
+R6: 3 | 1249 | 1173 | 93.91513210568455 | . | . | 14.523255813953488
+R7: 4 | 722 | 641 | 88.78116343490305 | . | . | 13.37037037037037
+R8: 5 | 771 | 723 | 93.77431906614785 | . | . | 14.018181818181818
+R9: 6 | 366 | 352 | 96.17486338797814 | . | . | 12.620689655172415
+R10: 7 | 1218 | 1129 | 92.69293924466339 | . | . | 19.64516129032258
+R11: 8 | 511 | 454 | 88.84540117416829 | . | . | 14.194444444444445
+R12: 9 | 536 | 478 | 89.17910447761194 | . | . | 15.314285714285715
+R13: 10 | 1162 | 1084 | 93.28743545611016 | . | . | 17.606060606060606
+R14: 11 | 490 | 452 | 92.24489795918367 | . | . | 15.806451612903226
+R15: 12 | 398 | 371 | 93.21608040201005 | . | . | 15.92
+R16: 13 | 845 | 801 | 94.79289940828403 | . | . | 14.322033898305085
+R17: 14 | 720 | 647 | 89.86111111111111 | . | . | 11.80327868852459
+R18: 15 | 1302 | 1171 | 89.93855606758832 | . | . | 12.640776699029127
+R19: . Dato no registrado
+R20: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+Coincidencias relevantes:
+HIT R1: Locales relevados, ocupados, densidad comercial, tasa de ocupación y variación respecto del relevamiento previo e interanual por comuna. 48 ejes comerciales. Ciudad de Buenos Aires. 1er. cuatrimestre de 2025
+HIT R2: Comuna | Locales Relevados | Locales Ocupados | Tasa de ocupación (%) | Variación interrelevamiento (p.p.) | Variación interanual (p.p.) | Densidad comercial (relevados por frente)
+HIT R20: Fuente: Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA), datos provisorios.
+
+-- Hoja: Ficha Técnica · 39 filas × 4 columnas --
+R1: FICHA TÉCNICA
+R2: Archivo | AC_EJ_2026_04
+R3: Área Temática | COMERCIO INTERIOR
+R4: Tema | LOCALES COMERCIALES
+R5: Subtema | EJES COMERCIALES
+R6: Serie 1 | Locales relevados
+R7: Objetivo | Presentar información sobre los locales relevados en los ejes comerciales de la Ciudad de Buenos Aires. Los ejes comerciales están constituidos por calles o intersecciones, las cuales fueron seleccionadas en función de tres variables: densidad comercial, ubicación territorial y actividades predominantes en ellas.
+R8: Variable 1 | Locales relevados por comuna
+R9: Definición operativa | Corresponde a los locales relevados en los ejes comerciales de la Ciudad de Buenos Aires, desagregados por comuna. Se considera Local el establecimiento separado y estructuralmente independiente, identificable visualmente, que desarrolla una actividad con fines comerciales (venta de bienes y/o oferta de servicios) y/o productivos. En la práctica, el concepto comprende a todos los locales con atención al público y con acceso directo desde la calle; no incluye locales en el interior de galerías ni shoppings (solo se relevan los que tienen vidriera a la vereda). Tampoco se consideran puestos de revistas y de flores, ferias informales y comercios ubicados en andenes ferroviarios o subterráneos. Asimismo, quedan fuera de la definición los locales que desarrollan actividades sin fines de lucro tales como educación pública, salud pública, dependencias gubernamentales, cementerios, asociaciones civiles, obras sociales, centros de jubilados, centros culturales, clubes sociales, museos, bibliotecas y templos religiosos
+R10: Unidad de medida | Unidades
+R11: Método de cálculo (fórmula) | No corresponde
+R12: Serie 2 | Locales ocupados
+R13: Objetivo | Presentar información sobre el estado de ocupación de los locales comerciales en los ejes comerciales de la Ciudad de Buenos Aires
+R14: Variable 1 | Locales ocupados por comuna
+R15: Definición operativa | Corresponde a los comercios que se encuentran abiertos o prestando servicios el día del relevamiento en los ejes comerciales de la Ciudad de Buenos Aires, desagregados por comuna
+R16: Unidad de medida | Unidades
+R17: Método de cálculo (fórmula) | No corresponde
+R18: Serie 3 | Tasa de ocupación
+R19: Objetivo | Presentar la evolución de la ocupación de locales comerciales en los ejes comerciales de la Ciudad de Buenos Aires
+R20: Variable 1 | Tasa de ocupación por comuna
+R21: Definición operativa | Corresponde a los locales ocupados sobre el total de locales relevados en los ejes comerciales de la Ciudad de Buenos Aires, desagregados por comuna
+R22: Unidad de medida | Porcentaje
+R23: Método de cálculo (fórmula) | Cociente de los locales ocupados sobre los locales relevados, expresado en porcentaje
+R24: Serie 4 | Densidad comercial
+R25: Objetivo | Presentar información sobre la densidad comercial (locales por frente de manzana) en los ejes comerciales de la Ciudad de Buenos Aires
+R26: Variable 1 | Densidad comercial por comuna
+R27: Definición operativa | Corresponde al promedio de locales relevados por frente de manzana (independientemente del estado) en los ejes comerciales de la Ciudad de Buenos Aires, desagregados por comuna
+R28: Unidad de medida | Unidades
+R29: Método de cálculo (fórmula) | Cociente de la cantidad de locales sobre el total de frentes de manzana relevados
+R30: Serie 5 | Frentes de manzana
+R31: Objetivo | Presentar información sobre la cantidad de frentes de manzana relevados en los ejes comerciales de la Ciudad de Buenos Aires
+R32: Variable 1 | Frentes de manzana por comuna
+R33: Definición operativa | Corresponde a la consideración de los lados par e impar de las cuadras que componen los ejes comerciales, sin ajuste en función de la presencia de espacios verdes o construcciones que impidan el desarrollo comercial, desagregados por comuna. La cantidad de cuadras relevadas se calcula considerando intervalos de altura de a 100.
+R34: Unidad de medida | Unidades
+R35: Método de cálculo (fórmula) | No corresponde
+R36: Periodicidad de recepción (información secundaria) | No corresponde
+R37: Periodicidad de recolección (información primaria) | Cuatrimestral
+R38: Periodicidad de difusión | Cuatrimestral
+R39: Fuente | Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA)
+Coincidencias relevantes:
+HIT R2: Archivo | AC_EJ_2026_04
+HIT R6: Serie 1 | Locales relevados
+HIT R7: Objetivo | Presentar información sobre los locales relevados en los ejes comerciales de la Ciudad de Buenos Aires. Los ejes comerciales están constituidos por calles o intersecciones, las cuales fueron seleccionadas en función de tres variables: densidad comercial, ubicación territorial y actividades predominantes en ellas.
+HIT R8: Variable 1 | Locales relevados por comuna
+HIT R9: Definición operativa | Corresponde a los locales relevados en los ejes comerciales de la Ciudad de Buenos Aires, desagregados por comuna. Se considera Local el establecimiento separado y estructuralmente independiente, identificable visualmente, que desarrolla una actividad con fines comerciales (venta de bienes y/o oferta de servicios) y/o productivos. En la práctica, el concepto comprende a todos los locales con atención al público y con acceso directo desde la calle; no incluye locales en el interior de galerías ni shoppings (solo se relevan los que tienen vidriera a la vereda). Tampoco se consideran puestos de revistas y de flores, ferias informales y comercios ubicados en andenes ferroviarios o subterráneos. Asimismo, quedan fuera de la definición los locales que desarrollan actividades sin fines de lucro tales como educación pública, salud pública, dependencias gubernamentales, cementerios, asociaciones civiles, obras sociales, centros de jubilados, centros culturales, clubes sociales, museos, bibliotecas y templos religiosos
+HIT R12: Serie 2 | Locales ocupados
+HIT R13: Objetivo | Presentar información sobre el estado de ocupación de los locales comerciales en los ejes comerciales de la Ciudad de Buenos Aires
+HIT R14: Variable 1 | Locales ocupados por comuna
+HIT R15: Definición operativa | Corresponde a los comercios que se encuentran abiertos o prestando servicios el día del relevamiento en los ejes comerciales de la Ciudad de Buenos Aires, desagregados por comuna
+HIT R18: Serie 3 | Tasa de ocupación
+HIT R19: Objetivo | Presentar la evolución de la ocupación de locales comerciales en los ejes comerciales de la Ciudad de Buenos Aires
+HIT R20: Variable 1 | Tasa de ocupación por comuna
+HIT R21: Definición operativa | Corresponde a los locales ocupados sobre el total de locales relevados en los ejes comerciales de la Ciudad de Buenos Aires, desagregados por comuna
+HIT R23: Método de cálculo (fórmula) | Cociente de los locales ocupados sobre los locales relevados, expresado en porcentaje
+HIT R24: Serie 4 | Densidad comercial
+HIT R25: Objetivo | Presentar información sobre la densidad comercial (locales por frente de manzana) en los ejes comerciales de la Ciudad de Buenos Aires
+HIT R26: Variable 1 | Densidad comercial por comuna
+HIT R27: Definición operativa | Corresponde al promedio de locales relevados por frente de manzana (independientemente del estado) en los ejes comerciales de la Ciudad de Buenos Aires, desagregados por comuna
+HIT R29: Método de cálculo (fórmula) | Cociente de la cantidad de locales sobre el total de frentes de manzana relevados
+HIT R31: Objetivo | Presentar información sobre la cantidad de frentes de manzana relevados en los ejes comerciales de la Ciudad de Buenos Aires
+HIT R32: Variable 1 | Frentes de manzana por comuna
+HIT R33: Definición operativa | Corresponde a la consideración de los lados par e impar de las cuadras que componen los ejes comerciales, sin ajuste en función de la presencia de espacios verdes o construcciones que impidan el desarrollo comercial, desagregados por comuna. La cantidad de cuadras relevadas se calcula considerando intervalos de altura de a 100.
+HIT R39: Fuente | Instituto de Estadística y Censos de la Ciudad Autónoma de Buenos Aires (Jefatura de Gabinete de Ministros - GCBA)

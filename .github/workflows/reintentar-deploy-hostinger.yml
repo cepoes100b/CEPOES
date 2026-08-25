@@ -1,0 +1,55 @@
+name: Reintentar despliegue Hostinger
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/reintentar-deploy-hostinger.yml"
+  workflow_run:
+    workflows: ["Desplegar sitio en Hostinger"]
+    types: [completed]
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: cepoes-hostinger-auto-retry
+  cancel-in-progress: false
+
+jobs:
+  iniciar:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lanzar un nuevo despliegue de main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run desplegar-hostinger.yml --repo "$GITHUB_REPOSITORY" --ref main
+
+  reintentar:
+    if: >-
+      github.event_name == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'failure' &&
+      github.event.workflow_run.run_attempt < 3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reintentar jobs fallidos del despliegue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
+        run: |
+          echo "Despliegue $RUN_ID falló en intento $RUN_ATTEMPT; se reintenta automáticamente."
+          gh run rerun "$RUN_ID" --failed --repo "$GITHUB_REPOSITORY"
+
+  agotado:
+    if: >-
+      github.event_name == 'workflow_run' &&
+      github.event.workflow_run.conclusion == 'failure' &&
+      github.event.workflow_run.run_attempt >= 3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Registrar agotamiento de reintentos
+        run: |
+          echo "El despliegue falló tras 3 intentos. No se publica ni se modifica producción si el fallo ocurre antes del paso SFTP de publicación."

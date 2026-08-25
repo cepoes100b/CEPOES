@@ -10,11 +10,14 @@ Metodología:
   el buffer, suponiendo distribución uniforme de la población dentro de cada radio.
 
 Solo se publica el agregado Ciudad/comuna; no se replica la cartografía censal.
+Si la fuente censal tiene una indisponibilidad transitoria y existe un último JSON
+validado, se conserva ese resultado en lugar de bloquear todo el pipeline territorial.
 """
 from __future__ import annotations
 
 import datetime as dt
 import json
+import time
 from pathlib import Path
 
 import geopandas as gpd
@@ -40,23 +43,44 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def previous_output_is_usable() -> bool:
+    if not OUT.exists() or OUT.stat().st_size < 1000:
+        return False
+    try:
+        old=json.loads(OUT.read_text(encoding="utf-8"))
+        return old.get("version")==1 and set((old.get("cobertura") or {})) >= {"clubes","polideportivos","red_deportiva"}
+    except Exception:
+        return False
+
+
 def download_radios() -> None:
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     if RADIOS.exists() and RADIOS.stat().st_size >= MIN_RADIOS_BYTES:
         print(f"Radios Censo 2022: usando caché local · {RADIOS.stat().st_size // 1024 // 1024} MB")
         return
     tmp = RADIOS.with_suffix(".part")
-    with requests.get(RADIOS_URL, stream=True, timeout=180, headers={"User-Agent": "CEPOES-data/1.0"}) as r:
-        r.raise_for_status()
-        with tmp.open("wb") as fh:
-            for chunk in r.iter_content(1024 * 1024):
-                if chunk:
-                    fh.write(chunk)
-    if tmp.stat().st_size < MIN_RADIOS_BYTES:
+    last_error: Exception | None = None
+    for attempt in range(1,5):
         tmp.unlink(missing_ok=True)
-        raise SystemExit(f"Descarga de radios inesperadamente pequeña: {tmp.stat().st_size} bytes")
-    tmp.replace(RADIOS)
-    print(f"Radios Censo 2022: descarga actualizada · {RADIOS.stat().st_size // 1024 // 1024} MB")
+        try:
+            with requests.get(RADIOS_URL, stream=True, timeout=(30,180), headers={"User-Agent": "CEPOES-data/1.0"}) as r:
+                r.raise_for_status()
+                with tmp.open("wb") as fh:
+                    for chunk in r.iter_content(1024 * 1024):
+                        if chunk:
+                            fh.write(chunk)
+            if tmp.stat().st_size < MIN_RADIOS_BYTES:
+                raise RuntimeError(f"descarga incompleta: {tmp.stat().st_size} bytes")
+            tmp.replace(RADIOS)
+            print(f"Radios Censo 2022: descarga actualizada · {RADIOS.stat().st_size // 1024 // 1024} MB · intento {attempt}")
+            return
+        except Exception as exc:
+            last_error=exc
+            tmp.unlink(missing_ok=True)
+            print(f"Radios Censo 2022: fallo de descarga {attempt}/4 · {type(exc).__name__}: {exc}")
+            if attempt < 4:
+                time.sleep((3,8,15)[attempt-1])
+    raise RuntimeError(f"No se pudo descargar la base censal tras 4 intentos: {last_error}")
 
 
 def read_caba() -> gpd.GeoDataFrame:
@@ -151,7 +175,15 @@ def coverage_for(radios_metric: gpd.GeoDataFrame, points_wgs84: list[Point], met
 
 def main() -> int:
     sport = load_json(SPORT)
-    radios = read_caba()
+    try:
+        radios = read_caba()
+    except Exception as exc:
+        if previous_output_is_usable():
+            old=load_json(OUT)
+            print(f"AVISO: fuente censal temporalmente no disponible; se conserva deporte-accesibilidad.json generado {old.get('generado','sin fecha')}. Detalle: {exc}")
+            return 0
+        raise
+
     metric_crs = radios.estimate_utm_crs()
     if metric_crs is None:
         raise SystemExit("No se pudo estimar un CRS métrico para CABA")

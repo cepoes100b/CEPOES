@@ -10,7 +10,7 @@ assert root.is_dir(), root
 
 
 def patch_territorio_navigation(site_root: Path) -> None:
-    """Normaliza accesos HTML reales a módulos territoriales nuevos."""
+    """Normaliza accesos HTML reales y pequeños ajustes de integración."""
     changed=[]
     for p in site_root.rglob('*.html'):
         s=p.read_text(encoding='utf-8',errors='replace')
@@ -51,14 +51,19 @@ def patch_territorio_navigation(site_root: Path) -> None:
                         clone=opening+'Migraciones →'+m.group(3)
                         s=s[:m.start()]+clone+s[m.start():]
 
+            if rel=='territorio/estructura-productiva/index.html' and '/assets/estructura-productiva-bootstrap.js' not in s:
+                target='<script defer src="/assets/estructura-productiva.js?v=260"></script>'
+                bootstrap='<script defer src="/assets/estructura-productiva-bootstrap.js?v=260"></script>'
+                if target in s:
+                    s=s.replace(target,bootstrap+target)
+
         if s!=original:
             p.write_text(s,encoding='utf-8')
             changed.append(rel)
-    print(f'Navegación territorial normalizada en {len(changed)} HTML')
+    print(f'Navegación/integración territorial normalizada en {len(changed)} HTML')
 
 
 def ensure_sitemap_url(site_root: Path, path: str) -> None:
-    """Agrega una ruta nueva al sitemap heredado de producción si falta."""
     p=site_root/'sitemap.xml'
     s=p.read_text(encoding='utf-8',errors='replace')
     url='https://cepoes.org'+path
@@ -79,7 +84,7 @@ required=[
     'assets/site.css','assets/common.js','assets/data.js','assets/favicon.svg',
     'legislatura/index.html','territorio/endeudamiento/index.html',
     'territorio/migraciones/index.html','territorio/estructura-productiva/index.html',
-    'assets/estructura-productiva.js','assets/estructura-productiva.css',
+    'assets/estructura-productiva.js','assets/estructura-productiva-bootstrap.js','assets/estructura-productiva.css',
     'assets/data/estructura-productiva/actual.json',
     'assets/data/estructura-productiva/comunas.geojson',
 ]
@@ -98,7 +103,7 @@ assert 'data-cepoes-migraciones-access="1"' in territorio, 'Falta acceso visible
 assert 'data-cepoes-estructura-productiva-access="1"' in territorio, 'Falta acceso visible a Estructura productiva en portada Territorio'
 
 productiva=(root/'territorio'/'estructura-productiva'/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['Perfil comercial de las 15 comunas','Comparar comunas','Matriz comuna × rubro','Ocupación comercial 2025 → 2026','Archivo histórico · RUS 2017']:
+for token in ['Perfil comercial de las 15 comunas','Comparar comunas','Matriz comuna × rubro','Ocupación comercial 2025 → 2026','Archivo histórico · RUS 2017','/assets/estructura-productiva-bootstrap.js']:
     assert token in productiva, f'Estructura productiva V2 incompleta: {token}'
 
 tree=ET.parse(root/'sitemap.xml')

@@ -31,6 +31,11 @@ https://cepoes.org/publicaciones/boletines/boletin-03-julio-2026/
 https://cepoes.org/publicaciones/boletines/boletin-04-agosto-2026/
 https://cepoes.org/publicaciones/informe-coyuntura-01-junio-2026/
 https://cepoes.org/publicaciones/informes/
+https://cepoes.org/prensa/
+https://cepoes.org/prensa/brecha-acceso-deporte/
+https://cepoes.org/prensa/migraciones-geografia-comunal/
+https://cepoes.org/prensa/empresas-y-ocupacion-comercial/
+https://cepoes.org/prensa/mora-brecha-barrios/
 https://cepoes.org/territorio/
 https://cepoes.org/territorio/barrios/
 https://cepoes.org/territorio/barrios/agronomia/

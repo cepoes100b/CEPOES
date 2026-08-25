@@ -9,8 +9,10 @@ Supuestos principales:
 - población uniforme dentro de cada radio, igual que en V2;
 - cada radio se aproxima con una malla 4x4: cada intersección no vacía aporta un
   punto representativo y una fracción de población proporcional a su superficie;
-- distancia caminable estimada = acceso desde la muestra al nodo OSM más cercano
-  + camino mínimo por la red `walk` + acceso del nodo OSM al equipamiento;
+- cada muestra y equipamiento se conectan al TRAMO peatonal OSM más cercano, no
+  al nodo más cercano, para evitar sumar artificialmente media cuadra en cada extremo;
+- distancia caminable estimada = acceso perpendicular al tramo + recorrido parcial
+  por el tramo + camino mínimo por la red `walk`;
 - los umbrales 800/1.000 m representan metros recorridos estimados, no tiempo real.
 """
 from __future__ import annotations
@@ -24,8 +26,7 @@ from typing import Iterable
 import geopandas as gpd
 import numpy as np
 import osmnx as ox
-from scipy.spatial import cKDTree
-from shapely.geometry import Point, box
+from shapely.geometry import LineString, Point, box
 
 from generar_accesibilidad_deportiva import comuna_id, load_json, read_caba, sport_points
 
@@ -86,7 +87,6 @@ def sample_radios(radios_m: gpd.GeoDataFrame) -> tuple[list[dict], dict]:
                 frac = float(inter.area) / radio_area
                 local.append((inter.representative_point(), frac))
                 radio_weight += frac
-        # Renormalizar solo por error numérico; la malla cubre todo el bbox.
         if not local or radio_weight <= 0:
             invalid += 1
             continue
@@ -109,18 +109,6 @@ def sample_radios(radios_m: gpd.GeoDataFrame) -> tuple[list[dict], dict]:
     }
 
 
-def node_index(graph) -> tuple[list, np.ndarray, cKDTree]:
-    nodes = ox.graph_to_gdfs(graph, edges=False)
-    ids = list(nodes.index)
-    xy = np.column_stack((nodes["x"].astype(float).to_numpy(), nodes["y"].astype(float).to_numpy()))
-    return ids, xy, cKDTree(xy)
-
-
-def nearest_nodes(tree: cKDTree, ids: list, xs: np.ndarray, ys: np.ndarray) -> tuple[np.ndarray, list]:
-    dist, idx = tree.query(np.column_stack((xs, ys)), k=1)
-    return np.asarray(dist, dtype=float), [ids[int(i)] for i in np.asarray(idx)]
-
-
 def min_edge_length(keydict: dict) -> float | None:
     best: float | None = None
     for data in keydict.values():
@@ -136,7 +124,7 @@ def min_edge_length(keydict: dict) -> float | None:
 
 
 def seeded_distances(graph, seeds: dict, cutoff: float) -> dict:
-    """Dijkstra multi-fuente con costo inicial por snap del equipamiento."""
+    """Dijkstra multi-fuente con costo inicial continuo desde cada equipamiento."""
     dist = {node: float(value) for node, value in seeds.items() if value <= cutoff}
     heap = [(value, node) for node, value in dist.items()]
     heapq.heapify(heap)
@@ -159,23 +147,88 @@ def seeded_distances(graph, seeds: dict, cutoff: float) -> dict:
     return dist
 
 
-def facility_seeds(points_wgs84: list[Point], graph_crs, tree: cKDTree, ids: list) -> tuple[dict, dict]:
+def edge_geometry(graph, u, v, k) -> tuple[LineString, float]:
+    data = graph.get_edge_data(u, v, k)
+    if data is None:
+        raise KeyError((u, v, k))
+    geom = data.get("geometry")
+    if geom is None:
+        geom = LineString([
+            (float(graph.nodes[u]["x"]), float(graph.nodes[u]["y"])),
+            (float(graph.nodes[v]["x"]), float(graph.nodes[v]["y"])),
+        ])
+    try:
+        edge_len = float(data.get("length", geom.length))
+    except (TypeError, ValueError):
+        edge_len = float(geom.length)
+    if not math.isfinite(edge_len) or edge_len < 0:
+        edge_len = float(geom.length)
+    return geom, edge_len
+
+
+def edge_access(graph, edge_id, x: float, y: float, off_network: float) -> tuple:
+    """Devuelve (u, v, acceso_fuera_red, metros_hasta_u, metros_hasta_v)."""
+    u, v, k = tuple(edge_id)
+    geom, edge_len = edge_geometry(graph, u, v, k)
+    p = Point(float(x), float(y))
+    geom_len = float(geom.length)
+    if geom_len <= 0:
+        return u, v, float(off_network), 0.0, 0.0
+
+    position = float(geom.project(p))
+    # OSMnx suele orientar la geometría u→v. Se verifica explícitamente para que
+    # el cálculo siga siendo correcto si algún GraphML trae la línea invertida.
+    first = Point(geom.coords[0])
+    up = Point(float(graph.nodes[u]["x"]), float(graph.nodes[u]["y"]))
+    vp = Point(float(graph.nodes[v]["x"]), float(graph.nodes[v]["y"]))
+    if first.distance(up) <= first.distance(vp):
+        geom_to_u = position
+    else:
+        geom_to_u = geom_len - position
+    frac_u = min(1.0, max(0.0, geom_to_u / geom_len))
+    along_u = edge_len * frac_u
+    along_v = max(0.0, edge_len - along_u)
+    return u, v, float(off_network), float(along_u), float(along_v)
+
+
+def nearest_edge_accesses(graph, xs: np.ndarray, ys: np.ndarray) -> tuple[list[tuple], np.ndarray]:
+    edge_ids, off = ox.distance.nearest_edges(graph, X=xs, Y=ys, return_dist=True)
+    off_arr = np.asarray(off, dtype=float)
+    accesses = [
+        edge_access(graph, edge_id, x, y, d)
+        for edge_id, x, y, d in zip(edge_ids, xs, ys, off_arr)
+    ]
+    return accesses, off_arr
+
+
+def facility_seeds(points_wgs84: list[Point], graph, graph_crs) -> tuple[dict, dict]:
     if not points_wgs84:
         raise SystemExit("Universo deportivo sin puntos georreferenciados")
     gs = gpd.GeoSeries(points_wgs84, crs="EPSG:4326").to_crs(graph_crs)
     xs = gs.x.to_numpy(dtype=float)
     ys = gs.y.to_numpy(dtype=float)
-    snap, nodes = nearest_nodes(tree, ids, xs, ys)
+    accesses, off = nearest_edge_accesses(graph, xs, ys)
     seeds: dict = {}
-    for node, d in zip(nodes, snap):
-        val = float(d)
-        if val < seeds.get(node, math.inf):
-            seeds[node] = val
+    for u, v, outside, along_u, along_v in accesses:
+        for node, value in ((u, outside + along_u), (v, outside + along_v)):
+            if value < seeds.get(node, math.inf):
+                seeds[node] = value
     return seeds, {
         "puntos_georreferenciados": len(points_wgs84),
-        "nodos_destino_unicos": len(seeds),
-        "snap_equipamiento": stats(snap),
+        "nodos_semilla_unicos": len(seeds),
+        "distancia_fuera_red_equipamiento": stats(off),
     }
+
+
+def sample_network_distances(accesses: list[tuple], node_dist: dict) -> np.ndarray:
+    out = np.full(len(accesses), math.inf, dtype=float)
+    for i, (u, v, outside, along_u, along_v) in enumerate(accesses):
+        via_u = node_dist.get(u, math.inf) + along_u
+        via_v = node_dist.get(v, math.inf) + along_v
+        best = min(via_u, via_v)
+        if math.isfinite(best):
+            out[i] = outside + best
+    return out
 
 
 def aggregate(samples: list[dict], total_distance: np.ndarray, threshold: int) -> tuple[dict, dict]:
@@ -238,7 +291,6 @@ def main() -> int:
     graph_wgs = ox.load_graphml(GRAPH)
     graph = ox.project_graph(graph_wgs)
     graph_crs = graph.graph["crs"]
-    ids, _, tree = node_index(graph)
 
     radios_m = radios.to_crs(graph_crs)
     samples, sampling_diag = sample_radios(radios_m)
@@ -247,7 +299,7 @@ def main() -> int:
 
     sample_x = np.asarray([s["x"] for s in samples], dtype=float)
     sample_y = np.asarray([s["y"] for s in samples], dtype=float)
-    sample_snap, sample_nodes = nearest_nodes(tree, ids, sample_x, sample_y)
+    sample_accesses, sample_off = nearest_edge_accesses(graph, sample_x, sample_y)
 
     clubs = sport_points(sport, "clubes")
     polis = sport_points(sport, "polideportivos")
@@ -262,10 +314,9 @@ def main() -> int:
     max_threshold = max(DISTANCES)
     results = {}
     for key, points in universes.items():
-        seeds, seed_diag = facility_seeds(points, graph_crs, tree, ids)
+        seeds, seed_diag = facility_seeds(points, graph, graph_crs)
         node_dist = seeded_distances(graph, seeds, cutoff=max_threshold)
-        graph_distance = np.asarray([node_dist.get(node, math.inf) for node in sample_nodes], dtype=float)
-        total_distance = graph_distance + sample_snap
+        total_distance = sample_network_distances(sample_accesses, node_dist)
 
         distances = {}
         for d in DISTANCES:
@@ -289,10 +340,11 @@ def main() -> int:
         "metodologia": {
             "tipo": "distancia peatonal estimada sobre red OpenStreetMap walk",
             "network_type": "walk",
+            "conexion_red": "tramo peatonal más cercano, con recorrido parcial proporcional a la longitud de la arista",
             "distancias_m": list(DISTANCES),
             "muestreo_intraradio": f"malla {GRID_N}x{GRID_N} con población ponderada por superficie intersectada",
             "supuesto_intraradio": "población uniforme dentro de cada radio censal, consistente con V2",
-            "formula": "snap muestra→red + camino mínimo por red + snap red→equipamiento",
+            "formula": "acceso perpendicular muestra→tramo + camino mínimo continuo por red + acceso tramo→equipamiento",
             "interpretacion": "metros de recorrido peatonal estimados; no equivalen a tiempo real de caminata",
         },
         "grafo": {
@@ -302,13 +354,13 @@ def main() -> int:
             "aristas_dirigidas": int(graph.number_of_edges()),
         },
         "muestreo": sampling_diag,
-        "snap_muestras": stats(sample_snap),
+        "distancia_fuera_red_muestras": stats(sample_off),
         "cobertura": results,
     }
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print(f"{OUT.name} · {OUT.stat().st_size // 1024} KB · {len(samples)} muestras")
-    print(f"snap muestras: p50 {out['snap_muestras'].get('p50_m')} m · p95 {out['snap_muestras'].get('p95_m')} m · max {out['snap_muestras'].get('max_m')} m")
+    print(f"fuera de red muestras: p50 {out['distancia_fuera_red_muestras'].get('p50_m')} m · p95 {out['distancia_fuera_red_muestras'].get('p95_m')} m · max {out['distancia_fuera_red_muestras'].get('max_m')} m")
     for key in universes:
         print(f"  · {key}")
         for d in DISTANCES:

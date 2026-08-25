@@ -1,6 +1,11 @@
 name: Actualizar datos territoriales
 
 on:
+  push:
+    paths:
+      - "generar_deporte_salud.py"
+      - "verificar_deporte_salud.py"
+      - ".github/workflows/territorio.yml"
   schedule:
     # 15:10 de Buenos Aires, diez minutos después de la segunda corrida diaria
     # del observatorio. Estas fuentes cambian mucho menos seguido, pero la consulta
@@ -12,7 +17,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: actualizar-territorio
+  group: actualizar-territorio-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -63,11 +68,17 @@ jobs:
       - name: Verificar resumen territorial
         run: python verificar_resumen_territorial.py
 
+      - name: Generar Deporte y vida saludable
+        run: python generar_deporte_salud.py
+
+      - name: Verificar Deporte y vida saludable
+        run: python verificar_deporte_salud.py
+
       - name: Commitear si cambió
         run: |
           git config user.name  "cepoes-bot"
           git config user.email "actions@github.com"
-          git add territorio.json estado_territorio.json badata/ equipamientos/
+          git add territorio.json estado_territorio.json badata/ equipamientos/ deploy/site-overlay/assets/data/deporte-salud.json
           if git diff --cached --quiet; then
             echo "Sin cambios"
             exit 0

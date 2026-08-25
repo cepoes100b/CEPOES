@@ -5,6 +5,8 @@ import json
 from pathlib import Path
 
 P = Path("deploy/site-overlay/assets/data/estructura-productiva/actual.json")
+GEO = Path("deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson")
+EXPECTED_2026Q1 = {"1":-0.5,"2":-4.6,"3":-1.1,"4":-0.3,"5":-2.0,"6":0.0,"7":-0.4,"8":-1.7,"9":0.7,"10":-2.5,"11":0.8,"12":-1.0,"13":-3.3,"14":-2.1,"15":-3.5}
 
 
 def fail(msg: str):
@@ -73,6 +75,18 @@ def main():
         comp = ejes.get("comparacion_interanual") or {}
         if int((comp.get("desde") or {}).get("anio", 0)) != int(periodo.get("anio")) - 1:
             fail("período interanual inválido")
+        if int(periodo.get("anio",0)) == 2026 and int(periodo.get("cuatrimestre",0)) == 1:
+            got={c: round(float(x["variacion_interanual_pp"]),1) for c,x in comunas.items()}
+            if got != EXPECTED_2026Q1:
+                fail(f"variación interanual 2026-C1 no coincide con informe IDECBA: {got}")
+
+    if not GEO.exists():
+        fail(f"falta {GEO}")
+    geo=json.loads(GEO.read_text(encoding="utf-8"))
+    feats=geo.get("features") or []
+    ids={str(int((f.get("properties") or {}).get("comuna"))) for f in feats}
+    if geo.get("type") != "FeatureCollection" or len(feats) != 15 or ids != {str(i) for i in range(1,16)}:
+        fail("GeoJSON oficial de comunas inválido")
 
     criterio = d.get("criterio") or {}
     if "2017" not in str(criterio.get("historico", "")):

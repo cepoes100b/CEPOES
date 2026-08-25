@@ -203,6 +203,7 @@ jobs:
             https://cepoes.org/assets/deporte-salud.js \
             https://cepoes.org/assets/data/deporte-salud.json \
             https://cepoes.org/assets/data/deporte-accesibilidad.json \
+            https://cepoes.org/assets/data/deporte-accesibilidad-peatonal.json \
             https://cepoes.org/territorio/endeudamiento/ \
             https://cepoes.org/territorio/migraciones/ \
             https://cepoes.org/legislatura/; do
@@ -220,7 +221,10 @@ jobs:
             | python -c 'import json,sys; d=json.load(sys.stdin); r=d["resumen"]; assert set(d["comunas"]) == {str(i) for i in range(1,16)}; assert r["clubes"] > 100; assert r["polideportivos"] >= 10; assert r["estaciones_saludables"] >= 10; assert r["cesac"] >= 20; assert "programas_desactualizados" in d["alertas"]; print("Deporte y salud: JSON público válido · 15 comunas")'
 
           curl "${CURL_COMMON[@]}" "https://cepoes.org/assets/data/deporte-accesibilidad.json?${SMOKE_Q}" \
-            | python -c 'import json,sys; d=json.load(sys.stdin); b=d["base_poblacional"]; c=d["cobertura"]; assert b["radios"] >= 3500; assert b["diferencia_pct"] < .1; assert d["metodologia"]["distancias_m"] == [800,1000]; assert set(c) >= {"clubes","polideportivos","red_deportiva"}; assert all(set(c[k]["distancias"]["800"]["comunas"]) == {str(i) for i in range(1,16)} for k in c); print("Deporte y salud: accesibilidad pública válida · 800/1000 m")'
+            | python -c 'import json,sys; d=json.load(sys.stdin); b=d["base_poblacional"]; c=d["cobertura"]; assert b["radios"] >= 3500; assert b["diferencia_pct"] < .1; assert d["metodologia"]["distancias_m"] == [800,1000]; assert set(c) >= {"clubes","polideportivos","red_deportiva"}; assert all(set(c[k]["distancias"]["800"]["comunas"]) == {str(i) for i in range(1,16)} for k in c); print("Deporte y salud: accesibilidad geométrica pública válida · 800/1000 m")'
+
+          curl "${CURL_COMMON[@]}" "https://cepoes.org/assets/data/deporte-accesibilidad-peatonal.json?${SMOKE_Q}" \
+            | python -c 'import json,sys; d=json.load(sys.stdin); b=d["base_poblacional"]; c=d["cobertura"]; g=d["grafo_peatonal"]; u=d["control_conexion_red"]["umbrales"]; assert b["radios"] >= 3500; assert b["muestras_ponderadas"] > 150000; assert d["metodologia"]["network_type"] == "walk"; assert g["nodos"] > 20000 and g["aristas_dirigidas"] > 40000; assert u["100"]["poblacion_pct"] < .5; assert u["200"]["poblacion_pct"] < .1; assert set(c) >= {"clubes","polideportivos","red_deportiva"}; assert all(set(c[k]["distancias"]["800"]["comunas"]) == {str(i) for i in range(1,16)} for k in c); assert c["red_deportiva"]["distancias"]["800"]["ciudad"]["cobertura_pct"] < 90.13; print("Deporte y salud V3: accesibilidad peatonal pública válida")'
 
           curl "${CURL_COMMON[@]}" "https://cepoes.org/territorio/estructura-productiva/?${SMOKE_Q}" -o /tmp/estructura-productiva.html
           curl "${CURL_COMMON[@]}" "https://cepoes.org/assets/estructura-productiva.js?${SMOKE_Q}" -o /tmp/estructura-productiva.js
@@ -230,10 +234,11 @@ jobs:
 
           curl "${CURL_COMMON[@]}" "https://cepoes.org/territorio/deporte-salud/?${SMOKE_Q}" -o /tmp/deporte-salud.html
           curl "${CURL_COMMON[@]}" "https://cepoes.org/assets/deporte-salud.js?${SMOKE_Q}" -o /tmp/deporte-salud.js
-          grep -q 'ds-access-table' /tmp/deporte-salud.html || { echo "HTML Deporte y salud no corresponde a V2" >&2; exit 41; }
-          grep -q 'renderAccess' /tmp/deporte-salud.js || { echo "JS Deporte y salud no corresponde a V2" >&2; exit 42; }
-          grep -q 'deporte-accesibilidad.json' /tmp/deporte-salud.js || { echo "JS Deporte y salud no consume accesibilidad" >&2; exit 43; }
-          echo "Deporte y salud V2: frontend público con accesibilidad válido"
+          grep -q 'ds-access-method' /tmp/deporte-salud.html || { echo "HTML Deporte y salud no corresponde a V3" >&2; exit 41; }
+          grep -q 'Recorrido peatonal estimado' /tmp/deporte-salud.html || { echo "HTML Deporte y salud no expone selector peatonal V3" >&2; exit 42; }
+          grep -q 'deporte-accesibilidad-peatonal.json' /tmp/deporte-salud.js || { echo "JS Deporte y salud no consume accesibilidad peatonal" >&2; exit 43; }
+          grep -q 'accessMethod' /tmp/deporte-salud.js || { echo "JS Deporte y salud no implementa selector V3" >&2; exit 44; }
+          echo "Deporte y salud V3: frontend público geométrico + peatonal válido"
 
       - name: Restaurar versión anterior si falla publicación o smoke test
         if: failure() && steps.publish.outcome == 'success'

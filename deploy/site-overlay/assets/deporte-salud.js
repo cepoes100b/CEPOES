@@ -1,9 +1,10 @@
 (function(){
   'use strict';
-  const DATA='/assets/data/deporte-salud.json?v=2';
-  const ACCESS='/assets/data/deporte-accesibilidad.json?v=1';
+  const DATA='/assets/data/deporte-salud.json?v=3';
+  const ACCESS_EU='/assets/data/deporte-accesibilidad.json?v=2';
+  const ACCESS_WALK='/assets/data/deporte-accesibilidad-peatonal.json?v=1';
   const GEO='/assets/data/estructura-productiva/comunas.geojson?v=260';
-  const state={data:null,access:null,geo:null,metric:'clubes',comuna:'all',q:'',layers:new Set(['clubes','polideportivos','estaciones','cesac']),accessUniverse:'red_deportiva',accessDistance:'800'};
+  const state={data:null,accessEuclid:null,accessWalk:null,geo:null,metric:'clubes',comuna:'all',q:'',layers:new Set(['clubes','polideportivos','estaciones','cesac']),accessMethod:'walk',accessUniverse:'red_deportiva',accessDistance:'800'};
   const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const fmt=n=>new Intl.NumberFormat('es-AR').format(Number(n)||0);
@@ -16,6 +17,11 @@
     estaciones_saludables:{label:'Estaciones Saludables por 10.000 habitantes',key:'estaciones_saludables'},
     cesac:{label:'CeSAC por 10.000 habitantes',key:'cesac'}
   };
+  const methodMeta={
+    walk:{label:'Recorrido peatonal estimado',short:'red peatonal'},
+    euclidean:{label:'Distancia geométrica',short:'línea recta'}
+  };
+  const accessData=()=>state.accessMethod==='walk'?state.accessWalk:state.accessEuclid;
   const allItems=()=>Object.entries(state.data.capas||{}).flatMap(([layer,obj])=>(obj.items||[]).map(x=>({...x,capa:layer})));
   function itemVisible(x){
     if(!state.layers.has(x.capa)) return false;
@@ -26,7 +32,7 @@
   }
   function sourceDate(){
     const dates=(state.data.fuentes||[]).map(x=>x.generado_cepoes).filter(Boolean).sort();
-    dates.push(state.access?.generado||'');
+    dates.push(state.accessEuclid?.generado||'',state.accessWalk?.generado||'');
     return dates.filter(Boolean).sort().at(-1)||state.data.generado||'—';
   }
   function renderKpis(){
@@ -82,22 +88,23 @@
     function hideTip(){tt.style.display='none';}
   }
   function accessBlock(){
-    return state.access.cobertura[state.accessUniverse].distancias[state.accessDistance];
+    return accessData().cobertura[state.accessUniverse].distancias[state.accessDistance];
   }
   function renderSelected(){
     const el=$('#ds-selected');
     if(state.comuna==='all'){
-      el.innerHTML='<span class="eyebrow">Lectura territorial</span><h3>Toda la Ciudad</h3><p>Seleccioná una comuna en el mapa o en el filtro para comparar su dotación y proximidad territorial.</p>';
+      el.innerHTML='<span class="eyebrow">Lectura territorial</span><h3>Toda la Ciudad</h3><p>Seleccioná una comuna en el mapa o en el filtro para comparar su dotación y accesibilidad territorial.</p>';
       return;
     }
     const c=state.data.comunas[state.comuna];
+    const active=accessData();
     const ab=accessBlock().comunas[state.comuna];
-    const alabel=state.access.cobertura[state.accessUniverse].label;
+    const alabel=active.cobertura[state.accessUniverse].label;
     el.innerHTML=`<span class="eyebrow">Comuna ${esc(state.comuna)}</span><h3>${fmt(c.poblacion)} habitantes</h3><div class="ds-selected-grid">
       <div class="ds-mini"><b>${fmt(c.clubes)}</b><span>clubes</span></div><div class="ds-mini"><b>${fmt(c.polideportivos)}</b><span>polideportivos</span></div>
       <div class="ds-mini"><b>${fmt(c.estaciones_saludables)}</b><span>estaciones saludables</span></div><div class="ds-mini"><b>${fmt(c.cesac)}</b><span>CeSAC</span></div></div>
       <p class="small-muted">${metricMeta[state.metric].label}: <b>${dec(c.tasas_10k[metricMeta[state.metric].key])}</b>.</p>
-      <p class="small-muted">${esc(alabel)} a ${fmt(state.accessDistance)} m: <b>${dec(ab.cobertura_pct)}%</b> de cobertura estimada.</p>`;
+      <p class="small-muted">${esc(alabel)} a ${fmt(state.accessDistance)} m · ${methodMeta[state.accessMethod].label}: <b>${dec(ab.cobertura_pct)}%</b> de cobertura estimada.</p>`;
   }
   function renderRanking(){
     const meta=metricMeta[state.metric];
@@ -107,7 +114,7 @@
     $$('#ds-ranking [data-cid]').forEach(b=>b.addEventListener('click',()=>selectComuna(b.dataset.cid)));
   }
   function renderAccess(){
-    const coverage=state.access.cobertura;
+    const active=accessData(), coverage=active.cobertura;
     const red800=coverage.red_deportiva.distancias['800'].ciudad;
     const club800=coverage.clubes.distancias['800'].ciudad;
     const poli800=coverage.polideportivos.distancias['800'].ciudad;
@@ -115,16 +122,34 @@
     $('#ds-access-club800').textContent=`${dec(club800.cobertura_pct)}%`;
     $('#ds-access-poli800').textContent=`${dec(poli800.cobertura_pct)}%`;
     $('#ds-access-out800').textContent=fmt(red800.poblacion_fuera_cobertura_estimada);
+    $('#ds-access-kpi-mode').textContent=methodMeta[state.accessMethod].label.toLowerCase();
+
     const universe=coverage[state.accessUniverse];
     const block=universe.distancias[state.accessDistance];
-    $('#ds-access-title').textContent=`${universe.label} · ${fmt(state.accessDistance)} m`;
+    $('#ds-access-title').textContent=`${universe.label} · ${fmt(state.accessDistance)} m · ${methodMeta[state.accessMethod].short}`;
     $('#ds-access-city').textContent=`${dec(block.ciudad.cobertura_pct)}%`;
     $('#ds-access-out').textContent=fmt(block.ciudad.poblacion_fuera_cobertura_estimada);
     $('#ds-access-points').textContent=fmt(universe.puntos_georreferenciados);
-    const base=state.access.base_poblacional;
-    $('#ds-access-base').textContent=`Base: ${fmt(base.poblacion_radios)} habitantes en ${fmt(base.radios)} radios censales · cálculo ${state.access.generado}`;
+
+    const eu=state.accessEuclid.cobertura[state.accessUniverse].distancias[state.accessDistance].ciudad.cobertura_pct;
+    const walk=state.accessWalk.cobertura[state.accessUniverse].distancias[state.accessDistance].ciudad.cobertura_pct;
+    const delta=walk-eu;
+    $('#ds-access-compare').innerHTML=`<b>Comparación CABA:</b> geométrica ${dec(eu)}% · peatonal ${dec(walk)}% · diferencia <b>${delta>0?'+':''}${dec(delta)} pp</b>.`;
+
+    const base=active.base_poblacional;
+    const graphDate=state.accessMethod==='walk'&&active.grafo_peatonal?.generado?` · red OSM ${esc(String(active.grafo_peatonal.generado).slice(0,10))}`:'';
+    $('#ds-access-base').textContent=`Base: ${fmt(base.poblacion_radios)} habitantes en ${fmt(base.radios)} radios censales · cálculo ${active.generado}${graphDate}`;
     $('#ds-access-pop').textContent=fmt(base.poblacion_radios);
     $('#ds-access-gap').textContent=`${fmt(base.diferencia_personas)} personas (${dec(base.diferencia_pct)}%)`;
+
+    if(state.accessMethod==='walk'){
+      $('#ds-access-method-title').textContent='Recorrido sobre red peatonal';
+      $('#ds-access-method-copy').textContent='Cada radio censal se aproxima con una malla 8×8 ponderada por superficie. Cada muestra se conecta al tramo peatonal más cercano y se calcula el camino mínimo hasta la oferta deportiva sobre la red caminable de OpenStreetMap.';
+    }else{
+      $('#ds-access-method-title').textContent='Proximidad geométrica';
+      $('#ds-access-method-copy').textContent='Para cada radio censal se calcula qué proporción de su superficie queda dentro de un buffer euclidiano. La población cubierta se prorratea con esa proporción, bajo el supuesto de distribución uniforme dentro del radio.';
+    }
+
     const rows=Object.entries(block.comunas).map(([cid,c])=>({cid,...c})).sort((a,b)=>a.cobertura_pct-b.cobertura_pct);
     $('#ds-access-table tbody').innerHTML=rows.map((x,i)=>`<tr><td>${i+1}</td><td><button class="ds-rank-link" data-access-cid="${x.cid}">Comuna ${x.cid}</button></td><td class="num"><b>${dec(x.cobertura_pct)}%</b></td><td class="num">${fmt(x.poblacion_fuera_cobertura_estimada)}</td></tr>`).join('');
     $$('#ds-access-table [data-access-cid]').forEach(b=>b.addEventListener('click',()=>selectComuna(b.dataset.accessCid)));
@@ -138,7 +163,8 @@
   }
   function renderSources(){
     $('#ds-sources').innerHTML=(state.data.fuentes||[]).map(x=>`<div class="ds-source"><div><b>${esc(x.nombre)}</b><small>${x.recurso_modificado?`Recurso: ${esc(String(x.recurso_modificado).slice(0,10))}`:`Procesado: ${esc(x.generado_cepoes||'—')}`}</small></div>${x.url?`<a href="${esc(x.url)}" target="_blank" rel="noopener">Fuente ↗</a>`:''}</div>`).join('');
-    $('#ds-access-sources').innerHTML=(state.access.fuentes||[]).map(x=>`<div class="ds-source"><div><b>${esc(x.nombre)}</b><small>${esc(x.detalle||'')}</small></div>${x.url?`<a href="${esc(x.url)}" target="_blank" rel="noopener">Fuente ↗</a>`:''}</div>`).join('');
+    const seen=new Set(), sources=[...(state.accessWalk.fuentes||[]),...(state.accessEuclid.fuentes||[])].filter(x=>{const k=`${x.nombre}|${x.url||''}`;if(seen.has(k))return false;seen.add(k);return true;});
+    $('#ds-access-sources').innerHTML=sources.map(x=>`<div class="ds-source"><div><b>${esc(x.nombre)}</b><small>${esc(x.detalle||'')}</small></div>${x.url?`<a href="${esc(x.url)}" target="_blank" rel="noopener">Fuente ↗</a>`:''}</div>`).join('');
   }
   function renderBridge(){
     $('#ds-bridge-est').textContent=fmt(state.data.resumen.estaciones_saludables); $('#ds-bridge-cesac').textContent=fmt(state.data.resumen.cesac);
@@ -148,14 +174,15 @@
     $('#ds-metric').addEventListener('change',e=>{state.metric=e.target.value;renderAll();});
     $('#ds-comuna').addEventListener('change',e=>{state.comuna=e.target.value;renderAll();});
     $('#ds-search').addEventListener('input',e=>{state.q=norm(e.target.value.trim());renderMap();});
+    $('#ds-access-method').addEventListener('change',e=>{state.accessMethod=e.target.value;renderAccess();renderSelected();});
     $('#ds-access-universe').addEventListener('change',e=>{state.accessUniverse=e.target.value;renderAccess();renderSelected();});
     $('#ds-access-distance').addEventListener('change',e=>{state.accessDistance=e.target.value;renderAccess();renderSelected();});
     $$('.ds-layer').forEach(b=>b.addEventListener('click',()=>{const l=b.dataset.layer;if(state.layers.has(l))state.layers.delete(l);else state.layers.add(l);b.classList.toggle('active',state.layers.has(l));renderMap();}));
   }
   async function init(){
     try{
-      const [dr,ar,gr]=await Promise.all([fetch(DATA,{cache:'no-store'}),fetch(ACCESS,{cache:'no-store'}),fetch(GEO)]); if(!dr.ok||!ar.ok||!gr.ok)throw new Error('No se pudieron cargar los datos');
-      state.data=await dr.json(); state.access=await ar.json(); state.geo=await gr.json();
+      const [dr,er,wr,gr]=await Promise.all([fetch(DATA,{cache:'no-store'}),fetch(ACCESS_EU,{cache:'no-store'}),fetch(ACCESS_WALK,{cache:'no-store'}),fetch(GEO)]); if(!dr.ok||!er.ok||!wr.ok||!gr.ok)throw new Error('No se pudieron cargar los datos');
+      state.data=await dr.json(); state.accessEuclid=await er.json(); state.accessWalk=await wr.json(); state.geo=await gr.json();
       renderKpis();renderActivities();renderSources();renderBridge();bind();renderAll();
       $('#ds-loading').hidden=true;
     }catch(err){console.error(err);$('#ds-loading').innerHTML='<div class="ds-error"><b>No pudimos cargar el tablero.</b> El pipeline evita publicar archivos inválidos. Probá recargar la página.</div>';}

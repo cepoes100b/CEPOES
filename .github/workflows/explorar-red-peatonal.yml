@@ -1,0 +1,88 @@
+name: Explorar red peatonal CABA
+
+on:
+  push:
+    paths:
+      - "explorar_red_peatonal_osm.py"
+      - "diagnosticar_accesibilidad_peatonal.py"
+      - "comparar_sensibilidad_peatonal.py"
+      - "generar_accesibilidad_deportiva.py"
+      - ".github/workflows/explorar-red-peatonal.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  explorar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Restaurar caché peatonal
+        uses: actions/cache@v4
+        with:
+          path: |
+            _cache/caba-walk.graphml
+            _cache/osmnx
+          key: caba-walk-osm-v1
+
+      - name: Restaurar caché de radios Censo 2022
+        uses: actions/cache@v4
+        with:
+          path: _cache/radios_2022_conDatos_1habHa.gpkg
+          key: radios-censo-2022-conicet-v1
+
+      - name: Instalar dependencias geoespaciales
+        run: pip install "osmnx==2.1.1" scipy pyogrio
+
+      - name: Construir o restaurar red peatonal
+        run: python explorar_red_peatonal_osm.py
+
+      - name: Mostrar diagnóstico de red
+        run: cat diagnostico_red_peatonal.json
+
+      - name: Calcular diagnóstico 4x4
+        env:
+          GRID_N: "4"
+        run: python diagnosticar_accesibilidad_peatonal.py
+
+      - name: Calcular diagnóstico 8x8
+        env:
+          GRID_N: "8"
+        run: python diagnosticar_accesibilidad_peatonal.py
+
+      - name: Comparar sensibilidad espacial
+        run: python comparar_sensibilidad_peatonal.py
+
+      - name: Mostrar auditoría de muestras extremas
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for grid in (4, 8):
+              d = json.loads(Path(f"diagnostico_accesibilidad_peatonal_g{grid}.json").read_text())
+              print(f"Malla {grid}x{grid} · {d['muestreo']['muestras']} muestras")
+              print("  fuera de red:", d["distancia_fuera_red_muestras"])
+              for threshold, row in d["auditoria_fuera_red"]["umbrales"].items():
+                  print(f"  >{threshold} m: {row['poblacion_pct']}% población · {row['muestras']} muestras")
+              print("  top 5:")
+              for row in d["auditoria_fuera_red"]["top_20"][:5]:
+                  print("   ", row)
+          PY
+
+      - name: Guardar diagnósticos
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnostico-accesibilidad-peatonal
+          path: |
+            diagnostico_red_peatonal.json
+            diagnostico_accesibilidad_peatonal_g4.json
+            diagnostico_accesibilidad_peatonal_g8.json
+            diagnostico_sensibilidad_peatonal.json
+          retention-days: 7

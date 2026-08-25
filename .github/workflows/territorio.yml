@@ -7,11 +7,15 @@ on:
       - "verificar_deporte_salud.py"
       - "generar_accesibilidad_deportiva.py"
       - "verificar_accesibilidad_deportiva.py"
+      - "explorar_red_peatonal_osm.py"
+      - "diagnosticar_accesibilidad_peatonal.py"
+      - "generar_accesibilidad_peatonal.py"
+      - "verificar_accesibilidad_peatonal.py"
       - ".github/workflows/territorio.yml"
   schedule:
     # 15:10 de Buenos Aires, diez minutos después de la segunda corrida diaria
-    # del observatorio. Estas fuentes cambian mucho menos seguido, pero la consulta
-    # diaria permite levantar actualizaciones sin depender de una fecha fija.
+    # del observatorio. Las fuentes deportivas cambian lentamente; OSM se reutiliza
+    # diariamente y el propio generador intenta refrescar la red si supera 28 días.
     - cron: "10 18 * * *"
   workflow_dispatch:
 
@@ -35,13 +39,34 @@ jobs:
       - name: Instalar dependencias
         run: |
           pip install -r requirements.txt
-          pip install geopandas pyogrio
+          pip install geopandas pyogrio "osmnx==2.1.1" scipy
 
       - name: Restaurar caché de radios Censo 2022
         uses: actions/cache@v4
         with:
           path: _cache/radios_2022_conDatos_1habHa.gpkg
           key: radios-censo-2022-conicet-v1
+
+      - name: Crear clave diaria de caché peatonal
+        id: osm-cache-date
+        shell: bash
+        run: echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: Restaurar caché peatonal
+        uses: actions/cache@v4
+        with:
+          path: |
+            _cache/caba-walk.graphml
+            _cache/caba-walk.meta.json
+            _cache/osmnx
+          key: caba-walk-osm-v2-${{ steps.osm-cache-date.outputs.date }}
+          restore-keys: |
+            caba-walk-osm-v2-
+            caba-walk-osm-v1
+
+      - name: Construir o refrescar red peatonal
+        run: python explorar_red_peatonal_osm.py
+        continue-on-error: true
 
       - name: Descargar fuentes territoriales de BA Data
         run: python descargar_territorio.py
@@ -84,22 +109,37 @@ jobs:
       - name: Verificar Deporte y vida saludable
         run: python verificar_deporte_salud.py
 
-      - name: Generar accesibilidad deportiva
+      - name: Generar accesibilidad deportiva geométrica
         run: python generar_accesibilidad_deportiva.py
 
-      - name: Verificar accesibilidad deportiva
+      - name: Verificar accesibilidad deportiva geométrica
         run: python verificar_accesibilidad_deportiva.py
+
+      - name: Generar accesibilidad deportiva peatonal
+        shell: bash
+        run: |
+          if [ -s _cache/caba-walk.graphml ]; then
+            python generar_accesibilidad_peatonal.py
+          elif [ -s deploy/site-overlay/assets/data/deporte-accesibilidad-peatonal.json ]; then
+            echo "Red OSM no disponible: se conserva el último dataset peatonal validado"
+          else
+            echo "No existe red OSM ni dataset peatonal previo" >&2
+            exit 1
+          fi
+
+      - name: Verificar accesibilidad deportiva peatonal
+        run: python verificar_accesibilidad_peatonal.py
 
       - name: Commitear si cambió
         run: |
           git config user.name  "cepoes-bot"
           git config user.email "actions@github.com"
           if [ "${GITHUB_REF_NAME}" = "main" ]; then
-            git add territorio.json estado_territorio.json badata/ equipamientos/ deploy/site-overlay/assets/data/deporte-salud.json deploy/site-overlay/assets/data/deporte-accesibilidad.json
+            git add territorio.json estado_territorio.json badata/ equipamientos/ deploy/site-overlay/assets/data/deporte-salud.json deploy/site-overlay/assets/data/deporte-accesibilidad.json deploy/site-overlay/assets/data/deporte-accesibilidad-peatonal.json
           else
             # En ramas funcionales evitamos mezclar el refresco rutinario de todas
             # las fuentes con el diff del PR; solo materializamos datasets del módulo.
-            git add deploy/site-overlay/assets/data/deporte-salud.json deploy/site-overlay/assets/data/deporte-accesibilidad.json
+            git add deploy/site-overlay/assets/data/deporte-salud.json deploy/site-overlay/assets/data/deporte-accesibilidad.json deploy/site-overlay/assets/data/deporte-accesibilidad-peatonal.json
           fi
           if git diff --cached --quiet; then
             echo "Sin cambios"

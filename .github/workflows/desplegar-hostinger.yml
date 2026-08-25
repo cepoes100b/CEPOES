@@ -56,8 +56,17 @@ jobs:
         run: |
           set -euo pipefail
           echo "1/2 · Probando conectividad TCP al servidor SFTP..."
-          if ! timeout 15 bash -c "cat < /dev/null > /dev/tcp/$SFTP_HOST/$SFTP_PORT"; then
-            echo "ERROR SFTP-TCP: GitHub no puede abrir una conexión con el host/puerto configurados." >&2
+          tcp_ok=0
+          for intento in 1 2 3; do
+            if timeout 15 bash -c "cat < /dev/null > /dev/tcp/$SFTP_HOST/$SFTP_PORT"; then
+              tcp_ok=1
+              break
+            fi
+            echo "TCP no disponible en intento $intento/3; reintentando..." >&2
+            sleep $((intento * 3))
+          done
+          if [ "$tcp_ok" -ne 1 ]; then
+            echo "ERROR SFTP-TCP: GitHub no puede abrir una conexión con el host/puerto configurados tras 3 intentos." >&2
             echo "Revisar HOSTINGER_SFTP_HOST y HOSTINGER_SFTP_PORT en Hostinger > Acceso SSH." >&2
             exit 31
           fi
@@ -66,7 +75,7 @@ jobs:
           lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
           set sftp:auto-confirm yes
           set cmd:fail-exit yes
-          set net:max-retries 1
+          set net:max-retries 2
           set net:timeout 15
           pwd
           cls -1 "$REMOTE_DIR"
@@ -202,11 +211,13 @@ jobs:
             https://cepoes.org/assets/data/estructura-productiva/comunas.geojson \
             | python -c 'import json,sys; d=json.load(sys.stdin); fs=d.get("features",[]); assert d.get("type") == "FeatureCollection"; assert len(fs) == 15; assert {int(f["properties"]["comuna"]) for f in fs} == set(range(1,16)); print("Estructura productiva: GeoJSON público válido · 15 comunas")'
 
-          # El HTML y el JS publicados deben contener las funciones analíticas centrales.
+          # Descargar primero y validar después evita SIGPIPE/curl 23 cuando grep -q encuentra rápido el patrón.
           curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
-            https://cepoes.org/territorio/estructura-productiva/ | grep -q 'prod-matrix'
+            https://cepoes.org/territorio/estructura-productiva/ -o /tmp/estructura-productiva.html
           curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
-            https://cepoes.org/assets/estructura-productiva.js | grep -q 'especializacion'
+            https://cepoes.org/assets/estructura-productiva.js -o /tmp/estructura-productiva.js
+          grep -q 'prod-matrix' /tmp/estructura-productiva.html
+          grep -q 'especializacion' /tmp/estructura-productiva.js
           echo "Estructura productiva: frontend analítico público válido"
 
       - name: Restaurar versión anterior si falla publicación o smoke test

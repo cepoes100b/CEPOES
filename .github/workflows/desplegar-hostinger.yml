@@ -197,6 +197,7 @@ jobs:
             https://cepoes.org/territorio/deporte-salud/ \
             https://cepoes.org/assets/deporte-salud.js \
             https://cepoes.org/assets/data/deporte-salud.json \
+            https://cepoes.org/assets/data/deporte-accesibilidad.json \
             https://cepoes.org/territorio/endeudamiento/ \
             https://cepoes.org/territorio/migraciones/ \
             https://cepoes.org/legislatura/; do
@@ -217,6 +218,10 @@ jobs:
             | python -c 'import json,sys; d=json.load(sys.stdin); r=d["resumen"]; assert set(d["comunas"]) == {str(i) for i in range(1,16)}; assert r["clubes"] > 100; assert r["polideportivos"] >= 10; assert r["estaciones_saludables"] >= 10; assert r["cesac"] >= 20; assert "programas_desactualizados" in d["alertas"]; print("Deporte y salud: JSON público válido · 15 comunas")'
 
           curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
+            https://cepoes.org/assets/data/deporte-accesibilidad.json \
+            | python -c 'import json,sys; d=json.load(sys.stdin); b=d["base_poblacional"]; c=d["cobertura"]; assert b["radios"] >= 3500; assert b["diferencia_pct"] < .1; assert d["metodologia"]["distancias_m"] == [800,1000]; assert set(c) >= {"clubes","polideportivos","red_deportiva"}; assert all(set(c[k]["distancias"]["800"]["comunas"]) == {str(i) for i in range(1,16)} for k in c); print("Deporte y salud: accesibilidad pública válida · 800/1000 m")'
+
+          curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
             https://cepoes.org/territorio/estructura-productiva/ -o /tmp/estructura-productiva.html
           curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
             https://cepoes.org/assets/estructura-productiva.js -o /tmp/estructura-productiva.js
@@ -228,9 +233,10 @@ jobs:
             https://cepoes.org/territorio/deporte-salud/ -o /tmp/deporte-salud.html
           curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
             https://cepoes.org/assets/deporte-salud.js -o /tmp/deporte-salud.js
-          grep -q 'ds-ranking' /tmp/deporte-salud.html
-          grep -q 'renderMap' /tmp/deporte-salud.js
-          echo "Deporte y salud: frontend público válido"
+          grep -q 'ds-access-table' /tmp/deporte-salud.html
+          grep -q 'renderAccess' /tmp/deporte-salud.js
+          grep -q 'deporte-accesibilidad.json' /tmp/deporte-salud.js
+          echo "Deporte y salud V2: frontend público con accesibilidad válido"
 
       - name: Restaurar versión anterior si falla publicación o smoke test
         if: failure() && steps.publish.outcome == 'success'

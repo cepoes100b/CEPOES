@@ -25,11 +25,13 @@ from shapely.ops import unary_union
 BASE = Path(__file__).resolve().parent
 SPORT = BASE / "deploy" / "site-overlay" / "assets" / "data" / "deporte-salud.json"
 OUT = BASE / "deploy" / "site-overlay" / "assets" / "data" / "deporte-accesibilidad.json"
-TMP = BASE / "_tmp_radios_2022.gpkg"
+CACHE_DIR = BASE / "_cache"
+RADIOS = CACHE_DIR / "radios_2022_conDatos_1habHa.gpkg"
 
 RADIOS_URL = "https://datosdeinvestigacion.conicet.gov.ar/bitstream/handle/11336/284095/radios_2022_conDatos_1habHa.gpkg?isAllowed=y&sequence=2"
 RADIOS_PAGE = "https://datosdeinvestigacion.conicet.gov.ar/handle/11336/284095"
 DISTANCES = (800, 1000)
+MIN_RADIOS_BYTES = 10_000_000
 
 
 def load_json(path: Path) -> dict:
@@ -39,20 +41,28 @@ def load_json(path: Path) -> dict:
 
 
 def download_radios() -> None:
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
+    if RADIOS.exists() and RADIOS.stat().st_size >= MIN_RADIOS_BYTES:
+        print(f"Radios Censo 2022: usando caché local · {RADIOS.stat().st_size // 1024 // 1024} MB")
+        return
+    tmp = RADIOS.with_suffix(".part")
     with requests.get(RADIOS_URL, stream=True, timeout=180, headers={"User-Agent": "CEPOES-data/1.0"}) as r:
         r.raise_for_status()
-        with TMP.open("wb") as fh:
+        with tmp.open("wb") as fh:
             for chunk in r.iter_content(1024 * 1024):
                 if chunk:
                     fh.write(chunk)
-    if TMP.stat().st_size < 10_000_000:
-        raise SystemExit(f"Descarga de radios inesperadamente pequeña: {TMP.stat().st_size} bytes")
+    if tmp.stat().st_size < MIN_RADIOS_BYTES:
+        tmp.unlink(missing_ok=True)
+        raise SystemExit(f"Descarga de radios inesperadamente pequeña: {tmp.stat().st_size} bytes")
+    tmp.replace(RADIOS)
+    print(f"Radios Censo 2022: descarga actualizada · {RADIOS.stat().st_size // 1024 // 1024} MB")
 
 
 def read_caba() -> gpd.GeoDataFrame:
     download_radios()
-    layer = gpd.list_layers(TMP).iloc[0]["name"]
-    gdf = gpd.read_file(TMP, layer=layer)
+    layer = gpd.list_layers(RADIOS).iloc[0]["name"]
+    gdf = gpd.read_file(RADIOS, layer=layer)
     needed = {"NOMPROV", "NOMDEPTO", "CRO", "CA3", "geometry"}
     missing = needed - set(gdf.columns)
     if missing:
@@ -100,12 +110,7 @@ def comuna_id(name: object) -> str | None:
     return str(n) if 1 <= n <= 15 else None
 
 
-def coverage_for(
-    radios_metric: gpd.GeoDataFrame,
-    points_wgs84: list[Point],
-    metric_crs: object,
-    distance: int,
-) -> tuple[dict, dict]:
+def coverage_for(radios_metric: gpd.GeoDataFrame, points_wgs84: list[Point], metric_crs: object, distance: int) -> tuple[dict, dict]:
     if not points_wgs84:
         raise SystemExit("No hay puntos deportivos georreferenciados")
     points = gpd.GeoSeries(points_wgs84, crs="EPSG:4326").to_crs(metric_crs)
@@ -154,7 +159,8 @@ def main() -> int:
 
     clubs = sport_points(sport, "clubes")
     polis = sport_points(sport, "polideportivos")
-    network = clubs + [p for p in polis if (round(p.x, 6), round(p.y, 6)) not in {(round(c.x, 6), round(c.y, 6)) for c in clubs}]
+    club_keys = {(round(c.x, 6), round(c.y, 6)) for c in clubs}
+    network = clubs + [p for p in polis if (round(p.x, 6), round(p.y, 6)) not in club_keys]
 
     universes = {
         "clubes": {"label": "Clubes y sedes", "points": clubs},
@@ -168,11 +174,7 @@ def main() -> int:
         for d in DISTANCES:
             city, comunas = coverage_for(radios_m, meta["points"], metric_crs, d)
             distances[str(d)] = {"ciudad": city, "comunas": comunas}
-        results[key] = {
-            "label": meta["label"],
-            "puntos_georreferenciados": len(meta["points"]),
-            "distancias": distances,
-        }
+        results[key] = {"label": meta["label"], "puntos_georreferenciados": len(meta["points"]), "distancias": distances}
 
     pop_radios = int(round(radios["CA3"].sum()))
     territory_pop = sum(int((v or {}).get("poblacion") or 0) for v in (load_json(BASE / "territorio.json").get("comunas") or {}).values())
@@ -198,16 +200,8 @@ def main() -> int:
             "diferencia_pct": round(abs(gap) / territory_pop * 100, 4) if territory_pop else None,
         },
         "fuentes": [
-            {
-                "nombre": "CONICET Digital · Argentina (2022) radios censales con datos de cantidad de población y densidad de población",
-                "url": RADIOS_PAGE,
-                "detalle": "Geometría de radios censales INDEC 2022 y población total obtenida mediante Redatam-INDEC.",
-            },
-            {
-                "nombre": "CEPOES · Deporte y vida saludable",
-                "url": "https://cepoes.org/territorio/deporte-salud/",
-                "detalle": "Clubes, sedes y polideportivos normalizados desde fuentes oficiales de BA Data.",
-            },
+            {"nombre": "CONICET Digital · Argentina (2022) radios censales con datos de cantidad de población y densidad de población", "url": RADIOS_PAGE, "detalle": "Geometría de radios censales INDEC 2022 y población total obtenida mediante Redatam-INDEC."},
+            {"nombre": "CEPOES · Deporte y vida saludable", "url": "https://cepoes.org/territorio/deporte-salud/", "detalle": "Clubes, sedes y polideportivos normalizados desde fuentes oficiales de BA Data."},
         ],
         "cobertura": results,
     }

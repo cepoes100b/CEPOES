@@ -47,8 +47,7 @@ def patch_territorio_navigation(site_root: Path) -> None:
                     if anchors:
                         m=anchors[-1]
                         opening=m.group(1).replace('href="/territorio/endeudamiento/"','href="/territorio/deporte-salud/" '+marker)
-                        clone=opening+'Deporte y vida saludable →'+m.group(3)
-                        s=s[:m.start()]+clone+s[m.start():]
+                        s=s[:m.start()]+opening+'Deporte y vida saludable →'+m.group(3)+s[m.start():]
 
                 marker='data-cepoes-estructura-productiva-access="1"'
                 if marker not in s:
@@ -56,8 +55,7 @@ def patch_territorio_navigation(site_root: Path) -> None:
                     if anchors:
                         m=anchors[-1]
                         opening=m.group(1).replace('href="/territorio/endeudamiento/"','href="/territorio/estructura-productiva/" '+marker)
-                        clone=opening+'Estructura productiva →'+m.group(3)
-                        s=s[:m.start()]+clone+s[m.start():]
+                        s=s[:m.start()]+opening+'Estructura productiva →'+m.group(3)+s[m.start():]
 
                 marker='data-cepoes-migraciones-access="1"'
                 if marker not in s:
@@ -65,8 +63,7 @@ def patch_territorio_navigation(site_root: Path) -> None:
                     if anchors:
                         m=anchors[-1]
                         opening=m.group(1).replace('href="/territorio/endeudamiento/"','href="/territorio/migraciones/" '+marker)
-                        clone=opening+'Migraciones →'+m.group(3)
-                        s=s[:m.start()]+clone+s[m.start():]
+                        s=s[:m.start()]+opening+'Migraciones →'+m.group(3)+s[m.start():]
 
             if rel=='territorio/estructura-productiva/index.html' and '/assets/estructura-productiva-bootstrap.js' not in s:
                 target='<script defer src="/assets/estructura-productiva.js?v=260"></script>'
@@ -103,10 +100,10 @@ required=[
     'legislatura/index.html','territorio/endeudamiento/index.html',
     'territorio/migraciones/index.html','territorio/estructura-productiva/index.html',
     'territorio/deporte-salud/index.html',
-    'assets/deporte-salud.js','assets/deporte-salud.css','assets/data/deporte-salud.json','assets/data/deporte-accesibilidad.json',
+    'assets/deporte-salud.js','assets/deporte-salud.css','assets/data/deporte-salud.json',
+    'assets/data/deporte-accesibilidad.json','assets/data/deporte-accesibilidad-peatonal.json',
     'assets/estructura-productiva.js','assets/estructura-productiva-bootstrap.js','assets/estructura-productiva.css',
-    'assets/data/estructura-productiva/actual.json',
-    'assets/data/estructura-productiva/comunas.geojson',
+    'assets/data/estructura-productiva/actual.json','assets/data/estructura-productiva/comunas.geojson',
 ]
 for rel in required:
     p=root/rel
@@ -117,20 +114,23 @@ barrios=[p for p in (root/'territorio'/'barrios').glob('*/index.html')]
 assert len(barrios)==48, f'barrios={len(barrios)}'
 
 territorio=(root/'territorio'/'index.html').read_text(encoding='utf-8',errors='replace')
-assert 'href="/territorio/migraciones/"' in territorio, 'Territorio no enlaza Migraciones'
-assert 'href="/territorio/estructura-productiva/"' in territorio, 'Territorio no enlaza Estructura productiva'
-assert 'href="/territorio/deporte-salud/"' in territorio, 'Territorio no enlaza Deporte y salud'
-assert 'data-cepoes-migraciones-access="1"' in territorio, 'Falta acceso visible a Migraciones en portada Territorio'
-assert 'data-cepoes-estructura-productiva-access="1"' in territorio, 'Falta acceso visible a Estructura productiva en portada Territorio'
-assert 'data-cepoes-deporte-salud-access="1"' in territorio, 'Falta acceso visible a Deporte y salud en portada Territorio'
+for path,label in [('/territorio/migraciones/','Migraciones'),('/territorio/estructura-productiva/','Estructura productiva'),('/territorio/deporte-salud/','Deporte y salud')]:
+    assert f'href="{path}"' in territorio, f'Territorio no enlaza {label}'
+assert 'data-cepoes-migraciones-access="1"' in territorio
+assert 'data-cepoes-estructura-productiva-access="1"' in territorio
+assert 'data-cepoes-deporte-salud-access="1"' in territorio
 
 productiva=(root/'territorio'/'estructura-productiva'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Perfil comercial de las 15 comunas','Comparar comunas','Matriz comuna × rubro','Ocupación comercial 2025 → 2026','Archivo histórico · RUS 2017','/assets/estructura-productiva-bootstrap.js']:
     assert token in productiva, f'Estructura productiva V2 incompleta: {token}'
 
 deporte=(root/'territorio'/'deporte-salud'/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['Deporte y vida saludable en CABA','Accesibilidad territorial','ds-access-table','Brechas comunales de infraestructura y sedes','Estaciones Saludables','Centros de Salud y Acción Comunitaria','/assets/deporte-salud.js?v=2']:
-    assert token in deporte, f'Deporte y salud V2 incompleto: {token}'
+for token in ['Deporte y vida saludable en CABA','Accesibilidad territorial','ds-access-table','ds-access-method','ds-access-compare','Recorrido peatonal estimado','OpenStreetMap','Brechas comunales de infraestructura y sedes','Estaciones Saludables','Centros de Salud y Acción Comunitaria','/assets/deporte-salud.js?v=3']:
+    assert token in deporte, f'Deporte y salud V3 incompleto: {token}'
+
+js=(root/'assets'/'deporte-salud.js').read_text(encoding='utf-8',errors='replace')
+for token in ['deporte-accesibilidad-peatonal.json','accessWalk','accessEuclid','accessMethod','renderAccess']:
+    assert token in js, f'JS Deporte V3 incompleto: {token}'
 
 tree=ET.parse(root/'sitemap.xml')
 ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
@@ -142,8 +142,8 @@ for u in urls:
     assert loc is not None and (loc.text or '').startswith('https://cepoes.org/')
     assert last is not None and re.fullmatch(r'\d{4}-\d{2}-\d{2}',(last.text or '').strip())
     locs.append((loc.text or '').strip())
-assert 'https://cepoes.org/territorio/estructura-productiva/' in locs, 'Estructura productiva ausente del sitemap'
-assert 'https://cepoes.org/territorio/deporte-salud/' in locs, 'Deporte y salud ausente del sitemap'
+assert 'https://cepoes.org/territorio/estructura-productiva/' in locs
+assert 'https://cepoes.org/territorio/deporte-salud/' in locs
 
 manifest=json.loads((root/'site.webmanifest').read_text(encoding='utf-8'))
 assert manifest.get('name')=='CEPOES'
@@ -161,31 +161,54 @@ assert all('variacion_interanual_pp' in x and 'tasa_ocupacion_anterior' in x for
 
 geo=json.loads((root/'assets/data/estructura-productiva/comunas.geojson').read_text(encoding='utf-8'))
 features=geo.get('features') or []
-assert geo.get('type')=='FeatureCollection' and len(features)==15, 'GeoJSON comunal inválido'
-assert {int((f.get('properties') or {}).get('comuna')) for f in features}==set(range(1,16)), 'GeoJSON no contiene las 15 comunas'
+assert geo.get('type')=='FeatureCollection' and len(features)==15
+assert {int((f.get('properties') or {}).get('comuna')) for f in features}==set(range(1,16))
 
 sport=json.loads((root/'assets/data/deporte-salud.json').read_text(encoding='utf-8'))
-assert sport.get('version')==1, 'Dataset Deporte y salud inválido'
-assert set((sport.get('comunas') or {}).keys())=={str(i) for i in range(1,16)}, 'Deporte y salud no contiene 15 comunas'
+assert sport.get('version')==1
+assert set((sport.get('comunas') or {}).keys())=={str(i) for i in range(1,16)}
 sr=sport.get('resumen') or {}
-assert sr.get('clubes',0)>100 and sr.get('polideportivos',0)>=10 and sr.get('estaciones_saludables',0)>=10 and sr.get('cesac',0)>=20, 'Totales Deporte y salud fuera de rango'
-assert 'programas_desactualizados' in (sport.get('alertas') or {}), 'Falta control de vigencia de Programas Deportivos'
+assert sr.get('clubes',0)>100 and sr.get('polideportivos',0)>=10 and sr.get('estaciones_saludables',0)>=10 and sr.get('cesac',0)>=20
+assert 'programas_desactualizados' in (sport.get('alertas') or {})
 
 access=json.loads((root/'assets/data/deporte-accesibilidad.json').read_text(encoding='utf-8'))
-assert access.get('version')==1, 'Dataset accesibilidad deportiva inválido'
+assert access.get('version')==1
 ab=access.get('base_poblacional') or {}
-assert ab.get('radios',0)>=3500 and 3_000_000<=ab.get('poblacion_radios',0)<=3_200_000, 'Base censal de accesibilidad fuera de rango'
-assert ab.get('diferencia_pct',1)<0.1, 'Base de accesibilidad inconsistente con población territorial CEPOES'
-assert (access.get('metodologia') or {}).get('distancias_m')==[800,1000], 'Distancias de accesibilidad inesperadas'
+assert ab.get('radios',0)>=3500 and 3_000_000<=ab.get('poblacion_radios',0)<=3_200_000
+assert ab.get('diferencia_pct',1)<0.1
+assert (access.get('metodologia') or {}).get('distancias_m')==[800,1000]
 ac=access.get('cobertura') or {}
 for key in ['clubes','polideportivos','red_deportiva']:
-    assert key in ac and ac[key].get('puntos_georreferenciados',0)>0, f'Falta universo de accesibilidad {key}'
+    assert key in ac and ac[key].get('puntos_georreferenciados',0)>0
     for dist in ['800','1000']:
         block=(ac[key].get('distancias') or {}).get(dist) or {}
-        assert set((block.get('comunas') or {}).keys())=={str(i) for i in range(1,16)}, f'Accesibilidad {key}/{dist} sin 15 comunas'
+        assert set((block.get('comunas') or {}).keys())=={str(i) for i in range(1,16)}
         pct=(block.get('ciudad') or {}).get('cobertura_pct')
-        assert pct is not None and 0<=pct<=100, f'Cobertura inválida {key}/{dist}'
-    assert ac[key]['distancias']['1000']['ciudad']['cobertura_pct']>=ac[key]['distancias']['800']['ciudad']['cobertura_pct'], f'Cobertura no monótona {key}'
+        assert pct is not None and 0<=pct<=100
+    assert ac[key]['distancias']['1000']['ciudad']['cobertura_pct']>=ac[key]['distancias']['800']['ciudad']['cobertura_pct']
+
+walk=json.loads((root/'assets/data/deporte-accesibilidad-peatonal.json').read_text(encoding='utf-8'))
+assert walk.get('version')==1
+wm=walk.get('metodologia') or {}
+assert wm.get('network_type')=='walk' and wm.get('distancias_m')==[800,1000]
+wb=walk.get('base_poblacional') or {}
+assert wb.get('poblacion_radios')==ab.get('poblacion_radios')
+assert wb.get('muestras_ponderadas',0)>150_000
+wg=walk.get('grafo_peatonal') or {}
+assert wg.get('nodos',0)>20_000 and wg.get('aristas_dirigidas',0)>40_000
+wc=(walk.get('control_conexion_red') or {}).get('umbrales') or {}
+assert wc.get('100',{}).get('poblacion_pct',99)<0.5
+assert wc.get('200',{}).get('poblacion_pct',99)<0.1
+wcoverage=walk.get('cobertura') or {}
+for key in ['clubes','polideportivos','red_deportiva']:
+    assert key in wcoverage and wcoverage[key].get('puntos_georreferenciados',0)>0
+    for dist in ['800','1000']:
+        block=(wcoverage[key].get('distancias') or {}).get(dist) or {}
+        assert set((block.get('comunas') or {}).keys())=={str(i) for i in range(1,16)}
+        pct=(block.get('ciudad') or {}).get('cobertura_pct')
+        assert pct is not None and 0<=pct<=100
+        assert pct<=ac[key]['distancias'][dist]['ciudad']['cobertura_pct']+0.5
+    assert wcoverage[key]['distancias']['1000']['ciudad']['cobertura_pct']>=wcoverage[key]['distancias']['800']['ciudad']['cobertura_pct']
 
 blocked=[]
 for p in root.rglob('*'):
@@ -197,4 +220,4 @@ assert not blocked, f'Archivos no publicables: {blocked[:10]}'
 
 key=(root/'indexnow-key.txt').read_text(encoding='utf-8').strip()
 assert re.fullmatch(r'[A-Za-z0-9_-]{8,128}',key), 'IndexNow key inválida'
-print(f'OK sitio: {len(html)} HTML · {len(barrios)} barrios · {len(urls)} URLs indexables · estructura productiva + deporte/salud V2 validados · sin crudos')
+print(f'OK sitio: {len(html)} HTML · {len(barrios)} barrios · {len(urls)} URLs indexables · estructura productiva + deporte/salud V3 validados · sin crudos')

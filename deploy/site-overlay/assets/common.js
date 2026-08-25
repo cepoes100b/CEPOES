@@ -25,6 +25,13 @@
         const a=document.createElement('a');a.href='/territorio/migraciones/';a.textContent='Migraciones';
         const debt=sub.querySelector('a[href="/territorio/endeudamiento/"]'); debt?sub.insertBefore(a,debt):sub.appendChild(a);
       }
+      if(location.pathname==='/territorio/' && !document.querySelector('[data-cepoes-deporte-salud-access]')){
+        const anchors=Array.from(document.querySelectorAll('a[href="/territorio/endeudamiento/"]')).filter(x=>!x.closest('.subnav'));
+        const source=anchors.at(-1);
+        if(source&&source.parentNode){
+          const a=source.cloneNode(true);a.href='/territorio/deporte-salud/';a.dataset.cepoesDeporteSaludAccess='1';a.textContent='Deporte y vida saludable →';source.parentNode.insertBefore(a,source);
+        }
+      }
     }
     initSearch();
   });

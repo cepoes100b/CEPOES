@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - feat/estructura-productiva-actual-2026
+      - "feat/estructura-productiva-*"
     paths:
       - "generar_estructura_actual_v2.py"
       - "verificar_estructura_actual.py"

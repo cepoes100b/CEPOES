@@ -194,6 +194,9 @@ jobs:
             https://cepoes.org/assets/estructura-productiva.js \
             https://cepoes.org/assets/data/estructura-productiva/actual.json \
             https://cepoes.org/assets/data/estructura-productiva/comunas.geojson \
+            https://cepoes.org/territorio/deporte-salud/ \
+            https://cepoes.org/assets/deporte-salud.js \
+            https://cepoes.org/assets/data/deporte-salud.json \
             https://cepoes.org/territorio/endeudamiento/ \
             https://cepoes.org/territorio/migraciones/ \
             https://cepoes.org/legislatura/; do
@@ -211,6 +214,11 @@ jobs:
             https://cepoes.org/assets/data/estructura-productiva/comunas.geojson \
             | python -c 'import json,sys; d=json.load(sys.stdin); fs=d.get("features",[]); assert d.get("type") == "FeatureCollection"; assert len(fs) == 15; assert {int(f["properties"]["comuna"]) for f in fs} == set(range(1,16)); print("Estructura productiva: GeoJSON público válido · 15 comunas")'
 
+          # Deporte + salud debe conservar sus cuatro capas vigentes y las 15 comunas.
+          curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
+            https://cepoes.org/assets/data/deporte-salud.json \
+            | python -c 'import json,sys; d=json.load(sys.stdin); r=d["resumen"]; assert set(d["comunas"]) == {str(i) for i in range(1,16)}; assert r["clubes"] > 100; assert r["polideportivos"] >= 10; assert r["estaciones_saludables"] >= 10; assert r["cesac"] >= 20; assert "programas_desactualizados" in d["alertas"]; print("Deporte y salud: JSON público válido · 15 comunas")'
+
           # Descargar primero y validar después evita SIGPIPE/curl 23 cuando grep -q encuentra rápido el patrón.
           curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
             https://cepoes.org/territorio/estructura-productiva/ -o /tmp/estructura-productiva.html
@@ -219,6 +227,14 @@ jobs:
           grep -q 'prod-matrix' /tmp/estructura-productiva.html
           grep -q 'especializacion' /tmp/estructura-productiva.js
           echo "Estructura productiva: frontend analítico público válido"
+
+          curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
+            https://cepoes.org/territorio/deporte-salud/ -o /tmp/deporte-salud.html
+          curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
+            https://cepoes.org/assets/deporte-salud.js -o /tmp/deporte-salud.js
+          grep -q 'ds-ranking' /tmp/deporte-salud.html
+          grep -q 'renderMap' /tmp/deporte-salud.js
+          echo "Deporte y salud: frontend público válido"
 
       - name: Restaurar versión anterior si falla publicación o smoke test
         if: failure() && steps.publish.outcome == 'success'

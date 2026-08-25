@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - "explorar_red_peatonal_osm.py"
+      - "diagnosticar_accesibilidad_peatonal.py"
+      - "generar_accesibilidad_deportiva.py"
       - ".github/workflows/explorar-red-peatonal.yml"
   workflow_dispatch:
 
@@ -13,7 +15,7 @@ permissions:
 jobs:
   explorar:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v5
 
@@ -29,11 +31,23 @@ jobs:
             _cache/osmnx
           key: caba-walk-osm-v1
 
-      - name: Instalar OSMnx
-        run: pip install "osmnx==2.1.1"
+      - name: Restaurar caché de radios Censo 2022
+        uses: actions/cache@v4
+        with:
+          path: _cache/radios_2022_conDatos_1habHa.gpkg
+          key: radios-censo-2022-conicet-v1
+
+      - name: Instalar dependencias geoespaciales
+        run: pip install "osmnx==2.1.1" scipy pyogrio
 
       - name: Construir o restaurar red peatonal
         run: python explorar_red_peatonal_osm.py
 
-      - name: Mostrar diagnóstico
+      - name: Mostrar diagnóstico de red
         run: cat diagnostico_red_peatonal.json
+
+      - name: Calcular accesibilidad peatonal diagnóstica
+        run: python diagnosticar_accesibilidad_peatonal.py
+
+      - name: Mostrar diagnóstico de accesibilidad
+        run: cat diagnostico_accesibilidad_peatonal.json

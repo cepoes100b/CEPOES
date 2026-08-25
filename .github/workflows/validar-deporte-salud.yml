@@ -1,0 +1,69 @@
+name: Validar Deporte y vida saludable
+
+on:
+  push:
+    paths:
+      - "deploy/site-overlay/territorio/deporte-salud/**"
+      - "deploy/site-overlay/assets/deporte-salud.js"
+      - "deploy/site-overlay/assets/deporte-salud.css"
+      - "deploy/site-overlay/assets/data/deporte-salud.json"
+      - "deploy/site-overlay/assets/data/deporte-accesibilidad.json"
+      - "generar_deporte_salud.py"
+      - "verificar_deporte_salud.py"
+      - "generar_accesibilidad_deportiva.py"
+      - "verificar_accesibilidad_deportiva.py"
+      - ".github/workflows/validar-deporte-salud.yml"
+  pull_request:
+    paths:
+      - "deploy/site-overlay/territorio/deporte-salud/**"
+      - "deploy/site-overlay/assets/deporte-salud.js"
+      - "deploy/site-overlay/assets/deporte-salud.css"
+      - "deploy/site-overlay/assets/data/deporte-salud.json"
+      - "deploy/site-overlay/assets/data/deporte-accesibilidad.json"
+      - "generar_deporte_salud.py"
+      - "verificar_deporte_salud.py"
+      - "generar_accesibilidad_deportiva.py"
+      - "verificar_accesibilidad_deportiva.py"
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Verificar datasets publicados
+        run: |
+          python verificar_deporte_salud.py
+          python verificar_accesibilidad_deportiva.py
+
+      - name: Verificar sintaxis JavaScript
+        run: node --check deploy/site-overlay/assets/deporte-salud.js
+
+      - name: Verificar integración estática
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          page=Path('deploy/site-overlay/territorio/deporte-salud/index.html').read_text(encoding='utf-8')
+          js=Path('deploy/site-overlay/assets/deporte-salud.js').read_text(encoding='utf-8')
+          css=Path('deploy/site-overlay/assets/deporte-salud.css').read_text(encoding='utf-8')
+          for token in ['Accesibilidad territorial','ds-access-table','ds-access-universe','ds-access-distance','/assets/deporte-salud.js?v=2']:
+              assert token in page, token
+          for token in ['deporte-accesibilidad.json','renderAccess','accessUniverse','accessDistance']:
+              assert token in js, token
+          for token in ['ds-access-grid','ds-access-kpis','ds-access-summary']:
+              assert token in css, token
+          d=json.loads(Path('deploy/site-overlay/assets/data/deporte-accesibilidad.json').read_text(encoding='utf-8'))
+          red=d['cobertura']['red_deportiva']['distancias']
+          assert red['800']['ciudad']['cobertura_pct'] <= red['1000']['ciudad']['cobertura_pct']
+          assert set(red['800']['comunas']) == {str(i) for i in range(1,16)}
+          print('Deporte y salud V2: integración estática válida')
+          PY

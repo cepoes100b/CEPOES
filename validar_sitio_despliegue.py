@@ -103,7 +103,7 @@ required=[
     'legislatura/index.html','territorio/endeudamiento/index.html',
     'territorio/migraciones/index.html','territorio/estructura-productiva/index.html',
     'territorio/deporte-salud/index.html',
-    'assets/deporte-salud.js','assets/deporte-salud.css','assets/data/deporte-salud.json',
+    'assets/deporte-salud.js','assets/deporte-salud.css','assets/data/deporte-salud.json','assets/data/deporte-accesibilidad.json',
     'assets/estructura-productiva.js','assets/estructura-productiva-bootstrap.js','assets/estructura-productiva.css',
     'assets/data/estructura-productiva/actual.json',
     'assets/data/estructura-productiva/comunas.geojson',
@@ -129,8 +129,8 @@ for token in ['Perfil comercial de las 15 comunas','Comparar comunas','Matriz co
     assert token in productiva, f'Estructura productiva V2 incompleta: {token}'
 
 deporte=(root/'territorio'/'deporte-salud'/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['Deporte y vida saludable en CABA','Brechas comunales','Estaciones Saludables','Centros de Salud y Acción Comunitaria','/assets/deporte-salud.js']:
-    assert token in deporte, f'Deporte y salud incompleto: {token}'
+for token in ['Deporte y vida saludable en CABA','Accesibilidad territorial','ds-access-table','Brechas comunales de infraestructura y sedes','Estaciones Saludables','Centros de Salud y Acción Comunitaria','/assets/deporte-salud.js?v=2']:
+    assert token in deporte, f'Deporte y salud V2 incompleto: {token}'
 
 tree=ET.parse(root/'sitemap.xml')
 ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
@@ -171,6 +171,22 @@ sr=sport.get('resumen') or {}
 assert sr.get('clubes',0)>100 and sr.get('polideportivos',0)>=10 and sr.get('estaciones_saludables',0)>=10 and sr.get('cesac',0)>=20, 'Totales Deporte y salud fuera de rango'
 assert 'programas_desactualizados' in (sport.get('alertas') or {}), 'Falta control de vigencia de Programas Deportivos'
 
+access=json.loads((root/'assets/data/deporte-accesibilidad.json').read_text(encoding='utf-8'))
+assert access.get('version')==1, 'Dataset accesibilidad deportiva inválido'
+ab=access.get('base_poblacional') or {}
+assert ab.get('radios',0)>=3500 and 3_000_000<=ab.get('poblacion_radios',0)<=3_200_000, 'Base censal de accesibilidad fuera de rango'
+assert ab.get('diferencia_pct',1)<0.1, 'Base de accesibilidad inconsistente con población territorial CEPOES'
+assert (access.get('metodologia') or {}).get('distancias_m')==[800,1000], 'Distancias de accesibilidad inesperadas'
+ac=access.get('cobertura') or {}
+for key in ['clubes','polideportivos','red_deportiva']:
+    assert key in ac and ac[key].get('puntos_georreferenciados',0)>0, f'Falta universo de accesibilidad {key}'
+    for dist in ['800','1000']:
+        block=(ac[key].get('distancias') or {}).get(dist) or {}
+        assert set((block.get('comunas') or {}).keys())=={str(i) for i in range(1,16)}, f'Accesibilidad {key}/{dist} sin 15 comunas'
+        pct=(block.get('ciudad') or {}).get('cobertura_pct')
+        assert pct is not None and 0<=pct<=100, f'Cobertura inválida {key}/{dist}'
+    assert ac[key]['distancias']['1000']['ciudad']['cobertura_pct']>=ac[key]['distancias']['800']['ciudad']['cobertura_pct'], f'Cobertura no monótona {key}'
+
 blocked=[]
 for p in root.rglob('*'):
     if not p.is_file(): continue
@@ -181,4 +197,4 @@ assert not blocked, f'Archivos no publicables: {blocked[:10]}'
 
 key=(root/'indexnow-key.txt').read_text(encoding='utf-8').strip()
 assert re.fullmatch(r'[A-Za-z0-9_-]{8,128}',key), 'IndexNow key inválida'
-print(f'OK sitio: {len(html)} HTML · {len(barrios)} barrios · {len(urls)} URLs indexables · estructura productiva + deporte/salud validados · sin crudos')
+print(f'OK sitio: {len(html)} HTML · {len(barrios)} barrios · {len(urls)} URLs indexables · estructura productiva + deporte/salud V2 validados · sin crudos')

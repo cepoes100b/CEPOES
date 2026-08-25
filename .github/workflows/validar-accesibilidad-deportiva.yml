@@ -1,0 +1,38 @@
+name: Validar accesibilidad deportiva
+
+on:
+  push:
+    paths:
+      - "generar_accesibilidad_deportiva.py"
+      - "verificar_accesibilidad_deportiva.py"
+      - ".github/workflows/validar-accesibilidad-deportiva.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  validar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias geoespaciales
+        run: pip install requests geopandas pyogrio
+      - name: Generar accesibilidad deportiva
+        run: python generar_accesibilidad_deportiva.py
+      - name: Verificar accesibilidad deportiva
+        run: python verificar_accesibilidad_deportiva.py
+      - name: Materializar JSON de prueba
+        run: |
+          git config user.name "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add deploy/site-overlay/assets/data/deporte-accesibilidad.json
+          if git diff --cached --quiet; then
+            echo "Sin cambios"
+            exit 0
+          fi
+          git commit -m "deporte v2: generar accesibilidad territorial"
+          git push

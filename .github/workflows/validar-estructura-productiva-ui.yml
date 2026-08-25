@@ -7,6 +7,9 @@ on:
       - "deploy/site-overlay/assets/estructura-productiva.*"
       - "deploy/site-overlay/assets/common.js"
       - "deploy/site-overlay/assets/data/estructura-productiva/actual.json"
+      - "deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson"
+      - "generar_estructura_actual_v2.py"
+      - "verificar_estructura_actual.py"
       - "validar_sitio_despliegue.py"
       - ".github/workflows/validar-estructura-productiva-ui.yml"
   push:
@@ -14,7 +17,8 @@ on:
     paths:
       - "deploy/site-overlay/territorio/estructura-productiva/**"
       - "deploy/site-overlay/assets/estructura-productiva.*"
-      - "deploy/site-overlay/assets/common.js"
+      - "deploy/site-overlay/assets/data/estructura-productiva/actual.json"
+      - "deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson"
       - "validar_sitio_despliegue.py"
 
 jobs:
@@ -27,33 +31,59 @@ jobs:
           node --check deploy/site-overlay/assets/estructura-productiva.js
           node --check deploy/site-overlay/assets/common.js
           python -m py_compile generar_estructura_actual_v2.py verificar_estructura_actual.py validar_sitio_despliegue.py
-      - name: HTML, datos y criterio temporal
+      - name: HTML, cartografía, datos y criterios analíticos
         run: |
           python - <<'PY'
           import json
           from html.parser import HTMLParser
           from pathlib import Path
+
           html=Path('deploy/site-overlay/territorio/estructura-productiva/index.html').read_text(encoding='utf-8')
           class P(HTMLParser):
               def __init__(self): super().__init__(); self.ids=[]
               def handle_starttag(self,tag,attrs):
                   a=dict(attrs)
                   if a.get('id'): self.ids.append(a['id'])
-          p=P();p.feed(html)
+          p=P(); p.feed(html)
           assert len(p.ids)==len(set(p.ids)), 'IDs HTML duplicados'
-          required=['productive-map','prod-selection','prod-status','prod-company-bars','prod-rubro-bars','prod-comuna-cards','prod-year']
+          required=[
+              'productive-map','productive-detail-map','prod-selection','prod-detail-selection',
+              'prod-map-status','prod-detail-status','prod-company-bars','prod-city-rubro-bars',
+              'prod-map-metric','prod-map-rubro','prod-map-ranking','prod-compare-selector',
+              'prod-compare-cards','prod-compare-table','prod-matrix','prod-evolution-summary',
+              'prod-evolution','prod-year'
+          ]
           missing=[x for x in required if x not in p.ids]
           assert not missing, f'IDs faltantes: {missing}'
-          for token in ['Panorama vigente','2024–2026','Histórico por manzana · RUS 2017','no representa todos los locales','/assets/estructura-productiva.js','/assets/estructura-productiva.css']:
+          for token in [
+              'Perfil comercial de las 15 comunas','Comparar comunas','Matriz comuna × rubro',
+              'Ocupación comercial 2025 → 2026','Archivo histórico · RUS 2017',
+              '48 ejes comerciales','Buenos Aires Data · Comunas',
+              '/assets/estructura-productiva.js','/assets/estructura-productiva.css'
+          ]:
               assert token in html, token
-          assert 'Estructura existente' not in html, 'RUS 2017 no debe presentarse como estructura existente/vigente'
+          assert 'Estructura existente' not in html, 'RUS 2017 no debe presentarse como estructura vigente'
+
           data=json.loads(Path('deploy/site-overlay/assets/data/estructura-productiva/actual.json').read_text(encoding='utf-8'))
           o=data['panorama']['empresas_registradas']; e=data['panorama']['ejes_comerciales']
           assert o['periodo']>=2024 and o['empresas']>80000
-          assert e['periodo']['anio']>=2026 and e['locales_ocupados']==11605 and e['locales_relevados']==12896
+          assert e['periodo']=={'anio':2026,'cuatrimestre':1}
+          assert e['locales_ocupados']==11605 and e['locales_relevados']==12896
           assert len(e['comunas'])==15 and len(e['rubros'])>=15
+          expected={'1':-0.5,'2':-4.6,'3':-1.1,'4':-0.3,'5':-2.0,'6':0.0,'7':-0.4,'8':-1.7,'9':0.7,'10':-2.5,'11':0.8,'12':-1.0,'13':-3.3,'14':-2.1,'15':-3.5}
+          got={c:round(float(x['variacion_interanual_pp']),1) for c,x in e['comunas'].items()}
+          assert got==expected, got
+
+          geo=json.loads(Path('deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson').read_text(encoding='utf-8'))
+          assert geo['type']=='FeatureCollection' and len(geo['features'])==15
+          assert {int(f['properties']['comuna']) for f in geo['features']}==set(range(1,16))
+
+          js=Path('deploy/site-overlay/assets/estructura-productiva.js').read_text(encoding='utf-8')
+          for token in ['especializacion','prod-compare-selector','prod-matrix','prod-evolution','L.geoJSON']:
+              assert token in js, token
+
           validator=Path('validar_sitio_despliegue.py').read_text(encoding='utf-8')
           assert '/territorio/estructura-productiva/' in validator
           assert 'data-cepoes-estructura-productiva-access' in validator
-          print('OK interfaz actual-primero, criterios temporales e integración de despliegue')
+          print('OK V2 analítica: 15 comunas, especialización, comparación, matriz, evolución y archivo territorial')
           PY

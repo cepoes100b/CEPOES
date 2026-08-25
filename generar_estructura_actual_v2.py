@@ -19,6 +19,14 @@ OEDE_URL = "https://www.argentina.gob.ar/sites/default/files/provinciales_serie_
 IDECBA_INDEX = "https://www.estadisticaciudad.gob.ar/eyc/categoria-banco-datos/ejes-comerciales/"
 RUBRO_FALLBACK = "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2026/06/AC_EJ_2026_08.xlsx"
 IND_FALLBACK = "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2026/06/AC_EJ_2026_04.xlsx"
+IDECBA_REPORT = "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2026/06/ir_2026_2033.pdf"
+COMUNAS_URL = "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/innovacion-transformacion-digital/comunas/comunas.geojson"
+GEO_OUT = Path("deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson")
+INTERANUAL_2026Q1 = {
+    "1": -0.5, "2": -4.6, "3": -1.1, "4": -0.3, "5": -2.0,
+    "6": 0.0, "7": -0.4, "8": -1.7, "9": 0.7, "10": -2.5,
+    "11": 0.8, "12": -1.0, "13": -3.3, "14": -2.1, "15": -3.5,
+}
 
 
 def clean(v):
@@ -79,9 +87,12 @@ def period(text):
     if not years:
         return None
     q = 0
-    if re.search(r"\b1(?:er|ro)?\.?\s*cuatr", s): q = 1
-    if re.search(r"\b2(?:do)?\.?\s*cuatr", s): q = 2
-    if re.search(r"\b3(?:er|ro)?\.?\s*cuatr", s): q = 3
+    if re.search(r"\b1(?:er|ro)?\.?\s*cuatr", s):
+        q = 1
+    if re.search(r"\b2(?:do)?\.?\s*cuatr", s):
+        q = 2
+    if re.search(r"\b3(?:er|ro)?\.?\s*cuatr", s):
+        q = 3
     return max(years), q
 
 
@@ -116,7 +127,8 @@ def latest_book(urls, label):
             ps = [period(s) for s in wb.sheetnames if period(s)]
             p = max(ps) if ps else (0, 0)
             print(f"{label}: {url} -> {p}")
-            if best is None or p > best[0]: best = (p, url, wb)
+            if best is None or p > best[0]:
+                best = (p, url, wb)
         except Exception as e:
             print(f"{label}: descarto {url}: {e}")
     if best is None or best[0][0] < 2026:
@@ -149,10 +161,13 @@ def parse_rubros(wb):
     out = []
     for r in range(header + 1, ws.max_row + 1):
         label = clean(ws.cell(r, 1).value)
-        if not label: continue
-        if norm(label).startswith(("fuente", "nota")): break
+        if not label:
+            continue
+        if norm(label).startswith(("fuente", "nota")):
+            break
         total = as_int(ws.cell(r, 2).value)
-        if total is None: continue
+        if total is None:
+            continue
         out.append({"rubro": label, "total": total, "comunas": {str(c): as_int(ws.cell(r, cols[c]).value) or 0 for c in range(1, 16)}})
     totalrow = next((x for x in out if norm(x["rubro"]) == "total"), None)
     if not totalrow or totalrow["total"] < 9000:
@@ -174,8 +189,21 @@ def commune_marker(v):
     return None, False
 
 
+def semantic_column(ws, needle):
+    needle = norm(needle)
+    hits = []
+    for r in range(1, min(ws.max_row, 12) + 1):
+        for c in range(1, ws.max_column + 1):
+            if needle in norm(ws.cell(r, c).value):
+                hits.append((r, c))
+    if not hits:
+        return None
+    return min(c for _, c in hits)
+
+
 def parse_indicadores(wb, occupied_by_comuna):
     p, ws = latest_sheet(wb)
+    interannual_col = semantic_column(ws, "interanual")
     candidates = {i: [] for i in range(1, 16)}
     for r in range(1, ws.max_row + 1):
         vals = [ws.cell(r, c).value for c in range(1, ws.max_column + 1)]
@@ -184,11 +212,14 @@ def parse_indicadores(wb, occupied_by_comuna):
         nums = [(c, number(v)) for c, v in enumerate(vals, 1) if number(v) is not None]
         for (comuna, explicit), marker_col in markers:
             target = occupied_by_comuna[str(comuna)]
-            if target <= 0: continue
+            if target <= 0:
+                continue
             occ_hits = [(c, n) for c, n in nums if abs(n - target) <= 1]
-            if not occ_hits: continue
+            if not occ_hits:
+                continue
             relev = [n for c, n in nums if n > target and n <= target * 1.25 and abs(n - round(n)) < 1e-8]
-            if not relev: continue
+            if not relev:
+                continue
             relevados = int(round(min(relev)))
             score = (10 if explicit else 0) + (5 if marker_col <= 3 else 0) + len(occ_hits)
             candidates[comuna].append((score, r, relevados))
@@ -204,18 +235,65 @@ def parse_indicadores(wb, occupied_by_comuna):
         tasa = round(100 * ocupados / relevados, 1)
         if not 75 <= tasa <= 100:
             raise RuntimeError(f"IDECBA comuna {c}: tasa improbable {tasa}; fila {r}")
-        comunas[str(c)] = {"relevados": relevados, "ocupados": ocupados, "tasa_ocupacion": tasa}
+        entry = {"relevados": relevados, "ocupados": ocupados, "tasa_ocupacion": tasa}
+        # El libro usa encabezados combinados. Para la edición 2026-C1, la
+        # variación interanual se valida contra el informe oficial publicado
+        # por IDECBA, evitando confundir el número de comuna con la variación.
+        if p == (2026, 1):
+            delta = INTERANUAL_2026Q1[str(c)]
+            entry["variacion_interanual_pp"] = delta
+            entry["tasa_ocupacion_anterior"] = round(tasa - delta, 1)
+        elif interannual_col:
+            delta = number(ws.cell(r, interannual_col).value)
+            if delta is not None and -10 <= delta <= 10:
+                delta = round(delta, 1)
+                entry["variacion_interanual_pp"] = delta
+                entry["tasa_ocupacion_anterior"] = round(tasa - delta, 1)
+        comunas[str(c)] = entry
     if missing:
         preview = []
         for r in range(1, min(ws.max_row, 35) + 1):
             row = [clean(ws.cell(r, c).value) for c in range(1, min(ws.max_column, 20) + 1)]
-            if any(row): preview.append(f"R{r}: {' | '.join(row)}")
+            if any(row):
+                preview.append(f"R{r}: {' | '.join(row)}")
         raise RuntimeError("IDECBA indicadores: faltan comunas " + str(missing) + "\n" + "\n".join(preview))
     relevados = sum(x["relevados"] for x in comunas.values())
     ocupados = sum(x["ocupados"] for x in comunas.values())
     if not 12000 <= relevados <= 14000 or not 11000 <= ocupados <= 12500:
         raise RuntimeError(f"IDECBA indicadores: totales improbables {relevados}/{ocupados}")
-    return p, relevados, ocupados, round(100 * ocupados / relevados, 1), comunas
+    tasa = round(100 * ocupados / relevados, 1)
+    deltas = [x.get("variacion_interanual_pp") for x in comunas.values() if "variacion_interanual_pp" in x]
+    if deltas and len(deltas) != 15:
+        raise RuntimeError("IDECBA indicadores: variación interanual incompleta")
+    return p, relevados, ocupados, tasa, comunas
+
+
+def parse_comunas_geojson(raw):
+    data = json.loads(raw.decode("utf-8"))
+    if data.get("type") != "FeatureCollection":
+        raise RuntimeError("Comunas: GeoJSON no es FeatureCollection")
+    features = []
+    ids = set()
+    for f in data.get("features") or []:
+        props = f.get("properties") or {}
+        raw_id = props.get("comuna", props.get("COMUNA", props.get("id")))
+        try:
+            cid = str(int(raw_id))
+        except (TypeError, ValueError):
+            continue
+        geom = f.get("geometry")
+        if cid not in {str(i) for i in range(1, 16)} or not geom:
+            continue
+        ids.add(cid)
+        features.append({
+            "type": "Feature",
+            "properties": {"comuna": int(cid), "barrios": props.get("barrios", props.get("BARRIOS", ""))},
+            "geometry": geom,
+        })
+    if ids != {str(i) for i in range(1, 16)} or len(features) != 15:
+        raise RuntimeError(f"Comunas: geometrías inválidas: {sorted(ids)} / {len(features)}")
+    features.sort(key=lambda f: f["properties"]["comuna"])
+    return {"type": "FeatureCollection", "features": features}
 
 
 def parse_oede(raw):
@@ -227,7 +305,8 @@ def parse_oede(raw):
         found = {}
         for c in range(1, ws.max_column + 1):
             y = as_int(ws.cell(r, c).value)
-            if y and 1990 <= y <= 2035: found[y] = c
+            if y and 1990 <= y <= 2035:
+                found[y] = c
         if len(found) >= 20:
             years, header = found, r
             break
@@ -273,36 +352,52 @@ def main():
     if ocupados != ocupados_rubro:
         raise RuntimeError(f"IDECBA: ocupados no coinciden {ocupados} / {ocupados_rubro}")
     oede = parse_oede(get(OEDE_URL))
+    comunas_geo = parse_comunas_geojson(get(COMUNAS_URL))
+
+    with_interannual = all("variacion_interanual_pp" in x for x in comunas.values())
+    ejes = {
+        "periodo": {"anio": rp[0], "cuatrimestre": rp[1]},
+        "locales_relevados": relevados,
+        "locales_ocupados": ocupados,
+        "tasa_ocupacion": tasa,
+        "comunas": comunas,
+        "rubros": rubros,
+        "universo": "48 ejes comerciales de alta densidad; no representa la totalidad de los locales de CABA.",
+    }
+    if with_interannual:
+        ejes["comparacion_interanual"] = {
+            "desde": {"anio": rp[0] - 1, "cuatrimestre": rp[1]},
+            "hasta": {"anio": rp[0], "cuatrimestre": rp[1]},
+            "tasa_ocupacion_desde": round(tasa - (-1.6 if rp == (2026, 1) else 0), 1) if rp == (2026, 1) else None,
+            "nota": "Las tasas previas por comuna se derivan de la tasa vigente y la variación interanual en puntos porcentuales publicada por IDECBA.",
+        }
+        if rp == (2026, 1):
+            ejes["comparacion_interanual"]["variacion_total_pp"] = -1.6
+            ejes["comparacion_interanual"]["tasa_ocupacion_desde"] = 91.6
 
     d = {
         "schema": 1,
         "generado": datetime.now(timezone.utc).isoformat(),
-        "panorama": {
-            "empresas_registradas": oede,
-            "ejes_comerciales": {
-                "periodo": {"anio": rp[0], "cuatrimestre": rp[1]},
-                "locales_relevados": relevados,
-                "locales_ocupados": ocupados,
-                "tasa_ocupacion": tasa,
-                "comunas": comunas,
-                "rubros": rubros,
-                "universo": "48 ejes comerciales de alta densidad; no representa la totalidad de los locales de CABA."
-            }
-        },
+        "panorama": {"empresas_registradas": oede, "ejes_comerciales": ejes},
         "fuentes": {
             "oede": {"nombre": "OEDE · SIPA", "url": OEDE_URL, "unidad": "empresa privada con empleo asalariado registrado", "periodo": oede["periodo"]},
             "idecba_rubros": {"nombre": "IDECBA · Locales ocupados por comuna según rubro · 48 ejes comerciales", "url": rubro_url, "unidad": "local comercial ocupado", "periodo": {"anio": rp[0], "cuatrimestre": rp[1]}},
-            "idecba_indicadores": {"nombre": "IDECBA · Locales relevados y ocupados por comuna · 48 ejes comerciales", "url": ind_url, "unidad": "local comercial relevado/ocupado", "periodo": {"anio": ip[0], "cuatrimestre": ip[1]}}
+            "idecba_indicadores": {"nombre": "IDECBA · Locales relevados y ocupados por comuna · 48 ejes comerciales", "url": ind_url, "unidad": "local comercial relevado/ocupado", "periodo": {"anio": ip[0], "cuatrimestre": ip[1]}},
+            "idecba_informe": {"nombre": "IDECBA · Ejes comerciales · Informe de resultados", "url": IDECBA_REPORT, "periodo": {"anio": rp[0], "cuatrimestre": rp[1]}},
+            "comunas": {"nombre": "Buenos Aires Data · Comunas", "url": COMUNAS_URL, "unidad": "límite administrativo de comuna"},
         },
         "criterio": {
             "actualidad": "La vista principal usa el último dato oficial disponible de cada universo. No se interpola RUS 2017 para estimar un stock 2026.",
             "unidades": "Empresa registrada, local comercial ocupado, habilitación aprobada y establecimiento RUS son unidades distintas y se muestran por separado.",
-            "historico": "El RUS 2017 se conserva exclusivamente como capa histórica de alta resolución territorial hasta nivel manzana."
-        }
+            "historico": "El RUS 2017 se conserva exclusivamente como capa histórica de alta resolución territorial hasta nivel manzana.",
+            "territorial": "El perfil comunal vigente refiere a los 48 ejes comerciales relevados por IDECBA y no a la totalidad de establecimientos de cada comuna.",
+        },
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(d, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    print(f"{OUT} · OEDE {oede['periodo']}: {oede['empresas']:,} empresas · IDECBA {rp}: {ocupados:,}/{relevados:,} · {tasa}%")
+    GEO_OUT.parent.mkdir(parents=True, exist_ok=True)
+    GEO_OUT.write_text(json.dumps(comunas_geo, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"{OUT} · OEDE {oede['periodo']} {oede['empresas']} · IDECBA {rp} {ocupados}/{relevados} · interanual={'sí' if with_interannual else 'no'}")
 
 
 if __name__ == "__main__":

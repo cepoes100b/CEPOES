@@ -10,12 +10,7 @@ assert root.is_dir(), root
 
 
 def patch_territorio_navigation(site_root: Path) -> None:
-    """Normaliza accesos HTML reales a módulos territoriales nuevos.
-
-    El despliegue se arma sobre producción + overlay. Esta pasada evita que una
-    página antigua dependa exclusivamente de una inyección JS y actualiza el
-    query de common.js para invalidar caché.
-    """
+    """Normaliza accesos HTML reales y pequeños ajustes de integración."""
     changed=[]
     for p in site_root.rglob('*.html'):
         s=p.read_text(encoding='utf-8',errors='replace')
@@ -23,7 +18,6 @@ def patch_territorio_navigation(site_root: Path) -> None:
         s=re.sub(r'(/assets/common\.js)(?:\?v=\d+)?', r'\1?v=252', s)
         rel=p.relative_to(site_root).as_posix()
         if rel.startswith('territorio/'):
-            # Estructura productiva antes de Migraciones/Endeudamiento.
             prod='/territorio/estructura-productiva/'
             if f'href="{prod}"' not in s:
                 target=re.search(r'<a\b[^>]*href="/territorio/migraciones/"[^>]*>',s,re.I)
@@ -32,7 +26,6 @@ def patch_territorio_navigation(site_root: Path) -> None:
                 if target:
                     s=s[:target.start()]+'<a href="/territorio/estructura-productiva/">Estructura productiva</a>'+s[target.start():]
 
-            # Migraciones antes de Endeudamiento.
             mig='/territorio/migraciones/'
             if f'href="{mig}"' not in s:
                 debt=re.search(r'<a\b[^>]*href="/territorio/endeudamiento/"[^>]*>',s,re.I)
@@ -40,8 +33,6 @@ def patch_territorio_navigation(site_root: Path) -> None:
                     s=s[:debt.start()]+'<a href="/territorio/migraciones/">Migraciones</a>'+s[debt.start():]
 
             if rel=='territorio/index.html':
-                # Accesos visibles desde la portada, clonando el formato de un
-                # acceso territorial existente para preservar el diseño actual.
                 marker='data-cepoes-estructura-productiva-access="1"'
                 if marker not in s:
                     anchors=list(re.finditer(r'(<a\b[^>]*href="/territorio/endeudamiento/"[^>]*>)(.*?)(</a>)',s,re.I|re.S))
@@ -60,14 +51,19 @@ def patch_territorio_navigation(site_root: Path) -> None:
                         clone=opening+'Migraciones →'+m.group(3)
                         s=s[:m.start()]+clone+s[m.start():]
 
+            if rel=='territorio/estructura-productiva/index.html' and '/assets/estructura-productiva-bootstrap.js' not in s:
+                target='<script defer src="/assets/estructura-productiva.js?v=260"></script>'
+                bootstrap='<script defer src="/assets/estructura-productiva-bootstrap.js?v=260"></script>'
+                if target in s:
+                    s=s.replace(target,bootstrap+target)
+
         if s!=original:
             p.write_text(s,encoding='utf-8')
             changed.append(rel)
-    print(f'Navegación territorial normalizada en {len(changed)} HTML')
+    print(f'Navegación/integración territorial normalizada en {len(changed)} HTML')
 
 
 def ensure_sitemap_url(site_root: Path, path: str) -> None:
-    """Agrega una ruta nueva al sitemap heredado de producción si falta."""
     p=site_root/'sitemap.xml'
     s=p.read_text(encoding='utf-8',errors='replace')
     url='https://cepoes.org'+path
@@ -88,8 +84,9 @@ required=[
     'assets/site.css','assets/common.js','assets/data.js','assets/favicon.svg',
     'legislatura/index.html','territorio/endeudamiento/index.html',
     'territorio/migraciones/index.html','territorio/estructura-productiva/index.html',
-    'assets/estructura-productiva.js','assets/estructura-productiva.css',
+    'assets/estructura-productiva.js','assets/estructura-productiva-bootstrap.js','assets/estructura-productiva.css',
     'assets/data/estructura-productiva/actual.json',
+    'assets/data/estructura-productiva/comunas.geojson',
 ]
 for rel in required:
     p=root/rel
@@ -104,6 +101,10 @@ assert 'href="/territorio/migraciones/"' in territorio, 'Territorio no enlaza Mi
 assert 'href="/territorio/estructura-productiva/"' in territorio, 'Territorio no enlaza Estructura productiva'
 assert 'data-cepoes-migraciones-access="1"' in territorio, 'Falta acceso visible a Migraciones en portada Territorio'
 assert 'data-cepoes-estructura-productiva-access="1"' in territorio, 'Falta acceso visible a Estructura productiva en portada Territorio'
+
+productiva=(root/'territorio'/'estructura-productiva'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['Perfil comercial de las 15 comunas','Comparar comunas','Matriz comuna × rubro','Ocupación comercial 2025 → 2026','Archivo histórico · RUS 2017','/assets/estructura-productiva-bootstrap.js']:
+    assert token in productiva, f'Estructura productiva V2 incompleta: {token}'
 
 tree=ET.parse(root/'sitemap.xml')
 ns={'s':'http://www.sitemaps.org/schemas/sitemap/0.9'}
@@ -126,8 +127,15 @@ for p in html:
 
 actual=json.loads((root/'assets/data/estructura-productiva/actual.json').read_text(encoding='utf-8'))
 assert actual['panorama']['empresas_registradas']['periodo']>=2024
-assert actual['panorama']['ejes_comerciales']['periodo']['anio']>=2026
-assert len(actual['panorama']['ejes_comerciales']['comunas'])==15
+ejes=actual['panorama']['ejes_comerciales']
+assert ejes['periodo']['anio']>=2026
+assert len(ejes['comunas'])==15
+assert all('variacion_interanual_pp' in x and 'tasa_ocupacion_anterior' in x for x in ejes['comunas'].values())
+
+geo=json.loads((root/'assets/data/estructura-productiva/comunas.geojson').read_text(encoding='utf-8'))
+features=geo.get('features') or []
+assert geo.get('type')=='FeatureCollection' and len(features)==15, 'GeoJSON comunal inválido'
+assert {int((f.get('properties') or {}).get('comuna')) for f in features}==set(range(1,16)), 'GeoJSON no contiene las 15 comunas'
 
 blocked=[]
 for p in root.rglob('*'):
@@ -139,4 +147,4 @@ assert not blocked, f'Archivos no publicables: {blocked[:10]}'
 
 key=(root/'indexnow-key.txt').read_text(encoding='utf-8').strip()
 assert re.fullmatch(r'[A-Za-z0-9_-]{8,128}',key), 'IndexNow key inválida'
-print(f'OK sitio: {len(html)} HTML · {len(barrios)} barrios · {len(urls)} URLs indexables · estructura productiva incluida · sin crudos')
+print(f'OK sitio: {len(html)} HTML · {len(barrios)} barrios · {len(urls)} URLs indexables · estructura productiva analítica con 15 comunas · sin crudos')

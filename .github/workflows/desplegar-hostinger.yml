@@ -181,7 +181,10 @@ jobs:
             https://cepoes.org/observatorio/ \
             https://cepoes.org/territorio/ \
             https://cepoes.org/territorio/estructura-productiva/ \
+            https://cepoes.org/assets/estructura-productiva-bootstrap.js \
+            https://cepoes.org/assets/estructura-productiva.js \
             https://cepoes.org/assets/data/estructura-productiva/actual.json \
+            https://cepoes.org/assets/data/estructura-productiva/comunas.geojson \
             https://cepoes.org/territorio/endeudamiento/ \
             https://cepoes.org/territorio/migraciones/ \
             https://cepoes.org/legislatura/; do
@@ -192,7 +195,19 @@ jobs:
           # Además de responder 200, el dataset productivo debe seguir siendo JSON válido.
           curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
             https://cepoes.org/assets/data/estructura-productiva/actual.json \
-            | python -c 'import json,sys; d=json.load(sys.stdin); assert d["panorama"]["empresas_registradas"]["periodo"] >= 2024; assert d["panorama"]["ejes_comerciales"]["periodo"]["anio"] >= 2026; print("Estructura productiva: JSON público válido")'
+            | python -c 'import json,sys; d=json.load(sys.stdin); e=d["panorama"]["ejes_comerciales"]; assert d["panorama"]["empresas_registradas"]["periodo"] >= 2024; assert e["periodo"]["anio"] >= 2026; assert len(e["comunas"]) == 15; assert "comparacion_interanual" in e; print("Estructura productiva: JSON público analítico válido")'
+
+          # El mapa comunal debe conservar exactamente las 15 unidades administrativas oficiales.
+          curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
+            https://cepoes.org/assets/data/estructura-productiva/comunas.geojson \
+            | python -c 'import json,sys; d=json.load(sys.stdin); fs=d.get("features",[]); assert d.get("type") == "FeatureCollection"; assert len(fs) == 15; assert {int(f["properties"]["comuna"]) for f in fs} == set(range(1,16)); print("Estructura productiva: GeoJSON público válido · 15 comunas")'
+
+          # El HTML y el JS publicados deben contener las funciones analíticas centrales.
+          curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
+            https://cepoes.org/territorio/estructura-productiva/ | grep -q 'prod-matrix'
+          curl --retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
+            https://cepoes.org/assets/estructura-productiva.js | grep -q 'especializacion'
+          echo "Estructura productiva: frontend analítico público válido"
 
       - name: Restaurar versión anterior si falla publicación o smoke test
         if: failure() && steps.publish.outcome == 'success'

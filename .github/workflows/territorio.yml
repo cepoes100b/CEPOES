@@ -5,6 +5,8 @@ on:
     paths:
       - "generar_deporte_salud.py"
       - "verificar_deporte_salud.py"
+      - "generar_accesibilidad_deportiva.py"
+      - "verificar_accesibilidad_deportiva.py"
       - ".github/workflows/territorio.yml"
   schedule:
     # 15:10 de Buenos Aires, diez minutos después de la segunda corrida diaria
@@ -31,7 +33,15 @@ jobs:
           python-version: "3.12"
 
       - name: Instalar dependencias
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install geopandas pyogrio
+
+      - name: Restaurar caché de radios Censo 2022
+        uses: actions/cache@v4
+        with:
+          path: _cache/radios_2022_conDatos_1habHa.gpkg
+          key: radios-censo-2022-conicet-v1
 
       - name: Descargar fuentes territoriales de BA Data
         run: python descargar_territorio.py
@@ -74,16 +84,22 @@ jobs:
       - name: Verificar Deporte y vida saludable
         run: python verificar_deporte_salud.py
 
+      - name: Generar accesibilidad deportiva
+        run: python generar_accesibilidad_deportiva.py
+
+      - name: Verificar accesibilidad deportiva
+        run: python verificar_accesibilidad_deportiva.py
+
       - name: Commitear si cambió
         run: |
           git config user.name  "cepoes-bot"
           git config user.email "actions@github.com"
           if [ "${GITHUB_REF_NAME}" = "main" ]; then
-            git add territorio.json estado_territorio.json badata/ equipamientos/ deploy/site-overlay/assets/data/deporte-salud.json
+            git add territorio.json estado_territorio.json badata/ equipamientos/ deploy/site-overlay/assets/data/deporte-salud.json deploy/site-overlay/assets/data/deporte-accesibilidad.json
           else
             # En ramas funcionales evitamos mezclar el refresco rutinario de todas
-            # las fuentes con el diff del PR; solo materializamos el dataset nuevo.
-            git add deploy/site-overlay/assets/data/deporte-salud.json
+            # las fuentes con el diff del PR; solo materializamos datasets del módulo.
+            git add deploy/site-overlay/assets/data/deporte-salud.json deploy/site-overlay/assets/data/deporte-accesibilidad.json
           fi
           if git diff --cached --quiet; then
             echo "Sin cambios"

@@ -59,11 +59,28 @@ def main():
     if sum(int(x.get("total", 0)) for x in rubros) != ocupados:
         fail("rubros IDECBA no suman los locales ocupados")
 
+    if int(periodo.get("anio", 0)) >= 2026:
+        missing = [c for c, x in comunas.items() if "variacion_interanual_pp" not in x or "tasa_ocupacion_anterior" not in x]
+        if missing:
+            fail(f"faltan variaciones interanuales por comuna: {missing}")
+        for c, x in comunas.items():
+            delta = float(x["variacion_interanual_pp"])
+            prev = float(x["tasa_ocupacion_anterior"])
+            if not -15 <= delta <= 15 or not 70 <= prev <= 100:
+                fail(f"interanual improbable comuna {c}: {prev=} {delta=}")
+            if abs((prev + delta) - float(x["tasa_ocupacion"])) > 0.11:
+                fail(f"interanual inconsistente comuna {c}")
+        comp = ejes.get("comparacion_interanual") or {}
+        if int((comp.get("desde") or {}).get("anio", 0)) != int(periodo.get("anio")) - 1:
+            fail("período interanual inválido")
+
     criterio = d.get("criterio") or {}
     if "2017" not in str(criterio.get("historico", "")):
         fail("falta advertencia histórica RUS 2017")
+    if "48 ejes" not in str(criterio.get("territorial", "")):
+        fail("falta alcance territorial de los 48 ejes")
 
-    print(f"✔ panorama actual válido · OEDE {oede['periodo']}: {empresas:,} empresas · IDECBA {periodo.get('anio')} C{periodo.get('cuatrimestre')}: {ocupados:,}/{relevados:,} locales · {tasa:.1f}%")
+    print(f"✔ panorama analítico válido · OEDE {oede['periodo']}: {empresas:,} empresas · IDECBA {periodo.get('anio')} C{periodo.get('cuatrimestre')}: {ocupados:,}/{relevados:,} locales · {tasa:.1f}% · 15 comunas con comparación interanual")
 
 
 if __name__ == "__main__":

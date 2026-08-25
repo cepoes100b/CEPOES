@@ -8,10 +8,13 @@ on:
       - "deploy/site-overlay/assets/deporte-salud.css"
       - "deploy/site-overlay/assets/data/deporte-salud.json"
       - "deploy/site-overlay/assets/data/deporte-accesibilidad.json"
+      - "deploy/site-overlay/assets/data/deporte-accesibilidad-peatonal.json"
       - "generar_deporte_salud.py"
       - "verificar_deporte_salud.py"
       - "generar_accesibilidad_deportiva.py"
       - "verificar_accesibilidad_deportiva.py"
+      - "generar_accesibilidad_peatonal.py"
+      - "verificar_accesibilidad_peatonal.py"
       - ".github/workflows/validar-deporte-salud.yml"
   pull_request:
     paths:
@@ -20,10 +23,14 @@ on:
       - "deploy/site-overlay/assets/deporte-salud.css"
       - "deploy/site-overlay/assets/data/deporte-salud.json"
       - "deploy/site-overlay/assets/data/deporte-accesibilidad.json"
+      - "deploy/site-overlay/assets/data/deporte-accesibilidad-peatonal.json"
       - "generar_deporte_salud.py"
       - "verificar_deporte_salud.py"
       - "generar_accesibilidad_deportiva.py"
       - "verificar_accesibilidad_deportiva.py"
+      - "generar_accesibilidad_peatonal.py"
+      - "verificar_accesibilidad_peatonal.py"
+      - ".github/workflows/validar-deporte-salud.yml"
 
 permissions:
   contents: read
@@ -42,6 +49,7 @@ jobs:
         run: |
           python verificar_deporte_salud.py
           python verificar_accesibilidad_deportiva.py
+          python verificar_accesibilidad_peatonal.py
 
       - name: Verificar sintaxis JavaScript
         run: node --check deploy/site-overlay/assets/deporte-salud.js
@@ -55,15 +63,19 @@ jobs:
           page=Path('deploy/site-overlay/territorio/deporte-salud/index.html').read_text(encoding='utf-8')
           js=Path('deploy/site-overlay/assets/deporte-salud.js').read_text(encoding='utf-8')
           css=Path('deploy/site-overlay/assets/deporte-salud.css').read_text(encoding='utf-8')
-          for token in ['Accesibilidad territorial','ds-access-table','ds-access-universe','ds-access-distance','/assets/deporte-salud.js?v=2']:
+          for token in ['Accesibilidad territorial','ds-access-table','ds-access-universe','ds-access-distance','ds-access-method','ds-access-compare','/assets/deporte-salud.js?v=3']:
               assert token in page, token
-          for token in ['deporte-accesibilidad.json','renderAccess','accessUniverse','accessDistance']:
+          for token in ['deporte-accesibilidad.json','deporte-accesibilidad-peatonal.json','renderAccess','accessMethod','accessWalk','accessEuclid']:
               assert token in js, token
-          for token in ['ds-access-grid','ds-access-kpis','ds-access-summary']:
+          for token in ['ds-access-grid','ds-access-kpis','ds-access-summary','ds-access-compare']:
               assert token in css, token
-          d=json.loads(Path('deploy/site-overlay/assets/data/deporte-accesibilidad.json').read_text(encoding='utf-8'))
-          red=d['cobertura']['red_deportiva']['distancias']
-          assert red['800']['ciudad']['cobertura_pct'] <= red['1000']['ciudad']['cobertura_pct']
-          assert set(red['800']['comunas']) == {str(i) for i in range(1,16)}
-          print('Deporte y salud V2: integración estática válida')
+          eu=json.loads(Path('deploy/site-overlay/assets/data/deporte-accesibilidad.json').read_text(encoding='utf-8'))
+          walk=json.loads(Path('deploy/site-overlay/assets/data/deporte-accesibilidad-peatonal.json').read_text(encoding='utf-8'))
+          er=eu['cobertura']['red_deportiva']['distancias']
+          wr=walk['cobertura']['red_deportiva']['distancias']
+          assert er['800']['ciudad']['cobertura_pct'] <= er['1000']['ciudad']['cobertura_pct']
+          assert wr['800']['ciudad']['cobertura_pct'] <= wr['1000']['ciudad']['cobertura_pct']
+          assert wr['800']['ciudad']['cobertura_pct'] < er['800']['ciudad']['cobertura_pct']
+          assert set(wr['800']['comunas']) == {str(i) for i in range(1,16)}
+          print('Deporte y salud V3: integración geométrica + peatonal válida')
           PY

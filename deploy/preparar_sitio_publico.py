@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=2"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=3"
 
 
 TOPICS = [
@@ -138,9 +138,10 @@ def territory_subnav(rel: str) -> str:
     def links(items: list[tuple[str, str]]) -> str:
         return "".join(f'<a{active_link(rel, href)} href="{href}">{label}</a>' for href, label in items)
     return (
-        '<nav aria-label="Navegación territorial" class="subnav territory-subnav"><div class="wrap ia-groups">'
-        f'<div class="ia-group"><span class="ia-group-label">Explorar</span>{links(explore)}</div>'
-        f'<div class="ia-group"><span class="ia-group-label">Temas territoriales</span>{links(thematic)}</div>'
+        '<nav aria-label="Navegación territorial" class="subnav territory-subnav"><div class="wrap territory-nav">'
+        f'<div class="territory-primary">{links(explore)}</div>'
+        '<details class="territory-topics"><summary>Temas territoriales <span aria-hidden="true">⌄</span></summary>'
+        f'<div class="territory-topics-menu">{links(thematic)}</div></details>'
         '</div></nav>'
     )
 
@@ -265,8 +266,28 @@ def replace_id_text(source: str, element_id: str, value: str) -> str:
 
 
 def replace_id_html(source: str, element_id: str, value: str) -> str:
-    pattern = rf'(<(?P<tag>[a-zA-Z0-9]+)\b[^>]*\bid=["\']{re.escape(element_id)}["\'][^>]*>)(.*?)(</(?P=tag)>)'
-    return re.sub(pattern, lambda m: m.group(1) + value + m.group(4), source, count=1, flags=re.S)
+    opening = re.search(
+        rf'<(?P<tag>[a-zA-Z0-9]+)\b[^>]*\bid=["\']{re.escape(element_id)}["\'][^>]*>',
+        source,
+        flags=re.S,
+    )
+    if not opening:
+        return source
+
+    # The target containers frequently contain nested divs. A non-greedy regex
+    # stops at the first child closing tag and leaves stale fragments behind on
+    # every deploy. Walk tags of the same name so the whole element is replaced.
+    tag = opening.group("tag")
+    token = re.compile(rf'</?{re.escape(tag)}\b[^>]*>', flags=re.I | re.S)
+    depth = 1
+    for match in token.finditer(source, opening.end()):
+        if match.group(0).startswith("</"):
+            depth -= 1
+        elif not match.group(0).rstrip().endswith("/>"):
+            depth += 1
+        if depth == 0:
+            return source[:opening.end()] + value + source[match.start():]
+    return source
 
 
 def apply_fallbacks(source: str, rel: str) -> str:

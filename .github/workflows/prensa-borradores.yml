@@ -4,28 +4,20 @@ on:
   schedule:
     - cron: "35 13 * * *"
 permissions:
-  contents: write
+  contents: read
+  id-token: write
 concurrency:
   group: prensa-borradores
   cancel-in-progress: true
 jobs:
   generar:
     runs-on: ubuntu-latest
+    env:
+      PRESS_DRAFT_FUNCTION_URL: https://nriexnijkjamrmfivfmd.supabase.co/functions/v1/press-draft-ingest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Detectar hallazgos
+      - name: Preparar y guardar borradores privados
         run: python generar_borradores_prensa.py
-      - name: Versionar cambios
-        run: |
-          if git diff --quiet -- datos/prensa-borradores.json; then
-            echo "Sin cambios"
-            exit 0
-          fi
-          git config user.name "cepoes-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add datos/prensa-borradores.json
-          git commit -m "prensa: actualizar borradores editoriales"
-          git push

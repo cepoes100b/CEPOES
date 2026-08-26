@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "actualizado": "2026-08-26",
+  "criterio": "Cada contenido lleva un tema principal y puede llevar hasta cuatro etiquetas secundarias. Producto, tema y territorio son dimensiones independientes.",
+  "temas": [
+    {
+      "slug": "vivienda-y-habitat",
+      "nombre": "Vivienda y hábitat",
+      "descripcion": "Alquileres, acceso a la vivienda, condiciones habitacionales y desarrollo urbano.",
+      "incluye": ["vivienda", "alquileres", "hábitat", "desarrollo urbano", "espacio urbano"]
+    },
+    {
+      "slug": "salud-y-cuidados",
+      "nombre": "Salud y cuidados",
+      "descripcion": "Sistema de salud, cuidados, personas mayores, discapacidad y vida saludable.",
+      "incluye": ["salud", "cuidados", "mayores", "discapacidad", "deporte y salud"]
+    },
+    {
+      "slug": "educacion-e-infancias",
+      "nombre": "Educación e infancias",
+      "descripcion": "Educación, infraestructura escolar, niñez y adolescencia.",
+      "incluye": ["educación", "escuelas", "infancias", "adolescencias"]
+    },
+    {
+      "slug": "trabajo-e-ingresos",
+      "nombre": "Trabajo e ingresos",
+      "descripcion": "Empleo, salarios, informalidad, distribución y condiciones de trabajo.",
+      "incluye": ["trabajo", "empleo", "salarios", "informalidad", "ingresos"]
+    },
+    {
+      "slug": "precios-y-consumo",
+      "nombre": "Precios y consumo",
+      "descripcion": "Inflación, costo de vida, consumo y poder adquisitivo de los hogares.",
+      "incluye": ["precios", "inflación", "consumo", "costo de vida"]
+    },
+    {
+      "slug": "produccion-y-comercio",
+      "nombre": "Producción y comercio",
+      "descripcion": "Actividad económica, empresas, estructura productiva y comercio urbano.",
+      "incluye": ["producción", "empresas", "industria", "comercio", "estructura productiva"]
+    },
+    {
+      "slug": "presupuesto-y-estado",
+      "nombre": "Presupuesto y Estado",
+      "descripcion": "Gasto, ingresos, ejecución, deuda pública y capacidades estatales.",
+      "incluye": ["presupuesto", "finanzas públicas", "Estado", "deuda pública", "servicios públicos"]
+    },
+    {
+      "slug": "ambiente-y-movilidad",
+      "nombre": "Ambiente y movilidad",
+      "descripcion": "Transporte, movilidad, espacios verdes, ambiente y espacio público.",
+      "incluye": ["ambiente", "movilidad", "transporte", "espacios verdes", "espacio público"]
+    }
+  ],
+  "alias": {
+    "deporte y salud": "salud-y-cuidados",
+    "migraciones": "trabajo-e-ingresos",
+    "estructura productiva": "produccion-y-comercio",
+    "endeudamiento": "precios-y-consumo",
+    "vivienda y alquiler": "vivienda-y-habitat",
+    "finanzas públicas": "presupuesto-y-estado"
+  }
+}

@@ -7,12 +7,26 @@ import argparse
 import html
 import json
 import re
+import shutil
 from datetime import datetime, timedelta
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=1"
+
+
+TOPICS = [
+    ("vivienda-y-habitat", "Vivienda y hábitat"),
+    ("salud-y-cuidados", "Salud y cuidados"),
+    ("educacion-e-infancias", "Educación e infancias"),
+    ("trabajo-e-ingresos", "Trabajo e ingresos"),
+    ("precios-y-consumo", "Precios y consumo"),
+    ("produccion-y-comercio", "Producción y comercio"),
+    ("presupuesto-y-estado", "Presupuesto y Estado"),
+    ("ambiente-y-movilidad", "Ambiente y movilidad"),
+]
 
 
 def load_json(name: str) -> dict:
@@ -74,7 +88,8 @@ SEARCH = (
     '<button class="chip" data-search-filter="Publicaciones">Publicaciones</button>'
     '<button class="chip" data-search-filter="Territorio">Territorio</button>'
     '<button class="chip" data-search-filter="Propuestas">Propuestas</button>'
-    '<button class="chip" data-search-filter="Legislatura">Legislatura</button></div>'
+    '<button class="chip" data-search-filter="Legislatura">Legislatura</button>'
+    '<a class="chip" href="/temas/">Explorar temas</a></div>'
     '<div class="search-results" id="site-search-results"><p class="search-empty">Escribí al menos dos caracteres para buscar.</p>'
     '</div></div></dialog>'
 )
@@ -87,7 +102,8 @@ FOOTER = (
     '<li><a href="/observatorio/">Observatorio</a></li><li><a href="/presupuesto/">Presupuesto</a></li>'
     '<li><a href="/territorio/">Territorio</a></li><li><a href="/territorio/equipamientos/">Qué hay en tu barrio</a></li>'
     '<li><a href="/legislatura/">Legislatura</a></li><li><a href="/publicaciones/">Publicaciones</a></li>'
-    '<li><a href="/propuestas/">Propuestas</a></li><li><a href="/prensa/">Prensa</a></li></ul></div>'
+    '<li><a href="/propuestas/">Propuestas</a></li><li><a href="/prensa/">Prensa</a></li>'
+    '<li><a href="/temas/">Explorar por tema</a></li></ul></div>'
     '<div class="footer-links"><h5>CEPOES</h5><ul><li><a href="/cepoes/">Quiénes somos</a></li>'
     '<li><a href="/cepoes/metodologia/">Metodología y fuentes</a></li>'
     '<li><a href="mailto:contacto@cepoes.org">contacto@cepoes.org</a></li>'
@@ -95,6 +111,117 @@ FOOTER = (
     '</ul></div></div><div class="footer-copy"><span>© 2026 CEPOES · Somos 100 Barrios</span>'
     '<span>Datos: IDECBA · INDEC · BA Data · Legislatura CABA · Elaboración propia</span></div></div></footer>'
 )
+
+
+def active_link(rel: str, href: str) -> str:
+    path = "/" + rel.lstrip("/").removesuffix("index.html")
+    active = path == href or ("#" not in href and href != "/territorio/" and path.startswith(href))
+    return ' class="active"' if active else ""
+
+
+def territory_subnav(rel: str) -> str:
+    explore = [
+        ("/territorio/#comunas", "Comunas"),
+        ("/territorio/barrios/", "Barrios"),
+        ("/territorio/equipamientos/", "Qué hay en tu barrio"),
+        ("/territorio/mapa-tematico/", "Mapa temático"),
+        ("/territorio/comparar/", "Comparar"),
+        ("/territorio/brechas/", "Brechas"),
+    ]
+    thematic = [
+        ("/territorio/endeudamiento/", "Endeudamiento"),
+        ("/territorio/migraciones/", "Migraciones"),
+        ("/territorio/estructura-productiva/", "Estructura productiva"),
+        ("/territorio/deporte-salud/", "Deporte y salud"),
+        ("/presupuesto/territorio/", "Presupuesto"),
+    ]
+    def links(items: list[tuple[str, str]]) -> str:
+        return "".join(f'<a{active_link(rel, href)} href="{href}">{label}</a>' for href, label in items)
+    return (
+        '<nav aria-label="Navegación territorial" class="subnav territory-subnav"><div class="wrap ia-groups">'
+        f'<div class="ia-group"><span class="ia-group-label">Explorar</span>{links(explore)}</div>'
+        f'<div class="ia-group"><span class="ia-group-label">Temas territoriales</span>{links(thematic)}</div>'
+        '</div></nav>'
+    )
+
+
+def budget_subnav(rel: str) -> str:
+    items = [
+        ("/presupuesto/", "Panorama"),
+        ("/presupuesto/ejecucion/", "Ejecución y estructura"),
+        ("/presupuesto/territorio/", "Territorio"),
+        ("/presupuesto/diagnostico/", "Diagnóstico"),
+    ]
+    links = "".join(f'<a{active_link(rel, href)} href="{href}">{label}</a>' for href, label in items)
+    return f'<nav aria-label="Navegación de Presupuesto" class="subnav"><div class="wrap subnav-in">{links}</div></nav>'
+
+
+def editorial_subnav(active: str) -> str:
+    items = [
+        ("publicaciones", "/publicaciones/", "Publicaciones"),
+        ("boletines", "/publicaciones/boletines/", "Boletines"),
+        ("informes", "/publicaciones/informes/", "Informes"),
+        ("prensa", "/prensa/", "Notas de prensa"),
+        ("temas", "/temas/", "Temas"),
+    ]
+    links = "".join(f'<a{(" class=\"active\"" if key == active else "")} href="{href}">{label}</a>' for key, href, label in items)
+    return f'<nav aria-label="Producción editorial" class="subnav"><div class="wrap subnav-in">{links}</div></nav>'
+
+
+def topic_chips() -> str:
+    return "".join(f'<a href="/temas/#{slug}">{label}</a>' for slug, label in TOPICS)
+
+
+def prepare_canonical_routes(site: Path) -> None:
+    copies = [
+        (site / "observatorio" / "presupuesto", site / "presupuesto" / "ejecucion"),
+        (site / "territorio" / "presupuesto", site / "presupuesto" / "territorio"),
+    ]
+    for source, target in copies:
+        if not source.is_dir():
+            raise SystemExit(f"No se encontró la ruta que debe conservarse: {source}")
+        shutil.copytree(source, target, dirs_exist_ok=True)
+
+    htaccess = site / ".htaccess"
+    current = htaccess.read_text(encoding="utf-8") if htaccess.exists() else ""
+    start, end = "# BEGIN CEPOES IA", "# END CEPOES IA"
+    block = (
+        f"{start}\n"
+        "Redirect 301 /observatorio/presupuesto/ /presupuesto/ejecucion/\n"
+        "Redirect 301 /territorio/presupuesto/ /presupuesto/territorio/\n"
+        f"{end}"
+    )
+    current = re.sub(rf"{re.escape(start)}.*?{re.escape(end)}", block, current, flags=re.S)
+    if start not in current:
+        current = block + "\n\n" + current.lstrip()
+    htaccess.write_text(current.rstrip() + "\n", encoding="utf-8")
+    replacements = {
+        "https://cepoes.org/observatorio/presupuesto/": "https://cepoes.org/presupuesto/ejecucion/",
+        "https://cepoes.org/territorio/presupuesto/": "https://cepoes.org/presupuesto/territorio/",
+    }
+    for name in ("sitemap.xml", "sitemap.txt"):
+        sitemap = site / name
+        if not sitemap.exists():
+            continue
+        source = sitemap.read_text(encoding="utf-8")
+        for old, new in replacements.items():
+            source = source.replace(old, new)
+        sitemap.write_text(source, encoding="utf-8")
+
+
+def inject_editorial_bridge(source: str) -> str:
+    if 'id="archivo-por-tema"' in source:
+        return source
+    block = (
+        '<section class="section ia-editorial-bridge" id="archivo-por-tema"><div class="wrap">'
+        '<div class="ia-editorial-head"><div><span class="eyebrow">Archivo transversal</span>'
+        '<h2>Publicaciones y notas, conectadas por tema</h2><p>Los boletines e informes conservan su formato. Las notas breves para medios viven en Prensa y se integran al mismo archivo temático.</p></div>'
+        '<a class="btn btn-outline" href="/prensa/">Ver notas de prensa →</a></div>'
+        f'<div class="ia-theme-chips" aria-label="Explorar publicaciones por tema">{topic_chips()}</div>'
+        '</div></section>'
+    )
+    marker = '<section class="section alt editorial-territory">'
+    return source.replace(marker, block + marker, 1) if marker in source else source.replace("</main>", block + "</main>", 1)
 
 
 def fmt_period(value: str) -> str:
@@ -263,6 +390,10 @@ def normalize_html(path: Path, site: Path) -> None:
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
+    source = source.replace('href="/observatorio/presupuesto/"', 'href="/presupuesto/ejecucion/"')
+    source = source.replace('href="/territorio/presupuesto/"', 'href="/presupuesto/territorio/"')
+    if ARCHITECTURE_CSS not in source:
+        source = source.replace("</head>", f'<link href="{ARCHITECTURE_CSS}" rel="stylesheet"></head>', 1)
     source = re.sub(r'<meta\s+(?:content=["\'][^"\']+["\']\s+name=["\']theme-color["\']|name=["\']theme-color["\']\s+content=["\'][^"\']+["\'])\s*/?>', "", source, flags=re.I)
     viewport = re.search(r'<meta\b[^>]*name=["\']viewport["\'][^>]*>', source, flags=re.I)
     if viewport:
@@ -271,6 +402,23 @@ def normalize_html(path: Path, site: Path) -> None:
     source, nav_count = re.subn(r'<nav class="site-nav">.*?</nav>', canonical_nav, source, count=1, flags=re.S)
     if not nav_count and "<body" in source:
         source = re.sub(r'(<body\b[^>]*>)', r'\1' + canonical_nav, source, count=1, flags=re.I)
+
+    contextual = None
+    if rel.startswith("/territorio/"):
+        contextual = territory_subnav(rel)
+    elif rel.startswith("/presupuesto/"):
+        contextual = budget_subnav(rel)
+    elif rel.startswith("/publicaciones/"):
+        active = "boletines" if rel.startswith("/publicaciones/boletines/") else "informes" if rel.startswith("/publicaciones/informes/") or "informe-" in rel else "publicaciones"
+        contextual = editorial_subnav(active)
+    elif rel.startswith("/prensa/"):
+        contextual = editorial_subnav("prensa")
+    elif rel == "/temas/index.html":
+        contextual = editorial_subnav("temas")
+    if contextual:
+        source, subnav_count = re.subn(r'<nav\b[^>]*class=["\'][^"\']*\bsubnav\b[^"\']*["\'][^>]*>.*?</nav>', contextual, source, count=1, flags=re.S | re.I)
+        if not subnav_count:
+            source = source.replace(canonical_nav, canonical_nav + contextual, 1)
     source, footer_count = re.subn(r'<footer class="footer">.*?</footer>', FOOTER, source, count=1, flags=re.S)
     if not footer_count and "</body>" in source:
         source = source.replace("</body>", FOOTER + "</body>", 1)
@@ -278,6 +426,28 @@ def normalize_html(path: Path, site: Path) -> None:
     if 'id="site-search"' not in source:
         source = source.replace('<footer class="footer">', SEARCH + '<footer class="footer">', 1)
     source = re.sub(r'(<a\b[^>]*href=["\']/territorio/equipamientos/(?:\?[^"\']*)?["\'][^>]*>)(?:Información territorial|Oferta territorial)(\s*→)?(</a>)', lambda m: m.group(1) + "Qué hay en tu barrio" + (m.group(2) or "") + m.group(3), source, flags=re.I)
+    if rel == "/publicaciones/index.html":
+        source = inject_editorial_bridge(source)
+    canonical_routes = {
+        "/presupuesto/ejecucion/index.html": "https://cepoes.org/presupuesto/ejecucion/",
+        "/presupuesto/territorio/index.html": "https://cepoes.org/presupuesto/territorio/",
+    }
+    if rel in canonical_routes:
+        target = canonical_routes[rel]
+        source = re.sub(
+            r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>',
+            lambda m: re.sub(r'\bhref=["\'][^"\']+["\']', f'href="{target}"', m.group(0), count=1),
+            source,
+            count=1,
+            flags=re.I,
+        )
+        source = re.sub(
+            r'<meta\b(?=[^>]*\bproperty=["\']og:url["\'])[^>]*>',
+            lambda m: re.sub(r'\bcontent=["\'][^"\']+["\']', f'content="{target}"', m.group(0), count=1),
+            source,
+            count=1,
+            flags=re.I,
+        )
     source = apply_fallbacks(source, rel)
     path.write_text(source, encoding="utf-8")
 
@@ -289,6 +459,7 @@ def main() -> None:
     site = args.site.resolve()
     if not (site / "index.html").is_file():
         raise SystemExit(f"No se encontró el sitio en {site}")
+    prepare_canonical_routes(site)
     count = 0
     for path in site.rglob("*.html"):
         normalize_html(path, site)

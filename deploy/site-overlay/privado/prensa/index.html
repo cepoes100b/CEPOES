@@ -37,7 +37,7 @@
       <form id="pa-editor" class="pa-editor" hidden>
         <input id="pa-id" type="hidden">
         <div class="pa-editor-head"><div><span class="pa-kicker">NOTA DE PRENSA</span><h2 id="pa-editor-title">Editar nota</h2></div><span id="pa-status" class="pa-status"></span></div>
-        <div class="pa-two"><label>Tema principal<input id="pa-topic" required placeholder="Ej. Territorio"></label><label>Etiquetas<input id="pa-tags" placeholder="Comuna 8, empleo, jóvenes"></label></div>
+        <div class="pa-two"><label>Tema principal<select id="pa-topic" required><option value="Vivienda y hábitat">Vivienda y hábitat</option><option value="Salud y cuidados">Salud y cuidados</option><option value="Educación e infancias">Educación e infancias</option><option value="Trabajo e ingresos">Trabajo e ingresos</option><option value="Precios y consumo">Precios y consumo</option><option value="Producción y comercio">Producción y comercio</option><option value="Presupuesto y Estado">Presupuesto y Estado</option><option value="Ambiente y movilidad">Ambiente y movilidad</option></select></label><label>Etiquetas <small>Hasta cuatro, separadas por coma</small><input id="pa-tags" placeholder="Comuna 8, empleo, jóvenes"></label></div>
         <label>Título<input id="pa-title" required></label><label>Bajada<textarea id="pa-summary" rows="3"></textarea></label>
         <label>Cuerpo de la nota <small>Un párrafo por bloque</small><textarea id="pa-body" rows="10"></textarea></label>
         <label>Frase atribuible a CEPOES<textarea id="pa-quote" rows="3"></textarea></label><label>Metodología<textarea id="pa-method" rows="3"></textarea></label>
@@ -52,5 +52,5 @@
 <dialog id="pa-preview-dialog"><button id="pa-preview-close" aria-label="Cerrar">×</button><article id="pa-preview-content"></article></dialog>
 <dialog id="pa-team-dialog"><button id="pa-team-close" class="pa-dialog-close" aria-label="Cerrar">×</button><h2>Equipo y permisos</h2><p>El acceso se habilita por invitación. Cada integrante recibe un enlace en su correo.</p><form id="pa-team-form" class="pa-team-form"><input id="pa-team-email" type="email" placeholder="correo@dominio.com" required><select id="pa-team-role"><option value="redactor">Redactor</option><option value="revisor">Revisor</option><option value="editor">Editor</option><option value="admin">Administrador</option></select><button>Invitar</button></form><p id="pa-team-msg" role="status"></p><div id="pa-team-list" class="pa-team-list"></div></dialog>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" crossorigin="anonymous"></script>
-<script src="/assets/legislativa-config.js?v=1"></script><script src="/assets/prensa-admin.js?v=4"></script>
+<script src="/assets/legislativa-config.js?v=1"></script><script src="/assets/prensa-admin.js?v=5"></script>
 </body></html>

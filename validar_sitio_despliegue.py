@@ -15,7 +15,7 @@ def patch_territorio_navigation(site_root: Path) -> None:
     for p in site_root.rglob('*.html'):
         s=p.read_text(encoding='utf-8',errors='replace')
         original=s
-        s=re.sub(r'(/assets/common\.js)(?:\?v=\d+)?', r'\1?v=253', s)
+        s=re.sub(r'(/assets/common\.js)(?:\?v=\d+)?', r'\1?v=254', s)
         rel=p.relative_to(site_root).as_posix()
         if rel.startswith('territorio/'):
             sport='/territorio/deporte-salud/'
@@ -68,13 +68,18 @@ def ensure_sitemap_url(site_root: Path, path: str) -> None:
 patch_territorio_navigation(root)
 ensure_sitemap_url(root,'/territorio/estructura-productiva/')
 ensure_sitemap_url(root,'/territorio/deporte-salud/')
+ensure_sitemap_url(root,'/presupuesto/ejecucion/')
+ensure_sitemap_url(root,'/presupuesto/territorio/')
+ensure_sitemap_url(root,'/temas/')
 
 required=[
     'index.html','404.html','robots.txt','sitemap.xml','site.webmanifest',
     'assets/site.css','assets/common.js','assets/data.js','assets/favicon.svg',
+    'assets/arquitectura.css','assets/data/taxonomia.json','temas/index.html',
     'legislatura/index.html','territorio/endeudamiento/index.html',
     'territorio/migraciones/index.html','territorio/estructura-productiva/index.html',
     'territorio/deporte-salud/index.html',
+    'presupuesto/ejecucion/index.html','presupuesto/territorio/index.html',
     'assets/deporte-salud.js','assets/deporte-salud.css','assets/data/deporte-salud.json',
     'assets/data/deporte-accesibilidad.json','assets/data/deporte-accesibilidad-peatonal.json',
     'assets/estructura-productiva.js','assets/estructura-productiva-bootstrap.js','assets/estructura-productiva.css',
@@ -97,6 +102,8 @@ for p in html:
     assert s.count('<footer class="footer">')==1, f'Footer no canónico: {rel}'
     assert len(re.findall(r'name=["\']theme-color["\']',s,re.I))==1, f'theme-color inválido: {rel}'
     assert 'href="/prensa/"' in s, f'Falta Prensa en navegación: {rel}'
+    assert 'href="/observatorio/presupuesto/"' not in s, f'Enlace presupuestario antiguo: {rel}'
+    assert 'href="/territorio/presupuesto/"' not in s, f'Enlace territorial antiguo: {rel}'
 
 home=(root/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home-leg-recent">—','id="home-pulse"></div>']:
@@ -105,10 +112,27 @@ observatorio=(root/'observatorio'/'index.html').read_text(encoding='utf-8',error
 assert 'id="obs-pulse"></div>' not in observatorio, 'Señales vacías en Observatorio'
 presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'Cargando último trimestre oficial' not in presupuesto and '<b>—</b>' not in presupuesto, 'Fallback vacío en Presupuesto'
+for rel,url in [('presupuesto/ejecucion/index.html','https://cepoes.org/presupuesto/ejecucion/'),('presupuesto/territorio/index.html','https://cepoes.org/presupuesto/territorio/')]:
+    s=(root/rel).read_text(encoding='utf-8',errors='replace')
+    canonical=re.search(r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>',s,re.I)
+    assert canonical and re.search(rf'\bhref=["\']{re.escape(url)}["\']',canonical.group(0),re.I), f'Canonical incorrecto: {rel}'
+htaccess=(root/'.htaccess').read_text(encoding='utf-8',errors='replace')
+for rule in ['Redirect 301 /observatorio/presupuesto/ /presupuesto/ejecucion/','Redirect 301 /territorio/presupuesto/ /presupuesto/territorio/']:
+    assert rule in htaccess, f'Falta redirect: {rule}'
 
 territorio=(root/'territorio'/'index.html').read_text(encoding='utf-8',errors='replace')
 for path,label in [('/territorio/migraciones/','Migraciones'),('/territorio/estructura-productiva/','Estructura productiva'),('/territorio/deporte-salud/','Deporte y salud')]:
     assert f'href="{path}"' in territorio, f'Territorio no enlaza {label}'
+for token in ['Explorar','Temas territoriales','/presupuesto/territorio/']:
+    assert token in territorio, f'Navegación territorial sin {token}'
+
+publicaciones=(root/'publicaciones'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['id="archivo-por-tema"','Notas de prensa','/temas/#vivienda-y-habitat']:
+    assert token in publicaciones, f'Archivo editorial incompleto: {token}'
+temas=(root/'temas'/'index.html').read_text(encoding='utf-8',errors='replace')
+assert temas.count('class="ia-topic-card"')==8, 'Taxonomía pública incompleta'
+taxonomy=json.loads((root/'assets/data/taxonomia.json').read_text(encoding='utf-8'))
+assert len(taxonomy.get('temas') or [])==8 and len({x['slug'] for x in taxonomy['temas']})==8
 
 productiva=(root/'territorio'/'estructura-productiva'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Perfil comercial de las 15 comunas','Comparar comunas','Matriz comuna × rubro','Ocupación comercial 2025 → 2026','Archivo histórico · RUS 2017','/assets/estructura-productiva-bootstrap.js']:
@@ -134,6 +158,11 @@ for u in urls:
     locs.append((loc.text or '').strip())
 assert 'https://cepoes.org/territorio/estructura-productiva/' in locs
 assert 'https://cepoes.org/territorio/deporte-salud/' in locs
+assert 'https://cepoes.org/presupuesto/ejecucion/' in locs
+assert 'https://cepoes.org/presupuesto/territorio/' in locs
+assert 'https://cepoes.org/temas/' in locs
+assert 'https://cepoes.org/observatorio/presupuesto/' not in locs
+assert 'https://cepoes.org/territorio/presupuesto/' not in locs
 
 manifest=json.loads((root/'site.webmanifest').read_text(encoding='utf-8'))
 assert manifest.get('name')=='CEPOES'

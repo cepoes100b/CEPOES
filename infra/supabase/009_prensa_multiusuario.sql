@@ -19,7 +19,7 @@ on conflict(user_id) do update set press_role='admin',active=excluded.active,upd
 
 create or replace function private.current_press_role()
 returns text language sql stable security definer
-set search_path=public,private,pg_catalog
+set search_path=''
 as $$
   select pm.press_role from public.press_members pm
   where pm.user_id=(select auth.uid()) and pm.active and (select auth.uid()) is not null
@@ -29,7 +29,7 @@ grant execute on function private.current_press_role() to authenticated;
 
 create or replace function private.press_role_rank()
 returns integer language sql stable security invoker
-set search_path=public,private,pg_catalog
+set search_path=''
 as $$
   select case private.current_press_role()
     when 'redactor' then 1 when 'revisor' then 2 when 'editor' then 3 when 'admin' then 4 else 0 end
@@ -136,7 +136,7 @@ create policy "press_admin_delete" on public.press_notes for delete to authentic
 using(private.press_role_rank()>=4);
 
 create or replace function private.guard_press_note()
-returns trigger language plpgsql security invoker set search_path=public,private,pg_catalog as $$
+returns trigger language plpgsql security invoker set search_path='' as $$
 declare role_rank integer:=private.press_role_rank();
 begin
   new.updated_at=now();
@@ -174,7 +174,7 @@ end $$;
 revoke all on function private.guard_press_note() from public,anon,authenticated;
 
 create or replace function private.capture_press_version()
-returns trigger language plpgsql security definer set search_path=public,private,pg_catalog as $$
+returns trigger language plpgsql security definer set search_path='' as $$
 declare next_version integer;
 begin
   select coalesce(max(version_no),0)+1 into next_version from public.press_note_versions where note_id=old.id;
@@ -185,7 +185,7 @@ end $$;
 revoke all on function private.capture_press_version() from public,anon,authenticated;
 
 create or replace function private.log_press_activity()
-returns trigger language plpgsql security definer set search_path=public,private,pg_catalog as $$
+returns trigger language plpgsql security definer set search_path='' as $$
 begin
   if tg_op='INSERT' then
     insert into public.press_note_activity(note_id,action,to_status,actor_id) values(new.id,'creada',new.status,auth.uid());
@@ -222,7 +222,7 @@ where p.role='admin' and u.email is not null
 on conflict(email) do update set press_role='admin',active=excluded.active,updated_at=now();
 
 create or replace function public.manage_press_invite(invite_email text,invite_role text,invite_active boolean default true)
-returns void language plpgsql security definer set search_path=public,private,auth,pg_catalog as $$
+returns void language plpgsql security definer set search_path='' as $$
 declare normalized text:=lower(trim(invite_email)); existing_user uuid;
 begin
   if (select auth.uid()) is null or coalesce(private.current_press_role(),'')<>'admin' then raise exception 'Acceso denegado'; end if;
@@ -247,7 +247,7 @@ grant execute on function public.manage_press_invite(text,text,boolean) to authe
 
 create or replace function public.list_press_team()
 returns table(user_id uuid,email text,display_name text,press_role text,active boolean,last_sign_in_at timestamptz)
-language plpgsql stable security definer set search_path=public,private,auth,pg_catalog as $$
+language plpgsql stable security definer set search_path='' as $$
 begin
   if (select auth.uid()) is null or coalesce(private.current_press_role(),'')<>'admin' then raise exception 'Acceso denegado'; end if;
   return query
@@ -261,7 +261,7 @@ revoke all on function public.list_press_team() from public,anon,authenticated;
 grant execute on function public.list_press_team() to authenticated;
 
 create or replace function private.handle_new_user()
-returns trigger language plpgsql security definer set search_path=private,public,pg_catalog as $$
+returns trigger language plpgsql security definer set search_path='' as $$
 declare approved_role text; approved_active boolean; invited_press_role text; press_active boolean;
 begin
   select a.role,a.active into approved_role,approved_active from private.access_allowlist a where a.email=lower(coalesce(new.email,''));
@@ -285,7 +285,7 @@ create index if not exists press_versions_changed_by_idx on public.press_note_ve
 create index if not exists press_activity_actor_idx on public.press_note_activity(actor_id);
 
 create or replace function private.manage_press_invite_internal(invite_email text,invite_role text,invite_active boolean)
-returns void language plpgsql security definer set search_path=public,private,auth,pg_catalog as $$
+returns void language plpgsql security definer set search_path='' as $$
 declare normalized text:=lower(trim(invite_email)); existing_user uuid;
 begin
   if (select auth.uid()) is null or coalesce(private.current_press_role(),'')<>'admin' then raise exception 'Acceso denegado'; end if;
@@ -306,7 +306,7 @@ grant execute on function private.manage_press_invite_internal(text,text,boolean
 
 create or replace function private.list_press_team_internal()
 returns table(user_id uuid,email text,display_name text,press_role text,active boolean,last_sign_in_at timestamptz)
-language plpgsql stable security definer set search_path=public,private,auth,pg_catalog as $$
+language plpgsql stable security definer set search_path='' as $$
 begin
   if (select auth.uid()) is null or coalesce(private.current_press_role(),'')<>'admin' then raise exception 'Acceso denegado'; end if;
   return query select u.id,i.email,p.display_name,i.press_role,i.active,u.last_sign_in_at from private.press_invites i left join auth.users u on lower(u.email)=i.email left join public.profiles p on p.id=u.id order by i.active desc,coalesce(p.display_name,i.email);
@@ -315,11 +315,11 @@ revoke all on function private.list_press_team_internal() from public,anon,authe
 grant execute on function private.list_press_team_internal() to authenticated;
 
 create or replace function public.manage_press_invite(invite_email text,invite_role text,invite_active boolean default true)
-returns void language sql security invoker set search_path=public,private,pg_catalog
+returns void language sql security invoker set search_path=''
 as $$ select private.manage_press_invite_internal(invite_email,invite_role,invite_active) $$;
 create or replace function public.list_press_team()
 returns table(user_id uuid,email text,display_name text,press_role text,active boolean,last_sign_in_at timestamptz)
-language sql stable security invoker set search_path=public,private,pg_catalog
+language sql stable security invoker set search_path=''
 as $$ select * from private.list_press_team_internal() $$;
 revoke all on function public.manage_press_invite(text,text,boolean) from public,anon,authenticated;
 revoke all on function public.list_press_team() from public,anon,authenticated;

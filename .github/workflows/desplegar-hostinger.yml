@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "deploy/site-overlay/**"
+      - "deploy/preparar_sitio_publico.py"
       - "deploy/delete-paths.txt"
       - "validar_sitio_despliegue.py"
       - "notificar_indexnow.py"
@@ -162,6 +163,9 @@ jobs:
           else:
               raise SystemExit("No se encontró ni el texto anterior ni el nuevo; se aborta para evitar un despliegue sin el cambio solicitado.")
           PY
+
+      - name: Normalizar navegación y fallbacks públicos
+        run: python deploy/preparar_sitio_publico.py _site
 
       - name: Validar sitio antes de publicar
         run: python validar_sitio_despliegue.py _site

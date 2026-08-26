@@ -40,31 +40,6 @@ def patch_territorio_navigation(site_root: Path) -> None:
                 if debt:
                     s=s[:debt.start()]+'<a href="/territorio/migraciones/">Migraciones</a>'+s[debt.start():]
 
-            if rel=='territorio/index.html':
-                marker='data-cepoes-deporte-salud-access="1"'
-                if marker not in s:
-                    anchors=list(re.finditer(r'(<a\b[^>]*href="/territorio/endeudamiento/"[^>]*>)(.*?)(</a>)',s,re.I|re.S))
-                    if anchors:
-                        m=anchors[-1]
-                        opening=m.group(1).replace('href="/territorio/endeudamiento/"','href="/territorio/deporte-salud/" '+marker)
-                        s=s[:m.start()]+opening+'Deporte y vida saludable →'+m.group(3)+s[m.start():]
-
-                marker='data-cepoes-estructura-productiva-access="1"'
-                if marker not in s:
-                    anchors=list(re.finditer(r'(<a\b[^>]*href="/territorio/endeudamiento/"[^>]*>)(.*?)(</a>)',s,re.I|re.S))
-                    if anchors:
-                        m=anchors[-1]
-                        opening=m.group(1).replace('href="/territorio/endeudamiento/"','href="/territorio/estructura-productiva/" '+marker)
-                        s=s[:m.start()]+opening+'Estructura productiva →'+m.group(3)+s[m.start():]
-
-                marker='data-cepoes-migraciones-access="1"'
-                if marker not in s:
-                    anchors=list(re.finditer(r'(<a\b[^>]*href="/territorio/endeudamiento/"[^>]*>)(.*?)(</a>)',s,re.I|re.S))
-                    if anchors:
-                        m=anchors[-1]
-                        opening=m.group(1).replace('href="/territorio/endeudamiento/"','href="/territorio/migraciones/" '+marker)
-                        s=s[:m.start()]+opening+'Migraciones →'+m.group(3)+s[m.start():]
-
             if rel=='territorio/estructura-productiva/index.html' and '/assets/estructura-productiva-bootstrap.js' not in s:
                 target='<script defer src="/assets/estructura-productiva.js?v=260"></script>'
                 bootstrap='<script defer src="/assets/estructura-productiva-bootstrap.js?v=260"></script>'
@@ -113,12 +88,27 @@ assert len(html)>=100, len(html)
 barrios=[p for p in (root/'territorio'/'barrios').glob('*/index.html')]
 assert len(barrios)==48, f'barrios={len(barrios)}'
 
+for p in html:
+    rel=p.relative_to(root).as_posix()
+    if rel.startswith('privado/'):
+        continue
+    s=p.read_text(encoding='utf-8',errors='replace')
+    assert s.count('<nav class="site-nav">')==1, f'Navegación no canónica: {rel}'
+    assert s.count('<footer class="footer">')==1, f'Footer no canónico: {rel}'
+    assert len(re.findall(r'name=["\']theme-color["\']',s,re.I))==1, f'theme-color inválido: {rel}'
+    assert 'href="/prensa/"' in s, f'Falta Prensa en navegación: {rel}'
+
+home=(root/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home-leg-recent">—','id="home-pulse"></div>']:
+    assert token not in home, f'Fallback vacío en home: {token}'
+observatorio=(root/'observatorio'/'index.html').read_text(encoding='utf-8',errors='replace')
+assert 'id="obs-pulse"></div>' not in observatorio, 'Señales vacías en Observatorio'
+presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')
+assert 'Cargando último trimestre oficial' not in presupuesto and '<b>—</b>' not in presupuesto, 'Fallback vacío en Presupuesto'
+
 territorio=(root/'territorio'/'index.html').read_text(encoding='utf-8',errors='replace')
 for path,label in [('/territorio/migraciones/','Migraciones'),('/territorio/estructura-productiva/','Estructura productiva'),('/territorio/deporte-salud/','Deporte y salud')]:
     assert f'href="{path}"' in territorio, f'Territorio no enlaza {label}'
-assert 'data-cepoes-migraciones-access="1"' in territorio
-assert 'data-cepoes-estructura-productiva-access="1"' in territorio
-assert 'data-cepoes-deporte-salud-access="1"' in territorio
 
 productiva=(root/'territorio'/'estructura-productiva'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Perfil comercial de las 15 comunas','Comparar comunas','Matriz comuna × rubro','Ocupación comercial 2025 → 2026','Archivo histórico · RUS 2017','/assets/estructura-productiva-bootstrap.js']:

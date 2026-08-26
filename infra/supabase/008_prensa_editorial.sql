@@ -23,6 +23,7 @@ create index press_notes_created_by_idx on public.press_notes(created_by);
 create index press_notes_updated_by_idx on public.press_notes(updated_by);
 create index press_notes_approved_by_idx on public.press_notes(approved_by);
 create index press_notes_status_published_idx on public.press_notes(status,published_at desc);
+create unique index press_notes_source_hash_uniq on public.press_notes(source_hash) where source_hash is not null;
 grant select on public.press_notes to anon, authenticated;
 grant insert,update,delete on public.press_notes to authenticated;
 create policy "press_public_select_published" on public.press_notes for select to anon using(status='publicada');

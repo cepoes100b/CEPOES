@@ -1,5 +1,115 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="same-origin"><title>CEPOES · Edición de prensa</title><link rel="icon" href="/assets/favicon.svg"><link rel="stylesheet" href="/assets/prensa-admin.css?v=1"></head><body><noscript>Esta aplicación requiere JavaScript.</noscript>
-<main id="press-auth" class="pa-auth"><section><a class="pa-brand" href="/">CEPOES</a><span class="pa-kicker">ACCESO RESTRINGIDO</span><h1>Edición de prensa</h1><p>Revisá, editá y aprobá los análisis preparados a partir de los datos del observatorio.</p></section><form id="pa-login"><h2>Ingresar</h2><label>Correo electrónico<input id="pa-email" type="email" autocomplete="email" required></label><button type="submit">Recibir enlace de acceso</button><p id="pa-login-msg"></p></form></main>
-<div id="press-app" hidden><aside class="pa-side"><a class="pa-brand" href="/">CEPOES</a><strong>Prensa</strong><nav><button class="active" data-filter="borrador">Borradores</button><button data-filter="revision">En revisión</button><button data-filter="publicada">Publicadas</button><button data-filter="descartada">Descartadas</button><button data-filter="todas">Todas</button></nav><div><a href="/prensa/" target="_blank">Ver sección pública ↗</a><button id="pa-logout" class="link">Cerrar sesión</button></div></aside><main class="pa-main"><header><div><span class="pa-kicker">ÁREA PRIVADA</span><h1>Bandeja editorial</h1></div><div id="pa-user"></div></header><div id="pa-message"></div><section class="pa-grid"><div id="pa-list" class="pa-list"></div><form id="pa-editor" class="pa-editor" hidden><input id="pa-id" type="hidden"><div class="pa-editor-head"><div><span class="pa-kicker">NOTA DE PRENSA</span><h2>Editar borrador</h2></div><span id="pa-status"></span></div><label>Tema<input id="pa-topic" required></label><label>Título<input id="pa-title" required></label><label>Bajada<textarea id="pa-summary" rows="3"></textarea></label><label>Cuerpo de la nota <small>Un párrafo por bloque</small><textarea id="pa-body" rows="10"></textarea></label><label>Frase atribuible a CEPOES<textarea id="pa-quote" rows="3"></textarea></label><label>Metodología<textarea id="pa-method" rows="3"></textarea></label><div class="pa-two"><label>Fuente<input id="pa-source"></label><label>Enlace a datos<input id="pa-section"></label></div><div class="pa-actions"><button type="button" id="pa-preview" class="secondary">Previsualizar</button><button type="button" id="pa-discard" class="danger">Descartar</button><button type="submit" class="secondary">Guardar cambios</button><button type="button" id="pa-publish">Aprobar y publicar</button></div></form></section></main></div>
-<dialog id="pa-preview-dialog"><button id="pa-preview-close" aria-label="Cerrar">×</button><article id="pa-preview-content"></article></dialog>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" crossorigin="anonymous"></script><script src="/assets/legislativa-config.js?v=1"></script><script src="/assets/prensa-admin.js?v=1"></script></body></html>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="same-origin">
+<title>CEPOES · Edición de prensa</title>
+<link rel="icon" href="/assets/favicon.svg">
+<link rel="stylesheet" href="/assets/prensa-admin.css?v=2">
+</head>
+<body>
+<noscript>Esta aplicación requiere JavaScript.</noscript>
+<main id="press-auth" class="pa-auth">
+<section>
+<a class="pa-brand" href="/">CEPOES</a>
+<span class="pa-kicker">ACCESO RESTRINGIDO</span>
+<h1>Edición de prensa</h1>
+<p>Revisá, editá y aprobá los análisis preparados a partir de los datos del observatorio.</p>
+</section>
+<form id="pa-login">
+<h2>Ingresar</h2>
+<label>Correo electrónico<input id="pa-email" type="email" autocomplete="email" required>
+</label>
+<button type="submit">Recibir enlace de acceso</button>
+<p id="pa-login-msg">
+</p>
+</form>
+</main>
+<div id="press-app" hidden>
+<aside class="pa-side">
+<a class="pa-brand" href="/">CEPOES</a>
+<strong>Prensa</strong>
+<nav>
+<button class="active" data-filter="borrador">Borradores</button>
+<button data-filter="revision">En revisión</button>
+<button data-filter="publicada">Publicadas</button>
+<button data-filter="descartada">Descartadas</button>
+<button data-filter="todas">Todas</button>
+</nav>
+<div>
+<a href="/prensa/" target="_blank">Ver sección pública ↗</a>
+<button id="pa-logout" class="link">Cerrar sesión</button>
+</div>
+</aside>
+<main class="pa-main">
+<header>
+<div>
+<span class="pa-kicker">ÁREA PRIVADA</span>
+<h1>Bandeja editorial</h1>
+</div>
+<div id="pa-user">
+</div>
+</header>
+<div id="pa-message">
+</div>
+<section class="pa-grid">
+<div id="pa-list" class="pa-list">
+</div>
+<form id="pa-editor" class="pa-editor" hidden>
+<input id="pa-id" type="hidden">
+<div class="pa-editor-head">
+<div>
+<span class="pa-kicker">NOTA DE PRENSA</span>
+<h2>Editar borrador</h2>
+</div>
+<span id="pa-status">
+</span>
+</div>
+<label>Tema<input id="pa-topic" required>
+</label>
+<label>Título<input id="pa-title" required>
+</label>
+<label>Bajada<textarea id="pa-summary" rows="3">
+</textarea>
+</label>
+<label>Cuerpo de la nota <small>Un párrafo por bloque</small>
+<textarea id="pa-body" rows="10">
+</textarea>
+</label>
+<label>Frase atribuible a CEPOES<textarea id="pa-quote" rows="3">
+</textarea>
+</label>
+<label>Metodología<textarea id="pa-method" rows="3">
+</textarea>
+</label>
+<div class="pa-two">
+<label>Fuente<input id="pa-source">
+</label>
+<label>Enlace a datos<input id="pa-section">
+</label>
+</div>
+<div class="pa-actions">
+<button type="button" id="pa-preview" class="secondary">Previsualizar</button>
+<button type="button" id="pa-discard" class="danger">Descartar</button>
+<button type="submit" class="secondary">Guardar cambios</button>
+<button type="button" id="pa-publish">Aprobar y publicar</button>
+</div>
+</form>
+</section>
+</main>
+</div>
+<dialog id="pa-preview-dialog">
+<button id="pa-preview-close" aria-label="Cerrar">×</button>
+<article id="pa-preview-content">
+</article>
+</dialog>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" crossorigin="anonymous">
+</script>
+<script src="/assets/legislativa-config.js?v=1">
+</script>
+<script src="/assets/prensa-admin.js?v=2">
+</script>
+</body>
+</html>

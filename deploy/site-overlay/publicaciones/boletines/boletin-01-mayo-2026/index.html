@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>La Ciudad que ajusta donde más duele — Boletín CEPOES N.º 1, Mayo 2026</title>
+  <meta name="description" content="Primer número del boletín del CEPOES: la recaudación y el gasto total crecen, pero vivienda, salud, empleo y educación registran caídas reales sostenidas.">
+  <meta name="theme-color" content="#16232F">
+  <link rel="canonical" href="https://cepoes.org/publicaciones/boletines/boletin-01-mayo-2026/">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="CEPOES">
+  <meta property="og:title" content="La Ciudad que ajusta donde más duele — Boletín CEPOES">
+  <meta property="og:description" content="Primer número del boletín del CEPOES: la recaudación y el gasto total crecen, pero vivienda, salud, empleo y educación registran caídas reales sostenidas.">
+  <meta property="og:url" content="https://cepoes.org/publicaciones/boletines/boletin-01-mayo-2026/">
+  <meta property="og:image" content="https://cepoes.org/assets/boletines/boletin-01.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+  <link href="/assets/site.css?v=233" rel="stylesheet">
+<link href="/assets/boletines-html.css?v=1" rel="stylesheet">
+<script defer src="/assets/common.js?v=254"></script>
+<script defer src="/assets/boletines-html.js?v=1"></script>
+</head>
+<body data-related-tags="publicaciones,boletines">
+<article class="bol">
+   dentro de cualquier plantilla del sitio sin que se pisen los estilos.
+   Los tokens de la primera sección son los únicos que hay que tocar para
+   alinear el boletín con el resto de cepoes.org.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+
+.bol {
+  /* Tipografías: si el sitio ya carga sus fuentes, reapuntar acá */
+  --bol-font-display: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --bol-font-body: "IBM Plex Sans", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bol-font-num: "IBM Plex Sans Condensed", "Roboto Condensed", "IBM Plex Sans", system-ui, sans-serif;
+  --bol-font-meta: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Color base — anclado en el navy institucional del sitio (#16232F) */
+  --bol-tinta: #16232f;
+  --bol-tinta-2: #48545f;
+  --bol-tinta-3: #737d87;
+  --bol-papel: #f6f4f0;
+  --bol-carta: #ffffff;
+  --bol-linea: #dcd7cf;
+  --bol-linea-suave: #e9e5de;
+  --bol-sombra: 0 1px 2px rgba(22, 35, 47, .04), 0 8px 24px -16px rgba(22, 35, 47, .28);
+
+  /* Métrica */
+  --bol-ancho: 1160px;
+  --bol-col: 66ch;
+  --bol-radio: 3px;
+  --bol-gap: clamp(1.5rem, 4vw, 3rem);
+
+  color: var(--bol-tinta);
+  background: var(--bol-papel);
+  font-family: var(--bol-font-body);
+  font-size: clamp(16px, .95rem + .2vw, 18px);
+  line-height: 1.65;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Acento por eje temático. Se hereda hacia abajo con var(--accent). */
+.bol { --accent: var(--bol-tinta); }
+.bol [data-eje="vivienda"]  { --accent: #0f7b7f; }
+.bol [data-eje="salud"]     { --accent: #b4232a; }
+.bol [data-eje="empleo"]    { --accent: #a96500; }
+.bol [data-eje="finanzas"]  { --accent: #3a3f8f; }
+.bol [data-eje="educacion"] { --accent: #2c7a46; }
+
+.bol [data-eje] {
+  --accent-suave: #f0efec;
+  --accent-suave: color-mix(in srgb, var(--accent) 8%, var(--bol-carta));
+  --accent-borde: #dcd7cf;
+  --accent-borde: color-mix(in srgb, var(--accent) 26%, var(--bol-linea));
+}
+
+/* Modo oscuro: automático, y respetando el conmutador del sitio */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bol {
+    --bol-tinta: #eef1f4;
+    --bol-tinta-2: #aab4be;
+    --bol-tinta-3: #7f8a95;
+    --bol-papel: #101922;
+    --bol-carta: #16232f;
+    --bol-linea: #2b3947;
+    --bol-linea-suave: #223040;
+    --bol-sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -18px rgba(0, 0, 0, .8);
+  }
+  :root:not([data-theme="light"]) .bol [data-eje="vivienda"]  { --accent: #4fc3c6; }
+  :root:not([data-theme="light"]) .bol [data-eje="salud"]     { --accent: #f0736f; }
+  :root:not([data-theme="light"]) .bol [data-eje="empleo"]    { --accent: #e5a33c; }
+  :root:not([data-theme="light"]) .bol [data-eje="finanzas"]  { --accent: #8f93e8; }
+  :root:not([data-theme="light"]) .bol [data-eje="educacion"] { --accent: #5cbb7d; }
+  :root:not([data-theme="light"]) .bol [data-eje] {
+    --accent-suave: color-mix(in srgb, var(--accent) 12%, var(--bol-carta));
+    --accent-borde: color-mix(in srgb, var(--accent) 32%, var(--bol-linea));
+  }
+}
+
+:root[data-theme="dark"] .bol {
+  --bol-tinta: #eef1f4;
+  --bol-tinta-2: #aab4be;
+  --bol-tinta-3: #7f8a95;
+  --bol-papel: #101922;
+  --bol-carta: #16232f;
+  --bol-linea: #2b3947;
+  --bol-linea-suave: #223040;
+  --bol-sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -18px rgba(0, 0, 0, .8);
+}
+:root[data-theme="dark"] .bol [data-eje="vivienda"]  { --accent: #4fc3c6; }
+:root[data-theme="dark"] .bol [data-eje="salud"]     { --accent: #f0736f; }
+:root[data-theme="dark"] .bol [data-eje="empleo"]    { --accent: #e5a33c; }
+:root[data-theme="dark"] .bol [data-eje="finanzas"]  { --accent: #8f93e8; }
+:root[data-theme="dark"] .bol [data-eje="educacion"] { --accent: #5cbb7d; }
+:root[data-theme="dark"] .bol [data-eje] {
+  --accent-suave: color-mix(in srgb, var(--accent) 12%, var(--bol-carta));
+  --accent-borde: color-mix(in srgb, var(--accent) 32%, var(--bol-linea));
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset acotado
+   -------------------------------------------------------------------------- */
+
+.bol *, .bol *::before, .bol *::after { box-sizing: border-box; }
+.bol p, .bol h1, .bol h2, .bol h3, .bol h4, .bol ul, .bol ol, .bol figure, .bol table { margin: 0; }
+.bol ul, .bol ol { padding: 0; list-style: none; }
+.bol img { max-width: 100%; height: auto; display: block; }
+.bol a { color: inherit; }
+.bol :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.bol-wrap {
+  width: min(100% - 2.5rem, var(--bol-ancho));
+  margin-inline: auto;
+}
+
+.bol-sr {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   3. Etiquetas y utilidades tipográficas
+   -------------------------------------------------------------------------- */
+
+.bol-eyebrow {
+  font-family: var(--bol-font-meta);
+  font-size: .69rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+}
+
+.bol-eyebrow--accent { color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   4. Barra de progreso de lectura
+   -------------------------------------------------------------------------- */
+
+.bol-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  background: transparent;
+  pointer-events: none;
+}
+.bol-progress__bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent, var(--bol-tinta));
+  transition: width .12s linear, background-color .4s ease;
+}
+
+/* --------------------------------------------------------------------------
+   5. Portada
+   -------------------------------------------------------------------------- */
+
+.bol-hero {
+  padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-hero__grid {
+  display: grid;
+  gap: var(--bol-gap);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .bol-hero__grid { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+}
+
+.bol-hero__serie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .6rem 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--bol-tinta);
+  margin-bottom: 1.6rem;
+}
+
+.bol-hero__serie strong {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -.01em;
+}
+
+.bol-hero__num {
+  margin-left: auto;
+  font-family: var(--bol-font-num);
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  font-weight: 600;
+  line-height: .85;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.bol-hero__num span {
+  font-family: var(--bol-font-meta);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  vertical-align: super;
+  color: var(--bol-tinta-2);
+  margin-right: .35rem;
+}
+
+.bol-hero__title {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 1.2rem + 3.6vw, 3.9rem);
+  line-height: 1.03;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+  margin-bottom: 1.1rem;
+}
+
+.bol-hero__dek {
+  font-size: clamp(1.05rem, 1rem + .3vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--bol-tinta-2);
+  max-width: 48ch;
+  text-wrap: pretty;
+}
+
+.bol-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem .9rem;
+  align-items: center;
+  margin-top: 1.8rem;
+  font-family: var(--bol-font-meta);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+}
+.bol-hero__meta span + span::before {
+  content: "·";
+  margin-right: .9rem;
+  color: var(--bol-tinta-3);
+}
+
+.bol-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: 1.6rem;
+}
+
+.bol-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .62rem 1.1rem;
+  border: 1px solid var(--bol-tinta);
+  border-radius: var(--bol-radio);
+  font-family: var(--bol-font-meta);
+  font-size: .74rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--bol-tinta);
+  color: var(--bol-papel);
+  transition: transform .18s ease, opacity .18s ease, background-color .18s ease, color .18s ease;
+}
+.bol-btn:hover { transform: translateY(-1px); opacity: .9; }
+.bol-btn--ghost {
+  background: transparent;
+  color: var(--bol-tinta);
+  border-color: var(--bol-linea);
+}
+.bol-btn--ghost:hover { border-color: var(--bol-tinta); }
+
+.bol-hero__cover {
+  width: 100%;
+  max-width: 22rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+}
+
+/* Sumario de la portada */
+.bol-sumario {
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  padding: 1.4rem 1.5rem .6rem;
+}
+.bol-sumario__t {
+  padding-bottom: .9rem;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  margin-bottom: .3rem;
+}
+.bol-sumario__item {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  gap: .1rem .9rem;
+  padding: .85rem 0;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  text-decoration: none;
+  transition: background-color .18s ease;
+}
+.bol-sumario__item:last-child { border-bottom: 0; }
+.bol-sumario__item:hover { background: var(--accent-suave, var(--bol-papel)); }
+.bol-sumario__n {
+  grid-row: 1 / span 2;
+  font-family: var(--bol-font-num);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  padding-top: .1rem;
+}
+.bol-sumario__h {
+  font-weight: 600;
+  font-size: .95rem;
+  line-height: 1.3;
+}
+.bol-sumario__d {
+  font-size: .84rem;
+  line-height: 1.45;
+  color: var(--bol-tinta-2);
+  margin-top: .25rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. Riel de ejes (navegación pegajosa)
+   -------------------------------------------------------------------------- */
+
+.bol-riel {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--bol-papel) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-riel__lista {
+  display: flex;
+  gap: .2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: .55rem;
+}
+.bol-riel__lista::-webkit-scrollbar { display: none; }
+
+.bol-riel__link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+  padding: .4rem .75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: .82rem;
+  font-weight: 500;
+  color: var(--bol-tinta-2);
+  transition: color .2s ease, background-color .2s ease;
+}
+.bol-riel__link::before {
+  content: "";
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: .45;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.bol-riel__link:hover { color: var(--bol-tinta); }
+.bol-riel__link[aria-current="true"] {
+  color: var(--accent);
+  background: var(--accent-suave);
+  font-weight: 600;
+}
+.bol-riel__link[aria-current="true"]::before { opacity: 1; transform: scale(1.15); }
+
+/* --------------------------------------------------------------------------
+   7. Secciones
+   -------------------------------------------------------------------------- */
+
+.bol-sec { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.bol-sec + .bol-sec { border-top: 1px solid var(--bol-linea); }
+
+.bol-sec__head { max-width: 58ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+
+.bol-sec__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: 1rem;
+}
+.bol-sec__kicker::before {
+  content: "";
+  width: 1.6rem;
+  height: 2px;
+  background: var(--accent);
+}
+
+.bol-sec__title {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.7rem);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.bol-sec__title--lead {
+  font-size: clamp(1.25rem, 1.05rem + .9vw, 1.75rem);
+  line-height: 1.32;
+  letter-spacing: -.012em;
+  font-weight: 400;
+  color: var(--bol-tinta-2);
+}
+.bol-sec__title--lead strong { font-weight: 600; color: var(--bol-tinta); }
+
+.bol-sec__dek {
+  margin-top: .9rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--bol-tinta-2);
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   8. Banda de indicadores (elemento firma)
+   -------------------------------------------------------------------------- */
+
+.bol-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  border-top: 3px solid var(--accent);
+  border-bottom: 1px solid var(--bol-linea);
+  background: var(--bol-carta);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.bol-kpi {
+  padding: 1.5rem 1.4rem 1.3rem;
+  border-left: 1px solid var(--bol-linea-suave);
+}
+.bol-kpi:first-child { border-left: 0; }
+
+.bol-kpi__val {
+  font-family: var(--bol-font-num);
+  font-size: clamp(2.4rem, 1.6rem + 2.6vw, 3.5rem);
+  font-weight: 600;
+  line-height: .95;
+  letter-spacing: -.03em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+  margin-bottom: .7rem;
+}
+
+.bol-kpi__desc {
+  font-size: .9rem;
+  line-height: 1.42;
+  color: var(--bol-tinta);
+  max-width: 26ch;
+}
+
+.bol-kpi__src {
+  display: block;
+  margin-top: .6rem;
+  font-family: var(--bol-font-meta);
+  font-size: .66rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+}
+
+/* --------------------------------------------------------------------------
+   9. Cuerpo de texto
+   -------------------------------------------------------------------------- */
+
+.bol-cuerpo {
+  display: grid;
+  gap: clamp(1.8rem, 3vw, 2.6rem);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 860px) {
+  .bol-cuerpo--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.bol-bloque__h {
+  font-family: var(--bol-font-display);
+  font-size: 1.22rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  margin-bottom: .7rem;
+}
+.bol-bloque__h::after {
+  content: "";
+  display: block;
+  width: 2.2rem;
+  height: 2px;
+  background: var(--accent);
+  margin-top: .55rem;
+  opacity: .6;
+}
+
+.bol-bloque p + p { margin-top: .85rem; }
+.bol-bloque p { text-wrap: pretty; }
+
+.bol-prosa { max-width: var(--bol-col); }
+.bol-prosa p + p { margin-top: 1rem; }
+
+/* Destacado */
+.bol-quote {
+  margin-block: clamp(2rem, 4vw, 3rem);
+  padding: 1.6rem 0 1.6rem 1.6rem;
+  border-left: 3px solid var(--accent);
+  font-family: var(--bol-font-display);
+  font-size: clamp(1.25rem, 1rem + 1.1vw, 1.7rem);
+  line-height: 1.3;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  max-width: 44ch;
+}
+
+/* --------------------------------------------------------------------------
+   10. Tabla de indicadores síntesis
+   -------------------------------------------------------------------------- */
+
+.bol-tabla-wrap {
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  overflow: hidden;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.bol-tabla-wrap__t {
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-tabla { width: 100%; border-collapse: collapse; }
+
+.bol-tabla th {
+  text-align: left;
+  padding: .8rem 1.4rem;
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+  border-bottom: 1px solid var(--bol-linea-suave);
+}
+
+.bol-tabla td {
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  vertical-align: top;
+  font-size: .93rem;
+  line-height: 1.45;
+}
+.bol-tabla tr:last-child td { border-bottom: 0; }
+
+.bol-tabla__tema {
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--accent);
+  border-left: 3px solid var(--accent);
+}
+
+.bol-tabla__dato {
+  font-family: var(--bol-font-num);
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.bol-tabla__fuente {
+  font-family: var(--bol-font-meta);
+  font-size: .7rem;
+  letter-spacing: .04em;
+  color: var(--bol-tinta-3);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .bol-tabla thead { display: none; }
+  .bol-tabla tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .2rem .8rem;
+    padding: 1.1rem 1.2rem;
+    border-bottom: 1px solid var(--bol-linea-suave);
+    border-left: 3px solid var(--accent);
+  }
+  .bol-tabla tr:last-child { border-bottom: 0; }
+  .bol-tabla td { display: block; padding: 0; border: 0; }
+  .bol-tabla__tema { grid-column: 1 / -1; border-left: 0; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; font-family: var(--bol-font-meta); }
+  .bol-tabla__ind { grid-column: 1; }
+  .bol-tabla__dato { grid-column: 2; grid-row: 2; text-align: right; }
+  .bol-tabla__fuente { grid-column: 1 / -1; margin-top: .3rem; }
+}
+
+/* --------------------------------------------------------------------------
+   11. Agenda pública
+   -------------------------------------------------------------------------- */
+
+.bol-agenda {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  background: var(--accent-suave);
+  border: 1px solid var(--accent-borde);
+  border-radius: var(--bol-radio);
+  padding: clamp(1.4rem, 3vw, 2rem);
+}
+
+.bol-agenda__t {
+  display: flex;
+  align-items: baseline;
+  gap: .7rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--accent-borde);
+}
+
+.bol-agenda__sub {
+  font-size: .88rem;
+  color: var(--bol-tinta-2);
+}
+
+.bol-agenda__lista {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.bol-agenda__item { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: .2rem .7rem; }
+.bol-agenda__n {
+  grid-row: 1 / span 2;
+  font-family: var(--bol-font-meta);
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding-top: .18rem;
+  font-variant-numeric: tabular-nums;
+}
+.bol-agenda__h { font-weight: 600; font-size: .95rem; line-height: 1.3; }
+.bol-agenda__p { font-size: .88rem; line-height: 1.45; color: var(--bol-tinta-2); margin-top: .25rem; }
+
+/* --------------------------------------------------------------------------
+   12. Fuentes
+   -------------------------------------------------------------------------- */
+
+.bol-fuentes {
+  margin-top: 1.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bol-linea);
+  font-size: .8rem;
+  line-height: 1.5;
+  color: var(--bol-tinta-3);
+}
+.bol-fuentes b {
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+  margin-right: .4rem;
+}
+
+/* --------------------------------------------------------------------------
+   13. Cierre
+   -------------------------------------------------------------------------- */
+
+.bol-cierre {
+  background: var(--bol-tinta);
+  color: var(--bol-papel);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+.bol-cierre .bol-eyebrow { color: color-mix(in srgb, var(--bol-papel) 62%, transparent); }
+
+.bol-cierre__grid {
+  display: grid;
+  gap: var(--bol-gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 800px) {
+  .bol-cierre__grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+}
+
+.bol-cierre__t {
+  font-family: var(--bol-font-display);
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin-block: .8rem 1rem;
+}
+.bol-cierre p { color: color-mix(in srgb, var(--bol-papel) 78%, transparent); font-size: .95rem; }
+
+.bol-cita {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--bol-papel) 22%, transparent);
+  border-radius: var(--bol-radio);
+  font-family: var(--bol-font-meta);
+  font-size: .78rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--bol-papel) 82%, transparent);
+}
+
+.bol-cierre .bol-btn {
+  background: var(--bol-papel);
+  color: var(--bol-tinta);
+  border-color: var(--bol-papel);
+}
+.bol-cierre .bol-btn--ghost {
+  background: transparent;
+  color: var(--bol-papel);
+  border-color: color-mix(in srgb, var(--bol-papel) 34%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   14. Movimiento
+   -------------------------------------------------------------------------- */
+
+.bol [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .55s cubic-bezier(.22, .61, .36, 1), transform .55s cubic-bezier(.22, .61, .36, 1);
+}
+.bol [data-reveal].is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bol *, .bol *::before, .bol *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+  .bol [data-reveal] { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   15. Impresión
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .bol-riel, .bol-progress, .bol-acciones { display: none !important; }
+  .bol {
+    --bol-papel: #fff;
+    --bol-carta: #fff;
+    --bol-tinta: #000;
+    --bol-tinta-2: #333;
+    --bol-tinta-3: #555;
+    font-size: 10.5pt;
+  }
+  .bol-sec { padding-block: 1.2rem; break-inside: avoid; }
+  .bol-sec { break-before: page; }
+  .bol-hero { break-after: avoid; }
+  .bol-kpis, .bol-agenda, .bol-tabla-wrap { break-inside: avoid; }
+  .bol [data-reveal] { opacity: 1; transform: none; }
+  .bol-cierre { background: #fff; color: #000; border-top: 1px solid #000; }
+}
+
+  </style>
+</head>
+<body>
+<article class="bol">
+  <div class="bol-progress" aria-hidden="true"><div class="bol-progress__bar"></div></div>
+  <header class="bol-hero">
+      <div class="bol-wrap">
+        <div class="bol-hero__serie">
+          <strong>La Ciudad que habitamos</strong>
+          <span class="bol-eyebrow">Boletín mensual · CEPOES · Somos 100 Barrios</span>
+          <span class="bol-hero__num"><span>N.º</span>01</span>
+        </div>
+        <div class="bol-hero__grid">
+          <div>
+            <h1 class="bol-hero__title">La Ciudad que ajusta donde más duele</h1>
+            <p class="bol-hero__dek">Un diagnóstico sobre vivienda, salud, empleo, finanzas públicas y educación en la Ciudad de Buenos Aires.</p>
+            <p class="bol-hero__meta">
+              <span>Mayo 2026</span><span>7 páginas</span><span>Datos, análisis y propuestas desde el territorio</span>
+            </p>
+            <div class="bol-acciones">
+              <a class="bol-btn" href="/publicaciones/files/boletin-01-mayo-2026.pdf">Descargar PDF ↓</a>
+              <a class="bol-btn bol-btn--ghost" href="#resumen">Ir al resumen</a>
+            </div>
+          </div>
+          <div>
+            <img class="bol-hero__cover" src="/assets/boletines/boletin-01.jpg" alt="Tapa del N.º 1 del boletín del CEPOES, Mayo 2026" loading="eager" width="800" height="1035">
+            <nav class="bol-sumario" aria-label="Sumario del número">
+          <p class="bol-sumario__t bol-eyebrow">En este número</p>
+        <a class="bol-sumario__item" href="#resumen" data-eje="resumen">
+          <span class="bol-sumario__n" aria-hidden="true">02</span>
+          <span class="bol-sumario__h">Resumen ejecutivo</span>
+          <span class="bol-sumario__d">Las ideas centrales del boletín: un Estado que ajusta donde más se necesita y una ciudad cada vez más desigual.</span>
+        </a>
+        <a class="bol-sumario__item" href="#vivienda" data-eje="vivienda">
+          <span class="bol-sumario__n" aria-hidden="true">03</span>
+          <span class="bol-sumario__h">Vivienda y alquileres</span>
+          <span class="bol-sumario__d">El presupuesto porteño 2026 para vivienda es el más bajo en 14 años, mientras los alquileres acumulan +423% desde dic. 2023.</span>
+        </a>
+        <a class="bol-sumario__item" href="#salud" data-eje="salud">
+          <span class="bol-sumario__n" aria-hidden="true">04</span>
+          <span class="bol-sumario__h">Salud pública</span>
+          <span class="bol-sumario__d">Los hospitales Argerich, Durand y Fernández perderán entre 5% y 7% de sus recursos. Un ajuste acumulado del 10% desde 2023.</span>
+        </a>
+        <a class="bol-sumario__item" href="#empleo" data-eje="empleo">
+          <span class="bol-sumario__n" aria-hidden="true">05</span>
+          <span class="bol-sumario__h">Empleo y economía urbana</span>
+          <span class="bol-sumario__d">La desocupación llegó al 7,5% y la informalidad al 43%. Siete de cada diez jóvenes trabajan sin cobertura legal.</span>
+        </a>
+        <a class="bol-sumario__item" href="#finanzas" data-eje="finanzas">
+          <span class="bol-sumario__n" aria-hidden="true">06</span>
+          <span class="bol-sumario__h">Finanzas públicas de CABA</span>
+          <span class="bol-sumario__d">El gasto en áreas esenciales cae mientras la recaudación crece. Quién gana y quién pierde en el presupuesto porteño.</span>
+        </a>
+        <a class="bol-sumario__item" href="#educacion" data-eje="educacion">
+          <span class="bol-sumario__n" aria-hidden="true">07</span>
+          <span class="bol-sumario__h">Educación</span>
+          <span class="bol-sumario__d">El ajuste acumula casi el 13% desde 2023. Las obras en escuelas caen 11% y las becas estudiantiles retroceden 5%.</span>
+        </a>
+        </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+  <nav class="bol-riel" aria-label="Secciones del boletín">
+      <div class="bol-wrap"><div class="bol-riel__lista"><a class="bol-riel__link" href="#resumen" data-eje="resumen">Resumen</a><a class="bol-riel__link" href="#vivienda" data-eje="vivienda">Vivienda</a><a class="bol-riel__link" href="#salud" data-eje="salud">Salud</a><a class="bol-riel__link" href="#empleo" data-eje="empleo">Empleo</a><a class="bol-riel__link" href="#finanzas" data-eje="finanzas">Finanzas públicas</a><a class="bol-riel__link" href="#educacion" data-eje="educacion">Educación</a></div></div>
+    </nav>
+  <main>
+    <section class="bol-sec" id="resumen" data-eje="resumen" aria-labelledby="t-resumen">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow">Resumen ejecutivo</span>
+          <h2 class="bol-sec__title bol-sec__title--lead" id="t-resumen">En 2026, la recaudación y el gasto total crecen, pero las áreas que más impactan en la vida cotidiana de las mayorías registran caídas reales sostenidas. Una ciudad que produce más recursos y los orienta al equilibrio fiscal mientras recorta donde más se necesita.</h2>
+        </header>
+        <div class="bol-prosa" data-reveal>
+          <p>La Ciudad de Buenos Aires atraviesa en 2026 una paradoja que los datos vuelven difícil de ignorar: la recaudación y el gasto total crecen, pero las áreas que más impactan en la vida cotidiana de las mayorías —vivienda, salud, empleo, educación y desarrollo social— registran caídas reales sostenidas. El resultado es una ciudad que produce más recursos y los orienta de manera creciente hacia el equilibrio fiscal, mientras recorta donde más se necesita.</p>
+          <p>En vivienda, el presupuesto 2026 es el más bajo en 14 años: cayó un 22,9% en términos reales respecto de 2025. Alquilar un monoambiente cuesta en promedio $704.704 mensuales —más del doble del Salario Mínimo Vital y Móvil— y la población en situación de calle superó las 5.000 personas, con un aumento del 30% en un año.</p>
+          <p>En salud, el ajuste acumulado desde 2023 alcanza el 10%. Los hospitales de referencia de la zona sur —Argerich, Durand, Piñero— enfrentan reducciones de entre 5% y 20% en sus partidas. El sistema hospitalario porteño atiende a quienes no tienen obra social ni pueden pagar una consulta privada: recortarlo no es austeridad, es transferir costos a los sectores más vulnerables.</p>
+          <p>En el mercado laboral, la desocupación cerró 2025 en 7,5% y la informalidad trepó al 43% de los trabajadores. El impacto es especialmente duro en las juventudes: siete de cada diez jóvenes de 16 a 24 años trabajan sin cobertura legal, sin jubilación y sin obra social.</p>
+          <blockquote class="bol-quote">Siete de cada diez jóvenes trabajan sin cobertura legal, sin jubilación y sin obra social.</blockquote>
+          <p>En educación, el ajuste acumulado desde 2023 roza el 13%. Las obras en establecimientos escolares caen 11%, las becas estudiantiles retroceden 5% y los programas de apoyo y asistencia se contraen. Educar en la Ciudad cuesta cada vez más a las familias y cada vez menos le importa al presupuesto.</p>
+          <p>Este boletín es el primer producto del CEPOES. Su objetivo es aportar datos rigurosos y análisis accesible para construir agenda pública desde el territorio. Cada sección incluye indicadores clave, análisis de contexto y propuestas concretas para reorientar las políticas del Gobierno de la Ciudad.</p>
+        </div>
+        <div class="bol-tabla-wrap" data-reveal>
+          <div class="bol-tabla-wrap__t"><span class="bol-eyebrow">Indicadores síntesis del boletín</span></div>
+          <table class="bol-tabla">
+            <thead>
+              <tr><th scope="col">Tema</th><th scope="col">Indicador clave</th><th scope="col">Dato</th><th scope="col">Fuente</th></tr>
+            </thead>
+            <tbody>
+            <tr data-eje="vivienda">
+              <td class="bol-tabla__tema">Vivienda</td>
+              <td class="bol-tabla__ind">Presupuesto organismos de vivienda CABA 2026</td>
+              <td class="bol-tabla__dato">−22,9% real</td>
+              <td class="bol-tabla__fuente">ACIJ</td>
+            </tr>
+            <tr data-eje="salud">
+              <td class="bol-tabla__tema">Salud</td>
+              <td class="bol-tabla__ind">Ajuste acumulado en salud CABA desde 2023</td>
+              <td class="bol-tabla__dato">−10%</td>
+              <td class="bol-tabla__fuente">CEPA</td>
+            </tr>
+            <tr data-eje="empleo">
+              <td class="bol-tabla__tema">Empleo</td>
+              <td class="bol-tabla__ind">Informalidad laboral (4.º trim. 2025)</td>
+              <td class="bol-tabla__dato">43%</td>
+              <td class="bol-tabla__fuente">INDEC / IIEP-UBA</td>
+            </tr>
+            <tr data-eje="finanzas">
+              <td class="bol-tabla__tema">Finanzas</td>
+              <td class="bol-tabla__ind">Caída en gasto educación CABA 2026</td>
+              <td class="bol-tabla__dato">−3,5% real</td>
+              <td class="bol-tabla__fuente">CEPA</td>
+            </tr>
+            <tr data-eje="educacion">
+              <td class="bol-tabla__tema">Educación</td>
+              <td class="bol-tabla__ind">Ajuste acumulado educación CABA desde 2023</td>
+              <td class="bol-tabla__dato">−13%</td>
+              <td class="bol-tabla__fuente">CEPA</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>ACIJ (feb. 2026) · CEPA (oct. 2025) · INDEC EPH 4.º trim. 2025 · IIEP-UBA (mar. 2026) · Centro RA FCE-UBA (feb. 2026) · Zonaprop (abr. 2026).</p>
+      </div>
+    </section>
+    <section class="bol-sec" id="vivienda" data-eje="vivienda" aria-labelledby="t-vivienda">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow bol-eyebrow--accent">Vivienda y alquileres</span>
+          <h2 class="bol-sec__title" id="t-vivienda">Vivienda en CABA: el derecho que el mercado no garantiza</h2>
+          <p class="bol-sec__dek">El presupuesto porteño 2026 destina a vivienda su mínima histórica en 14 años, mientras los alquileres acumulan aumentos que cuadruplican la inflación.</p>
+        </header>
+        <div class="bol-kpis" data-eje="vivienda" data-reveal>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">+423%</p>
+          <p class="bol-kpi__desc">Suba acumulada en vivienda, servicios y combustibles desde dic. 2023 a feb. 2026<span class="bol-kpi__src">Centro RA – FCE UBA</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">$704.704</p>
+          <p class="bol-kpi__desc">Alquiler promedio mensual de un monoambiente en CABA (marzo 2026)<span class="bol-kpi__src">Zonaprop, abr. 2026</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−22,9%</p>
+          <p class="bol-kpi__desc">Caída real del presupuesto para organismos de vivienda respecto de 2025<span class="bol-kpi__src">ACIJ, feb. 2026</span></p>
+        </div>
+      </div>
+        <div class="bol-cuerpo bol-cuerpo--dos">
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">El presupuesto que no llega</h3>
+          <p>El Presupuesto 2026 proyecta que los recursos para organismos de vivienda representarán menos del 1% del gasto total. Según ACIJ, esto implica una caída real del 22,9% respecto de 2025 y el nivel más bajo en al menos 14 años.</p><p>El jefe de Gobierno, Jorge Macri, anunció un giro hacia “la clase media que alquila”, en detrimento de la urbanización en barrios populares. Los datos contradicen ese discurso: las partidas destinadas a créditos y programas de alquiler representan apenas el 4% del presupuesto de vivienda.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Alquileres: cuatro veces la inflación</h3>
+          <p>Un informe del Centro RA (FCE-UBA) muestra que el rubro vivienda, servicios y combustibles acumuló una suba del 423% entre diciembre de 2023 y febrero de 2026, frente a una inflación general del 209% según el IPC del INDEC.</p><p>En concreto: alquilar un monoambiente cuesta en promedio $704.704 mensuales (Zonaprop, marzo 2026), mientras el Salario Mínimo Vital y Móvil era de $322.200: apenas el 64% del costo de la unidad más chica del mercado.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Desigualdad territorial</h3>
+          <p>Los precios no son uniformes. En Lugano, Nueva Pompeya y Parque Avellaneda los valores son menores, pero también concentran mayor hacinamiento y menor acceso a infraestructura. Puerto Madero lidera el precio de venta con USD 6.148 por m², mientras Agronomía registra USD 2.270. La misma ciudad, mundos distintos.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Situación de calle: la punta del iceberg</h3>
+          <p>Según la Dirección de Estadísticas y Censos de la Ciudad, más de 5.000 personas duermen en la vía pública o en centros de inclusión social, lo que representa un aumento superior al 30% en el último año.</p><p>Este dato no es un accidente: es el resultado de políticas insuficientes, un mercado desregulado y la ausencia de instrumentos públicos que prioricen el derecho a la vivienda sobre la lógica especulativa.</p>
+        </div>
+        </div>
+        <div class="bol-agenda" data-eje="vivienda" data-reveal>
+          <div class="bol-agenda__t">
+            <span class="bol-eyebrow bol-eyebrow--accent">Agenda pública</span>
+            <span class="bol-agenda__sub">Qué debería hacer el GCBA</span>
+          </div>
+          <ul class="bol-agenda__lista">
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">01</span>
+            <p class="bol-agenda__h">Ampliar el presupuesto de vivienda</p>
+            <p class="bol-agenda__p">Revertir la caída del 22,9% real e incrementar partidas para alquiler social, crédito accesible y urbanización en barrios populares.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">02</span>
+            <p class="bol-agenda__h">Registro de unidades ociosas</p>
+            <p class="bol-agenda__p">Implementar un relevamiento de viviendas vacías para diseñar instrumentos fiscales que incentiven su puesta en alquiler a precios accesibles.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">03</span>
+            <p class="bol-agenda__h">Monitoreo comunal de precios</p>
+            <p class="bol-agenda__p">Construir un índice de alquileres desagregado por barrio para orientar la política pública con datos propios.</p>
+          </li>
+          </ul>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>Centro RA – FCE UBA (feb. 2026) · ACIJ – Análisis Presupuesto CABA 2026 · Zonaprop (abr. 2026) · Dir. de Estadísticas GCBA · Chequeado (feb. 2026) · Infobae Real Estate (ene. 2026).</p>
+      </div>
+    </section>
+<section class="bol-sec" id="salud" data-eje="salud" aria-labelledby="t-salud">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow bol-eyebrow--accent">Salud pública</span>
+          <h2 class="bol-sec__title" id="t-salud">Salud pública porteña: ajuste sobre ajuste</h2>
+          <p class="bol-sec__dek">El presupuesto de salud de la Ciudad acumula una caída real del 10% desde 2023. Los hospitales del sur son los más afectados. La demanda no para de crecer.</p>
+        </header>
+        <div class="bol-kpis" data-eje="salud" data-reveal>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−10%</p>
+          <p class="bol-kpi__desc">Caída acumulada real en salud pública CABA desde 2023<span class="bol-kpi__src">CEPA, oct. 2025</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−2,7%</p>
+          <p class="bol-kpi__desc">Caída real prevista en el presupuesto de salud para 2026<span class="bol-kpi__src">Página 12 / CEPA</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">34 + 50</p>
+          <p class="bol-kpi__desc">Hospitales y CeSAC de la red pública de salud de la Ciudad<span class="bol-kpi__src">GCBA</span></p>
+        </div>
+      </div>
+        <div class="bol-cuerpo bol-cuerpo--dos">
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Un ajuste que se acumula</h3>
+          <p>Según el Observatorio Económico de CEPA, la caída presupuestaria prevista para salud en 2026 es del 2,7%, con un ajuste acumulado del 10% desde 2023. El recorte se concentra en los hospitales con mayor demanda de los sectores vulnerables.</p><p>Los hospitales Argerich, Durand y Fernández verán reducidos sus recursos entre un 5% y un 7%. El Hospital Piñero, cabecera de la zona suroeste con los índices más altos de pobreza de la Ciudad, ya acumulaba en períodos anteriores recortes de hasta el 20%.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Salud mental: el eslabón más frágil</h3>
+          <p>Los hospitales Alvear y Tobar García sufrieron recortes del 20% y 22% respectivamente. Los Talleres Protegidos de Rehabilitación Psiquiátrica perdieron el 35% de su presupuesto. Este subsistema es el que menos visibilidad tiene y el que más rápido se deteriora.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">La demanda no baja</h3>
+          <p>La red pública —34 hospitales y 50 CeSAC— atiende a quienes no tienen obra social ni pueden pagar una consulta privada. En un contexto donde el empleo informal alcanza al 43% de los trabajadores, la demanda sobre el sistema público no para de crecer.</p><p>Los CeSAC son la puerta de entrada al sistema para los barrios populares: atención primaria, controles de embarazo, vacunación, seguimiento de enfermedades crónicas. Su deterioro no se ve en los titulares, pero se siente en los tiempos de espera y en las derivaciones que no llegan.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">La desigualdad territorial en salud</h3>
+          <p>Las comunas del sur concentran mayor pobreza, menor cobertura privada y los hospitales con más recortes. La geografía del ajuste reproduce y profundiza la geografía de la desigualdad.</p>
+        </div>
+        </div>
+        <div class="bol-agenda" data-eje="salud" data-reveal>
+          <div class="bol-agenda__t">
+            <span class="bol-eyebrow bol-eyebrow--accent">Agenda pública</span>
+            <span class="bol-agenda__sub">Qué debería hacer el GCBA</span>
+          </div>
+          <ul class="bol-agenda__lista">
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">01</span>
+            <p class="bol-agenda__h">Revertir el ajuste hospitalario</p>
+            <p class="bol-agenda__p">Garantizar un incremento real en los presupuestos de los hospitales de la zona sur y los centros de salud mental, priorizando los más afectados.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">02</span>
+            <p class="bol-agenda__h">Fortalecer la red de CeSAC</p>
+            <p class="bol-agenda__p">Ampliar dotación de personal, insumos y equipamiento en los centros de atención primaria de las comunas con mayor demanda y vulnerabilidad social.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">03</span>
+            <p class="bol-agenda__h">Observatorio de Salud CABA</p>
+            <p class="bol-agenda__p">Crear un sistema de monitoreo público con indicadores de tiempos de espera, camas disponibles y prestaciones por barrio y comuna.</p>
+          </li>
+          </ul>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>CEPA – Observatorio Económico Urbano (oct. 2025) · Página 12 (oct. 2025) · GCBA – Red hospitalaria pública · La Nación (oct. 2025).</p>
+      </div>
+    </section>
+<section class="bol-sec" id="empleo" data-eje="empleo" aria-labelledby="t-empleo">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow bol-eyebrow--accent">Empleo y economía urbana</span>
+          <h2 class="bol-sec__title" id="t-empleo">Empleo en crisis: más trabajo, menos derechos</h2>
+          <p class="bol-sec__dek">La desocupación llegó al 7,5% y la informalidad al 43%. Siete de cada diez jóvenes trabajan sin cobertura legal. El crecimiento económico no llega a los bolsillos.</p>
+        </header>
+        <div class="bol-kpis" data-eje="empleo" data-reveal>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">7,5%</p>
+          <p class="bol-kpi__desc">Tasa de desocupación en el 4.º trimestre de 2025<span class="bol-kpi__src">INDEC – EPH, mar. 2026</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">43%</p>
+          <p class="bol-kpi__desc">Trabajadores en informalidad laboral (4.º trim. 2025)<span class="bol-kpi__src">IIEP-UBA, mar. 2026</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">7 de 10</p>
+          <p class="bol-kpi__desc">Jóvenes de 16 a 24 años que trabajan sin cobertura legal<span class="bol-kpi__src">IIEP-UBA / EPH</span></p>
+        </div>
+      </div>
+        <div class="bol-cuerpo bol-cuerpo--dos">
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Un mercado laboral en deterioro</h3>
+          <p>La tasa de desocupación cerró el cuarto trimestre de 2025 en 7,5%, su nivel más alto desde el inicio de la gestión Milei. En términos absolutos, 1,64 millones de personas buscaban trabajo sin encontrarlo. El empleo formal cayó 0,8 puntos porcentuales en el período.</p><p>La informalidad alcanzó al 43% de los trabajadores, lo que implica que más de 9 millones de personas trabajan sin cobertura de salud, sin aportes jubilatorios y sin protección legal. Desde diciembre de 2023, la informalidad creció 1,6 puntos porcentuales.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">La juventud: la más golpeada</h3>
+          <p>Entre los jóvenes de 16 a 24 años, siete de cada diez trabajan en condiciones informales. La tasa de desocupación juvenil duplica la tasa general: las mujeres de hasta 29 años vieron crecer su desempleo 3 puntos en un año; los varones, 3,7 puntos.</p><p>En los barrios populares el cuadro es más crudo: el 90% de los jóvenes trabaja en la informalidad, y el 43% tuvo su primera experiencia laboral a los 15 años o menos.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Los salarios que no alcanzan</h3>
+          <p>Los salarios de los trabajadores registrados retrocedieron un 2,1% adicional durante 2025 y acumulan una caída del 7,1% en términos reales desde noviembre de 2023. La tasa de actividad alcanzó el 48,6%, su nivel más alto de la serie: más personas salen a buscar trabajo porque los ingresos del hogar no alcanzan.</p><p>La Ciudad de Buenos Aires concentra una proporción significativa del empleo nacional, pero también uno de los costos de vida más altos del país. Alquilar, trasladarse y comer en CABA consume una porción creciente del ingreso de los trabajadores, especialmente de los informales.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Sectores más afectados</h3>
+          <p>Entre los desocupados, la construcción concentra el 19,3% y el comercio el 16%. Ambos sectores son intensivos en mano de obra y tienen alta presencia en los barrios populares. La industria manufacturera aporta el 9,7%, en un contexto de cierre de pymes y pérdida de empleos formales.</p>
+        </div>
+        </div>
+        <div class="bol-agenda" data-eje="empleo" data-reveal>
+          <div class="bol-agenda__t">
+            <span class="bol-eyebrow bol-eyebrow--accent">Agenda pública</span>
+            <span class="bol-agenda__sub">Qué debería hacer el GCBA</span>
+          </div>
+          <ul class="bol-agenda__lista">
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">01</span>
+            <p class="bol-agenda__h">Mapa de empleo por comuna</p>
+            <p class="bol-agenda__p">Relevamiento de oficios, pymes y empleadores por barrio para orientar políticas de formación, crédito y compras públicas inclusivas.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">02</span>
+            <p class="bol-agenda__h">Agenda de formalización</p>
+            <p class="bol-agenda__p">Impulsar desde la Legislatura porteña programas de registro laboral para trabajadores de plataformas, cuidadores y sector informal urbano.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">03</span>
+            <p class="bol-agenda__h">Empleo joven con derechos</p>
+            <p class="bol-agenda__p">Crear un programa comunal de primer empleo registrado que articule formación, orientación laboral y acompañamiento para jóvenes de 18 a 25 años.</p>
+          </li>
+          </ul>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>INDEC – EPH 4.º trim. 2025 (mar. 2026) · IIEP-UBA / Maurizio y Beccaria (mar. 2026) · Infobae (mar. y abr. 2026) · APF Digital (abr. 2026).</p>
+      </div>
+    </section>
+<section class="bol-sec" id="finanzas" data-eje="finanzas" aria-labelledby="t-finanzas">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow bol-eyebrow--accent">Finanzas públicas de CABA</span>
+          <h2 class="bol-sec__title" id="t-finanzas">El presupuesto porteño 2026: quién gana y quién pierde</h2>
+          <p class="bol-sec__dek">La Ciudad proyecta un crecimiento del gasto superior al 25%, pero el ajuste en áreas sociales es sistemático. Un análisis de las prioridades reales del GCBA.</p>
+        </header>
+        <div class="bol-kpis" data-eje="finanzas" data-reveal>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−3,5%</p>
+          <p class="bol-kpi__desc">Caída real en Educación CABA 2026 vs. 2025<span class="bol-kpi__src">CEPA, oct. 2025</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−15%</p>
+          <p class="bol-kpi__desc">Caída real en Cultura CABA 2026 (acum. −37% desde 2023)<span class="bol-kpi__src">CEPA, oct. 2025</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">+22%</p>
+          <p class="bol-kpi__desc">Aumento en obras de mantenimiento urbano 2026<span class="bol-kpi__src">CEPA, oct. 2025</span></p>
+        </div>
+      </div>
+        <div class="bol-cuerpo bol-cuerpo--dos">
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Un presupuesto que crece desigual</h3>
+          <p>El Presupuesto 2026 proyecta un crecimiento del gasto total superior al 25% y una recaudación también en alza. Sin embargo, el análisis de CEPA revela que ese crecimiento no llega a las áreas sociales: salud cae 2,7%, educación cae 3,5%, vivienda cae 22,9% y cultura cae 15%.</p><p>En términos acumulados desde 2023, el ajuste es más profundo: educación acumula una baja cercana al 13%. Las partidas para obras en establecimientos escolares caen 11%, las becas estudiantiles retroceden 5% y los subsidios a cooperadoras también disminuyen.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Cultura: el ajuste invisible</h3>
+          <p>El Ministerio de Cultura reducirá su gasto un 15%, acumulando una baja del 37% desde 2023. El Complejo Teatral de Buenos Aires pierde más del 40% de sus recursos y el programa Cultural en los Barrios cae 25%. Solo la Usina del Arte y el programa de rehabilitación de La Boca presentan aumentos.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">¿Qué crece?</h3>
+          <p>En contraste con las caídas sociales, el presupuesto 2026 sí aumenta en algunas áreas: el alumbrado público sube 20% y las obras de mantenimiento urbano crecen 22%. Son inversiones con alta visibilidad pero bajo impacto redistributivo.</p><p>El Gobierno porteño prioriza la infraestructura visible sobre los servicios esenciales. La Ciudad puede mostrar obras, pero los hospitales no tienen insumos, las escuelas no tienen recursos y los barrios no tienen apoyo.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">El patrón estructural</h3>
+          <p>Según CEPA, el Presupuesto 2026 consolida una orientación de ajuste estructural que limita la capacidad del Estado para garantizar derechos básicos y profundiza las desigualdades urbanas. Detrás del discurso de eficiencia administrativa, se contrae el gasto donde más se necesita.</p><p>Para el CEPOES, el seguimiento trimestral del presupuesto porteño es una herramienta clave de incidencia: saber dónde se gasta es condición para saber dónde y cómo disputar.</p>
+        </div>
+        </div>
+        <div class="bol-agenda" data-eje="finanzas" data-reveal>
+          <div class="bol-agenda__t">
+            <span class="bol-eyebrow bol-eyebrow--accent">Agenda pública</span>
+            <span class="bol-agenda__sub">Qué debería hacer el GCBA</span>
+          </div>
+          <ul class="bol-agenda__lista">
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">01</span>
+            <p class="bol-agenda__h">Presupuesto CABA en 10 láminas</p>
+            <p class="bol-agenda__p">Publicar, tras cada presentación del Ejecutivo, un resumen accesible con la distribución real del gasto y sus variaciones respecto al año anterior.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">02</span>
+            <p class="bol-agenda__h">Seguimiento trimestral</p>
+            <p class="bol-agenda__p">Monitorear la ejecución presupuestaria trimestral para detectar desvíos y subdistribuciones en áreas sociales.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">03</span>
+            <p class="bol-agenda__h">Presupuesto participativo real</p>
+            <p class="bol-agenda__p">Impulsar en cada comuna un proceso genuino de priorización ciudadana del gasto, con información clara y mecanismos de control comunitario.</p>
+          </li>
+          </ul>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>CEPA – Observatorio Económico Urbano (oct. 2025) · Página 12 (oct. 2025) · ACIJ (feb. 2026) · Chequeado (feb. 2026).</p>
+      </div>
+    </section>
+<section class="bol-sec" id="educacion" data-eje="educacion" aria-labelledby="t-educacion">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow bol-eyebrow--accent">Educación</span>
+          <h2 class="bol-sec__title" id="t-educacion">Educación en CABA: el ajuste que no para</h2>
+          <p class="bol-sec__dek">El gasto educativo porteño acumula una caída del 13% desde 2023. Las obras en escuelas caen 11%, las becas retroceden 5% y los programas de apoyo se contraen. Datos que el GCBA no publicita.</p>
+        </header>
+        <div class="bol-kpis" data-eje="educacion" data-reveal>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−13%</p>
+          <p class="bol-kpi__desc">Ajuste acumulado en educación CABA desde 2023<span class="bol-kpi__src">CEPA, oct. 2025</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−11%</p>
+          <p class="bol-kpi__desc">Caída en partidas para obras en establecimientos escolares 2026<span class="bol-kpi__src">CEPA, oct. 2025</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−5%</p>
+          <p class="bol-kpi__desc">Retroceso en becas estudiantiles CABA 2026<span class="bol-kpi__src">CEPA, oct. 2025</span></p>
+        </div>
+      </div>
+        <div class="bol-cuerpo bol-cuerpo--dos">
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Un ajuste sostenido desde 2023</h3>
+          <p>El Observatorio Económico de CEPA registra que el gasto en educación en la Ciudad de Buenos Aires acumula una baja cercana al 13% en términos reales desde 2023. Para 2026, la caída prevista es del 3,5% adicional, lo que equivale a casi 500.000 millones de pesos resignados en cuatro años.</p><p>Las partidas para obras en establecimientos educativos caen 11%. Los subsidios a cooperadoras, la educación inicial, primaria y especial, así como los fondos para educación técnica y de adultos, también disminuyen. El ajuste no discrimina nivel ni modalidad.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Becas e infraestructura: los más golpeados</h3>
+          <p>Las becas estudiantiles retroceden 5%, en un contexto donde el costo de materiales, fotocopias y transporte sigue creciendo. Para muchas familias de ingresos bajos, esa diferencia define si un joven permanece en el sistema o lo abandona.</p><p>La infraestructura escolar es otro punto crítico: edificios deteriorados, falta de calefacción y problemas edilicios que las cooperadoras intentan resolver con recursos mínimos. El recorte del 11% en obras profundiza un déficit acumulado que ningún discurso de “calidad educativa” puede disimular.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Desigualdad en el aula</h3>
+          <p>Como en otros ejes, el ajuste no pega igual en toda la Ciudad. Las comunas del sur —donde se concentran los sectores de menores ingresos— tienen escuelas con mayor demanda de apoyo estatal y menor capacidad de las familias para compensar con recursos propios. Cuando el Estado se retira, la brecha se agranda.</p><p>En el nivel nacional, la tendencia es similar: la inversión en infraestructura escolar cayó más del 60% en términos reales respecto de 2023 según datos del IIEP-UBA y CTERA, y el programa Conectar Igualdad fue prácticamente desfinanciado.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Lo que dice el presupuesto de las prioridades</h3>
+          <p>El gasto educativo porteño revela una Ciudad que delega en las familias lo que el Estado deja de garantizar. Cuando se recortan cooperadoras, becas e infraestructura, son las madres, los padres y las y los docentes quienes compensan. No es eficiencia: es transferencia de costos a quienes menos pueden sostenerlos.</p>
+        </div>
+        </div>
+        <div class="bol-agenda" data-eje="educacion" data-reveal>
+          <div class="bol-agenda__t">
+            <span class="bol-eyebrow bol-eyebrow--accent">Agenda pública</span>
+            <span class="bol-agenda__sub">Qué debería hacer el GCBA</span>
+          </div>
+          <ul class="bol-agenda__lista">
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">01</span>
+            <p class="bol-agenda__h">Revertir el recorte en infraestructura escolar</p>
+            <p class="bol-agenda__p">Garantizar un incremento real en las partidas para obras y mantenimiento de establecimientos educativos, priorizando las comunas del sur con mayor déficit.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">02</span>
+            <p class="bol-agenda__h">Fortalecer becas y apoyo escolar</p>
+            <p class="bol-agenda__p">Ampliar el programa de becas estudiantiles e incorporar subsidios para útiles, fotocopias y transporte en comunas con mayor vulnerabilidad socioeconómica.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">03</span>
+            <p class="bol-agenda__h">Observatorio educativo comunal</p>
+            <p class="bol-agenda__p">Construir un tablero de indicadores por escuela y barrio: matrícula, deserción, estado edilicio y asistencia docente, para orientar el gasto con datos reales.</p>
+          </li>
+          </ul>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>CEPA – Observatorio Económico Urbano (oct. 2025) · IIEP-UBA / CONICET (nov. 2025) · CTERA (dic. 2025) · Chequeado (oct. 2025) · Argentinos por la Educación (oct. 2025).</p>
+      </div>
+    </section>
+  </main>
+  <footer class="bol-cierre">
+      <div class="bol-wrap">
+        <div class="bol-cierre__grid">
+          <div>
+            <span class="bol-eyebrow">CEPOES</span>
+            <p class="bol-cierre__t">Datos, investigación y propuestas para CABA, desde los barrios.</p>
+            <p>La Ciudad que habitamos es el boletín mensual del Centro de Estudios en Política, Economía y Sociedad, el centro de estudios de Somos 100 Barrios. Cada número sigue cinco ejes: vivienda, salud, empleo, finanzas públicas y educación.</p>
+            <div class="bol-acciones">
+              <a class="bol-btn" href="https://cepoes.org/publicaciones/boletines/">Ver la serie completa</a>
+              <a class="bol-btn bol-btn--ghost" href="/publicaciones/files/boletin-01-mayo-2026.pdf">Descargar este número ↓</a>
+            </div>
+            <div class="bol-acciones"><a class="bol-btn bol-btn--ghost" href="/publicaciones/boletines/boletin-02-junio-2026/">N.º 02 · Junio 2026 →</a></div>
+          </div>
+          <div>
+            <span class="bol-eyebrow">Cita sugerida</span>
+            <p class="bol-cita">CEPOES (2026). «La Ciudad que ajusta donde más duele». La Ciudad que habitamos, N.º 1, Mayo 2026. Centro de Estudios en Política, Economía y Sociedad – Somos 100 Barrios.</p>
+            <div class="bol-acciones">
+              <button class="bol-btn bol-btn--ghost" type="button" data-copiar-cita>Copiar cita</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+</article>
+</body>
+</html>

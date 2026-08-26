@@ -570,8 +570,9 @@ def normalize_html(path: Path, site: Path) -> None:
     source = path.read_text(encoding="utf-8")
     source = source.replace('href="/observatorio/presupuesto/"', 'href="/presupuesto/ejecucion/"')
     source = source.replace('href="/territorio/presupuesto/"', 'href="/presupuesto/territorio/"')
-    if ARCHITECTURE_CSS not in source:
-        source = source.replace("</head>", f'<link href="{ARCHITECTURE_CSS}" rel="stylesheet"></head>', 1)
+    source = re.sub(r'/assets/endeudamiento\.js(?:\?v=\d+)?', '/assets/endeudamiento.js?v=232', source)
+    source = re.sub(r'<link\b[^>]*href=["\']/assets/arquitectura\.css(?:\?[^"\']*)?["\'][^>]*>', '', source, flags=re.I)
+    source = source.replace("</head>", f'<link href="{ARCHITECTURE_CSS}" rel="stylesheet"></head>', 1)
     source = re.sub(r'<meta\s+(?:content=["\'][^"\']+["\']\s+name=["\']theme-color["\']|name=["\']theme-color["\']\s+content=["\'][^"\']+["\'])\s*/?>', "", source, flags=re.I)
     viewport = re.search(r'<meta\b[^>]*name=["\']viewport["\'][^>]*>', source, flags=re.I)
     if viewport:

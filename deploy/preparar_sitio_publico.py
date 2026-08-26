@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=3"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=4"
 
 
 TOPICS = [
@@ -290,6 +290,65 @@ def replace_id_html(source: str, element_id: str, value: str) -> str:
     return source
 
 
+def element_span(source: str, opening: re.Match) -> tuple[int, int] | None:
+    """Return the complete span of an element, including nested equal tags."""
+    tag = opening.group("tag")
+    token = re.compile(rf'</?{re.escape(tag)}\b[^>]*>', flags=re.I | re.S)
+    depth = 1
+    for match in token.finditer(source, opening.end()):
+        if match.group(0).startswith("</"):
+            depth -= 1
+        elif not match.group(0).rstrip().endswith("/>"):
+            depth += 1
+        if depth == 0:
+            return opening.start(), match.end()
+    return None
+
+
+def replace_class_element(source: str, tag: str, class_name: str, value: str) -> str:
+    opening = re.search(
+        rf'<(?P<tag>{re.escape(tag)})\b(?=[^>]*\bclass=["\'][^"\']*\b{re.escape(class_name)}\b[^"\']*["\'])[^>]*>',
+        source,
+        flags=re.I | re.S,
+    )
+    if not opening or not (span := element_span(source, opening)):
+        return source
+    return source[:span[0]] + value + source[span[1]:]
+
+
+def pop_class_element(source: str, tag: str, class_name: str) -> tuple[str, str]:
+    opening = re.search(
+        rf'<(?P<tag>{re.escape(tag)})\b(?=[^>]*\bclass=["\'][^"\']*\b{re.escape(class_name)}\b[^"\']*["\'])[^>]*>',
+        source,
+        flags=re.I | re.S,
+    )
+    if not opening or not (span := element_span(source, opening)):
+        return source, ""
+    return source[:span[0]] + source[span[1]:], source[span[0]:span[1]]
+
+
+def restructure_home(source: str) -> str:
+    """Shorten the home and keep its product hierarchy stable across deploys."""
+    sections: dict[str, str] = {}
+    order = [
+        "home-pulse-section",
+        "home-kpi-section",
+        "home-offer-section",
+        "home-latest-section",
+        "home-products-section",
+        "home-about-section",
+    ]
+    for class_name in order:
+        source, sections[class_name] = pop_class_element(source, "section", class_name)
+    for redundant in ("home-territory-section", "home-topics-section", "home-recent-section"):
+        source, _ = pop_class_element(source, "section", redundant)
+    block = "".join(sections[name] for name in order if sections[name])
+    footer_at = source.find('<dialog', source.find('</header>'))
+    if footer_at < 0:
+        footer_at = source.find('<footer')
+    return source[:footer_at] + block + source[footer_at:] if footer_at >= 0 else source + block
+
+
 def apply_fallbacks(source: str, rel: str) -> str:
     budget = load_json("presupuesto.json")
     diagnostic = load_json("diagnostico_presupuestario.json")
@@ -343,7 +402,16 @@ def apply_fallbacks(source: str, rel: str) -> str:
             f'<div class="num">+{fmt_number(now)}% mensual</div><p>La inflación {"se aceleró" if now > before else "desaceleró"} '
             f'{fmt_number(abs(now-before))} puntos frente al mes previo; la variación interanual fue {fmt_number(ipc["var_ia"][-1])}%.</p></div>'
         )
-        source = replace_id_html(source, "home-pulse", signals)
+        pulse_section = (
+            '<section class="section home-pulse-section"><div class="wrap">'
+            '<div class="section-head"><div><span class="eyebrow">Lectura CEPOES</span>'
+            '<h2>Tres señales de coyuntura</h2></div></div>'
+            f'<div class="pulse-grid home-pulse" id="home-pulse">{signals}</div>'
+            '</div></section>'
+        )
+        # Replace the entire section to remove malformed fragments left by the
+        # old nested-div replacement, not only the first inner container.
+        source = replace_class_element(source, "section", "home-pulse-section", pulse_section)
 
     if rel == "/observatorio/index.html":
         ipc = data["ipcba"]
@@ -470,6 +538,8 @@ def normalize_html(path: Path, site: Path) -> None:
             flags=re.I,
         )
     source = apply_fallbacks(source, rel)
+    if rel == "/index.html":
+        source = restructure_home(source)
     path.write_text(source, encoding="utf-8")
 
 

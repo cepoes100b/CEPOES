@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=6"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=7"
 
 
 TOPICS = [
@@ -506,6 +506,17 @@ def apply_fallbacks(source: str, rel: str) -> str:
         ipc = data["ipcba"]
         employment = data["empleo"]
         pgb = data["pgb"]
+        poverty = data["pobreza"]
+        locales = data["comunas_locales"]["total"]
+        vacancy = 100 - locales["tasa_ocup"]
+        kpis = (
+            f'<a class="kpi kpi-link" href="/observatorio/precios/ipc/" style="--c:var(--lB)"><div class="label">IPCBA · interanual</div><div class="value">+{fmt_number(ipc["var_ia"][-1])}%</div><div class="small">{fmt_period(ipc["meses"][-1])}</div><span class="kpi-go">Ver serie →</span></a>'
+            f'<a class="kpi kpi-link" href="/observatorio/precios/ipc/" style="--c:var(--lH)"><div class="label">IPCBA · mensual</div><div class="value">+{fmt_number(ipc["var_m"][-1])}%</div><div class="small">{fmt_period(ipc["meses"][-1])}</div><span class="kpi-go">Ver serie →</span></a>'
+            f'<a class="kpi kpi-link" href="/observatorio/produccion/pgb/" style="--c:var(--lA)"><div class="label">Actividad · PGB</div><div class="value">+{fmt_number(pgb["ultimo_var"])}%</div><div class="small">{fmt_period(pgb["ultimo_trim"])}</div><span class="kpi-go">Ver serie →</span></a>'
+            f'<a class="kpi kpi-link" href="/observatorio/produccion/locales-vacantes/" style="--c:var(--lN)"><div class="label">Locales vacantes</div><div class="value">{fmt_number(vacancy)}%</div><div class="small">1.er relevamiento 2026</div><span class="kpi-go">Ver serie →</span></a>'
+            f'<a class="kpi kpi-link" href="/observatorio/trabajo/empleo/" style="--c:var(--lD)"><div class="label">Tasa de empleo</div><div class="value">{fmt_number(employment["empleo"][-1])}%</div><div class="small">{fmt_period(employment["trimestres"][-1])}</div><span class="kpi-go">Ver serie →</span></a>'
+            f'<a class="kpi kpi-link" href="/observatorio/condiciones-de-vida/pobreza/" style="--c:var(--lE)"><div class="label">Pobreza</div><div class="value">{fmt_number(poverty["pob_per_pct"][-1])}%</div><div class="small">{fmt_period(poverty["periodos"][-1])}</div><span class="kpi-go">Ver serie →</span></a>'
+        )
         signals = (
             f'<div class="pulse-card" style="--c:var(--lH)"><div class="top"><span>Precios</span></div>'
             f'<div class="num">+{fmt_number(ipc["var_m"][-1])}% mensual</div><p>{fmt_period(ipc["meses"][-1])}: '
@@ -517,7 +528,16 @@ def apply_fallbacks(source: str, rel: str) -> str:
             f'<div class="num">+{fmt_number(pgb["ultimo_var"])}% interanual</div><p>Producto Geográfico Bruto de CABA, '
             f'{fmt_period(pgb["ultimo_trim"])}.</p></div>'
         )
-        source = replace_id_html(source, "obs-pulse", signals)
+        overview = (
+            '<section class="section alt observatory-overview"><div class="wrap">'
+            '<div class="section-head"><div><span class="eyebrow">Panorama</span><h2>La Ciudad hoy</h2></div></div>'
+            f'<div class="kpis observatory-kpis">{kpis}</div>'
+            '<div class="section-head observatory-signals-head"><div><span class="eyebrow">Lectura rápida</span><h2>Tres señales</h2></div></div>'
+            f'<div class="pulse-grid observatory-pulse" id="obs-pulse">{signals}</div>'
+            '</div></section>'
+        )
+        source = re.sub(r'<section class="section alt">.*?</section>', overview, source, count=1, flags=re.S)
+        source = replace_id_text(source, "data-date", "26 de agosto de 2026")
 
     if rel == "/prensa/index.html":
         press = load_json("deploy/site-overlay/assets/data/prensa.json")
@@ -534,6 +554,7 @@ def apply_fallbacks(source: str, rel: str) -> str:
         source = replace_id_text(source, "press-total", f'{len(notes)} {"nota" if len(notes) == 1 else "notas"}')
 
     if rel == "/presupuesto/index.html":
+        source = replace_id_text(source, "data-date", "26 de agosto de 2026")
         status = f"Último dato oficial: {fmt_period(budget['periodo'])}"
         source = re.sub(r'(<div class="budget-status" id="budget-hub-status"><span class="status-dot"></span><span>).*?(</span>)', rf'\1{status}\2', source, count=1, flags=re.S)
         cells = [
@@ -607,6 +628,9 @@ def normalize_html(path: Path, site: Path) -> None:
     source = re.sub(r'(<a\b[^>]*href=["\']/territorio/equipamientos/(?:\?[^"\']*)?["\'][^>]*>)(?:Información territorial|Oferta territorial)(\s*→)?(</a>)', lambda m: m.group(1) + "Qué hay en tu barrio" + (m.group(2) or "") + m.group(3), source, flags=re.I)
     if rel == "/publicaciones/index.html":
         source = inject_editorial_bridge(source)
+        source = re.sub(r'(<a\b[^>]*href=["\']/publicaciones/boletines/boletin-04-agosto-2026/["\'][^>]*>)Ver síntesis →(</a>)', r'\1Leer boletín web →\2', source, count=1)
+        source = re.sub(r'(<a\b[^>]*href=["\']/publicaciones/informe-coyuntura-01-junio-2026/["\'][^>]*>)Ver síntesis →(</a>)', r'\1Leer informe web →\2', source, count=1)
+        source = re.sub(r'<a\b[^>]*data-pdf-viewer=["\'][^"\']+["\'][^>]*>Leer online</a>', '', source, flags=re.S)
     canonical_routes = {
         "/presupuesto/ejecucion/index.html": "https://cepoes.org/presupuesto/ejecucion/",
         "/presupuesto/territorio/index.html": "https://cepoes.org/presupuesto/territorio/",

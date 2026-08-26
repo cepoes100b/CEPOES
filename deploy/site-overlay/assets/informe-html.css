@@ -1,0 +1,1230 @@
+/* ==========================================================================
+   CEPOES · "La Ciudad que habitamos"
+   Sistema de diseño para los boletines en HTML
+   --------------------------------------------------------------------------
+   Todo el CSS está scopeado bajo .bol para poder pegar el <article class="bol">
+   dentro de cualquier plantilla del sitio sin que se pisen los estilos.
+   Los tokens de la primera sección son los únicos que hay que tocar para
+   alinear el boletín con el resto de cepoes.org.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+
+.bol {
+  /* Tipografías: si el sitio ya carga sus fuentes, reapuntar acá */
+  --bol-font-display: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --bol-font-body: "IBM Plex Sans", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bol-font-num: "IBM Plex Sans Condensed", "Roboto Condensed", "IBM Plex Sans", system-ui, sans-serif;
+  --bol-font-meta: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Color base — anclado en el navy institucional del sitio (#16232F) */
+  --bol-tinta: #16232f;
+  --bol-tinta-2: #48545f;
+  --bol-tinta-3: #737d87;
+  --bol-papel: #f6f4f0;
+  --bol-carta: #ffffff;
+  --bol-linea: #dcd7cf;
+  --bol-linea-suave: #e9e5de;
+  --bol-sombra: 0 1px 2px rgba(22, 35, 47, .04), 0 8px 24px -16px rgba(22, 35, 47, .28);
+
+  /* Métrica */
+  --bol-ancho: 1160px;
+  --bol-col: 66ch;
+  --bol-radio: 3px;
+  --bol-gap: clamp(1.5rem, 4vw, 3rem);
+
+  color: var(--bol-tinta);
+  background: var(--bol-papel);
+  font-family: var(--bol-font-body);
+  font-size: clamp(16px, .95rem + .2vw, 18px);
+  line-height: 1.65;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Acento por eje temático. Se hereda hacia abajo con var(--accent). */
+.bol { --accent: var(--bol-tinta); }
+.bol [data-eje="vivienda"]  { --accent: #0f7b7f; }
+.bol [data-eje="salud"]     { --accent: #b4232a; }
+.bol [data-eje="empleo"]    { --accent: #a96500; }
+.bol [data-eje="finanzas"]  { --accent: #3a3f8f; }
+.bol [data-eje="educacion"] { --accent: #2c7a46; }
+
+.bol [data-eje] {
+  --accent-suave: #f0efec;
+  --accent-suave: color-mix(in srgb, var(--accent) 8%, var(--bol-carta));
+  --accent-borde: #dcd7cf;
+  --accent-borde: color-mix(in srgb, var(--accent) 26%, var(--bol-linea));
+}
+
+/* Modo oscuro: automático, y respetando el conmutador del sitio */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bol {
+    --bol-tinta: #eef1f4;
+    --bol-tinta-2: #aab4be;
+    --bol-tinta-3: #7f8a95;
+    --bol-papel: #101922;
+    --bol-carta: #16232f;
+    --bol-linea: #2b3947;
+    --bol-linea-suave: #223040;
+    --bol-sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -18px rgba(0, 0, 0, .8);
+  }
+  :root:not([data-theme="light"]) .bol [data-eje="vivienda"]  { --accent: #4fc3c6; }
+  :root:not([data-theme="light"]) .bol [data-eje="salud"]     { --accent: #f0736f; }
+  :root:not([data-theme="light"]) .bol [data-eje="empleo"]    { --accent: #e5a33c; }
+  :root:not([data-theme="light"]) .bol [data-eje="finanzas"]  { --accent: #8f93e8; }
+  :root:not([data-theme="light"]) .bol [data-eje="educacion"] { --accent: #5cbb7d; }
+  :root:not([data-theme="light"]) .bol [data-eje] {
+    --accent-suave: color-mix(in srgb, var(--accent) 12%, var(--bol-carta));
+    --accent-borde: color-mix(in srgb, var(--accent) 32%, var(--bol-linea));
+  }
+}
+
+:root[data-theme="dark"] .bol {
+  --bol-tinta: #eef1f4;
+  --bol-tinta-2: #aab4be;
+  --bol-tinta-3: #7f8a95;
+  --bol-papel: #101922;
+  --bol-carta: #16232f;
+  --bol-linea: #2b3947;
+  --bol-linea-suave: #223040;
+  --bol-sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -18px rgba(0, 0, 0, .8);
+}
+:root[data-theme="dark"] .bol [data-eje="vivienda"]  { --accent: #4fc3c6; }
+:root[data-theme="dark"] .bol [data-eje="salud"]     { --accent: #f0736f; }
+:root[data-theme="dark"] .bol [data-eje="empleo"]    { --accent: #e5a33c; }
+:root[data-theme="dark"] .bol [data-eje="finanzas"]  { --accent: #8f93e8; }
+:root[data-theme="dark"] .bol [data-eje="educacion"] { --accent: #5cbb7d; }
+:root[data-theme="dark"] .bol [data-eje] {
+  --accent-suave: color-mix(in srgb, var(--accent) 12%, var(--bol-carta));
+  --accent-borde: color-mix(in srgb, var(--accent) 32%, var(--bol-linea));
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset acotado
+   -------------------------------------------------------------------------- */
+
+.bol *, .bol *::before, .bol *::after { box-sizing: border-box; }
+.bol p, .bol h1, .bol h2, .bol h3, .bol h4, .bol ul, .bol ol, .bol figure, .bol table { margin: 0; }
+.bol ul, .bol ol { padding: 0; list-style: none; }
+.bol img { max-width: 100%; height: auto; display: block; }
+.bol a { color: inherit; }
+.bol :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.bol-wrap {
+  width: min(100% - 2.5rem, var(--bol-ancho));
+  margin-inline: auto;
+}
+
+.bol-sr {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   3. Etiquetas y utilidades tipográficas
+   -------------------------------------------------------------------------- */
+
+.bol-eyebrow {
+  font-family: var(--bol-font-meta);
+  font-size: .69rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+}
+
+.bol-eyebrow--accent { color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   4. Barra de progreso de lectura
+   -------------------------------------------------------------------------- */
+
+.bol-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  background: transparent;
+  pointer-events: none;
+}
+.bol-progress__bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent, var(--bol-tinta));
+  transition: width .12s linear, background-color .4s ease;
+}
+
+/* --------------------------------------------------------------------------
+   5. Portada
+   -------------------------------------------------------------------------- */
+
+.bol-hero {
+  padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-hero__grid {
+  display: grid;
+  gap: var(--bol-gap);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .bol-hero__grid { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+}
+
+.bol-hero__serie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .6rem 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--bol-tinta);
+  margin-bottom: 1.6rem;
+}
+
+.bol-hero__serie strong {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -.01em;
+}
+
+.bol-hero__num {
+  margin-left: auto;
+  font-family: var(--bol-font-num);
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  font-weight: 600;
+  line-height: .85;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.bol-hero__num span {
+  font-family: var(--bol-font-meta);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  vertical-align: super;
+  color: var(--bol-tinta-2);
+  margin-right: .35rem;
+}
+
+.bol-hero__title {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 1.2rem + 3.6vw, 3.9rem);
+  line-height: 1.03;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+  margin-bottom: 1.1rem;
+}
+
+.bol-hero__dek {
+  font-size: clamp(1.05rem, 1rem + .3vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--bol-tinta-2);
+  max-width: 48ch;
+  text-wrap: pretty;
+}
+
+.bol-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem .9rem;
+  align-items: center;
+  margin-top: 1.8rem;
+  font-family: var(--bol-font-meta);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+}
+.bol-hero__meta span + span::before {
+  content: "·";
+  margin-right: .9rem;
+  color: var(--bol-tinta-3);
+}
+
+.bol-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: 1.6rem;
+}
+
+.bol-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .62rem 1.1rem;
+  border: 1px solid var(--bol-tinta);
+  border-radius: var(--bol-radio);
+  font-family: var(--bol-font-meta);
+  font-size: .74rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--bol-tinta);
+  color: var(--bol-papel);
+  transition: transform .18s ease, opacity .18s ease, background-color .18s ease, color .18s ease;
+}
+.bol-btn:hover { transform: translateY(-1px); opacity: .9; }
+.bol-btn--ghost {
+  background: transparent;
+  color: var(--bol-tinta);
+  border-color: var(--bol-linea);
+}
+.bol-btn--ghost:hover { border-color: var(--bol-tinta); }
+
+.bol-hero__cover {
+  width: 100%;
+  max-width: 22rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+}
+
+/* Sumario de la portada */
+.bol-sumario {
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  padding: 1.4rem 1.5rem .6rem;
+}
+.bol-sumario__t {
+  padding-bottom: .9rem;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  margin-bottom: .3rem;
+}
+.bol-sumario__item {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  gap: .1rem .9rem;
+  padding: .85rem 0;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  text-decoration: none;
+  transition: background-color .18s ease;
+}
+.bol-sumario__item:last-child { border-bottom: 0; }
+.bol-sumario__item:hover { background: var(--accent-suave, var(--bol-papel)); }
+.bol-sumario__n {
+  grid-row: 1 / span 2;
+  font-family: var(--bol-font-num);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  padding-top: .1rem;
+}
+.bol-sumario__h {
+  font-weight: 600;
+  font-size: .95rem;
+  line-height: 1.3;
+}
+.bol-sumario__d {
+  font-size: .84rem;
+  line-height: 1.45;
+  color: var(--bol-tinta-2);
+  margin-top: .25rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. Riel de ejes (navegación pegajosa)
+   -------------------------------------------------------------------------- */
+
+.bol-riel {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--bol-papel) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-riel__lista {
+  display: flex;
+  gap: .2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: .55rem;
+}
+.bol-riel__lista::-webkit-scrollbar { display: none; }
+
+.bol-riel__link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+  padding: .4rem .75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: .82rem;
+  font-weight: 500;
+  color: var(--bol-tinta-2);
+  transition: color .2s ease, background-color .2s ease;
+}
+.bol-riel__link::before {
+  content: "";
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: .45;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.bol-riel__link:hover { color: var(--bol-tinta); }
+.bol-riel__link[aria-current="true"] {
+  color: var(--accent);
+  background: var(--accent-suave);
+  font-weight: 600;
+}
+.bol-riel__link[aria-current="true"]::before { opacity: 1; transform: scale(1.15); }
+
+/* --------------------------------------------------------------------------
+   7. Secciones
+   -------------------------------------------------------------------------- */
+
+.bol-sec { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.bol-sec + .bol-sec { border-top: 1px solid var(--bol-linea); }
+
+.bol-sec__head { max-width: 58ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+
+.bol-sec__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: 1rem;
+}
+.bol-sec__kicker::before {
+  content: "";
+  width: 1.6rem;
+  height: 2px;
+  background: var(--accent);
+}
+
+.bol-sec__title {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.7rem);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.bol-sec__title--lead {
+  font-size: clamp(1.25rem, 1.05rem + .9vw, 1.75rem);
+  line-height: 1.32;
+  letter-spacing: -.012em;
+  font-weight: 400;
+  color: var(--bol-tinta-2);
+}
+.bol-sec__title--lead strong { font-weight: 600; color: var(--bol-tinta); }
+
+.bol-sec__dek {
+  margin-top: .9rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--bol-tinta-2);
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   8. Banda de indicadores (elemento firma)
+   -------------------------------------------------------------------------- */
+
+.bol-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  border-top: 3px solid var(--accent);
+  border-bottom: 1px solid var(--bol-linea);
+  background: var(--bol-carta);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.bol-kpi {
+  padding: 1.5rem 1.4rem 1.3rem;
+  border-left: 1px solid var(--bol-linea-suave);
+}
+.bol-kpi:first-child { border-left: 0; }
+
+.bol-kpi__val {
+  font-family: var(--bol-font-num);
+  font-size: clamp(2.4rem, 1.6rem + 2.6vw, 3.5rem);
+  font-weight: 600;
+  line-height: .95;
+  letter-spacing: -.03em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+  margin-bottom: .7rem;
+}
+
+.bol-kpi__desc {
+  font-size: .9rem;
+  line-height: 1.42;
+  color: var(--bol-tinta);
+  max-width: 26ch;
+}
+
+.bol-kpi__src {
+  display: block;
+  margin-top: .6rem;
+  font-family: var(--bol-font-meta);
+  font-size: .66rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+}
+
+/* --------------------------------------------------------------------------
+   9. Cuerpo de texto
+   -------------------------------------------------------------------------- */
+
+.bol-cuerpo {
+  display: grid;
+  gap: clamp(1.8rem, 3vw, 2.6rem);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 860px) {
+  .bol-cuerpo--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.bol-bloque__h {
+  font-family: var(--bol-font-display);
+  font-size: 1.22rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  margin-bottom: .7rem;
+}
+.bol-bloque__h::after {
+  content: "";
+  display: block;
+  width: 2.2rem;
+  height: 2px;
+  background: var(--accent);
+  margin-top: .55rem;
+  opacity: .6;
+}
+
+.bol-bloque p + p { margin-top: .85rem; }
+.bol-bloque p { text-wrap: pretty; }
+
+.bol-prosa { max-width: var(--bol-col); }
+.bol-prosa p + p { margin-top: 1rem; }
+
+/* Destacado */
+.bol-quote {
+  margin-block: clamp(2rem, 4vw, 3rem);
+  padding: 1.6rem 0 1.6rem 1.6rem;
+  border-left: 3px solid var(--accent);
+  font-family: var(--bol-font-display);
+  font-size: clamp(1.25rem, 1rem + 1.1vw, 1.7rem);
+  line-height: 1.3;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  max-width: 44ch;
+}
+
+/* --------------------------------------------------------------------------
+   10. Tabla de indicadores síntesis
+   -------------------------------------------------------------------------- */
+
+.bol-tabla-wrap {
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  overflow: hidden;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.bol-tabla-wrap__t {
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-tabla { width: 100%; border-collapse: collapse; }
+
+.bol-tabla th {
+  text-align: left;
+  padding: .8rem 1.4rem;
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+  border-bottom: 1px solid var(--bol-linea-suave);
+}
+
+.bol-tabla td {
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  vertical-align: top;
+  font-size: .93rem;
+  line-height: 1.45;
+}
+.bol-tabla tr:last-child td { border-bottom: 0; }
+
+.bol-tabla__tema {
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--accent);
+  border-left: 3px solid var(--accent);
+}
+
+.bol-tabla__dato {
+  font-family: var(--bol-font-num);
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.bol-tabla__fuente {
+  font-family: var(--bol-font-meta);
+  font-size: .7rem;
+  letter-spacing: .04em;
+  color: var(--bol-tinta-3);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .bol-tabla thead { display: none; }
+  .bol-tabla tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .2rem .8rem;
+    padding: 1.1rem 1.2rem;
+    border-bottom: 1px solid var(--bol-linea-suave);
+    border-left: 3px solid var(--accent);
+  }
+  .bol-tabla tr:last-child { border-bottom: 0; }
+  .bol-tabla td { display: block; padding: 0; border: 0; }
+  .bol-tabla__tema { grid-column: 1 / -1; border-left: 0; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; font-family: var(--bol-font-meta); }
+  .bol-tabla__ind { grid-column: 1; }
+  .bol-tabla__dato { grid-column: 2; grid-row: 2; text-align: right; }
+  .bol-tabla__fuente { grid-column: 1 / -1; margin-top: .3rem; }
+}
+
+/* --------------------------------------------------------------------------
+   11. Agenda pública
+   -------------------------------------------------------------------------- */
+
+.bol-agenda {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  background: var(--accent-suave);
+  border: 1px solid var(--accent-borde);
+  border-radius: var(--bol-radio);
+  padding: clamp(1.4rem, 3vw, 2rem);
+}
+
+.bol-agenda__t {
+  display: flex;
+  align-items: baseline;
+  gap: .7rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--accent-borde);
+}
+
+.bol-agenda__sub {
+  font-size: .88rem;
+  color: var(--bol-tinta-2);
+}
+
+.bol-agenda__lista {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.bol-agenda__item { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: .2rem .7rem; }
+.bol-agenda__n {
+  grid-row: 1 / span 2;
+  font-family: var(--bol-font-meta);
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding-top: .18rem;
+  font-variant-numeric: tabular-nums;
+}
+.bol-agenda__h { font-weight: 600; font-size: .95rem; line-height: 1.3; }
+.bol-agenda__p { font-size: .88rem; line-height: 1.45; color: var(--bol-tinta-2); margin-top: .25rem; }
+
+/* --------------------------------------------------------------------------
+   12. Fuentes
+   -------------------------------------------------------------------------- */
+
+.bol-fuentes {
+  margin-top: 1.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bol-linea);
+  font-size: .8rem;
+  line-height: 1.5;
+  color: var(--bol-tinta-3);
+}
+.bol-fuentes b {
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+  margin-right: .4rem;
+}
+
+/* --------------------------------------------------------------------------
+   13. Cierre
+   -------------------------------------------------------------------------- */
+
+.bol-cierre {
+  background: var(--bol-tinta);
+  color: var(--bol-papel);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+.bol-cierre .bol-eyebrow { color: color-mix(in srgb, var(--bol-papel) 62%, transparent); }
+
+.bol-cierre__grid {
+  display: grid;
+  gap: var(--bol-gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 800px) {
+  .bol-cierre__grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+}
+
+.bol-cierre__t {
+  font-family: var(--bol-font-display);
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin-block: .8rem 1rem;
+}
+.bol-cierre p { color: color-mix(in srgb, var(--bol-papel) 78%, transparent); font-size: .95rem; }
+
+.bol-cita {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--bol-papel) 22%, transparent);
+  border-radius: var(--bol-radio);
+  font-family: var(--bol-font-meta);
+  font-size: .78rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--bol-papel) 82%, transparent);
+}
+
+.bol-cierre .bol-btn {
+  background: var(--bol-papel);
+  color: var(--bol-tinta);
+  border-color: var(--bol-papel);
+}
+.bol-cierre .bol-btn--ghost {
+  background: transparent;
+  color: var(--bol-papel);
+  border-color: color-mix(in srgb, var(--bol-papel) 34%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   14. Movimiento
+   -------------------------------------------------------------------------- */
+
+.bol [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .55s cubic-bezier(.22, .61, .36, 1), transform .55s cubic-bezier(.22, .61, .36, 1);
+}
+.bol [data-reveal].is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bol *, .bol *::before, .bol *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+  .bol [data-reveal] { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   15. Impresión
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .bol-riel, .bol-progress, .bol-acciones { display: none !important; }
+  .bol {
+    --bol-papel: #fff;
+    --bol-carta: #fff;
+    --bol-tinta: #000;
+    --bol-tinta-2: #333;
+    --bol-tinta-3: #555;
+    font-size: 10.5pt;
+  }
+  .bol-sec { padding-block: 1.2rem; break-inside: avoid; }
+  .bol-sec { break-before: page; }
+  .bol-hero { break-after: avoid; }
+  .bol-kpis, .bol-agenda, .bol-tabla-wrap { break-inside: avoid; }
+  .bol [data-reveal] { opacity: 1; transform: none; }
+  .bol-cierre { background: #fff; color: #000; border-top: 1px solid #000; }
+}
+
+/* ==========================================================================
+   CEPOES · Informe económico de coyuntura
+   Módulo que se carga DESPUÉS de cepoes-boletin.css y reutiliza sus tokens.
+   El artículo raíz lleva las dos clases: <article class="bol inf">
+   ========================================================================== */
+
+.bol.inf {
+  --accent: #1f5f8b;
+  --accent-suave: color-mix(in srgb, var(--accent) 8%, var(--bol-carta));
+  --accent-borde: color-mix(in srgb, var(--accent) 26%, var(--bol-linea));
+  --pos: #2c7a46;
+  --neg: #b4232a;
+  --neutro: #7b8794;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bol.inf {
+    --accent: #6bb6e0;
+    --pos: #5cbb7d;
+    --neg: #f0736f;
+    --neutro: #8b96a3;
+  }
+}
+:root[data-theme="dark"] .bol.inf {
+  --accent: #6bb6e0;
+  --pos: #5cbb7d;
+  --neg: #f0736f;
+  --neutro: #8b96a3;
+}
+
+/* --------------------------------------------------------------------------
+   Ficha técnica de portada
+   -------------------------------------------------------------------------- */
+
+.inf-ficha {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 1px;
+  margin-top: 2rem;
+  background: var(--bol-linea);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  overflow: hidden;
+}
+.inf-ficha__celda { background: var(--bol-carta); padding: 1rem 1.1rem; }
+.inf-ficha__k { display: block; margin-bottom: .35rem; }
+.inf-ficha__v { font-size: .95rem; font-weight: 600; line-height: 1.3; }
+
+/* Índice de la portada */
+.inf-indice { display: grid; gap: 0; }
+.inf-indice__item {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: .8rem;
+  align-items: baseline;
+  padding: .7rem 0;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  text-decoration: none;
+  font-size: .93rem;
+  line-height: 1.35;
+}
+.inf-indice__item:last-child { border-bottom: 0; }
+.inf-indice__item:hover { color: var(--accent); }
+.inf-indice__n {
+  font-family: var(--bol-font-meta);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Encabezado de sección con numeral romano
+   -------------------------------------------------------------------------- */
+
+.inf-sec__head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: .2rem 1.2rem;
+  align-items: start;
+  max-width: 62ch;
+  margin-bottom: clamp(1.8rem, 3.5vw, 2.6rem);
+  padding-top: 1rem;
+  border-top: 2px solid var(--accent);
+}
+.inf-sec__n {
+  grid-row: 1 / span 2;
+  font-family: var(--bol-font-num);
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -.02em;
+  min-width: 2.2rem;
+}
+.inf-sec__t {
+  font-family: var(--bol-font-display);
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+.inf-sec__sub {
+  font-family: var(--bol-font-meta);
+  font-size: .7rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+  margin-top: .5rem;
+}
+
+.inf-prosa { max-width: var(--bol-col); }
+.inf-prosa + .inf-prosa { margin-top: 1rem; }
+.inf-prosa p + p { margin-top: 1rem; }
+
+/* --------------------------------------------------------------------------
+   Gráficos (HTML + CSS, sin librerías)
+   -------------------------------------------------------------------------- */
+
+.graf {
+  margin-block: clamp(2rem, 4vw, 2.8rem);
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  padding: clamp(1.2rem, 3vw, 1.8rem);
+}
+.graf__t {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.3;
+  margin-bottom: .3rem;
+}
+.graf__sub {
+  font-size: .82rem;
+  color: var(--bol-tinta-2);
+  margin-bottom: 1.3rem;
+}
+.graf__fuente {
+  margin-top: 1.2rem;
+  padding-top: .8rem;
+  border-top: 1px solid var(--bol-linea-suave);
+  font-family: var(--bol-font-meta);
+  font-size: .68rem;
+  line-height: 1.5;
+  letter-spacing: .03em;
+  color: var(--bol-tinta-3);
+}
+
+/* Barras horizontales simples */
+.graf__filas { display: grid; gap: .55rem; }
+
+.graf-fila {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 11rem) minmax(0, 1fr) auto;
+  gap: .5rem .8rem;
+  align-items: center;
+}
+.graf-fila__lab {
+  font-size: .8rem;
+  line-height: 1.25;
+  color: var(--bol-tinta-2);
+  text-align: right;
+}
+.graf-fila__pista {
+  position: relative;
+  height: 1.45rem;
+  background: var(--bol-linea-suave);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.graf-fila__barra {
+  height: 100%;
+  width: var(--w, 0%);
+  background: var(--accent);
+  border-radius: 2px;
+}
+.graf-fila__val {
+  font-family: var(--bol-font-num);
+  font-size: 1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  min-width: 3.6rem;
+  text-align: right;
+}
+
+.graf-fila[data-tono="pos"] .graf-fila__barra { background: var(--pos); }
+.graf-fila[data-tono="neg"] .graf-fila__barra { background: var(--neg); }
+.graf-fila[data-tono="neutro"] .graf-fila__barra { background: var(--neutro); }
+.graf-fila[data-tono="pos"] .graf-fila__val { color: var(--pos); }
+.graf-fila[data-tono="neg"] .graf-fila__val { color: var(--neg); }
+
+/* Línea de referencia */
+.graf-fila__ref {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--ref, 50%);
+  width: 0;
+  border-left: 2px dashed var(--bol-tinta-3);
+}
+.graf__ref-nota {
+  margin-top: .8rem;
+  font-size: .76rem;
+  color: var(--bol-tinta-2);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.graf__ref-nota::before {
+  content: "";
+  width: 1.4rem;
+  border-top: 2px dashed var(--bol-tinta-3);
+}
+
+/* Barras divergentes alrededor del cero */
+.graf-div { display: grid; gap: .5rem; }
+.graf-div__fila {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 11rem) 1fr 1fr auto;
+  gap: .5rem 0;
+  align-items: center;
+}
+.graf-div__lab {
+  font-size: .8rem;
+  line-height: 1.25;
+  color: var(--bol-tinta-2);
+  text-align: right;
+  padding-right: .8rem;
+}
+.graf-div__neg, .graf-div__pos {
+  height: 1.45rem;
+  display: flex;
+  align-items: stretch;
+  background: linear-gradient(var(--bol-linea-suave), var(--bol-linea-suave)) no-repeat center / 100% 1px;
+}
+.graf-div__neg { justify-content: flex-end; border-right: 2px solid var(--bol-tinta); }
+.graf-div__pos { justify-content: flex-start; }
+.graf-div__neg i, .graf-div__pos i {
+  display: block;
+  width: var(--w, 0%);
+  border-radius: 2px;
+}
+.graf-div__neg i { background: var(--neg); }
+.graf-div__pos i { background: var(--pos); }
+.graf-div__val {
+  font-family: var(--bol-font-num);
+  font-size: 1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  min-width: 4.2rem;
+  text-align: right;
+  padding-left: .8rem;
+}
+.graf-div__fila[data-tono="neg"] .graf-div__val { color: var(--neg); }
+.graf-div__fila[data-tono="pos"] .graf-div__val { color: var(--pos); }
+
+@media (max-width: 640px) {
+  .graf-fila { grid-template-columns: minmax(0, 1fr) auto; }
+  .graf-fila__lab { grid-column: 1 / -1; text-align: left; }
+  .graf-div__fila { grid-template-columns: 1fr 1fr auto; }
+  .graf-div__lab { grid-column: 1 / -1; text-align: left; padding-right: 0; }
+}
+
+/* Barra apilada */
+.graf-apilada {
+  display: flex;
+  height: 3rem;
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--bol-linea);
+}
+.graf-apilada__parte {
+  width: var(--w, 0%);
+  display: grid;
+  place-items: center;
+  font-family: var(--bol-font-num);
+  font-size: .85rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--c, var(--accent));
+}
+.graf-leyenda {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: .7rem 1.2rem;
+  margin-top: 1.1rem;
+}
+.graf-leyenda__item {
+  display: grid;
+  grid-template-columns: .7rem minmax(0, 1fr);
+  gap: .1rem .6rem;
+  font-size: .82rem;
+  line-height: 1.35;
+}
+.graf-leyenda__punto {
+  grid-row: 1 / span 2;
+  width: .7rem;
+  height: .7rem;
+  border-radius: 2px;
+  background: var(--c, var(--accent));
+  margin-top: .3rem;
+}
+.graf-leyenda__v {
+  font-family: var(--bol-font-num);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.graf-leyenda__d { color: var(--bol-tinta-2); font-size: .78rem; }
+
+/* --------------------------------------------------------------------------
+   Cifras destacadas, notas, tablas y tarjetas
+   -------------------------------------------------------------------------- */
+
+.inf-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 1px;
+  margin-block: clamp(1.8rem, 3.5vw, 2.5rem);
+  background: var(--bol-linea);
+  border: 1px solid var(--bol-linea);
+  border-top: 3px solid var(--accent);
+}
+.inf-stat { background: var(--bol-carta); padding: 1.3rem 1.2rem; }
+.inf-stat__v {
+  font-family: var(--bol-font-num);
+  font-size: clamp(2rem, 1.5rem + 2vw, 2.9rem);
+  font-weight: 600;
+  line-height: .95;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  margin-bottom: .6rem;
+}
+.inf-stat[data-tono="neg"] .inf-stat__v { color: var(--neg); }
+.inf-stat[data-tono="pos"] .inf-stat__v { color: var(--pos); }
+.inf-stat__d { font-size: .87rem; line-height: 1.4; }
+.inf-stat__n {
+  display: block;
+  margin-top: .5rem;
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+}
+
+.inf-nota {
+  margin-block: clamp(1.8rem, 3.5vw, 2.5rem);
+  padding: 1.3rem 1.4rem;
+  background: var(--accent-suave);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--bol-radio) var(--bol-radio) 0;
+}
+.inf-nota__t { display: block; margin-bottom: .6rem; }
+.inf-nota p { font-size: .92rem; line-height: 1.55; }
+
+.inf-tabla-wrap {
+  margin-block: clamp(1.8rem, 3.5vw, 2.5rem);
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  overflow-x: auto;
+}
+.inf-tabla { width: 100%; border-collapse: collapse; min-width: 34rem; }
+.inf-tabla th {
+  text-align: left;
+  padding: .85rem 1.1rem;
+  font-family: var(--bol-font-meta);
+  font-size: .64rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+  border-bottom: 1px solid var(--bol-linea);
+  white-space: nowrap;
+}
+.inf-tabla td {
+  padding: .85rem 1.1rem;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  font-size: .9rem;
+  font-variant-numeric: tabular-nums;
+}
+.inf-tabla tr:last-child td { border-bottom: 0; }
+.inf-tabla td:first-child { font-weight: 600; }
+.inf-tabla__estado {
+  display: inline-block;
+  padding: .15rem .55rem;
+  border-radius: 999px;
+  font-family: var(--bol-font-meta);
+  font-size: .64rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.inf-tabla__estado[data-e="critico"] { background: color-mix(in srgb, var(--neg) 14%, transparent); color: var(--neg); }
+.inf-tabla__estado[data-e="debil"] { background: color-mix(in srgb, var(--neutro) 20%, transparent); color: var(--bol-tinta-2); }
+.inf-tabla__estado[data-e="recup"] { background: color-mix(in srgb, var(--pos) 14%, transparent); color: var(--pos); }
+
+.inf-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1rem;
+  margin-top: clamp(1.8rem, 3.5vw, 2.5rem);
+}
+.inf-tarjeta {
+  padding: 1.2rem 1.2rem 1.3rem;
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--bol-radio);
+}
+.inf-tarjeta h3 {
+  font-family: var(--bol-font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: .5rem;
+}
+.inf-tarjeta p { font-size: .87rem; line-height: 1.45; color: var(--bol-tinta-2); }
+
+.inf-metodo {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--bol-linea);
+  font-size: .82rem;
+  line-height: 1.55;
+  color: var(--bol-tinta-3);
+  max-width: 78ch;
+}
+.inf-metodo b {
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+  margin-right: .4rem;
+}
+
+@media print {
+  .graf, .inf-stats, .inf-nota, .inf-tabla-wrap, .inf-tarjeta { break-inside: avoid; }
+  .graf-apilada__parte { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .graf-fila__barra, .graf-div__neg i, .graf-div__pos i { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+  

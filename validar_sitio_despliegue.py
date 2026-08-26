@@ -121,8 +121,11 @@ for token in ['El Boca–River de la mora','25,5% vs. 9,1%','/publicaciones/nota
     assert token in home, f'Editorial central de endeudamiento incompleto: {token}'
 observatorio=(root/'observatorio'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'id="obs-pulse"></div>' not in observatorio, 'Señales vacías en Observatorio'
+assert observatorio.count('id="obs-pulse"')==1, 'Contenedor de señales duplicado en Observatorio'
+assert observatorio.count('class="pulse-card"')==3, f'Señales duplicadas en Observatorio: {observatorio.count("class=\"pulse-card\"")}'
+assert observatorio.count('observatory-overview')==1, 'Panorama del Observatorio duplicado'
 presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')
-assert 'Cargando último trimestre oficial' not in presupuesto and '<b>—</b>' not in presupuesto, 'Fallback vacío en Presupuesto'
+assert 'Cargando último trimestre oficial' not in presupuesto and 'cargando…' not in presupuesto and '<b>—</b>' not in presupuesto, 'Fallback vacío en Presupuesto'
 for rel,url in [('presupuesto/ejecucion/index.html','https://cepoes.org/presupuesto/ejecucion/'),('presupuesto/territorio/index.html','https://cepoes.org/presupuesto/territorio/')]:
     s=(root/rel).read_text(encoding='utf-8',errors='replace')
     canonical=re.search(r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>',s,re.I)
@@ -150,6 +153,13 @@ for slug in ['boletin-01-mayo-2026','boletin-02-junio-2026','boletin-03-julio-20
 debt_note=(root/'publicaciones'/'notas'/'el-boca-river-de-la-mora'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['25,5%','9,1%','La Boca','Núñez','estimación territorial agregada','/territorio/endeudamiento/']:
     assert token in debt_note, f'Nota de endeudamiento incompleta: {token}'
+report=(root/'publicaciones'/'informe-coyuntura-01-junio-2026'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['class="bol"','Descargar PDF','/assets/informe-html.css?v=1','/assets/boletines-html.js?v=1']:
+    assert token in report, f'Informe HTML incompleto: {token}'
+deporte=(root/'territorio'/'deporte-salud'/'index.html').read_text(encoding='utf-8',errors='replace')
+assert all(token not in deporte for token in ('Siguiente etapa', 'El siguiente salto', 'Una etapa posterior')), 'Deporte y salud expone contenido futuro'
+migraciones=(root/'territorio'/'migraciones'/'index.html').read_text(encoding='utf-8',errors='replace')
+assert 'Línea de trabajo prioritaria' not in migraciones and 'Movilidad internacional' in migraciones, 'Rótulo institucional de Migraciones incorrecto'
 temas=(root/'temas'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert temas.count('class="ia-topic-card"')==8, 'Taxonomía pública incompleta'
 taxonomy=json.loads((root/'assets/data/taxonomia.json').read_text(encoding='utf-8'))

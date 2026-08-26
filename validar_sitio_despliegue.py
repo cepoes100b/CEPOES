@@ -106,15 +106,16 @@ for p in html:
     assert 'href="/territorio/presupuesto/"' not in s, f'Enlace territorial antiguo: {rel}'
 
 home=(root/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home-leg-recent">—','id="home-pulse"></div>']:
+for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home-leg-recent">—']:
     assert token not in home, f'Fallback vacío en home: {token}'
-assert home.count('id="home-pulse"')==1, 'La home debe tener un único contenedor de señales'
-assert home.count('class="pulse-card"')==3, f'Señales de home duplicadas: {home.count("class=\"pulse-card\"")}'
-for redundant in ['home-territory-section','home-topics-section','home-recent-section']:
+for redundant in ['home-pulse-section','home-territory-section','home-topics-section','home-recent-section']:
     assert redundant not in home, f'Bloque redundante reapareció en home: {redundant}'
-home_order=['home-pulse-section','home-kpi-section','home-offer-section','home-latest-section','home-products-section','home-about-section']
+home_order=['home-editorial-hero','home-kpi-section','home-offer-section','home-latest-section','home-products-section','home-about-section']
 home_positions=[home.find(token) for token in home_order]
 assert all(pos>=0 for pos in home_positions) and home_positions==sorted(home_positions), f'Jerarquía de home inválida: {home_positions}'
+for token in ['home-editorial-datum','home-comparison-grid','home-neighborhood-form','home-subscription-form','Leer la versión web →','/assets/home-redesign.js?v=1']:
+    assert token in home, f'Bloque de portada incompleto: {token}'
+assert home.count('class="home-comparison-card"')==4, 'La home debe mostrar exactamente cuatro datos comparados'
 observatorio=(root/'observatorio'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'id="obs-pulse"></div>' not in observatorio, 'Señales vacías en Observatorio'
 presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')

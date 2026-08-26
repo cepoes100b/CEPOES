@@ -8,13 +8,14 @@ import html
 import json
 import re
 import shutil
+import unicodedata
 from datetime import datetime, timedelta
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=5"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=6"
 
 
 TOPICS = [
@@ -331,11 +332,74 @@ def pop_class_element(source: str, tag: str, class_name: str) -> tuple[str, str]
     return source[:span[0]] + source[span[1]:], source[span[0]:span[1]]
 
 
+def slugify(value: str) -> str:
+    value = unicodedata.normalize("NFD", value.lower())
+    value = "".join(char for char in value if unicodedata.category(char) != "Mn")
+    return re.sub(r"[^a-z0-9]+", "-", value).strip("-")
+
+
+def comparison_card(label: str, value: str, period: str, change: float, comparison: str, color: str) -> str:
+    if abs(change) < .05:
+        direction, icon, verb = "flat", "→", "Sin cambios"
+    elif change > 0:
+        direction, icon, verb = "up", "↑", "Subió"
+    else:
+        direction, icon, verb = "down", "↓", "Bajó"
+    delta = fmt_number(abs(change))
+    return (
+        f'<article class="home-comparison-card" style="--kpi-color:{color}">'
+        f'<span class="home-comparison-label">{html.escape(label)}</span>'
+        f'<strong>{html.escape(value)}</strong><span class="home-comparison-period">{html.escape(period)}</span>'
+        f'<p class="home-comparison-change is-{direction}"><b>{icon} {verb} {delta} p.p.</b> {html.escape(comparison)}</p>'
+        '</article>'
+    )
+
+
 def restructure_home(source: str) -> str:
-    """Shorten the home and keep its product hierarchy stable across deploys."""
+    """Build the six-block editorial home from data and editable content."""
+    data = load_json("datos.json")
+    editorial = load_json("deploy/site-overlay/assets/data/home-editorial.json")
+    ipc, employment, pgb, poverty = data["ipcba"], data["empleo"], data["pgb"], data["pobreza"]
+
+    hero = (
+        '<header class="hero home-hero home-editorial-hero"><div class="wrap home-editorial-grid"><div>'
+        f'<span class="eyebrow">{html.escape(editorial["eyebrow"])}</span>'
+        f'<h1>{html.escape(editorial["title"])}</h1><p>{html.escape(editorial["summary"])}</p>'
+        f'<a class="btn btn-primary" href="{html.escape(editorial["url"])}">{html.escape(editorial["cta"])} →</a>'
+        '</div><aside class="home-editorial-datum" aria-label="Dato central">'
+        f'<strong>{html.escape(editorial["datum"]["value"])}</strong><p>{html.escape(editorial["datum"]["label"])}</p>'
+        f'<small>{html.escape(editorial["datum"]["source"])}</small></aside></div></header>'
+    )
+    source = replace_class_element(source, "header", "home-hero", hero)
+
+    kpis = "".join([
+        comparison_card("Inflación · IPCBA", f'+{fmt_number(ipc["var_m"][-1])}%', fmt_period(ipc["meses"][-1]), ipc["var_m"][-1]-ipc["var_m"][-2], f'frente al mes anterior · {fmt_number(ipc["var_ia"][-1])}% interanual', "var(--lH)"),
+        comparison_card("Desocupación", f'{fmt_number(employment["desocupacion"][-1])}%', fmt_period(employment["trimestres"][-1]), employment["desocupacion"][-1]-employment["desocupacion"][-2], f'frente al trimestre anterior · {fmt_number(employment["desocupacion"][-1]-employment["desocupacion"][-5])} p.p. interanual', "var(--lB)"),
+        comparison_card("Actividad · PGB", f'+{fmt_number(pgb["total"][-1])}% i.a.', fmt_period(pgb["trimestres"][-1]), pgb["total"][-1]-pgb["total"][-2], 'frente a la variación interanual del trimestre anterior', "var(--lA)"),
+        comparison_card("Pobreza", f'{fmt_number(poverty["pob_per_pct"][-1])}%', fmt_period(poverty["periodos"][-1]), poverty["pob_per_pct"][-1]-poverty["pob_per_pct"][-5], 'frente al mismo trimestre del año anterior', "var(--lE)"),
+    ])
+    kpi_section = (
+        '<section class="section alt home-kpi-section"><div class="wrap"><div class="section-head"><div>'
+        '<span class="eyebrow">Cuatro datos para situarse</span><h2>La comparación le da sentido al número</h2>'
+        '</div></div><div class="home-comparison-grid">' + kpis + '</div>'
+        '<p class="source home-comparison-source">Fuentes: IDECBA · INDEC · Elaboración CEPOES. Cada tarjeta conserva el período de referencia.</p>'
+        '</div></section>'
+    )
+
+    barrio_names = sorted({("La Paternal" if name == "Paternal" else name) for c in data["censo"]["comunas"].values() for name in c.get("barrios", {})}, key=str.casefold)
+    barrio_options = "".join(f'<option value="{slugify(name)}">{html.escape(name)}</option>' for name in barrio_names)
+    offer_section = (
+        '<section class="section home-offer-section"><div class="wrap home-neighborhood-band"><div>'
+        '<span class="eyebrow">El dato baja al territorio</span><h2>Buscá tu barrio</h2>'
+        '<p>Entrá directamente a su ficha para ver población, servicios, brechas y contexto comunal.</p></div>'
+        '<form class="home-neighborhood-form" id="home-neighborhood-form">'
+        '<label for="home-neighborhood">Elegí uno de los 48 barrios</label><div>'
+        '<select id="home-neighborhood" required><option value="">Seleccionar barrio…</option>' + barrio_options + '</select>'
+        '<button class="btn btn-primary" type="submit">Ver ficha →</button></div></form></div></section>'
+    )
+
     sections: dict[str, str] = {}
     order = [
-        "home-pulse-section",
         "home-kpi-section",
         "home-offer-section",
         "home-latest-section",
@@ -346,11 +410,32 @@ def restructure_home(source: str) -> str:
         source, sections[class_name] = pop_class_element(source, "section", class_name)
     for redundant in ("home-territory-section", "home-topics-section", "home-recent-section"):
         source, _ = pop_class_element(source, "section", redundant)
+    source, _ = pop_class_element(source, "section", "home-pulse-section")
+    sections["home-kpi-section"] = kpi_section
+    sections["home-offer-section"] = offer_section
+    latest = sections.get("home-latest-section", "")
+    if latest:
+        latest = latest.replace("Ver síntesis →", "Leer la versión web →")
+        latest = re.sub(r'<a class="btn btn-outline"[^>]*>Leer online</a>', '', latest)
+        subscription = (
+            '<div class="home-subscription"><span class="eyebrow">Recibir novedades</span><h3>El boletín, en tu correo</h3>'
+            '<form id="home-subscription-form"><label for="home-subscription-email">Correo electrónico</label>'
+            '<div><input autocomplete="email" id="home-subscription-email" name="email" placeholder="tu@email.com" required type="email">'
+            '<button class="btn btn-primary" type="submit">Suscribirme</button></div>'
+            '<label class="home-consent"><input name="consent" required type="checkbox"> Acepto recibir publicaciones de CEPOES. Puedo pedir la baja o el borrado de mis datos escribiendo a contacto@cepoes.org.</label>'
+            '<input aria-hidden="true" class="home-honeypot" name="company" tabindex="-1" type="text">'
+            '<p aria-live="polite" class="home-subscription-status" id="home-subscription-status"></p></form></div>'
+        )
+        latest = latest.replace('</div></div></div></section>', '</div>' + subscription + '</div></div></section>', 1)
+        sections["home-latest-section"] = latest
     block = "".join(sections[name] for name in order if sections[name])
     footer_at = source.find('<dialog', source.find('</header>'))
     if footer_at < 0:
         footer_at = source.find('<footer')
-    return source[:footer_at] + block + source[footer_at:] if footer_at >= 0 else source + block
+    result = source[:footer_at] + block + source[footer_at:] if footer_at >= 0 else source + block
+    if '/assets/home-redesign.js?v=1' not in result:
+        result = result.replace('</body>', '<script defer src="/assets/home-redesign.js?v=1"></script></body>', 1)
+    return result
 
 
 def apply_fallbacks(source: str, rel: str) -> str:

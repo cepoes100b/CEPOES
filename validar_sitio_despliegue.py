@@ -101,6 +101,7 @@ for p in html:
     assert s.count('<nav class="site-nav">')==1, f'Navegación no canónica: {rel}'
     assert s.count('<footer class="footer">')==1, f'Footer no canónico: {rel}'
     assert len(re.findall(r'name=["\']theme-color["\']',s,re.I))==1, f'theme-color inválido: {rel}'
+    assert len(re.findall(r'/assets/arquitectura\.css',s,re.I))==1, f'CSS de arquitectura duplicado: {rel}'
     assert 'href="/prensa/"' in s, f'Falta Prensa en navegación: {rel}'
     assert 'href="/observatorio/presupuesto/"' not in s, f'Enlace presupuestario antiguo: {rel}'
     assert 'href="/territorio/presupuesto/"' not in s, f'Enlace territorial antiguo: {rel}'
@@ -116,6 +117,8 @@ assert all(pos>=0 for pos in home_positions) and home_positions==sorted(home_pos
 for token in ['home-editorial-datum','home-comparison-grid','home-neighborhood-form','home-subscription-form','Leer la versión web →','/assets/home-redesign.js?v=1']:
     assert token in home, f'Bloque de portada incompleto: {token}'
 assert home.count('class="home-comparison-card"')==4, 'La home debe mostrar exactamente cuatro datos comparados'
+for token in ['El Boca–River de la mora','25,5% vs. 9,1%','/publicaciones/notas/el-boca-river-de-la-mora/']:
+    assert token in home, f'Editorial central de endeudamiento incompleto: {token}'
 observatorio=(root/'observatorio'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'id="obs-pulse"></div>' not in observatorio, 'Señales vacías en Observatorio'
 presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')
@@ -139,6 +142,14 @@ for token in ['class="territory-desktop"','class="territory-mobile"','Explorar T
 publicaciones=(root/'publicaciones'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['id="archivo-por-tema"','Notas de prensa','/temas/#vivienda-y-habitat']:
     assert token in publicaciones, f'Archivo editorial incompleto: {token}'
+for slug in ['boletin-01-mayo-2026','boletin-02-junio-2026','boletin-03-julio-2026','boletin-04-agosto-2026']:
+    bulletin=(root/'publicaciones'/'boletines'/slug/'index.html').read_text(encoding='utf-8',errors='replace')
+    for token in ['class="bol"','Descargar PDF','/assets/boletines-html.css?v=1','/assets/boletines-html.js?v=1']:
+        assert token in bulletin, f'Boletín HTML incompleto ({slug}): {token}'
+    assert '.html"' not in bulletin, f'Navegación plana sin normalizar en {slug}'
+debt_note=(root/'publicaciones'/'notas'/'el-boca-river-de-la-mora'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['25,5%','9,1%','La Boca','Núñez','estimación territorial agregada','/territorio/endeudamiento/']:
+    assert token in debt_note, f'Nota de endeudamiento incompleta: {token}'
 temas=(root/'temas'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert temas.count('class="ia-topic-card"')==8, 'Taxonomía pública incompleta'
 taxonomy=json.loads((root/'assets/data/taxonomia.json').read_text(encoding='utf-8'))

@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>El semestre cierra con récord de informalidad — Boletín CEPOES N.º 3, Julio 2026</title>
+  <meta name="description" content="Tercer número del boletín del CEPOES: la inflación desacelera, pero el semestre cierra con informalidad récord y un salario mínimo en su piso histórico.">
+  <meta name="theme-color" content="#16232F">
+  <link rel="canonical" href="https://cepoes.org/publicaciones/boletines/boletin-03-julio-2026/">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="CEPOES">
+  <meta property="og:title" content="El semestre cierra con récord de informalidad — Boletín CEPOES">
+  <meta property="og:description" content="Tercer número del boletín del CEPOES: la inflación desacelera, pero el semestre cierra con informalidad récord y un salario mínimo en su piso histórico.">
+  <meta property="og:url" content="https://cepoes.org/publicaciones/boletines/boletin-03-julio-2026/">
+  <meta property="og:image" content="https://cepoes.org/assets/boletines/boletin-03.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+  <link href="/assets/site.css?v=233" rel="stylesheet">
+<link href="/assets/boletines-html.css?v=1" rel="stylesheet">
+<script defer src="/assets/common.js?v=254"></script>
+<script defer src="/assets/boletines-html.js?v=1"></script>
+</head>
+<body data-related-tags="publicaciones,boletines">
+<article class="bol">
+   dentro de cualquier plantilla del sitio sin que se pisen los estilos.
+   Los tokens de la primera sección son los únicos que hay que tocar para
+   alinear el boletín con el resto de cepoes.org.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+
+.bol {
+  /* Tipografías: si el sitio ya carga sus fuentes, reapuntar acá */
+  --bol-font-display: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --bol-font-body: "IBM Plex Sans", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bol-font-num: "IBM Plex Sans Condensed", "Roboto Condensed", "IBM Plex Sans", system-ui, sans-serif;
+  --bol-font-meta: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Color base — anclado en el navy institucional del sitio (#16232F) */
+  --bol-tinta: #16232f;
+  --bol-tinta-2: #48545f;
+  --bol-tinta-3: #737d87;
+  --bol-papel: #f6f4f0;
+  --bol-carta: #ffffff;
+  --bol-linea: #dcd7cf;
+  --bol-linea-suave: #e9e5de;
+  --bol-sombra: 0 1px 2px rgba(22, 35, 47, .04), 0 8px 24px -16px rgba(22, 35, 47, .28);
+
+  /* Métrica */
+  --bol-ancho: 1160px;
+  --bol-col: 66ch;
+  --bol-radio: 3px;
+  --bol-gap: clamp(1.5rem, 4vw, 3rem);
+
+  color: var(--bol-tinta);
+  background: var(--bol-papel);
+  font-family: var(--bol-font-body);
+  font-size: clamp(16px, .95rem + .2vw, 18px);
+  line-height: 1.65;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Acento por eje temático. Se hereda hacia abajo con var(--accent). */
+.bol { --accent: var(--bol-tinta); }
+.bol [data-eje="vivienda"]  { --accent: #0f7b7f; }
+.bol [data-eje="salud"]     { --accent: #b4232a; }
+.bol [data-eje="empleo"]    { --accent: #a96500; }
+.bol [data-eje="finanzas"]  { --accent: #3a3f8f; }
+.bol [data-eje="educacion"] { --accent: #2c7a46; }
+
+.bol [data-eje] {
+  --accent-suave: #f0efec;
+  --accent-suave: color-mix(in srgb, var(--accent) 8%, var(--bol-carta));
+  --accent-borde: #dcd7cf;
+  --accent-borde: color-mix(in srgb, var(--accent) 26%, var(--bol-linea));
+}
+
+/* Modo oscuro: automático, y respetando el conmutador del sitio */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bol {
+    --bol-tinta: #eef1f4;
+    --bol-tinta-2: #aab4be;
+    --bol-tinta-3: #7f8a95;
+    --bol-papel: #101922;
+    --bol-carta: #16232f;
+    --bol-linea: #2b3947;
+    --bol-linea-suave: #223040;
+    --bol-sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -18px rgba(0, 0, 0, .8);
+  }
+  :root:not([data-theme="light"]) .bol [data-eje="vivienda"]  { --accent: #4fc3c6; }
+  :root:not([data-theme="light"]) .bol [data-eje="salud"]     { --accent: #f0736f; }
+  :root:not([data-theme="light"]) .bol [data-eje="empleo"]    { --accent: #e5a33c; }
+  :root:not([data-theme="light"]) .bol [data-eje="finanzas"]  { --accent: #8f93e8; }
+  :root:not([data-theme="light"]) .bol [data-eje="educacion"] { --accent: #5cbb7d; }
+  :root:not([data-theme="light"]) .bol [data-eje] {
+    --accent-suave: color-mix(in srgb, var(--accent) 12%, var(--bol-carta));
+    --accent-borde: color-mix(in srgb, var(--accent) 32%, var(--bol-linea));
+  }
+}
+
+:root[data-theme="dark"] .bol {
+  --bol-tinta: #eef1f4;
+  --bol-tinta-2: #aab4be;
+  --bol-tinta-3: #7f8a95;
+  --bol-papel: #101922;
+  --bol-carta: #16232f;
+  --bol-linea: #2b3947;
+  --bol-linea-suave: #223040;
+  --bol-sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -18px rgba(0, 0, 0, .8);
+}
+:root[data-theme="dark"] .bol [data-eje="vivienda"]  { --accent: #4fc3c6; }
+:root[data-theme="dark"] .bol [data-eje="salud"]     { --accent: #f0736f; }
+:root[data-theme="dark"] .bol [data-eje="empleo"]    { --accent: #e5a33c; }
+:root[data-theme="dark"] .bol [data-eje="finanzas"]  { --accent: #8f93e8; }
+:root[data-theme="dark"] .bol [data-eje="educacion"] { --accent: #5cbb7d; }
+:root[data-theme="dark"] .bol [data-eje] {
+  --accent-suave: color-mix(in srgb, var(--accent) 12%, var(--bol-carta));
+  --accent-borde: color-mix(in srgb, var(--accent) 32%, var(--bol-linea));
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset acotado
+   -------------------------------------------------------------------------- */
+
+.bol *, .bol *::before, .bol *::after { box-sizing: border-box; }
+.bol p, .bol h1, .bol h2, .bol h3, .bol h4, .bol ul, .bol ol, .bol figure, .bol table { margin: 0; }
+.bol ul, .bol ol { padding: 0; list-style: none; }
+.bol img { max-width: 100%; height: auto; display: block; }
+.bol a { color: inherit; }
+.bol :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.bol-wrap {
+  width: min(100% - 2.5rem, var(--bol-ancho));
+  margin-inline: auto;
+}
+
+.bol-sr {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   3. Etiquetas y utilidades tipográficas
+   -------------------------------------------------------------------------- */
+
+.bol-eyebrow {
+  font-family: var(--bol-font-meta);
+  font-size: .69rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+}
+
+.bol-eyebrow--accent { color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   4. Barra de progreso de lectura
+   -------------------------------------------------------------------------- */
+
+.bol-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  background: transparent;
+  pointer-events: none;
+}
+.bol-progress__bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent, var(--bol-tinta));
+  transition: width .12s linear, background-color .4s ease;
+}
+
+/* --------------------------------------------------------------------------
+   5. Portada
+   -------------------------------------------------------------------------- */
+
+.bol-hero {
+  padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-hero__grid {
+  display: grid;
+  gap: var(--bol-gap);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .bol-hero__grid { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+}
+
+.bol-hero__serie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .6rem 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--bol-tinta);
+  margin-bottom: 1.6rem;
+}
+
+.bol-hero__serie strong {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -.01em;
+}
+
+.bol-hero__num {
+  margin-left: auto;
+  font-family: var(--bol-font-num);
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  font-weight: 600;
+  line-height: .85;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.bol-hero__num span {
+  font-family: var(--bol-font-meta);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  vertical-align: super;
+  color: var(--bol-tinta-2);
+  margin-right: .35rem;
+}
+
+.bol-hero__title {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 1.2rem + 3.6vw, 3.9rem);
+  line-height: 1.03;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+  margin-bottom: 1.1rem;
+}
+
+.bol-hero__dek {
+  font-size: clamp(1.05rem, 1rem + .3vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--bol-tinta-2);
+  max-width: 48ch;
+  text-wrap: pretty;
+}
+
+.bol-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem .9rem;
+  align-items: center;
+  margin-top: 1.8rem;
+  font-family: var(--bol-font-meta);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+}
+.bol-hero__meta span + span::before {
+  content: "·";
+  margin-right: .9rem;
+  color: var(--bol-tinta-3);
+}
+
+.bol-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: 1.6rem;
+}
+
+.bol-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .62rem 1.1rem;
+  border: 1px solid var(--bol-tinta);
+  border-radius: var(--bol-radio);
+  font-family: var(--bol-font-meta);
+  font-size: .74rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--bol-tinta);
+  color: var(--bol-papel);
+  transition: transform .18s ease, opacity .18s ease, background-color .18s ease, color .18s ease;
+}
+.bol-btn:hover { transform: translateY(-1px); opacity: .9; }
+.bol-btn--ghost {
+  background: transparent;
+  color: var(--bol-tinta);
+  border-color: var(--bol-linea);
+}
+.bol-btn--ghost:hover { border-color: var(--bol-tinta); }
+
+.bol-hero__cover {
+  width: 100%;
+  max-width: 22rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+}
+
+/* Sumario de la portada */
+.bol-sumario {
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  padding: 1.4rem 1.5rem .6rem;
+}
+.bol-sumario__t {
+  padding-bottom: .9rem;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  margin-bottom: .3rem;
+}
+.bol-sumario__item {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  gap: .1rem .9rem;
+  padding: .85rem 0;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  text-decoration: none;
+  transition: background-color .18s ease;
+}
+.bol-sumario__item:last-child { border-bottom: 0; }
+.bol-sumario__item:hover { background: var(--accent-suave, var(--bol-papel)); }
+.bol-sumario__n {
+  grid-row: 1 / span 2;
+  font-family: var(--bol-font-num);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  padding-top: .1rem;
+}
+.bol-sumario__h {
+  font-weight: 600;
+  font-size: .95rem;
+  line-height: 1.3;
+}
+.bol-sumario__d {
+  font-size: .84rem;
+  line-height: 1.45;
+  color: var(--bol-tinta-2);
+  margin-top: .25rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. Riel de ejes (navegación pegajosa)
+   -------------------------------------------------------------------------- */
+
+.bol-riel {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--bol-papel) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-riel__lista {
+  display: flex;
+  gap: .2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: .55rem;
+}
+.bol-riel__lista::-webkit-scrollbar { display: none; }
+
+.bol-riel__link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+  padding: .4rem .75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: .82rem;
+  font-weight: 500;
+  color: var(--bol-tinta-2);
+  transition: color .2s ease, background-color .2s ease;
+}
+.bol-riel__link::before {
+  content: "";
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: .45;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.bol-riel__link:hover { color: var(--bol-tinta); }
+.bol-riel__link[aria-current="true"] {
+  color: var(--accent);
+  background: var(--accent-suave);
+  font-weight: 600;
+}
+.bol-riel__link[aria-current="true"]::before { opacity: 1; transform: scale(1.15); }
+
+/* --------------------------------------------------------------------------
+   7. Secciones
+   -------------------------------------------------------------------------- */
+
+.bol-sec { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.bol-sec + .bol-sec { border-top: 1px solid var(--bol-linea); }
+
+.bol-sec__head { max-width: 58ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+
+.bol-sec__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: 1rem;
+}
+.bol-sec__kicker::before {
+  content: "";
+  width: 1.6rem;
+  height: 2px;
+  background: var(--accent);
+}
+
+.bol-sec__title {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.7rem);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.bol-sec__title--lead {
+  font-size: clamp(1.25rem, 1.05rem + .9vw, 1.75rem);
+  line-height: 1.32;
+  letter-spacing: -.012em;
+  font-weight: 400;
+  color: var(--bol-tinta-2);
+}
+.bol-sec__title--lead strong { font-weight: 600; color: var(--bol-tinta); }
+
+.bol-sec__dek {
+  margin-top: .9rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--bol-tinta-2);
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   8. Banda de indicadores (elemento firma)
+   -------------------------------------------------------------------------- */
+
+.bol-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  border-top: 3px solid var(--accent);
+  border-bottom: 1px solid var(--bol-linea);
+  background: var(--bol-carta);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.bol-kpi {
+  padding: 1.5rem 1.4rem 1.3rem;
+  border-left: 1px solid var(--bol-linea-suave);
+}
+.bol-kpi:first-child { border-left: 0; }
+
+.bol-kpi__val {
+  font-family: var(--bol-font-num);
+  font-size: clamp(2.4rem, 1.6rem + 2.6vw, 3.5rem);
+  font-weight: 600;
+  line-height: .95;
+  letter-spacing: -.03em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+  margin-bottom: .7rem;
+}
+
+.bol-kpi__desc {
+  font-size: .9rem;
+  line-height: 1.42;
+  color: var(--bol-tinta);
+  max-width: 26ch;
+}
+
+.bol-kpi__src {
+  display: block;
+  margin-top: .6rem;
+  font-family: var(--bol-font-meta);
+  font-size: .66rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+}
+
+/* --------------------------------------------------------------------------
+   9. Cuerpo de texto
+   -------------------------------------------------------------------------- */
+
+.bol-cuerpo {
+  display: grid;
+  gap: clamp(1.8rem, 3vw, 2.6rem);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 860px) {
+  .bol-cuerpo--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.bol-bloque__h {
+  font-family: var(--bol-font-display);
+  font-size: 1.22rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  margin-bottom: .7rem;
+}
+.bol-bloque__h::after {
+  content: "";
+  display: block;
+  width: 2.2rem;
+  height: 2px;
+  background: var(--accent);
+  margin-top: .55rem;
+  opacity: .6;
+}
+
+.bol-bloque p + p { margin-top: .85rem; }
+.bol-bloque p { text-wrap: pretty; }
+
+.bol-prosa { max-width: var(--bol-col); }
+.bol-prosa p + p { margin-top: 1rem; }
+
+/* Destacado */
+.bol-quote {
+  margin-block: clamp(2rem, 4vw, 3rem);
+  padding: 1.6rem 0 1.6rem 1.6rem;
+  border-left: 3px solid var(--accent);
+  font-family: var(--bol-font-display);
+  font-size: clamp(1.25rem, 1rem + 1.1vw, 1.7rem);
+  line-height: 1.3;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  max-width: 44ch;
+}
+
+/* --------------------------------------------------------------------------
+   10. Tabla de indicadores síntesis
+   -------------------------------------------------------------------------- */
+
+.bol-tabla-wrap {
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  overflow: hidden;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.bol-tabla-wrap__t {
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-tabla { width: 100%; border-collapse: collapse; }
+
+.bol-tabla th {
+  text-align: left;
+  padding: .8rem 1.4rem;
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+  border-bottom: 1px solid var(--bol-linea-suave);
+}
+
+.bol-tabla td {
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  vertical-align: top;
+  font-size: .93rem;
+  line-height: 1.45;
+}
+.bol-tabla tr:last-child td { border-bottom: 0; }
+
+.bol-tabla__tema {
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--accent);
+  border-left: 3px solid var(--accent);
+}
+
+.bol-tabla__dato {
+  font-family: var(--bol-font-num);
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.bol-tabla__fuente {
+  font-family: var(--bol-font-meta);
+  font-size: .7rem;
+  letter-spacing: .04em;
+  color: var(--bol-tinta-3);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .bol-tabla thead { display: none; }
+  .bol-tabla tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .2rem .8rem;
+    padding: 1.1rem 1.2rem;
+    border-bottom: 1px solid var(--bol-linea-suave);
+    border-left: 3px solid var(--accent);
+  }
+  .bol-tabla tr:last-child { border-bottom: 0; }
+  .bol-tabla td { display: block; padding: 0; border: 0; }
+  .bol-tabla__tema { grid-column: 1 / -1; border-left: 0; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; font-family: var(--bol-font-meta); }
+  .bol-tabla__ind { grid-column: 1; }
+  .bol-tabla__dato { grid-column: 2; grid-row: 2; text-align: right; }
+  .bol-tabla__fuente { grid-column: 1 / -1; margin-top: .3rem; }
+}
+
+/* --------------------------------------------------------------------------
+   11. Agenda pública
+   -------------------------------------------------------------------------- */
+
+.bol-agenda {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  background: var(--accent-suave);
+  border: 1px solid var(--accent-borde);
+  border-radius: var(--bol-radio);
+  padding: clamp(1.4rem, 3vw, 2rem);
+}
+
+.bol-agenda__t {
+  display: flex;
+  align-items: baseline;
+  gap: .7rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--accent-borde);
+}
+
+.bol-agenda__sub {
+  font-size: .88rem;
+  color: var(--bol-tinta-2);
+}
+
+.bol-agenda__lista {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.bol-agenda__item { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: .2rem .7rem; }
+.bol-agenda__n {
+  grid-row: 1 / span 2;
+  font-family: var(--bol-font-meta);
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding-top: .18rem;
+  font-variant-numeric: tabular-nums;
+}
+.bol-agenda__h { font-weight: 600; font-size: .95rem; line-height: 1.3; }
+.bol-agenda__p { font-size: .88rem; line-height: 1.45; color: var(--bol-tinta-2); margin-top: .25rem; }
+
+/* --------------------------------------------------------------------------
+   12. Fuentes
+   -------------------------------------------------------------------------- */
+
+.bol-fuentes {
+  margin-top: 1.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bol-linea);
+  font-size: .8rem;
+  line-height: 1.5;
+  color: var(--bol-tinta-3);
+}
+.bol-fuentes b {
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+  margin-right: .4rem;
+}
+
+/* --------------------------------------------------------------------------
+   13. Cierre
+   -------------------------------------------------------------------------- */
+
+.bol-cierre {
+  background: var(--bol-tinta);
+  color: var(--bol-papel);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+.bol-cierre .bol-eyebrow { color: color-mix(in srgb, var(--bol-papel) 62%, transparent); }
+
+.bol-cierre__grid {
+  display: grid;
+  gap: var(--bol-gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 800px) {
+  .bol-cierre__grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+}
+
+.bol-cierre__t {
+  font-family: var(--bol-font-display);
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin-block: .8rem 1rem;
+}
+.bol-cierre p { color: color-mix(in srgb, var(--bol-papel) 78%, transparent); font-size: .95rem; }
+
+.bol-cita {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--bol-papel) 22%, transparent);
+  border-radius: var(--bol-radio);
+  font-family: var(--bol-font-meta);
+  font-size: .78rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--bol-papel) 82%, transparent);
+}
+
+.bol-cierre .bol-btn {
+  background: var(--bol-papel);
+  color: var(--bol-tinta);
+  border-color: var(--bol-papel);
+}
+.bol-cierre .bol-btn--ghost {
+  background: transparent;
+  color: var(--bol-papel);
+  border-color: color-mix(in srgb, var(--bol-papel) 34%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   14. Movimiento
+   -------------------------------------------------------------------------- */
+
+.bol [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .55s cubic-bezier(.22, .61, .36, 1), transform .55s cubic-bezier(.22, .61, .36, 1);
+}
+.bol [data-reveal].is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bol *, .bol *::before, .bol *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+  .bol [data-reveal] { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   15. Impresión
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .bol-riel, .bol-progress, .bol-acciones { display: none !important; }
+  .bol {
+    --bol-papel: #fff;
+    --bol-carta: #fff;
+    --bol-tinta: #000;
+    --bol-tinta-2: #333;
+    --bol-tinta-3: #555;
+    font-size: 10.5pt;
+  }
+  .bol-sec { padding-block: 1.2rem; break-inside: avoid; }
+  .bol-sec { break-before: page; }
+  .bol-hero { break-after: avoid; }
+  .bol-kpis, .bol-agenda, .bol-tabla-wrap { break-inside: avoid; }
+  .bol [data-reveal] { opacity: 1; transform: none; }
+  .bol-cierre { background: #fff; color: #000; border-top: 1px solid #000; }
+}
+
+  </style>
+</head>
+<body>
+<article class="bol">
+  <div class="bol-progress" aria-hidden="true"><div class="bol-progress__bar"></div></div>
+  <header class="bol-hero">
+      <div class="bol-wrap">
+        <div class="bol-hero__serie">
+          <strong>La Ciudad que habitamos</strong>
+          <span class="bol-eyebrow">Boletín mensual · CEPOES · Somos 100 Barrios</span>
+          <span class="bol-hero__num"><span>N.º</span>03</span>
+        </div>
+        <div class="bol-hero__grid">
+          <div>
+            <h1 class="bol-hero__title">El semestre cierra con récord de informalidad</h1>
+            <p class="bol-hero__dek">Cierre del primer semestre: un mercado laboral que se precariza y un costo de vida que no da tregua, en vivienda, salud, empleo, finanzas públicas y educación.</p>
+            <p class="bol-hero__meta">
+              <span>Julio 2026</span><span>7 páginas</span><span>Datos, análisis y propuestas desde el territorio</span>
+            </p>
+            <div class="bol-acciones">
+              <a class="bol-btn" href="/publicaciones/files/boletin-03-julio-2026.pdf">Descargar PDF ↓</a>
+              <a class="bol-btn bol-btn--ghost" href="#resumen">Ir al resumen</a>
+            </div>
+          </div>
+          <div>
+            <img class="bol-hero__cover" src="/assets/boletines/boletin-03.jpg" alt="Tapa del N.º 3 del boletín del CEPOES, Julio 2026" loading="eager" width="800" height="1035">
+            <nav class="bol-sumario" aria-label="Sumario del número">
+          <p class="bol-sumario__t bol-eyebrow">En este número</p>
+        <a class="bol-sumario__item" href="#resumen" data-eje="resumen">
+          <span class="bol-sumario__n" aria-hidden="true">02</span>
+          <span class="bol-sumario__h">Resumen ejecutivo</span>
+          <span class="bol-sumario__d">La inflación desacelera, pero el semestre cierra con un récord de informalidad y un salario mínimo en su piso histórico. El ajuste nacional no cede.</span>
+        </a>
+        <a class="bol-sumario__item" href="#vivienda" data-eje="vivienda">
+          <span class="bol-sumario__n" aria-hidden="true">03</span>
+          <span class="bol-sumario__h">Vivienda y alquileres</span>
+          <span class="bol-sumario__d">Un monoambiente promedia $755.935 y cuesta más de dos salarios mínimos. El presupuesto de vivienda sigue en su nivel más bajo en 14 años.</span>
+        </a>
+        <a class="bol-sumario__item" href="#salud" data-eje="salud">
+          <span class="bol-sumario__n" aria-hidden="true">04</span>
+          <span class="bol-sumario__h">Salud pública</span>
+          <span class="bol-sumario__d">El ajuste porteño acumula 10% desde 2023 y se apoya en una ejecución nacional que cae 31% real. La demanda sobre la red pública crece.</span>
+        </a>
+        <a class="bol-sumario__item" href="#empleo" data-eje="empleo">
+          <span class="bol-sumario__n" aria-hidden="true">05</span>
+          <span class="bol-sumario__h">Empleo y economía urbana</span>
+          <span class="bol-sumario__d">La EPH del primer trimestre marcó desocupación del 7,8% e informalidad récord del 44,2%. En un año se destruyeron 32.211 empleos registrados.</span>
+        </a>
+        <a class="bol-sumario__item" href="#finanzas" data-eje="finanzas">
+          <span class="bol-sumario__n" aria-hidden="true">06</span>
+          <span class="bol-sumario__h">Finanzas públicas de CABA</span>
+          <span class="bol-sumario__d">A nivel nacional, la deuda concentra el 12% del gasto —más que Educación, Salud, Ciencia, Vivienda y Trabajo juntas—. La única área que crece es Inteligencia.</span>
+        </a>
+        <a class="bol-sumario__item" href="#educacion" data-eje="educacion">
+          <span class="bol-sumario__n" aria-hidden="true">07</span>
+          <span class="bol-sumario__h">Educación</span>
+          <span class="bol-sumario__d">El recorte porteño acumula 13% desde 2023. En la Nación, Conectar Igualdad e Incentivo Docente con ejecución casi nula.</span>
+        </a>
+        </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+  <nav class="bol-riel" aria-label="Secciones del boletín">
+      <div class="bol-wrap"><div class="bol-riel__lista"><a class="bol-riel__link" href="#resumen" data-eje="resumen">Resumen</a><a class="bol-riel__link" href="#vivienda" data-eje="vivienda">Vivienda</a><a class="bol-riel__link" href="#salud" data-eje="salud">Salud</a><a class="bol-riel__link" href="#empleo" data-eje="empleo">Empleo</a><a class="bol-riel__link" href="#finanzas" data-eje="finanzas">Finanzas públicas</a><a class="bol-riel__link" href="#educacion" data-eje="educacion">Educación</a></div></div>
+    </nav>
+  <main>
+    <section class="bol-sec" id="resumen" data-eje="resumen" aria-labelledby="t-resumen">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow">Resumen ejecutivo</span>
+          <h2 class="bol-sec__title bol-sec__title--lead" id="t-resumen">La inflación desacelera —el IPC porteño fue de 1,8% en junio— pero la mejora no llega a la vida cotidiana: un alquiler que cuesta dos salarios mínimos, un salario mínimo en su piso histórico y un mercado laboral que precariza el poco empleo que crea.</h2>
+        </header>
+        <div class="bol-prosa" data-reveal>
+          <p>El primer semestre de 2026 cierra con una señal ambigua. Por un lado, la inflación se desaceleró: el IPC de la Ciudad marcó 1,8% en junio y acumuló 16% en seis meses, y el nacional perforó por primera vez en el año el piso del 2%. Por otro, esa moderación de precios no se tradujo en mejores condiciones de vida. El dato que ordena el semestre lo aportó la Encuesta Permanente de Hogares del primer trimestre: la informalidad laboral trepó al 44,2%, su nivel más alto desde el inicio de la serie, y la desocupación subió al 7,8%.</p>
+          <p>La combinación es elocuente. En un año se destruyeron 32.211 puestos registrados mientras el sector informal absorbió más de 400.000 trabajadores. El mercado no deja de emplear, pero el empleo que aparece llega sin aportes, sin obra social y sin protección legal.</p>
+          <p>En vivienda, el alquiler de un monoambiente promedió $755.935 en junio: más del doble del Salario Mínimo Vital y Móvil, que en julio quedó en $372.400. Los precios desaceleran en términos nominales, pero el punto de partida sigue siendo inaccesible, y el presupuesto porteño destinado a vivienda continúa en su mínimo de catorce años.</p>
+          <blockquote class="bol-quote">La informalidad marcó un récord del 44,2%. El poco empleo que se crea llega sin aportes, sin obra social y sin derechos.</blockquote>
+          <p>En salud, el ajuste porteño acumula 10% desde 2023 y se apoya sobre una retirada nacional más severa: la ejecución de la Administración Pública Nacional cae 31% real frente a 2023, con la salud entre las funciones más golpeadas. El sistema público recibe más demanda con menos recursos.</p>
+          <p>El marco fiscal nacional expresa con crudeza las prioridades: los servicios de la deuda concentran el 12% del gasto ejecutado —más que Educación, Salud, Ciencia, Vivienda y Trabajo juntas— y la única función que crece en términos reales es la Secretaría de Inteligencia.</p>
+          <p>Este es el tercer número del CEPOES. Cada sección incluye indicadores clave, contexto y propuestas concretas para reorientar las políticas del Gobierno de la Ciudad.</p>
+        </div>
+        <div class="bol-tabla-wrap" data-reveal>
+          <div class="bol-tabla-wrap__t"><span class="bol-eyebrow">Indicadores síntesis del boletín</span></div>
+          <table class="bol-tabla">
+            <thead>
+              <tr><th scope="col">Tema</th><th scope="col">Indicador clave</th><th scope="col">Dato</th><th scope="col">Fuente</th></tr>
+            </thead>
+            <tbody>
+            <tr data-eje="vivienda">
+              <td class="bol-tabla__tema">Vivienda</td>
+              <td class="bol-tabla__ind">Alquiler promedio de monoambiente en CABA (junio 2026)</td>
+              <td class="bol-tabla__dato">$755.935</td>
+              <td class="bol-tabla__fuente">Zonaprop</td>
+            </tr>
+            <tr data-eje="salud">
+              <td class="bol-tabla__tema">Salud</td>
+              <td class="bol-tabla__ind">Ajuste acumulado en salud CABA desde 2023</td>
+              <td class="bol-tabla__dato">−10%</td>
+              <td class="bol-tabla__fuente">CEPA</td>
+            </tr>
+            <tr data-eje="empleo">
+              <td class="bol-tabla__tema">Empleo</td>
+              <td class="bol-tabla__ind">Informalidad laboral (1.er trim. 2026, récord de la serie)</td>
+              <td class="bol-tabla__dato">44,2%</td>
+              <td class="bol-tabla__fuente">INDEC – EPH</td>
+            </tr>
+            <tr data-eje="finanzas">
+              <td class="bol-tabla__tema">Finanzas</td>
+              <td class="bol-tabla__ind">Peso de los servicios de deuda en el gasto nacional ejecutado</td>
+              <td class="bol-tabla__dato">12%</td>
+              <td class="bol-tabla__fuente">CEPA</td>
+            </tr>
+            <tr data-eje="educacion">
+              <td class="bol-tabla__tema">Educación</td>
+              <td class="bol-tabla__ind">Ajuste acumulado educación CABA desde 2023</td>
+              <td class="bol-tabla__dato">−13%</td>
+              <td class="bol-tabla__fuente">CEPA</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>Zonaprop (jul. 2026) · INDEC EPH 1.er trim. 2026 e IPC junio 2026 · CEPA – Ejecución presupuestaria nacional a mayo 2026 · CEPA – Observatorio Económico Urbano · Consejo Nacional del Salario.</p>
+      </div>
+    </section>
+    <section class="bol-sec" id="vivienda" data-eje="vivienda" aria-labelledby="t-vivienda">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow bol-eyebrow--accent">Vivienda y alquileres</span>
+          <h2 class="bol-sec__title" id="t-vivienda">Alquilar sigue costando dos salarios mínimos</h2>
+          <p class="bol-sec__dek">Los alquileres desaceleran y quedan levemente por debajo de la inflación, pero parten de un nivel inaccesible. El presupuesto de vivienda continúa en su mínimo histórico.</p>
+        </header>
+        <div class="bol-kpis" data-eje="vivienda" data-reveal>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">$755.935</p>
+          <p class="bol-kpi__desc">Alquiler promedio mensual de un monoambiente en CABA (junio 2026)<span class="bol-kpi__src">Zonaprop, jul. 2026</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">2,03×</p>
+          <p class="bol-kpi__desc">Cuántos salarios mínimos cuesta el alquiler de un monoambiente<span class="bol-kpi__src">Elab. propia s/ Zonaprop y SMVM</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−22,9%</p>
+          <p class="bol-kpi__desc">Caída real del presupuesto para organismos de vivienda respecto de 2025<span class="bol-kpi__src">ACIJ</span></p>
+        </div>
+      </div>
+        <div class="bol-cuerpo bol-cuerpo--dos">
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Alquileres: desaceleran, pero no aflojan</h3>
+          <p>Según Zonaprop, en junio de 2026 el alquiler de un monoambiente en CABA promedió $755.935 mensuales; un dos ambientes, $860.106; y un tres ambientes, $1.156.992. El rubro subió 1,4% en el mes y acumuló 15,7% en el primer semestre, apenas por debajo de la inflación del período (17,1%). La suba interanual fue del 31,3%, la menor desde noviembre de 2019.</p><p>La moderación nominal no equivale a accesibilidad. Aunque la mayor oferta tras la derogación de la Ley de Alquileres contuvo los precios de publicación, el punto de partida sigue siendo prohibitivo: el salario mínimo de julio ($372.400) cubre apenas la mitad de la unidad más chica del mercado.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">El salario que no alcanza</h3>
+          <p>El alquiler promedio de un monoambiente equivale hoy a poco más de dos salarios mínimos, y ese salario perdió cerca del 40% de su poder de compra desde noviembre de 2023. Alquilar dejó de ser una transacción de mercado para volverse una barrera estructural de acceso a la vivienda.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Desigualdad territorial</h3>
+          <p>El mapa de precios reproduce la fractura de la Ciudad. En alquiler, Puerto Madero encabeza con $1.260.640, mientras que Lugano es el más económico con $658.410. La brecha entre el barrio más caro y el más barato casi se duplica, y coincide con las zonas de mayor hacinamiento y menor acceso a infraestructura del sur porteño.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">El presupuesto que no llega</h3>
+          <p>El Presupuesto 2026 destina a los organismos de vivienda menos del 1% del gasto total, su nivel más bajo en al menos catorce años, con una caída real del 22,9% respecto de 2025. Las partidas para créditos y programas de alquiler representan apenas el 4% del presupuesto de vivienda: los datos contradicen el anunciado giro hacia “la clase media que alquila”.</p><p>La situación de calle es la contracara extrema de este cuadro: el censo oficial reconoció 5.176 personas, un 27,8% más que un año atrás; los relevamientos de las organizaciones sociales cuentan 11.892.</p>
+        </div>
+        </div>
+        <div class="bol-agenda" data-eje="vivienda" data-reveal>
+          <div class="bol-agenda__t">
+            <span class="bol-eyebrow bol-eyebrow--accent">Agenda pública</span>
+            <span class="bol-agenda__sub">Qué debería hacer el GCBA</span>
+          </div>
+          <ul class="bol-agenda__lista">
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">01</span>
+            <p class="bol-agenda__h">Ampliar el presupuesto de vivienda</p>
+            <p class="bol-agenda__p">Revertir la caída del 22,9% real y reforzar partidas de alquiler social, crédito accesible y urbanización de barrios populares.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">02</span>
+            <p class="bol-agenda__h">Registro de unidades ociosas</p>
+            <p class="bol-agenda__p">Relevar viviendas vacías y diseñar instrumentos fiscales que incentiven su puesta en alquiler a precios accesibles.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">03</span>
+            <p class="bol-agenda__h">Índice de alquileres por comuna</p>
+            <p class="bol-agenda__p">Construir información pública desagregada por barrio para orientar la política con datos propios.</p>
+          </li>
+          </ul>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>Zonaprop (jul. 2026) · Infobae / Filo News (jul. 2026) · ACIJ – Presupuesto CABA 2026 · IDECBA – GCBA, censo situación de calle · Consejo Nacional del Salario (Res. 9/2025).</p>
+      </div>
+    </section>
+<section class="bol-sec" id="salud" data-eje="salud" aria-labelledby="t-salud">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow bol-eyebrow--accent">Salud pública</span>
+          <h2 class="bol-sec__title" id="t-salud">Salud pública: ajuste porteño sobre ajuste nacional</h2>
+          <p class="bol-sec__dek">El recorte de la Ciudad acumula 10% desde 2023 y se apoya en una ejecución nacional que cae 31% real. La demanda sobre la red pública no para de crecer.</p>
+        </header>
+        <div class="bol-kpis" data-eje="salud" data-reveal>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−10%</p>
+          <p class="bol-kpi__desc">Caída real acumulada en salud pública CABA desde 2023<span class="bol-kpi__src">CEPA</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−31%</p>
+          <p class="bol-kpi__desc">Ejecución del gasto total nacional a mayo 2026 (vs. 2023)<span class="bol-kpi__src">CEPA</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">34 + 50</p>
+          <p class="bol-kpi__desc">Hospitales y CeSAC de la red pública porteña<span class="bol-kpi__src">GCBA</span></p>
+        </div>
+      </div>
+        <div class="bol-cuerpo bol-cuerpo--dos">
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Un ajuste que se acumula</h3>
+          <p>Según el Observatorio Económico de CEPA, el presupuesto de salud de la Ciudad prevé para 2026 una caída del 2,7% real, con un ajuste acumulado del 10% desde 2023. El recorte se concentra en los hospitales con mayor demanda de sectores vulnerables: el Argerich, el Durand y el Fernández ven reducidos sus recursos entre 5% y 7%, y el Piñero, cabecera del suroeste, ya acumulaba recortes de hasta el 20%.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">El piso nacional que se hunde</h3>
+          <p>El ajuste porteño no ocurre en el vacío. La ejecución presupuestaria nacional a mayo de 2026 cae 31% real respecto de 2023, con la salud entre las funciones más castigadas. La Superintendencia de Servicios de Salud, el Instituto Malbrán, la ANMAT y numerosos hospitales nacionales registran caídas profundas, y varios programas críticos de prevención tienen ejecución nula.</p><p>En los hechos, se trasladan costos sanitarios a las jurisdicciones sin transferir recursos.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Salud mental: el eslabón más frágil</h3>
+          <p>El subsistema de salud mental sigue siendo el más expuesto: los hospitales Alvear y Tobar García y los Talleres Protegidos de Rehabilitación Psiquiátrica arrastran los recortes más profundos. Es el área con menos visibilidad y la que más rápido se deteriora.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">La demanda no baja</h3>
+          <p>La red pública —34 hospitales y 50 CeSAC— atiende a quienes no tienen obra social ni pueden pagar una consulta privada. Con una informalidad laboral que trepó al 44,2%, la presión sobre el sistema crece. Los CeSAC son la puerta de entrada de los barrios populares, y su deterioro se siente en los tiempos de espera y en las derivaciones que no llegan.</p>
+        </div>
+        </div>
+        <div class="bol-agenda" data-eje="salud" data-reveal>
+          <div class="bol-agenda__t">
+            <span class="bol-eyebrow bol-eyebrow--accent">Agenda pública</span>
+            <span class="bol-agenda__sub">Qué debería hacer el GCBA</span>
+          </div>
+          <ul class="bol-agenda__lista">
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">01</span>
+            <p class="bol-agenda__h">Revertir el ajuste hospitalario</p>
+            <p class="bol-agenda__p">Garantizar un incremento real en los hospitales de la zona sur y en los centros de salud mental, priorizando los más afectados.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">02</span>
+            <p class="bol-agenda__h">Fortalecer la red de CeSAC</p>
+            <p class="bol-agenda__p">Ampliar dotación de personal, insumos y equipamiento en la atención primaria de las comunas con mayor demanda y vulnerabilidad.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">03</span>
+            <p class="bol-agenda__h">Observatorio de Salud CABA</p>
+            <p class="bol-agenda__p">Crear un sistema de monitoreo público con indicadores de tiempos de espera, camas disponibles y prestaciones por barrio y comuna.</p>
+          </li>
+          </ul>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>CEPA – Observatorio Económico Urbano y Ejecución presupuestaria nacional a mayo 2026 · GCBA – Red hospitalaria pública · Página 12 (oct. 2025).</p>
+      </div>
+    </section>
+<section class="bol-sec" id="empleo" data-eje="empleo" aria-labelledby="t-empleo">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow bol-eyebrow--accent">Empleo y economía urbana</span>
+          <h2 class="bol-sec__title" id="t-empleo">Récord de informalidad: el empleo que se crea es precario</h2>
+          <p class="bol-sec__dek">La EPH del primer trimestre confirmó el deterioro: la desocupación subió al 7,8% y la informalidad marcó su máximo histórico. La estabilidad aparente esconde más precarización.</p>
+        </header>
+        <div class="bol-kpis" data-eje="empleo" data-reveal>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">7,8%</p>
+          <p class="bol-kpi__desc">Tasa de desocupación (1.er trim. 2026; +0,3 pp vs. 4.º trim. 2025)<span class="bol-kpi__src">INDEC – EPH</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">44,2%</p>
+          <p class="bol-kpi__desc">Informalidad laboral (1.er trim. 2026), récord desde el inicio de la serie<span class="bol-kpi__src">INDEC – EPH</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−39,3%</p>
+          <p class="bol-kpi__desc">Caída real del Salario Mínimo desde noviembre 2023<span class="bol-kpi__src">CEPA / Consejo del Salario</span></p>
+        </div>
+      </div>
+        <div class="bol-cuerpo bol-cuerpo--dos">
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Una estabilidad que engaña</h3>
+          <p>La tasa de desocupación llegó al 7,8% en el primer trimestre de 2026, con 1,72 millones de personas buscando trabajo sin encontrarlo: 0,3 puntos más que en el cierre de 2025. Pero el dato más elocuente es la informalidad, que trepó al 44,2%, el nivel más alto desde el inicio de la serie. En apenas un año se destruyeron 32.211 puestos registrados mientras el sector informal absorbió más de 400.000 trabajadores. La subocupación, además, subió al 11,1%.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">El empleo que se crea es precario</h3>
+          <p>La lectura combinada es clara: el mercado “estabiliza” la desocupación a costa de multiplicar el trabajo no registrado y de tiempo parcial. Casi cuatro de cada diez asalariados no tienen descuento jubilatorio. No es que falte trabajo en términos absolutos; es que el que aparece llega sin derechos, sin aportes y sin protección.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">El salario mínimo, en su piso histórico</h3>
+          <p>El Salario Mínimo Vital y Móvil quedó fijado en $372.400 para julio, dentro del esquema dispuesto por decreto ante la falta de acuerdo en el Consejo del Salario. Acumula una caída real cercana al 40% desde noviembre de 2023 y es el más bajo de la historia argentina en términos reales.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">El mapa del desempleo</h3>
+          <p>La desocupación golpea más fuerte en el conurbano bonaerense (9,7%) y en el Gran Buenos Aires en su conjunto (8,7%). La Ciudad, con uno de los costos de vida más altos del país, no queda al margen: alquilar, trasladarse y comer consume una porción creciente del ingreso, sobre todo entre las juventudes y los trabajadores informales, que en los barrios populares llegan a nueve de cada diez.</p>
+        </div>
+        </div>
+        <div class="bol-agenda" data-eje="empleo" data-reveal>
+          <div class="bol-agenda__t">
+            <span class="bol-eyebrow bol-eyebrow--accent">Agenda pública</span>
+            <span class="bol-agenda__sub">Qué debería hacer el GCBA</span>
+          </div>
+          <ul class="bol-agenda__lista">
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">01</span>
+            <p class="bol-agenda__h">Mapa de empleo por comuna</p>
+            <p class="bol-agenda__p">Relevar oficios, pymes y empleadores por barrio para orientar formación, crédito y compras públicas inclusivas.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">02</span>
+            <p class="bol-agenda__h">Agenda de formalización</p>
+            <p class="bol-agenda__p">Impulsar desde la Legislatura programas de registro laboral para trabajadores de plataformas, cuidadoras y sector informal urbano.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">03</span>
+            <p class="bol-agenda__h">Empleo joven con derechos</p>
+            <p class="bol-agenda__p">Crear un programa comunal de primer empleo registrado que articule formación, orientación y acompañamiento para jóvenes de 18 a 25 años.</p>
+          </li>
+          </ul>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>INDEC – EPH 1.er trim. 2026 (jun. 2026) · Chequeado (jun. 2026) · CEPA – Salario Mínimo y mercado de trabajo · Consejo Nacional del Salario (Res. 9/2025).</p>
+      </div>
+    </section>
+<section class="bol-sec" id="finanzas" data-eje="finanzas" aria-labelledby="t-finanzas">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow bol-eyebrow--accent">Finanzas públicas de CABA</span>
+          <h2 class="bol-sec__title" id="t-finanzas">Las prioridades del ajuste: deuda arriba, derechos abajo</h2>
+          <p class="bol-sec__dek">A nivel nacional, los servicios de la deuda ya pesan más que educación, salud, ciencia, vivienda y trabajo juntas. La única función que crece en términos reales es Inteligencia.</p>
+        </header>
+        <div class="bol-kpis" data-eje="finanzas" data-reveal>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−31%</p>
+          <p class="bol-kpi__desc">Ejecución del gasto total nacional a mayo 2026 (vs. 2023)<span class="bol-kpi__src">CEPA</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">12%</p>
+          <p class="bol-kpi__desc">Peso de los servicios de deuda en el gasto nacional ejecutado<span class="bol-kpi__src">CEPA</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">+34%</p>
+          <p class="bol-kpi__desc">Aumento real de la Secretaría de Inteligencia (única función que crece)<span class="bol-kpi__src">CEPA</span></p>
+        </div>
+      </div>
+        <div class="bol-cuerpo bol-cuerpo--dos">
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Un ajuste con destinatarios claros</h3>
+          <p>La ejecución presupuestaria de la Administración Pública Nacional a mayo de 2026 cae 31% real respecto de 2023. El recorte es transversal —salud, educación, ciencia, desarrollo social, infraestructura y producción—, pero no alcanza a todos por igual: los servicios de la deuda concentran el 12% del gasto ejecutado, una cifra que supera a Educación, Salud, Ciencia, Vivienda y Trabajo sumadas. La única función que crece en términos reales es la Secretaría de Inteligencia del Estado, con un aumento del 34%.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">La educación, por debajo del piso legal</h3>
+          <p>El desplazamiento de prioridades se ve con nitidez en educación: hoy representa el 4,84% del gasto ejecutado, muy por debajo del piso del 6% que fijaba la Ley de Educación que el Gobierno buscó derogar con el Presupuesto 2026. El superávit que exhibe la gestión nacional se sostiene, en buena medida, sobre partidas que dejaron de ejecutarse.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">El impacto sobre las jurisdicciones</h3>
+          <p>El recorte nacional se traslada a provincias y municipios: la asistencia técnica a municipios cae 97% y el Fondo de Fortalecimiento Fiscal bonaerense, 100%. La Ciudad no es ajena: el conflicto por la coparticipación —recibe el 1,4% de la masa cuando por fallo de la Corte le correspondería el 2,95%— sigue sin resolverse y condiciona sus cuentas.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Mirar el gasto para disputarlo</h3>
+          <p>Para el CEPOES, seguir la orientación del gasto —nacional y porteño— es una herramienta central de incidencia. Saber qué se prioriza y qué se abandona es condición para construir una agenda alternativa desde el territorio.</p>
+        </div>
+        </div>
+        <div class="bol-agenda" data-eje="finanzas" data-reveal>
+          <div class="bol-agenda__t">
+            <span class="bol-eyebrow bol-eyebrow--accent">Agenda pública</span>
+            <span class="bol-agenda__sub">Qué debería hacer el GCBA</span>
+          </div>
+          <ul class="bol-agenda__lista">
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">01</span>
+            <p class="bol-agenda__h">Presupuesto CABA en 10 láminas</p>
+            <p class="bol-agenda__p">Publicar, tras cada presentación del Ejecutivo, un resumen accesible con la distribución real del gasto y sus variaciones.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">02</span>
+            <p class="bol-agenda__h">Seguimiento trimestral de ejecución</p>
+            <p class="bol-agenda__p">Monitorear el gasto devengado para detectar subejecución y desvíos en áreas sociales.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">03</span>
+            <p class="bol-agenda__h">Presupuesto participativo real</p>
+            <p class="bol-agenda__p">Impulsar en cada comuna un proceso genuino de priorización ciudadana del gasto, con información clara y control comunitario.</p>
+          </li>
+          </ul>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>CEPA – Ejecución presupuestaria nacional a mayo 2026 · Tiempo Argentino (jun. 2026) · OEC-CEPA – Recursos de la Ciudad de Buenos Aires.</p>
+      </div>
+    </section>
+<section class="bol-sec" id="educacion" data-eje="educacion" aria-labelledby="t-educacion">
+      <div class="bol-wrap">
+        <header class="bol-sec__head" data-reveal>
+          <span class="bol-sec__kicker bol-eyebrow bol-eyebrow--accent">Educación</span>
+          <h2 class="bol-sec__title" id="t-educacion">Educación en CABA: el ajuste que no para</h2>
+          <p class="bol-sec__dek">El gasto educativo porteño acumula una caída del 13% desde 2023. En el plano nacional, programas estructurales como Conectar Igualdad y el Incentivo Docente tienen ejecución casi nula.</p>
+        </header>
+        <div class="bol-kpis" data-eje="educacion" data-reveal>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−13%</p>
+          <p class="bol-kpi__desc">Ajuste acumulado en educación CABA desde 2023<span class="bol-kpi__src">CEPA</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">−11%</p>
+          <p class="bol-kpi__desc">Caída en partidas para obras en establecimientos escolares 2026<span class="bol-kpi__src">CEPA</span></p>
+        </div>
+        <div class="bol-kpi">
+          <p class="bol-kpi__val">4,84%</p>
+          <p class="bol-kpi__desc">Peso de Educación en el gasto nacional ejecutado (mínimo legal: 6%)<span class="bol-kpi__src">CEPA</span></p>
+        </div>
+      </div>
+        <div class="bol-cuerpo bol-cuerpo--dos">
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Un ajuste sostenido desde 2023</h3>
+          <p>El Observatorio Económico de CEPA registra que el gasto educativo de la Ciudad acumula una baja cercana al 13% real desde 2023. Para 2026 la caída prevista es del 3,5% adicional, equivalente a casi 500.000 millones de pesos resignados en cuatro años. Las obras en establecimientos caen 11% y las becas estudiantiles retroceden 5%; los subsidios a cooperadoras y los fondos para educación técnica y de adultos también disminuyen. El ajuste no discrimina nivel ni modalidad.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">El desfinanciamiento nacional</h3>
+          <p>El plano nacional marca el techo. A mayo, Educación representa apenas el 4,84% del presupuesto ejecutado, muy por debajo del piso del 6% que fijaba la Ley de Educación. Programas estructurales como Conectar Igualdad y el Fondo de Incentivo Docente tienen ejecución prácticamente nula, las universidades acumulan un recorte real cercano al 34% y la inversión en infraestructura escolar cayó más del 60% frente a 2023.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Becas e infraestructura: los más golpeados</h3>
+          <p>Las becas retroceden en un contexto donde el costo de materiales, fotocopias y transporte sigue creciendo. Para muchas familias de ingresos bajos, esa diferencia define si un joven permanece en el sistema o lo abandona. La infraestructura escolar arrastra edificios deteriorados y problemas edilicios que las cooperadoras intentan resolver con recursos mínimos.</p>
+        </div>
+        <div class="bol-bloque" data-reveal>
+          <h3 class="bol-bloque__h">Lo que dice el presupuesto de las prioridades</h3>
+          <p>Como en los demás ejes, el ajuste no pega igual en toda la Ciudad. Las comunas del sur —con menores ingresos y mayor demanda de apoyo estatal— son las que más sienten el repliegue. Cuando el Estado se retira, son las madres, los padres y las y los docentes quienes compensan: no es eficiencia, es transferencia de costos a quienes menos pueden sostenerlos.</p>
+        </div>
+        </div>
+        <div class="bol-agenda" data-eje="educacion" data-reveal>
+          <div class="bol-agenda__t">
+            <span class="bol-eyebrow bol-eyebrow--accent">Agenda pública</span>
+            <span class="bol-agenda__sub">Qué debería hacer el GCBA</span>
+          </div>
+          <ul class="bol-agenda__lista">
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">01</span>
+            <p class="bol-agenda__h">Revertir el recorte en infraestructura escolar</p>
+            <p class="bol-agenda__p">Garantizar incremento real en obras y mantenimiento, priorizando las comunas del sur con mayor déficit.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">02</span>
+            <p class="bol-agenda__h">Fortalecer becas y apoyo escolar</p>
+            <p class="bol-agenda__p">Ampliar el programa de becas e incorporar subsidios para útiles, fotocopias y transporte en comunas con mayor vulnerabilidad.</p>
+          </li>
+          <li class="bol-agenda__item">
+            <span class="bol-agenda__n" aria-hidden="true">03</span>
+            <p class="bol-agenda__h">Observatorio educativo comunal</p>
+            <p class="bol-agenda__p">Construir un tablero por escuela y barrio: matrícula, deserción, estado edilicio y asistencia docente, para orientar el gasto con datos reales.</p>
+          </li>
+          </ul>
+        </div>
+        <p class="bol-fuentes"><b>Fuentes</b>CEPA – Observatorio Económico Urbano y Ejecución presupuestaria nacional a mayo 2026 · IIEP-UBA / CTERA · Argentinos por la Educación.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="bol-cierre">
+      <div class="bol-wrap">
+        <div class="bol-cierre__grid">
+          <div>
+            <span class="bol-eyebrow">CEPOES</span>
+            <p class="bol-cierre__t">Datos, investigación y propuestas para CABA, desde los barrios.</p>
+            <p>La Ciudad que habitamos es el boletín mensual del Centro de Estudios en Política, Economía y Sociedad, el centro de estudios de Somos 100 Barrios. Cada número sigue cinco ejes: vivienda, salud, empleo, finanzas públicas y educación.</p>
+            <div class="bol-acciones">
+              <a class="bol-btn" href="https://cepoes.org/publicaciones/boletines/">Ver la serie completa</a>
+              <a class="bol-btn bol-btn--ghost" href="/publicaciones/files/boletin-03-julio-2026.pdf">Descargar este número ↓</a>
+            </div>
+            <div class="bol-acciones"><a class="bol-btn bol-btn--ghost" href="/publicaciones/boletines/boletin-02-junio-2026/">← N.º 02 · Junio 2026</a><a class="bol-btn bol-btn--ghost" href="/publicaciones/boletines/boletin-04-agosto-2026/">N.º 04 · Agosto 2026 →</a></div>
+          </div>
+          <div>
+            <span class="bol-eyebrow">Cita sugerida</span>
+            <p class="bol-cita">CEPOES (2026). «El semestre cierra con récord de informalidad». La Ciudad que habitamos, N.º 3, Julio 2026. Centro de Estudios en Política, Economía y Sociedad – Somos 100 Barrios.</p>
+            <div class="bol-acciones">
+              <button class="bol-btn bol-btn--ghost" type="button" data-copiar-cita>Copiar cita</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+</article>
+</body>
+</html>

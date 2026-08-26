@@ -132,6 +132,8 @@ for path,label in [('/territorio/migraciones/','Migraciones'),('/territorio/estr
     assert f'href="{path}"' in territorio, f'Territorio no enlaza {label}'
 for token in ['Explorar','Temas territoriales','/presupuesto/territorio/']:
     assert token in territorio, f'Navegación territorial sin {token}'
+for token in ['class="territory-desktop"','class="territory-mobile"','Explorar Territorio','class="territory-mobile-menu"']:
+    assert token in territorio, f'Navegación territorial responsive incompleta: {token}'
 
 publicaciones=(root/'publicaciones'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['id="archivo-por-tema"','Notas de prensa','/temas/#vivienda-y-habitat']:

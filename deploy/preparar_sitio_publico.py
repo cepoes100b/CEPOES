@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=4"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=5"
 
 
 TOPICS = [
@@ -139,9 +139,13 @@ def territory_subnav(rel: str) -> str:
         return "".join(f'<a{active_link(rel, href)} href="{href}">{label}</a>' for href, label in items)
     return (
         '<nav aria-label="Navegación territorial" class="subnav territory-subnav"><div class="wrap territory-nav">'
+        '<div class="territory-desktop">'
         f'<div class="territory-primary">{links(explore)}</div>'
         '<details class="territory-topics"><summary>Temas territoriales <span aria-hidden="true">⌄</span></summary>'
-        f'<div class="territory-topics-menu">{links(thematic)}</div></details>'
+        f'<div class="territory-topics-menu">{links(thematic)}</div></details></div>'
+        '<details class="territory-mobile"><summary><span>Explorar Territorio</span><span aria-hidden="true">⌄</span></summary>'
+        '<div class="territory-mobile-menu"><strong>Explorar</strong>'
+        f'<div>{links(explore)}</div><strong>Temas territoriales</strong><div>{links(thematic)}</div></div></details>'
         '</div></nav>'
     )
 

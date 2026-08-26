@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estructura productiva argentina: recuperación parcial, empleo bajo pre… — Informe CEPOES N.º 1</title>
+  <meta name="description" content="Análisis de la economía productiva argentina durante el primer cuatrimestre de 2026, con énfasis en capacidad instalada, industria, entramado empresario, mercado de trabajo y la situación productiva y laboral de CABA.">
+  <meta name="theme-color" content="#16232F">
+  <link rel="canonical" href="https://cepoes.org/publicaciones/informe-coyuntura-01-junio-2026/">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:site_name" content="CEPOES">
+  <meta property="og:title" content="Estructura productiva argentina: recuperación parcial, empleo bajo presión y crisis del tejido productivo en CABA">
+  <meta property="og:description" content="Análisis de la economía productiva argentina durante el primer cuatrimestre de 2026, con énfasis en capacidad instalada, industria, entramado empresario, mercado de trabajo y la situación productiva y laboral de CABA.">
+  <meta property="og:url" content="https://cepoes.org/publicaciones/informe-coyuntura-01-junio-2026/">
+  <meta property="og:image" content="https://cepoes.org/assets/publicaciones/informe-coyuntura-01.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+  <link href="/assets/site.css?v=233" rel="stylesheet">
+<link href="/assets/informe-html.css?v=1" rel="stylesheet">
+<script defer src="/assets/common.js?v=254"></script>
+<script defer src="/assets/boletines-html.js?v=1"></script>
+</head>
+<body data-related-tags="produccion,industria,empleo,empresas,caba,publicaciones">
+<article class="bol">
+   dentro de cualquier plantilla del sitio sin que se pisen los estilos.
+   Los tokens de la primera sección son los únicos que hay que tocar para
+   alinear el boletín con el resto de cepoes.org.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+
+.bol {
+  /* Tipografías: si el sitio ya carga sus fuentes, reapuntar acá */
+  --bol-font-display: "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+  --bol-font-body: "IBM Plex Sans", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bol-font-num: "IBM Plex Sans Condensed", "Roboto Condensed", "IBM Plex Sans", system-ui, sans-serif;
+  --bol-font-meta: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Color base — anclado en el navy institucional del sitio (#16232F) */
+  --bol-tinta: #16232f;
+  --bol-tinta-2: #48545f;
+  --bol-tinta-3: #737d87;
+  --bol-papel: #f6f4f0;
+  --bol-carta: #ffffff;
+  --bol-linea: #dcd7cf;
+  --bol-linea-suave: #e9e5de;
+  --bol-sombra: 0 1px 2px rgba(22, 35, 47, .04), 0 8px 24px -16px rgba(22, 35, 47, .28);
+
+  /* Métrica */
+  --bol-ancho: 1160px;
+  --bol-col: 66ch;
+  --bol-radio: 3px;
+  --bol-gap: clamp(1.5rem, 4vw, 3rem);
+
+  color: var(--bol-tinta);
+  background: var(--bol-papel);
+  font-family: var(--bol-font-body);
+  font-size: clamp(16px, .95rem + .2vw, 18px);
+  line-height: 1.65;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Acento por eje temático. Se hereda hacia abajo con var(--accent). */
+.bol { --accent: var(--bol-tinta); }
+.bol [data-eje="vivienda"]  { --accent: #0f7b7f; }
+.bol [data-eje="salud"]     { --accent: #b4232a; }
+.bol [data-eje="empleo"]    { --accent: #a96500; }
+.bol [data-eje="finanzas"]  { --accent: #3a3f8f; }
+.bol [data-eje="educacion"] { --accent: #2c7a46; }
+
+.bol [data-eje] {
+  --accent-suave: #f0efec;
+  --accent-suave: color-mix(in srgb, var(--accent) 8%, var(--bol-carta));
+  --accent-borde: #dcd7cf;
+  --accent-borde: color-mix(in srgb, var(--accent) 26%, var(--bol-linea));
+}
+
+/* Modo oscuro: automático, y respetando el conmutador del sitio */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bol {
+    --bol-tinta: #eef1f4;
+    --bol-tinta-2: #aab4be;
+    --bol-tinta-3: #7f8a95;
+    --bol-papel: #101922;
+    --bol-carta: #16232f;
+    --bol-linea: #2b3947;
+    --bol-linea-suave: #223040;
+    --bol-sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -18px rgba(0, 0, 0, .8);
+  }
+  :root:not([data-theme="light"]) .bol [data-eje="vivienda"]  { --accent: #4fc3c6; }
+  :root:not([data-theme="light"]) .bol [data-eje="salud"]     { --accent: #f0736f; }
+  :root:not([data-theme="light"]) .bol [data-eje="empleo"]    { --accent: #e5a33c; }
+  :root:not([data-theme="light"]) .bol [data-eje="finanzas"]  { --accent: #8f93e8; }
+  :root:not([data-theme="light"]) .bol [data-eje="educacion"] { --accent: #5cbb7d; }
+  :root:not([data-theme="light"]) .bol [data-eje] {
+    --accent-suave: color-mix(in srgb, var(--accent) 12%, var(--bol-carta));
+    --accent-borde: color-mix(in srgb, var(--accent) 32%, var(--bol-linea));
+  }
+}
+
+:root[data-theme="dark"] .bol {
+  --bol-tinta: #eef1f4;
+  --bol-tinta-2: #aab4be;
+  --bol-tinta-3: #7f8a95;
+  --bol-papel: #101922;
+  --bol-carta: #16232f;
+  --bol-linea: #2b3947;
+  --bol-linea-suave: #223040;
+  --bol-sombra: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 30px -18px rgba(0, 0, 0, .8);
+}
+:root[data-theme="dark"] .bol [data-eje="vivienda"]  { --accent: #4fc3c6; }
+:root[data-theme="dark"] .bol [data-eje="salud"]     { --accent: #f0736f; }
+:root[data-theme="dark"] .bol [data-eje="empleo"]    { --accent: #e5a33c; }
+:root[data-theme="dark"] .bol [data-eje="finanzas"]  { --accent: #8f93e8; }
+:root[data-theme="dark"] .bol [data-eje="educacion"] { --accent: #5cbb7d; }
+:root[data-theme="dark"] .bol [data-eje] {
+  --accent-suave: color-mix(in srgb, var(--accent) 12%, var(--bol-carta));
+  --accent-borde: color-mix(in srgb, var(--accent) 32%, var(--bol-linea));
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset acotado
+   -------------------------------------------------------------------------- */
+
+.bol *, .bol *::before, .bol *::after { box-sizing: border-box; }
+.bol p, .bol h1, .bol h2, .bol h3, .bol h4, .bol ul, .bol ol, .bol figure, .bol table { margin: 0; }
+.bol ul, .bol ol { padding: 0; list-style: none; }
+.bol img { max-width: 100%; height: auto; display: block; }
+.bol a { color: inherit; }
+.bol :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.bol-wrap {
+  width: min(100% - 2.5rem, var(--bol-ancho));
+  margin-inline: auto;
+}
+
+.bol-sr {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   3. Etiquetas y utilidades tipográficas
+   -------------------------------------------------------------------------- */
+
+.bol-eyebrow {
+  font-family: var(--bol-font-meta);
+  font-size: .69rem;
+  font-weight: 500;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+}
+
+.bol-eyebrow--accent { color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   4. Barra de progreso de lectura
+   -------------------------------------------------------------------------- */
+
+.bol-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  background: transparent;
+  pointer-events: none;
+}
+.bol-progress__bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent, var(--bol-tinta));
+  transition: width .12s linear, background-color .4s ease;
+}
+
+/* --------------------------------------------------------------------------
+   5. Portada
+   -------------------------------------------------------------------------- */
+
+.bol-hero {
+  padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-hero__grid {
+  display: grid;
+  gap: var(--bol-gap);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .bol-hero__grid { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+}
+
+.bol-hero__serie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .6rem 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--bol-tinta);
+  margin-bottom: 1.6rem;
+}
+
+.bol-hero__serie strong {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: -.01em;
+}
+
+.bol-hero__num {
+  margin-left: auto;
+  font-family: var(--bol-font-num);
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  font-weight: 600;
+  line-height: .85;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+.bol-hero__num span {
+  font-family: var(--bol-font-meta);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  vertical-align: super;
+  color: var(--bol-tinta-2);
+  margin-right: .35rem;
+}
+
+.bol-hero__title {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: clamp(2.1rem, 1.2rem + 3.6vw, 3.9rem);
+  line-height: 1.03;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+  margin-bottom: 1.1rem;
+}
+
+.bol-hero__dek {
+  font-size: clamp(1.05rem, 1rem + .3vw, 1.3rem);
+  line-height: 1.5;
+  color: var(--bol-tinta-2);
+  max-width: 48ch;
+  text-wrap: pretty;
+}
+
+.bol-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem .9rem;
+  align-items: center;
+  margin-top: 1.8rem;
+  font-family: var(--bol-font-meta);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+}
+.bol-hero__meta span + span::before {
+  content: "·";
+  margin-right: .9rem;
+  color: var(--bol-tinta-3);
+}
+
+.bol-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: 1.6rem;
+}
+
+.bol-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .62rem 1.1rem;
+  border: 1px solid var(--bol-tinta);
+  border-radius: var(--bol-radio);
+  font-family: var(--bol-font-meta);
+  font-size: .74rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: var(--bol-tinta);
+  color: var(--bol-papel);
+  transition: transform .18s ease, opacity .18s ease, background-color .18s ease, color .18s ease;
+}
+.bol-btn:hover { transform: translateY(-1px); opacity: .9; }
+.bol-btn--ghost {
+  background: transparent;
+  color: var(--bol-tinta);
+  border-color: var(--bol-linea);
+}
+.bol-btn--ghost:hover { border-color: var(--bol-tinta); }
+
+.bol-hero__cover {
+  width: 100%;
+  max-width: 22rem;
+  margin-bottom: 1.2rem;
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+}
+
+/* Sumario de la portada */
+.bol-sumario {
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  padding: 1.4rem 1.5rem .6rem;
+}
+.bol-sumario__t {
+  padding-bottom: .9rem;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  margin-bottom: .3rem;
+}
+.bol-sumario__item {
+  display: grid;
+  grid-template-columns: 2.6rem minmax(0, 1fr);
+  gap: .1rem .9rem;
+  padding: .85rem 0;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  text-decoration: none;
+  transition: background-color .18s ease;
+}
+.bol-sumario__item:last-child { border-bottom: 0; }
+.bol-sumario__item:hover { background: var(--accent-suave, var(--bol-papel)); }
+.bol-sumario__n {
+  grid-row: 1 / span 2;
+  font-family: var(--bol-font-num);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  padding-top: .1rem;
+}
+.bol-sumario__h {
+  font-weight: 600;
+  font-size: .95rem;
+  line-height: 1.3;
+}
+.bol-sumario__d {
+  font-size: .84rem;
+  line-height: 1.45;
+  color: var(--bol-tinta-2);
+  margin-top: .25rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. Riel de ejes (navegación pegajosa)
+   -------------------------------------------------------------------------- */
+
+.bol-riel {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--bol-papel) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-riel__lista {
+  display: flex;
+  gap: .2rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-block: .55rem;
+}
+.bol-riel__lista::-webkit-scrollbar { display: none; }
+
+.bol-riel__link {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+  padding: .4rem .75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: .82rem;
+  font-weight: 500;
+  color: var(--bol-tinta-2);
+  transition: color .2s ease, background-color .2s ease;
+}
+.bol-riel__link::before {
+  content: "";
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: .45;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.bol-riel__link:hover { color: var(--bol-tinta); }
+.bol-riel__link[aria-current="true"] {
+  color: var(--accent);
+  background: var(--accent-suave);
+  font-weight: 600;
+}
+.bol-riel__link[aria-current="true"]::before { opacity: 1; transform: scale(1.15); }
+
+/* --------------------------------------------------------------------------
+   7. Secciones
+   -------------------------------------------------------------------------- */
+
+.bol-sec { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.bol-sec + .bol-sec { border-top: 1px solid var(--bol-linea); }
+
+.bol-sec__head { max-width: 58ch; margin-bottom: clamp(2rem, 4vw, 3rem); }
+
+.bol-sec__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: 1rem;
+}
+.bol-sec__kicker::before {
+  content: "";
+  width: 1.6rem;
+  height: 2px;
+  background: var(--accent);
+}
+
+.bol-sec__title {
+  font-family: var(--bol-font-display);
+  font-weight: 600;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.7rem);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.bol-sec__title--lead {
+  font-size: clamp(1.25rem, 1.05rem + .9vw, 1.75rem);
+  line-height: 1.32;
+  letter-spacing: -.012em;
+  font-weight: 400;
+  color: var(--bol-tinta-2);
+}
+.bol-sec__title--lead strong { font-weight: 600; color: var(--bol-tinta); }
+
+.bol-sec__dek {
+  margin-top: .9rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--bol-tinta-2);
+  text-wrap: pretty;
+}
+
+/* --------------------------------------------------------------------------
+   8. Banda de indicadores (elemento firma)
+   -------------------------------------------------------------------------- */
+
+.bol-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  border-top: 3px solid var(--accent);
+  border-bottom: 1px solid var(--bol-linea);
+  background: var(--bol-carta);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.bol-kpi {
+  padding: 1.5rem 1.4rem 1.3rem;
+  border-left: 1px solid var(--bol-linea-suave);
+}
+.bol-kpi:first-child { border-left: 0; }
+
+.bol-kpi__val {
+  font-family: var(--bol-font-num);
+  font-size: clamp(2.4rem, 1.6rem + 2.6vw, 3.5rem);
+  font-weight: 600;
+  line-height: .95;
+  letter-spacing: -.03em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums lining-nums;
+  margin-bottom: .7rem;
+}
+
+.bol-kpi__desc {
+  font-size: .9rem;
+  line-height: 1.42;
+  color: var(--bol-tinta);
+  max-width: 26ch;
+}
+
+.bol-kpi__src {
+  display: block;
+  margin-top: .6rem;
+  font-family: var(--bol-font-meta);
+  font-size: .66rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+}
+
+/* --------------------------------------------------------------------------
+   9. Cuerpo de texto
+   -------------------------------------------------------------------------- */
+
+.bol-cuerpo {
+  display: grid;
+  gap: clamp(1.8rem, 3vw, 2.6rem);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 860px) {
+  .bol-cuerpo--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.bol-bloque__h {
+  font-family: var(--bol-font-display);
+  font-size: 1.22rem;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -.01em;
+  margin-bottom: .7rem;
+}
+.bol-bloque__h::after {
+  content: "";
+  display: block;
+  width: 2.2rem;
+  height: 2px;
+  background: var(--accent);
+  margin-top: .55rem;
+  opacity: .6;
+}
+
+.bol-bloque p + p { margin-top: .85rem; }
+.bol-bloque p { text-wrap: pretty; }
+
+.bol-prosa { max-width: var(--bol-col); }
+.bol-prosa p + p { margin-top: 1rem; }
+
+/* Destacado */
+.bol-quote {
+  margin-block: clamp(2rem, 4vw, 3rem);
+  padding: 1.6rem 0 1.6rem 1.6rem;
+  border-left: 3px solid var(--accent);
+  font-family: var(--bol-font-display);
+  font-size: clamp(1.25rem, 1rem + 1.1vw, 1.7rem);
+  line-height: 1.3;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  max-width: 44ch;
+}
+
+/* --------------------------------------------------------------------------
+   10. Tabla de indicadores síntesis
+   -------------------------------------------------------------------------- */
+
+.bol-tabla-wrap {
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  overflow: hidden;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+.bol-tabla-wrap__t {
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--bol-linea);
+}
+
+.bol-tabla { width: 100%; border-collapse: collapse; }
+
+.bol-tabla th {
+  text-align: left;
+  padding: .8rem 1.4rem;
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+  border-bottom: 1px solid var(--bol-linea-suave);
+}
+
+.bol-tabla td {
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  vertical-align: top;
+  font-size: .93rem;
+  line-height: 1.45;
+}
+.bol-tabla tr:last-child td { border-bottom: 0; }
+
+.bol-tabla__tema {
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--accent);
+  border-left: 3px solid var(--accent);
+}
+
+.bol-tabla__dato {
+  font-family: var(--bol-font-num);
+  font-size: 1.2rem;
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.bol-tabla__fuente {
+  font-family: var(--bol-font-meta);
+  font-size: .7rem;
+  letter-spacing: .04em;
+  color: var(--bol-tinta-3);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .bol-tabla thead { display: none; }
+  .bol-tabla tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .2rem .8rem;
+    padding: 1.1rem 1.2rem;
+    border-bottom: 1px solid var(--bol-linea-suave);
+    border-left: 3px solid var(--accent);
+  }
+  .bol-tabla tr:last-child { border-bottom: 0; }
+  .bol-tabla td { display: block; padding: 0; border: 0; }
+  .bol-tabla__tema { grid-column: 1 / -1; border-left: 0; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; font-family: var(--bol-font-meta); }
+  .bol-tabla__ind { grid-column: 1; }
+  .bol-tabla__dato { grid-column: 2; grid-row: 2; text-align: right; }
+  .bol-tabla__fuente { grid-column: 1 / -1; margin-top: .3rem; }
+}
+
+/* --------------------------------------------------------------------------
+   11. Agenda pública
+   -------------------------------------------------------------------------- */
+
+.bol-agenda {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  background: var(--accent-suave);
+  border: 1px solid var(--accent-borde);
+  border-radius: var(--bol-radio);
+  padding: clamp(1.4rem, 3vw, 2rem);
+}
+
+.bol-agenda__t {
+  display: flex;
+  align-items: baseline;
+  gap: .7rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--accent-borde);
+}
+
+.bol-agenda__sub {
+  font-size: .88rem;
+  color: var(--bol-tinta-2);
+}
+
+.bol-agenda__lista {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.bol-agenda__item { display: grid; grid-template-columns: 1.5rem minmax(0, 1fr); gap: .2rem .7rem; }
+.bol-agenda__n {
+  grid-row: 1 / span 2;
+  font-family: var(--bol-font-meta);
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding-top: .18rem;
+  font-variant-numeric: tabular-nums;
+}
+.bol-agenda__h { font-weight: 600; font-size: .95rem; line-height: 1.3; }
+.bol-agenda__p { font-size: .88rem; line-height: 1.45; color: var(--bol-tinta-2); margin-top: .25rem; }
+
+/* --------------------------------------------------------------------------
+   12. Fuentes
+   -------------------------------------------------------------------------- */
+
+.bol-fuentes {
+  margin-top: 1.6rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bol-linea);
+  font-size: .8rem;
+  line-height: 1.5;
+  color: var(--bol-tinta-3);
+}
+.bol-fuentes b {
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+  margin-right: .4rem;
+}
+
+/* --------------------------------------------------------------------------
+   13. Cierre
+   -------------------------------------------------------------------------- */
+
+.bol-cierre {
+  background: var(--bol-tinta);
+  color: var(--bol-papel);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+.bol-cierre .bol-eyebrow { color: color-mix(in srgb, var(--bol-papel) 62%, transparent); }
+
+.bol-cierre__grid {
+  display: grid;
+  gap: var(--bol-gap);
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 800px) {
+  .bol-cierre__grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+}
+
+.bol-cierre__t {
+  font-family: var(--bol-font-display);
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+  margin-block: .8rem 1rem;
+}
+.bol-cierre p { color: color-mix(in srgb, var(--bol-papel) 78%, transparent); font-size: .95rem; }
+
+.bol-cita {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--bol-papel) 22%, transparent);
+  border-radius: var(--bol-radio);
+  font-family: var(--bol-font-meta);
+  font-size: .78rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--bol-papel) 82%, transparent);
+}
+
+.bol-cierre .bol-btn {
+  background: var(--bol-papel);
+  color: var(--bol-tinta);
+  border-color: var(--bol-papel);
+}
+.bol-cierre .bol-btn--ghost {
+  background: transparent;
+  color: var(--bol-papel);
+  border-color: color-mix(in srgb, var(--bol-papel) 34%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   14. Movimiento
+   -------------------------------------------------------------------------- */
+
+.bol [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .55s cubic-bezier(.22, .61, .36, 1), transform .55s cubic-bezier(.22, .61, .36, 1);
+}
+.bol [data-reveal].is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bol *, .bol *::before, .bol *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+  .bol [data-reveal] { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   15. Impresión
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .bol-riel, .bol-progress, .bol-acciones { display: none !important; }
+  .bol {
+    --bol-papel: #fff;
+    --bol-carta: #fff;
+    --bol-tinta: #000;
+    --bol-tinta-2: #333;
+    --bol-tinta-3: #555;
+    font-size: 10.5pt;
+  }
+  .bol-sec { padding-block: 1.2rem; break-inside: avoid; }
+  .bol-sec { break-before: page; }
+  .bol-hero { break-after: avoid; }
+  .bol-kpis, .bol-agenda, .bol-tabla-wrap { break-inside: avoid; }
+  .bol [data-reveal] { opacity: 1; transform: none; }
+  .bol-cierre { background: #fff; color: #000; border-top: 1px solid #000; }
+}
+
+/* ==========================================================================
+   CEPOES · Informe económico de coyuntura
+   Módulo que se carga DESPUÉS de cepoes-boletin.css y reutiliza sus tokens.
+   El artículo raíz lleva las dos clases: <article class="bol inf">
+   ========================================================================== */
+
+.bol.inf {
+  --accent: #1f5f8b;
+  --accent-suave: color-mix(in srgb, var(--accent) 8%, var(--bol-carta));
+  --accent-borde: color-mix(in srgb, var(--accent) 26%, var(--bol-linea));
+  --pos: #2c7a46;
+  --neg: #b4232a;
+  --neutro: #7b8794;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bol.inf {
+    --accent: #6bb6e0;
+    --pos: #5cbb7d;
+    --neg: #f0736f;
+    --neutro: #8b96a3;
+  }
+}
+:root[data-theme="dark"] .bol.inf {
+  --accent: #6bb6e0;
+  --pos: #5cbb7d;
+  --neg: #f0736f;
+  --neutro: #8b96a3;
+}
+
+/* --------------------------------------------------------------------------
+   Ficha técnica de portada
+   -------------------------------------------------------------------------- */
+
+.inf-ficha {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  gap: 1px;
+  margin-top: 2rem;
+  background: var(--bol-linea);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  overflow: hidden;
+}
+.inf-ficha__celda { background: var(--bol-carta); padding: 1rem 1.1rem; }
+.inf-ficha__k { display: block; margin-bottom: .35rem; }
+.inf-ficha__v { font-size: .95rem; font-weight: 600; line-height: 1.3; }
+
+/* Índice de la portada */
+.inf-indice { display: grid; gap: 0; }
+.inf-indice__item {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: .8rem;
+  align-items: baseline;
+  padding: .7rem 0;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  text-decoration: none;
+  font-size: .93rem;
+  line-height: 1.35;
+}
+.inf-indice__item:last-child { border-bottom: 0; }
+.inf-indice__item:hover { color: var(--accent); }
+.inf-indice__n {
+  font-family: var(--bol-font-meta);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Encabezado de sección con numeral romano
+   -------------------------------------------------------------------------- */
+
+.inf-sec__head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: .2rem 1.2rem;
+  align-items: start;
+  max-width: 62ch;
+  margin-bottom: clamp(1.8rem, 3.5vw, 2.6rem);
+  padding-top: 1rem;
+  border-top: 2px solid var(--accent);
+}
+.inf-sec__n {
+  grid-row: 1 / span 2;
+  font-family: var(--bol-font-num);
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -.02em;
+  min-width: 2.2rem;
+}
+.inf-sec__t {
+  font-family: var(--bol-font-display);
+  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+.inf-sec__sub {
+  font-family: var(--bol-font-meta);
+  font-size: .7rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+  margin-top: .5rem;
+}
+
+.inf-prosa { max-width: var(--bol-col); }
+.inf-prosa + .inf-prosa { margin-top: 1rem; }
+.inf-prosa p + p { margin-top: 1rem; }
+
+/* --------------------------------------------------------------------------
+   Gráficos (HTML + CSS, sin librerías)
+   -------------------------------------------------------------------------- */
+
+.graf {
+  margin-block: clamp(2rem, 4vw, 2.8rem);
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  padding: clamp(1.2rem, 3vw, 1.8rem);
+}
+.graf__t {
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.3;
+  margin-bottom: .3rem;
+}
+.graf__sub {
+  font-size: .82rem;
+  color: var(--bol-tinta-2);
+  margin-bottom: 1.3rem;
+}
+.graf__fuente {
+  margin-top: 1.2rem;
+  padding-top: .8rem;
+  border-top: 1px solid var(--bol-linea-suave);
+  font-family: var(--bol-font-meta);
+  font-size: .68rem;
+  line-height: 1.5;
+  letter-spacing: .03em;
+  color: var(--bol-tinta-3);
+}
+
+/* Barras horizontales simples */
+.graf__filas { display: grid; gap: .55rem; }
+
+.graf-fila {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 11rem) minmax(0, 1fr) auto;
+  gap: .5rem .8rem;
+  align-items: center;
+}
+.graf-fila__lab {
+  font-size: .8rem;
+  line-height: 1.25;
+  color: var(--bol-tinta-2);
+  text-align: right;
+}
+.graf-fila__pista {
+  position: relative;
+  height: 1.45rem;
+  background: var(--bol-linea-suave);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.graf-fila__barra {
+  height: 100%;
+  width: var(--w, 0%);
+  background: var(--accent);
+  border-radius: 2px;
+}
+.graf-fila__val {
+  font-family: var(--bol-font-num);
+  font-size: 1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  min-width: 3.6rem;
+  text-align: right;
+}
+
+.graf-fila[data-tono="pos"] .graf-fila__barra { background: var(--pos); }
+.graf-fila[data-tono="neg"] .graf-fila__barra { background: var(--neg); }
+.graf-fila[data-tono="neutro"] .graf-fila__barra { background: var(--neutro); }
+.graf-fila[data-tono="pos"] .graf-fila__val { color: var(--pos); }
+.graf-fila[data-tono="neg"] .graf-fila__val { color: var(--neg); }
+
+/* Línea de referencia */
+.graf-fila__ref {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--ref, 50%);
+  width: 0;
+  border-left: 2px dashed var(--bol-tinta-3);
+}
+.graf__ref-nota {
+  margin-top: .8rem;
+  font-size: .76rem;
+  color: var(--bol-tinta-2);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.graf__ref-nota::before {
+  content: "";
+  width: 1.4rem;
+  border-top: 2px dashed var(--bol-tinta-3);
+}
+
+/* Barras divergentes alrededor del cero */
+.graf-div { display: grid; gap: .5rem; }
+.graf-div__fila {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 11rem) 1fr 1fr auto;
+  gap: .5rem 0;
+  align-items: center;
+}
+.graf-div__lab {
+  font-size: .8rem;
+  line-height: 1.25;
+  color: var(--bol-tinta-2);
+  text-align: right;
+  padding-right: .8rem;
+}
+.graf-div__neg, .graf-div__pos {
+  height: 1.45rem;
+  display: flex;
+  align-items: stretch;
+  background: linear-gradient(var(--bol-linea-suave), var(--bol-linea-suave)) no-repeat center / 100% 1px;
+}
+.graf-div__neg { justify-content: flex-end; border-right: 2px solid var(--bol-tinta); }
+.graf-div__pos { justify-content: flex-start; }
+.graf-div__neg i, .graf-div__pos i {
+  display: block;
+  width: var(--w, 0%);
+  border-radius: 2px;
+}
+.graf-div__neg i { background: var(--neg); }
+.graf-div__pos i { background: var(--pos); }
+.graf-div__val {
+  font-family: var(--bol-font-num);
+  font-size: 1rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  min-width: 4.2rem;
+  text-align: right;
+  padding-left: .8rem;
+}
+.graf-div__fila[data-tono="neg"] .graf-div__val { color: var(--neg); }
+.graf-div__fila[data-tono="pos"] .graf-div__val { color: var(--pos); }
+
+@media (max-width: 640px) {
+  .graf-fila { grid-template-columns: minmax(0, 1fr) auto; }
+  .graf-fila__lab { grid-column: 1 / -1; text-align: left; }
+  .graf-div__fila { grid-template-columns: 1fr 1fr auto; }
+  .graf-div__lab { grid-column: 1 / -1; text-align: left; padding-right: 0; }
+}
+
+/* Barra apilada */
+.graf-apilada {
+  display: flex;
+  height: 3rem;
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--bol-linea);
+}
+.graf-apilada__parte {
+  width: var(--w, 0%);
+  display: grid;
+  place-items: center;
+  font-family: var(--bol-font-num);
+  font-size: .85rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--c, var(--accent));
+}
+.graf-leyenda {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: .7rem 1.2rem;
+  margin-top: 1.1rem;
+}
+.graf-leyenda__item {
+  display: grid;
+  grid-template-columns: .7rem minmax(0, 1fr);
+  gap: .1rem .6rem;
+  font-size: .82rem;
+  line-height: 1.35;
+}
+.graf-leyenda__punto {
+  grid-row: 1 / span 2;
+  width: .7rem;
+  height: .7rem;
+  border-radius: 2px;
+  background: var(--c, var(--accent));
+  margin-top: .3rem;
+}
+.graf-leyenda__v {
+  font-family: var(--bol-font-num);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.graf-leyenda__d { color: var(--bol-tinta-2); font-size: .78rem; }
+
+/* --------------------------------------------------------------------------
+   Cifras destacadas, notas, tablas y tarjetas
+   -------------------------------------------------------------------------- */
+
+.inf-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 1px;
+  margin-block: clamp(1.8rem, 3.5vw, 2.5rem);
+  background: var(--bol-linea);
+  border: 1px solid var(--bol-linea);
+  border-top: 3px solid var(--accent);
+}
+.inf-stat { background: var(--bol-carta); padding: 1.3rem 1.2rem; }
+.inf-stat__v {
+  font-family: var(--bol-font-num);
+  font-size: clamp(2rem, 1.5rem + 2vw, 2.9rem);
+  font-weight: 600;
+  line-height: .95;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+  margin-bottom: .6rem;
+}
+.inf-stat[data-tono="neg"] .inf-stat__v { color: var(--neg); }
+.inf-stat[data-tono="pos"] .inf-stat__v { color: var(--pos); }
+.inf-stat__d { font-size: .87rem; line-height: 1.4; }
+.inf-stat__n {
+  display: block;
+  margin-top: .5rem;
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+}
+
+.inf-nota {
+  margin-block: clamp(1.8rem, 3.5vw, 2.5rem);
+  padding: 1.3rem 1.4rem;
+  background: var(--accent-suave);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--bol-radio) var(--bol-radio) 0;
+}
+.inf-nota__t { display: block; margin-bottom: .6rem; }
+.inf-nota p { font-size: .92rem; line-height: 1.55; }
+
+.inf-tabla-wrap {
+  margin-block: clamp(1.8rem, 3.5vw, 2.5rem);
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-radius: var(--bol-radio);
+  box-shadow: var(--bol-sombra);
+  overflow-x: auto;
+}
+.inf-tabla { width: 100%; border-collapse: collapse; min-width: 34rem; }
+.inf-tabla th {
+  text-align: left;
+  padding: .85rem 1.1rem;
+  font-family: var(--bol-font-meta);
+  font-size: .64rem;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-3);
+  border-bottom: 1px solid var(--bol-linea);
+  white-space: nowrap;
+}
+.inf-tabla td {
+  padding: .85rem 1.1rem;
+  border-bottom: 1px solid var(--bol-linea-suave);
+  font-size: .9rem;
+  font-variant-numeric: tabular-nums;
+}
+.inf-tabla tr:last-child td { border-bottom: 0; }
+.inf-tabla td:first-child { font-weight: 600; }
+.inf-tabla__estado {
+  display: inline-block;
+  padding: .15rem .55rem;
+  border-radius: 999px;
+  font-family: var(--bol-font-meta);
+  font-size: .64rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.inf-tabla__estado[data-e="critico"] { background: color-mix(in srgb, var(--neg) 14%, transparent); color: var(--neg); }
+.inf-tabla__estado[data-e="debil"] { background: color-mix(in srgb, var(--neutro) 20%, transparent); color: var(--bol-tinta-2); }
+.inf-tabla__estado[data-e="recup"] { background: color-mix(in srgb, var(--pos) 14%, transparent); color: var(--pos); }
+
+.inf-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1rem;
+  margin-top: clamp(1.8rem, 3.5vw, 2.5rem);
+}
+.inf-tarjeta {
+  padding: 1.2rem 1.2rem 1.3rem;
+  background: var(--bol-carta);
+  border: 1px solid var(--bol-linea);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--bol-radio);
+}
+.inf-tarjeta h3 {
+  font-family: var(--bol-font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: .5rem;
+}
+.inf-tarjeta p { font-size: .87rem; line-height: 1.45; color: var(--bol-tinta-2); }
+
+.inf-metodo {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--bol-linea);
+  font-size: .82rem;
+  line-height: 1.55;
+  color: var(--bol-tinta-3);
+  max-width: 78ch;
+}
+.inf-metodo b {
+  font-family: var(--bol-font-meta);
+  font-size: .65rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--bol-tinta-2);
+  margin-right: .4rem;
+}
+
+@media print {
+  .graf, .inf-stats, .inf-nota, .inf-tabla-wrap, .inf-tarjeta { break-inside: avoid; }
+  .graf-apilada__parte { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .graf-fila__barra, .graf-div__neg i, .graf-div__pos i { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+  </style>
+</head>
+<body>
+<article class="bol inf">
+  <div class="bol-progress" aria-hidden="true"><div class="bol-progress__bar"></div></div>
+  <header class="bol-hero">
+      <div class="bol-wrap">
+        <div class="bol-hero__serie">
+          <strong>Informe económico de coyuntura</strong>
+          <span class="bol-eyebrow">CEPOES · Somos 100 Barrios</span>
+          <span class="bol-hero__num"><span>N.º</span>01</span>
+        </div>
+        <div class="bol-hero__grid">
+          <div>
+            <h1 class="bol-hero__title">Estructura productiva argentina: recuperación parcial, empleo bajo presión y crisis del tejido productivo en CABA</h1>
+            <p class="bol-hero__dek">Análisis del sector real | Primer cuatrimestre 2026</p>
+            <div class="inf-ficha"><div class="inf-ficha__celda"><span class="inf-ficha__k bol-eyebrow">Publicación</span><span class="inf-ficha__v">Junio 2026</span></div><div class="inf-ficha__celda"><span class="inf-ficha__k bol-eyebrow">Fuentes primarias</span><span class="inf-ficha__v">INDEC / CEPA / IDECBA / CAC</span></div><div class="inf-ficha__celda"><span class="inf-ficha__k bol-eyebrow">Enfoque temático</span><span class="inf-ficha__v">Sector real productivo</span></div><div class="inf-ficha__celda"><span class="inf-ficha__k bol-eyebrow">Alcance territorial</span><span class="inf-ficha__v">Nacional + CABA</span></div></div>
+            <div class="bol-acciones">
+              <a class="bol-btn" href="/publicaciones/files/informe-coyuntura-01-junio-2026.pdf">Descargar PDF ↓</a>
+              <a class="bol-btn bol-btn--ghost" href="#sintesis">Ir a los indicadores</a>
+            </div>
+          </div>
+          <div>
+            <nav class="bol-sumario" aria-label="Índice del informe">
+              <p class="bol-sumario__t bol-eyebrow">Contenido</p>
+              <div class="inf-indice"><a class="inf-indice__item" href="#sintesis"><span class="inf-indice__n">I</span><span>Indicadores de síntesis</span></a><a class="inf-indice__item" href="#capacidad"><span class="inf-indice__n">II</span><span>Utilización de capacidad instalada por sector</span></a><a class="inf-indice__item" href="#ipi"><span class="inf-indice__n">III</span><span>IPI manufacturero por división industrial</span></a><a class="inf-indice__item" href="#evolucion"><span class="inf-indice__n">IV</span><span>Evolución comparada de la UCII</span></a><a class="inf-indice__item" href="#criticos"><span class="inf-indice__n">V</span><span>Sectores críticos</span></a><a class="inf-indice__item" href="#empresas"><span class="inf-indice__n">VI</span><span>Destrucción del entramado empresario</span></a><a class="inf-indice__item" href="#trabajo"><span class="inf-indice__n">VII</span><span>Mercado de trabajo y calidad del empleo</span></a><a class="inf-indice__item" href="#caba"><span class="inf-indice__n">VIII</span><span>Ciudad de Buenos Aires</span></a><a class="inf-indice__item" href="#lectura"><span class="inf-indice__n">IX</span><span>Lectura de síntesis</span></a></div>
+            </nav>
+            <p class="bol-fuentes"><b>Alcance</b>El presente informe analiza la situación de la economía productiva argentina durante el primer cuatrimestre de 2026, con énfasis en el sector real, el mercado de trabajo y las especificidades territoriales de la Ciudad de Buenos Aires. Los datos provienen de fuentes oficiales (INDEC, SIPA, SRT) y de centros de investigación de referencia (CEPA, IDECBA, CAC).</p>
+          </div>
+        </div>
+      </div>
+    </header>
+  <nav class="bol-riel" aria-label="Secciones del informe">
+      <div class="bol-wrap"><div class="bol-riel__lista"><a class="bol-riel__link" href="#sintesis">I. Indicadores de síntesis</a><a class="bol-riel__link" href="#capacidad">II. Utilización de capacidad instalada por sector</a><a class="bol-riel__link" href="#ipi">III. IPI manufacturero por división industrial</a><a class="bol-riel__link" href="#evolucion">IV. Evolución comparada de la UCII</a><a class="bol-riel__link" href="#criticos">V. Sectores críticos</a><a class="bol-riel__link" href="#empresas">VI. Destrucción del entramado empresario</a><a class="bol-riel__link" href="#trabajo">VII. Mercado de trabajo y calidad del empleo</a><a class="bol-riel__link" href="#caba">VIII. Ciudad de Buenos Aires</a><a class="bol-riel__link" href="#lectura">IX. Lectura de síntesis</a></div></div>
+    </nav>
+  <main>
+    <section class="bol-sec" id="sintesis" aria-labelledby="t-sintesis">
+      <div class="bol-wrap">
+        <header class="inf-sec__head" data-reveal>
+          <span class="inf-sec__n" aria-hidden="true">I</span>
+          <h2 class="inf-sec__t" id="t-sintesis">Indicadores de síntesis</h2>
+          <p class="inf-sec__sub">Marzo 2026</p>
+        </header>
+        <div class="inf-stats" data-reveal>
+          <div class="inf-stat" data-tono="neutro">
+            <p class="inf-stat__v">59,8%</p>
+            <p class="inf-stat__d">Capacidad instalada (UCII)<span class="inf-stat__n">vs. 54,4% de marzo 2025 · INDEC</span></p>
+          </div>
+          <div class="inf-stat" data-tono="pos">
+            <p class="inf-stat__v">+5,0%</p>
+            <p class="inf-stat__d">IPI manufacturero (i.a.)<span class="inf-stat__n">Acum. 1T 2026: −2,3% vs. 2025</span></p>
+          </div>
+          <div class="inf-stat" data-tono="pos">
+            <p class="inf-stat__v">+5,5%</p>
+            <p class="inf-stat__d">EMAE (i.a. marzo 2026)<span class="inf-stat__n">Recuperación heterogénea</span></p>
+          </div>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">68.800</p>
+            <p class="inf-stat__d">Puestos industriales perdidos<span class="inf-stat__n">Desde nov. 2023 · SIPA/INDEC</span></p>
+          </div>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">23.160</p>
+            <p class="inf-stat__d">Empresas cerradas (nacional)<span class="inf-stat__n">Stock SRT dic. 2023 – ene. 2026 · CEPA</span></p>
+          </div>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">7,5%</p>
+            <p class="inf-stat__d">Desocupación nacional (4T 2025)<span class="inf-stat__n">vs. 6,4% del 4T 2024 · EPH/INDEC</span></p>
+          </div>
+        </div>
+        <div class="inf-prosa" data-reveal><p>La foto del primer cuatrimestre de 2026 muestra una economía con rebote estadístico en algunos agregados, pero con una estructura productiva heterogénea, niveles de ociosidad elevados en ramas clave y señales persistentes de destrucción del entramado empresario. El EMAE de marzo (+5,5% i.a.) y el IPI manufacturero (+5,0% i.a.) reflejan una mejora puntual sobre bases de comparación deprimidas, no una recuperación consolidada. Los indicadores del mercado laboral y del tejido empresario confirman que el ajuste sigue siendo profundo.</p></div>
+      </div>
+    </section>
+<section class="bol-sec" id="capacidad" aria-labelledby="t-capacidad">
+      <div class="bol-wrap">
+        <header class="inf-sec__head" data-reveal>
+          <span class="inf-sec__n" aria-hidden="true">II</span>
+          <h2 class="inf-sec__t" id="t-capacidad">Utilización de capacidad instalada por sector</h2>
+          <p class="inf-sec__sub">Marzo 2026</p>
+        </header>
+        <div class="inf-prosa" data-reveal><p>La utilización de la capacidad instalada industrial (UCII) es uno de los indicadores más precisos para evaluar el estado del aparato productivo. En marzo de 2026 alcanzó el 59,8%, valor superior al 54,4% de igual mes de 2025. Sin embargo, este promedio oculta una dispersión sectorial pronunciada que impide leer el dato como señal de recuperación generalizada.</p></div>
+        <figure class="graf" data-reveal>
+          <figcaption>
+            <p class="graf__t">UCII por rama industrial</p>
+            <p class="graf__sub">En porcentaje de la capacidad instalada. Marzo 2026.</p>
+          </figcaption>
+          <div class="graf__filas">
+          <div class="graf-fila" data-tono="pos">
+            <span class="graf-fila__lab">Refinación de petróleo</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:86.0%"></span>
+              
+            </span>
+            <span class="graf-fila__val">86,0%</span>
+          </div>
+          <div class="graf-fila" data-tono="pos">
+            <span class="graf-fila__lab">Industrias metálicas básicas</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:73.3%"></span>
+              
+            </span>
+            <span class="graf-fila__val">73,3%</span>
+          </div>
+          <div class="graf-fila" data-tono="pos">
+            <span class="graf-fila__lab">Papel y cartón</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:70.0%"></span>
+              
+            </span>
+            <span class="graf-fila__val">70,0%</span>
+          </div>
+          <div class="graf-fila" data-tono="neutro">
+            <span class="graf-fila__lab">Promedio industrial</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:59.8%"></span>
+              
+            </span>
+            <span class="graf-fila__val">59,8%</span>
+          </div>
+          <div class="graf-fila" data-tono="neg">
+            <span class="graf-fila__lab">Automotriz</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:49.6%"></span>
+              
+            </span>
+            <span class="graf-fila__val">49,6%</span>
+          </div>
+          <div class="graf-fila" data-tono="neg">
+            <span class="graf-fila__lab">Caucho y plástico</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:41.3%"></span>
+              
+            </span>
+            <span class="graf-fila__val">41,3%</span>
+          </div>
+          <div class="graf-fila" data-tono="neg">
+            <span class="graf-fila__lab">Textiles</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:40.2%"></span>
+              
+            </span>
+            <span class="graf-fila__val">40,2%</span>
+          </div>
+          <div class="graf-fila" data-tono="neg">
+            <span class="graf-fila__lab">Metalmecánica excl. automotriz</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:40.0%"></span>
+              
+            </span>
+            <span class="graf-fila__val">40,0%</span>
+          </div>
+          </div>
+          
+          <p class="graf__fuente">Fuente: INDEC, Encuesta de Coyuntura Industrial, mayo 2026. Se grafican las ramas con dato citado en el informe.</p>
+        </figure>
+        <div class="inf-prosa" data-reveal><p>El gráfico evidencia la estructura dual del sector manufacturero. Un primer grupo, encabezado por refinación de petróleo (86,0%), industrias metálicas básicas (73,3%) y papel y cartón (70,0%), opera con relativa normalidad: son ramas vinculadas a la exportación, a insumos difundidos o a recursos naturales, con menor dependencia del consumo interno.</p></div>
+        <div class="inf-prosa" data-reveal><p>Un segundo grupo —textiles (40,2%), metalmecánica excluida la automotriz (40,0%) y caucho y plástico (41,3%)— opera con más de la mitad de su capacidad ociosa. Estas son las ramas más intensivas en empleo y más articuladas con cadenas pyme. Para que una empresa decida ampliar dotaciones o incorporar equipamiento nuevo, la utilización debería ubicarse en el rango del 70-80%. En el promedio actual, ese umbral está lejos de alcanzarse.</p></div>
+      </div>
+    </section>
+<section class="bol-sec" id="ipi" aria-labelledby="t-ipi">
+      <div class="bol-wrap">
+        <header class="inf-sec__head" data-reveal>
+          <span class="inf-sec__n" aria-hidden="true">III</span>
+          <h2 class="inf-sec__t" id="t-ipi">IPI manufacturero por división industrial</h2>
+          <p class="inf-sec__sub">Variación interanual · Marzo 2026</p>
+        </header>
+        <div class="inf-prosa" data-reveal><p>El IPI manufacturero de marzo de 2026 registró una suba interanual del 5,0%, pero el acumulado del primer trimestre fue negativo en 2,3% frente a igual período de 2025. Esta aparente contradicción se explica porque la base de comparación de marzo 2025 era particularmente baja. La lectura correcta exige distinguir entre rebote estadístico y recuperación efectiva.</p></div>
+        <figure class="graf" data-reveal>
+          <figcaption>
+            <p class="graf__t">Variación interanual del IPI por rama industrial</p>
+            <p class="graf__sub">En porcentaje. Marzo 2026 contra marzo 2025.</p>
+          </figcaption>
+          <div class="graf-div">
+          <div class="graf-div__fila" data-tono="pos">
+            <span class="graf-div__lab">Química</span>
+            <span class="graf-div__neg"></span>
+            <span class="graf-div__pos"><i style="--w:63.6%"></i></span>
+            <span class="graf-div__val">+15,9%</span>
+          </div>
+          <div class="graf-div__fila" data-tono="pos">
+            <span class="graf-div__lab">Refinación de petróleo</span>
+            <span class="graf-div__neg"></span>
+            <span class="graf-div__pos"><i style="--w:54.0%"></i></span>
+            <span class="graf-div__val">+13,5%</span>
+          </div>
+          <div class="graf-div__fila" data-tono="pos">
+            <span class="graf-div__lab">Madera y papel</span>
+            <span class="graf-div__neg"></span>
+            <span class="graf-div__pos"><i style="--w:51.2%"></i></span>
+            <span class="graf-div__val">+12,8%</span>
+          </div>
+          <div class="graf-div__fila" data-tono="pos">
+            <span class="graf-div__lab">Alimentos y bebidas</span>
+            <span class="graf-div__neg"></span>
+            <span class="graf-div__pos"><i style="--w:31.6%"></i></span>
+            <span class="graf-div__val">+7,9%</span>
+          </div>
+          <div class="graf-div__fila" data-tono="pos">
+            <span class="graf-div__lab">Automotriz</span>
+            <span class="graf-div__neg"></span>
+            <span class="graf-div__pos"><i style="--w:30.4%"></i></span>
+            <span class="graf-div__val">+7,6%</span>
+          </div>
+          <div class="graf-div__fila" data-tono="neg">
+            <span class="graf-div__lab">Caucho y plástico</span>
+            <span class="graf-div__neg"><i style="--w:9.6%"></i></span>
+            <span class="graf-div__pos"></span>
+            <span class="graf-div__val">−2,4%</span>
+          </div>
+          <div class="graf-div__fila" data-tono="neg">
+            <span class="graf-div__lab">Indumentaria, cuero y calzado</span>
+            <span class="graf-div__neg"><i style="--w:35.6%"></i></span>
+            <span class="graf-div__pos"></span>
+            <span class="graf-div__val">−8,9%</span>
+          </div>
+          <div class="graf-div__fila" data-tono="neg">
+            <span class="graf-div__lab">Industrias metálicas básicas</span>
+            <span class="graf-div__neg"><i style="--w:40.4%"></i></span>
+            <span class="graf-div__pos"></span>
+            <span class="graf-div__val">−10,1%</span>
+          </div>
+          <div class="graf-div__fila" data-tono="neg">
+            <span class="graf-div__lab">Maquinaria y equipo</span>
+            <span class="graf-div__neg"><i style="--w:45.2%"></i></span>
+            <span class="graf-div__pos"></span>
+            <span class="graf-div__val">−11,3%</span>
+          </div>
+          <div class="graf-div__fila" data-tono="neg">
+            <span class="graf-div__lab">Maquinaria agropecuaria</span>
+            <span class="graf-div__neg"><i style="--w:58.8%"></i></span>
+            <span class="graf-div__pos"></span>
+            <span class="graf-div__val">−14,7%</span>
+          </div>
+          <div class="graf-div__fila" data-tono="neg">
+            <span class="graf-div__lab">Textiles</span>
+            <span class="graf-div__neg"><i style="--w:93.2%"></i></span>
+            <span class="graf-div__pos"></span>
+            <span class="graf-div__val">−23,3%</span>
+          </div>
+          </div>
+          <p class="graf__fuente">Fuente: INDEC, IPI Manufacturero, mayo 2026.</p>
+        </figure>
+        <div class="inf-prosa" data-reveal><p>Los sectores que explican la mejora son en su mayoría ramas asociadas a insumos básicos o a la dinámica exportadora: química (+15,9%), refinación (+13,5%), madera-papel (+12,8%) y alimentos (+7,9%). En contraste, ramas clave para el empleo registrado y el entramado pyme continúan en retroceso: textiles (−23,3%), maquinaria (−11,3%), metálicas básicas (−10,1%) e indumentaria-cuero-calzado (−8,9%).</p></div>
+        <div class="inf-prosa" data-reveal><p>Esta divergencia refleja un patrón estructural en el que el ajuste de la demanda interna y la apertura importadora golpean desproporcionadamente a las ramas orientadas al mercado local.</p></div>
+      </div>
+    </section>
+<section class="bol-sec" id="evolucion" aria-labelledby="t-evolucion">
+      <div class="bol-wrap">
+        <header class="inf-sec__head" data-reveal>
+          <span class="inf-sec__n" aria-hidden="true">IV</span>
+          <h2 class="inf-sec__t" id="t-evolucion">Evolución comparada de la UCII</h2>
+          <p class="inf-sec__sub">Enero – marzo 2026</p>
+        </header>
+        <figure class="graf" data-reveal>
+          <figcaption>
+            <p class="graf__t">Utilización de capacidad instalada, promedio mensual</p>
+            <p class="graf__sub">En porcentaje. Primer trimestre de 2026.</p>
+          </figcaption>
+          <div class="graf__filas">
+          <div class="graf-fila" data-tono="neg">
+            <span class="graf-fila__lab">Enero 2026</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:53.6%"></span>
+              <span class="graf-fila__ref" style="--ref:54.4%"></span>
+            </span>
+            <span class="graf-fila__val">53,6%</span>
+          </div>
+          <div class="graf-fila" data-tono="neg">
+            <span class="graf-fila__lab">Febrero 2026</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:54.6%"></span>
+              <span class="graf-fila__ref" style="--ref:54.4%"></span>
+            </span>
+            <span class="graf-fila__val">54,6%</span>
+          </div>
+          <div class="graf-fila" data-tono="neutro">
+            <span class="graf-fila__lab">Marzo 2026</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:59.8%"></span>
+              <span class="graf-fila__ref" style="--ref:54.4%"></span>
+            </span>
+            <span class="graf-fila__val">59,8%</span>
+          </div>
+          </div>
+          <p class="graf__ref-nota">Marzo 2025: 54,4%</p>
+          <p class="graf__fuente">Fuente: INDEC, Encuesta de Coyuntura Industrial. Elaboración CEPOES. La referencia punteada corresponde a marzo de 2025, único mes de la serie 2025 con dato citado en el informe.</p>
+        </figure>
+        <div class="inf-prosa" data-reveal><p>La serie muestra que la mejora de marzo 2026 (59,8%) contrasta con un primer bimestre débil: enero (53,6%) y febrero (54,6%) quedaron por debajo del promedio de 2025. El repunte es positivo pero aislado: el acumulado trimestral sigue siendo negativo y el promedio del primer bimestre registró el piso más bajo de la década para ese período. Una expansión sostenida requiere niveles de UCII superiores al 65-70% durante al menos dos o tres trimestres consecutivos.</p></div>
+      </div>
+    </section>
+<section class="bol-sec" id="criticos" aria-labelledby="t-criticos">
+      <div class="bol-wrap">
+        <header class="inf-sec__head" data-reveal>
+          <span class="inf-sec__n" aria-hidden="true">V</span>
+          <h2 class="inf-sec__t" id="t-criticos">Sectores críticos</h2>
+          <p class="inf-sec__sub">Ramas bajo presión estructural</p>
+        </header>
+        <div class="inf-prosa" data-reveal><p>El siguiente cuadro sintetiza la situación de las ramas industriales intensivas en empleo y proveedoras de cadenas pyme, que exhiben los peores indicadores de actividad pese a la mejora del promedio general de la UCII.</p></div>
+        <div class="inf-tabla-wrap" data-reveal>
+          <table class="inf-tabla">
+            <thead><tr><th scope="col">Sector</th><th scope="col">UCII mar. 2026</th><th scope="col">Var. IPI i.a.</th><th scope="col">Acum. 1T 2026</th><th scope="col">Situación</th></tr></thead>
+            <tbody><tr><td>Textiles</td><td>40,2%</td><td>−23,3%</td><td>−15,1%</td><td><span class="inf-tabla__estado" data-e="critico">Crítico</span></td></tr><tr><td>Metalmec. excl. autom.</td><td>40,0%</td><td>−11,3%</td><td>s/d</td><td><span class="inf-tabla__estado" data-e="critico">Crítico</span></td></tr><tr><td>Caucho y plástico</td><td>41,3%</td><td>−2,4%</td><td>s/d</td><td><span class="inf-tabla__estado" data-e="debil">Débil</span></td></tr><tr><td>Indum., cuero, calzado</td><td>s/d</td><td>−8,9%</td><td>−15,1%</td><td><span class="inf-tabla__estado" data-e="critico">Crítico</span></td></tr><tr><td>Automotriz</td><td>49,6%</td><td>+7,6%</td><td>Recup.</td><td><span class="inf-tabla__estado" data-e="recup">En recuperación</span></td></tr><tr><td>Maq. agropecuaria</td><td>s/d</td><td>−14,7%</td><td>s/d</td><td><span class="inf-tabla__estado" data-e="critico">Crítico</span></td></tr></tbody>
+          </table>
+        </div>
+        <div class="inf-prosa" data-reveal><p>El cuadro muestra que cuatro de las seis ramas listadas están en situación crítica. La automotriz muestra recuperación parcial, aunque permanece por debajo del promedio general. El caso de la maquinaria agropecuaria (−14,7% i.a.) es particularmente significativo: en una economía con fuerte base agroindustrial, esta caída refleja el deterioro del poder de compra del sector rural ante mayores costos en pesos y la incertidumbre sobre la rentabilidad.</p></div>
+        <aside class="inf-nota" data-reveal>
+          <span class="inf-nota__t bol-eyebrow bol-eyebrow--accent">Nota analítica</span>
+          <p>El repunte del IPI general en marzo se explica por sectores de insumos básicos (química, refinación, papel). Las mejoras en UCII conviven con capacidad ociosa superior al 55-60% en textiles, metalmecánica y caucho, lo que impide hablar de una recuperación homogénea del tejido productivo.</p>
+        </aside>
+      </div>
+    </section>
+<section class="bol-sec" id="empresas" aria-labelledby="t-empresas">
+      <div class="bol-wrap">
+        <header class="inf-sec__head" data-reveal>
+          <span class="inf-sec__n" aria-hidden="true">VI</span>
+          <h2 class="inf-sec__t" id="t-empresas">Destrucción del entramado empresario</h2>
+          <p class="inf-sec__sub">Nacional</p>
+        </header>
+        <div class="inf-prosa" data-reveal><p>La destrucción del tejido empresario es quizá el dato estructural más preocupante de la coyuntura. A diferencia de los indicadores de actividad, que pueden rebotar con relativa rapidez, el cierre de unidades productivas implica la disolución de capacidades instaladas, redes de proveedores, conocimiento tácito y puestos de trabajo que se reconstituyen con lentitud y a considerable costo social.</p></div>
+        <div class="inf-stats" data-reveal>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">23.160</p>
+            <p class="inf-stat__d">Empleadores menos a nivel nacional<span class="inf-stat__n">Dic. 2023 – ene. 2026 · SRT/CEPA. Manufactura, comercio y construcción son los sectores más afectados.</span></p>
+          </div>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">5.548</p>
+            <p class="inf-stat__d">Empleadores menos en Provincia de Buenos Aires<span class="inf-stat__n">Un cuarto del total nacional, agravado por la caída de coparticipación federal (−4% real en 1T 2026).</span></p>
+          </div>
+        </div>
+        <div class="inf-prosa" data-reveal><p>La comparación con la pandemia es ilustrativa: en apenas 26 meses se destruyó un número de empleadores equivalente al que se perdió en el peor shock global en un siglo. La Provincia de Buenos Aires concentra el 24% del total (5.548 empleadores menos), reflejando el mayor peso relativo de la actividad manufacturera y comercial en ese territorio y el impacto del ajuste de las transferencias de coparticipación federal.</p></div>
+      </div>
+    </section>
+<section class="bol-sec" id="trabajo" aria-labelledby="t-trabajo">
+      <div class="bol-wrap">
+        <header class="inf-sec__head" data-reveal>
+          <span class="inf-sec__n" aria-hidden="true">VII</span>
+          <h2 class="inf-sec__t" id="t-trabajo">Mercado de trabajo y calidad del empleo</h2>
+          <p class="inf-sec__sub">Empleo registrado, informalidad y salarios</p>
+        </header>
+        <div class="inf-prosa" data-reveal><p>El mercado de trabajo muestra las consecuencias directas de la contracción productiva. La pérdida de puestos registrados, el incremento de la desocupación y la expansión de la informalidad configuran un cuadro de deterioro que afecta de manera estructural las condiciones de vida de la población trabajadora.</p></div>
+        <div class="inf-stats" data-reveal>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">310.930</p>
+            <p class="inf-stat__d">Puestos totales perdidos (nacional)<span class="inf-stat__n">Nov. 2023 – feb. 2026 · SIPA/INDEC</span></p>
+          </div>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">68.800</p>
+            <p class="inf-stat__d">Puestos industriales perdidos<span class="inf-stat__n">Caída del 5,8% del personal manufacturero</span></p>
+          </div>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">7,5%</p>
+            <p class="inf-stat__d">Desocupación nacional (4T 2025)<span class="inf-stat__n">vs. 6,4% del 4T 2024 · EPH/INDEC</span></p>
+          </div>
+        </div>
+        <figure class="graf" data-reveal>
+          <figcaption>
+            <p class="graf__t">Desocupación abierta nacional</p>
+            <p class="graf__sub">En porcentaje de la población económicamente activa, por trimestre.</p>
+          </figcaption>
+          <div class="graf__filas">
+          <div class="graf-fila" data-tono="neutro">
+            <span class="graf-fila__lab">4T 2024</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:64.0%"></span>
+              
+            </span>
+            <span class="graf-fila__val">6,4%</span>
+          </div>
+          <div class="graf-fila" data-tono="neutro">
+            <span class="graf-fila__lab">3T 2025</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:66.0%"></span>
+              
+            </span>
+            <span class="graf-fila__val">6,6%</span>
+          </div>
+          <div class="graf-fila" data-tono="neg">
+            <span class="graf-fila__lab">4T 2025</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:75.0%"></span>
+              
+            </span>
+            <span class="graf-fila__val">7,5%</span>
+          </div>
+          </div>
+          
+          <p class="graf__fuente">Fuente: INDEC, EPH. Datos al cuarto trimestre de 2025 (publicados marzo 2026). Se grafican los trimestres con dato citado en el informe.</p>
+        </figure>
+        <div class="inf-prosa" data-reveal><p>La tendencia al alza en la desocupación es clara: el 7,5% del cuarto trimestre de 2025 supera en un punto al 6,4% de igual período de 2024. El dato del tercer trimestre (6,6%) registró una mejora transitoria, probablemente asociada a absorción estacional de empleo informal, pero el cierre del año volvió a superar el 7%. La desocupación juvenil es especialmente elevada: en el Gran Buenos Aires alcanza el 16,2% entre varones jóvenes y el 16,8% entre mujeres jóvenes, más del doble del promedio general.</p></div>
+        <figure class="graf" data-reveal>
+          <figcaption>
+            <p class="graf__t">Composición del empleo total: formales e informales</p>
+            <p class="graf__sub">En millones de puestos. Total: 22.668.000 (enero 2026).</p>
+          </figcaption>
+          <div class="graf-apilada"><span class="graf-apilada__parte" style="--w:48.79%;--c:var(--pos)">48.8%</span><span class="graf-apilada__parte" style="--w:25.01%;--c:var(--neg)">25.0%</span><span class="graf-apilada__parte" style="--w:26.20%;--c:var(--neutro)">26.2%</span></div>
+          <div class="graf-leyenda">
+            <div class="graf-leyenda__item">
+              <span class="graf-leyenda__punto" style="--c:var(--pos)"></span>
+              <span><span class="graf-leyenda__v">11,06 M</span> · Asalariados registrados</span>
+              <span class="graf-leyenda__d">48,8% del total</span>
+            </div>
+            <div class="graf-leyenda__item">
+              <span class="graf-leyenda__punto" style="--c:var(--neg)"></span>
+              <span><span class="graf-leyenda__v">5,67 M</span> · Asalariados privados no registrados</span>
+              <span class="graf-leyenda__d">25,0% del total</span>
+            </div>
+            <div class="graf-leyenda__item">
+              <span class="graf-leyenda__punto" style="--c:var(--neutro)"></span>
+              <span><span class="graf-leyenda__v">5,94 M</span> · Trabajadores por cuenta propia</span>
+              <span class="graf-leyenda__d">26,2% del total</span>
+            </div>
+          </div>
+          <p class="graf__fuente">Fuente: INDEC, EPH (enero 2026). Cifras en millones, redondeadas.</p>
+        </figure>
+        <div class="inf-prosa" data-reveal><p>La composición del empleo total revela un dato de gravedad inédita: por primera vez en los registros disponibles, los trabajadores informales (no registrados más cuenta propia: 11,6 millones) superan a los asalariados formales (11,06 millones). Esto implica que más de la mitad de los ocupados carece de acceso pleno a derechos laborales, cobertura previsional y protección frente a riesgos. El sector privado no registrado reúne 5,67 millones de trabajadores y los cuenta propia suman 5,94 millones.</p></div>
+        <aside class="inf-nota" data-reveal>
+          <span class="inf-nota__t bol-eyebrow bol-eyebrow--accent">Nota analítica — empleo</span>
+          <p>La industria perdió 68.800 puestos registrados desde noviembre de 2023 (−5,8%). Con UCII por debajo del 60%, las condiciones para nuevas inversiones son inexistentes (umbral de referencia: 70-80%). Por primera vez, los trabajadores informales (11,6 millones) superan a los asalariados formales (11,06 millones).</p>
+        </aside>
+        <figure class="graf" data-reveal>
+          <figcaption>
+            <p class="graf__t">Variación nominal del índice de salarios por sector</p>
+            <p class="graf__sub">Acumulado a febrero de 2026, base diciembre 2025. Son variaciones nominales: ninguna implica recuperación real.</p>
+          </figcaption>
+          <div class="graf__filas">
+          <div class="graf-fila" data-tono="neutro">
+            <span class="graf-fila__lab">Sector no registrado</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:92.0%"></span>
+              
+            </span>
+            <span class="graf-fila__val">9,2%</span>
+          </div>
+          <div class="graf-fila" data-tono="neutro">
+            <span class="graf-fila__lab">Nivel general</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:50.0%"></span>
+              
+            </span>
+            <span class="graf-fila__val">5,0%</span>
+          </div>
+          <div class="graf-fila" data-tono="neutro">
+            <span class="graf-fila__lab">Sector público</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:42.0%"></span>
+              
+            </span>
+            <span class="graf-fila__val">4,2%</span>
+          </div>
+          <div class="graf-fila" data-tono="neutro">
+            <span class="graf-fila__lab">Privado registrado</span>
+            <span class="graf-fila__pista">
+              <span class="graf-fila__barra" style="--w:37.0%"></span>
+              
+            </span>
+            <span class="graf-fila__val">3,7%</span>
+          </div>
+          </div>
+          
+          <p class="graf__fuente">Fuente: INDEC, Índice de Salarios, febrero 2026.</p>
+        </figure>
+        <div class="inf-prosa" data-reveal><p>El índice de salarios acumuló una suba nominal del 5,0% en los dos primeros meses de 2026. La mayor variación corresponde al sector no registrado (+9,2%), dato que debe interpretarse con cautela: expresa ajustes heterogéneos sin cobertura sindical. Los salarios del privado registrado acumulan apenas +3,7% y los del sector público +4,2%. Ninguno de estos valores implica recuperación real frente a una inflación que, aun en desaceleración, sigue siendo significativa.</p></div>
+        <div class="inf-prosa" data-reveal><p>Los salarios reales acumulan una caída sustancial desde noviembre de 2023, lo que deprime el consumo y retroalimenta la contracción de las ramas orientadas al mercado doméstico. En este contexto, la divergencia entre la recuperación del sector exportador y el estancamiento del mercado interno se profundiza, consolidando una estructura productiva dual cuya superación requiere políticas activas de ingreso y demanda agregada.</p></div>
+      </div>
+    </section>
+<section class="bol-sec" id="caba" aria-labelledby="t-caba">
+      <div class="bol-wrap">
+        <header class="inf-sec__head" data-reveal>
+          <span class="inf-sec__n" aria-hidden="true">VIII</span>
+          <h2 class="inf-sec__t" id="t-caba">Ciudad de Buenos Aires</h2>
+          <p class="inf-sec__sub">Situación productiva y laboral</p>
+        </header>
+        <div class="inf-prosa" data-reveal><p>Marco territorial. La Ciudad Autónoma de Buenos Aires concentra una parte significativa del empleo registrado privado del país. Su estructura económica está dominada por servicios —los servicios inmobiliarios, empresariales y de alquiler explican el 26,2% del empleo privado formal—, pero el tejido productivo y comercial registra señales de deterioro sostenido desde finales de 2023, con pérdida de puestos, cierre de empleadores y creciente vacancia comercial.</p></div>
+        <div class="inf-stats" data-reveal>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">68.740</p>
+            <p class="inf-stat__d">Puestos privados perdidos en CABA<span class="inf-stat__n">Nov. 2023 – nov. 2025 · SRT/CEPA</span></p>
+          </div>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">2.055</p>
+            <p class="inf-stat__d">Empleadores menos en CABA<span class="inf-stat__n">−1,68% del tejido productivo formal</span></p>
+          </div>
+          <div class="inf-stat" data-tono="neg">
+            <p class="inf-stat__v">7,3%</p>
+            <p class="inf-stat__d">Desocupación CABA (4T 2025)<span class="inf-stat__n">vs. 6,7% del 4T 2024 · IDECBA</span></p>
+          </div>
+        </div>
+        <figure class="graf" data-reveal>
+          <figcaption>
+            <p class="graf__t">CABA: variación del empleo registrado privado por período de gobierno</p>
+            <p class="graf__sub">En miles de puestos. Los períodos tienen distinta duración: el dato está expresado en variación total acumulada, no anualizada.</p>
+          </figcaption>
+          <div class="graf-div">
+          <div class="graf-div__fila" data-tono="neg">
+            <span class="graf-div__lab">Macri (4 años)</span>
+            <span class="graf-div__neg"><i style="--w:60.0%"></i></span>
+            <span class="graf-div__pos"></span>
+            <span class="graf-div__val">−45 mil</span>
+          </div>
+          <div class="graf-div__fila" data-tono="pos">
+            <span class="graf-div__lab">Frente de Todos (4 años)</span>
+            <span class="graf-div__neg"></span>
+            <span class="graf-div__pos"><i style="--w:50.7%"></i></span>
+            <span class="graf-div__val">+38 mil</span>
+          </div>
+          <div class="graf-div__fila" data-tono="neg">
+            <span class="graf-div__lab">Milei (24 meses)</span>
+            <span class="graf-div__neg"><i style="--w:91.7%"></i></span>
+            <span class="graf-div__pos"></span>
+            <span class="graf-div__val">−68,74 mil</span>
+          </div>
+          </div>
+          <p class="graf__fuente">Fuente: CEPA con base en SIPA (2026). Variable homogénea: puestos de trabajo registrados privados ganados o perdidos en cada período.</p>
+        </figure>
+        <div class="inf-prosa" data-reveal><p>El gráfico presenta la variación del empleo registrado privado en CABA utilizando la misma variable para los tres períodos: miles de puestos. La gestión Milei acumula la caída más pronunciada (−68,74 mil puestos en apenas 24 meses), superando incluso la pérdida registrada durante la gestión Macri (−45 mil en 4 años). El Frente de Todos logró una recuperación parcial de 38 mil puestos, insuficiente para compensar la destrucción anterior.</p></div>
+        <div class="inf-prosa" data-reveal><p>Que la Ciudad, con su estructura orientada a servicios, registre la mayor caída absoluta de su historia reciente en este período refleja el impacto del ajuste del gasto público y la retracción del consumo urbano sobre sectores de alta densidad laboral: comercio minorista, gastronomía, cultura y transporte.</p></div>
+        <div class="bol-bloque inf-prosa" data-reveal>
+          <h3 class="bol-bloque__h">Empleo formal en baja estructural</h3>
+          <p>La cantidad de empleadores en CABA cayó de 122.155 a 120.207 entre noviembre de 2023 y diciembre de 2025 (−1,6%). El mercado laboral no recuperó los niveles de 2018. Desde septiembre de 2023 la caída se profundiza; el breve repunte de comienzos de 2025 no se sostuvo.</p>
+        </div>
+        <div class="bol-bloque inf-prosa" data-reveal>
+          <h3 class="bol-bloque__h">Crisis del comercio minorista</h3>
+          <p>Locales vacíos en las principales arterias porteñas: +30,7% interanual en marzo-abril 2026, alcanzando 277 espacios sin actividad. La oferta de locales en alquiler creció 102,2% interanual. Los corredores más afectados son Rivadavia, Corrientes y Avellaneda.</p>
+        </div>
+        <aside class="inf-nota" data-reveal>
+          <span class="inf-nota__t bol-eyebrow bol-eyebrow--accent">Nota analítica — CABA</span>
+          <p>La Ciudad de Buenos Aires muestra un deterioro sostenido que se superpone con las tendencias nacionales. Su estructura centrada en servicios la hace especialmente vulnerable al deterioro del consumo urbano y al ajuste del gasto público.</p><p>La vacancia comercial creciente en las principales arterias actúa como multiplicador regresivo: el cierre de locales reduce el empleo en el sector, lo que contrae el ingreso de los hogares y profundiza la caída del consumo, generando un círculo de retracción difícil de revertir sin políticas activas de sostenimiento de la demanda agregada.</p>
+        </aside>
+      </div>
+    </section>
+<section class="bol-sec" id="lectura" aria-labelledby="t-lectura">
+      <div class="bol-wrap">
+        <header class="inf-sec__head" data-reveal>
+          <span class="inf-sec__n" aria-hidden="true">IX</span>
+          <h2 class="inf-sec__t" id="t-lectura">Lectura de síntesis</h2>
+          <p class="inf-sec__sub">CEPOES</p>
+        </header>
+        <div class="inf-prosa" data-reveal><p>La economía productiva argentina en el primer cuatrimestre de 2026 presenta un cuadro de recuperación estadística parcial —traccionada por insumos básicos, química y refinación— que coexiste con un deterioro estructural del tejido industrial, del empleo registrado y de la actividad comercial en los principales centros urbanos del país.</p></div>
+        <div class="inf-prosa" data-reveal><p>Los tres indicadores que mejor resumen la situación real son: una UCII nacional del 59,8% insuficiente para atraer inversión productiva; la pérdida de 310.930 puestos registrados desde noviembre de 2023; y el cierre de más de 23.000 unidades empleadoras, equivalente al impacto de la pandemia de 2020 en apenas 26 meses.</p></div>
+        <div class="inf-prosa" data-reveal><p>En la Ciudad de Buenos Aires, la pérdida de casi 69.000 puestos formales y la vacancia comercial superior al 30% interanual muestran que el ajuste tiene una geografía concreta: calles y barrios donde la retracción del consumo y del empleo se vuelve visible y cotidiana.</p></div>
+        <div class="inf-tarjetas" data-reveal><div class="inf-tarjeta"><h3>Recuperación con sesgo concentrador</h3><p>El rebote beneficia a sectores exportadores e insumos, no a las cadenas pyme ni a las ramas intensivas en empleo.</p></div><div class="inf-tarjeta"><h3>Destrucción del entramado empresario</h3><p>23.160 empleadores menos a nivel nacional: un daño estructural que no se revierte con mejoras coyunturales.</p></div><div class="inf-tarjeta"><h3>Crisis laboral persistente</h3><p>Informalidad récord, subocupación creciente y salarios rezagados en todos los segmentos del mercado de trabajo.</p></div><div class="inf-tarjeta"><h3>CABA: deterioro urbano visible</h3><p>Vacancia +30,7% i.a., desocupación al 7,3% y más de 2.000 empleadores menos en dos años.</p></div></div>
+      </div>
+    </section>
+  </main>
+  <footer class="bol-cierre">
+      <div class="bol-wrap">
+        <div class="bol-cierre__grid">
+          <div>
+            <span class="bol-eyebrow">CEPOES</span>
+            <p class="bol-cierre__t">Datos, investigación y propuestas para CABA, desde los barrios.</p>
+            <p class="inf-metodo"><b>Nota metodológica</b>Datos primarios: INDEC (IPI, Encuesta de Coyuntura Industrial, EPH, EMAE, Índice de Salarios), SIPA, SRT (Superintendencia de Riesgos del Trabajo), CEPA (Centro de Economía Política Argentina), IDECBA (Instituto de Estadística de la Ciudad de Buenos Aires) y CAC (Cámara Argentina de Comercio y Servicios). El seguimiento de empleadores activos se basa en registros de la SRT como proxy de unidades productivas activas (metodología CEPA). Elaborado por el CEPOES – Centro de Estudios en Política, Economía y Sociedad.</p>
+            <div class="bol-acciones">
+              <a class="bol-btn" href="https://cepoes.org/publicaciones/informes/">Ver todos los informes</a>
+              <a class="bol-btn bol-btn--ghost" href="/publicaciones/files/informe-coyuntura-01-junio-2026.pdf">Descargar este informe ↓</a>
+            </div>
+          </div>
+          <div>
+            <span class="bol-eyebrow">Cita sugerida</span>
+            <p class="bol-cita">CEPOES (2026). «Estructura productiva argentina: recuperación parcial, empleo bajo presión y crisis del tejido productivo en CABA». Informe económico de coyuntura N.º 1, Junio 2026. Centro de Estudios en Política, Economía y Sociedad – Somos 100 Barrios.</p>
+            <div class="bol-acciones">
+              <button class="bol-btn bol-btn--ghost" type="button" data-copiar-cita>Copiar cita</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+</article>
+</body>
+</html>

@@ -551,7 +551,9 @@ def apply_fallbacks(source: str, rel: str) -> str:
             '<p>Demografía, costo de vida, vivienda y cuidados: datos públicos con actualización automática y último valor validado.</p>'
             '<span class="ia-topic-link">Explorar el eje →</span></a></div></section>'
         )
-        if '/observatorio/personas-mayores/' not in source:
+        if 'observatory-people-bridge' in source:
+            source = replace_class_element(source, "section", "observatory-people-bridge", people_bridge)
+        else:
             source = source.replace(overview, overview + people_bridge, 1)
         source = replace_id_text(source, "data-date", "26 de agosto de 2026")
 

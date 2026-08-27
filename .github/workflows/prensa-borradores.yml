@@ -1,6 +1,14 @@
 name: Preparar borradores de prensa
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "generar_borradores_prensa.py"
+      - "deploy/site-overlay/assets/data/migraciones.json"
+      - "deploy/site-overlay/assets/data/deporte-accesibilidad-peatonal.json"
+      - "deploy/site-overlay/assets/data/estructura-productiva/**"
+      - "datos/endeudamiento/**"
+      - ".github/workflows/prensa-borradores.yml"
   schedule:
     - cron: "35 13 * * *"
 permissions:

@@ -84,6 +84,11 @@ jobs:
 
           validator=Path('validar_sitio_despliegue.py').read_text(encoding='utf-8')
           assert '/territorio/estructura-productiva/' in validator
-          assert 'data-cepoes-estructura-productiva-access' in validator
+          for token in [
+              'Perfil comercial de las 15 comunas','Comparar comunas',
+              'Matriz comuna × rubro','Ocupación comercial 2025 → 2026',
+              'Archivo histórico · RUS 2017'
+          ]:
+              assert token in validator, token
           print('OK V2 analítica: 15 comunas, especialización, comparación, matriz, evolución y archivo territorial')
           PY

@@ -20,6 +20,7 @@ on:
       - "deploy/site-overlay/assets/data/estructura-productiva/actual.json"
       - "deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson"
       - "validar_sitio_despliegue.py"
+      - ".github/workflows/validar-estructura-productiva-ui.yml"
 
 jobs:
   validar:

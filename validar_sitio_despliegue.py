@@ -147,14 +147,15 @@ for token in ['id="archivo-por-tema"','Notas de prensa','/temas/#vivienda-y-habi
     assert token in publicaciones, f'Archivo editorial incompleto: {token}'
 for slug in ['boletin-01-mayo-2026','boletin-02-junio-2026','boletin-03-julio-2026','boletin-04-agosto-2026']:
     bulletin=(root/'publicaciones'/'boletines'/slug/'index.html').read_text(encoding='utf-8',errors='replace')
-    for token in ['class="bol"','Descargar PDF','/assets/boletines-html.css?v=1','/assets/boletines-html.js?v=1']:
+    for token in ['class="bol"','Descargar PDF','/assets/boletines-html.css?v=1','/assets/publicaciones-html-cepoes.css?v=2','/assets/boletines-html.js?v=1']:
         assert token in bulletin, f'Boletín HTML incompleto ({slug}): {token}'
+    assert bulletin.count('class="bol"') == 1 and '</style>' not in bulletin, f'CSS visible como texto en {slug}'
     assert '.html"' not in bulletin, f'Navegación plana sin normalizar en {slug}'
 debt_note=(root/'publicaciones'/'notas'/'el-boca-river-de-la-mora'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['25,5%','9,1%','La Boca','Núñez','estimación territorial agregada','/territorio/endeudamiento/']:
     assert token in debt_note, f'Nota de endeudamiento incompleta: {token}'
 report=(root/'publicaciones'/'informe-coyuntura-01-junio-2026'/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['class="bol inf"','Descargar PDF','/assets/informe-html.css?v=1','/assets/boletines-html.js?v=1']:
+for token in ['class="bol inf"','Descargar PDF','/assets/informe-html.css?v=1','/assets/publicaciones-html-cepoes.css?v=2','/assets/boletines-html.js?v=1']:
     assert token in report, f'Informe HTML incompleto: {token}'
 assert report.count('class="bol inf"') == 1 and '</style>' not in report, 'El informe contiene estilos incrustados como texto'
 deporte=(root/'territorio'/'deporte-salud'/'index.html').read_text(encoding='utf-8',errors='replace')

@@ -1,0 +1,435 @@
+/* CEPOES · integración editorial para boletines e informes HTML
+   Se carga después de los estilos originales para conservar sus gráficos
+   y adaptar tipografía, color, componentes y responsive al sitio. */
+
+.bol,
+:root:not([data-theme="light"]) .bol,
+:root[data-theme="dark"] .bol {
+  --bol-font-display: Poppins, system-ui, sans-serif;
+  --bol-font-body: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bol-font-num: Poppins, system-ui, sans-serif;
+  --bol-font-meta: Poppins, system-ui, sans-serif;
+  --bol-tinta: var(--tinta, #16232f);
+  --bol-tinta-2: var(--tinta2, #42596e);
+  --bol-tinta-3: #5c7388;
+  --bol-papel: var(--papel, #fff);
+  --bol-carta: var(--panel, #fff);
+  --bol-linea: var(--borde, #dde6ee);
+  --bol-linea-suave: var(--grid, rgba(22, 35, 47, .08));
+  --bol-sombra: var(--shadow, 0 1px 2px rgba(16, 42, 67, .05), 0 10px 26px rgba(16, 42, 67, .07));
+  --bol-radio: var(--r, 14px);
+  --bol-ancho: var(--max, 1180px);
+  --accent: var(--marca-osc, #0079a8);
+  background: var(--bol-papel);
+  font-size: clamp(16px, .97rem + .12vw, 17px);
+  line-height: 1.7;
+}
+
+:root[data-theme="dark"] .bol {
+  --bol-tinta-3: #a8bac8;
+  --accent: var(--marca-osc, #8fdcf5);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bol {
+    --bol-tinta-3: #a8bac8;
+    --accent: var(--marca-osc, #8fdcf5);
+  }
+}
+
+.bol h1,
+.bol h2,
+.bol h3,
+.bol h4,
+.bol-hero__serie strong,
+.bol-hero__title,
+.bol-sec__title,
+.bol-bloque__h,
+.bol-quote,
+.bol-cierre__t,
+.inf-sec__t,
+.inf-tarjeta h3 {
+  font-family: var(--bol-font-display);
+  color: var(--bol-tinta);
+}
+
+.bol-hero {
+  padding-block: clamp(2.5rem, 5vw, 4.5rem) clamp(2.25rem, 4vw, 3.5rem);
+  background:
+    radial-gradient(780px 300px at 88% -12%, var(--marca-cl, #e8f6fd), transparent 70%),
+    var(--bol-papel);
+}
+
+.bol-hero__serie {
+  border-bottom-color: var(--accent);
+}
+
+.bol-hero__serie strong {
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.bol-hero__title {
+  max-width: 18ch;
+  font-weight: 800;
+  font-size: clamp(2.15rem, 1.35rem + 3vw, 3.65rem);
+  line-height: 1.06;
+  letter-spacing: -.035em;
+}
+
+.bol.inf {
+  --accent: var(--marca-osc, #0079a8);
+}
+
+:root[data-theme="dark"] .bol.inf {
+  --accent: var(--marca-osc, #8fdcf5);
+}
+
+.bol.inf .bol-hero__title {
+  max-width: 21ch;
+  font-size: clamp(2rem, 1.25rem + 2.7vw, 3.35rem);
+}
+
+.bol-hero__dek {
+  color: var(--bol-tinta-2);
+  line-height: 1.58;
+}
+
+.bol-eyebrow,
+.bol-hero__meta,
+.bol-kpi__src,
+.bol-tabla th,
+.bol-tabla__fuente,
+.bol-fuentes,
+.graf__fuente,
+.inf-sec__sub,
+.inf-stat__n,
+.inf-tabla th,
+.inf-metodo {
+  font-family: var(--bol-font-meta);
+  font-weight: 600;
+}
+
+.bol-eyebrow--accent,
+.bol-sec__kicker,
+.inf-sec__n {
+  color: var(--accent);
+}
+
+.bol-sumario,
+.bol-tabla-wrap,
+.bol-agenda,
+.graf,
+.inf-ficha,
+.inf-stats,
+.inf-nota,
+.inf-tabla-wrap,
+.inf-tarjeta {
+  border-radius: var(--bol-radio);
+}
+
+.bol-sumario {
+  padding: 1.35rem 1.4rem .7rem;
+}
+
+.bol-sumario__item,
+.inf-indice__item {
+  border-radius: 9px;
+}
+
+.bol-sumario__item:hover,
+.bol-sumario__item:focus-visible,
+.inf-indice__item:hover,
+.inf-indice__item:focus-visible {
+  background: var(--marca-cl, #e8f6fd);
+  color: var(--accent);
+}
+
+.bol-btn {
+  min-height: 44px;
+  justify-content: center;
+  padding: .72rem 1.2rem;
+  border-radius: 999px;
+  border-color: var(--bol-tinta);
+  background: var(--bol-tinta);
+  color: #fff;
+  font-family: var(--bol-font-display);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .035em;
+  text-transform: none;
+  box-shadow: none;
+}
+
+.bol-btn:hover {
+  opacity: 1;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.bol-btn--ghost {
+  background: transparent;
+  color: var(--bol-tinta);
+  border-color: var(--bol-linea);
+}
+
+.bol-btn--ghost:hover {
+  color: var(--bol-tinta);
+  background: var(--marca-cl, #e8f6fd);
+  border-color: var(--accent);
+}
+
+.bol-hero__cover {
+  border-radius: 12px;
+}
+
+.bol-riel {
+  top: 72px;
+  background: color-mix(in srgb, var(--bol-papel) 94%, transparent);
+}
+
+.bol-riel__link {
+  min-height: 38px;
+  padding: .45rem .8rem;
+  font-family: var(--bol-font-display);
+  font-size: .75rem;
+  font-weight: 700;
+}
+
+.bol-sec__title,
+.inf-sec__t {
+  font-weight: 800;
+  letter-spacing: -.03em;
+}
+
+.bol-sec__title--lead {
+  font-family: var(--bol-font-body);
+  font-weight: 500;
+  letter-spacing: -.012em;
+}
+
+.bol-bloque__h,
+.inf-tarjeta h3,
+.graf__t {
+  font-weight: 700;
+}
+
+.bol-kpi__val,
+.bol-tabla__dato,
+.inf-stat__v,
+.graf-fila__val,
+.graf-div__val,
+.graf-leyenda__v {
+  font-family: var(--bol-font-num);
+  font-weight: 800;
+}
+
+.bol-kpis,
+.inf-stats {
+  overflow: hidden;
+  border-radius: var(--bol-radio);
+  border-right: 1px solid var(--bol-linea);
+  border-left: 1px solid var(--bol-linea);
+  box-shadow: var(--bol-sombra);
+}
+
+.bol-prosa a,
+.inf-prosa a,
+.bol-bloque p a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: .08em;
+  text-underline-offset: .17em;
+}
+
+.inf-tabla-wrap,
+.bol-tabla-wrap {
+  -webkit-overflow-scrolling: touch;
+}
+
+.inf-tabla th,
+.inf-tabla td,
+.bol-tabla th,
+.bol-tabla td {
+  color: var(--bol-tinta);
+}
+
+.graf-fila__lab,
+.graf-div__lab,
+.graf__sub,
+.graf-leyenda__d {
+  color: var(--bol-tinta-2);
+}
+
+.bol-cierre {
+  background: #16232f;
+  color: #fff;
+}
+
+.bol-cierre .bol-cierre__t {
+  color: #fff;
+  font-weight: 800;
+}
+
+.bol-cierre .bol-eyebrow {
+  color: #b9dcea;
+}
+
+.bol-cierre p {
+  color: #d7e2ea;
+}
+
+.bol-cierre .bol-cita {
+  color: #eaf1f5;
+  border-color: #587084;
+}
+
+.bol-cierre .bol-btn {
+  background: #fff;
+  color: #16232f;
+  border-color: #fff;
+}
+
+.bol-cierre .bol-btn:hover {
+  background: #8fdcf5;
+  color: #16232f;
+  border-color: #8fdcf5;
+}
+
+.bol-cierre .bol-btn--ghost {
+  background: transparent;
+  color: #fff;
+  border-color: #88c8df;
+}
+
+.bol-cierre .bol-btn--ghost:hover {
+  background: rgba(143, 220, 245, .14);
+  color: #fff;
+  border-color: #8fdcf5;
+}
+
+/* El contenido debe seguir visible si JavaScript no carga. */
+.bol [data-reveal] {
+  opacity: 1;
+  transform: none;
+}
+
+.bol.bol-js [data-reveal] {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.bol.bol-js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 760px) {
+  .bol-wrap {
+    width: min(100% - 2rem, var(--bol-ancho));
+  }
+
+  .bol-hero {
+    padding-block: 2.25rem 2.5rem;
+  }
+
+  .bol-hero__serie {
+    align-items: center;
+  }
+
+  .bol-hero__title,
+  .bol.inf .bol-hero__title {
+    max-width: none;
+    font-size: clamp(2rem, 9.5vw, 2.75rem);
+  }
+
+  .bol-hero__meta {
+    display: grid;
+    gap: .35rem;
+    line-height: 1.45;
+  }
+
+  .bol-hero__meta span + span::before {
+    content: none;
+  }
+
+  .bol-acciones {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .bol-btn {
+    width: 100%;
+  }
+
+  .bol-hero__cover {
+    max-width: 16rem;
+  }
+
+  .bol-riel {
+    top: 64px;
+  }
+
+  .bol-riel__lista {
+    padding-block: .45rem;
+  }
+
+  .bol-sec {
+    padding-block: clamp(2.5rem, 10vw, 3.75rem);
+  }
+
+  .bol-sec__head,
+  .inf-sec__head {
+    margin-bottom: 1.75rem;
+  }
+
+  .graf {
+    padding: 1.1rem;
+  }
+
+  .graf-fila__lab,
+  .graf-div__lab {
+    font-size: .82rem;
+  }
+
+  .inf-tabla-wrap::after {
+    content: "Deslizá para ver todas las columnas →";
+    display: block;
+    position: sticky;
+    left: 0;
+    padding: .65rem 1rem;
+    color: var(--bol-tinta-2);
+    background: var(--bol-papel);
+    border-top: 1px solid var(--bol-linea);
+    font: 600 .7rem var(--bol-font-meta);
+  }
+
+  .bol-cierre__grid {
+    gap: 1.75rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .bol-wrap {
+    width: min(100% - 1.5rem, var(--bol-ancho));
+  }
+
+  .bol-sumario {
+    padding-inline: 1rem;
+  }
+
+  .bol-kpi,
+  .inf-stat {
+    padding-inline: 1.1rem;
+  }
+}
+
+@media print {
+  .bol {
+    --bol-font-display: Arial, sans-serif;
+    --bol-font-body: Arial, sans-serif;
+    --bol-font-num: Arial, sans-serif;
+    --bol-font-meta: Arial, sans-serif;
+  }
+}

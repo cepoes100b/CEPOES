@@ -5,6 +5,7 @@
 
   var root = document.querySelector(".bol");
   if (!root) return;
+  root.classList.add("bol-js");
 
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -104,4 +105,3 @@
     });
   }
 })();
-

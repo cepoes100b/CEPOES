@@ -1,0 +1,151 @@
+name: Instalar puente del Monitor Legislativo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "deploy/site-overlay/assets/legislatura-public-bridge.js"
+      - ".github/workflows/instalar-puente-legislatura.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cepoes-instalar-puente-legislatura
+  cancel-in-progress: false
+
+jobs:
+  instalar:
+    runs-on: ubuntu-latest
+    environment: production
+
+    env:
+      SFTP_HOST: ${{ secrets.HOSTINGER_SFTP_HOST }}
+      SFTP_PORT: ${{ secrets.HOSTINGER_SFTP_PORT }}
+      SFTP_USER: ${{ secrets.HOSTINGER_SFTP_USER }}
+      SFTP_PASSWORD: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+      REMOTE_DIR: ${{ secrets.HOSTINGER_REMOTE_DIR }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Verificar configuración
+        shell: bash
+        run: |
+          set -euo pipefail
+          for v in SFTP_HOST SFTP_USER SFTP_PASSWORD REMOTE_DIR; do
+            if [ -z "${!v:-}" ]; then
+              echo "Falta $v" >&2
+              exit 1
+            fi
+          done
+          echo "SFTP_PORT=${SFTP_PORT:-65002}" >> "$GITHUB_ENV"
+
+      - name: Instalar cliente SFTP
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+      - name: Descargar HTML actual de Legislatura
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _patch/legislatura _patch/assets
+
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set cmd:fail-exit yes
+          set net:max-retries 3
+          set net:timeout 30
+          get -o "_patch/legislatura/index.html" "$REMOTE_DIR/legislatura/index.html"
+          bye
+          EOF
+
+          test -s _patch/legislatura/index.html
+          cp deploy/site-overlay/assets/legislatura-public-bridge.js _patch/assets/
+
+      - name: Inyectar puente antes de cualquier script de la página
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          path = Path("_patch/legislatura/index.html")
+          html = path.read_text(encoding="utf-8")
+
+          # Eliminar versiones anteriores para que el proceso sea idempotente.
+          html = re.sub(
+              r'<script\b[^>]*src=["\']/assets/legislatura-public-bridge\.js(?:\?[^"\']*)?["\'][^>]*></script>',
+              '',
+              html,
+              flags=re.I
+          )
+
+          tag = '<script src="/assets/legislatura-public-bridge.js?v=20260827-1"></script>'
+
+          # Debe ejecutarse inmediatamente después de <head>, antes de cualquier
+          # script histórico del monitor.
+          updated, count = re.subn(
+              r'(<head\b[^>]*>)',
+              r'\1' + tag,
+              html,
+              count=1,
+              flags=re.I
+          )
+          if count != 1:
+              raise SystemExit("No se pudo localizar <head> en legislatura/index.html")
+
+          path.write_text(updated, encoding="utf-8")
+
+          pos_bridge = updated.find("legislatura-public-bridge.js")
+          first_script = updated.find("<script")
+          assert pos_bridge >= 0
+          assert first_script >= 0
+          assert "legislatura-public-bridge.js" in updated[first_script:first_script+200]
+
+          print("✓ puente insertado como primer script del <head>")
+          PY
+
+      - name: Comprobar contenido antes de publicar
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'legislatura-public-bridge.js?v=20260827-1' _patch/legislatura/index.html
+          grep -q '__CEPOES_LEGISLATURA_PUBLIC_BRIDGE__' _patch/assets/legislatura-public-bridge.js
+          echo "✓ archivos locales listos"
+
+      - name: Publicar HTML y puente
+        shell: bash
+        run: |
+          set -euo pipefail
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set cmd:fail-exit yes
+          set net:max-retries 3
+          set net:timeout 30
+          put -O "$REMOTE_DIR/assets" "_patch/assets/legislatura-public-bridge.js"
+          put -O "$REMOTE_DIR/legislatura" "_patch/legislatura/index.html"
+          bye
+          EOF
+
+      - name: Smoke test sin caché
+        shell: bash
+        run: |
+          set -euo pipefail
+          Q="bridge=${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-$(date +%s)"
+
+          HTML="$(curl --retry 4 --retry-delay 3 --connect-timeout 15 --max-time 45 \
+            -fsS -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' \
+            "https://cepoes.org/legislatura/?$Q")"
+
+          echo "$HTML" | grep -q 'legislatura-public-bridge.js?v=20260827-1'
+
+          JS="$(curl --retry 4 --retry-delay 3 --connect-timeout 15 --max-time 45 \
+            -fsS -H 'Cache-Control: no-cache' -H 'Pragma: no-cache' \
+            "https://cepoes.org/assets/legislatura-public-bridge.js?$Q")"
+
+          echo "$JS" | grep -q '__CEPOES_LEGISLATURA_PUBLIC_BRIDGE__'
+
+          echo "PRODUCCIÓN OK · puente instalado antes del monitor"

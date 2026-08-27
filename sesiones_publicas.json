@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-08-26T13:41:49-03:00",
+  "actualizado_en": "2026-08-27T19:08:56-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -10,11 +10,11 @@
   },
   "periodo_consultado": {
     "desde": "01/01/2026",
-    "hasta": "26/08/2026"
+    "hasta": "27/08/2026"
   },
   "resumen": {
-    "sesiones": 5,
-    "sesiones_realizadas": 5,
+    "sesiones": 6,
+    "sesiones_realizadas": 6,
     "registros_presentismo": 303,
     "asuntos_considerados": 662,
     "votaciones_asuntos": 32,
@@ -26316,6 +26316,62 @@
             "estado": "Presente"
           }
         ]
+      },
+      "asuntos_considerados": [],
+      "sanciones": [],
+      "votaciones_nominales": [],
+      "sanciones_despacho": [],
+      "cambios_giro": [],
+      "resumen_items_recinto": {
+        "total": 0,
+        "sanciones_expediente": 0,
+        "sanciones_despacho": 0,
+        "cambios_giro": 0
+      }
+    },
+    {
+      "id_sesion": "1151",
+      "nro_orden_lp": "10679",
+      "ano_parlamentario": "2026",
+      "fecha": "2026-08-27",
+      "tipo": {
+        "id": "1",
+        "abreviatura": "ORD",
+        "descripcion": "ORDINARIA"
+      },
+      "datos_recinto": {
+        "id_sesion_recinto": "",
+        "periodo": "",
+        "fecha": "",
+        "reunion": ""
+      },
+      "realizada": true,
+      "criterio_realizada": "documento_labor",
+      "documentos": {
+        "acuerdo_labor": {
+          "id_documento": "226367",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=226367"
+        },
+        "informe_prelabor": {
+          "id_documento": "226329",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=226329"
+        },
+        "version_taquigrafica": null,
+        "asuntos_considerados": null
+      },
+      "urls": {
+        "votaciones": "https://parlamentaria.legislatura.gob.ar/pages/sesion_votaciones.aspx?IdSesion=1151",
+        "info_sesion": "https://parlamentaria.legislatura.gob.ar/InfoSesion/1151",
+        "reporte_presentismo": "https://parlamentaria.legislatura.gob.ar/ReportesPDFGen/VisualizadorReportes.aspx?iTipoReporte=100&IdSesion=1151"
+      },
+      "presentismo": {
+        "total": 0,
+        "presentes": 0,
+        "ausentes": 0,
+        "porcentaje_asistencia": null,
+        "presidente": "",
+        "secretarios": "",
+        "registros": []
       },
       "asuntos_considerados": [],
       "sanciones": [],

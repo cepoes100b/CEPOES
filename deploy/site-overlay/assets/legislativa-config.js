@@ -7,6 +7,42 @@ window.CEPOES_LEGISLATIVA = {
   publicDataBase: 'https://raw.githubusercontent.com/cepoes100b/CEPOES/main/'
 };
 
+// Puente retrocompatible hacia el universo consolidado.
+// legislativa.js históricamente consume `legislatura_publica.json.expedientes`.
+// Para no reescribir ese módulo grande, interceptamos sólo esa respuesta pública:
+// - conservamos la capa de agenda en `expedientes_agenda`;
+// - exponemos el universo consolidado como `expedientes` cuando está disponible;
+// - si una corrida no lo generó, la UI sigue funcionando con el esquema anterior.
+(() => {
+  const nativeFetch = window.fetch.bind(window);
+  window.fetch = async (...args) => {
+    const response = await nativeFetch(...args);
+    try {
+      const input = args[0];
+      const url = typeof input === 'string' ? input : (input?.url || '');
+      if (!url.includes('legislatura_publica.json') || !response.ok) return response;
+
+      const data = await response.clone().json();
+      const consolidated = data?.universo_consolidado?.expedientes;
+      if (!Array.isArray(consolidated) || !consolidated.length) return response;
+
+      data.expedientes_agenda = Array.isArray(data.expedientes) ? data.expedientes : [];
+      data.expedientes = consolidated;
+
+      const headers = new Headers(response.headers);
+      headers.set('content-type', 'application/json; charset=utf-8');
+      return new Response(JSON.stringify(data), {
+        status: response.status,
+        statusText: response.statusText,
+        headers
+      });
+    } catch (err) {
+      console.warn('CEPOES: no se pudo activar universo consolidado; se usa capa de agenda.', err);
+      return response;
+    }
+  };
+})();
+
 // Legislativa.js crea el cliente autenticado principal. Lo exponemos sólo dentro
 // de esta página para que módulos privados complementarios reutilicen la misma sesión.
 if (window.supabase?.createClient) {

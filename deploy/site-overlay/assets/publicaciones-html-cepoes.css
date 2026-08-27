@@ -145,7 +145,7 @@
   color: var(--accent);
 }
 
-.bol-btn {
+.bol .bol-btn {
   min-height: 44px;
   justify-content: center;
   padding: .72rem 1.2rem;
@@ -161,20 +161,20 @@
   box-shadow: none;
 }
 
-.bol-btn:hover {
+.bol .bol-btn:hover {
   opacity: 1;
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
 }
 
-.bol-btn--ghost {
+.bol .bol-btn--ghost {
   background: transparent;
   color: var(--bol-tinta);
   border-color: var(--bol-linea);
 }
 
-.bol-btn--ghost:hover {
+.bol .bol-btn--ghost:hover {
   color: var(--bol-tinta);
   background: var(--marca-cl, #e8f6fd);
   border-color: var(--accent);
@@ -359,7 +359,7 @@
     grid-template-columns: 1fr;
   }
 
-  .bol-btn {
+  .bol .bol-btn {
     width: 100%;
   }
 

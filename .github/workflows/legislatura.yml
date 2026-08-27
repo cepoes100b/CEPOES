@@ -40,7 +40,6 @@ jobs:
       - name: Integrar actividad de recinto en expedientes de agenda
         run: python integrar_recinto.py
 
-      # Nueva capa: no altera `expedientes` ni sus verificadores históricos.
       - name: Actualizar seguimiento institucional exhaustivo de Claudia Negri
         run: python actualizar_seguimiento_institucional.py
       - name: Construir universo legislativo consolidado
@@ -62,12 +61,15 @@ jobs:
         run: python verificar_integracion_recinto.py
       - name: Verificar universo consolidado y cobertura de Claudia
         run: python verificar_universo_consolidado.py
+      - name: Auditar inventario 2026 de Claudia Negri
+        run: python auditar_claudia.py
 
       - name: Commitear si cambió
         run: |
           git config user.name "cepoes-bot"
           git config user.email "actions@github.com"
           git add legislatura_publica.json estado_legislatura.json sesiones_publicas.json estructura_legislativa.json
+          git add auditorias/claudia_negri_2026.json auditorias/claudia_negri_2026.csv
           if git diff --cached --quiet; then
             echo "Sin cambios"
             exit 0

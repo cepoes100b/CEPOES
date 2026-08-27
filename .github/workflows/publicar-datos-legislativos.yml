@@ -1,0 +1,152 @@
+name: Publicar datos legislativos
+
+on:
+  workflow_run:
+    workflows:
+      - "Actualizar núcleo legislativo"
+    types:
+      - completed
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cepoes-legislatura-publica
+  cancel-in-progress: true
+
+jobs:
+  publicar:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment: production
+
+    env:
+      SFTP_HOST: ${{ secrets.HOSTINGER_SFTP_HOST }}
+      SFTP_PORT: ${{ secrets.HOSTINGER_SFTP_PORT }}
+      SFTP_USER: ${{ secrets.HOSTINGER_SFTP_USER }}
+      SFTP_PASSWORD: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+      REMOTE_DIR: ${{ secrets.HOSTINGER_REMOTE_DIR }}
+
+    steps:
+      - name: Obtener la última versión de main
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Configurar Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Preparar JSON público consolidado
+        run: python deploy/preparar_legislatura_publica.py _public_legislatura
+
+      - name: Validar que Claudia y 832-D-2026 estén en la copia pública
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          p = Path("_public_legislatura/legislatura_publica.json")
+          d = json.loads(p.read_text(encoding="utf-8"))
+          rows = d["expedientes"]
+
+          assert len(rows) == d["universo_consolidado"]["total"]
+          assert len(rows) >= 1000
+
+          claudia = [
+              x for x in rows
+              if "negri, claudia" in (x.get("autor") or "").lower()
+              or "claudia negri" in (x.get("autor") or "").lower()
+          ]
+          assert len(claudia) >= 200, len(claudia)
+
+          target = [
+              x for x in rows
+              if "832" in (x.get("numero") or "")
+              and ("2026" in (x.get("numero") or "") or "26" in (x.get("numero") or ""))
+          ]
+          assert target, "832-D-2026 ausente"
+
+          print(
+              f"OK publicación: {len(rows)} expedientes · "
+              f"Claudia {len(claudia)} · "
+              f"832 estado={target[0].get('estado_actual')} "
+              f"etapa={target[0].get('etapa_ciclo')}"
+          )
+          PY
+
+      - name: Instalar cliente SFTP
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+      - name: Verificar configuración SFTP
+        shell: bash
+        run: |
+          set -euo pipefail
+          for v in SFTP_HOST SFTP_USER SFTP_PASSWORD REMOTE_DIR; do
+            if [ -z "${!v:-}" ]; then
+              echo "Falta configurar $v" >&2
+              exit 1
+            fi
+          done
+          echo "SFTP_PORT=${SFTP_PORT:-65002}" >> "$GITHUB_ENV"
+
+      - name: Publicar sólo el núcleo legislativo
+        shell: bash
+        run: |
+          set -euo pipefail
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set cmd:fail-exit yes
+          set net:max-retries 3
+          set net:timeout 30
+          put -O "$REMOTE_DIR" "_public_legislatura/legislatura_publica.json"
+          put -O "$REMOTE_DIR" "_public_legislatura/sesiones_publicas.json"
+          bye
+          EOF
+
+      - name: Smoke test del universo público
+        shell: bash
+        run: |
+          set -euo pipefail
+          Q="leg=${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-$(date +%s)"
+          curl --retry 4 --retry-delay 3 --connect-timeout 15 --max-time 45 \
+            -fsS -H "Cache-Control: no-cache" -H "Pragma: no-cache" \
+            "https://cepoes.org/legislatura_publica.json?$Q" \
+            -o /tmp/legislatura_publica.json
+
+          python - <<'PY'
+          import json
+          d=json.load(open("/tmp/legislatura_publica.json", encoding="utf-8"))
+          rows=d["expedientes"]
+
+          assert len(rows) == d["universo_consolidado"]["total"], (
+              len(rows), d["universo_consolidado"]["total"]
+          )
+
+          claudia=[
+              x for x in rows
+              if "negri, claudia" in (x.get("autor") or "").lower()
+              or "claudia negri" in (x.get("autor") or "").lower()
+          ]
+          assert len(claudia) >= 200, len(claudia)
+
+          target=[
+              x for x in rows
+              if "832" in (x.get("numero") or "")
+              and ("2026" in (x.get("numero") or "") or "26" in (x.get("numero") or ""))
+          ]
+          assert target, "832-D-2026 ausente de producción"
+
+          print(
+              f"PRODUCCIÓN OK · {len(rows)} expedientes · "
+              f"Claudia {len(claudia)} · "
+              f"832={target[0].get('etapa_ciclo')}"
+          )
+          PY

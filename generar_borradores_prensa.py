@@ -78,9 +78,12 @@ def main():
     sep="&" if "?" in base else "?"
     oidc_req=Request(f"{base}{sep}audience={OIDC_AUDIENCE}",headers={"Authorization":f"Bearer {token}"})
     with urlopen(oidc_req,timeout=30) as response: oidc=json.loads(response.read())["value"]
-    ingest_req=Request(FUNCTION_URL,data=json.dumps({"drafts":raw}).encode(),headers={"Authorization":f"Bearer {oidc}","Content-Type":"application/json"},method="POST")
-    with urlopen(ingest_req,timeout=30) as response: result=json.loads(response.read())
-    print(f"Bandeja privada · {result}")
+    results=[]
+    for start in range(0,len(raw),5):
+        batch=raw[start:start+5]
+        ingest_req=Request(FUNCTION_URL,data=json.dumps({"drafts":batch}).encode(),headers={"Authorization":f"Bearer {oidc}","Content-Type":"application/json"},method="POST")
+        with urlopen(ingest_req,timeout=30) as response: results.append(json.loads(response.read()))
+    print(f"Bandeja privada · {len(raw)} borradores · {results}")
 
 if __name__ == "__main__":
     main()

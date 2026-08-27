@@ -33,15 +33,24 @@ jobs:
         run: python normalizar_sesiones.py
       - name: Actualizar radar de últimos expedientes
         run: python actualizar_universo.py
-      - name: Enriquecer fichas y ciclo oficial
+      - name: Enriquecer fichas y ciclo oficial de agenda
         run: python enriquecer_expedientes.py
       - name: Completar hitos desde evidencia oficial
         run: python completar_ciclo_legislativo.py
-      - name: Integrar actividad de recinto en expedientes
+      - name: Integrar actividad de recinto en expedientes de agenda
         run: python integrar_recinto.py
+
+      # Nueva capa: no altera `expedientes` ni sus verificadores históricos.
+      - name: Actualizar seguimiento institucional exhaustivo de Claudia Negri
+        run: python actualizar_seguimiento_institucional.py
+      - name: Construir universo legislativo consolidado
+        run: python consolidar_universo_legislativo.py
+      - name: Enriquecer fichas institucionales del universo consolidado
+        run: python enriquecer_universo_consolidado.py
+
       - name: Verificar estructura institucional
         run: python verificar_estructura_legislativa.py
-      - name: Verificar núcleo legislativo
+      - name: Verificar núcleo legislativo de agendas
         run: python verificar_legislatura.py
       - name: Verificar universo temprano
         run: python verificar_universo.py
@@ -51,6 +60,9 @@ jobs:
         run: python verificar_sesiones.py
       - name: Verificar integración de recinto
         run: python verificar_integracion_recinto.py
+      - name: Verificar universo consolidado y cobertura de Claudia
+        run: python verificar_universo_consolidado.py
+
       - name: Commitear si cambió
         run: |
           git config user.name "cepoes-bot"

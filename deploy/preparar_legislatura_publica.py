@@ -31,6 +31,10 @@ SES = ROOT / "sesiones_publicas.json"
 def norm(value) -> str:
     value = unicodedata.normalize("NFKD", str(value or ""))
     value = value.encode("ascii", "ignore").decode("ascii").lower()
+    # La fuente oficial publica autores como "APELLIDO, NOMBRE".
+    # Quitamos puntuación para que "NEGRI, CLAUDIA" y "Claudia Negri"
+    # puedan compararse de manera estable.
+    value = re.sub(r"[^a-z0-9 ]+", " ", value)
     return re.sub(r"\s+", " ", value).strip()
 
 

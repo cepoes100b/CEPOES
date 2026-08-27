@@ -58,7 +58,7 @@ jobs:
           set cmd:fail-exit yes
           set net:max-retries 3
           set net:timeout 30
-          get -o "_patch/legislatura/index.html" "$REMOTE_DIR/legislatura/index.html"
+          get "$REMOTE_DIR/legislatura/index.html" -o "_patch/legislatura/index.html"
           bye
           EOF
 

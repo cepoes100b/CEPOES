@@ -120,8 +120,24 @@ assert all(pos>=0 for pos in home_positions) and home_positions==sorted(home_pos
 for token in ['home-editorial-datum','home-comparison-grid','home-neighborhood-form','home-subscription-form','Leer la versión web →','/assets/home-redesign.js?v=1']:
     assert token in home, f'Bloque de portada incompleto: {token}'
 assert home.count('class="home-comparison-card"')==4, 'La home debe mostrar exactamente cuatro datos comparados'
-for token in ['El Boca–River de la mora','25,5% vs. 9,1%','/publicaciones/notas/el-boca-river-de-la-mora/']:
-    assert token in home, f'Editorial central de endeudamiento incompleto: {token}'
+# La editorial de portada debe coincidir con la configuración editorial vigente.
+editorial_path = root/'assets'/'data'/'home-editorial.json'
+assert editorial_path.is_file(), 'Falta assets/data/home-editorial.json'
+
+editorial = json.loads(editorial_path.read_text(encoding='utf-8'))
+
+editorial_required = {
+    'title': editorial.get('title'),
+    'url': editorial.get('url'),
+    'datum.value': (editorial.get('datum') or {}).get('value'),
+}
+
+for field, token in editorial_required.items():
+    assert token, f'Editorial vigente sin {field}: home-editorial.json'
+    assert token in home, (
+        f'La portada no coincide con home-editorial.json · '
+        f'{field}: {token}'
+    )
 observatorio=(root/'observatorio'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'id="obs-pulse"></div>' not in observatorio, 'Señales vacías en Observatorio'
 assert observatorio.count('id="obs-pulse"')==1, 'Contenedor de señales duplicado en Observatorio'

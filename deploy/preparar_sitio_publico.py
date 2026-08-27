@@ -594,6 +594,8 @@ def normalize_html(path: Path, site: Path) -> None:
     source = re.sub(r'/assets/endeudamiento\.js(?:\?v=\d+)?', '/assets/endeudamiento.js?v=232', source)
     source = re.sub(r'<link\b[^>]*href=["\']/assets/arquitectura\.css(?:\?[^"\']*)?["\'][^>]*>', '', source, flags=re.I)
     source = source.replace("</head>", f'<link href="{ARCHITECTURE_CSS}" rel="stylesheet"></head>', 1)
+    if '/assets/favicon.svg' not in source:
+        source = source.replace("</head>", '<link href="/assets/favicon.svg" rel="icon" type="image/svg+xml"></head>', 1)
     source = re.sub(r'<meta\s+(?:content=["\'][^"\']+["\']\s+name=["\']theme-color["\']|name=["\']theme-color["\']\s+content=["\'][^"\']+["\'])\s*/?>', "", source, flags=re.I)
     viewport = re.search(r'<meta\b[^>]*name=["\']viewport["\'][^>]*>', source, flags=re.I)
     if viewport:

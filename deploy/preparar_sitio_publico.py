@@ -134,6 +134,7 @@ def territory_subnav(rel: str) -> str:
         ("/territorio/migraciones/", "Migraciones"),
         ("/territorio/estructura-productiva/", "Estructura productiva"),
         ("/territorio/deporte-salud/", "Deporte y salud"),
+        ("/observatorio/personas-mayores/", "Personas mayores"),
         ("/presupuesto/territorio/", "Presupuesto"),
     ]
     def links(items: list[tuple[str, str]]) -> str:

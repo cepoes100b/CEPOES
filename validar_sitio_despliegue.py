@@ -71,11 +71,14 @@ ensure_sitemap_url(root,'/territorio/deporte-salud/')
 ensure_sitemap_url(root,'/presupuesto/ejecucion/')
 ensure_sitemap_url(root,'/presupuesto/territorio/')
 ensure_sitemap_url(root,'/temas/')
+ensure_sitemap_url(root,'/observatorio/personas-mayores/')
 
 required=[
     'index.html','404.html','robots.txt','sitemap.xml','site.webmanifest',
     'assets/site.css','assets/common.js','assets/data.js','assets/favicon.svg',
     'assets/arquitectura.css','assets/data/taxonomia.json','temas/index.html',
+    'observatorio/personas-mayores/index.html','assets/personas-mayores.css',
+    'assets/personas-mayores.js','assets/data/personas-mayores.json',
     'legislatura/index.html','territorio/endeudamiento/index.html',
     'territorio/migraciones/index.html','territorio/estructura-productiva/index.html',
     'territorio/deporte-salud/index.html',
@@ -124,6 +127,14 @@ assert 'id="obs-pulse"></div>' not in observatorio, 'Señales vacías en Observa
 assert observatorio.count('id="obs-pulse"')==1, 'Contenedor de señales duplicado en Observatorio'
 assert observatorio.count('class="pulse-card"')==3, f'Señales duplicadas en Observatorio: {observatorio.count("class=\"pulse-card\"")}'
 assert observatorio.count('observatory-overview')==1, 'Panorama del Observatorio duplicado'
+assert '/observatorio/personas-mayores/' in observatorio, 'Observatorio no enlaza el eje Personas mayores'
+personas=(root/'observatorio'/'personas-mayores'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['Una Ciudad envejecida no es, por eso, una Ciudad cuidada','17,7%','$2.835.928','Dato, elaboración e interpretación','/assets/data/personas-mayores.json']:
+    assert token in personas, f'Eje Personas mayores incompleto: {token}'
+assert 'cargando' not in personas.lower() and '>—<' not in personas, 'Personas mayores tiene un fallback vacío'
+personas_data=json.loads((root/'assets/data/personas-mayores.json').read_text(encoding='utf-8'))
+assert personas_data.get('schema')=='cepoes-personas-mayores-v1' and personas_data.get('status')=='VALIDADO'
+assert personas_data['indicadores']['canasta_inquilinos']['valor']>personas_data['indicadores']['canasta_propietarios']['valor']
 presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'Cargando último trimestre oficial' not in presupuesto and 'cargando…' not in presupuesto and '<b>—</b>' not in presupuesto, 'Fallback vacío en Presupuesto'
 for rel,url in [('presupuesto/ejecucion/index.html','https://cepoes.org/presupuesto/ejecucion/'),('presupuesto/territorio/index.html','https://cepoes.org/presupuesto/territorio/')]:
@@ -194,6 +205,7 @@ assert 'https://cepoes.org/territorio/deporte-salud/' in locs
 assert 'https://cepoes.org/presupuesto/ejecucion/' in locs
 assert 'https://cepoes.org/presupuesto/territorio/' in locs
 assert 'https://cepoes.org/temas/' in locs
+assert 'https://cepoes.org/observatorio/personas-mayores/' in locs
 assert 'https://cepoes.org/observatorio/presupuesto/' not in locs
 assert 'https://cepoes.org/territorio/presupuesto/' not in locs
 

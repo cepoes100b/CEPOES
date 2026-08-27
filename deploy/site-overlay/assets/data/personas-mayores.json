@@ -1,0 +1,163 @@
+{
+  "schema": "cepoes-personas-mayores-v1",
+  "status": "VALIDADO",
+  "actualizado": "2026-06-25T00:00:00Z",
+  "indicadores": {
+    "poblacion_65_mas": {
+      "valor": 17.7,
+      "unidad": "%",
+      "periodo": "2022",
+      "umbral_edad": "65 años y más",
+      "fuente": "IDECBA sobre datos censales",
+      "url": "https://www.estadisticaciudad.gob.ar/si/demog/principal-indicador?indicador=b11"
+    },
+    "poblacion_80_mas": {
+      "valor": 5.1,
+      "unidad": "%",
+      "periodo": "2022",
+      "umbral_edad": "80 años y más",
+      "fuente": "IDECBA sobre datos censales",
+      "url": "https://www.estadisticaciudad.gob.ar/si/demog/principal-indicador?indicador=b11"
+    },
+    "indice_envejecimiento": {
+      "valor": 119.6,
+      "unidad": "personas de 65+ cada 100 menores de 15",
+      "periodo": "2022",
+      "umbral_edad": "65 años y más / 0 a 14 años",
+      "fuente": "IDECBA sobre datos censales",
+      "url": "https://www.estadisticaciudad.gob.ar/si/demog/principal-indicador?indicador=b14"
+    },
+    "canasta_propietarios": {
+      "valor": 1622654,
+      "unidad": "pesos corrientes",
+      "periodo": "2026-05",
+      "variacion_mensual": 2.9,
+      "hogar": "pareja de personas mayores con vivienda propia",
+      "fuente": "Defensoría del Pueblo de la Ciudad de Buenos Aires",
+      "url": "https://defensoria.org.ar/noticias/aumentos-en-el-ipm-y-la-canasta-de-consumo-para-adultos-as-mayores-durante-mayo/"
+    },
+    "canasta_inquilinos": {
+      "valor": 2835928,
+      "unidad": "pesos corrientes",
+      "periodo": "2026-05",
+      "variacion_mensual": 3.2,
+      "hogar": "pareja jubilada que alquila",
+      "fuente": "Defensoría del Pueblo de la Ciudad de Buenos Aires",
+      "url": "https://defensoria.org.ar/noticias/aumentos-en-el-ipm-y-la-canasta-de-consumo-para-adultos-as-mayores-durante-mayo/"
+    },
+    "medicamentos": {
+      "valor": 2.3,
+      "unidad": "% de variación mensual",
+      "periodo": "2026-05",
+      "fuente": "Defensoría del Pueblo de la Ciudad de Buenos Aires",
+      "url": "https://defensoria.org.ar/noticias/aumentos-en-el-ipm-y-la-canasta-de-consumo-para-adultos-as-mayores-durante-mayo/"
+    }
+  },
+  "series": {
+    "estructura_etaria": {
+      "anios": [
+        2022,
+        2010,
+        2001,
+        1991,
+        1980,
+        1970,
+        1960,
+        1947,
+        1936,
+        1914,
+        1909,
+        1904,
+        1895,
+        1887,
+        1869,
+        1855
+      ],
+      "poblacion_65_mas": [
+        17.7,
+        16.4,
+        17.2,
+        16.3,
+        14.9,
+        11.8,
+        9.3,
+        5.3,
+        3.9,
+        2.2,
+        2.0,
+        2.0,
+        1.8,
+        1.7,
+        2.3,
+        3.1
+      ],
+      "poblacion_80_mas": [
+        5.1,
+        5.1,
+        4.5,
+        3.6,
+        2.5,
+        1.6,
+        1.4,
+        0.8,
+        0.4,
+        0.2,
+        0.2,
+        0.3,
+        0.2,
+        0.2,
+        0.4,
+        0.7
+      ]
+    },
+    "indice_envejecimiento": {
+      "anios": [
+        2022,
+        2010,
+        2001,
+        1991,
+        1980,
+        1970,
+        1960,
+        1947,
+        1936,
+        1914,
+        1909,
+        1904,
+        1895,
+        1887,
+        1869,
+        1855
+      ],
+      "valores": [
+        119.6,
+        100.3,
+        102.0,
+        85.5,
+        78.3,
+        64.9,
+        50.1,
+        28.0,
+        16.7,
+        7.3,
+        7.0,
+        5.8,
+        5.3,
+        5.3,
+        7.4,
+        10.8
+      ]
+    }
+  },
+  "metodologia": {
+    "umbrales": "El Censo e IDECBA usan 65 años y más para medir envejecimiento. Otros programas públicos pueden usar 60 años; esos universos no se mezclan.",
+    "territorio": "Los indicadores iniciales describen el total de CABA. No se atribuyen valores a barrios sin una fuente con esa desagregación.",
+    "precios": "Las canastas corresponden a hogares tipo de dos personas y se expresan en pesos corrientes del período informado.",
+    "acceso": "La existencia de un servicio no demuestra cupo, calidad ni acceso efectivo. La sección distingue oferta registrada de acceso real."
+  },
+  "automatizacion": {
+    "frecuencia": "diaria",
+    "politica_fallback": "Si una fuente falla o cambia de estructura, se conserva el último conjunto validado.",
+    "ultima_revision_exitosa": "2026-06-25T00:00:00Z"
+  }
+}

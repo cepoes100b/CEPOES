@@ -3,6 +3,7 @@ https://cepoes.org/cepoes/
 https://cepoes.org/cepoes/metodologia/
 https://cepoes.org/legislatura/
 https://cepoes.org/observatorio/
+https://cepoes.org/observatorio/personas-mayores/
 https://cepoes.org/observatorio/agenda/
 https://cepoes.org/observatorio/condiciones-de-vida/
 https://cepoes.org/observatorio/condiciones-de-vida/pobreza/

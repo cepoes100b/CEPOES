@@ -197,6 +197,7 @@ jobs:
           for url in \
             https://cepoes.org/ \
             https://cepoes.org/observatorio/ \
+            https://cepoes.org/observatorio/personas-mayores/ \
             https://cepoes.org/territorio/ \
             https://cepoes.org/territorio/estructura-productiva/ \
             https://cepoes.org/assets/estructura-productiva-bootstrap.js \

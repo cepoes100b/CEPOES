@@ -537,6 +537,15 @@ def apply_fallbacks(source: str, rel: str) -> str:
             '</div></section>'
         )
         source = re.sub(r'<section class="section alt">.*?</section>', overview, source, count=1, flags=re.S)
+        people_bridge = (
+            '<section class="section observatory-people-bridge"><div class="wrap">'
+            '<a class="ia-topic-card" href="/observatorio/personas-mayores/">'
+            '<span class="eyebrow">Nuevo eje transversal</span><h2>Personas mayores</h2>'
+            '<p>Demografía, costo de vida, vivienda y cuidados: datos públicos con actualización automática y último valor validado.</p>'
+            '<span class="ia-topic-link">Explorar el eje →</span></a></div></section>'
+        )
+        if '/observatorio/personas-mayores/' not in source:
+            source = source.replace(overview, overview + people_bridge, 1)
         source = replace_id_text(source, "data-date", "26 de agosto de 2026")
 
     if rel == "/prensa/index.html":

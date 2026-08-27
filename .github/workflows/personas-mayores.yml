@@ -1,0 +1,39 @@
+name: Actualizar Personas Mayores
+on:
+  schedule:
+    - cron: "25 13 * * *"
+  workflow_dispatch:
+  push:
+    branches-ignore: [main]
+    paths: ["actualizar_personas_mayores.py","verificar_personas_mayores.py",".github/workflows/personas-mayores.yml","deploy/site-overlay/observatorio/personas-mayores/**","deploy/site-overlay/assets/personas-mayores.*","deploy/site-overlay/assets/data/personas-mayores.json"]
+  pull_request:
+    branches: [main]
+    paths: ["actualizar_personas_mayores.py","verificar_personas_mayores.py",".github/workflows/personas-mayores.yml","deploy/site-overlay/observatorio/personas-mayores/**","deploy/site-overlay/assets/personas-mayores.*","deploy/site-overlay/assets/data/personas-mayores.json"]
+permissions: {contents: write}
+concurrency: {group: "personas-mayores-${{ github.ref }}", cancel-in-progress: false}
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - run: python actualizar_personas_mayores.py
+      - run: python verificar_personas_mayores.py
+      - name: Commitear sólo si cambió un dato validado
+        if: github.ref_name == 'main'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "cepoes-bot"
+          git config user.email "actions@github.com"
+          git add deploy/site-overlay/assets/data/personas-mayores.json deploy/site-overlay/observatorio/personas-mayores/index.html
+          if git diff --cached --quiet; then echo "Sin cambios"; exit 0; fi
+          git commit -m "personas mayores: actualización automática $(date -u +%F)"
+          for intento in 1 2 3; do
+            if git push origin HEAD:${GITHUB_REF_NAME}; then exit 0; fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || exit 1
+            sleep 3
+          done
+          exit 1

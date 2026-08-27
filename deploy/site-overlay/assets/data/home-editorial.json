@@ -1,12 +1,12 @@
 {
-  "eyebrow": "Análisis CEPOES · Endeudamiento",
-  "title": "El Boca–River de la mora",
-  "summary": "En Núñez la deuda media es 51% mayor, pero la incidencia de mora es casi tres veces menor que en La Boca. El mapa muestra que el problema no es solamente cuánto se debe, sino con qué ingresos y bajo qué condiciones se intenta pagar.",
-  "url": "/publicaciones/notas/el-boca-river-de-la-mora/",
-  "cta": "Leer el análisis completo",
+  "eyebrow": "Legislatura · Salud y derechos",
+  "title": "El dolor también es desigual",
+  "summary": "La Legislatura porteña aprobó la iniciativa de Claudia Negri para garantizar el acceso universal, gratuito y equitativo a la analgesia peridural durante el trabajo de parto. CEPOES abre desde ahora el seguimiento de su implementación.",
+  "url": "/publicaciones/notas/el-dolor-tambien-es-desigual/",
+  "cta": "Leer la nota y los datos",
   "datum": {
-    "value": "25,5% vs. 9,1%",
-    "label": "incidencia estimada de mora en La Boca y Núñez, respectivamente.",
-    "source": "Central de Deudores BCRA + padrón ARCA · Junio de 2026 · Elaboración CEPOES"
+    "value": "57 · 0 · 0",
+    "label": "votos afirmativos, negativos y abstenciones informados para la sanción.",
+    "source": "Legislatura CABA · 27 de agosto de 2026 · Seguimiento CEPOES"
   }
 }

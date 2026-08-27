@@ -1,0 +1,135 @@
+{
+  "updated_at": "2026-08-27",
+  "title": "Acceso a la analgesia obstétrica en CABA",
+  "expediente": "832/2026",
+  "author": "Claudia Negri",
+  "status": "sancionada",
+  "vote": {
+    "affirmative": 57,
+    "negative": 0,
+    "abstentions": 0,
+    "note": "Resultado informado para la sanción del 27/08/2026. CEPOES actualizará la ficha cuando el registro oficial de votación quede disponible en la fuente parlamentaria."
+  },
+  "law_requirements": {
+    "availability": "24 horas / 365 días",
+    "entry_into_force": "30 días desde la promulgación",
+    "regulation": "90 días desde la promulgación",
+    "implementation": "Progresiva, con cronograma, metas y prioridades definidos por la reglamentación",
+    "public_budget": "Las partidas deben preverse en las leyes anuales de presupuesto"
+  },
+  "context": {
+    "public_maternities": 12,
+    "births_public_maternities": [
+      {
+        "year": 2022,
+        "value": 14193
+      },
+      {
+        "year": 2023,
+        "value": 13812
+      },
+      {
+        "year": 2024,
+        "value": 12530
+      }
+    ],
+    "births_change_2022_2024_pct": -11.7,
+    "sip_2023": {
+      "cesareans": 5944,
+      "births_with_delivery_data": 13643,
+      "cesarean_rate_pct": 43.6,
+      "scope": "Nacimientos registrados en SIP por jurisdicción de ocurrencia; incluye nacidos vivos y muertos. Porcentaje sobre registros con dato de terminación del parto."
+    }
+  },
+  "implementation_indicators": [
+    {
+      "id": "promulgacion",
+      "label": "Promulgación y publicación oficial",
+      "status": "pendiente",
+      "value": "Pendiente de verificación oficial"
+    },
+    {
+      "id": "reglamentacion",
+      "label": "Reglamentación dentro del plazo legal",
+      "status": "pendiente",
+      "value": "El plazo comienza con la promulgación"
+    },
+    {
+      "id": "cronograma",
+      "label": "Cronograma público de implementación",
+      "status": "pendiente",
+      "value": "Sin dato oficial publicado"
+    },
+    {
+      "id": "partida",
+      "label": "Partida presupuestaria identificable",
+      "status": "pendiente",
+      "value": "A verificar en Presupuesto 2027"
+    },
+    {
+      "id": "dotacion",
+      "label": "Dotación de anestesiología obstétrica",
+      "status": "relevar",
+      "value": "A relevar hospital por hospital"
+    },
+    {
+      "id": "cobertura247",
+      "label": "Peridural disponible 24/7",
+      "status": "relevar",
+      "value": "A relevar hospital por hospital"
+    },
+    {
+      "id": "capacitacion",
+      "label": "Capacitación continua de equipos",
+      "status": "pendiente",
+      "value": "A verificar con la autoridad de aplicación"
+    },
+    {
+      "id": "monitoreo",
+      "label": "Sistema oficial de monitoreo y evaluación",
+      "status": "pendiente",
+      "value": "A verificar en la reglamentación"
+    }
+  ],
+  "maternities": [
+    "Hospital Materno Infantil Ramón Sardá",
+    "Hospital General de Agudos Juan A. Fernández",
+    "Hospital General de Agudos Cosme Argerich",
+    "Hospital General de Agudos Donación F. Santojanni",
+    "Hospital General de Agudos Carlos G. Durand",
+    "Hospital General de Agudos José M. Penna",
+    "Hospital General de Agudos Ignacio Pirovano",
+    "Hospital General de Agudos Parmenio Piñero",
+    "Hospital General de Agudos José M. Ramos Mejía",
+    "Hospital General de Agudos Bernardino Rivadavia",
+    "Hospital General de Agudos Dalmacio Vélez Sarsfield",
+    "Hospital General de Agudos Teodoro Álvarez"
+  ],
+  "sources": [
+    {
+      "name": "Proyecto de ley — Legislatura CABA",
+      "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=222537",
+      "supports": "derecho, disponibilidad 24/365, implementación progresiva, presupuesto, vigencia y reglamentación"
+    },
+    {
+      "name": "Comisión de Salud — Legislatura CABA, 16/07/2026",
+      "url": "https://www.legislatura.gob.ar/posts/avanza-en-la-modificacion-de-la-ley-de-partos-respetados-y-la-creacion-del-programa-de-atencion-integral-de-la-menopausia-y-el-climaterio.html",
+      "supports": "tratamiento legislativo y contenido de la iniciativa"
+    },
+    {
+      "name": "Cuenta de Inversión GCBA 2024",
+      "url": "https://buenosaires.gob.ar/sites/default/files/2025-07/3_TOMO_OGEPU_CI_2024_-_IF-2025-24806631-GCABA-DGOGPP-EX-2025_22205793.pdf",
+      "supports": "12 maternidades públicas y nacimientos 2022–2024"
+    },
+    {
+      "name": "Indicadores básicos sobre la atención perinatal — SIP-G, datos 2023",
+      "url": "https://www.argentina.gob.ar/sites/default/files/2025/01/indicadores_basicos_sobre_la_atencion_perinatal_anuario_2024_532025.pdf",
+      "supports": "tasa de cesárea CABA 43,6%, 5.944 sobre 13.643 registros"
+    },
+    {
+      "name": "Hospitales con maternidades — Buenos Aires Data",
+      "url": "https://data.buenosaires.gob.ar/dataset/hospitales-con-maternidades",
+      "supports": "universo georreferenciado de maternidades públicas"
+    }
+  ]
+}

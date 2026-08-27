@@ -159,5 +159,7614 @@
     "frecuencia": "diaria",
     "politica_fallback": "Si una fuente falla o cambia de estructura, se conserva el último conjunto validado.",
     "ultima_revision_exitosa": "2026-06-25T00:00:00Z"
+  },
+  "territorio": {
+    "periodo_demografico": "2022",
+    "nivel": "comuna",
+    "comunas": {
+      "1": {
+        "comuna": 1,
+        "barrios": "Retiro · San Nicolás · Puerto Madero · San Telmo · Montserrat · Constitución",
+        "poblacion": 221001,
+        "poblacion_65_mas_pct": 14.0,
+        "poblacion_80_mas_pct": 3.7,
+        "indice_envejecimiento": 90.0,
+        "personas_65_mas_estimadas": 30940,
+        "centros_dia": 2,
+        "centros_jubilados": 11,
+        "hogares_permanentes": 0,
+        "geriatricos": 13,
+        "centros_dia_por_mil_65": 0.06
+      },
+      "2": {
+        "comuna": 2,
+        "barrios": "Recoleta",
+        "poblacion": 160609,
+        "poblacion_65_mas_pct": 20.3,
+        "poblacion_80_mas_pct": 6.4,
+        "indice_envejecimiento": 183.0,
+        "personas_65_mas_estimadas": 32604,
+        "centros_dia": 1,
+        "centros_jubilados": 1,
+        "hogares_permanentes": 0,
+        "geriatricos": 15,
+        "centros_dia_por_mil_65": 0.03
+      },
+      "3": {
+        "comuna": 3,
+        "barrios": "Balvanera · San Cristóbal",
+        "poblacion": 193537,
+        "poblacion_65_mas_pct": 16.0,
+        "poblacion_80_mas_pct": 4.3,
+        "indice_envejecimiento": 114.0,
+        "personas_65_mas_estimadas": 30966,
+        "centros_dia": 0,
+        "centros_jubilados": 7,
+        "hogares_permanentes": 0,
+        "geriatricos": 19,
+        "centros_dia_por_mil_65": 0.0
+      },
+      "4": {
+        "comuna": 4,
+        "barrios": "La Boca · Barracas · Parque Patricios · Nueva Pompeya",
+        "poblacion": 227024,
+        "poblacion_65_mas_pct": 13.7,
+        "poblacion_80_mas_pct": 3.5,
+        "indice_envejecimiento": 73.0,
+        "personas_65_mas_estimadas": 31102,
+        "centros_dia": 4,
+        "centros_jubilados": 40,
+        "hogares_permanentes": 1,
+        "geriatricos": 12,
+        "centros_dia_por_mil_65": 0.13
+      },
+      "5": {
+        "comuna": 5,
+        "barrios": "Almagro · Boedo",
+        "poblacion": 192449,
+        "poblacion_65_mas_pct": 18.0,
+        "poblacion_80_mas_pct": 4.8,
+        "indice_envejecimiento": 138.0,
+        "personas_65_mas_estimadas": 34641,
+        "centros_dia": 0,
+        "centros_jubilados": 17,
+        "hogares_permanentes": 0,
+        "geriatricos": 38,
+        "centros_dia_por_mil_65": 0.0
+      },
+      "6": {
+        "comuna": 6,
+        "barrios": "Caballito",
+        "poblacion": 201764,
+        "poblacion_65_mas_pct": 19.8,
+        "poblacion_80_mas_pct": 5.6,
+        "indice_envejecimiento": 147.0,
+        "personas_65_mas_estimadas": 39949,
+        "centros_dia": 0,
+        "centros_jubilados": 8,
+        "hogares_permanentes": 0,
+        "geriatricos": 33,
+        "centros_dia_por_mil_65": 0.0
+      },
+      "7": {
+        "comuna": 7,
+        "barrios": "Flores · Parque Chacabuco",
+        "poblacion": 213262,
+        "poblacion_65_mas_pct": 17.8,
+        "poblacion_80_mas_pct": 4.9,
+        "indice_envejecimiento": 114.0,
+        "personas_65_mas_estimadas": 37961,
+        "centros_dia": 3,
+        "centros_jubilados": 35,
+        "hogares_permanentes": 0,
+        "geriatricos": 53,
+        "centros_dia_por_mil_65": 0.08
+      },
+      "8": {
+        "comuna": 8,
+        "barrios": "Villa Soldati · Villa Riachuelo · Villa Lugano",
+        "poblacion": 203888,
+        "poblacion_65_mas_pct": 11.1,
+        "poblacion_80_mas_pct": 2.8,
+        "indice_envejecimiento": 50.0,
+        "personas_65_mas_estimadas": 22632,
+        "centros_dia": 5,
+        "centros_jubilados": 31,
+        "hogares_permanentes": 0,
+        "geriatricos": 3,
+        "centros_dia_por_mil_65": 0.22
+      },
+      "9": {
+        "comuna": 9,
+        "barrios": "Liniers · Mataderos · Parque Avellaneda",
+        "poblacion": 167908,
+        "poblacion_65_mas_pct": 17.3,
+        "poblacion_80_mas_pct": 4.6,
+        "indice_envejecimiento": 106.0,
+        "personas_65_mas_estimadas": 29048,
+        "centros_dia": 3,
+        "centros_jubilados": 26,
+        "hogares_permanentes": 0,
+        "geriatricos": 27,
+        "centros_dia_por_mil_65": 0.1
+      },
+      "10": {
+        "comuna": 10,
+        "barrios": "Villa Real · Monte Castro · Versalles · Floresta · Vélez Sarsfield · Villa Luro",
+        "poblacion": 171896,
+        "poblacion_65_mas_pct": 19.2,
+        "poblacion_80_mas_pct": 5.1,
+        "indice_envejecimiento": 130.0,
+        "personas_65_mas_estimadas": 33004,
+        "centros_dia": 3,
+        "centros_jubilados": 31,
+        "hogares_permanentes": 0,
+        "geriatricos": 35,
+        "centros_dia_por_mil_65": 0.09
+      },
+      "11": {
+        "comuna": 11,
+        "barrios": "Villa Gral. Mitre · Villa Devoto · Villa del Parque · Villa Santa Rita",
+        "poblacion": 201905,
+        "poblacion_65_mas_pct": 19.5,
+        "poblacion_80_mas_pct": 5.2,
+        "indice_envejecimiento": 137.0,
+        "personas_65_mas_estimadas": 39371,
+        "centros_dia": 1,
+        "centros_jubilados": 27,
+        "hogares_permanentes": 0,
+        "geriatricos": 42,
+        "centros_dia_por_mil_65": 0.03
+      },
+      "12": {
+        "comuna": 12,
+        "barrios": "Coghlan · Saavedra · Villa Urquiza · Villa Pueyrredón",
+        "poblacion": 235364,
+        "poblacion_65_mas_pct": 18.0,
+        "poblacion_80_mas_pct": 4.9,
+        "indice_envejecimiento": 125.0,
+        "personas_65_mas_estimadas": 42366,
+        "centros_dia": 3,
+        "centros_jubilados": 23,
+        "hogares_permanentes": 0,
+        "geriatricos": 45,
+        "centros_dia_por_mil_65": 0.07
+      },
+      "13": {
+        "comuna": 13,
+        "barrios": "Núñez · Belgrano · Colegiales",
+        "poblacion": 262330,
+        "poblacion_65_mas_pct": 20.2,
+        "poblacion_80_mas_pct": 6.1,
+        "indice_envejecimiento": 152.0,
+        "personas_65_mas_estimadas": 52991,
+        "centros_dia": 0,
+        "centros_jubilados": 4,
+        "hogares_permanentes": 0,
+        "geriatricos": 36,
+        "centros_dia_por_mil_65": 0.0
+      },
+      "14": {
+        "comuna": 14,
+        "barrios": "Palermo",
+        "poblacion": 247252,
+        "poblacion_65_mas_pct": 19.1,
+        "poblacion_80_mas_pct": 5.6,
+        "indice_envejecimiento": 160.0,
+        "personas_65_mas_estimadas": 47225,
+        "centros_dia": 3,
+        "centros_jubilados": 4,
+        "hogares_permanentes": 0,
+        "geriatricos": 19,
+        "centros_dia_por_mil_65": 0.06
+      },
+      "15": {
+        "comuna": 15,
+        "barrios": "Chacarita · Villa Crespo · Paternal · Villa Ortúzar · Agronomía · Parque Chas",
+        "poblacion": 195265,
+        "poblacion_65_mas_pct": 16.6,
+        "poblacion_80_mas_pct": 4.3,
+        "indice_envejecimiento": 118.0,
+        "personas_65_mas_estimadas": 32414,
+        "centros_dia": 2,
+        "centros_jubilados": 23,
+        "hogares_permanentes": 1,
+        "geriatricos": 28,
+        "centros_dia_por_mil_65": 0.06
+      }
+    },
+    "equipamientos": [
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día N° 24",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.49670400000001,
+          -34.667541000000014
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro Cultural Palermo Grande",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.430724000000005,
+          -34.579713999999996
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 7",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.468749643407314,
+          -34.63345988772265
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 31",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50371517383853,
+          -34.61673558629748
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 10",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.49127213264465,
+          -34.67829801950569
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 20",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.50208100000001,
+          -34.56740799999999
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 16",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.47351899659987,
+          -34.690158304243035
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 27",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.49442887473684,
+          -34.63812819953642
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 15",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.43194316964122,
+          -34.59617826484752
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 3",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.454760840303734,
+          -34.63752593072952
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 29",
+        "comuna": 4,
+        "barrio": "Parque Patricios",
+        "coord": [
+          -58.40768286315261,
+          -34.63683207230944
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día N° 30",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.511817293422524,
+          -34.615238783066665
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 12",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.472977000000014,
+          -34.651846000000006
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 1",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.383589000000015,
+          -34.633537
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 2",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.4668163053486,
+          -34.68240979628837
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 5",
+        "comuna": 15,
+        "barrio": "Villa Ortuzar",
+        "coord": [
+          -58.463153149948184,
+          -34.57896799273157
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 4",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.497506776707404,
+          -34.63619007528425
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro Modelo",
+        "comuna": 1,
+        "barrio": "San Telmo",
+        "coord": [
+          -58.376455075577546,
+          -34.62488588899881
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día N° 9",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.43063439635941,
+          -34.579759410106526
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 6",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.383625000000016,
+          -34.63349400000001
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 21",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.471938491646256,
+          -34.663079057892546
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día N° 28",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.435107363626805,
+          -34.636599588889574
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día N° 8",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.503208000000015,
+          -34.58115699999999
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 25",
+        "comuna": 4,
+        "barrio": "Nueva Pompeya",
+        "coord": [
+          -58.42782283049846,
+          -34.64429739111237
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Nº 19",
+        "comuna": 1,
+        "barrio": "San Telmo",
+        "coord": [
+          -58.37620529845918,
+          -34.62477837528283
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día N° 13",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.43058100000001,
+          -34.579829999999994
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día N° 18",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.50318200000001,
+          -34.58127300000001
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día N° 14",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47288100000002,
+          -34.65192500000003
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día N° 33",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.47462800000002,
+          -34.69041300000002
+        ]
+      },
+      {
+        "tipo": "centro-dia",
+        "nombre": "Centro de Día Rinconcito de Recoleta",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.39904200000001,
+          -34.59667099999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Solamente Amigos",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.514278000000004,
+          -34.60288799999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Los Gurises",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.511817601790966,
+          -34.62541504036409
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "La Porteña",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.521265043596514,
+          -34.63643597279915
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Manantial",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.41486459944155,
+          -34.57963253569482
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Vengo A Proponerles Un Sueño",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.512241942120696,
+          -34.58660769338475
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Renacer 2001",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.46833849580093,
+          -34.688169222665614
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Enrique Pavon Pereyra",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.382766936933095,
+          -34.64893005292411
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Dr Ramon Carrillo",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.50959887803176,
+          -34.62988894043302
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Participar",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.42794268953735,
+          -34.58363886131936
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Abuelos Unidos",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.514807255167696,
+          -34.60309726855325
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "El Laberinto de Parque Chas",
+        "comuna": 15,
+        "barrio": "Parque Chas",
+        "coord": [
+          -58.47916121548131,
+          -34.582157991210956
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Amistad y Libertad",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.49781816164446,
+          -34.58886473225378
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Nuestra Esperanza",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.432317299106415,
+          -34.63902963157807
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Ribera Sur",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.36148912213448,
+          -34.629949993515964
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Caminemos Juntos",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41350352524825,
+          -34.61414111279273
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Yo Soy Luz",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.457724958477456,
+          -34.62314013959981
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Los Pequeños Grandes",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.38018229914394,
+          -34.645275221183944
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Luces de Buenos Aires",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50325979658105,
+          -34.61489570993671
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "La Fabrica",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.469707732465025,
+          -34.620659575029634
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Abuelos de Villa Luro",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.509535519718824,
+          -34.6314887395361
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Renovacion",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.402682549713916,
+          -34.599458286525724
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Reempezar",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46039242080892,
+          -34.64297403631669
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Floparch",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.468749643407314,
+          -34.63345988772265
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Fortaleza",
+        "comuna": 13,
+        "barrio": "Colegiales",
+        "coord": [
+          -58.45867616807279,
+          -34.573119210571924
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Quinta del Molino",
+        "comuna": 8,
+        "barrio": "Villa Soldati",
+        "coord": [
+          -58.440540148238725,
+          -34.663900251644634
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Juan de Dios Filiberto",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.361023793870224,
+          -34.63445943051797
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "General Pueyrredon",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.48815564831603,
+          -34.67073338902812
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Vecinos Activos",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.50492354432196,
+          -34.63813105972086
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Encuentro Vecinal Sur",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.435255486133094,
+          -34.63660678415727
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Esperanza Viva",
+        "comuna": 4,
+        "barrio": "Parque Patricios",
+        "coord": [
+          -58.40647413607223,
+          -34.631578645092866
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Carlos Carella",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.49739869580308,
+          -34.61088588437635
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Los Años Felices",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46484676423652,
+          -34.63410370891142
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Todos Unidos",
+        "comuna": 15,
+        "barrio": "Agronomia",
+        "coord": [
+          -58.49110175778751,
+          -34.589612382271966
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Liniers Sur",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.52941130002238,
+          -34.6472175734697
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "San Miguel Arcangel",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.49195666256918,
+          -34.64150852110416
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Pleno Vivir",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.509153003382835,
+          -34.61345768538718
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Abuelos por El Cambio",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.503785000000015,
+          -34.572450999999994
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Barrio Espora",
+        "comuna": 4,
+        "barrio": "Nueva Pompeya",
+        "coord": [
+          -58.40252184446555,
+          -34.656568913359266
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Nueva Esperanza de Flores",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45783973029789,
+          -34.64383645317205
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Casa Feliz",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.43956273642198,
+          -34.63116307963248
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Florecer",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.47348518858122,
+          -34.690077067458
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Los Colores de Quinquela",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.35800049907768,
+          -34.63192527415771
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Por Siempre Juntos",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.5242219046545,
+          -34.64149127599727
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Paselo Bien",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45336591834323,
+          -34.636420855776734
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "El Hornero",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.491667649644214,
+          -34.6463407286608
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "La Isla de La Paternal",
+        "comuna": 15,
+        "barrio": "Paternal",
+        "coord": [
+          -58.469075104240076,
+          -34.59329616346723
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Amigos y Abuelos del Barrio",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.489847530488866,
+          -34.664627112203576
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "El Camino Real de Liniers",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.52621187113337,
+          -34.64301050261615
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Mi Esperanza",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.46514579948329,
+          -34.68315320426033
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Cañada de Gomez",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.47110077973159,
+          -34.69172945204579
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Felicidad",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.49454512543011,
+          -34.63984535636904
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Saavedra",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.48246283610614,
+          -34.55473139992793
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Amanecer de Primavera",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.445052647710384,
+          -34.637973049170384
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Volver A Vivir Dias Felices",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46059149242766,
+          -34.62068137944854
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Jardin de La Amistad",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41245083708992,
+          -34.59993632668861
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "La Esperanza",
+        "comuna": 15,
+        "barrio": "Villa Ortuzar",
+        "coord": [
+          -58.46318635423613,
+          -34.57897158797683
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Gracias A La Vida",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.457718516292445,
+          -34.60303216507337
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Cuqui Robles",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.511693154418005,
+          -34.65559827544085
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Verde Esperanza",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45766925930143,
+          -34.62309507288336
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Una Gota de Amor",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.37888816974189,
+          -34.64784623623508
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Sueños del Alma",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.4936717211881,
+          -34.65172451237563
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "14 de Mayo",
+        "comuna": 11,
+        "barrio": "Villa Santa Rita",
+        "coord": [
+          -58.48352900000001,
+          -34.61245999999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Dignidad",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.35773407671204,
+          -34.63707712371511
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "21 de Diciembre",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.37908030465968,
+          -34.649324465626236
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Nueva Argentina",
+        "comuna": 4,
+        "barrio": "Nueva Pompeya",
+        "coord": [
+          -58.428669106664145,
+          -34.647413578355504
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Padre Federico Grote",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.36792619519579,
+          -34.63885637890671
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Los Caminantes",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.495026379595615,
+          -34.570208512125575
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "No Me Olvides",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.42880420483473,
+          -34.597246438532885
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Caracas",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.47513602357065,
+          -34.60562484663092
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "La Nueva Esperanza",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.523376137922455,
+          -34.65329489699957
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Barracas",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.37973548581608,
+          -34.64950186223184
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Un Lugar Diferente",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45146534676875,
+          -34.642743759676065
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Los Amigos de Versalles",
+        "comuna": 10,
+        "barrio": "Versalles",
+        "coord": [
+          -58.52851962711403,
+          -34.63102264480034
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Doña Filomena",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50371517383853,
+          -34.61673558629748
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Renacimiento",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.47115631619896,
+          -34.66149479249979
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Sol de Almagro",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.4218280366144,
+          -34.59943050468424
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Justicia Social",
+        "comuna": 15,
+        "barrio": "Villa Ortuzar",
+        "coord": [
+          -58.47193811596808,
+          -34.580436444789584
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Amistad y Union",
+        "comuna": 15,
+        "barrio": "Parque Chas",
+        "coord": [
+          -58.479301751824,
+          -34.58789064558307
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Albariño",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.47802594967264,
+          -34.66633064484528
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Dr. Raul Matera",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.50969884458913,
+          -34.57740712830897
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Los Pichones",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.527738530347634,
+          -34.60848047161541
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "El Reencuentro de Los Amigos",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.50221475464488,
+          -34.572953405451905
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Abuelos Siglo Xxi",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.52163800000001,
+          -34.60891
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Adultos Mayores Que Saben Vivir",
+        "comuna": 15,
+        "barrio": "Paternal",
+        "coord": [
+          -58.46719971306281,
+          -34.601689325635824
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "De Los Patricios",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.3688669017455,
+          -34.64417863739367
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Corazon Solidario",
+        "comuna": 15,
+        "barrio": "Parque Chas",
+        "coord": [
+          -58.48102033746513,
+          -34.58332397535586
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Simona Veron",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.42694977412693,
+          -34.583541354387364
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Vivir En Amistad",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.43244360798639,
+          -34.64349454947381
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Compartiendo Sueños",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.47627168895613,
+          -34.679062042697126
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "El Fortin de Villa Ortuzar",
+        "comuna": 15,
+        "barrio": "Villa Ortuzar",
+        "coord": [
+          -58.468481884433814,
+          -34.587786748944886
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "Momentos de Amigos",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.50973727396919,
+          -34.66540061869372
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "HORAS INOLVIDABLES",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46960700000001,
+          -34.62560900000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "BRINCA QUEM PODE",
+        "comuna": 4,
+        "barrio": "Nueva Pompeya",
+        "coord": [
+          -58.420568383984154,
+          -34.64519897675804
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "MI SEGUNDA CASA",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.49091045082538,
+          -34.672421399783495
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PLAZA DE LOS PERIODISTAS",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.47258602146822,
+          -34.62097814814665
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LOS AMIGOS DE ALICIA",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.48927570705538,
+          -34.624211568587604
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "RUCA-MALEM",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.47502562584256,
+          -34.66446176561003
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DE VILLA REAL",
+        "comuna": 10,
+        "barrio": "Versalles",
+        "coord": [
+          -58.519524401332035,
+          -34.627287548883565
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS CABOPE",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48992149456743,
+          -34.572152707717436
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "SARMIENTO EL SAUCE",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.47473209938901,
+          -34.6088772480562
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "VIEJO RINCON",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.38601439716026,
+          -34.619698215983966
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "AÑOS FELICES",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.47085600000001,
+          -34.688723000000024
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ASOC.JYP VILLA LUGANO EL TREBOL",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.472038180508,
+          -34.68527544924075
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA CASITA",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.5021881233786,
+          -34.664415078096035
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS ASIMRA",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.406569739343155,
+          -34.61845322588988
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ABUELOS DEL RIESTRA",
+        "comuna": 4,
+        "barrio": "Nueva Pompeya",
+        "coord": [
+          -58.42796346823939,
+          -34.6443907095063
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA CASA DE EVA PERON (CLUB DE LA 3RA JUVENTUD RINCON ARGENTINO)",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.49499600000001,
+          -34.582902999999995
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "UN ESTILO DE VIDA",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.49783300000002,
+          -34.671413000000015
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DEL BICENTENARIO",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.419585000000005,
+          -34.63608200000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PARQUE LEZAMA (SUBCOMISION DE J. Y P. DE ASOCIACION VECINAL)",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.369169345927894,
+          -34.62833950243266
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO ARMONIA SANTA LUCIA DE PALERMO",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.42252100000001,
+          -34.592414
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ENCUENTRO CON AMIGOS",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50339330165124,
+          -34.62252732970848
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "MIS MEJORES AÑOS",
+        "comuna": 1,
+        "barrio": "Monserrat",
+        "coord": [
+          -58.3891970902253,
+          -34.615122306252196
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "17 DE NOVIEMBRE",
+        "comuna": 1,
+        "barrio": "Monserrat",
+        "coord": [
+          -58.38706000000001,
+          -34.616621
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS BIENVENIDOS",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.385212261847286,
+          -34.623725618460114
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA RAZON DE MI VIDA - NELLY OMAR",
+        "comuna": 11,
+        "barrio": "Villa Santa Rita",
+        "coord": [
+          -58.48079702367043,
+          -34.609597118527766
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ARMANDO CANZZIANI",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.51717583418613,
+          -34.652991212752504
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "NUESTRO RINCONCITO",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.47638400000002,
+          -34.685685000000014
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "NEGRITO DIAZ",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.517552000000016,
+          -34.65267300000002
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ROMULO VINCIGUERRA",
+        "comuna": 15,
+        "barrio": "Paternal",
+        "coord": [
+          -58.468401000000014,
+          -34.59961299999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "HIPOLITO YRIGOYEN",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.40730300000001,
+          -34.621766000000015
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA NUEVA ESPERANZA DE SOLDATI",
+        "comuna": 8,
+        "barrio": "Villa Soldati",
+        "coord": [
+          -58.441403000000015,
+          -34.66095400000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "AMIGOS PLAZA  LEANDRO N. ALEM",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.50353600000001,
+          -34.57606899999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "APEJURA (ASOCIACION JUBILADOS Y PENSIONADOS DE LA REP. ARGENTINA)",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.37909397854072,
+          -34.61869384777637
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "RICARDO ROJAS",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.45852674524878,
+          -34.57990819341513
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ALMABASTO ASOCIACION CIVIL",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.413118000000004,
+          -34.604721
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS Y PENSIONADOS SABRINA PETRILLI",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.47124049808936,
+          -34.54868856694286
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ARCOIRIS DE LUGANO",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.4694109904449,
+          -34.69238609153831
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "MEMORIA Y FUTURO",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.37198463715438,
+          -34.641375082768015
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "SONRISAS",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.413699306203625,
+          -34.63627524756177
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "2 DE ABRIL MALVINAS ARGENTINAS",
+        "comuna": 13,
+        "barrio": "Nuñez",
+        "coord": [
+          -58.46642292427707,
+          -34.55532558923678
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA FLOR DEL PARQUE",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.48661900000002,
+          -34.609281
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO SOCIAL SANTA LUCIA",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.373651314134534,
+          -34.64486078358937
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ETERNA Y VIEJA JUVENTUD",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.474646000000014,
+          -34.690470000000026
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS Y PENSIONADOS VILLA PUEYRREDON",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.50306267793125,
+          -34.58703435921187
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "AMIGOS DE LA COMUNA 12",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.48774699447362,
+          -34.554509777076255
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA MUCHACHADA DEL AYER",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.513835149279664,
+          -34.62708729872424
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DISCEPOLIN UNIDAD BASICA J. M. ROSAS",
+        "comuna": 10,
+        "barrio": "Villa Real",
+        "coord": [
+          -58.52070344642468,
+          -34.61942911209085
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ESPACIO SOCIAL, CULTURAL Y DEPORTIVO TIERRA, TECHO Y TRABAJO",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.45844100000001,
+          -34.596095000000005
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PASO A PASO",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.491395000000004,
+          -34.602556
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "FUNDACION CASASAN",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.364327577274246,
+          -34.63845441762419
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ASOCIACION MUTUAL DE CENTROS DE JUBILADOS DE LA BOCA DOÑA BETTY DE LA BOCA",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.365453705323695,
+          -34.64310778516832
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "GANAS DE VIVIR",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.503350832596574,
+          -34.64734464267235
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ROBUSTIANA SAN MARTIN",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.40105900000001,
+          -34.651317000000006
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "AMOR Y AMISTAD",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.45267300000001,
+          -34.617687
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "22 DE AGOSTO",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.44222700000002,
+          -34.60064500000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS Y PENSIONADOS ACTUARTE",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.362460108577814,
+          -34.63496626884681
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "NUESTRA SEÑORA DE LOS BS. AS.",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.454479497173956,
+          -34.60994665365039
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "AMIGOS DEL PARQUECITO",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.43169630900176,
+          -34.6296066754225
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ANGELITA",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.509886220845914,
+          -34.659277287280844
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PREMIER SOLIDARIO",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.435327000000015,
+          -34.611940999999995
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PLAZA VILLA REAL",
+        "comuna": 10,
+        "barrio": "Villa Real",
+        "coord": [
+          -58.52725486970995,
+          -34.6203216712441
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "BARRIO J. F. KENNEDY",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.51714914907518,
+          -34.63360925450325
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "FLORENTINO AMEGHINO",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47269064880538,
+          -34.651868629598646
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EL SOL DE VILLA REAL",
+        "comuna": 10,
+        "barrio": "Villa Real",
+        "coord": [
+          -58.529454020010434,
+          -34.62176761123303
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EL ESFUERZO DE LOS ABUELOS",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46864283739131,
+          -34.64162925546176
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "VOLVER A VIVIR ASOCIACION CIVIL",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.524833521015324,
+          -34.63581334345034
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "HUGO DEL CARRIL - BARRACAS",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.371988000000016,
+          -34.64215500000002
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CONVIVENCIA FELIZ",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.48332070824337,
+          -34.54945235008924
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA AMISTAD DE MONTE CASTRO",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.503588074857944,
+          -34.617095946541255
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE TERCERA EDAD 8 DE OCTUBRE",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.49685400000001,
+          -34.621872
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CLUB DE TERCERA EDAD SANTA ISABEL DE HUNGRIA",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.43657040697817,
+          -34.63153060029639
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PATERNAL",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.46901839003441,
+          -34.602864754964365
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EL RESURGIR DE BARRACAS",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.383871000000006,
+          -34.64673400000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EL ENCANTO POR LA VIDA ASOCIACION CIVIL",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.43290599740345,
+          -34.634796226432776
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS Y PENSIONADOS SUYAI",
+        "comuna": 10,
+        "barrio": "Velez Sarsfield",
+        "coord": [
+          -58.49391901773872,
+          -34.62501133026498
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "FLORES SOLIDARIO",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45339400000001,
+          -34.63887900000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "JUAN PUEBLO",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.429512000000024,
+          -34.638928000000014
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LOS GALANCITOS",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.44078500000001,
+          -34.64477100000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS ALMAGRO-BOEDO",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.423157355329515,
+          -34.62383627293108
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "MOSCONI",
+        "comuna": 15,
+        "barrio": "Villa Ortuzar",
+        "coord": [
+          -58.47530200000001,
+          -34.578984
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "RINCONCITO DE RECOLETA",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.39909300000001,
+          -34.59667100000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "FAVALORO",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45504017849805,
+          -34.64286570180809
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "RECREATIVO BELGRANO, NUÑEZ Y COLEGIALES",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.463711858397126,
+          -34.56023362564222
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "FLORECER",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41629800000001,
+          -34.608066
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PINTANDO FLORES",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46585200000001,
+          -34.636566000000016
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "BENITO QUINQUELA MARTIN",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.359130000000015,
+          -34.636548
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EDUARDO MONTENEGRO",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.43959196499974,
+          -34.61787504189418
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ONG LUZ MATINAL",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.396141000000014,
+          -34.623465
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "INTEGRACION CON PROYECTO DE VIDA  LAS BASES - CLUB ALBERDI",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.48783769739684,
+          -34.64721854307851
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DEL SUR",
+        "comuna": 4,
+        "barrio": "Nueva Pompeya",
+        "coord": [
+          -58.41525500000001,
+          -34.655927000000005
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CLUB HURACAN ADULTOS MAYORES",
+        "comuna": 4,
+        "barrio": "Parque Patricios",
+        "coord": [
+          -58.40818300000001,
+          -34.637353
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CANDIDA",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.39690900000001,
+          -34.656284000000014
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LOS DORADOS AÑOS",
+        "comuna": 4,
+        "barrio": "Nueva Pompeya",
+        "coord": [
+          -58.410779000000005,
+          -34.65384800000002
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EL RINCON FELIZ",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.484851000000006,
+          -34.671159000000024
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ARGENTINA NUESTRO HOGAR",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.50180837788946,
+          -34.57882317812361
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "SIN RUMBO",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.503815000000024,
+          -34.572478999999994
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "AMIGOS DE VILLA MITRE",
+        "comuna": 11,
+        "barrio": "Villa Santa Rita",
+        "coord": [
+          -58.48744300000002,
+          -34.60998399999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CERVANTES",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50951400000001,
+          -34.623504000000004
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DON RAUL",
+        "comuna": 11,
+        "barrio": "Villa Santa Rita",
+        "coord": [
+          -58.47811700000001,
+          -34.612700000000004
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS DON RAMON CARRILLO",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51193000000001,
+          -34.615303000000004
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EL PARAJE DE ALEGRIAS",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.46337502456676,
+          -34.685318118389176
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LOS ABUELOS DEL NORTE",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.48905700000001,
+          -34.55798199999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LES CHIQUES EN RED",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.358384000000015,
+          -34.636531
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LOS ABUELOS DE MATADEROS",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.50212900000001,
+          -34.66447300000002
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "VIRGEN DEL CARMEN (CENTRO COMUNITARIO DEL ADULTO MAYOR)",
+        "comuna": 1,
+        "barrio": "Puerto Madero",
+        "coord": [
+          -58.35220800000001,
+          -34.617832
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA CASONA",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.509291000000005,
+          -34.61479099999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PAPA FRANCISCO",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.44002600000002,
+          -34.64878600000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "SIEMPRE PRIMAVERA-",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42696200000002,
+          -34.608525
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "SANTA ANA Y SAN JOAQUIN",
+        "comuna": 1,
+        "barrio": "Puerto Madero",
+        "coord": [
+          -58.35322100000001,
+          -34.618778999999996
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DE LA AMISTAD DE MONTE CASTRO",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50353200000001,
+          -34.61704100000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA CASA DEL ENCUENTRO",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.416281000000005,
+          -34.60806600000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ESPERANZA",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41626400000001,
+          -34.60805200000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS GRUPO PARA VIVIR MEJOR",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.418954190610165,
+          -34.623907413887814
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "HUGO DEL CARRIL DE VILLA DEL PARQUE",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51902400000002,
+          -34.614629
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "MAYORES ACTIVOS UNIDOS",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.49014700000001,
+          -34.67751800000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "MILAGRO AL SUR",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.41596700000001,
+          -34.63574700000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "MORDISQUITO",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50035200000002,
+          -34.618394000000016
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PAMI 2",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.51038100000002,
+          -34.61608
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "SAN PEDRO APOSTOL",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50903400000001,
+          -34.619499000000005
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EL TIEMPO DE LOS SUEÑOS",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46618300000001,
+          -34.633805000000024
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "MONSEÑOR VERNAZZA",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45555700000002,
+          -34.62878
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PODER JUDICIAL DE LA CIUDAD",
+        "comuna": 1,
+        "barrio": "San Nicolas",
+        "coord": [
+          -58.374983000000014,
+          -34.60643099999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "JUVENILIA",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.48305300000001,
+          -34.603276
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "9 DE JULIO LUGANO 1 Y 2",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.459974519191995,
+          -34.68579023099543
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS CHACARITA - COLEGIALES",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.451664000000015,
+          -34.58673300000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "RINCON FELIZ",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.479547000000004,
+          -34.65959500000002
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "INDUSTRIA DEL GAS. POR NUESTROS DERECHOS",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.373060950848405,
+          -34.63982229906297
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "COLEGIALES",
+        "comuna": 13,
+        "barrio": "Colegiales",
+        "coord": [
+          -58.44705500000001,
+          -34.57310799999998
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EL TIEMPO NO PARA",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47377900000001,
+          -34.644217
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "AMIGOS DEL CLUB HABANA",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.523964000000014,
+          -34.605989
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "RECREATIVO SAAVEDRA ASOCIACION CIVIL",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.49178600000001,
+          -34.559173999999985
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS CHACARITA - COLEGIALES",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.45172000000001,
+          -34.58576099999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS PLAZA TERAN",
+        "comuna": 10,
+        "barrio": "Villa Real",
+        "coord": [
+          -58.51979700000001,
+          -34.620689
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DOÑA ROSA",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.39848800000001,
+          -34.616433
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "SIEMPRE JUNTOS",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48130200000001,
+          -34.57097399999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA LUZ DE EVA",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.49134000000002,
+          -34.677829000000024
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LAS DELICIAS DE LUGANO",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.46500186878217,
+          -34.67271147156394
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ALEGRES MOMENTOS",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.485078000000016,
+          -34.607377
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "UN BUEN LUGAR",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.520977000000016,
+          -34.605745
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE JUBILADOS CABALLITO - VILLA CRESPO",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.44635600000001,
+          -34.60331899999999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DULCES ENCUENTROS",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.428537000000006,
+          -34.61168
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ALFONSINA STORNI",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.50492354432196,
+          -34.638131059720855
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DR. RODOLFO FERRARI",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.50063900000001,
+          -34.637837000000005
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "HONRAR LA VIDA",
+        "comuna": 4,
+        "barrio": "Parque Patricios",
+        "coord": [
+          -58.40614000000001,
+          -34.636167000000015
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "GENTE COMO UNO",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.4762474651723,
+          -34.67994630595547
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "JUAN XXIII",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.43664000000001,
+          -34.645202000000005
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "COMBATIENTES DE MALVINAS",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.378603000000005,
+          -34.64855600000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "JUAN JOSE NAGERA",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.46933300000001,
+          -34.658091000000006
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "VIRGEN DE URKUPIÑA",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.439391000000015,
+          -34.645389000000016
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO DE PERSONAS MAYORES SOLIDARIAS",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.49527900000001,
+          -34.565033
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EL REGRESO",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.43580700000001,
+          -34.643391000000015
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "VIDA",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.46157400000002,
+          -34.61213900000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA NUEVA ESPERANZA DE BARRACAS",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.37744700000001,
+          -34.64749400000002
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "RAUL MATERA",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.378374000000015,
+          -34.64661800000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DAR AMOR",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.441094000000014,
+          -34.618771
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "BENDECIDOS PIEDRA BUENA",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.495232000000016,
+          -34.67775100000002
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "TOMASA FANY ARIAS",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47335800000001,
+          -34.65758000000002
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ENCUENTRO Y SALUD",
+        "comuna": 4,
+        "barrio": "Parque Patricios",
+        "coord": [
+          -58.390952000000006,
+          -34.63114200000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DEL MASO",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.416573000000014,
+          -34.62533300000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "A EMPEZAR",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.516093000000005,
+          -34.589782
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DEL CARMEN DE URQUIZA",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.488576000000016,
+          -34.572878
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "AMIGOS POR EL TEJO",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.43376900000001,
+          -34.60745000000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CREANDO REDES",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44401700000001,
+          -34.62303400000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "GRUPO COMUNAL VIAJEMOS CON ALEGRIA",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.469303000000004,
+          -34.64445700000002
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "ETERNA JUVENTUD",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41861500000001,
+          -34.608713
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "HOMERO MANZI",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.48649500000001,
+          -34.621805000000016
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA FETRA ESPERANZA",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.37040000000001,
+          -34.63447600000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA HISPANIDAD",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.35901900000001,
+          -34.63485000000002
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "NUEVA ESPERANZA",
+        "comuna": 1,
+        "barrio": "Retiro",
+        "coord": [
+          -58.376460000000016,
+          -34.584033
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PUERTAS ABIERTAS A LOS SUEÑOS",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.44110700000002,
+          -34.64880000000001
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "VIDA",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.503412000000004,
+          -34.632897
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "TU LUGAR",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.49642500000001,
+          -34.601322999999994
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "SOÑAR JUNTOS",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.41653800000002,
+          -34.62539
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA CASA DE EVA PERON (CLUB DE LA 3RA JUVENTUD RINCON ARGENTINO)",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.50792998990997,
+          -34.57625045143067
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CARLOS MORA",
+        "comuna": 15,
+        "barrio": "Paternal",
+        "coord": [
+          -58.4607369583763,
+          -34.6006564909725
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CASA DEL JUBILADO",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.48573988968406,
+          -34.55135016381766
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CATALINAS SUR",
+        "comuna": 4,
+        "barrio": "La Boca",
+        "coord": [
+          -58.36444426801336,
+          -34.6279142201702
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "CENTRO CULTURAL Y SOCIAL EVA DUARTE",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.50568314568974,
+          -34.59406236723447
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "DESHOJANDO MARGARITAS",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.52552332046341,
+          -34.64959318210999
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "EL ALBA",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.49883814210531,
+          -34.61035305319164
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "JOVENES CORAZONES",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42313230430804,
+          -34.61455987104021
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "JUNTOS",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.47339875486848,
+          -34.566905305127904
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LA NUEVA ESPERANZA",
+        "comuna": 8,
+        "barrio": "Villa Soldati",
+        "coord": [
+          -58.43407511595778,
+          -34.66113095623501
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "LUGANO EN MARCHA",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.48466114352022,
+          -34.66993584872449
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "MOMENTOS FELICES",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.46535190362583,
+          -34.647158214557294
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "NUESTRO REFUGIO",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50164746700508,
+          -34.61642544660046
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "NUESTRO TIEMPO DE CABALLITO",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44226081538764,
+          -34.61921434345239
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "NUEVOS HORIZONTES",
+        "comuna": 1,
+        "barrio": "San Telmo",
+        "coord": [
+          -58.37534681372805,
+          -34.62325378996012
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PAMPERO",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.48372310442806,
+          -34.667672569122246
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "PINTITAS",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.460613706275524,
+          -34.65157960217779
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "REJUVENECER EL ATARDECER",
+        "comuna": 15,
+        "barrio": "Agronomia",
+        "coord": [
+          -58.490682679876485,
+          -34.5970354666059
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "SAGRADO CORAZON",
+        "comuna": 15,
+        "barrio": "Agronomia",
+        "coord": [
+          -58.490682679876485,
+          -34.5970354666059
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "SEGUIMOS SIENDO JOVENES",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.394997486903506,
+          -34.605224826686566
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "TIEMPO FELIZ",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.480337724711454,
+          -34.671732701257596
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "UN NUEVO HOGAR",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45540285424508,
+          -34.64094127463856
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "UNIDOS PARA SIEMPRE",
+        "comuna": 15,
+        "barrio": "Parque Chas",
+        "coord": [
+          -58.4764058490832,
+          -34.586393611379975
+        ]
+      },
+      {
+        "tipo": "centro-jubilados",
+        "nombre": "UPSA - VOLAR",
+        "comuna": 1,
+        "barrio": "Monserrat",
+        "coord": [
+          -58.381712874865464,
+          -34.61748213656983
+        ]
+      },
+      {
+        "tipo": "hogar-permanente",
+        "nombre": "San Martin",
+        "comuna": 15,
+        "barrio": "Paternal",
+        "coord": [
+          -58.4760917769211,
+          -34.59712864606485
+        ]
+      },
+      {
+        "tipo": "hogar-permanente",
+        "nombre": "Hogar Rawson",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.38370418833293,
+          -34.633357717233025
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Sol",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.505111398912796,
+          -34.57698351270797
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Carpe Diem",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.402482856484404,
+          -34.59788337285673
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuestra Señora del Carmen",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.385334019569484,
+          -34.63073497635811
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Avril",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.384478715744194,
+          -34.62838708590809
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Establecimiento Geriátrico San José",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.38548822141487,
+          -34.63259520839258
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Villa Juncal",
+        "comuna": 1,
+        "barrio": "Retiro",
+        "coord": [
+          -58.379432999284305,
+          -34.59269017589287
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico San Juan",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.37887818430229,
+          -34.62108246261188
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico 9 de Julio",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.37939228653491,
+          -34.620877499454785
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Siete Lunas Residencia",
+        "comuna": 1,
+        "barrio": "San Nicolas",
+        "coord": [
+          -58.387537133916645,
+          -34.59950320951284
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Cochabamba",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.389030200026255,
+          -34.62373787988916
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Caseros",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.388079297347495,
+          -34.633485434511286
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Clínica Geriátrica Espíritu Santo S.A.",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.38992525100499,
+          -34.618910338609304
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Agustín",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.38638356258121,
+          -34.61853504808664
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Francisco de Asís",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.3896168479922,
+          -34.62739241516723
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Fronesis",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.40157757494694,
+          -34.59767171444591
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Del Pilar",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.39645200167635,
+          -34.59169294651799
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Santa Sofía",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.411512903195465,
+          -34.59562016175289
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Casa Mater Residencia para Mayores",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.39771031143432,
+          -34.59331240389233
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Carpe Diem Arenales",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.39744218379508,
+          -34.59422895214578
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Santa María del Buen Ayre",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.41049195794941,
+          -34.59745741032496
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Mediger",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.40419555803574,
+          -34.58990494594613
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Aleph",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.401134420038105,
+          -34.59338395047529
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico de Rehabilitación Integral",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.406985923289305,
+          -34.5864208714413
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Mater",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.40368359530254,
+          -34.59767545578658
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Interplaza",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.40990925910629,
+          -34.59713242697328
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Gerifren",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.403433635812654,
+          -34.58861850142336
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Geriátrico Catamarca S.R.L",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.40556466419945,
+          -34.61686398432773
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nazaret",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.41382260443801,
+          -34.60915056930139
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Manantiales",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.4029900086893,
+          -34.62128442987857
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Modelo Sánchez de Loria",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.41257270069876,
+          -34.61601536458142
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Carpe Diem",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.411514758072194,
+          -34.62639673632724
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Entre Amigos",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.41028818291076,
+          -34.62774991596417
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica En Familia II",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.40523662710668,
+          -34.622704923663065
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Alberti",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.401345609009944,
+          -34.61708186798616
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Mayores Princess",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.39680589720932,
+          -34.61548585932935
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Oldman Residencia para Adultos Mayores",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.40442035610153,
+          -34.600050857207755
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica del Este",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.40874994012435,
+          -34.62527792128552
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Santa Bárbara",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.395135829698255,
+          -34.62570592573646
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Casa Azul",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.40521451664304,
+          -34.598805519725516
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Las Cinco Palmeras",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.40103241119567,
+          -34.61113606998111
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Salvador Residencia Asistida para Adultos Mayores",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.40353771552146,
+          -34.619492048165306
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Florida Bay",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.403348703745365,
+          -34.62239586695799
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "We Care",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.39237117648926,
+          -34.6081829985921
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico San Martín",
+        "comuna": 3,
+        "barrio": "San Cristobal",
+        "coord": [
+          -58.392559088828385,
+          -34.62010081209887
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Santa María Josefa",
+        "comuna": 3,
+        "barrio": "Balvanera",
+        "coord": [
+          -58.398126966591036,
+          -34.61304963804235
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Nueva Pompeya",
+        "comuna": 4,
+        "barrio": "Nueva Pompeya",
+        "coord": [
+          -58.417900757147834,
+          -34.650782976976195
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Tacuarí",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.373182784832686,
+          -34.63136834896211
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Villa Verde S.R.L.",
+        "comuna": 4,
+        "barrio": "Parque Patricios",
+        "coord": [
+          -58.39861189411703,
+          -34.63073981496558
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Santa Isabel",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.376590716016885,
+          -34.65331471053556
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Casa Grande",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.380502814783156,
+          -34.649853925705045
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Privado",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.37643811926429,
+          -34.63723896729757
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Santa Paula",
+        "comuna": 4,
+        "barrio": "Nueva Pompeya",
+        "coord": [
+          -58.4246674620249,
+          -34.64539162702116
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Rincón del Sol",
+        "comuna": 4,
+        "barrio": "Nueva Pompeya",
+        "coord": [
+          -58.41909623142813,
+          -34.651875154573
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Los Alpes",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.378334302800695,
+          -34.64940865130717
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Le-Sa",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.38256194434515,
+          -34.64925610612616
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Manfredi Jesús",
+        "comuna": 4,
+        "barrio": "Parque Patricios",
+        "coord": [
+          -58.407626168167496,
+          -34.64488280781787
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Rincón del Sur",
+        "comuna": 4,
+        "barrio": "Barracas",
+        "coord": [
+          -58.37332938497353,
+          -34.648446312340866
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Vida Plena",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.41966330007983,
+          -34.628930094824824
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Cohabitam Asist Hotel",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42349874225165,
+          -34.60145910485364
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico del Sol",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42136087475392,
+          -34.601668987406285
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Mario Bravo",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41712564845534,
+          -34.60455487363231
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Monterrey II",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41889408730176,
+          -34.61087319194878
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Gran Familia",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42469406824689,
+          -34.611956529557
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Rosa Blanca Residencia Geriátrica",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.416353833237785,
+          -34.59900881720659
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuestra Señora de Lourdes",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.418986729321404,
+          -34.61396313131907
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica A. Martino",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.42233052508233,
+          -34.62465290857241
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Jardín de Don Bosco",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.414578802492194,
+          -34.611875120465605
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Solar de Don Bosco",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42272842445786,
+          -34.60744744277456
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Gervasio",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41812925164451,
+          -34.59889503604572
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "The Senior Home",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.4149241924373,
+          -34.6076186443617
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Solar de Don Bosco",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42155923091179,
+          -34.61070692234137
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Centro Geriátrico Villa Sol",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42792075063729,
+          -34.61159800442637
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Centro del Sol",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.420266123306696,
+          -34.62700733651897
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuevo Lucero",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42112962575997,
+          -34.60874228331554
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Años Dorados",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42502505276745,
+          -34.62023812526163
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Maza",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.4156870922754,
+          -34.61483531381067
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Alerian",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.420565032290234,
+          -34.60618889012889
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nueva Casa",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.42172575735505,
+          -34.634835912799666
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Castro Barros Senior Apart",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42061671885735,
+          -34.61293530414456
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Refugio",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42090317251602,
+          -34.60085057563723
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Geriátrico Copahue",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41633916759809,
+          -34.6205215515704
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriland",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.424635989850636,
+          -34.6143422810199
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia la Renata",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.42072040514139,
+          -34.621671853843175
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia San Jorge",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.422935933017364,
+          -34.610097171110375
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Priamo",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41907008193699,
+          -34.61371682425159
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia En Familia",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42124112888834,
+          -34.60081694944679
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Dalmau",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41355710894673,
+          -34.61284367642556
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Nadir",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.426990949766,
+          -34.6151317569056
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Casa de Mis Abuelos",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41621444908642,
+          -34.601938888318045
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Sagrada Familia",
+        "comuna": 5,
+        "barrio": "Boedo",
+        "coord": [
+          -58.41446638967978,
+          -34.62541819408314
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Lucero",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.41569132333589,
+          -34.61384770204752
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Don Francisco",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.50992455789085,
+          -34.64997095703858
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Casa del Sol",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42746654376588,
+          -34.607626417378455
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Los Luceros",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42559883013153,
+          -34.60452076923569
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Agape",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44429385368606,
+          -34.609506014575764
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia San Lucas",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44947865126596,
+          -34.62448641489386
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Caballito",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44181005234534,
+          -34.61746325953294
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto para Mayores San Francisco",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44123889783094,
+          -34.61392380831287
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Luz de Vida",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.42946031964584,
+          -34.619875823436765
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Mansión",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.43120092145141,
+          -34.611502044184796
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica la Esperanza",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44211500274896,
+          -34.614668681997
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Establecimiento Geriátrico Neuquén",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.43455891290188,
+          -34.61513136279923
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Soleada",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.436188922274674,
+          -34.614236708607784
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia El Buen Pastor",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44485227314492,
+          -34.6087755382922
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica En Familia",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44473192844639,
+          -34.624578074022274
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Stella Maris",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.431722616200226,
+          -34.611951362255645
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Modelo Buenos Aires S.R.L.",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44984140108129,
+          -34.61155884206582
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Rincón del Sol",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.45940761362221,
+          -34.60781270009851
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Dulce Hogar II",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.42888008095157,
+          -34.624944891100164
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Santa Julia",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44723027061661,
+          -34.62379448765968
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "John-John",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.451690542392754,
+          -34.628298434528205
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Santa Rosa de Lima",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.43836107416439,
+          -34.61575888366314
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Riglos",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.43740581214003,
+          -34.62026265686063
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Colpayo",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.4428773928347,
+          -34.612770054322866
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica En Casa",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.441992777961744,
+          -34.62703664933046
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Osiris",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.4568712047174,
+          -34.61895416481618
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Renacer II",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.456462132553796,
+          -34.61984952842852
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hostal Geriátrico la Luisa S.A.",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.43587354301746,
+          -34.61438407466655
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Sagrado Corazón",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.43119156324796,
+          -34.61250711401384
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Establecimiento Geriátrico Nivel",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44363174873575,
+          -34.624330651446535
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Clínica Geriátrica Guayaquil",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.430452159249924,
+          -34.61954113381185
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Mayores Victoria",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.44196636185134,
+          -34.62530219153778
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Aunar",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.45720363643106,
+          -34.61094926754239
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Paysandú",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.45469974774228,
+          -34.609363292922595
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Mi Nuevo Hogar",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.427627343811025,
+          -34.62535956583524
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Stella Maris",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.4560325894644,
+          -34.61652184497135
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Pensionado Francisco Darder",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45642664534616,
+          -34.63109514775586
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Santa Ana Instituto Geriátrico",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46690672313666,
+          -34.62704380823642
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Adultos Mayores Beltrán",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45858760154376,
+          -34.625241816869675
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Baldomero",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.44407320278236,
+          -34.63149954334831
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Juan Residencia",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.457307696156136,
+          -34.619019225591586
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San José y María",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.47187054321943,
+          -34.633101614383555
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Pergola",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.467354985529624,
+          -34.6111617512634
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Monterrey III",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.443013206969404,
+          -34.63705909631185
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica María Reina",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46746335969886,
+          -34.62769201529021
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Larrea",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45872444381474,
+          -34.63092248578271
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Vernet S.R.L.",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.42775338499187,
+          -34.632558776655905
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar San Agustín",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46469685022675,
+          -34.64237795650651
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Medalla Milagrosa",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45851951915858,
+          -34.62627931867511
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Directorio",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.45002553079551,
+          -34.63059193054461
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Parque Rosal Residencia para Mayores",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.457136567430176,
+          -34.620375750329806
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Convivencia",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45625677869889,
+          -34.63065465056439
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San José",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46170252604703,
+          -34.6318804745382
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Jorge",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46642849927063,
+          -34.62700883220592
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Andrea",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46686758165123,
+          -34.635139848160634
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Lafuente",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.4629835034355,
+          -34.641964169408524
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Maura",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.466260073620624,
+          -34.622410797094254
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Artigas",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46599556488688,
+          -34.625474450571325
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico San José de Flores",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46991575065902,
+          -34.63097009299736
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia San Alberto",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46720911854274,
+          -34.621183388133886
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Bruno Casa de Mayores",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45625949432035,
+          -34.63348178197013
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuestra Señora de los Milagros",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.443352020315466,
+          -34.62959622691042
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Vida Plena",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46853142320362,
+          -34.6318139114139
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Hesse",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.4648448859663,
+          -34.625655212030196
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Calcena",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45775962452826,
+          -34.621358496327915
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Gavilán S.R.L. (Anexo Central)",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.4637930437542,
+          -34.62063235872198
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nonni S.R.L.",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46560344215942,
+          -34.619352749097665
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Gavilán S.R.L.",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.4585563950501,
+          -34.62362587647134
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Los Milagros",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46264365744128,
+          -34.63817339054652
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Casa Grande",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.4716643213656,
+          -34.63060649403233
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Los Pinos",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46579346532086,
+          -34.627201947696165
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Carpe Diem",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.4601885740836,
+          -34.633133887154855
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Horai",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.427561090632594,
+          -34.617553392378206
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Artigas",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.465425645922544,
+          -34.625720508159866
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Buenos Aires",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46793650699561,
+          -34.62469260755599
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Sólo Quiero Verte Reír",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.457714925912924,
+          -34.62557134469652
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico de Bild",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.42998192812894,
+          -34.62864382589454
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Beit Sión de la Asociación Argentina-Sefaradí de Cultura y Beneficencia",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46887329352181,
+          -34.6260388052524
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Tiempo",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.42920872801491,
+          -34.630717800541845
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Geriatrico Stella Maris",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.470846224926206,
+          -34.62270500869349
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Altos de Vallese",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46547026001637,
+          -34.620597645434906
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Casa Ii",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.45232632896191,
+          -34.63184794722191
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Don Severino",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.461737050011564,
+          -34.624811113347455
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriatrica Flores",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.461236531174464,
+          -34.624870614781
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Nuestra Señora de Luján",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.468529693906554,
+          -34.639717801494854
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia del Sol",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.463394089760534,
+          -34.633250483632274
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Rinconcito de Luz",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.45365529222025,
+          -34.636201585647804
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Virgen de Pompeya",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46762455881394,
+          -34.632428901419395
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Artesano",
+        "comuna": 7,
+        "barrio": "Parque Chacabuco",
+        "coord": [
+          -58.435004600128806,
+          -34.63897110197833
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Eterna S.R.L.",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.47352909964542,
+          -34.6760096529632
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Megahome",
+        "comuna": 8,
+        "barrio": "Villa Riachuelo",
+        "coord": [
+          -58.47836860784224,
+          -34.69057034575986
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Hogar de Dora",
+        "comuna": 8,
+        "barrio": "Villa Lugano",
+        "coord": [
+          -58.47305505799626,
+          -34.67660251628731
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Establecimiento Geriátrico Nuestra Señora de Luján",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.51188327510425,
+          -34.64392456035225
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Santa Teresa Jornet",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.48650846327809,
+          -34.64467620448809
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Aires de Emuna",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.468258752786056,
+          -34.64333716282142
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Trinidad",
+        "comuna": 6,
+        "barrio": "Caballito",
+        "coord": [
+          -58.455785305505856,
+          -34.60636470890661
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Tuyú",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.513967063345056,
+          -34.63965633288723
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Moreto",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.48726947317369,
+          -34.643774324051016
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Stella Maris",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.475426221920465,
+          -34.64415246555338
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar mi Esperanza",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.514283974067226,
+          -34.64457431231267
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Cafayate",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.50811488919267,
+          -34.65382455077356
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Versalles",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.52407920858876,
+          -34.6376605490637
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Nueva Primavera",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47709882965236,
+          -34.640448610507434
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico Elit",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.51118364632209,
+          -34.656312698352984
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogares Canadá",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47080817112701,
+          -34.64202233164336
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Entre Amigos",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.50984206562443,
+          -34.64957337657931
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Jardín de la Armonía",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47683131019493,
+          -34.63858058654326
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Gavilán S.R.L. (Anexo San Pedro)",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47421046304418,
+          -34.643302499813636
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Santa Ana",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.49043066934979,
+          -34.6438203264276
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Serena",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.51908383861619,
+          -34.64756258232645
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Barragan",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.52293451532674,
+          -34.637380413874396
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar San Lucas",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47535825050904,
+          -34.65092600009872
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Athenai",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47434150780705,
+          -34.641923383980554
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar para Mayores la Casa de Amanda",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.48878830403823,
+          -34.65085168497634
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar la Fe",
+        "comuna": 9,
+        "barrio": "Mataderos",
+        "coord": [
+          -58.50520267280351,
+          -34.65040593547336
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar San Nicolas",
+        "comuna": 9,
+        "barrio": "Liniers",
+        "coord": [
+          -58.51492370029513,
+          -34.64248851835773
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Clinica Geriatrica S.A",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47128316597154,
+          -34.63722511516117
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Santa Rosa",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47070931629001,
+          -34.63854691713918
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Geriátrico Bahía Blanca",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.493137475726286,
+          -34.617923190408604
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Adultos Mayores Oasis",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.47685053953967,
+          -34.63071543421319
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar del Carmen",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.5071861685911,
+          -34.641809470844485
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar la Fuente",
+        "comuna": 10,
+        "barrio": "Velez Sarsfield",
+        "coord": [
+          -58.4969866382598,
+          -34.62761091792116
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Oldrick Robertson",
+        "comuna": 10,
+        "barrio": "Velez Sarsfield",
+        "coord": [
+          -58.49492655777872,
+          -34.627930349381884
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Sweet Home",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.503656659242516,
+          -34.630344580469774
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Inter Garden",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.48457996496342,
+          -34.62953341963173
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Modelo Villa Real",
+        "comuna": 10,
+        "barrio": "Villa Real",
+        "coord": [
+          -58.52920032227417,
+          -34.62147020734661
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Mercedes Long Life",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.48488887299368,
+          -34.63041466075729
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Buenos Aires Hogar Srl",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.51061832802576,
+          -34.62481827982674
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Jose de Calasanz",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.494633645282526,
+          -34.615383185283044
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Roma",
+        "comuna": 10,
+        "barrio": "Velez Sarsfield",
+        "coord": [
+          -58.487404121451455,
+          -34.631966125376806
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Mayores Hogar Libra",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.51130828565398,
+          -34.61832652856576
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriatrica Las Rosas",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.493251939696364,
+          -34.64022007222612
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Tata",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.50747692389098,
+          -34.63796140377144
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar San Blas",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.5104002734981,
+          -34.6322562699699
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "De los Angeles",
+        "comuna": 10,
+        "barrio": "Villa Real",
+        "coord": [
+          -58.523418367183474,
+          -34.61971818693104
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriatrica Casa Blanca",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50453693168633,
+          -34.62016069881956
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Bendita Victoria",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.50415748063241,
+          -34.64332253053509
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Moshab Zekenim",
+        "comuna": 10,
+        "barrio": "Velez Sarsfield",
+        "coord": [
+          -58.48510283222527,
+          -34.63291450782871
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Micaela",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.47953959307359,
+          -34.63125656846152
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriatrica Modelo Cervantes",
+        "comuna": 10,
+        "barrio": "Velez Sarsfield",
+        "coord": [
+          -58.49832370004922,
+          -34.62530364582592
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriatrica Agostina",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.5058796246584,
+          -34.630940133762195
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Mis Abuelas",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.49938532125425,
+          -34.63900203401
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Galicia",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.50891005143437,
+          -34.626625269980366
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar de Abuelos San Nicolás",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50905626121826,
+          -34.62550651628006
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuestras Raices",
+        "comuna": 10,
+        "barrio": "Villa Real",
+        "coord": [
+          -58.521953445460156,
+          -34.61767372634394
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Brisas",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.49792615112317,
+          -34.583876192282375
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nadir",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.472878100674144,
+          -34.63365802754974
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Covadonga",
+        "comuna": 10,
+        "barrio": "Velez Sarsfield",
+        "coord": [
+          -58.483247783514855,
+          -34.63575511395134
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriatrica Aranguren S.A",
+        "comuna": 11,
+        "barrio": "Villa Santa Rita",
+        "coord": [
+          -58.48054227941153,
+          -34.61643976291399
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Inst. Geriatrico Genesis",
+        "comuna": 10,
+        "barrio": "Velez Sarsfield",
+        "coord": [
+          -58.490071903736386,
+          -34.63146865959877
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Casita",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.50627314267484,
+          -34.63793066262225
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuestra Casa",
+        "comuna": 10,
+        "barrio": "Villa Luro",
+        "coord": [
+          -58.5050288435189,
+          -34.638438493150296
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Canalejas",
+        "comuna": 10,
+        "barrio": "Monte Castro",
+        "coord": [
+          -58.50035810622356,
+          -34.61781028109677
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Jardin del Sol",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51367398880073,
+          -34.58566522441511
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriatrica Argerich",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.49378684498279,
+          -34.59853682670635
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Pinar de devoto",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.507789971631084,
+          -34.60196007061747
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia de Otoño",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51493002054547,
+          -34.599094732623165
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Casa del Sol",
+        "comuna": 11,
+        "barrio": "Villa Santa Rita",
+        "coord": [
+          -58.48094246775176,
+          -34.61914007620187
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Rincón de los Abuelos",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.49054645755051,
+          -34.60660561388205
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Argentino",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.464038733983664,
+          -34.61117246780335
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Mayores Villa Grana",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.518612007722254,
+          -34.601964198564474
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Altos del Boulevard",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.50768879095744,
+          -34.59627118863255
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Marino",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51257609523023,
+          -34.59073584557389
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Santa Lucía",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.46901827575856,
+          -34.614178196162506
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Sanabria",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51026971726614,
+          -34.60672948895127
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Aranguren S.A.",
+        "comuna": 11,
+        "barrio": "Villa Santa Rita",
+        "coord": [
+          -58.48054227941153,
+          -34.61643976291399
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Bacacay",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.476304213215776,
+          -34.60992379321724
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico del Rosario",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.4965388413073,
+          -34.597201059734886
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Gerusia II",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.50609049870707,
+          -34.60347922538937
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Terrero",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.46634049741507,
+          -34.608714106669076
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Mansión de Las Siete Estrellas",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.50979784294589,
+          -34.597993204986984
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Chatelet",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51284972236765,
+          -34.60412037293605
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Jardines del Carril",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51385920855362,
+          -34.60027504100008
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Maison Blanc",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51990509380792,
+          -34.59939697518232
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Julia",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.4897225530325,
+          -34.603547370498944
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Mi Dulce Hogar",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.47845479060165,
+          -34.632000418798526
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Copacabana",
+        "comuna": 10,
+        "barrio": "Floresta",
+        "coord": [
+          -58.475374709040516,
+          -34.63090627250562
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Medalla Milagrosa",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.518732372366735,
+          -34.60136896456952
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Tejas Verdes S.R.L.",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.472866553011194,
+          -34.61710136130799
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Las Martas S.R.L.",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.47569844058002,
+          -34.607631773066586
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Le Bosquet",
+        "comuna": 11,
+        "barrio": "Villa Santa Rita",
+        "coord": [
+          -58.48641872696877,
+          -34.62072680050924
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Paraty",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.465241913490104,
+          -34.61507662424482
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Santa Germana",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.48987811464284,
+          -34.597932621239195
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Congregación de Madres de desamparadas - Hogar San José de la Montaña",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51524892338414,
+          -34.599437012264666
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Misión",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.51736009076823,
+          -34.60007249647699
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Plaza Hogar",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.509361271073246,
+          -34.59854222399309
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Primavera Eterna",
+        "comuna": 11,
+        "barrio": "Villa Gral. Mitre",
+        "coord": [
+          -58.47597154565036,
+          -34.60731725769958
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriátrico San Marcos",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.485270374458956,
+          -34.59787392091681
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Asociación de Beneficencia Británica y Norteamericana",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.509795524317674,
+          -34.609579142478246
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia San Nicolás",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.49751671697146,
+          -34.60198939096586
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Elim",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.48509049432158,
+          -34.60387472576044
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San José",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.52685226546106,
+          -34.61228941543787
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Coghlan",
+        "comuna": 12,
+        "barrio": "Coghlan",
+        "coord": [
+          -58.47704395329818,
+          -34.56566486616382
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Olimpia Residencia para Mayores",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48218667064697,
+          -34.57563948526783
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Las Glicinas",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.4893508422798,
+          -34.580491905542644
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Don Emilio",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.483197421307324,
+          -34.574061413971506
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Manantial",
+        "comuna": 12,
+        "barrio": "Coghlan",
+        "coord": [
+          -58.47745698598208,
+          -34.55858433682119
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Macamax S.A.",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.49981500763002,
+          -34.57243984844674
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Geriátrico Belgrano R",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.47268001025697,
+          -34.54703689813711
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica El Hogar Sa.",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.49916404735065,
+          -34.56505706850404
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Amabilis",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.47050055638289,
+          -34.55002838593782
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Carmir",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48366619220106,
+          -34.573727715575785
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Arce",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.492227980901475,
+          -34.57665730278119
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Mayores Otro Estilo",
+        "comuna": 15,
+        "barrio": "Villa Ortuzar",
+        "coord": [
+          -58.47156264858009,
+          -34.577269225708854
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Remanso de los Abuelos",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.50745758593507,
+          -34.57593296670677
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Activos",
+        "comuna": 12,
+        "barrio": "Coghlan",
+        "coord": [
+          -58.469451452474736,
+          -34.55885520605742
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Irma",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48383478054868,
+          -34.5706918859241
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Benito",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.47380456007628,
+          -34.567698897766846
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Jardin de los Abuelos",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.494877715092414,
+          -34.564709609406634
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Agustin",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48513892493745,
+          -34.5673059499758
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Altos de Urquiza",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.49094159729656,
+          -34.577337638087926
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Urquiza",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.49410239284917,
+          -34.5720516293776
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Quo Vadis",
+        "comuna": 12,
+        "barrio": "Coghlan",
+        "coord": [
+          -58.46933064367847,
+          -34.56164063805204
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Villamayor",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.50142687623519,
+          -34.570827909559604
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Azul- Azul",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.48260816254786,
+          -34.54499361455942
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Renacer",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.48747828734255,
+          -34.55793511911349
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Abuelos Milagros de María",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48349403354987,
+          -34.573618413968916
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Tu Familia",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.486222607845626,
+          -34.575674389851734
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Capdevila",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.489737114939345,
+          -34.570144346582374
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Caracas",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.49815888555463,
+          -34.57871912795069
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Fuente Residencia para Adultos Mayores",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.485264484469916,
+          -34.582125078711506
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Laguna Dorada",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.49518577504452,
+          -34.56736949674298
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Casa del Nono",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48691654104699,
+          -34.575654545548865
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica la Casa del Sol",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.49225877123955,
+          -34.57166678364591
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Ayelen",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.504453996631455,
+          -34.57243574444783
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Suites Galvan",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48719326886721,
+          -34.56750535293818
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriatrico del Sol S.R.L.",
+        "comuna": 12,
+        "barrio": "Saavedra",
+        "coord": [
+          -58.48416145495387,
+          -34.54344052021925
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar de Residencia San Cono",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48607022013921,
+          -34.567203521966235
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Sol",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.505033947664835,
+          -34.5771137819403
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Solar III",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.475710036801544,
+          -34.56783313991074
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Tramas",
+        "comuna": 12,
+        "barrio": "Villa Pueyrredon",
+        "coord": [
+          -58.49864399864627,
+          -34.587951370601814
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriatrico San Antonio",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.47987576842484,
+          -34.56782764154764
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Santa Maria Residencia Geriatrica",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.49386563439116,
+          -34.57529999445187
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuestra Señora de Lourdes",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.48769481035435,
+          -34.58328145381251
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Margarita",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.4571597746959,
+          -34.55926018827149
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Mayores Magnolia Suites",
+        "comuna": 13,
+        "barrio": "Nuñez",
+        "coord": [
+          -58.46540839876768,
+          -34.54242928323442
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Merita",
+        "comuna": 13,
+        "barrio": "Nuñez",
+        "coord": [
+          -58.47000330859249,
+          -34.55509375554086
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia San Demetrio",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.42699483968776,
+          -34.59333496866502
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia  Vida Digna",
+        "comuna": 13,
+        "barrio": "Colegiales",
+        "coord": [
+          -58.45466573305114,
+          -34.572219330409425
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hostal Cullen",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.49668964821292,
+          -34.577494453202355
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Mayores Cramer",
+        "comuna": 13,
+        "barrio": "Colegiales",
+        "coord": [
+          -58.44680678101829,
+          -34.57392396488776
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuevo Hogar de Belgrano",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.463631071691985,
+          -34.56877188371161
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Edificio Manantial",
+        "comuna": 13,
+        "barrio": "Nuñez",
+        "coord": [
+          -58.46898977844914,
+          -34.55118986591601
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Jardines de Belgrano",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.44515203037683,
+          -34.564900753105505
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Mayores Nueva Vida",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.46610088837782,
+          -34.55824175669134
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Nuevo Estilo",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.46585328225104,
+          -34.57316837391763
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Jose",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.46813618108344,
+          -34.571479555868265
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Club Residencial Flor de Lis",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.45224275138191,
+          -34.55906454288845
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia del Sol S.R.L",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.465388132446535,
+          -34.55866054384567
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Maria Reina",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.460460757944794,
+          -34.570704191895516
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Galia",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.46733939820871,
+          -34.56433903338226
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "C.E.R.E.V.E.",
+        "comuna": 13,
+        "barrio": "Colegiales",
+        "coord": [
+          -58.455489802100296,
+          -34.57843438775431
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Geriatrico Modelo del Palmar",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.46084943343029,
+          -34.56712966462213
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Marcos",
+        "comuna": 13,
+        "barrio": "Colegiales",
+        "coord": [
+          -58.44977855806939,
+          -34.57604857653462
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Sophia Residencia para Mayores",
+        "comuna": 13,
+        "barrio": "Nuñez",
+        "coord": [
+          -58.468197387514685,
+          -34.549259359088204
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Centro Geriatrico Belgrano",
+        "comuna": 13,
+        "barrio": "Nuñez",
+        "coord": [
+          -58.47190921712968,
+          -34.55127771569774
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Roman",
+        "comuna": 13,
+        "barrio": "Colegiales",
+        "coord": [
+          -58.446077673638314,
+          -34.57051859169228
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriatrica Santa Monica",
+        "comuna": 13,
+        "barrio": "Nuñez",
+        "coord": [
+          -58.466126543552996,
+          -34.54930992083414
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico de los Santos",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.4604005635846,
+          -34.563826682020945
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Del Rosario",
+        "comuna": 13,
+        "barrio": "Colegiales",
+        "coord": [
+          -58.45164876253861,
+          -34.56991066530872
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Mirage",
+        "comuna": 13,
+        "barrio": "Colegiales",
+        "coord": [
+          -58.448038040360686,
+          -34.57056609094403
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Zapiola",
+        "comuna": 13,
+        "barrio": "Colegiales",
+        "coord": [
+          -58.44901728472284,
+          -34.57552301288735
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Hogar del Sol",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.47232411519588,
+          -34.566554591847755
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Modelo Vidal",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.464082666143575,
+          -34.56017513774052
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Complejo del Este",
+        "comuna": 13,
+        "barrio": "Nuñez",
+        "coord": [
+          -58.471313184405346,
+          -34.5436341214376
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hostal Cramer",
+        "comuna": 13,
+        "barrio": "Nuñez",
+        "coord": [
+          -58.46792153346399,
+          -34.55733919267089
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Mayores Amanecer",
+        "comuna": 13,
+        "barrio": "Nuñez",
+        "coord": [
+          -58.474679449703494,
+          -34.539650716927646
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Dr. Silva Clinica Geriatrica",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.43198957528356,
+          -34.587165657945036
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Pampa 3119 S.R.L",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.46128724399881,
+          -34.56874018788563
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Esteban",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.46693201133606,
+          -34.559117420719936
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Mater Domini",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.456452409492016,
+          -34.55549012418218
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuevo Hogar de Belgrano",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.463352957216415,
+          -34.56860804238448
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Jorge",
+        "comuna": 13,
+        "barrio": "Belgrano",
+        "coord": [
+          -58.46610643797571,
+          -34.55983788191201
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Altos del Botánico Residencia Geriátrica",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.42067698687297,
+          -34.58260501230327
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Ser Vital",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.44204422926663,
+          -34.56713979628305
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia la Pampa",
+        "comuna": 12,
+        "barrio": "Villa Urquiza",
+        "coord": [
+          -58.482025525827105,
+          -34.580669838107504
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Ugarteche",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.4137320435063,
+          -34.582923845978655
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Nuestro Tiempo",
+        "comuna": 15,
+        "barrio": "Parque Chas",
+        "coord": [
+          -58.47742300608644,
+          -34.58608245904891
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriátrico Serrano",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.42296623232568,
+          -34.584049468713275
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Serranía Residencia para Mayores",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.432612409276885,
+          -34.59007360910142
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Constanza",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.439608440812655,
+          -34.572950944470946
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Cumelen Residencia para Adultos Mayores",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.427310678486414,
+          -34.58967691940513
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuestra Señora de Guadalupe",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.41765262521984,
+          -34.58875031559335
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Centro de Geriátria Belgrano S.R.L.",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.442536117342065,
+          -34.567644298606005
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Gorriti",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.41937325146734,
+          -34.5956187879189
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Gardenia",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.43413334652227,
+          -34.56987693145809
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Arboleda",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.442208236798635,
+          -34.574166385820426
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Palermo Chico",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.40425881125168,
+          -34.579675433286944
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Ana Evelina El Yar",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.42519297826103,
+          -34.59326118277429
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Casazul",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.431191624195556,
+          -34.575130925916
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Dr. Silva",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.43191322794585,
+          -34.58711502463349
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Plaza Mayor",
+        "comuna": 15,
+        "barrio": "Villa Ortuzar",
+        "coord": [
+          -58.467036864799,
+          -34.580304987227166
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia San Jorge",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.451115950232975,
+          -34.58317031774147
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuevo Hogar",
+        "comuna": 15,
+        "barrio": "Parque Chas",
+        "coord": [
+          -58.47878599011729,
+          -34.57932122822401
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Serrana",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.440664195342066,
+          -34.59527810682472
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Camargo",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.44363606098541,
+          -34.59755557800277
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Instituto Geriatrico Nuestra Señora de Las Nieves",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.448055722644334,
+          -34.58182453447541
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Loyola",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.44360136205186,
+          -34.58778169534784
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica la Amistad",
+        "comuna": 15,
+        "barrio": "Paternal",
+        "coord": [
+          -58.46711267745175,
+          -34.60089532433807
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Centro Dorrego Residencia para Adultos Mayores",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.44918589788757,
+          -34.58717056290368
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para Mayores 12 de Octubre",
+        "comuna": 15,
+        "barrio": "Paternal",
+        "coord": [
+          -58.46995487255753,
+          -34.599981077205534
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Miss Daisy",
+        "comuna": 15,
+        "barrio": "Paternal",
+        "coord": [
+          -58.46025286464744,
+          -34.602489846901356
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Del Jazmín",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.438352583167564,
+          -34.60186172087504
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Asociación Civil Club Tinetense Residencia Asturiana",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.44628606452402,
+          -34.58836790186559
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Hogar de mi Bobe",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.43472661204111,
+          -34.59406751369993
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "La Posada",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.44786113341341,
+          -34.60485473502111
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar mi Casita",
+        "comuna": 15,
+        "barrio": "Parque Chas",
+        "coord": [
+          -58.48165722630036,
+          -34.58205060949157
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Despertares",
+        "comuna": 15,
+        "barrio": "Villa Ortuzar",
+        "coord": [
+          -58.47036674049678,
+          -34.5803059618346
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Gerusia S.R.L",
+        "comuna": 15,
+        "barrio": "Paternal",
+        "coord": [
+          -58.46300160520788,
+          -34.60214466828009
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Nuestro Tiempo",
+        "comuna": 15,
+        "barrio": "Parque Chas",
+        "coord": [
+          -58.47742300608644,
+          -34.58608245904891
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "El Amanecer",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.45321450720203,
+          -34.605441288517795
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia para El Adulto Mayor Albert Schweitzer",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.44315659392489,
+          -34.5922338392098
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar Ledor Vador",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.45087526654477,
+          -34.58650036443513
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuestra Señora de Lourdes",
+        "comuna": 15,
+        "barrio": "Villa Ortuzar",
+        "coord": [
+          -58.47032009292482,
+          -34.57708817562914
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Hogar de los Abuelos",
+        "comuna": 15,
+        "barrio": "Villa Crespo",
+        "coord": [
+          -58.4380505802618,
+          -34.59723135177383
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Nuestro Hogar",
+        "comuna": 15,
+        "barrio": "Chacarita",
+        "coord": [
+          -58.44803967476036,
+          -34.58478081656413
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Montecarlo",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46301342500963,
+          -34.6491669640936
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Álvarez Thomas Residencia Senior",
+        "comuna": 15,
+        "barrio": "Villa Ortuzar",
+        "coord": [
+          -58.462548673733664,
+          -34.5782710650501
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Billinghurst",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.404741427425925,
+          -34.58429091017354
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica Miraflores",
+        "comuna": 9,
+        "barrio": "Parque Avellaneda",
+        "coord": [
+          -58.47537503886396,
+          -34.644848756404926
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "San Genaro I",
+        "comuna": 7,
+        "barrio": "Flores",
+        "coord": [
+          -58.46686211112878,
+          -34.63353177862823
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Altos del Boulevard",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.50765717029522,
+          -34.59616022064828
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Cirep",
+        "comuna": 5,
+        "barrio": "Almagro",
+        "coord": [
+          -58.42762401997625,
+          -34.6097663545453
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Los Rubíes",
+        "comuna": 11,
+        "barrio": "Villa Devoto",
+        "coord": [
+          -58.5156419932962,
+          -34.61793541309958
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Centro del Parque",
+        "comuna": 11,
+        "barrio": "Villa Del Parque",
+        "coord": [
+          -58.486388597054074,
+          -34.60341054541826
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Santa Catalina",
+        "comuna": 2,
+        "barrio": "Recoleta",
+        "coord": [
+          -58.387381603884485,
+          -34.59442886901518
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Geriátrica de Hom",
+        "comuna": 14,
+        "barrio": "Palermo",
+        "coord": [
+          -58.43385718294477,
+          -34.59061825711365
+        ]
+      },
+      {
+        "tipo": "geriatrico",
+        "nombre": "Residencia Cochabamba",
+        "comuna": 1,
+        "barrio": "Constitucion",
+        "coord": [
+          -58.38913652184555,
+          -34.62389061339368
+        ]
+      }
+    ],
+    "fuentes": [
+      {
+        "nombre": "INDEC · Censo 2022",
+        "url": "https://censo.gob.ar/index.php/datos_definitivos_caba/"
+      },
+      {
+        "nombre": "Buenos Aires Data · equipamientos para personas mayores",
+        "url": "https://data.buenosaires.gob.ar/"
+      }
+    ],
+    "nota": "Los valores por barrio no se estiman: el dato demográfico oficial usado aquí llega a comuna. La tasa de centros de día usa una población de 65+ estimada a partir del porcentaje censal publicado."
   }
 }

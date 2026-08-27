@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Actualiza Personas mayores y conserva el último conjunto validado si una fuente falla."""
 from __future__ import annotations
-import argparse,json,re,unicodedata
+import argparse,csv,json,re,unicodedata
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from copy import deepcopy
 from datetime import datetime,timezone
@@ -106,6 +106,45 @@ def latest_basket(session):
     if not candidates:raise ValueError("sin publicación de canasta interpretable")
     return max(candidates,key=lambda item:item[0])[1]
 
+def point_from_row(row):
+    raw=(row.get("geometry") or row.get("wkt") or "").strip()
+    match=re.search(r"POINT\s*\(\s*(-?[\d.]+)\s+(-?[\d.]+)\s*\)",raw,re.I)
+    if match:return [float(match.group(1)),float(match.group(2))]
+    try:return [float(row.get("x") or row.get("long") or row.get("lon")),float(row.get("y") or row.get("lat"))]
+    except (TypeError,ValueError):return None
+
+def territory_snapshot():
+    city=json.loads((ROOT/"datos.json").read_text(encoding="utf-8"));census=city["censo"]
+    labels=census["age_lbl"];start=labels.index("80-84")
+    communes={}
+    for key,row in census["comunas"].items():
+        pct65=float(row["pob65p_pct"]);people65=round(float(row["pob"])*pct65/100)
+        communes[key]={"comuna":int(key),"barrios":row["desc"],"poblacion":int(row["pob"]),
+            "poblacion_65_mas_pct":pct65,"poblacion_80_mas_pct":round(sum(row["age_pct"][start:]),1),
+            "indice_envejecimiento":float(row["ind_env"]),"personas_65_mas_estimadas":people65,
+            "centros_dia":0,"centros_jubilados":0,"hogares_permanentes":0,"geriatricos":0}
+    configs=[("centros_dia.csv","centro-dia","centros_dia"),("centros_jubilados.csv","centro-jubilados","centros_jubilados"),
+        ("hogares_permanentes.csv","hogar-permanente","hogares_permanentes"),("geriatricos.csv","geriatrico","geriatricos")]
+    points=[]
+    for filename,kind,count_key in configs:
+        with (ROOT/"badata"/filename).open(encoding="utf-8-sig",newline="") as fh:
+            for row in csv.DictReader(fh):
+                match=re.search(r"(\d{1,2})",row.get("comuna") or "")
+                coord=point_from_row(row)
+                if not match or not coord:continue
+                commune=match.group(1)
+                if commune not in communes:continue
+                communes[commune][count_key]+=1
+                points.append({"tipo":kind,"nombre":row.get("nombre") or row.get("nombre_de") or "Sin denominación",
+                    "comuna":int(commune),"barrio":row.get("barrio") or "","coord":coord})
+    for row in communes.values():
+        denom=row["personas_65_mas_estimadas"]
+        row["centros_dia_por_mil_65"]=round(row["centros_dia"]*1000/denom,2) if denom else None
+    return {"periodo_demografico":"2022","nivel":"comuna","comunas":communes,"equipamientos":points,
+        "fuentes":[{"nombre":"INDEC · Censo 2022","url":"https://censo.gob.ar/index.php/datos_definitivos_caba/"},
+            {"nombre":"Buenos Aires Data · equipamientos para personas mayores","url":"https://data.buenosaires.gob.ar/"}],
+        "nota":"Los valores por barrio no se estiman: el dato demográfico oficial usado aquí llega a comuna. La tasa de centros de día usa una población de 65+ estimada a partir del porcentaje censal publicado."}
+
 def validate(d):
     assert d["schema"]=="cepoes-personas-mayores-v1" and d["status"]=="VALIDADO"
     i=d["indicadores"];assert 10<=i["poblacion_65_mas"]["valor"]<=30;assert 2<=i["poblacion_80_mas"]["valor"]<=12
@@ -114,6 +153,9 @@ def validate(d):
     assert all(-10<=i[k]["variacion_mensual"]<=50 for k in ("canasta_propietarios","canasta_inquilinos"))
     assert -10<=i["medicamentos"]["valor"]<=50
     s=d["series"]["estructura_etaria"];assert len(s["anios"])==len(s["poblacion_65_mas"])==len(s["poblacion_80_mas"])
+    territory=d.get("territorio") or {};assert territory.get("nivel")=="comuna" and len(territory.get("comunas") or {})==15
+    assert len(territory.get("equipamientos") or [])>=100
+    assert all(0<=x["poblacion_80_mas_pct"]<=15 and 0<=x["centros_dia_por_mil_65"]<5 for x in territory["comunas"].values())
 
 def build(previous,session):
     out=deepcopy(previous);warnings=[]
@@ -130,8 +172,10 @@ def build(previous,session):
         out["indicadores"]["canasta_inquilinos"].update(common,valor=b["renter"],variacion_mensual=b["renter_var"])
         out["indicadores"]["medicamentos"].update(common,valor=b["meds"])
     except Exception as exc:warnings.append(f"Defensoría: {exc}")
+    try:out["territorio"]=territory_snapshot()
+    except Exception as exc:warnings.append(f"Territorio: {exc}")
     validate(out)
-    if any(out[k]!=previous[k] for k in ("indicadores","series")):
+    if any(out.get(k)!=previous.get(k) for k in ("indicadores","series","territorio")):
         now=datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z");out["actualizado"]=now;out["automatizacion"]["ultima_revision_exitosa"]=now
     return out,warnings
 
@@ -153,7 +197,9 @@ def render_page(d):
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument("--validate-only",action="store_true");args=ap.parse_args()
-    previous=json.loads(DATA.read_text(encoding="utf-8"));validate(previous)
+    previous=json.loads(DATA.read_text(encoding="utf-8"))
+    if "territorio" not in previous:previous["territorio"]=territory_snapshot()
+    validate(previous)
     if args.validate_only:print("Personas mayores VALIDADO");return
     updated,warnings=build(previous,requests.Session());rendered=json.dumps(updated,ensure_ascii=False,indent=2)+"\n"
     changed=rendered!=DATA.read_text(encoding="utf-8")

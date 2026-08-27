@@ -415,6 +415,13 @@ def restructure_home(source: str) -> str:
     sections["home-offer-section"] = offer_section
     latest = sections.get("home-latest-section", "")
     if latest:
+        # La normalización parte de la copia publicada. Debe ser idempotente:
+        # retirar formularios previos antes de insertar la única suscripción.
+        while 'home-subscription' in latest:
+            cleaned, removed = pop_class_element(latest, "div", "home-subscription")
+            if not removed:
+                break
+            latest = cleaned
         latest = latest.replace("Ver síntesis →", "Leer la versión web →")
         latest = re.sub(r'<a class="btn btn-outline"[^>]*>Leer online</a>', '', latest)
         subscription = (
@@ -540,7 +547,7 @@ def apply_fallbacks(source: str, rel: str) -> str:
         people_bridge = (
             '<section class="section observatory-people-bridge"><div class="wrap">'
             '<a class="ia-topic-card" href="/observatorio/personas-mayores/">'
-            '<span class="eyebrow">Nuevo eje transversal</span><h2>Personas mayores</h2>'
+            '<span class="eyebrow">Eje transversal · Salud y cuidados</span><h2>Personas mayores</h2>'
             '<p>Demografía, costo de vida, vivienda y cuidados: datos públicos con actualización automática y último valor validado.</p>'
             '<span class="ia-topic-link">Explorar el eje →</span></a></div></section>'
         )

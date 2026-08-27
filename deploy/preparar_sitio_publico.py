@@ -168,6 +168,7 @@ def editorial_subnav(active: str) -> str:
         ("publicaciones", "/publicaciones/", "Publicaciones"),
         ("boletines", "/publicaciones/boletines/", "Boletines"),
         ("informes", "/publicaciones/informes/", "Informes"),
+        ("notas", "/publicaciones/notas/", "Notas y análisis"),
         ("prensa", "/prensa/", "Notas de prensa"),
         ("temas", "/temas/", "Temas"),
     ]
@@ -630,7 +631,7 @@ def normalize_html(path: Path, site: Path) -> None:
     elif rel.startswith("/presupuesto/"):
         contextual = budget_subnav(rel)
     elif rel.startswith("/publicaciones/"):
-        active = "boletines" if rel.startswith("/publicaciones/boletines/") else "informes" if rel.startswith("/publicaciones/informes/") or "informe-" in rel else "publicaciones"
+        active = "boletines" if rel.startswith("/publicaciones/boletines/") else "informes" if rel.startswith("/publicaciones/informes/") or "informe-" in rel else "notas" if rel.startswith("/publicaciones/notas/") else "publicaciones"
         contextual = editorial_subnav(active)
     elif rel.startswith("/prensa/"):
         contextual = editorial_subnav("prensa")

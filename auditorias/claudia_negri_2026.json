@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-08-28T02:33:46.896894+00:00",
+  "generado_en": "2026-08-28T22:10:19.816581+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,23 +9,23 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2023-11-16",
-    "fecha_mas_reciente_obtenida": "2026-08-27",
-    "ids_del_anio_en_ventana": 2702,
-    "ids_revisados_acumulados": 2702,
+    "fecha_mas_antigua_obtenida": "2023-11-17",
+    "fecha_mas_reciente_obtenida": "2026-08-28",
+    "ids_del_anio_en_ventana": 2713,
+    "ids_revisados_acumulados": 2713,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
-    "expedientes_seguimiento_institucional": 213,
-    "expedientes_auditados": 213,
-    "autoría_principal": 40,
+    "expedientes_seguimiento_institucional": 214,
+    "expedientes_auditados": 214,
+    "autoría_principal": 41,
     "coautoría": 173,
-    "fichas_oficiales_completas": 213,
+    "fichas_oficiales_completas": 214,
     "con_evidencia_sancion": 61,
     "problemas": 0
   },
   "por_tipo": {
-    "DECLARACION": 85,
+    "DECLARACION": 86,
     "RESOLUCION": 69,
     "LEY": 59
   },
@@ -33,12 +33,12 @@
     "en_comision": 115,
     "archivado": 59,
     "despacho": 15,
+    "ingresado": 11,
     "sancionado": 11,
-    "ingresado": 10,
     "con_dictamen": 3
   },
   "por_etapa_ciclo": {
-    "en_comision": 125,
+    "en_comision": 126,
     "archivado": 59,
     "con_dictamen": 18,
     "sancionado": 11
@@ -101,6 +101,41 @@
   "problemas": [],
   "expedientes": [
     {
+      "id_expediente": "142234",
+      "numero": "2645-D-2026",
+      "fecha_ingreso": "2026-08-28T12:22:57",
+      "sumario": "SE CONMEMORA EL “DÍA DE LA PREVENCIÓN DEL SUICIDIO”",
+      "rol_claudia": "autora",
+      "rol_recalculado": "autora",
+      "autoría_confirmada": true,
+      "rol_consistente": true,
+      "autores": [
+        "NEGRI, CLAUDIA"
+      ],
+      "cantidad_autores": 1,
+      "tipo_oficial": "DECLARACION",
+      "estado_actual": "ingresado",
+      "etapa_ciclo": "en_comision",
+      "ubicacion": "MEP",
+      "giros": [
+        "(GIRO AUN NO ASIGNADO)"
+      ],
+      "ultimo_movimiento": {
+        "fecha": "2026-08-28",
+        "oficina": "MEP",
+        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+      },
+      "evidencia_sancion": false,
+      "fuentes_sancion": [],
+      "fuentes_captura": [
+        "radar_ingresos",
+        "seguimiento_institucional"
+      ],
+      "ficha_oficial_completa": true,
+      "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142234",
+      "es_832_2026": false
+    },
+    {
       "id_expediente": "142209",
       "numero": "2622-D-2026",
       "fecha_ingreso": "2026-08-26T12:20:17",
@@ -116,14 +151,14 @@
       "tipo_oficial": "DECLARACION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "DGDP",
+      "ubicacion": "MEP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-26",
-        "oficina": "DGDP",
-        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-08-28",
+        "oficina": "MEP",
+        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

@@ -14,7 +14,7 @@ import re
 import sys
 import unicodedata
 import urllib.request
-from collections import defaultdict
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -135,8 +135,11 @@ def to_int(value: object) -> int | None:
 
 
 def is_suicide(value: object) -> bool:
+    """Definición DEIS: X60-X84 y secuelas Y87.0/Y870."""
     s = str(value or "").upper().replace(" ", "")
-    return bool(re.search(r"(?:^|[^A-Z])X(?:6[0-9]|7[0-9]|8[0-4])(?:\.|$|[^0-9])", s)) or bool(re.match(r"^X(?:6[0-9]|7[0-9]|8[0-4])", s))
+    x60_x84 = bool(re.search(r"(?:^|[^A-Z])X(?:6[0-9]|7[0-9]|8[0-4])(?:\.|$|[^0-9])", s)) or bool(re.match(r"^X(?:6[0-9]|7[0-9]|8[0-4])", s))
+    y870 = bool(re.search(r"(?:^|[^A-Z])Y87(?:\.0|0)(?:$|[^0-9])", s)) or s in {"Y87.0", "Y870"}
+    return x60_x84 or y870
 
 
 def caba_value(value: object) -> bool:
@@ -181,18 +184,77 @@ def age_group(value: object) -> str:
     return "sin_especificar"
 
 
+def pick_residence_col(fields: list[str]) -> str | None:
+    """Selecciona exclusivamente jurisdicción/provincia de RESIDENCIA.
+
+    Evita el fallback histórico demasiado amplio sobre cualquier columna que
+    contuviera "jurisdiccion" (por ejemplo, jurisdicción de ocurrencia).
+    Se priorizan nombres textuales porque son más robustos ante cambios de
+    codificación numérica entre recursos anuales.
+    """
+    mapped = {norm(f): f for f in fields}
+    exact = (
+        "prov_res",
+        "provincia_residencia", "provincia_de_residencia",
+        "residencia_provincia", "residencia_provincia_nombre",
+        "jurisdiccion_residencia", "jurisdiccion_de_residencia",
+        "jurisdiccion_residencia_nombre", "residencia_jurisdiccion_nombre",
+        "residencia_provincia_id", "jurisdiccion_residencia_id",
+        "residencia_jurisdiccion_id", "cod_jurisdiccion_residencia",
+        "codigo_jurisdiccion_residencia",
+    )
+    for key in exact:
+        if key in mapped:
+            return mapped[key]
+
+    candidates = []
+    for i, f in enumerate(fields):
+        nf = norm(f)
+        # Debe hablar explícitamente de residencia y de provincia/jurisdicción.
+        if "resid" not in nf:
+            continue
+        if not any(t in nf for t in ("prov", "jurisd")):
+            continue
+        if any(t in nf for t in ("ocurr", "carga", "registro", "establecimiento")):
+            continue
+        score = 100
+        if any(t in nf for t in ("nombre", "name", "descripcion", "desc")):
+            score += 20
+        if any(t in nf for t in ("id", "cod", "codigo")):
+            score += 5
+        # desempate estable por orden original
+        candidates.append((score, -i, f))
+    return max(candidates)[2] if candidates else None
+
+
+def pick_count_col(fields: list[str], rows_count: int) -> str | None:
+    exact = ("cantidad", "cant", "defunciones", "casos", "frecuencia", "n", "valor")
+    col = pick_col(fields, exact, ("cantidad", "defunc", "casos", "frecuenc"))
+    if col:
+        return col
+    # Las bases individuales tienen del orden de cientos de miles de filas;
+    # en ese caso cada fila representa una defunción y no hace falta contador.
+    if rows_count >= 150_000:
+        return None
+    # Para una tabla agregada pequeña, contar filas como personas sería un error.
+    raise RuntimeError(
+        f"DEIS: recurso aparentemente agregado ({rows_count} filas) sin columna de cantidad reconocible. Campos={fields}"
+    )
+
+
 def process_rows(fields: list[str], rows: list[dict[str, str]], forced_year: int | None, acc: dict) -> dict:
     year_col = pick_col(fields, ("anio", "ano", "anio_defuncion", "ano_defuncion"), ("anio", "ano"))
-    prov_col = pick_col(fields, ("prov_res", "provincia_residencia", "jurisdiccion_residencia", "cod_jurisdiccion_residencia"), ("prov_res", "residencia", "jurisdiccion"))
+    prov_col = pick_residence_col(fields)
     sex_col = pick_col(fields, ("sexo", "sex"), ("sexo",))
     age_col = pick_col(fields, ("edad", "grupo_edad", "edad_grupo", "rango_edad"), ("edad",))
-    count_col = pick_col(fields, ("cantidad", "cant", "defunciones", "n"), ("cantidad", "defunc"))
+    count_col = pick_count_col(fields, len(rows))
     cause_cols = [f for f in fields if any(t in norm(f) for t in ("causa", "cie"))]
     if not prov_col or not cause_cols:
         raise RuntimeError(f"Esquema DEIS no reconocido. Campos={fields}")
 
     matched = 0
     cause_samples = []
+    province_values = Counter()
     for row in rows:
         cause_values = [row.get(c, "") for c in cause_cols]
         if len(cause_samples) < 12:
@@ -206,13 +268,20 @@ def process_rows(fields: list[str], rows: list[dict[str, str]], forced_year: int
         n = n if n is not None and n >= 0 else 1
         matched += n
         acc["arg"][y] += n
+        province_values[str(row.get(prov_col, "")).strip()] += n
         if caba_value(row.get(prov_col)):
             acc["caba"][y] += n
             if sex_col:
                 acc["sex"][y][sex_label(row.get(sex_col))] += n
             if age_col:
                 acc["age"][y][age_group(row.get(age_col))] += n
-    return {"matched": matched, "fields": fields, "cause_samples": cause_samples[:12], "columns": {"year": year_col, "province": prov_col, "sex": sex_col, "age": age_col, "count": count_col, "cause": cause_cols}}
+    return {
+        "matched": matched,
+        "fields": fields,
+        "cause_samples": cause_samples[:12],
+        "province_top": province_values.most_common(12),
+        "columns": {"year": year_col, "province": prov_col, "sex": sex_col, "age": age_col, "count": count_col, "cause": cause_cols},
+    }
 
 
 def rate(n: int, pop: int | None) -> float | None:
@@ -233,6 +302,14 @@ def main() -> None:
         diag = process_rows(fields, rows, r.get("_year"), acc)
         diag.update({"name": r.get("name"), "url": r.get("url"), "rows": len(rows)})
         diagnostics.append(diag)
+        # Log operativo: suficiente para detectar cambios de esquema sin exponer datos individuales.
+        inferred_year = r.get("_year")
+        if inferred_year in (2023, 2024):
+            print(
+                f"DEIS {inferred_year}: filas={len(rows)} · suicidios={diag['matched']} · "
+                f"residencia={diag['columns']['province']} · cantidad={diag['columns']['count']}"
+            )
+            print(f"DEIS {inferred_year}: top residencia en suicidios={diag['province_top']}")
 
     years = list(range(2005, 2025))
     # Controles fuertes: no publicamos una serie vacía o con CABA mal identificada.
@@ -243,6 +320,14 @@ def main() -> None:
     if len(caba_nonzero) < 18:
         print(json.dumps(diagnostics, ensure_ascii=False, indent=2), file=sys.stderr)
         raise SystemExit(f"DEIS: CABA no identificada de modo consistente: {caba_nonzero}")
+    # Sanidad estructural del último año: rangos amplios, no una cifra externa fija.
+    # Evitan publicar una selección de columna equivocada sin confundir DEIS con SNIC.
+    if not (1_500 <= acc["arg"][2024] <= 6_000):
+        print(json.dumps(diagnostics[-2:], ensure_ascii=False, indent=2), file=sys.stderr)
+        raise SystemExit(f"DEIS: total nacional 2024 implausible para suicidios: {acc['arg'][2024]}")
+    if not (30 <= acc["caba"][2024] <= 500):
+        print(json.dumps(diagnostics[-2:], ensure_ascii=False, indent=2), file=sys.stderr)
+        raise SystemExit(f"DEIS: CABA 2024 implausible para suicidios: {acc['caba'][2024]}")
 
     series = []
     for y in years:
@@ -289,7 +374,7 @@ def main() -> None:
         },
         "series": series,
         "methodology": {
-            "evento": "Defunciones cuya causa básica se clasifica en CIE-10 X60-X84 (lesiones autoinfligidas intencionalmente).",
+            "evento": "Defunciones cuya causa básica se clasifica en CIE-10 X60-X84 (lesiones autoinfligidas intencionalmente) o Y87.0/Y870 (secuelas), siguiendo la definición publicada por DEIS.",
             "territorio": "Jurisdicción de residencia. No se producen tasas por barrio o comuna a partir de esta base.",
             "tasas": "Tasas brutas por 100.000 habitantes. Desde 2010 se usan proyecciones INDEC 2010-2040; 2005-2009 se publican conteos sin tasa hasta incorporar denominadores históricos homogéneos.",
             "sexo": "Las tasas por sexo usan las proyecciones INDEC por sexo. La desagregación etaria V1 publica conteos; las tasas específicas por edad se incorporarán con denominadores quinquenales validados.",

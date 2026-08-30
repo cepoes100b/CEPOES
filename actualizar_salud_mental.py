@@ -124,12 +124,44 @@ def pick_col(fields: list[str], exact: tuple[str, ...], contains: tuple[str, ...
 
 
 def to_int(value: object) -> int | None:
-    s = str(value or "").strip().replace(".0", "")
+    """Conversión para años/códigos enteros."""
+    s = str(value or "").strip()
     m = re.search(r"(19|20)\d{2}", s)
     if m and len(s) >= 4:
         return int(m.group(0))
     try:
         return int(float(s.replace(",", ".")))
+    except Exception:
+        return None
+
+
+def to_count(value: object) -> int | None:
+    """Convierte la columna `cantidad` sin confundirla con un año.
+
+    DEIS publica un archivo agregado: cada fila representa una combinación de
+    dimensiones y `cantidad` es el número de defunciones. Si la cantidad no se
+    puede interpretar, no se reemplaza silenciosamente por 1.
+    """
+    if value is None:
+        return None
+    s = str(value).strip().replace("\u00a0", "").replace(" ", "")
+    if not s:
+        return None
+    # Formatos habituales: 12, 12.0, 12,0. Para separadores de miles,
+    # resolvemos de forma conservadora según la posición del último separador.
+    try:
+        if "," in s and "." in s:
+            if s.rfind(",") > s.rfind("."):
+                s = s.replace(".", "").replace(",", ".")
+            else:
+                s = s.replace(",", "")
+        elif "," in s:
+            head, tail = s.rsplit(",", 1)
+            s = head.replace(".", "") + "." + tail
+        v = float(s)
+        if v < 0 or abs(v - round(v)) > 1e-6:
+            return None
+        return int(round(v))
     except Exception:
         return None
 
@@ -278,9 +310,16 @@ def process_rows(fields: list[str], rows: list[dict[str, str]], forced_year: int
         raise RuntimeError(f"Esquema DEIS no reconocido. Campos={fields}")
 
     matched = 0
+    matched_rows = 0
+    count_parse_failures = 0
+    count_samples = []
     cause_samples = []
     province_values = Counter()
+    province_rows = Counter()
+    province_ids = defaultdict(Counter)
     caba_labels = Counter()
+    caba_rows = 0
+    caba_count_samples = []
     for row in rows:
         cause_values = [row.get(c, "") for c in cause_cols]
         if len(cause_samples) < 12:
@@ -290,18 +329,39 @@ def process_rows(fields: list[str], rows: list[dict[str, str]], forced_year: int
         y = forced_year or (to_int(row.get(year_col)) if year_col else None)
         if not y or y < 2005 or y > 2024:
             continue
-        n = to_int(row.get(count_col)) if count_col else 1
-        n = n if n is not None and n >= 0 else 1
+        matched_rows += 1
+        raw_count = row.get(count_col) if count_col else None
+        n = to_count(raw_count) if count_col else 1
+        if len(count_samples) < 20:
+            count_samples.append((raw_count, n))
+        if count_col and n is None:
+            count_parse_failures += 1
+            continue
+        n = 1 if n is None else n
         matched += n
         acc["arg"][y] += n
         province_label = str(row.get(prov_col, "")).strip()
         province_values[province_label] += n
+        province_rows[province_label] += 1
+        if prov_id_col:
+            province_ids[province_label][str(row.get(prov_id_col, "")).strip()] += n
         is_caba = False
         if prov_id_col and caba_value(row.get(prov_id_col)):
             is_caba = True
         elif caba_value(row.get(prov_col)):
             is_caba = True
         if is_caba:
+            caba_rows += 1
+            if len(caba_count_samples) < 20:
+                caba_count_samples.append({
+                    "province": province_label,
+                    "province_id": str(row.get(prov_id_col, "")).strip() if prov_id_col else None,
+                    "raw_count": raw_count,
+                    "parsed_count": n,
+                    "cause": [row.get(c) for c in cause_cols],
+                    "sex": row.get(sex_col) if sex_col else None,
+                    "age": row.get(age_col) if age_col else None,
+                })
             acc["caba"][y] += n
             caba_labels[province_label] += n
             if sex_col:
@@ -310,10 +370,17 @@ def process_rows(fields: list[str], rows: list[dict[str, str]], forced_year: int
                 acc["age"][y][age_group(row.get(age_col))] += n
     return {
         "matched": matched,
+        "matched_rows": matched_rows,
+        "count_parse_failures": count_parse_failures,
+        "count_samples": count_samples,
         "fields": fields,
         "cause_samples": cause_samples[:12],
-        "province_top": province_values.most_common(12),
+        "province_top": province_values.most_common(),
+        "province_rows": province_rows.most_common(),
+        "province_ids": {k: v.most_common() for k, v in province_ids.items()},
         "caba_labels": caba_labels.most_common(),
+        "caba_rows": caba_rows,
+        "caba_count_samples": caba_count_samples,
         "columns": {"year": year_col, "province": prov_col, "province_id": prov_id_col, "sex": sex_col, "age": age_col, "count": count_col, "cause": cause_cols},
     }
 
@@ -340,12 +407,18 @@ def main() -> None:
         inferred_year = r.get("_year")
         if inferred_year in (2023, 2024):
             print(
-                f"DEIS {inferred_year}: filas={len(rows)} · suicidios={diag['matched']} · "
+                f"DEIS {inferred_year}: filas={len(rows)} · filas_suicidio={diag['matched_rows']} · "
+                f"suicidios_sumados={diag['matched']} · fallas_cantidad={diag['count_parse_failures']} · "
                 f"residencia={diag['columns']['province']} · residencia_id={diag['columns']['province_id']} · "
                 f"cantidad={diag['columns']['count']}"
             )
-            print(f"DEIS {inferred_year}: top residencia en suicidios={diag['province_top']}")
-            print(f"DEIS {inferred_year}: CABA por código 02={diag['caba_labels']}")
+            print(f"DEIS {inferred_year}: muestras cantidad={diag['count_samples'][:12]}")
+            print(f"DEIS {inferred_year}: residencia en suicidios (suma cantidad)={diag['province_top']}")
+            print(f"DEIS {inferred_year}: residencia en suicidios (filas)={diag['province_rows']}")
+            print(f"DEIS {inferred_year}: CABA suma={diag['caba_labels']} · filas={diag['caba_rows']}")
+            print(f"DEIS {inferred_year}: CABA muestras={diag['caba_count_samples'][:8]}")
+            if diag['count_parse_failures']:
+                raise SystemExit(f"DEIS {inferred_year}: no se pudieron interpretar {diag['count_parse_failures']} valores de cantidad")
 
     years = list(range(2005, 2025))
     # Controles fuertes: no publicamos una serie vacía o con CABA mal identificada.

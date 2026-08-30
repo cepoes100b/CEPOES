@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
-"""CEPOES · Salud mental: serie de suicidios DEIS.
+"""CEPOES · Monitor de Salud Mental V2.
 
-Descarga la base oficial de defunciones DEIS y construye una serie comparable
-para CABA y Argentina. La clasificación de suicidio usa CIE-10 X60-X84.
-Las tasas se calculan desde 2010 con proyecciones oficiales INDEC 2010-2040.
+Arquitectura de fuentes:
+- Argentina: defunciones por suicidio DEIS (CIE-10 X60-X84 / Y87.0), 2005→último año.
+- CABA: suicidios consumados SNIC-SAT, 2017→último año disponible.
+- DEIS-CABA se conserva sólo como diagnóstico de calidad y NO como indicador
+  reciente, debido a la advertencia oficial de DEIS sobre pérdida de atributos
+  en la jurisdicción.
+
+El pipeline falla cerrado si las bases cambian de esquema o si la extracción
+SNIC no reproduce los puntos de control oficiales 2022-2024.
 """
 from __future__ import annotations
 
@@ -16,77 +22,48 @@ import unicodedata
 import urllib.request
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
+from html import unescape
 from pathlib import Path
+from urllib.parse import urljoin
 
-CKAN = "https://datos.salud.gob.ar/api/3/action/package_show?id=27c588e8-43d0-411a-a40c-7ecc563c2c9f"
+DEIS_CKAN = "https://datos.salud.gob.ar/api/3/action/package_show?id=27c588e8-43d0-411a-a40c-7ecc563c2c9f"
+SNIC_DIR = "https://cloud-snic.minseg.gob.ar/Bases/SAT/SS/"
+SNIC_REPORT_2024 = "https://cloud-snic.minseg.gob.ar/Informes/SAT/SAT_SS/Informe_Suicidios_2024.pdf"
+DEIS_REPORT_2024 = "https://www.argentina.gob.ar/sites/default/files/serie_5_nro_68_anuario_vitales_v4_revisada_ok.pdf"
+
 OUT_ROOT = Path("salud_mental.json")
 OUT_PUBLIC = Path("deploy/site-overlay/assets/data/salud-mental.json")
-UA = "CEPOES-data-pipeline/1.0"
+UA = "CEPOES-data-pipeline/2.0"
 
-# INDEC, Proyecciones provinciales 2010-2040, cuadros 1.1 y 1.2.
+# INDEC · Proyecciones provinciales 2010-2040 (vintage utilizado por la V1).
+# Sólo se usa para una tasa nacional CEPOES hasta 2024. No se usa para SNIC-CABA.
 POP_ARG = {
-2010:40788453,2011:41261490,2012:41733271,2013:42202935,2014:42669500,
-2015:43131966,2016:43590368,2017:44044811,2018:44494502,2019:44938712,
-2020:45376763,2021:45808747,2022:46234830,2023:46654581,2024:47067641,
-}
-POP_CABA = {
-2010:3028481,2011:3033639,2012:3038860,2013:3044076,2014:3049229,
-2015:3054267,2016:3059122,2017:3063728,2018:3068043,2019:3072029,
-2020:3075646,2021:3078836,2022:3081550,2023:3083770,2024:3085483,
-}
-POP_CABA_SEX = {
-2010:(1405566,1622915),2011:(1409835,1623804),2012:(1414105,1624755),
-2013:(1418339,1625737),2014:(1422507,1626722),2015:(1426582,1627685),
-2016:(1430531,1628591),2017:(1434323,1629405),2018:(1437936,1630107),
-2019:(1441350,1630679),2020:(1444545,1631101),2021:(1447495,1631341),
-2022:(1450179,1631371),2023:(1452588,1631182),2024:(1454716,1630767),
+    2010:40788453,2011:41261490,2012:41733271,2013:42202935,2014:42669500,
+    2015:43131966,2016:43590368,2017:44044811,2018:44494502,2019:44938712,
+    2020:45376763,2021:45808747,2022:46234830,2023:46654581,2024:47067641,
 }
 INDEC_URL = "https://www.indec.gob.ar/ftp/cuadros/publicaciones/proyecciones_prov_2010_2040.pdf"
 
+# Puntos de control publicados en Tabla 4 del Informe SNIC-SAT 2024.
+SNIC_CABA_CHECKPOINTS = {2022: 242, 2023: 184, 2024: 171}
+SNIC_CABA_OFFICIAL_RATES_5PLUS = {2022: 8.4, 2023: 6.4, 2024: 5.9}
+DEIS_NATIONAL_CHECKPOINTS = {2023: 3488, 2024: 3614}
 
-def norm(s: object) -> str:
-    x = unicodedata.normalize("NFKD", str(s or ""))
+
+def norm(value: object) -> str:
+    x = unicodedata.normalize("NFKD", str(value or ""))
     x = x.encode("ascii", "ignore").decode("ascii").lower().strip()
     return re.sub(r"[^a-z0-9]+", "_", x).strip("_")
 
 
-def get_json(url: str) -> dict:
+def request(url: str, timeout: int = 180) -> bytes:
     req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return json.load(r)
-
-
-def get_bytes(url: str) -> bytes:
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=180) as r:
+    with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read()
 
 
-def choose_resources(pkg: dict) -> list[dict]:
-    resources = pkg.get("resources", [])
-    csvs = [r for r in resources if "csv" in str(r.get("format", "")).lower() or str(r.get("url", "")).lower().endswith(".csv")]
-    if not csvs:
-        raise RuntimeError("DEIS: no se encontraron recursos CSV")
-    # Preferimos el consolidado más reciente 2005-20xx y luego archivos anuales posteriores.
-    consolidated = []
-    annual = []
-    for r in csvs:
-        text = f"{r.get('name','')} {r.get('description','')} {r.get('url','')}"
-        years = [int(y) for y in re.findall(r"20\d{2}", text)]
-        if "2005" in text and years:
-            consolidated.append((max(years), r))
-        elif years:
-            annual.append((max(years), r))
-    if not consolidated:
-        raise RuntimeError("DEIS: no se identificó recurso consolidado desde 2005")
-    base_year, base = max(consolidated, key=lambda x: x[0])
-    selected = [base]
-    for y, r in sorted(annual):
-        if y > base_year and y <= 2024:
-            # uno por año, preferencia nombre que diga exactamente el año
-            if not any(int(x.get("_year", -1)) == y for x in selected):
-                rr = dict(r); rr["_year"] = y; selected.append(rr)
-    return selected
+def get_json(url: str) -> dict:
+    return json.loads(request(url, 60).decode("utf-8"))
 
 
 def decode_csv(raw: bytes) -> tuple[list[str], list[dict[str, str]]]:
@@ -96,59 +73,46 @@ def decode_csv(raw: bytes) -> tuple[list[str], list[dict[str, str]]]:
             text = raw.decode(enc)
             break
         except UnicodeDecodeError:
-            pass
+            continue
     if text is None:
-        raise RuntimeError("No se pudo decodificar CSV DEIS")
-    sample = text[:20000]
+        raise RuntimeError("No se pudo decodificar CSV")
+
+    sample = text[:30000]
     try:
-        dialect = csv.Sniffer().sniff(sample, delimiters=",;\t|")
-        delim = dialect.delimiter
+        delim = csv.Sniffer().sniff(sample, delimiters=",;\t|").delimiter
     except csv.Error:
         delim = ","
+
     reader = csv.DictReader(io.StringIO(text), delimiter=delim)
     if not reader.fieldnames:
-        raise RuntimeError("CSV DEIS sin encabezado")
-    rows = list(reader)
-    return list(reader.fieldnames), rows
+        raise RuntimeError("CSV sin encabezado")
+    return list(reader.fieldnames), list(reader)
 
 
-def pick_col(fields: list[str], exact: tuple[str, ...], contains: tuple[str, ...] = ()) -> str | None:
+def pick_col(fields: list[str], exact=(), contains=()) -> str | None:
     mapped = {norm(f): f for f in fields}
     for key in exact:
         if key in mapped:
             return mapped[key]
-    for nf, original in mapped.items():
+    for f in fields:
+        nf = norm(f)
         if any(token in nf for token in contains):
-            return original
+            return f
     return None
 
 
-def to_int(value: object) -> int | None:
-    """Conversión para años/códigos enteros."""
+def to_year(value: object) -> int | None:
     s = str(value or "").strip()
-    m = re.search(r"(19|20)\d{2}", s)
-    if m and len(s) >= 4:
-        return int(m.group(0))
-    try:
-        return int(float(s.replace(",", ".")))
-    except Exception:
-        return None
+    m = re.search(r"(?:19|20)\d{2}", s)
+    return int(m.group(0)) if m else None
 
 
 def to_count(value: object) -> int | None:
-    """Convierte la columna `cantidad` sin confundirla con un año.
-
-    DEIS publica un archivo agregado: cada fila representa una combinación de
-    dimensiones y `cantidad` es el número de defunciones. Si la cantidad no se
-    puede interpretar, no se reemplaza silenciosamente por 1.
-    """
     if value is None:
         return None
     s = str(value).strip().replace("\u00a0", "").replace(" ", "")
     if not s:
         return None
-    # Formatos habituales: 12, 12.0, 12,0. Para separadores de miles,
-    # resolvemos de forma conservadora según la posición del último separador.
     try:
         if "," in s and "." in s:
             if s.rfind(",") > s.rfind("."):
@@ -156,8 +120,7 @@ def to_count(value: object) -> int | None:
             else:
                 s = s.replace(",", "")
         elif "," in s:
-            head, tail = s.rsplit(",", 1)
-            s = head.replace(".", "") + "." + tail
+            s = s.replace(".", "").replace(",", ".")
         v = float(s)
         if v < 0 or abs(v - round(v)) > 1e-6:
             return None
@@ -167,343 +130,517 @@ def to_count(value: object) -> int | None:
 
 
 def is_suicide(value: object) -> bool:
-    """Definición DEIS: X60-X84 y secuelas Y87.0/Y870."""
+    """DEIS: X60-X84 y secuelas Y87.0/Y870."""
     s = str(value or "").upper().replace(" ", "")
-    x60_x84 = bool(re.search(r"(?:^|[^A-Z])X(?:6[0-9]|7[0-9]|8[0-4])(?:\.|$|[^0-9])", s)) or bool(re.match(r"^X(?:6[0-9]|7[0-9]|8[0-4])", s))
-    y870 = bool(re.search(r"(?:^|[^A-Z])Y87(?:\.0|0)(?:$|[^0-9])", s)) or s in {"Y87.0", "Y870"}
-    return x60_x84 or y870
+    if re.match(r"^X(?:6[0-9]|7[0-9]|8[0-4])(?:\.|$|[^0-9])", s):
+        return True
+    if s in {"Y87.0", "Y870"}:
+        return True
+    return False
 
 
 def caba_value(value: object) -> bool:
     s = norm(value)
-    if not s:
-        return False
-    if "ciudad_autonoma_de_buenos_aires" in s or s in {"caba", "capital_federal"}:
-        return True
-    # Código INDEC de CABA = 02. Evitar interpretar cualquier texto que contenga 2.
-    return s in {"2", "02", "002"}
-
-
-def sex_label(value: object) -> str:
-    s = norm(value)
-    if s in {"1", "m", "masculino", "varon", "varones", "hombre", "hombres"} or "mascul" in s:
-        return "varones"
-    if s in {"2", "f", "femenino", "mujer", "mujeres"} or "femen" in s:
-        return "mujeres"
-    return "sin_especificar"
-
-
-def age_group(value: object) -> str:
-    s = norm(value).replace("_anos", "")
-    # Si ya viene agrupada, conservar una etiqueta legible.
-    nums = [int(x) for x in re.findall(r"\d+", s)]
-    if len(nums) >= 2:
-        a, b = nums[0], nums[1]
-        if 0 <= a <= b <= 120:
-            return f"{a}-{b}"
-    if len(nums) == 1:
-        age = nums[0]
-        if age <= 120:
-            if age < 10: return "0-9"
-            if age < 15: return "10-14"
-            if age < 20: return "15-19"
-            if age < 25: return "20-24"
-            if age < 35: return "25-34"
-            if age < 45: return "35-44"
-            if age < 55: return "45-54"
-            if age < 65: return "55-64"
-            return "65+"
-    return "sin_especificar"
-
-
-def pick_residence_col(fields: list[str]) -> str | None:
-    """Selecciona exclusivamente jurisdicción/provincia de RESIDENCIA.
-
-    Evita el fallback histórico demasiado amplio sobre cualquier columna que
-    contuviera "jurisdiccion" (por ejemplo, jurisdicción de ocurrencia).
-    Se priorizan nombres textuales porque son más robustos ante cambios de
-    codificación numérica entre recursos anuales.
-    """
-    mapped = {norm(f): f for f in fields}
-    exact = (
-        "prov_res",
-        "provincia_residencia", "provincia_de_residencia",
-        "residencia_provincia", "residencia_provincia_nombre",
-        "jurisdiccion_residencia", "jurisdiccion_de_residencia",
-        "jurisdiccion_residencia_nombre", "residencia_jurisdiccion_nombre",
-        "residencia_provincia_id", "jurisdiccion_residencia_id",
-        "residencia_jurisdiccion_id", "cod_jurisdiccion_residencia",
-        "codigo_jurisdiccion_residencia",
+    return (
+        s in {"2", "02", "002", "caba", "capital_federal"}
+        or "ciudad_autonoma_de_buenos_aires" in s
     )
-    for key in exact:
-        if key in mapped:
-            return mapped[key]
-
-    candidates = []
-    for i, f in enumerate(fields):
-        nf = norm(f)
-        # Debe hablar explícitamente de residencia y de provincia/jurisdicción.
-        if "resid" not in nf:
-            continue
-        if not any(t in nf for t in ("prov", "jurisd")):
-            continue
-        if any(t in nf for t in ("ocurr", "carga", "registro", "establecimiento")):
-            continue
-        score = 100
-        if any(t in nf for t in ("nombre", "name", "descripcion", "desc")):
-            score += 20
-        if any(t in nf for t in ("id", "cod", "codigo")):
-            score += 5
-        # desempate estable por orden original
-        candidates.append((score, -i, f))
-    return max(candidates)[2] if candidates else None
-
-
-def pick_residence_id_col(fields: list[str]) -> str | None:
-    """Devuelve específicamente el código de jurisdicción/provincia de residencia."""
-    mapped = {norm(f): f for f in fields}
-    exact = (
-        "jurisdiccion_de_residencia_id",
-        "jurisdiccion_residencia_id",
-        "residencia_jurisdiccion_id",
-        "provincia_de_residencia_id",
-        "provincia_residencia_id",
-        "residencia_provincia_id",
-        "prov_res_id",
-        "cod_jurisdiccion_residencia",
-        "codigo_jurisdiccion_residencia",
-    )
-    for key in exact:
-        if key in mapped:
-            return mapped[key]
-    for f in fields:
-        nf = norm(f)
-        if "resid" in nf and any(t in nf for t in ("jurisd", "prov")) and any(t in nf for t in ("_id", "cod", "codigo")):
-            return f
-    return None
-
-
-def pick_count_col(fields: list[str], rows_count: int) -> str | None:
-    exact = ("cantidad", "cant", "defunciones", "casos", "frecuencia", "n", "valor")
-    col = pick_col(fields, exact, ("cantidad", "defunc", "casos", "frecuenc"))
-    if col:
-        return col
-    # Las bases individuales tienen del orden de cientos de miles de filas;
-    # en ese caso cada fila representa una defunción y no hace falta contador.
-    if rows_count >= 150_000:
-        return None
-    # Para una tabla agregada pequeña, contar filas como personas sería un error.
-    raise RuntimeError(
-        f"DEIS: recurso aparentemente agregado ({rows_count} filas) sin columna de cantidad reconocible. Campos={fields}"
-    )
-
-
-def process_rows(fields: list[str], rows: list[dict[str, str]], forced_year: int | None, acc: dict) -> dict:
-    year_col = pick_col(fields, ("anio", "ano", "anio_defuncion", "ano_defuncion"), ("anio", "ano"))
-    prov_col = pick_residence_col(fields)
-    prov_id_col = pick_residence_id_col(fields)
-    sex_col = pick_col(fields, ("sexo", "sex"), ("sexo",))
-    age_col = pick_col(fields, ("edad", "grupo_edad", "edad_grupo", "rango_edad"), ("edad",))
-    count_col = pick_count_col(fields, len(rows))
-    cause_cols = [f for f in fields if any(t in norm(f) for t in ("causa", "cie"))]
-    if not prov_col or not cause_cols:
-        raise RuntimeError(f"Esquema DEIS no reconocido. Campos={fields}")
-
-    matched = 0
-    matched_rows = 0
-    count_parse_failures = 0
-    count_samples = []
-    cause_samples = []
-    province_values = Counter()
-    province_rows = Counter()
-    province_ids = defaultdict(Counter)
-    caba_labels = Counter()
-    caba_rows = 0
-    caba_count_samples = []
-    for row in rows:
-        cause_values = [row.get(c, "") for c in cause_cols]
-        if len(cause_samples) < 12:
-            cause_samples.extend([str(v) for v in cause_values if v][:2])
-        if not any(is_suicide(v) for v in cause_values):
-            continue
-        y = forced_year or (to_int(row.get(year_col)) if year_col else None)
-        if not y or y < 2005 or y > 2024:
-            continue
-        matched_rows += 1
-        raw_count = row.get(count_col) if count_col else None
-        n = to_count(raw_count) if count_col else 1
-        if len(count_samples) < 20:
-            count_samples.append((raw_count, n))
-        if count_col and n is None:
-            count_parse_failures += 1
-            continue
-        n = 1 if n is None else n
-        matched += n
-        acc["arg"][y] += n
-        province_label = str(row.get(prov_col, "")).strip()
-        province_values[province_label] += n
-        province_rows[province_label] += 1
-        if prov_id_col:
-            province_ids[province_label][str(row.get(prov_id_col, "")).strip()] += n
-        is_caba = False
-        if prov_id_col and caba_value(row.get(prov_id_col)):
-            is_caba = True
-        elif caba_value(row.get(prov_col)):
-            is_caba = True
-        if is_caba:
-            caba_rows += 1
-            if len(caba_count_samples) < 20:
-                caba_count_samples.append({
-                    "province": province_label,
-                    "province_id": str(row.get(prov_id_col, "")).strip() if prov_id_col else None,
-                    "raw_count": raw_count,
-                    "parsed_count": n,
-                    "cause": [row.get(c) for c in cause_cols],
-                    "sex": row.get(sex_col) if sex_col else None,
-                    "age": row.get(age_col) if age_col else None,
-                })
-            acc["caba"][y] += n
-            caba_labels[province_label] += n
-            if sex_col:
-                acc["sex"][y][sex_label(row.get(sex_col))] += n
-            if age_col:
-                acc["age"][y][age_group(row.get(age_col))] += n
-    return {
-        "matched": matched,
-        "matched_rows": matched_rows,
-        "count_parse_failures": count_parse_failures,
-        "count_samples": count_samples,
-        "fields": fields,
-        "cause_samples": cause_samples[:12],
-        "province_top": province_values.most_common(),
-        "province_rows": province_rows.most_common(),
-        "province_ids": {k: v.most_common() for k, v in province_ids.items()},
-        "caba_labels": caba_labels.most_common(),
-        "caba_rows": caba_rows,
-        "caba_count_samples": caba_count_samples,
-        "columns": {"year": year_col, "province": prov_col, "province_id": prov_id_col, "sex": sex_col, "age": age_col, "count": count_col, "cause": cause_cols},
-    }
 
 
 def rate(n: int, pop: int | None) -> float | None:
     return round(n / pop * 100000, 2) if pop else None
 
 
-def main() -> None:
-    payload = get_json(CKAN)
-    if not payload.get("success"):
-        raise SystemExit("CKAN DEIS respondió success=false")
-    pkg = payload["result"]
-    resources = choose_resources(pkg)
-    acc = {"arg": defaultdict(int), "caba": defaultdict(int), "sex": defaultdict(lambda: defaultdict(int)), "age": defaultdict(lambda: defaultdict(int))}
-    diagnostics = []
-    for r in resources:
-        raw = get_bytes(r["url"])
-        fields, rows = decode_csv(raw)
-        diag = process_rows(fields, rows, r.get("_year"), acc)
-        diag.update({"name": r.get("name"), "url": r.get("url"), "rows": len(rows)})
-        diagnostics.append(diag)
-        # Log operativo: suficiente para detectar cambios de esquema sin exponer datos individuales.
-        inferred_year = r.get("_year")
-        if inferred_year in (2023, 2024):
-            print(
-                f"DEIS {inferred_year}: filas={len(rows)} · filas_suicidio={diag['matched_rows']} · "
-                f"suicidios_sumados={diag['matched']} · fallas_cantidad={diag['count_parse_failures']} · "
-                f"residencia={diag['columns']['province']} · residencia_id={diag['columns']['province_id']} · "
-                f"cantidad={diag['columns']['count']}"
-            )
-            print(f"DEIS {inferred_year}: muestras cantidad={diag['count_samples'][:12]}")
-            print(f"DEIS {inferred_year}: residencia en suicidios (suma cantidad)={diag['province_top']}")
-            print(f"DEIS {inferred_year}: residencia en suicidios (filas)={diag['province_rows']}")
-            print(f"DEIS {inferred_year}: CABA suma={diag['caba_labels']} · filas={diag['caba_rows']}")
-            print(f"DEIS {inferred_year}: CABA muestras={diag['caba_count_samples'][:8]}")
-            if diag['count_parse_failures']:
-                raise SystemExit(f"DEIS {inferred_year}: no se pudieron interpretar {diag['count_parse_failures']} valores de cantidad")
+# ---------- DEIS: serie nacional + diagnóstico CABA ----------
 
-    years = list(range(2005, 2025))
-    # Controles fuertes: no publicamos una serie vacía o con CABA mal identificada.
-    available = [y for y in years if acc["arg"][y] > 0]
-    if len(available) < 18 or 2024 not in available:
-        raise SystemExit(f"DEIS: cobertura temporal insuficiente: {available}")
-    caba_nonzero = [y for y in years if acc["caba"][y] > 0]
-    if len(caba_nonzero) < 18:
-        print(json.dumps(diagnostics, ensure_ascii=False, indent=2), file=sys.stderr)
-        raise SystemExit(f"DEIS: CABA no identificada de modo consistente: {caba_nonzero}")
-    # Sanidad estructural del último año: rangos amplios, no una cifra externa fija.
-    # Evitan publicar una selección de columna equivocada sin confundir DEIS con SNIC.
-    if not (1_500 <= acc["arg"][2024] <= 6_000):
-        print(json.dumps(diagnostics[-2:], ensure_ascii=False, indent=2), file=sys.stderr)
-        raise SystemExit(f"DEIS: total nacional 2024 implausible para suicidios: {acc['arg'][2024]}")
-    if not (30 <= acc["caba"][2024] <= 500):
-        print(json.dumps(diagnostics[-2:], ensure_ascii=False, indent=2), file=sys.stderr)
-        raise SystemExit(f"DEIS: CABA 2024 implausible para suicidios: {acc['caba'][2024]}")
+def choose_deis_resources(pkg: dict) -> list[dict]:
+    resources = pkg.get("resources", [])
+    csvs = [
+        r for r in resources
+        if "csv" in str(r.get("format", "")).lower()
+        or str(r.get("url", "")).lower().endswith(".csv")
+    ]
+    consolidated, annual = [], []
+    for r in csvs:
+        text = f"{r.get('name','')} {r.get('description','')} {r.get('url','')}"
+        years = [int(y) for y in re.findall(r"20\d{2}", text)]
+        if "2005" in text and years:
+            consolidated.append((max(years), r))
+        elif years:
+            annual.append((max(years), r))
 
-    series = []
-    for y in years:
-        caba = acc["caba"][y]
-        arg = acc["arg"][y]
-        var = acc["sex"][y].get("varones", 0)
-        muj = acc["sex"][y].get("mujeres", 0)
-        popsex = POP_CABA_SEX.get(y)
-        item = {
-            "anio": y,
-            "caba": {"defunciones": caba, "tasa_100k": rate(caba, POP_CABA.get(y))},
-            "argentina": {"defunciones": arg, "tasa_100k": rate(arg, POP_ARG.get(y))},
-            "sexo_caba": {
-                "varones": {"defunciones": var, "tasa_100k": rate(var, popsex[0] if popsex else None)},
-                "mujeres": {"defunciones": muj, "tasa_100k": rate(muj, popsex[1] if popsex else None)},
-                "sin_especificar": acc["sex"][y].get("sin_especificar", 0),
-            },
-            "edad_caba_defunciones": dict(sorted(acc["age"][y].items())),
-        }
-        series.append(item)
+    if not consolidated:
+        raise RuntimeError("DEIS: no se identificó recurso consolidado desde 2005")
 
-    rate_series = [x for x in series if x["caba"]["tasa_100k"] is not None]
-    latest = rate_series[-1]
-    first = rate_series[0]
-    max_item = max(rate_series, key=lambda x: x["caba"]["tasa_100k"])
-    change_5 = None
-    if len(rate_series) >= 6:
-        prev = rate_series[-6]["caba"]["tasa_100k"]
-        change_5 = round((latest["caba"]["tasa_100k"] / prev - 1) * 100, 1) if prev else None
+    base_year, base = max(consolidated, key=lambda x: x[0])
+    selected = [dict(base)]
+    seen = set()
+    for y, r in sorted(annual, key=lambda x: x[0]):
+        if y <= base_year or y > datetime.now().year:
+            continue
+        if y in seen:
+            continue
+        rr = dict(r)
+        rr["_year"] = y
+        selected.append(rr)
+        seen.add(y)
+    return selected
 
-    output = {
-        "schema": "cepoes-salud-mental-v1",
-        "status": "VALIDADO",
-        "generated_at": datetime.now(timezone.utc).isoformat(),
-        "scope": "CABA y Argentina",
-        "headline": {
-            "ultimo_anio": latest["anio"],
-            "caba_defunciones": latest["caba"]["defunciones"],
-            "caba_tasa_100k": latest["caba"]["tasa_100k"],
-            "argentina_tasa_100k": latest["argentina"]["tasa_100k"],
-            "variacion_caba_5_anios_pct": change_5,
-            "maximo_tasa_caba": {"anio": max_item["anio"], "tasa_100k": max_item["caba"]["tasa_100k"]},
-            "inicio_tasas": {"anio": first["anio"], "tasa_100k": first["caba"]["tasa_100k"]},
-        },
-        "series": series,
-        "methodology": {
-            "evento": "Defunciones cuya causa básica se clasifica en CIE-10 X60-X84 (lesiones autoinfligidas intencionalmente) o Y87.0/Y870 (secuelas), siguiendo la definición publicada por DEIS.",
-            "territorio": "Jurisdicción de residencia. No se producen tasas por barrio o comuna a partir de esta base.",
-            "tasas": "Tasas brutas por 100.000 habitantes. Desde 2010 se usan proyecciones INDEC 2010-2040; 2005-2009 se publican conteos sin tasa hasta incorporar denominadores históricos homogéneos.",
-            "sexo": "Las tasas por sexo usan las proyecciones INDEC por sexo. La desagregación etaria V1 publica conteos; las tasas específicas por edad se incorporarán con denominadores quinquenales validados.",
-            "advertencia": "Suicidios consumados (DEIS) no deben confundirse con intentos de suicidio notificados al SNVS/BES.",
-        },
-        "sources": {
-            "deis": {"name": "DEIS · Defunciones ocurridas y registradas", "package_api": CKAN, "resources_used": [{"name": x.get("name"), "url": x.get("url")} for x in resources]},
-            "indec": {"name": "INDEC · Proyecciones provinciales de población por sexo y grupo de edad 2010-2040", "url": INDEC_URL},
-        },
-        "quality": {
-            "years_with_argentina": len(available),
-            "years_with_caba": len(caba_nonzero),
-            "diagnostics": diagnostics,
+
+def pick_deis_residence(fields: list[str]) -> tuple[str | None, str | None]:
+    mapped = {norm(f): f for f in fields}
+    name_keys = (
+        "jurisdicion_residencia_nombre",  # typo real del recurso 2023/2024
+        "jurisdiccion_residencia_nombre",
+        "jurisdiccion_de_residencia_nombre",
+        "provincia_residencia_nombre",
+        "provincia_de_residencia_nombre",
+        "prov_res",
+    )
+    id_keys = (
+        "jurisdiccion_de_residencia_id",
+        "jurisdiccion_residencia_id",
+        "provincia_de_residencia_id",
+        "provincia_residencia_id",
+        "prov_res_id",
+    )
+    name_col = next((mapped[k] for k in name_keys if k in mapped), None)
+    id_col = next((mapped[k] for k in id_keys if k in mapped), None)
+
+    if not name_col:
+        for f in fields:
+            nf = norm(f)
+            if "resid" in nf and any(x in nf for x in ("jurisd", "prov")) and not any(x in nf for x in ("_id", "cod", "codigo")):
+                name_col = f
+                break
+    if not id_col:
+        for f in fields:
+            nf = norm(f)
+            if "resid" in nf and any(x in nf for x in ("jurisd", "prov")) and any(x in nf for x in ("_id", "cod", "codigo")):
+                id_col = f
+                break
+    return name_col, id_col
+
+
+def process_deis(fields, rows, forced_year, national, caba_raw) -> dict:
+    year_col = pick_col(fields, ("anio", "ano", "anio_defuncion", "ano_defuncion"), ("anio", "ano"))
+    prov_col, prov_id_col = pick_deis_residence(fields)
+    count_col = pick_col(fields, ("cantidad", "cant", "defunciones", "casos", "frecuencia"), ("cantidad", "defunc", "frecuenc"))
+    cause_cols = [f for f in fields if any(t in norm(f) for t in ("causa", "cie"))]
+    if not cause_cols:
+        raise RuntimeError(f"DEIS: no se reconoce causa. Campos={fields}")
+    if len(rows) < 150000 and not count_col:
+        raise RuntimeError(f"DEIS: recurso agregado sin columna cantidad. Campos={fields}")
+
+    matched_rows = 0
+    matched_sum = 0
+    caba_sum = 0
+    count_failures = 0
+
+    for row in rows:
+        if not any(is_suicide(row.get(c, "")) for c in cause_cols):
+            continue
+        y = forced_year or (to_year(row.get(year_col)) if year_col else None)
+        if not y or y < 2005:
+            continue
+
+        n = to_count(row.get(count_col)) if count_col else 1
+        if n is None:
+            count_failures += 1
+            continue
+
+        matched_rows += 1
+        matched_sum += n
+        national[y] += n
+
+        is_caba = False
+        if prov_id_col and caba_value(row.get(prov_id_col)):
+            is_caba = True
+        elif prov_col and caba_value(row.get(prov_col)):
+            is_caba = True
+        if is_caba:
+            caba_raw[y] += n
+            caba_sum += n
+
+    return {
+        "year": forced_year,
+        "rows": len(rows),
+        "suicide_rows": matched_rows,
+        "suicide_sum": matched_sum,
+        "caba_sum": caba_sum,
+        "count_failures": count_failures,
+        "columns": {
+            "year": year_col,
+            "residence": prov_col,
+            "residence_id": prov_id_col,
+            "count": count_col,
+            "cause": cause_cols,
         },
     }
+
+
+def load_deis() -> tuple[dict[int, int], dict[int, int], list[dict], list[dict]]:
+    payload = get_json(DEIS_CKAN)
+    if not payload.get("success"):
+        raise RuntimeError("DEIS CKAN: success=false")
+    resources = choose_deis_resources(payload["result"])
+    national = defaultdict(int)
+    caba_raw = defaultdict(int)
+    diagnostics = []
+
+    for r in resources:
+        fields, rows = decode_csv(request(r["url"]))
+        diag = process_deis(fields, rows, r.get("_year"), national, caba_raw)
+        diag["name"] = r.get("name")
+        diag["url"] = r.get("url")
+        diagnostics.append(diag)
+        if r.get("_year") in (2023, 2024):
+            y = r["_year"]
+            print(
+                f"DEIS {y}: nacional={diag['suicide_sum']} · "
+                f"CABA_raw={diag['caba_sum']} · filas_suicidio={diag['suicide_rows']}"
+            )
+
+    for y, expected in DEIS_NATIONAL_CHECKPOINTS.items():
+        if national.get(y) != expected:
+            raise RuntimeError(
+                f"DEIS: punto de control nacional {y}={national.get(y)}; esperado={expected}"
+            )
+
+    return dict(national), dict(caba_raw), diagnostics, resources
+
+
+# ---------- SNIC-SAT: serie CABA ----------
+
+def discover_snic_csv() -> tuple[str, int, str]:
+    html = request(SNIC_DIR, 60).decode("utf-8", "replace")
+    matches = re.findall(
+        r'href=["\']([^"\']*SAT-SS-BU_(20\d{2})-(20\d{2})\.csv)["\']',
+        unescape(html),
+        flags=re.I,
+    )
+    if not matches:
+        # fallback actual conocido
+        filename = "SAT-SS-BU_2017-2024.csv"
+        return urljoin(SNIC_DIR, filename), 2024, filename
+
+    candidates = sorted(
+        ((int(end), href, start, end) for href, start, end in matches),
+        reverse=True,
+    )
+    latest_end, href, start, end = candidates[0]
+    return urljoin(SNIC_DIR, href), latest_end, f"SAT-SS-BU_{start}-{end}.csv"
+
+
+def pick_snic_columns(fields: list[str]) -> dict[str, str | None]:
+    year = pick_col(fields, ("anio", "ano", "year"), ("anio",))
+    province_id = pick_col(
+        fields,
+        ("provincia_id", "jurisdiccion_id", "provincia_codigo", "jurisdiccion_codigo"),
+        ("provincia_id", "jurisdiccion_id"),
+    )
+    province_name = pick_col(
+        fields,
+        ("provincia_nombre", "jurisdiccion_nombre", "provincia", "jurisdiccion"),
+        ("provincia_nombre", "jurisdiccion_nombre"),
+    )
+    event_id = pick_col(
+        fields,
+        ("id_hecho", "hecho_id", "id_evento", "evento_id"),
+        ("id_hecho", "hecho_id"),
+    )
+    role = pick_col(
+        fields,
+        ("rol", "rol_persona", "tipo_persona", "persona_rol", "tipo_involucrado"),
+        ("rol_persona", "tipo_persona", "rol"),
+    )
+    return {
+        "year": year,
+        "province_id": province_id,
+        "province_name": province_name,
+        "event_id": event_id,
+        "role": role,
+    }
+
+
+def role_is_suicide_victim(value: object) -> bool:
+    s = norm(value)
+    if not s:
+        return False
+    if "testig" in s:
+        return False
+    return any(t in s for t in ("suicid", "victim", "fallecid"))
+
+
+def count_candidate(rows, cols, filter_role=False, unique=False) -> dict[int, int]:
+    by_year = defaultdict(int)
+    seen = defaultdict(set)
+
+    for i, row in enumerate(rows):
+        if cols["province_id"]:
+            is_caba = caba_value(row.get(cols["province_id"]))
+        else:
+            is_caba = caba_value(row.get(cols["province_name"]))
+        if not is_caba:
+            continue
+
+        if filter_role and cols["role"] and not role_is_suicide_victim(row.get(cols["role"])):
+            continue
+
+        y = to_year(row.get(cols["year"])) if cols["year"] else None
+        if not y or y < 2017:
+            continue
+
+        if unique and cols["event_id"]:
+            eid = str(row.get(cols["event_id"], "")).strip()
+            if not eid:
+                eid = f"__row_{i}"
+            seen[y].add(eid)
+        else:
+            by_year[y] += 1
+
+    if unique and cols["event_id"]:
+        return {y: len(ids) for y, ids in seen.items()}
+    return dict(by_year)
+
+
+def checkpoint_score(series: dict[int, int]) -> tuple[bool, dict[int, dict]]:
+    detail = {}
+    ok = True
+    for y, expected in SNIC_CABA_CHECKPOINTS.items():
+        actual = series.get(y)
+        same = actual == expected
+        detail[y] = {"actual": actual, "expected": expected, "ok": same}
+        ok = ok and same
+    return ok, detail
+
+
+def load_snic_caba() -> tuple[dict[int, int], dict]:
+    url, advertised_end, filename = discover_snic_csv()
+    raw = request(url, 180)
+    fields, rows = decode_csv(raw)
+    cols = pick_snic_columns(fields)
+
+    if not cols["year"] or not (cols["province_id"] or cols["province_name"]):
+        raise RuntimeError(f"SNIC-SAT: esquema territorial/año no reconocido. Campos={fields}")
+
+    candidates = {}
+    # Orden de preferencia: una fila/hecho único de víctima, luego hecho único,
+    # luego filas de víctima, y por último todas las filas CABA.
+    if cols["event_id"] and cols["role"]:
+        candidates["unique_victim_event"] = count_candidate(rows, cols, filter_role=True, unique=True)
+    if cols["event_id"]:
+        candidates["unique_event"] = count_candidate(rows, cols, filter_role=False, unique=True)
+    if cols["role"]:
+        candidates["victim_rows"] = count_candidate(rows, cols, filter_role=True, unique=False)
+    candidates["rows"] = count_candidate(rows, cols, filter_role=False, unique=False)
+
+    diagnostics = {}
+    selected_method = None
+    selected = None
+    for method, series in candidates.items():
+        ok, detail = checkpoint_score(series)
+        diagnostics[method] = {
+            "checkpoints": detail,
+            "years": sorted(series),
+            "latest": series.get(max(series)) if series else None,
+        }
+        if ok and selected_method is None:
+            selected_method = method
+            selected = series
+
+    if selected_method is None:
+        print(json.dumps({
+            "fields": fields,
+            "columns": cols,
+            "candidates": diagnostics,
+            "rows": len(rows),
+            "url": url,
+        }, ensure_ascii=False, indent=2), file=sys.stderr)
+        raise RuntimeError(
+            "SNIC-SAT: ningún método de conteo reproduce los puntos oficiales "
+            "CABA 2022=242, 2023=184, 2024=171"
+        )
+
+    years = sorted(selected)
+    if not years or min(years) > 2017 or max(years) < 2024:
+        raise RuntimeError(f"SNIC-SAT: cobertura CABA insuficiente: {years}")
+
+    print(
+        f"SNIC-SAT: método={selected_method} · archivo={filename} · "
+        f"CABA 2022={selected.get(2022)} · 2023={selected.get(2023)} · "
+        f"2024={selected.get(2024)} · último={max(years)}"
+    )
+
+    return dict(selected), {
+        "url": url,
+        "filename": filename,
+        "advertised_end_year": advertised_end,
+        "rows": len(rows),
+        "fields": fields,
+        "columns": cols,
+        "selected_method": selected_method,
+        "candidate_validation": diagnostics,
+    }
+
+
+def main() -> None:
+    deis_national, deis_caba_raw, deis_diag, deis_resources = load_deis()
+    snic_caba, snic_diag = load_snic_caba()
+
+    deis_years = sorted(y for y, n in deis_national.items() if n > 0)
+    snic_years = sorted(y for y, n in snic_caba.items() if n > 0)
+
+    if not deis_years or deis_years[0] > 2005 or deis_years[-1] < 2024:
+        raise RuntimeError(f"DEIS: cobertura nacional inválida: {deis_years}")
+    if not snic_years or snic_years[0] > 2017 or snic_years[-1] < 2024:
+        raise RuntimeError(f"SNIC-SAT: cobertura CABA inválida: {snic_years}")
+
+    argentina_series = [
+        {
+            "anio": y,
+            "defunciones": deis_national[y],
+            "tasa_100k_cepoes": rate(deis_national[y], POP_ARG.get(y)),
+            "denominador": "INDEC proyecciones 2010-2040" if y in POP_ARG else None,
+        }
+        for y in range(2005, deis_years[-1] + 1)
+        if deis_national.get(y, 0) > 0
+    ]
+
+    caba_series = [
+        {
+            "anio": y,
+            "suicidios": snic_caba[y],
+            "tasa_100k_mayores_5": SNIC_CABA_OFFICIAL_RATES_5PLUS.get(y),
+            "tasa_fuente": (
+                "Tabla 4 Informe SNIC-SAT 2024"
+                if y in SNIC_CABA_OFFICIAL_RATES_5PLUS
+                else None
+            ),
+        }
+        for y in snic_years
+    ]
+
+    deis_caba_diag_series = [
+        {"anio": y, "defunciones_codificadas_como_suicidio": deis_caba_raw.get(y, 0)}
+        for y in sorted(deis_caba_raw)
+    ]
+
+    latest_arg = argentina_series[-1]
+    latest_caba = caba_series[-1]
+    change_22_24 = round((snic_caba[2024] / snic_caba[2022] - 1) * 100, 1)
+    change_23_24 = round((snic_caba[2024] / snic_caba[2023] - 1) * 100, 1)
+
+    output = {
+        "schema": "cepoes-salud-mental-v2",
+        "status": "VALIDADO",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "scope": "Argentina y Ciudad Autónoma de Buenos Aires",
+        "headline": {
+            "argentina": {
+                "anio": latest_arg["anio"],
+                "defunciones_suicidio_deis": latest_arg["defunciones"],
+                "tasa_100k_cepoes": latest_arg["tasa_100k_cepoes"],
+            },
+            "caba": {
+                "anio": latest_caba["anio"],
+                "suicidios_snic_sat": latest_caba["suicidios"],
+                "tasa_100k_mayores_5": latest_caba["tasa_100k_mayores_5"],
+                "variacion_2022_2024_pct": change_22_24,
+                "variacion_2023_2024_pct": change_23_24,
+            },
+        },
+        "series": {
+            "argentina_deis": argentina_series,
+            "caba_snic_sat": caba_series,
+            "caba_deis_diagnostico": deis_caba_diag_series,
+        },
+        "methodology": {
+            "argentina": (
+                "Serie de defunciones por causa básica DEIS CIE-10 X60-X84 y Y87.0/Y870. "
+                "La serie se utiliza a nivel nacional."
+            ),
+            "caba": (
+                "Serie de suicidios consumados del Sistema Nacional de Información Criminal, "
+                "módulo SAT-Suicidios. Es una fuente de ocurrencia/intervención de seguridad, "
+                "no una estadística vital por residencia."
+            ),
+            "separacion_fuentes": (
+                "No se fusionan DEIS y SNIC en una única serie. Para CABA, el dato DEIS reciente "
+                "se conserva sólo como diagnóstico de calidad, no como indicador sustantivo."
+            ),
+            "tasas_caba": (
+                "Las tasas CABA 2022-2024 son las publicadas por SNIC-SAT y usan población "
+                "de 5 años y más. Para otros años la V2 publica conteos y deja la tasa nula "
+                "hasta incorporar denominadores comparables validados."
+            ),
+            "advertencias": [
+                (
+                    "DEIS advierte pérdida de atributos particularmente notoria en CABA, "
+                    "que resta validez al cálculo de algunos indicadores de esa jurisdicción."
+                ),
+                (
+                    "SNIC-SAT no es exhaustivo: depende de la vinculación entre instituciones "
+                    "de salud y seguridad y puede diferir de DEIS."
+                ),
+                (
+                    "El Informe SNIC-SAT 2024 señala que CABA auditó 2022-2024 y que la "
+                    "auditoría 2024 estaba en proceso, por lo que los valores pueden rectificarse."
+                ),
+                (
+                    "Suicidios consumados no deben confundirse con intentos de suicidio "
+                    "notificados al SNVS/BES."
+                ),
+            ],
+        },
+        "sources": {
+            "deis": {
+                "name": "DEIS · Defunciones ocurridas y registradas",
+                "package_api": DEIS_CKAN,
+                "annual_report_2024": DEIS_REPORT_2024,
+                "resources_used": [
+                    {"name": r.get("name"), "url": r.get("url")}
+                    for r in deis_resources
+                ],
+            },
+            "snic_sat": {
+                "name": "SNIC · Sistema de Alerta Temprana Suicidios",
+                "directory": SNIC_DIR,
+                "csv": snic_diag["url"],
+                "report_2024": SNIC_REPORT_2024,
+            },
+            "indec": {
+                "name": "INDEC · Proyecciones provinciales de población 2010-2040",
+                "url": INDEC_URL,
+            },
+        },
+        "quality": {
+            "deis_national_checkpoints": {
+                str(y): {"actual": deis_national.get(y), "expected": n, "ok": deis_national.get(y) == n}
+                for y, n in DEIS_NATIONAL_CHECKPOINTS.items()
+            },
+            "snic_caba_checkpoints": {
+                str(y): {"actual": snic_caba.get(y), "expected": n, "ok": snic_caba.get(y) == n}
+                for y, n in SNIC_CABA_CHECKPOINTS.items()
+            },
+            "snic_method": snic_diag["selected_method"],
+            "snic_diagnostics": snic_diag,
+            "deis_diagnostics": deis_diag,
+            "deis_caba_recent_quality": "NO_VALIDO_PARA_INDICADOR",
+        },
+    }
+
     text = json.dumps(output, ensure_ascii=False, separators=(",", ":"))
     for path in (OUT_ROOT, OUT_PUBLIC):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text, encoding="utf-8")
-    print(f"Salud mental · {len(series)} años · último={latest['anio']} · CABA={latest['caba']['defunciones']} · tasa={latest['caba']['tasa_100k']}")
+
+    print(
+        f"Salud mental V2 · Argentina DEIS {latest_arg['anio']}={latest_arg['defunciones']} · "
+        f"CABA SNIC {latest_caba['anio']}={latest_caba['suicidios']} · "
+        f"CABA 2022→2024={change_22_24}%"
+    )
+
 
 if __name__ == "__main__":
     main()

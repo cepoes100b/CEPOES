@@ -1,0 +1,35 @@
+name: Actualizar salud mental
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 10 20 * *'
+permissions:
+  contents: write
+concurrency:
+  group: cepoes-salud-mental
+  cancel-in-progress: false
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generar serie DEIS
+        run: python actualizar_salud_mental.py
+      - name: Verificar
+        run: python verificar_salud_mental.py
+      - name: Guardar último dato validado
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "cepoes-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add salud_mental.json deploy/site-overlay/assets/data/salud-mental.json
+          if git diff --cached --quiet; then
+            echo "Sin cambios."
+          else
+            git commit -m "datos: actualizar salud mental DEIS"
+            git push
+          fi

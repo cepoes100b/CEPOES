@@ -1,0 +1,218 @@
+name: Integrar Descentralizacion en Presupuesto
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Parchear generador y validaciones
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          prepare = Path("deploy/preparar_sitio_publico.py")
+          validate = Path("validar_sitio_despliegue.py")
+
+          if not prepare.exists():
+              raise SystemExit("Falta deploy/preparar_sitio_publico.py")
+          if not validate.exists():
+              raise SystemExit("Falta validar_sitio_despliegue.py")
+
+          p = prepare.read_text(encoding="utf-8")
+          v = validate.read_text(encoding="utf-8")
+
+          route = "/presupuesto/descentralizacion/"
+          canonical = "https://cepoes.org/presupuesto/descentralizacion/"
+
+          # 1) Subnavegación de Presupuesto.
+          if route not in p:
+              needle = '        ("/presupuesto/diagnostico/", "Diagnóstico"),'
+              if needle not in p:
+                  raise SystemExit("No se encontró el ancla budget_subnav Diagnóstico")
+              p = p.replace(
+                  needle,
+                  needle + '\n        ("/presupuesto/descentralizacion/", "Descentralización"),',
+                  1,
+              )
+              print("✓ subnav: Descentralización agregada")
+          else:
+              print("✓ subnav: ruta ya presente")
+
+          # 2) Canonical de la nueva página dentro de canonical_routes.
+          canonical_key = '"/presupuesto/descentralizacion/index.html"'
+          if canonical_key not in p:
+              needle = (
+                  '        "/presupuesto/territorio/index.html": '
+                  '"https://cepoes.org/presupuesto/territorio/",'
+              )
+              if needle not in p:
+                  # Tolerar markdown/transformaciones previas sólo si existe la clave.
+                  m = re.search(
+                      r'(?m)^(\s*)["\']/presupuesto/territorio/index\.html["\']\s*:\s*'
+                      r'["\']https://cepoes\.org/presupuesto/territorio/["\']\s*,?\s*$',
+                      p
+                  )
+                  if not m:
+                      raise SystemExit("No se encontró canonical_routes de presupuesto/territorio")
+                  indent = m.group(1)
+                  insert = (
+                      m.group(0).rstrip() + "\n" +
+                      f'{indent}"/presupuesto/descentralizacion/index.html": '
+                      f'"{canonical}",'
+                  )
+                  p = p[:m.start()] + insert + p[m.end():]
+              else:
+                  p = p.replace(
+                      needle,
+                      needle + '\n        "/presupuesto/descentralizacion/index.html": '
+                      '"https://cepoes.org/presupuesto/descentralizacion/",',
+                      1,
+                  )
+              print("✓ canonical route agregada")
+          else:
+              print("✓ canonical route ya presente")
+
+          # 3) Asegurar sitemap en el validador/deploy.
+          ensure_line = "    ensure_sitemap_url(root,'/presupuesto/descentralizacion/')"
+          if ensure_line not in v:
+              needle = "    ensure_sitemap_url(root,'/presupuesto/territorio/')"
+              if needle not in v:
+                  raise SystemExit("No se encontró ensure_sitemap_url de presupuesto/territorio")
+              v = v.replace(needle, needle + "\n" + ensure_line, 1)
+              print("✓ ensure_sitemap_url agregado")
+          else:
+              print("✓ ensure_sitemap_url ya presente")
+
+          # 4) Canonical validado por validar_sitio_despliegue.py.
+          if "presupuesto/descentralizacion/index.html" not in v:
+              # La lista actual está en una sola línea. Insertamos antes de ]:
+              pattern = re.compile(
+                  r"for rel,url in \[(?P<body>.*?)\]:\s*\n"
+                  r"\s*s=\(root/rel\)\.read_text",
+                  re.S
+              )
+              matches = list(pattern.finditer(v))
+              target = None
+              for m in matches:
+                  if "presupuesto/ejecucion/index.html" in m.group("body") and "presupuesto/territorio/index.html" in m.group("body"):
+                      target = m
+                      break
+              if not target:
+                  raise SystemExit("No se encontró lista de canonical presupuestarios en validador")
+
+              body = target.group("body").rstrip()
+              if body and not body.rstrip().endswith(","):
+                  body += ","
+              body += (
+                  "('presupuesto/descentralizacion/index.html',"
+                  "'https://cepoes.org/presupuesto/descentralizacion/')"
+              )
+              replacement = (
+                  "for rel,url in [" + body + "]:\n"
+                  "    s=(root/rel).read_text"
+              )
+              v = v[:target.start()] + replacement + v[target.end():]
+              print("✓ validación canonical agregada")
+          else:
+              print("✓ validación canonical ya presente")
+
+          # 5) Assert de sitemap.
+          sitemap_assert = (
+              "assert 'https://cepoes.org/presupuesto/descentralizacion/' in locs"
+          )
+          if sitemap_assert not in v:
+              needle = "assert 'https://cepoes.org/presupuesto/territorio/' in locs"
+              if needle not in v:
+                  raise SystemExit("No se encontró assert sitemap presupuesto/territorio")
+              v = v.replace(needle, needle + "\n" + sitemap_assert, 1)
+              print("✓ assert sitemap agregado")
+          else:
+              print("✓ assert sitemap ya presente")
+
+          # 6) Control explícito de que la subnav pública tenga el enlace.
+          validation_marker = "Falta Descentralización en subnav de Presupuesto"
+          if validation_marker not in v:
+              needle = (
+                  "presupuesto=(root/'presupuesto'/'index.html').read_text"
+                  "(encoding='utf-8',errors='replace')"
+              )
+              if needle not in v:
+                  raise SystemExit("No se encontró lectura de presupuesto/index.html")
+              insert = (
+                  needle + "\n"
+                  "assert 'href=\"/presupuesto/descentralizacion/\"' in presupuesto, "
+                  "'Falta Descentralización en subnav de Presupuesto'"
+              )
+              v = v.replace(needle, insert, 1)
+              print("✓ validación enlace portada agregada")
+
+          prepare.write_text(p, encoding="utf-8")
+          validate.write_text(v, encoding="utf-8")
+          PY
+
+      - name: Validar sintaxis
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile deploy/preparar_sitio_publico.py
+          python -m py_compile validar_sitio_despliegue.py
+
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path("deploy/preparar_sitio_publico.py").read_text(encoding="utf-8")
+          v = Path("validar_sitio_despliegue.py").read_text(encoding="utf-8")
+
+          checks = {
+              "subnav": '("/presupuesto/descentralizacion/", "Descentralización")' in p,
+              "canonical_prepare": '"/presupuesto/descentralizacion/index.html"' in p,
+              "sitemap": "ensure_sitemap_url(root,'/presupuesto/descentralizacion/')" in v,
+              "canonical_validate": "presupuesto/descentralizacion/index.html" in v,
+              "sitemap_assert": "https://cepoes.org/presupuesto/descentralizacion/" in v,
+              "portada_assert": "Falta Descentralización en subnav de Presupuesto" in v,
+          }
+          for name, ok in checks.items():
+              print(("✓" if ok else "✘"), name)
+              if not ok:
+                  raise SystemExit(1)
+          PY
+
+      - name: Commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "cepoes-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          git add deploy/preparar_sitio_publico.py validar_sitio_despliegue.py
+
+          if git diff --cached --quiet; then
+            echo "Sin cambios: integración ya presente."
+          else
+            echo "Cambios:"
+            git diff --cached --stat
+            git commit -m "feat: integrar descentralizacion en presupuesto"
+            git push origin HEAD:main
+          fi
+
+      - name: Confirmar
+        run: |
+          echo "✓ Descentralización integrada al generador de Presupuesto"
+          grep -n 'presupuesto/descentralizacion' deploy/preparar_sitio_publico.py
+          grep -n 'presupuesto/descentralizacion' validar_sitio_despliegue.py

@@ -1,0 +1,228 @@
+name: Integrar Descentralizacion en Presupuesto V3
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Aplicar parche mínimo
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import xml.etree.ElementTree as ET
+
+          prepare = Path("deploy/preparar_sitio_publico.py")
+          page = Path("deploy/site-overlay/presupuesto/descentralizacion/index.html")
+          sitemap_txt = Path("deploy/site-overlay/sitemap.txt")
+          sitemap_xml = Path("deploy/site-overlay/sitemap.xml")
+
+          required = [prepare, page]
+          missing = [str(p) for p in required if not p.exists()]
+          if missing:
+              raise SystemExit("Faltan archivos requeridos: " + ", ".join(missing))
+
+          # 1. Integrar Descentralización a la subnavegación que genera /presupuesto/.
+          src = prepare.read_text(encoding="utf-8")
+          tuple_text = '("/presupuesto/descentralizacion/", "Descentralización")'
+
+          if tuple_text not in src:
+              pattern = re.compile(
+                  r'(?m)^(?P<indent>\s*)\("/presupuesto/diagnostico/",\s*"Diagnóstico"\),?\s*$'
+              )
+              match = pattern.search(src)
+              if not match:
+                  raise SystemExit(
+                      "No se encontró la entrada Diagnóstico dentro de budget_subnav; "
+                      "no se modifica el generador."
+                  )
+
+              indent = match.group("indent")
+              old_line = match.group(0).rstrip()
+              if not old_line.endswith(","):
+                  old_line += ","
+
+              replacement = old_line + "\n" + indent + tuple_text + ","
+              src = src[:match.start()] + replacement + src[match.end():]
+              prepare.write_text(src, encoding="utf-8")
+              print("✓ Descentralización agregada a budget_subnav")
+          else:
+              print("✓ Descentralización ya estaba en budget_subnav")
+
+          # 2. Canonical directamente en la página: no depende del generador.
+          html = page.read_text(encoding="utf-8")
+          canonical_url = "https://cepoes.org/presupuesto/descentralizacion/"
+          if canonical_url not in html:
+              tag = f'<link rel="canonical" href="{canonical_url}">'
+              if "</head>" not in html:
+                  raise SystemExit("La página de Descentralización no tiene </head>")
+              html = html.replace("</head>", tag + "\n</head>", 1)
+              page.write_text(html, encoding="utf-8")
+              print("✓ canonical agregado directamente al HTML")
+          else:
+              print("✓ canonical ya presente")
+
+          # 3. sitemap.txt: append idempotente.
+          if sitemap_txt.exists():
+              txt = sitemap_txt.read_text(encoding="utf-8")
+              urls = [line.strip() for line in txt.splitlines() if line.strip()]
+              if canonical_url not in urls:
+                  txt = txt.rstrip() + "\n" + canonical_url + "\n"
+                  sitemap_txt.write_text(txt, encoding="utf-8")
+                  print("✓ sitemap.txt actualizado")
+              else:
+                  print("✓ sitemap.txt ya contenía la ruta")
+          else:
+              print("ℹ sitemap.txt no existe en overlay; no se crea artificialmente")
+
+          # 4. sitemap.xml: parseo XML real, sin reemplazos de texto.
+          if sitemap_xml.exists():
+              tree = ET.parse(sitemap_xml)
+              root = tree.getroot()
+
+              ns_match = re.match(r"\{([^}]+)\}", root.tag)
+              ns = ns_match.group(1) if ns_match else ""
+              q = (lambda tag: f"{{{ns}}}{tag}") if ns else (lambda tag: tag)
+
+              existing = {
+                  (loc.text or "").strip()
+                  for loc in root.findall(".//" + q("loc"))
+              }
+
+              if canonical_url not in existing:
+                  url_el = ET.SubElement(root, q("url"))
+                  loc_el = ET.SubElement(url_el, q("loc"))
+                  loc_el.text = canonical_url
+                  tree.write(
+                      sitemap_xml,
+                      encoding="utf-8",
+                      xml_declaration=True
+                  )
+                  print("✓ sitemap.xml actualizado")
+              else:
+                  print("✓ sitemap.xml ya contenía la ruta")
+          else:
+              print("ℹ sitemap.xml no existe en overlay; no se crea artificialmente")
+          PY
+
+      - name: Validar todo antes del commit
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "1/6 · Sintaxis del generador"
+          python -m py_compile deploy/preparar_sitio_publico.py
+
+          echo "2/6 · Sintaxis JavaScript"
+          node --check deploy/site-overlay/assets/descentralizacion-observatorio.js
+
+          echo "3/6 · JSON"
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          for f in [
+              "deploy/site-overlay/assets/data/descentralizacion-transparencia-2024.json",
+              "deploy/site-overlay/assets/data/descentralizacion-competencias.json",
+              "deploy/site-overlay/assets/data/descentralizacion-comunas.json",
+          ]:
+              p = Path(f)
+              if not p.exists():
+                  raise SystemExit(f"Falta {f}")
+              json.loads(p.read_text(encoding="utf-8"))
+              print("✓", f)
+          PY
+
+          echo "4/6 · HTML y canonical"
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path("deploy/site-overlay/presupuesto/descentralizacion/index.html")
+          html = p.read_text(encoding="utf-8")
+          assert 'href="https://cepoes.org/presupuesto/descentralizacion/"' in html
+          assert 'src="/assets/descentralizacion-observatorio.js"' in html
+          print("✓ página y canonical")
+          PY
+
+          echo "5/6 · Sitemap"
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          url = "https://cepoes.org/presupuesto/descentralizacion/"
+
+          txt = Path("deploy/site-overlay/sitemap.txt")
+          if txt.exists():
+              assert url in txt.read_text(encoding="utf-8")
+
+          xml = Path("deploy/site-overlay/sitemap.xml")
+          if xml.exists():
+              root = ET.parse(xml).getroot()
+              locs = [
+                  (el.text or "").strip()
+                  for el in root.iter()
+                  if el.tag.endswith("loc")
+              ]
+              assert url in locs
+
+          print("✓ sitemaps")
+          PY
+
+          echo "6/6 · Integridad del diff"
+          git diff --check
+
+          echo "✓ TODAS LAS VALIDACIONES PRE-COMMIT PASARON"
+
+      - name: Mostrar exactamente qué cambia
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --stat
+          echo
+          git diff -- deploy/preparar_sitio_publico.py \
+                     deploy/site-overlay/presupuesto/descentralizacion/index.html \
+                     deploy/site-overlay/sitemap.txt \
+                     deploy/site-overlay/sitemap.xml
+
+      - name: Commit sólo después de validar
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "cepoes-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          git add deploy/preparar_sitio_publico.py \
+                  deploy/site-overlay/presupuesto/descentralizacion/index.html
+
+          [ ! -f deploy/site-overlay/sitemap.txt ] || git add deploy/site-overlay/sitemap.txt
+          [ ! -f deploy/site-overlay/sitemap.xml ] || git add deploy/site-overlay/sitemap.xml
+
+          if git diff --cached --quiet; then
+            echo "Sin cambios: integración ya instalada."
+          else
+            git commit -m "feat: integrar descentralizacion en presupuesto"
+            git push origin HEAD:main
+          fi
+
+      - name: Confirmar
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -n 'presupuesto/descentralizacion' deploy/preparar_sitio_publico.py
+          grep -n 'canonical' deploy/site-overlay/presupuesto/descentralizacion/index.html
+          echo "✓ Integración mínima completada"

@@ -1,0 +1,97 @@
+name: Diagnosticar fuente de Presupuesto
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diagnosticar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Buscar fuente real de /presupuesto/
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          phrases = [
+              "Presupuesto de la Ciudad",
+              "Tres puertas de entrada",
+              "Explorar el presupuesto según la pregunta",
+              "Producto central CEPOES",
+              "/presupuesto/ejecucion/",
+              "/territorio/presupuesto/",
+          ]
+          exts = {".py", ".js", ".mjs", ".cjs", ".html", ".htm", ".md", ".json", ".yml", ".yaml", ".txt", ".njk", ".jinja", ".jinja2"}
+          skip = {".git", "node_modules", ".venv", "venv", "__pycache__", ".next", "dist", "build"}
+
+          matches = []
+          for p in Path(".").rglob("*"):
+              if not p.is_file() or p.suffix.lower() not in exts:
+                  continue
+              if any(part in skip for part in p.parts):
+                  continue
+              try:
+                  text = p.read_text(encoding="utf-8")
+              except Exception:
+                  try:
+                      text = p.read_text(encoding="latin-1")
+                  except Exception:
+                      continue
+              for phrase in phrases:
+                  if phrase.lower() in text.lower():
+                      matches.append((p, phrase, text))
+                      break
+
+          print("=== ARCHIVOS QUE CONTIENEN FRASES DE LA PORTADA DE PRESUPUESTO ===")
+          if not matches:
+              print("NINGUNO")
+          else:
+              for p, phrase, text in matches:
+                  print(f"\n### {p}")
+                  print(f"match: {phrase!r}")
+                  lines = text.splitlines()
+                  hits = [i for i, line in enumerate(lines) if phrase.lower() in line.lower()]
+                  for i in hits[:6]:
+                      start = max(0, i-3)
+                      end = min(len(lines), i+4)
+                      for j in range(start, end):
+                          mark = ">>" if j == i else "  "
+                          print(f"{mark} {j+1:5d}: {lines[j][:500]}")
+                      print("---")
+
+          print("\n=== ARCHIVOS RELACIONADOS CON PRESUPUESTO POR NOMBRE ===")
+          named = []
+          for p in Path(".").rglob("*"):
+              if not p.is_file():
+                  continue
+              if any(part in skip for part in p.parts):
+                  continue
+              if "presupuesto" in str(p).lower():
+                  named.append(p)
+          for p in sorted(named, key=lambda x: str(x))[:200]:
+              print(p)
+
+          print("\n=== WORKFLOWS / SCRIPTS QUE COPIAN O GENERAN SITE-OVERLAY ===")
+          keywords = ("site-overlay", "rsync", "cp -r", "copytree", "shutil.copy", "deploy/")
+          for p in Path(".").rglob("*"):
+              if not p.is_file() or p.suffix.lower() not in {".py",".sh",".yml",".yaml",".js"}:
+                  continue
+              if any(part in skip for part in p.parts):
+                  continue
+              try:
+                  text = p.read_text(encoding="utf-8")
+              except Exception:
+                  continue
+              if any(k.lower() in text.lower() for k in keywords):
+                  print(f"\n### {p}")
+                  for i, line in enumerate(text.splitlines(), 1):
+                      if any(k.lower() in line.lower() for k in keywords):
+                          print(f"{i:5d}: {line[:500]}")
+          PY

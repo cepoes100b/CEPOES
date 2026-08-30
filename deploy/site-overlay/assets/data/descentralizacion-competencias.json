@@ -1,0 +1,77 @@
+{
+  "schema": "cepoes-descentralizacion-competencias-v1",
+  "status": "BASE_NORMATIVA",
+  "updated": "2026-08-30",
+  "sources": [
+    {
+      "name": "Ley 1.777",
+      "url": "https://www.boletinoficial.buenosaires.gob.ar/normativaba/norma/77544"
+    },
+    {
+      "name": "Decreto 371/2013",
+      "url": "https://boletinoficial.buenosaires.gob.ar/normativaba/norma/227890"
+    },
+    {
+      "name": "Decreto 166/2013",
+      "url": "https://boletinoficial.buenosaires.gob.ar/normativaba/norma/219042"
+    },
+    {
+      "name": "Decreto 453/2012",
+      "url": "https://boletinoficial.buenosaires.gob.ar/normativaba/norma/202040"
+    },
+    {
+      "name": "Ley 5.629",
+      "url": "https://boletinoficial.buenosaires.gob.ar/normativaba/norma/337910"
+    }
+  ],
+  "competencias": [
+    {
+      "id": "vias_secundarias",
+      "nombre": "Vías secundarias",
+      "tipo": "exclusiva",
+      "base": "Ley 1.777 art. 10.a",
+      "estado_instrumental": "pendiente_verificacion",
+      "lectura": "La ley asigna planificación, ejecución y control en forma exclusiva. Falta cerrar la trazabilidad del instrumento operativo y del presupuesto efectivamente transferido."
+    },
+    {
+      "id": "espacios_verdes",
+      "nombre": "Espacios verdes",
+      "tipo": "exclusiva_con_excepciones",
+      "base": "Ley 1.777 art. 10.b + Decreto 371/2013",
+      "estado_instrumental": "transferido",
+      "lectura": "El Decreto 371/13 transfiere mantenimiento a las Comunas, con espacios exceptuados en su Anexo I."
+    },
+    {
+      "id": "arbolado",
+      "nombre": "Arbolado público",
+      "tipo": "mixta",
+      "base": "Decreto 166/2013 y modificatorios",
+      "estado_instrumental": "transferido_con_competencias_concurrentes",
+      "lectura": "Las Comunas reciben responsabilidades de mantenimiento integral y planificación, con funciones concurrentes y excepciones para la autoridad central."
+    },
+    {
+      "id": "poder_policia",
+      "nombre": "Poder de policía sobre espacio público",
+      "tipo": "concurrente",
+      "base": "Ley 1.777 art. 11.c + Decreto 453/2012",
+      "estado_instrumental": "delegado",
+      "lectura": "El ejercicio se delega a las Comunas en forma concurrente con el Poder Ejecutivo."
+    },
+    {
+      "id": "presupuesto_participativo",
+      "nombre": "Anteproyecto presupuestario participativo",
+      "tipo": "obligacion_institucional",
+      "base": "Ley 1.777 art. 15",
+      "estado_instrumental": "pendiente_auditoria",
+      "lectura": "Debe elaborarse con participación vecinal en el Consejo Consultivo y remitirse separado por Comuna."
+    },
+    {
+      "id": "matriz_equidad",
+      "nombre": "Matriz de distribución y compensación",
+      "tipo": "obligacion_sistema",
+      "base": "Ley 1.777 arts. 16 y 17",
+      "estado_instrumental": "pendiente_auditoria",
+      "lectura": "Los recursos deben ser suficientes y distribuirse con criterios de equidad mediante una matriz con indicadores estructurales."
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "schema": "cepoes-descentralizacion-transparencia-2024-v1",
+  "status": "BASELINE_OFICIAL_AUTO_REPORTE",
+  "periodo": "2024-07/08",
+  "source": {
+    "name": "Respuesta del Poder Ejecutivo a la Resolución 178/2024",
+    "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=210386",
+    "resolution": "178/2024",
+    "law": "Ley 5.629"
+  },
+  "methodology": {
+    "unit": "Comuna",
+    "scope": "Autorreporte oficial de las 15 Juntas Comunales",
+    "warning": "La matriz codifica lo informado por cada Junta en 2024. Cumple_reportado no equivale a auditoría externa de cumplimiento actual.",
+    "statuses": {
+      "cumple_reportado": "La respuesta oficial afirma o acredita cumplimiento.",
+      "cumple_funcional_reportado": "La respuesta acredita una vía funcional equivalente, aunque no necesariamente la arquitectura literal prevista por la ley.",
+      "parcial": "La respuesta acredita sólo una parte o describe un circuito distinto al exigido.",
+      "en_proceso": "La propia respuesta informa acciones en curso para alcanzar el requisito.",
+      "no_acreditado": "La respuesta no aporta evidencia suficiente para clasificar como cumplimiento o incumplimiento.",
+      "no_informado": "La Junta declara no contar con información sobre el punto.",
+      "incumple_explicito": "La propia respuesta reconoce una situación incompatible con el requisito legal.",
+      "registrado_sin_contenido": "Se informa dominio registrado pero sin contenido."
+    },
+    "not_scored": [
+      "partida_especifica"
+    ],
+    "reason_not_scored": "La Resolución 178/2024 pregunta por partidas destinadas al cumplimiento, pero la Ley 5.629 no exige una partida presupuestaria específica."
+  },
+  "headline": {
+    "respuestas_comunales": 15,
+    "web_admin_exclusiva_incumple_o_no_acredita": 15,
+    "dominio_explicito_no_registrado": 3,
+    "dominio_registrado_sin_contenido": 1,
+    "difusion_parcial_o_en_proceso": 5,
+    "sin_partida_especifica_reportada": 15
+  },
+  "comunas": [
+    {
+      "comuna": 1,
+      "art4_difusion": "cumple_reportado",
+      "actas": "cumple_reportado",
+      "dominio_art8": "incumple_explicito",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "parcial",
+      "reclamos": "cumple_funcional_reportado",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Declara publicación y libros actualizados; no posee comuna1.gob.ar; la publicación web final depende de la Subsecretaría de Gestión Comunal; reclamos vía Gestión Colaborativa."
+    },
+    {
+      "comuna": 2,
+      "art4_difusion": "cumple_reportado",
+      "actas": "parcial",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "cumple_reportado",
+      "reclamos": "cumple_funcional_reportado",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Junta con libro físico; Consejo Consultivo con actas digitales pero sin libro físico; publicación final a cargo de Subsecretaría; se asigna número de trámite/solicitud."
+    },
+    {
+      "comuna": 3,
+      "art4_difusion": "cumple_reportado",
+      "actas": "cumple_reportado",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "cumple_reportado",
+      "reclamos": "cumple_reportado",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Declara cumplimiento del art. 4, libros de Junta y Consejo; reconoce que la Junta no administra la web; reclamos de competencia comunal respondidos en plazo legal."
+    },
+    {
+      "comuna": 4,
+      "art4_difusion": "cumple_reportado",
+      "actas": "parcial",
+      "dominio_art8": "registrado_sin_contenido",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "parcial",
+      "reclamos": "parcial",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Actas publicadas; informa dominio registrado pero sin contenido; la publicación activa se hace en la web del GCBA; reclamos se encauzan por canales habilitados."
+    },
+    {
+      "comuna": 5,
+      "art4_difusion": "parcial",
+      "actas": "cumple_reportado",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "parcial",
+      "reclamos": "parcial",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Ambos libros actualizados; sitio administrado por Subsecretaría; la web no está estructurada para recibir reclamos y los plazos varían según el caso."
+    },
+    {
+      "comuna": 6,
+      "art4_difusion": "cumple_reportado",
+      "actas": "parcial",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "cumple_reportado",
+      "reclamos": "cumple_reportado",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Junta con libro actualizado; página de Transparencia Activa no administrada por la Comuna; Gestión Colaborativa asigna seguimiento y declara respuestas dentro de 72 horas hábiles."
+    },
+    {
+      "comuna": 7,
+      "art4_difusion": "cumple_reportado",
+      "actas": "parcial",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "parcial",
+      "reclamos": "parcial",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Declara cumplimiento y actas actualizadas; reconoce que la Junta no administra la web y que su diagramación difiere de la prevista por ley; reclamos caratulados en SADE."
+    },
+    {
+      "comuna": 8,
+      "art4_difusion": "parcial",
+      "actas": "parcial",
+      "dominio_art8": "incumple_explicito",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "no_acreditado",
+      "reclamos": "no_acreditado",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Reconoce difusión parcial; libro del Consejo Consultivo en actualización; comuna8.gob.ar no estaba registrado; la Junta no administra la web."
+    },
+    {
+      "comuna": 9,
+      "art4_difusion": "parcial",
+      "actas": "cumple_reportado",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "no_acreditado",
+      "reclamos": "parcial",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Libros de Junta y Consejo; publicación por webmaster de Subsecretaría; la Junta no administra la web; reclamos por múltiples canales y expedientes electrónicos."
+    },
+    {
+      "comuna": 10,
+      "art4_difusion": "parcial",
+      "actas": "cumple_reportado",
+      "dominio_art8": "incumple_explicito",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "no_acreditado",
+      "reclamos": "parcial",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Ambos libros disponibles; declara que no posee dominio registrado como exige la ley; web del GCBA administrada por Subsecretaría; número de gestión/expediente para solicitudes."
+    },
+    {
+      "comuna": 11,
+      "art4_difusion": "cumple_reportado",
+      "actas": "parcial",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "no_acreditado",
+      "reclamos": "parcial",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Actas publicadas; Junta no administra la web; reclamos canalizados por área de seguimiento pero sin acreditación específica de número y plazo para todos los casos."
+    },
+    {
+      "comuna": 12,
+      "art4_difusion": "en_proceso",
+      "actas": "cumple_reportado",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "en_proceso",
+      "reclamos": "cumple_reportado",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Declara avances para mejorar difusión y que trabaja para garantizar contenidos mínimos; ambos libros actualizados; Junta no administra la web; reclamos con número y plazos según sistema."
+    },
+    {
+      "comuna": 13,
+      "art4_difusion": "en_proceso",
+      "actas": "parcial",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "parcial",
+      "reclamos": "parcial",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Realizaba gestiones para cumplir art. 4 en redes; Junta con libro actualizado; sitio administrado por Subsecretaría; tres secciones identificadas y reclamos vía Gestión Colaborativa."
+    },
+    {
+      "comuna": 14,
+      "art4_difusion": "cumple_reportado",
+      "actas": "parcial",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "parcial",
+      "reclamos": "incumple_explicito",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Actas actualizadas y publicadas; Junta no administra la web; reconoce que la página no está diseñada en las cuatro secciones previstas; reclamos no ingresan por la web comunal."
+    },
+    {
+      "comuna": 15,
+      "art4_difusion": "cumple_reportado",
+      "actas": "parcial",
+      "dominio_art8": "no_informado",
+      "web_admin_exclusiva": "incumple_explicito",
+      "contenidos_minimos": "no_acreditado",
+      "reclamos": "parcial",
+      "prohibiciones_cap6": "cumple_reportado",
+      "partida_especifica": "no",
+      "evidencia": "Actas publicadas; Junta no administra la web; reclamos canalizados por distintos medios, sin acreditación específica de plazo y expediente para todos los casos."
+    }
+  ]
+}

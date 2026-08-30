@@ -1,0 +1,140 @@
+name: Reparar sitemap XML
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reparar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Diagnosticar sitemap actual
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "=== INICIO sitemap.xml ==="
+          head -n 4 deploy/site-overlay/sitemap.xml
+          echo "=== FINAL sitemap.xml ==="
+          tail -n 4 deploy/site-overlay/sitemap.xml
+
+      - name: Normalizar namespace sin alterar contenido
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          p = Path("deploy/site-overlay/sitemap.xml")
+          if not p.exists():
+              raise SystemExit("Falta deploy/site-overlay/sitemap.xml")
+
+          # Primero debe ser XML válido ANTES de tocarlo.
+          tree = ET.parse(p)
+          root = tree.getroot()
+
+          local_name = root.tag.split("}", 1)[-1]
+          if local_name != "urlset":
+              raise SystemExit(f"Raíz inesperada: {root.tag!r}")
+
+          namespace = ""
+          if root.tag.startswith("{") and "}" in root.tag:
+              namespace = root.tag[1:].split("}", 1)[0]
+
+          # Sitemaps estándar: registrar el namespace como DEFAULT evita ns0:.
+          if namespace:
+              ET.register_namespace("", namespace)
+
+          # No agregamos ni quitamos URLs. Sólo reserializamos correctamente.
+          tree.write(
+              p,
+              encoding="utf-8",
+              xml_declaration=True,
+              short_empty_elements=True,
+          )
+
+          print("✓ XML reserializado")
+          print("✓ namespace:", namespace or "(sin namespace)")
+          PY
+
+      - name: Validar exactamente lo que exige CEPOES
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          p = Path("deploy/site-overlay/sitemap.xml")
+          text = p.read_text(encoding="utf-8")
+
+          # 1. Debe seguir siendo XML válido.
+          root = ET.parse(p).getroot()
+          assert root.tag.split("}", 1)[-1] == "urlset", root.tag
+
+          # 2. El validador actual de CEPOES necesita este cierre literal.
+          assert "</urlset>" in text, "sitemap.xml sigue sin cierre literal </urlset>"
+
+          # 3. No debe quedar el prefijo que causó el problema.
+          assert "ns0:" not in text, "quedó prefijo ns0 en sitemap.xml"
+          assert "xmlns:ns0=" not in text, "quedó declaración xmlns:ns0"
+
+          # 4. La nueva ruta debe seguir presente.
+          target = "https://cepoes.org/presupuesto/descentralizacion/"
+          locs = [
+              (el.text or "").strip()
+              for el in root.iter()
+              if el.tag.split("}", 1)[-1] == "loc"
+          ]
+          assert target in locs, "se perdió la URL de Descentralización"
+
+          # 5. No debe haber URLs duplicadas.
+          assert len(locs) == len(set(locs)), "hay URLs duplicadas en sitemap.xml"
+
+          print(f"✓ XML válido · {len(locs)} URLs")
+          print("✓ cierre </urlset>")
+          print("✓ sin namespace ns0")
+          print("✓ Descentralización presente")
+          print("✓ sin URLs duplicadas")
+          PY
+
+          git diff --check
+          echo "✓ diff válido"
+
+      - name: Mostrar diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff -- deploy/site-overlay/sitemap.xml
+
+      - name: Commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "cepoes-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add deploy/site-overlay/sitemap.xml
+
+          if git diff --cached --quiet; then
+            echo "Sin cambios: sitemap ya estaba normalizado."
+          else
+            git commit -m "fix: normalizar namespace del sitemap"
+            git push origin HEAD:main
+          fi
+
+      - name: Confirmar
+        shell: bash
+        run: |
+          set -euo pipefail
+          tail -n 3 deploy/site-overlay/sitemap.xml
+          echo "✓ sitemap.xml reparado"

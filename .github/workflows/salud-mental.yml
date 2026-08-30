@@ -1,25 +1,101 @@
 name: Actualizar salud mental
+
 on:
   workflow_dispatch:
   schedule:
     - cron: '17 10 20 * *'
+
 permissions:
   contents: write
+
 concurrency:
   group: cepoes-salud-mental
   cancel-in-progress: false
+
 jobs:
   actualizar:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v5
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Diagnosticar versión del extractor
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Commit: $GITHUB_SHA"
+          echo "Líneas del extractor:"
+          wc -l actualizar_salud_mental.py
+          echo "Funciones TLS presentes:"
+          grep -nE 'def (_urlopen|get_json)|ADVERTENCIA TLS' actualizar_salud_mental.py || true
+
       - name: Generar serie DEIS
-        run: python actualizar_salud_mental.py
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import ssl
+          import urllib.request
+          from urllib.parse import urlparse
+          from pathlib import Path
+
+          # Workaround acotado al portal público de Datos Salud.
+          # Se mantiene la validación TLS normal para cualquier otro host.
+          native_urlopen = urllib.request.urlopen
+          salud_ctx = ssl._create_unverified_context()
+
+          def salud_urlopen(url, *args, **kwargs):
+              target = getattr(url, "full_url", url)
+              host = (urlparse(str(target)).hostname or "").lower()
+
+              if host == "datos.salud.gob.ar" or host.endswith(".salud.gob.ar"):
+                  kwargs.setdefault("context", salud_ctx)
+                  print(f"TLS workaround acotado: {host}")
+
+              return native_urlopen(url, *args, **kwargs)
+
+          urllib.request.urlopen = salud_urlopen
+
+          script = Path("actualizar_salud_mental.py")
+          source = script.read_text(encoding="utf-8")
+          code = compile(source, str(script), "exec")
+          namespace = {
+              "__name__": "__main__",
+              "__file__": str(script),
+              "__package__": None,
+          }
+          exec(code, namespace)
+          PY
+
       - name: Verificar
         run: python verificar_salud_mental.py
+
+      - name: Mostrar resultado resumido
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          p = Path("salud_mental.json")
+          data = json.loads(p.read_text(encoding="utf-8"))
+
+          print("Archivo generado:", p)
+          print("Claves superiores:", ", ".join(data.keys()))
+
+          # Salida tolerante a pequeños cambios de esquema.
+          for key in ("actualizado", "generated_at", "periodo", "latest_year", "ultimo_anio"):
+              if key in data:
+                  print(f"{key}: {data[key]}")
+
+          print("Tamaño bytes:", p.stat().st_size)
+          PY
+
       - name: Guardar último dato validado
         shell: bash
         run: |
@@ -27,6 +103,7 @@ jobs:
           git config user.name "cepoes-bot"
           git config user.email "actions@users.noreply.github.com"
           git add salud_mental.json deploy/site-overlay/assets/data/salud-mental.json
+
           if git diff --cached --quiet; then
             echo "Sin cambios."
           else

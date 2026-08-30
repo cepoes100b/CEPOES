@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CEPOES · Descentralización comunal V2.
+"""CEPOES · Descentralización comunal V2.1.
 
 Mide presupuesto ADMINISTRADO por las 15 Comunas y lo separa del gasto
 meramente LOCALIZADO territorialmente en Desc_Geo.
@@ -177,27 +177,34 @@ def fnum(v):
     s = str(v or "").strip().replace("\u00a0", "").replace(" ", "")
     if not s or norm(s) in {"nan", "none", "null"}:
         return 0.0
-    try:
-        return float(s)
-    except ValueError:
-        pass
 
-    # formatos locales: 1.234.567,89 o 1,234,567.89
-    if "," in s and "." in s:
-        if s.rfind(",") > s.rfind("."):
-            s = s.replace(".", "").replace(",", ".")
-        else:
-            s = s.replace(",", "")
-    elif "," in s:
-        if s.count(",") > 1:
-            s = s.replace(",", "")
-        else:
-            s = s.replace(",", ".")
-    try:
-        return float(s)
-    except ValueError as exc:
-        raise RuntimeError(f"Valor monetario no parseable: {v!r}") from exc
+    negative = False
+    if s.startswith("(") and s.endswith(")"):
+        negative = True
+        s = s[1:-1]
+    s = s.replace("$", "")
 
+    # Formato argentino con puntos de miles: 398.992.769 / 1.234.567,89
+    if re.fullmatch(r"-?\d{1,3}(?:\.\d{3})+(?:,\d+)?", s):
+        value = float(s.replace(".", "").replace(",", "."))
+        return -value if negative else value
+
+    # Formato estadounidense con comas de miles: 1,234,567.89
+    if re.fullmatch(r"-?\d{1,3}(?:,\d{3})+(?:\.\d+)?", s):
+        value = float(s.replace(",", ""))
+        return -value if negative else value
+
+    # Decimal con coma sin separadores de miles: 1234567,89
+    if re.fullmatch(r"-?\d+,\d+", s):
+        value = float(s.replace(",", "."))
+        return -value if negative else value
+
+    # Entero o decimal estándar: 1234567 / 1234567.89
+    if re.fullmatch(r"-?\d+(?:\.\d+)?", s):
+        value = float(s)
+        return -value if negative else value
+
+    raise RuntimeError(f"Valor monetario no parseable: {v!r}")
 
 def colmap(fields):
     return {norm(f): f for f in fields}

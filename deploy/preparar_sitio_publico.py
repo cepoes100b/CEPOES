@@ -158,6 +158,7 @@ def budget_subnav(rel: str) -> str:
         ("/presupuesto/ejecucion/", "Ejecución y estructura"),
         ("/presupuesto/territorio/", "Territorio"),
         ("/presupuesto/diagnostico/", "Diagnóstico"),
+        ("/presupuesto/descentralizacion/", "Descentralización"),
     ]
     links = "".join(f'<a{active_link(rel, href)} href="{href}">{label}</a>' for href, label in items)
     return f'<nav aria-label="Navegación de Presupuesto" class="subnav"><div class="wrap subnav-in">{links}</div></nav>'

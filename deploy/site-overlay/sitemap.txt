@@ -109,3 +109,4 @@ https://cepoes.org/territorio/equipamientos/
 https://cepoes.org/territorio/mapa-tematico/
 https://cepoes.org/territorio/presupuesto/
 https://cepoes.org/territorio/migraciones/
+https://cepoes.org/presupuesto/descentralizacion/

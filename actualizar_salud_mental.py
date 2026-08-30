@@ -227,6 +227,30 @@ def pick_residence_col(fields: list[str]) -> str | None:
     return max(candidates)[2] if candidates else None
 
 
+def pick_residence_id_col(fields: list[str]) -> str | None:
+    """Devuelve específicamente el código de jurisdicción/provincia de residencia."""
+    mapped = {norm(f): f for f in fields}
+    exact = (
+        "jurisdiccion_de_residencia_id",
+        "jurisdiccion_residencia_id",
+        "residencia_jurisdiccion_id",
+        "provincia_de_residencia_id",
+        "provincia_residencia_id",
+        "residencia_provincia_id",
+        "prov_res_id",
+        "cod_jurisdiccion_residencia",
+        "codigo_jurisdiccion_residencia",
+    )
+    for key in exact:
+        if key in mapped:
+            return mapped[key]
+    for f in fields:
+        nf = norm(f)
+        if "resid" in nf and any(t in nf for t in ("jurisd", "prov")) and any(t in nf for t in ("_id", "cod", "codigo")):
+            return f
+    return None
+
+
 def pick_count_col(fields: list[str], rows_count: int) -> str | None:
     exact = ("cantidad", "cant", "defunciones", "casos", "frecuencia", "n", "valor")
     col = pick_col(fields, exact, ("cantidad", "defunc", "casos", "frecuenc"))
@@ -245,6 +269,7 @@ def pick_count_col(fields: list[str], rows_count: int) -> str | None:
 def process_rows(fields: list[str], rows: list[dict[str, str]], forced_year: int | None, acc: dict) -> dict:
     year_col = pick_col(fields, ("anio", "ano", "anio_defuncion", "ano_defuncion"), ("anio", "ano"))
     prov_col = pick_residence_col(fields)
+    prov_id_col = pick_residence_id_col(fields)
     sex_col = pick_col(fields, ("sexo", "sex"), ("sexo",))
     age_col = pick_col(fields, ("edad", "grupo_edad", "edad_grupo", "rango_edad"), ("edad",))
     count_col = pick_count_col(fields, len(rows))
@@ -255,6 +280,7 @@ def process_rows(fields: list[str], rows: list[dict[str, str]], forced_year: int
     matched = 0
     cause_samples = []
     province_values = Counter()
+    caba_labels = Counter()
     for row in rows:
         cause_values = [row.get(c, "") for c in cause_cols]
         if len(cause_samples) < 12:
@@ -268,9 +294,16 @@ def process_rows(fields: list[str], rows: list[dict[str, str]], forced_year: int
         n = n if n is not None and n >= 0 else 1
         matched += n
         acc["arg"][y] += n
-        province_values[str(row.get(prov_col, "")).strip()] += n
-        if caba_value(row.get(prov_col)):
+        province_label = str(row.get(prov_col, "")).strip()
+        province_values[province_label] += n
+        is_caba = False
+        if prov_id_col and caba_value(row.get(prov_id_col)):
+            is_caba = True
+        elif caba_value(row.get(prov_col)):
+            is_caba = True
+        if is_caba:
             acc["caba"][y] += n
+            caba_labels[province_label] += n
             if sex_col:
                 acc["sex"][y][sex_label(row.get(sex_col))] += n
             if age_col:
@@ -280,7 +313,8 @@ def process_rows(fields: list[str], rows: list[dict[str, str]], forced_year: int
         "fields": fields,
         "cause_samples": cause_samples[:12],
         "province_top": province_values.most_common(12),
-        "columns": {"year": year_col, "province": prov_col, "sex": sex_col, "age": age_col, "count": count_col, "cause": cause_cols},
+        "caba_labels": caba_labels.most_common(),
+        "columns": {"year": year_col, "province": prov_col, "province_id": prov_id_col, "sex": sex_col, "age": age_col, "count": count_col, "cause": cause_cols},
     }
 
 
@@ -307,9 +341,11 @@ def main() -> None:
         if inferred_year in (2023, 2024):
             print(
                 f"DEIS {inferred_year}: filas={len(rows)} · suicidios={diag['matched']} · "
-                f"residencia={diag['columns']['province']} · cantidad={diag['columns']['count']}"
+                f"residencia={diag['columns']['province']} · residencia_id={diag['columns']['province_id']} · "
+                f"cantidad={diag['columns']['count']}"
             )
             print(f"DEIS {inferred_year}: top residencia en suicidios={diag['province_top']}")
+            print(f"DEIS {inferred_year}: CABA por código 02={diag['caba_labels']}")
 
     years = list(range(2005, 2025))
     # Controles fuertes: no publicamos una serie vacía o con CABA mal identificada.

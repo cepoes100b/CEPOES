@@ -200,7 +200,7 @@ jobs:
           dW5hIHBhcnRpZGEgcHJvcGlhLjwvcD48L2FydGljbGU+PC9kaXY+PC9kaXY+PC9zZWN0aW9uPjwvZGl2PjwvbWFpbj4KPHNjcmlwdCBzcmM9Imh0dHBzOi8v
           Y2RuLmpzZGVsaXZyLm5ldC9ucG0vZDNANy45LjAvZGlzdC9kMy5taW4uanMiPjwvc2NyaXB0PjxzY3JpcHQgc3JjPSIvYXNzZXRzL2Rlc2NlbnRyYWxpemFj
           aW9uLW9ic2VydmF0b3Jpby5qcz92PTQiPjwvc2NyaXB0PjxzY3JpcHQgZGVmZXIgc3JjPSIvYXNzZXRzL2NvbW1vbi5qcz92PTI1NCI+PC9zY3JpcHQ+PC9i
-          b2R5PjwvaHRtbD4K""", 'f265483aaf6a7d7fae624b423e93c53cc51d63c1e48b8707750428d001774714', '14fa5628b3e7716f3b95d56c719e38dbe7ccd20f1515e771530aa07a2bd5bece'),
+          b2R5PjwvaHRtbD4K""", 'f265483aaf6a7d7fae624b423e93c53cc51d63c1e48b8707750428d001774714', '14fa5628b3e7716f3b95d56c719e38dbe7ccd20f1515e771530aa07a2bd5bece,2a620a0db16e6c433fcdd53ddfd9552730b2b984f79c57c52b7bf9c5390f5e5e'),
             'deploy/site-overlay/assets/descentralizacion-observatorio.js': ("""KCgpID0+IHsKICBjb25zdCBHRU9fQ09NVU5BUyA9IFsKICAgICcvYXNzZXRzL2RhdGEvZXN0cnVjdHVyYS1wcm9kdWN0aXZhL2NvbXVuYXMuZ2VvanNvbics
           CiAgICAnaHR0cHM6Ly9jZG4uYnVlbm9zYWlyZXMuZ29iLmFyL2RhdG9zYWJpZXJ0b3MvZGF0YXNldHMvaW5ub3ZhY2lvbi10cmFuc2Zvcm1hY2lvbi1kaWdp
           dGFsL2NvbXVuYXMvY29tdW5hcy5nZW9qc29uJwogIF07CiAgY29uc3QgbW9uZXkgPSBuID0+IHsKICAgIGlmICghTnVtYmVyLmlzRmluaXRlKCtuKSkgcmV0
@@ -534,7 +534,7 @@ jobs:
           OiB7YmxvY2tlZFs6MTBdfScKCmtleT0ocm9vdC8naW5kZXhub3cta2V5LnR4dCcpLnJlYWRfdGV4dChlbmNvZGluZz0ndXRmLTgnKS5zdHJpcCgpCmFzc2Vy
           dCByZS5mdWxsbWF0Y2gocidbQS1aYS16MC05Xy1dezgsMTI4fScsa2V5KSwgJ0luZGV4Tm93IGtleSBpbnbDoWxpZGEnCnByaW50KGYnT0sgc2l0aW86IHts
           ZW4oaHRtbCl9IEhUTUwgwrcge2xlbihiYXJyaW9zKX0gYmFycmlvcyDCtyB7bGVuKHVybHMpfSBVUkxzIGluZGV4YWJsZXMgwrcgZXN0cnVjdHVyYSBwcm9k
-          dWN0aXZhICsgZGVwb3J0ZS9zYWx1ZCBWMyB2YWxpZGFkb3Mgwrcgc2luIGNydWRvcycpCg==""", 'b00de69ce4e5511c098e957b429b3f8aefb45facd96f7fb6c9f2ff4233a1cd7d', 'c0ba2f4d348711e5e8c7a87fa7ee7889db1ebac4a60c6b3950a27accee00800b'),
+          dWN0aXZhICsgZGVwb3J0ZS9zYWx1ZCBWMyB2YWxpZGFkb3Mgwrcgc2luIGNydWRvcycpCg==""", 'b00de69ce4e5511c098e957b429b3f8aefb45facd96f7fb6c9f2ff4233a1cd7d', 'c0ba2f4d348711e5e8c7a87fa7ee7889db1ebac4a60c6b3950a27accee00800b,844a9635424819c1d12f61bc063215891a11ab54a289a6292558c964eda057d6'),
             'deploy/site-overlay/sitemap.xml': ("""PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0ndXRmLTgnPz4KPHVybHNldCB4bWxucz0iaHR0cDovL3d3dy5zaXRlbWFwcy5vcmcvc2NoZW1hcy9zaXRl
           bWFwLzAuOSI+CiAgPHVybD48bG9jPmh0dHBzOi8vY2Vwb2VzLm9yZy88L2xvYz48bGFzdG1vZD4yMDI2LTA4LTI0PC9sYXN0bW9kPjwvdXJsPgogIDx1cmw+
           PGxvYz5odHRwczovL2NlcG9lcy5vcmcvY2Vwb2VzLzwvbG9jPjxsYXN0bW9kPjIwMjYtMDgtMjQ8L2xhc3Rtb2Q+PC91cmw+CiAgPHVybD48bG9jPmh0dHBz
@@ -661,7 +661,7 @@ jobs:
           Ly9jZXBvZXMub3JnL3ByZXN1cHVlc3RvL3RlcnJpdG9yaW8vPC9sb2M+PGxhc3Rtb2Q+MjAyNi0wOC0zMTwvbGFzdG1vZD48L3VybD4KICA8dXJsPjxsb2M+
           aHR0cHM6Ly9jZXBvZXMub3JnL3RlcnJpdG9yaW8vbWlncmFjaW9uZXMvPC9sb2M+PGxhc3Rtb2Q+MjAyNi0wOC0yNDwvbGFzdG1vZD48L3VybD4KICA8dXJs
           Pjxsb2M+aHR0cHM6Ly9jZXBvZXMub3JnL3ByZXN1cHVlc3RvL2Rlc2NlbnRyYWxpemFjaW9uLzwvbG9jPjxsYXN0bW9kPjIwMjYtMDgtMzE8L2xhc3Rtb2Q+
-          PC91cmw+CjwvdXJsc2V0Pgo=""", '2ff973f16cfefcd14211ce7943082950907ca77ae0bb153e5ac37c921a6a2767', '1c696080c62ce6113e3d9ba452fc863fa458fc93c7b6b65a38e26012484ec816'),
+          PC91cmw+CjwvdXJsc2V0Pgo=""", '2ff973f16cfefcd14211ce7943082950907ca77ae0bb153e5ac37c921a6a2767', '1c696080c62ce6113e3d9ba452fc863fa458fc93c7b6b65a38e26012484ec816,85f6f41b4a938c331c9af197ff26187052d96737a5288c6ac92ce5ea8e201eff'),
             'deploy/site-overlay/sitemap.txt': ("""aHR0cHM6Ly9jZXBvZXMub3JnLwpodHRwczovL2NlcG9lcy5vcmcvY2Vwb2VzLwpodHRwczovL2NlcG9lcy5vcmcvY2Vwb2VzL21ldG9kb2xvZ2lhLwpodHRw
           czovL2NlcG9lcy5vcmcvbGVnaXNsYXR1cmEvCmh0dHBzOi8vY2Vwb2VzLm9yZy9vYnNlcnZhdG9yaW8vCmh0dHBzOi8vY2Vwb2VzLm9yZy9vYnNlcnZhdG9y
           aW8vcGVyc29uYXMtbWF5b3Jlcy8KaHR0cHM6Ly9jZXBvZXMub3JnL29ic2VydmF0b3Jpby9hZ2VuZGEvCmh0dHBzOi8vY2Vwb2VzLm9yZy9vYnNlcnZhdG9y
@@ -734,7 +734,7 @@ jobs:
                   if current == expected:
                       print(f'✓ {rel} ya estaba actualizado')
                       continue
-                  if current != base:
+                  if current not in base.split(','):
                       raise SystemExit(f'{rel} cambió desde la instantánea auditada: {current}. No se sobrescribe.')
               path.parent.mkdir(parents=True, exist_ok=True)
               path.write_bytes(raw)

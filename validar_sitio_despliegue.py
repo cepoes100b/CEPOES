@@ -40,6 +40,14 @@ def patch_territorio_navigation(site_root: Path) -> None:
                 if debt:
                     s=s[:debt.start()]+'<a href="/territorio/migraciones/">Migraciones</a>'+s[debt.start():]
 
+            mental='/observatorio/salud-mental/'
+            if f'href="{mental}"' not in s:
+                target=re.search(r'<a\b[^>]*href="/observatorio/personas-mayores/"[^>]*>',s,re.I)
+                if not target:
+                    target=re.search(r'<a\b[^>]*href="/territorio/deporte-salud/"[^>]*>',s,re.I)
+                if target:
+                    s=s[:target.start()]+'<a href="/observatorio/salud-mental/">Salud mental</a>'+s[target.start():]
+
             if rel=='territorio/estructura-productiva/index.html' and '/assets/estructura-productiva-bootstrap.js' not in s:
                 target='<script defer src="/assets/estructura-productiva.js?v=260"></script>'
                 bootstrap='<script defer src="/assets/estructura-productiva-bootstrap.js?v=260"></script>'
@@ -72,6 +80,7 @@ ensure_sitemap_url(root,'/presupuesto/ejecucion/')
 ensure_sitemap_url(root,'/presupuesto/territorio/')
 ensure_sitemap_url(root,'/temas/')
 ensure_sitemap_url(root,'/observatorio/personas-mayores/')
+ensure_sitemap_url(root,'/observatorio/salud-mental/')
 
 required=[
     'index.html','404.html','robots.txt','sitemap.xml','site.webmanifest',
@@ -79,6 +88,7 @@ required=[
     'assets/arquitectura.css','assets/data/taxonomia.json','temas/index.html',
     'observatorio/personas-mayores/index.html','assets/personas-mayores.css',
     'assets/personas-mayores.js','assets/data/personas-mayores.json',
+    'observatorio/salud-mental/index.html','assets/salud-mental.css','assets/salud-mental.js','assets/data/salud-mental.json',
     'legislatura/index.html','territorio/endeudamiento/index.html',
     'territorio/migraciones/index.html','territorio/estructura-productiva/index.html',
     'territorio/deporte-salud/index.html',
@@ -147,6 +157,7 @@ assert observatorio.count('id="obs-pulse"')==1, 'Contenedor de señales duplicad
 assert observatorio.count('class="pulse-card"')==3, f'Señales duplicadas en Observatorio: {observatorio.count("class=\"pulse-card\"")}'
 assert observatorio.count('observatory-overview')==1, 'Panorama del Observatorio duplicado'
 assert '/observatorio/personas-mayores/' in observatorio, 'Observatorio no enlaza el eje Personas mayores'
+assert '/observatorio/salud-mental/' in observatorio, 'Observatorio no enlaza el eje Salud mental'
 personas=(root/'observatorio'/'personas-mayores'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Una Ciudad envejecida no es, por eso, una Ciudad cuidada','17,7%','$2.835.928','Dato, elaboración e interpretación','/assets/data/personas-mayores.json']:
     assert token in personas, f'Eje Personas mayores incompleto: {token}'
@@ -154,6 +165,18 @@ assert 'cargando' not in personas.lower() and '>—<' not in personas, 'Personas
 personas_data=json.loads((root/'assets/data/personas-mayores.json').read_text(encoding='utf-8'))
 assert personas_data.get('schema')=='cepoes-personas-mayores-v1' and personas_data.get('status')=='VALIDADO'
 assert personas_data['indicadores']['canasta_inquilinos']['valor']>personas_data['indicadores']['canasta_propietarios']['valor']
+salud_mental=(root/'observatorio'/'salud-mental'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['Salud mental: mirar la tendencia sin perder de vista el territorio','5.209','11,84','236','7,97','0800-999-0091','/assets/data/salud-mental.json']:
+    assert token in salud_mental, f'Eje Salud mental incompleto: {token}'
+sm_data=json.loads((root/'assets/data/salud-mental.json').read_text(encoding='utf-8'))
+assert sm_data.get('schema')=='cepoes-salud-mental-v3' and sm_data.get('status')=='VALIDADO'
+assert sm_data['headline']['argentina']['suicidios_snic']==5209
+assert sm_data['headline']['caba']['suicidios_snic']==236
+assert len(sm_data.get('jurisdicciones_2025') or [])==24
+assert sum(int(x['suicidios_2025']) for x in sm_data['jurisdicciones_2025'])==5209
+assert len(sm_data.get('red_atencion_caba',{}).get('cesac_con_salud_mental') or [])>=43
+assert len(sm_data.get('red_atencion_caba',{}).get('efectores_especializados') or [])==5
+assert sm_data.get('contraste_deis',{}).get('estado') in {'ACTUALIZADO','ULTIMO_DATO_VALIDADO'}
 presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'Cargando último trimestre oficial' not in presupuesto and 'cargando…' not in presupuesto and '<b>—</b>' not in presupuesto, 'Fallback vacío en Presupuesto'
 descentralizacion=(root/'presupuesto'/'descentralizacion'/'index.html').read_text(encoding='utf-8',errors='replace')
@@ -175,7 +198,7 @@ for rule in ['Redirect 301 /observatorio/presupuesto/ /presupuesto/ejecucion/','
     assert rule in htaccess, f'Falta redirect: {rule}'
 
 territorio=(root/'territorio'/'index.html').read_text(encoding='utf-8',errors='replace')
-for path,label in [('/territorio/migraciones/','Migraciones'),('/territorio/estructura-productiva/','Estructura productiva'),('/territorio/deporte-salud/','Deporte y salud')]:
+for path,label in [('/territorio/migraciones/','Migraciones'),('/territorio/estructura-productiva/','Estructura productiva'),('/territorio/deporte-salud/','Deporte y salud'),('/observatorio/salud-mental/','Salud mental')]:
     assert f'href="{path}"' in territorio, f'Territorio no enlaza {label}'
 for token in ['Explorar','Temas territoriales','/presupuesto/territorio/']:
     assert token in territorio, f'Navegación territorial sin {token}'

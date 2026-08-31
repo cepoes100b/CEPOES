@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Salud mental en CABA — CEPOES</title>
+  <meta name="description" content="Serie SNIC 2016–2025, comparación entre jurisdicciones y red territorial de atención en salud mental de la Ciudad de Buenos Aires.">
+  <link rel="canonical" href="https://cepoes.org/observatorio/salud-mental/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CEPOES">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:url" content="https://cepoes.org/observatorio/salud-mental/">
+  <meta property="og:title" content="Salud mental en CABA — CEPOES">
+  <meta property="og:description" content="Datos, evolución y red territorial de atención con fuentes oficiales y advertencias de comparabilidad.">
+  <link href="/assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="/assets/site.css?v=252" rel="stylesheet">
+  <link href="/assets/salud-mental.css?v=1" rel="stylesheet">
+  <script defer src="/assets/common.js?v=254"></script>
+  <script defer src="/assets/salud-mental.js?v=1"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Dataset","name":"Salud mental: suicidios consumados y red de atención","url":"https://cepoes.org/observatorio/salud-mental/","creator":{"@type":"Organization","name":"CEPOES"},"spatialCoverage":"Argentina y Ciudad Autónoma de Buenos Aires","temporalCoverage":"2016/2025","isBasedOn":["Sistema Nacional de Información Criminal (SNIC)","Dirección de Estadísticas e Información de Salud (DEIS)","BA Data"]}</script>
+</head>
+<body class="sm-page" data-sm-page data-related-tags="salud mental,salud,cuidados,suicidios,cesac,territorio">
+<nav class="site-nav"></nav>
+<main>
+  <header class="sm-hero">
+    <div class="wrap sm-hero-grid">
+      <div>
+        <div class="breadcrumbs"><a href="/">CEPOES</a> / <a href="/observatorio/">Observatorio</a> / Salud mental</div>
+        <span class="eyebrow">Eje transversal · Salud y cuidados</span>
+        <h1>Salud mental: mirar la tendencia sin perder de vista el territorio</h1>
+        <p>CEPOES reúne la serie oficial de suicidios consumados del SNIC, la compara entre jurisdicciones y la vincula con la red de atención disponible en la Ciudad. Las fuentes se mantienen separadas cuando miden fenómenos distintos.</p>
+        <div class="sm-meta">
+          <span><b>Serie principal:</b> SNIC 2016–2025</span>
+          <span><b>Ámbito:</b> Argentina y CABA</span>
+          <span><b>Actualización:</b> automática con controles de calidad</span>
+        </div>
+      </div>
+      <aside class="sm-assistance" aria-label="Información de asistencia">
+        <span class="eyebrow">Orientación y urgencias</span>
+        <h2>Si necesitás ayuda ahora</h2>
+        <a href="tel:08009990091"><strong>0800-999-0091</strong><small>Orientación y Apoyo en la Urgencia de Salud Mental · 24 horas</small></a>
+        <a href="tel:107"><strong>107</strong><small>SAME · emergencias en la Ciudad de Buenos Aires</small></a>
+        <p>Estos teléfonos forman parte de la información pública del sistema de atención. CEPOES no presta servicios de emergencia.</p>
+      </aside>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="sm-kpis" aria-label="Indicadores destacados de 2025">
+        <article class="sm-kpi"><span>Argentina · suicidios consumados</span><strong id="sm-arg-count">5.209</strong><p>2025 · SNIC. <b id="sm-arg-change">+22,6%</b> interanual.</p></article>
+        <article class="sm-kpi"><span>Argentina · tasa</span><strong id="sm-arg-rate">11,84</strong><p>Por 100.000 habitantes de 5 años y más.</p></article>
+        <article class="sm-kpi"><span>CABA · suicidios consumados</span><strong id="sm-caba-count">236</strong><p>2025 · SNIC. <b id="sm-caba-change">+38,0%</b> interanual.</p></article>
+        <article class="sm-kpi"><span>CABA · tasa</span><strong id="sm-caba-rate">7,97</strong><p>Por 100.000 habitantes de 5 años y más.</p></article>
+      </div>
+      <p class="source sm-source">Fuente principal: Sistema Nacional de Información Criminal (SNIC). Código 31: suicidios consumados. Las tasas publicadas usan población de 5 años y más.</p>
+    </div>
+  </section>
+
+  <section class="section alt" id="evolucion">
+    <div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">Evolución 2016–2025</span><h2>Dos series comparables por tasa, no por volumen</h2><p>Argentina y CABA se muestran sobre la misma métrica: suicidios consumados por cada 100.000 habitantes de 5 años y más.</p></div></div>
+      <div class="sm-chart-panel">
+        <div class="sm-chart-head">
+          <div class="sm-legend"><span><i class="sm-dot sm-dot-arg"></i> Argentina</span><span><i class="sm-dot sm-dot-caba"></i> CABA</span></div>
+          <span id="sm-series-period">2016–2025</span>
+        </div>
+        <svg id="sm-series-chart" viewBox="0 0 920 430" role="img" aria-labelledby="sm-series-title">
+          <title id="sm-series-title">Evolución de la tasa de suicidios consumados de Argentina y CABA entre 2016 y 2025</title>
+        </svg>
+        <div class="sm-fallback-series">
+          <p><b>2024 → 2025.</b> Argentina pasó de 9,71 a 11,84 por 100.000; CABA pasó de 5,76 a 7,97.</p>
+        </div>
+      </div>
+      <div class="sm-reading-grid">
+        <article><span class="eyebrow">Lectura CABA</span><h3>El aumento de 2025 revierte la baja de los dos años anteriores</h3><p>CABA había descendido de 8,14 en 2022 a 6,19 en 2023 y 5,76 en 2024. En 2025 la tasa sube a 7,97. La serie sirve para observar tendencia, no para atribuir causas.</p></article>
+        <article><span class="eyebrow">Lectura nacional</span><h3>El dato 2025 es el máximo de la serie SNIC publicada</h3><p>La tasa nacional alcanza 11,84 en 2025. Para interpretar el salto debe leerse junto con las advertencias de calidad y, en particular, con la ruptura de serie informada para Provincia de Buenos Aires.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="jurisdicciones">
+    <div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">Comparación federal · 2025</span><h2>La tasa cambia mucho entre jurisdicciones</h2><p>El gráfico ordena las 24 jurisdicciones por tasa. No se recomienda usar el salto 2025 de Provincia de Buenos Aires como una variación histórica comparable.</p></div></div>
+      <div class="sm-jur-layout">
+        <div class="sm-jur-panel">
+          <div id="sm-jurisdiction-bars" class="sm-jur-bars" aria-live="polite">
+            <div class="sm-static-note"><b>CABA:</b> 7,97 por 100.000. <b>Argentina:</b> 11,84. La comparación completa se carga desde el JSON validado.</div>
+          </div>
+        </div>
+        <aside class="sm-warning">
+          <span class="eyebrow">Advertencia de comparabilidad</span>
+          <h3>Provincia de Buenos Aires · ruptura de serie 2025</h3>
+          <p>El Informe SNIC 2025 informa mejoras en los sistemas de carga y en el intercambio con la Procuración General provincial y otros organismos, incluido el cruce con registros de defunciones. Para categorías afectadas de muertes violentas, entre ellas suicidios, no se recomiendan comparaciones interanuales ni históricas directas.</p>
+          <a href="https://cloud-snic.minseg.gob.ar/Informes/SNIC/Informe_SNIC_Nacional_2025.pdf" target="_blank" rel="noopener">Ver informe SNIC 2025 ↗</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="red-atencion">
+    <div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">Red territorial de atención</span><h2>La oferta existe en el territorio, pero oferta no equivale a acceso</h2><p>Se muestran CeSAC cuya cartera oficial incluye Psicología y/o Psiquiatría y cinco efectores especializados. La localización no informa cupos, tiempos de espera ni demanda insatisfecha.</p></div></div>
+      <div class="sm-network-grid">
+        <article class="sm-map-panel">
+          <div class="sm-map-head"><div><h3>CeSAC con oferta de salud mental</h3><p id="sm-cesac-summary">Al menos 43 establecimientos cumplen el criterio del pipeline validado.</p></div>
+          <label>Comuna <select id="sm-cesac-comuna"><option value="">Todas</option></select></label></div>
+          <svg id="sm-cesac-map" viewBox="0 0 720 520" role="img" aria-labelledby="sm-cesac-map-title"><title id="sm-cesac-map-title">Localización aproximada de CeSAC con Psicología o Psiquiatría</title></svg>
+          <p class="sm-map-note">Los puntos se ubican con las coordenadas publicadas por BA Data. El gráfico no representa áreas de cobertura ni tiempos de viaje.</p>
+        </article>
+        <article class="sm-list-panel">
+          <h3>Detalle de CeSAC</h3>
+          <div id="sm-cesac-list" class="sm-cesac-list">
+            <p>La lista se actualiza desde la capa oficial validada. Incluye domicilio, barrio, comuna, teléfono y especialidades.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="section-head sm-effectors-head"><div><span class="eyebrow">Efectores especializados</span><h2>Cinco referencias de la red pública especializada</h2></div></div>
+      <div class="sm-effectors">
+        <article><h3>Hospital de Emergencias Psiquiátricas Torcuato de Alvear</h3><p>Warnes 2630 · Agronomía</p></article>
+        <article><h3>Hospital de Salud Mental J. T. Borda</h3><p>Dr. Ramón Carrillo 375 · Barracas</p></article>
+        <article><h3>Hospital de Salud Mental Braulio Moyano</h3><p>Brandsen 2570 · Barracas</p></article>
+        <article><h3>Hospital Infanto Juvenil C. Tobar García</h3><p>Dr. Ramón Carrillo 315 · Barracas</p></article>
+        <article><h3>Centro de Salud Mental N° 3 Dr. Arturo Ameghino</h3><p>Av. Córdoba 3120 · Comuna 3</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="metodologia">
+    <div class="wrap">
+      <div class="section-head"><div><span class="eyebrow">Metodología y fuentes</span><h2>Separar fuentes es parte del método</h2></div></div>
+      <div class="sm-method-grid">
+        <article><span class="eyebrow">Serie principal</span><h3>SNIC</h3><p>Se usa para suicidios consumados a nivel nacional, provincial y CABA entre 2016 y 2025. El pipeline exige que las 24 jurisdicciones sumen el total nacional y reproduce puntos oficiales de control.</p></article>
+        <article><span class="eyebrow">Contraste</span><h3>DEIS</h3><p>Las defunciones por suicidio de DEIS se conservan como una serie nacional separada. No se fusionan con SNIC porque responden a sistemas estadísticos distintos.</p></article>
+        <article><span class="eyebrow">Territorio</span><h3>BA Data</h3><p>Los CeSAC se filtran cuando su cartera oficial de especialidades incluye Psicología o Psiquiatría. La presencia de un servicio no demuestra disponibilidad inmediata.</p></article>
+        <article><span class="eyebrow">Límites</span><h3>Qué no inferimos</h3><p>No atribuimos causalidad a cambios anuales, no estimamos intentos de suicidio a partir de suicidios consumados y no convertimos la cantidad de establecimientos en una medida de acceso efectivo.</p></article>
+      </div>
+      <div class="sm-source-links">
+        <a href="https://cloud-snic.minseg.gob.ar/Bases/SNIC/snic-pais.csv" target="_blank" rel="noopener"><strong>SNIC · Base país ↗</strong><small>Serie principal agregada.</small></a>
+        <a href="https://cloud-snic.minseg.gob.ar/Bases/SNIC/snic-provincias.csv" target="_blank" rel="noopener"><strong>SNIC · Base provincias ↗</strong><small>Comparación entre 24 jurisdicciones.</small></a>
+        <a href="https://datos.salud.gob.ar/api/3/action/package_show?id=27c588e8-43d0-411a-a40c-7ecc563c2c9f" target="_blank" rel="noopener"><strong>DEIS · Defunciones ↗</strong><small>Contraste nacional mantenido separado.</small></a>
+        <a href="https://data.buenosaires.gob.ar/dataset/centros-salud-accion-comunitaria-cesac" target="_blank" rel="noopener"><strong>BA Data · CeSAC ↗</strong><small>Localización y cartera de especialidades.</small></a>
+      </div>
+      <p class="source">Última generación validada del dataset: <span id="sm-generated-at">31 de agosto de 2026</span>. CEPOES publica el último dato que supera los controles automáticos y conserva las advertencias de comparabilidad de las fuentes.</p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -134,6 +134,7 @@ def territory_subnav(rel: str) -> str:
         ("/territorio/migraciones/", "Migraciones"),
         ("/territorio/estructura-productiva/", "Estructura productiva"),
         ("/territorio/deporte-salud/", "Deporte y salud"),
+        ("/observatorio/salud-mental/", "Salud mental"),
         ("/observatorio/personas-mayores/", "Personas mayores"),
         ("/presupuesto/territorio/", "Presupuesto"),
     ]
@@ -559,6 +560,21 @@ def apply_fallbacks(source: str, rel: str) -> str:
         else:
             source = source.replace(overview, overview + people_bridge, 1)
         source = replace_id_text(source, "data-date", "26 de agosto de 2026")
+
+    if rel == "/observatorio/index.html":
+        mental_bridge = (
+            '<section class="section observatory-mental-bridge"><div class="wrap">'
+            '<a class="ia-topic-card" href="/observatorio/salud-mental/">'
+            '<span class="eyebrow">Eje transversal · Salud y cuidados</span><h2>Salud mental</h2>'
+            '<p>Serie SNIC 2016–2025, comparación federal, advertencias de comparabilidad y red territorial de atención en CABA.</p>'
+            '<span class="ia-topic-link">Explorar el eje →</span></a></div></section>'
+        )
+        if 'observatory-mental-bridge' not in source:
+            m = re.search(r'<section class="section observatory-people-bridge">.*?</section>', source, flags=re.S)
+            if m:
+                source = source[:m.end()] + mental_bridge + source[m.end():]
+            else:
+                source = source.replace("</main>", mental_bridge + "</main>", 1)
 
     if rel == "/prensa/index.html":
         press = load_json("deploy/site-overlay/assets/data/prensa.json")

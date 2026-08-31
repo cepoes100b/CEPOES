@@ -166,8 +166,10 @@ personas_data=json.loads((root/'assets/data/personas-mayores.json').read_text(en
 assert personas_data.get('schema')=='cepoes-personas-mayores-v1' and personas_data.get('status')=='VALIDADO'
 assert personas_data['indicadores']['canasta_inquilinos']['valor']>personas_data['indicadores']['canasta_propietarios']['valor']
 salud_mental=(root/'observatorio'/'salud-mental'/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['Salud mental: mirar la tendencia sin perder de vista el territorio','5.209','11,84','236','7,97','0800-999-0091','/assets/data/salud-mental.json']:
+for token in ['Salud mental: mirar la tendencia sin perder de vista el territorio','5.209','11,84','236','7,97','0800-999-0091','/assets/salud-mental.css?v=1','/assets/salud-mental.js?v=1']:
     assert token in salud_mental, f'Eje Salud mental incompleto: {token}'
+sm_js=(root/'assets/salud-mental.js').read_text(encoding='utf-8',errors='replace')
+assert '/assets/data/salud-mental.json' in sm_js, 'JS de Salud mental no enlaza el dataset validado'
 sm_data=json.loads((root/'assets/data/salud-mental.json').read_text(encoding='utf-8'))
 assert sm_data.get('schema')=='cepoes-salud-mental-v3' and sm_data.get('status')=='VALIDADO'
 assert sm_data['headline']['argentina']['suicidios_snic']==5209

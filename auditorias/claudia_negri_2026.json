@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-08-28T22:10:19.816581+00:00",
+  "generado_en": "2026-08-31T13:51:06.240508+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,22 +10,22 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2023-11-17",
-    "fecha_mas_reciente_obtenida": "2026-08-28",
-    "ids_del_anio_en_ventana": 2713,
-    "ids_revisados_acumulados": 2713,
+    "fecha_mas_reciente_obtenida": "2026-08-31",
+    "ids_del_anio_en_ventana": 2717,
+    "ids_revisados_acumulados": 2717,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
-    "expedientes_seguimiento_institucional": 214,
-    "expedientes_auditados": 214,
+    "expedientes_seguimiento_institucional": 215,
+    "expedientes_auditados": 215,
     "autoría_principal": 41,
-    "coautoría": 173,
-    "fichas_oficiales_completas": 214,
+    "coautoría": 174,
+    "fichas_oficiales_completas": 215,
     "con_evidencia_sancion": 61,
     "problemas": 0
   },
   "por_tipo": {
-    "DECLARACION": 86,
+    "DECLARACION": 87,
     "RESOLUCION": 69,
     "LEY": 59
   },
@@ -33,12 +33,12 @@
     "en_comision": 115,
     "archivado": 59,
     "despacho": 15,
-    "ingresado": 11,
+    "ingresado": 12,
     "sancionado": 11,
     "con_dictamen": 3
   },
   "por_etapa_ciclo": {
-    "en_comision": 126,
+    "en_comision": 127,
     "archivado": 59,
     "con_dictamen": 18,
     "sancionado": 11
@@ -100,6 +100,59 @@
   },
   "problemas": [],
   "expedientes": [
+    {
+      "id_expediente": "142247",
+      "numero": "2656-D-2026",
+      "fecha_ingreso": "2026-08-31T10:14:07",
+      "sumario": "BENEPLÁCITO POR LA OBTENCIÓN DEL TERCER CAMPEONATO MUNDIAL DE LA SELECCIÓN ARGENTINA DE HOCKEY FEMENINO, \"LAS LEONAS\"",
+      "rol_claudia": "coautora",
+      "rol_recalculado": "coautora",
+      "autoría_confirmada": true,
+      "rol_consistente": true,
+      "autores": [
+        "NEIRA, CLAUDIA",
+        "BARROETAVEÑA, MATÍAS",
+        "BIELLI, MARÍA",
+        "CAPORICCIO, FRANCISCO",
+        "FERREÑO, CLAUDIO AMÉRICO",
+        "FREIRE, VICTORIA",
+        "GONZÁLEZ, ANDREA MARIANA",
+        "GRILLO, ALEJANDRO OMAR",
+        "IAÑEZ, BERENICE",
+        "LA BLUNDA, ANDRÉS",
+        "LAMMENS , MATÍAS",
+        "MOCHI, FEDERICO",
+        "MODARELLI, JUAN PABLO",
+        "NEGRI, CLAUDIA",
+        "PEÑAFORT, GRACIANA",
+        "ROSSEN, BÁRBARA",
+        "SALVATIERRA, ALEJANDRO",
+        "SANTORO, LEANDRO",
+        "VELÁZQUEZ, DELFINA"
+      ],
+      "cantidad_autores": 19,
+      "tipo_oficial": "DECLARACION",
+      "estado_actual": "ingresado",
+      "etapa_ciclo": "en_comision",
+      "ubicacion": "DGDP",
+      "giros": [
+        "(GIRO AUN NO ASIGNADO)"
+      ],
+      "ultimo_movimiento": {
+        "fecha": "2026-08-31",
+        "oficina": "DGDP",
+        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+      },
+      "evidencia_sancion": false,
+      "fuentes_sancion": [],
+      "fuentes_captura": [
+        "radar_ingresos",
+        "seguimiento_institucional"
+      ],
+      "ficha_oficial_completa": true,
+      "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142247",
+      "es_832_2026": false
+    },
     {
       "id_expediente": "142234",
       "numero": "2645-D-2026",

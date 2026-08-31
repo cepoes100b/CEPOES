@@ -12,7 +12,7 @@ https://cepoes.org/observatorio/estado/ejecucion-presupuestaria/
 https://cepoes.org/observatorio/precios/
 https://cepoes.org/observatorio/precios/canasta-consumo/
 https://cepoes.org/observatorio/precios/ipc/
-https://cepoes.org/observatorio/presupuesto/
+https://cepoes.org/presupuesto/ejecucion/
 https://cepoes.org/observatorio/produccion/
 https://cepoes.org/observatorio/produccion/exportaciones/
 https://cepoes.org/observatorio/produccion/industria/
@@ -107,6 +107,6 @@ https://cepoes.org/territorio/comuna-9/
 https://cepoes.org/territorio/endeudamiento/
 https://cepoes.org/territorio/equipamientos/
 https://cepoes.org/territorio/mapa-tematico/
-https://cepoes.org/territorio/presupuesto/
+https://cepoes.org/presupuesto/territorio/
 https://cepoes.org/territorio/migraciones/
 https://cepoes.org/presupuesto/descentralizacion/

@@ -70,7 +70,6 @@ ensure_sitemap_url(root,'/territorio/estructura-productiva/')
 ensure_sitemap_url(root,'/territorio/deporte-salud/')
 ensure_sitemap_url(root,'/presupuesto/ejecucion/')
 ensure_sitemap_url(root,'/presupuesto/territorio/')
-ensure_sitemap_url(root,'/presupuesto/descentralizacion/')
 ensure_sitemap_url(root,'/temas/')
 ensure_sitemap_url(root,'/observatorio/personas-mayores/')
 
@@ -80,13 +79,13 @@ required=[
     'assets/arquitectura.css','assets/data/taxonomia.json','temas/index.html',
     'observatorio/personas-mayores/index.html','assets/personas-mayores.css',
     'assets/personas-mayores.js','assets/data/personas-mayores.json',
-    'presupuesto/descentralizacion/index.html','assets/descentralizacion-observatorio.js',
-    'assets/data/descentralizacion-comunas.json','assets/data/descentralizacion-transparencia-2024.json',
-    'assets/data/descentralizacion-competencias.json',
     'legislatura/index.html','territorio/endeudamiento/index.html',
     'territorio/migraciones/index.html','territorio/estructura-productiva/index.html',
     'territorio/deporte-salud/index.html',
     'presupuesto/ejecucion/index.html','presupuesto/territorio/index.html',
+    'presupuesto/descentralizacion/index.html','assets/descentralizacion-observatorio.js',
+    'assets/data/descentralizacion-comunas.json','assets/data/descentralizacion-transparencia-2024.json',
+    'assets/data/descentralizacion-competencias.json',
     'assets/deporte-salud.js','assets/deporte-salud.css','assets/data/deporte-salud.json',
     'assets/data/deporte-accesibilidad.json','assets/data/deporte-accesibilidad-peatonal.json',
     'assets/estructura-productiva.js','assets/estructura-productiva-bootstrap.js','assets/estructura-productiva.css',
@@ -157,17 +156,20 @@ assert personas_data.get('schema')=='cepoes-personas-mayores-v1' and personas_da
 assert personas_data['indicadores']['canasta_inquilinos']['valor']>personas_data['indicadores']['canasta_propietarios']['valor']
 presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'Cargando último trimestre oficial' not in presupuesto and 'cargando…' not in presupuesto and '<b>—</b>' not in presupuesto, 'Fallback vacío en Presupuesto'
-assert 'href="/presupuesto/descentralizacion/"' in presupuesto, 'Presupuesto no enlaza Descentralización'
-for rel,url in [('presupuesto/ejecucion/index.html','https://cepoes.org/presupuesto/ejecucion/'),('presupuesto/territorio/index.html','https://cepoes.org/presupuesto/territorio/'),('presupuesto/descentralizacion/index.html','https://cepoes.org/presupuesto/descentralizacion/')]:
+descentralizacion=(root/'presupuesto'/'descentralizacion'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['Descentralización: cuánto administran las Comunas','id="commune-map"','id="ranking"','id="selected-title"','Ver competencias transferidas y pendientes','/assets/descentralizacion-observatorio.js?v=4']:
+    assert token in descentralizacion, f'Descentralización incompleta: {token}'
+assert descentralizacion.count('id="content"')==1 and descentralizacion.count('id="content-body"')==1, 'Contenedores de Descentralización duplicados'
+dc_js=(root/'assets'/'descentralizacion-observatorio.js').read_text(encoding='utf-8',errors='replace')
+for token in ['estructura-productiva/comunas.geojson','drawMap','renderDetail','descentralizacion-transparencia-2024.json']:
+    assert token in dc_js, f'JS de Descentralización incompleto: {token}'
+dc_data=json.loads((root/'assets/data/descentralizacion-comunas.json').read_text(encoding='utf-8'))
+assert dc_data.get('schema')=='cepoes-descentralizacion-comunas-v2' and dc_data.get('status')=='VALIDADO'
+assert len(dc_data.get('comunas') or [])==15 and {x.get('comuna') for x in dc_data['comunas']}==set(range(1,16))
+for rel,url in [('presupuesto/ejecucion/index.html','https://cepoes.org/presupuesto/ejecucion/'),('presupuesto/territorio/index.html','https://cepoes.org/presupuesto/territorio/')]:
     s=(root/rel).read_text(encoding='utf-8',errors='replace')
     canonical=re.search(r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>',s,re.I)
     assert canonical and re.search(rf'\bhref=["\']{re.escape(url)}["\']',canonical.group(0),re.I), f'Canonical incorrecto: {rel}'
-descentralizacion=(root/'presupuesto'/'descentralizacion'/'index.html').read_text(encoding='utf-8',errors='replace')
-assert '/assets/descentralizacion-observatorio.js' in descentralizacion, 'Falta JS de Descentralización'
-assert '/assets/common.js' in descentralizacion, 'Falta common.js en Descentralización'
-assert '/assets/site.css' in descentralizacion, 'Falta site.css en Descentralización'
-assert descentralizacion.count('<nav class="site-nav">')==1, 'Navegación global duplicada en Descentralización'
-assert 'class="active" href="/presupuesto/descentralizacion/"' in descentralizacion, 'Subnav de Descentralización no activa'
 htaccess=(root/'.htaccess').read_text(encoding='utf-8',errors='replace')
 for rule in ['Redirect 301 /observatorio/presupuesto/ /presupuesto/ejecucion/','Redirect 301 /territorio/presupuesto/ /presupuesto/territorio/']:
     assert rule in htaccess, f'Falta redirect: {rule}'
@@ -231,9 +233,9 @@ assert 'https://cepoes.org/territorio/estructura-productiva/' in locs
 assert 'https://cepoes.org/territorio/deporte-salud/' in locs
 assert 'https://cepoes.org/presupuesto/ejecucion/' in locs
 assert 'https://cepoes.org/presupuesto/territorio/' in locs
-assert 'https://cepoes.org/presupuesto/descentralizacion/' in locs
 assert 'https://cepoes.org/temas/' in locs
 assert 'https://cepoes.org/observatorio/personas-mayores/' in locs
+assert 'https://cepoes.org/presupuesto/descentralizacion/' in locs
 assert 'https://cepoes.org/observatorio/presupuesto/' not in locs
 assert 'https://cepoes.org/territorio/presupuesto/' not in locs
 

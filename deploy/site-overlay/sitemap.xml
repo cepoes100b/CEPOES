@@ -14,7 +14,7 @@
   <url><loc>https://cepoes.org/observatorio/precios/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/observatorio/precios/canasta-consumo/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/observatorio/precios/ipc/</loc><lastmod>2026-08-24</lastmod></url>
-  <url><loc>https://cepoes.org/observatorio/presupuesto/</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://cepoes.org/presupuesto/ejecucion/</loc><lastmod>2026-08-31</lastmod></url>
   <url><loc>https://cepoes.org/observatorio/produccion/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/observatorio/produccion/exportaciones/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/observatorio/produccion/industria/</loc><lastmod>2026-08-24</lastmod></url>
@@ -109,6 +109,7 @@
   <url><loc>https://cepoes.org/territorio/endeudamiento/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/territorio/equipamientos/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/territorio/mapa-tematico/</loc><lastmod>2026-08-24</lastmod></url>
-  <url><loc>https://cepoes.org/territorio/presupuesto/</loc><lastmod>2026-08-24</lastmod></url>
-  <url><loc>https://cepoes.org/territorio/migraciones/</loc><lastmod>2026-08-24</lastmod></url>  <url><loc>https://cepoes.org/presupuesto/descentralizacion/</loc><lastmod>2026-08-31</lastmod></url>
+  <url><loc>https://cepoes.org/presupuesto/territorio/</loc><lastmod>2026-08-31</lastmod></url>
+  <url><loc>https://cepoes.org/territorio/migraciones/</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://cepoes.org/presupuesto/descentralizacion/</loc><lastmod>2026-08-31</lastmod></url>
 </urlset>

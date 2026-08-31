@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-08-31T10:42:01-03:00",
+  "actualizado_en": "2026-08-31T17:42:04-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -15,19 +15,19 @@
   "resumen": {
     "sesiones": 6,
     "sesiones_realizadas": 6,
-    "registros_presentismo": 303,
-    "asuntos_considerados": 662,
+    "registros_presentismo": 363,
+    "asuntos_considerados": 746,
     "votaciones_asuntos": 32,
     "votos_nominales": 1947,
     "expedientes_votados_unicos": 31,
     "fallas": 0,
-    "items_recinto": 662,
-    "sanciones_expediente": 376,
-    "sanciones_despacho": 250,
-    "cambios_giro": 36,
+    "items_recinto": 746,
+    "sanciones_expediente": 457,
+    "sanciones_despacho": 251,
+    "cambios_giro": 38,
     "sanciones_por_alcance": {
-      "definitiva": 371,
-      "inicial": 5
+      "definitiva": 451,
+      "inicial": 6
     }
   },
   "fallas": [],
@@ -26346,7 +26346,7 @@
         "reunion": ""
       },
       "realizada": true,
-      "criterio_realizada": "documento_labor",
+      "criterio_realizada": "presentismo_quorum",
       "documentos": {
         "acuerdo_labor": {
           "id_documento": "226367",
@@ -26365,24 +26365,1682 @@
         "reporte_presentismo": "https://parlamentaria.legislatura.gob.ar/ReportesPDFGen/VisualizadorReportes.aspx?iTipoReporte=100&IdSesion=1151"
       },
       "presentismo": {
-        "total": 0,
-        "presentes": 0,
-        "ausentes": 0,
-        "porcentaje_asistencia": null,
-        "presidente": "",
-        "secretarios": "",
-        "registros": []
+        "total": 60,
+        "presentes": 59,
+        "ausentes": 1,
+        "porcentaje_asistencia": 98.33,
+        "presidente": "MUZZIO, Clara LOPEZ, Matias",
+        "secretarios": "SCHILLAGI, Pablo J. GRIBAUDO, Christian MISH, Agusto",
+        "registros": [
+          {
+            "id_legislador": "30922",
+            "nombre": "EDGARDO NESTOR",
+            "apellido": "ALIFRACO",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30946",
+            "nombre": "Laura",
+            "apellido": "Alonso",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30680",
+            "nombre": "JUAN PABLO",
+            "apellido": "ARENAZA",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30841",
+            "nombre": "MATÍAS",
+            "apellido": "BARROETAVEÑA",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30949",
+            "nombre": "Vanina",
+            "apellido": "Biasi",
+            "bloque": "Frente de Izquierda de los Trabajadores / PO",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30844",
+            "nombre": "MARÍA",
+            "apellido": "BIELLI",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30943",
+            "nombre": "Francisco",
+            "apellido": "Caporiccio",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30847",
+            "nombre": "EUGENIO",
+            "apellido": "CASIELLES",
+            "bloque": "Transformación",
+            "id_estado": "2",
+            "estado": "Ausente con aviso"
+          },
+          {
+            "id_legislador": "30912",
+            "nombre": "ALDANA BELÉN",
+            "apellido": "CRUCITTA",
+            "bloque": "Ciudadanos Unidos / UCR",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30848",
+            "nombre": "JUAN FACUNDO",
+            "apellido": "DEL GAISO",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30913",
+            "nombre": "PABLO ALEJANDRO",
+            "apellido": "DONATI",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30951",
+            "nombre": "Marcelo Gregorio",
+            "apellido": "Ernst",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30935",
+            "nombre": "Juan Ignacio",
+            "apellido": "Fernández",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30880",
+            "nombre": "EMMANUEL",
+            "apellido": "FERRARIO",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30561",
+            "nombre": "CLAUDIO AMÉRICO",
+            "apellido": "FERREÑO",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30947",
+            "nombre": "Rocío",
+            "apellido": "Figueroa",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30899",
+            "nombre": "REBECA",
+            "apellido": "FLEITAS",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30933",
+            "nombre": "Andrea",
+            "apellido": "Freguia",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30916",
+            "nombre": "VICTORIA",
+            "apellido": "FREIRE",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30940",
+            "nombre": "Noemí",
+            "apellido": "Geminiani",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30906",
+            "nombre": "PATRICIA INÉS",
+            "apellido": "GLIZE",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30939",
+            "nombre": "Andrea Mariana",
+            "apellido": "González",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30915",
+            "nombre": "ALEJANDRO OMAR",
+            "apellido": "GRILLO",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30896",
+            "nombre": "BERENICE",
+            "apellido": "IAÑEZ",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30910",
+            "nombre": "SILVIA",
+            "apellido": "IMAS",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30886",
+            "nombre": "MARINA",
+            "apellido": "KIENAST",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30918",
+            "nombre": "ANDRÉS",
+            "apellido": "LA BLUNDA",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30914",
+            "nombre": "MATÍAS",
+            "apellido": "LAMMENS",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30853",
+            "nombre": "MATÍAS DAMIÁN",
+            "apellido": "LÓPEZ",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30944",
+            "nombre": "Silvia",
+            "apellido": "Lospennato",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30911",
+            "nombre": "FRANCISCO",
+            "apellido": "LOUPIAS",
+            "bloque": "Ciudadanos Unidos / UCR",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30878",
+            "nombre": "AMANDA",
+            "apellido": "MARTÍN",
+            "bloque": "Frente de Izquierda de los Trabajadores / PO",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30938",
+            "nombre": "Federico",
+            "apellido": "Mochi",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30892",
+            "nombre": "JUAN PABLO",
+            "apellido": "MODARELLI",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30908",
+            "nombre": "MARÍA FERNANDA",
+            "apellido": "MOLLARD",
+            "bloque": "Ciudadanos Unidos / UCR",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30898",
+            "nombre": "LUCÍA",
+            "apellido": "MONTENEGRO",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30907",
+            "nombre": "SEBASTIÁN",
+            "apellido": "NAGATA",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30936",
+            "nombre": "Claudia",
+            "apellido": "Negri",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30716",
+            "nombre": "CLAUDIA",
+            "apellido": "NEIRA",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30887",
+            "nombre": "DARÍO HUGO",
+            "apellido": "NIETO",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30742",
+            "nombre": "MARÍA GRACIELA",
+            "apellido": "OCAÑA",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30932",
+            "nombre": "Nicolás",
+            "apellido": "Pakgojz",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30909",
+            "nombre": "IGNACIO JOSÉ",
+            "apellido": "PARERA",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30931",
+            "nombre": "Solana",
+            "apellido": "Pelayo",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30917",
+            "nombre": "GRACIANA",
+            "apellido": "PEÑAFORT",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30921",
+            "nombre": "MARÍA DEL PILAR",
+            "apellido": "RAMÍREZ",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30923",
+            "nombre": "SANDRA MÓNICA",
+            "apellido": "REY",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30950",
+            "nombre": "Horacio",
+            "apellido": "Rodríguez Larreta",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30942",
+            "nombre": "Bárbara",
+            "apellido": "Rossen",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30900",
+            "nombre": "LEONARDO",
+            "apellido": "SAIFERT",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30941",
+            "nombre": "Alejandro",
+            "apellido": "Salvatierra",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30823",
+            "nombre": "LEANDRO",
+            "apellido": "SANTORO",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30905",
+            "nombre": "SERGIO HERNÁN",
+            "apellido": "SICILIANO",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30814",
+            "nombre": "GUILLERMO",
+            "apellido": "SUÁREZ",
+            "bloque": "Ciudadanos Unidos / UCR",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30948",
+            "nombre": "Guadalupe",
+            "apellido": "Tagliaferri",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30858",
+            "nombre": "MANUELA",
+            "apellido": "THOURTE",
+            "bloque": "Ciudadanos Unidos / UCR",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30934",
+            "nombre": "Diego",
+            "apellido": "Vartabedian",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30919",
+            "nombre": "DELFINA",
+            "apellido": "VELÁZQUEZ",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30859",
+            "nombre": "GIMENA",
+            "apellido": "VILLAFRUELA",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30952",
+            "nombre": "Waldo",
+            "apellido": "Wolff",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          }
+        ]
       },
-      "asuntos_considerados": [],
-      "sanciones": [],
+      "asuntos_considerados": [
+        {
+          "id_expediente": "141694",
+          "numero_expediente": "2153-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 397-2026 / Expediente 2153-D-2026"
+        },
+        {
+          "id_expediente": "141697",
+          "numero_expediente": "2156-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 396-2026 / Expediente 2156-D-2026"
+        },
+        {
+          "id_expediente": "141865",
+          "numero_expediente": "2316-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 395-2026 / Expediente 2316-D-2026"
+        },
+        {
+          "id_expediente": "142165",
+          "numero_expediente": "2580-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 396-2026 / Expediente 2580-D-2026"
+        },
+        {
+          "id_expediente": "142157",
+          "numero_expediente": "2573-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 394-2026 / Expediente 2573-D-2026"
+        },
+        {
+          "id_expediente": "142172",
+          "numero_expediente": "2587-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 392-2026 / Expediente 2587-D-2026"
+        },
+        {
+          "id_expediente": "140369",
+          "numero_expediente": "1008-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 391-2026 / Expediente 1008-D-2026"
+        },
+        {
+          "id_expediente": "141732",
+          "numero_expediente": "2185-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 390-2026 / Expediente 2185-D-2026"
+        },
+        {
+          "id_expediente": "142112",
+          "numero_expediente": "2531-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 389-2026 / Expediente 2531-D-2026"
+        },
+        {
+          "id_expediente": "142096",
+          "numero_expediente": "2516-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 394-2026 / Expediente 2516-D-2026"
+        },
+        {
+          "id_expediente": "142026",
+          "numero_expediente": "2452-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 388-2026 / Expediente 2452-D-2026"
+        },
+        {
+          "id_expediente": "141891",
+          "numero_expediente": "2341-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 387-2026 / Expediente 2341-D-2026"
+        },
+        {
+          "id_expediente": "141835",
+          "numero_expediente": "2286-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 393-2026 / Expediente 2286-D-2026"
+        },
+        {
+          "id_expediente": "141827",
+          "numero_expediente": "2278-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 385-2026 / Expediente 2278-D-2026"
+        },
+        {
+          "id_expediente": "141816",
+          "numero_expediente": "2267-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 384-2026 / Expediente 2267-D-2026"
+        },
+        {
+          "id_expediente": "141578",
+          "numero_expediente": "2056-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 392-2026 / Expediente 2056-D-2026"
+        },
+        {
+          "id_expediente": "141923",
+          "numero_expediente": "2367-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 391-2026 / Expediente 2367-D-2026"
+        },
+        {
+          "id_expediente": "141599",
+          "numero_expediente": "2076-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 390-2026 / Expediente 2076-D-2026"
+        },
+        {
+          "id_expediente": "141598",
+          "numero_expediente": "2075-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 389-2026 / Expediente 2075-D-2026"
+        },
+        {
+          "id_expediente": "141913",
+          "numero_expediente": "2360-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 408-2026 / Expediente 2360-D-2026"
+        },
+        {
+          "id_expediente": "141828",
+          "numero_expediente": "2280-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 407-2026 / Expediente 2280-D-2026"
+        },
+        {
+          "id_expediente": "141792",
+          "numero_expediente": "2242-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 406-2026 / Expediente 2242-D-2026"
+        },
+        {
+          "id_expediente": "141780",
+          "numero_expediente": "2230-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 405-2026 / Expediente 2230-D-2026"
+        },
+        {
+          "id_expediente": "141774",
+          "numero_expediente": "2224-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 404-2026 / Expediente 2224-D-2026"
+        },
+        {
+          "id_expediente": "141766",
+          "numero_expediente": "2220-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 403-2026 / Expediente 2220-D-2026"
+        },
+        {
+          "id_expediente": "141629",
+          "numero_expediente": "2097-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 403-2026 / Expediente 2097-D-2026"
+        },
+        {
+          "id_expediente": "141628",
+          "numero_expediente": "2096-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 402-2026 / Expediente 2096-D-2026"
+        },
+        {
+          "id_expediente": "141553",
+          "numero_expediente": "2033-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 401-2026 / Expediente 2033-D-2026"
+        },
+        {
+          "id_expediente": "141233",
+          "numero_expediente": "1757-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 402-2026 / Expediente 1757-D-2026"
+        },
+        {
+          "id_expediente": "140958",
+          "numero_expediente": "1522-P-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 399-2026 / Expediente 1522-P-2026"
+        },
+        {
+          "id_expediente": "140956",
+          "numero_expediente": "1520-P-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 398-2026 / Expediente 1520-P-2026"
+        },
+        {
+          "id_expediente": "139899",
+          "numero_expediente": "581-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 401-2026 / Expediente 581-D-2026"
+        },
+        {
+          "id_expediente": "142022",
+          "numero_expediente": "2449-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 400-2026 / Expediente 2449-D-2026"
+        },
+        {
+          "id_expediente": "141875",
+          "numero_expediente": "2326-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 399-2026 / Expediente 2326-D-2026"
+        },
+        {
+          "id_expediente": "141464",
+          "numero_expediente": "1960-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 397-2026 / Expediente 1960-D-2026"
+        },
+        {
+          "id_expediente": "141946",
+          "numero_expediente": "2387-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 409-2026 / Expediente 2387-D-2026"
+        },
+        {
+          "id_expediente": "141983",
+          "numero_expediente": "2422-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 410-2026 / Expediente 2422-D-2026"
+        },
+        {
+          "id_expediente": "142089",
+          "numero_expediente": "2509-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 411-2026 / Expediente 2509-D-2026"
+        },
+        {
+          "id_expediente": "142110",
+          "numero_expediente": "2529-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 406-2026 / Expediente 2529-D-2026"
+        },
+        {
+          "id_expediente": "141518",
+          "numero_expediente": "2001-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 412-2026 / Expediente 2001-D-2026"
+        },
+        {
+          "id_expediente": "141145",
+          "numero_expediente": "1685-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 413-2026 / Expediente 1685-D-2026"
+        },
+        {
+          "id_expediente": "141573",
+          "numero_expediente": "2054-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 414-2026 / Expediente 2054-D-2026"
+        },
+        {
+          "id_expediente": "142051",
+          "numero_expediente": "2473-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 415-2026 / Expediente 2473-D-2026"
+        },
+        {
+          "id_expediente": "141854",
+          "numero_expediente": "2305-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 407-2026 / Expediente 2305-D-2026"
+        },
+        {
+          "id_expediente": "141952",
+          "numero_expediente": "2393-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 408-2026 / Expediente 2393-D-2026"
+        },
+        {
+          "id_expediente": "140548",
+          "numero_expediente": "1173-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 409-2026 / Expediente 1173-D-2026"
+        },
+        {
+          "id_expediente": "142040",
+          "numero_expediente": "2466-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 410-2026 / Expediente 2466-D-2026"
+        },
+        {
+          "id_expediente": "141953",
+          "numero_expediente": "2394-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 411-2026 / Expediente 2394-D-2026"
+        },
+        {
+          "id_expediente": "141705",
+          "numero_expediente": "2164-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 412-2026 / Expediente 2164-D-2026"
+        },
+        {
+          "id_expediente": "141544",
+          "numero_expediente": "2024-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 413-2026 / Expediente 2024-D-2026"
+        },
+        {
+          "id_expediente": "141958",
+          "numero_expediente": "2398-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 416-2026 / Expediente 2398-D-2026"
+        },
+        {
+          "id_expediente": "141609",
+          "numero_expediente": "2082-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 414-2026 / Expediente 2082-D-2026"
+        },
+        {
+          "id_expediente": "142152",
+          "numero_expediente": "2569-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 415-2026 / Expediente 2569-D-2026"
+        },
+        {
+          "id_expediente": "142069",
+          "numero_expediente": "2489-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 416-2026 / Expediente 2489-D-2026"
+        },
+        {
+          "id_expediente": "141648",
+          "numero_expediente": "2115-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 417-2026 / Expediente 2115-D-2026"
+        },
+        {
+          "id_expediente": "141907",
+          "numero_expediente": "2354-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 418-2026 / Expediente 2354-D-2026"
+        },
+        {
+          "id_expediente": "142137",
+          "numero_expediente": "2556-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 418-2026 / Expediente 2556-D-2026"
+        },
+        {
+          "id_expediente": "141552",
+          "numero_expediente": "2032-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 420-2026 / Expediente 2032-D-2026"
+        },
+        {
+          "id_expediente": "141640",
+          "numero_expediente": "2106-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 421-2026 / Expediente 2106-D-2026"
+        },
+        {
+          "id_expediente": "141801",
+          "numero_expediente": "2253-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 422-2026 / Expediente 2253-D-2026"
+        },
+        {
+          "id_expediente": "142037",
+          "numero_expediente": "2461-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 423-2026 / Expediente 2461-D-2026"
+        },
+        {
+          "id_expediente": "141959",
+          "numero_expediente": "2399-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 424-2026 / Expediente 2399-D-2026"
+        },
+        {
+          "id_expediente": "142072",
+          "numero_expediente": "2492-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 425-2026 / Expediente 2492-D-2026"
+        },
+        {
+          "id_expediente": "141990",
+          "numero_expediente": "2427-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 426-2026 / Expediente 2427-D-2026"
+        },
+        {
+          "id_expediente": "141561",
+          "numero_expediente": "2039-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 419-2026 / Expediente 2039-D-2026"
+        },
+        {
+          "id_expediente": "141899",
+          "numero_expediente": "2348-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley con sanción inicial / Expediente 2348-D-2026"
+        },
+        {
+          "id_expediente": "140853",
+          "numero_expediente": "1428-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 419-2026 / Expediente 1428-D-2026"
+        },
+        {
+          "id_expediente": "141556",
+          "numero_expediente": "2036-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 420-2026 / Expediente 2036-D-2026"
+        },
+        {
+          "id_expediente": "139783",
+          "numero_expediente": "456-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 421-2026 / Expediente 456-D-2026"
+        },
+        {
+          "id_expediente": "141138",
+          "numero_expediente": "1678-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 427-2026 / Expediente 1678-D-2026"
+        },
+        {
+          "id_expediente": "141904",
+          "numero_expediente": "2351-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 422-2026 / Expediente 2351-D-2026"
+        },
+        {
+          "id_expediente": "142028",
+          "numero_expediente": "2454-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 423-2026 / Expediente 2454-D-2026"
+        },
+        {
+          "id_expediente": "142047",
+          "numero_expediente": "2469-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 424-2026 / Expediente 2469-D-2026"
+        },
+        {
+          "id_expediente": "141970",
+          "numero_expediente": "2408-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 428-2026 / Expediente 2408-D-2026"
+        },
+        {
+          "id_expediente": "141506",
+          "numero_expediente": "1995-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 430-2026 / Expediente 1995-D-2026"
+        },
+        {
+          "id_expediente": "141698",
+          "numero_expediente": "2157-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 431-2026 / Expediente 2157-D-2026"
+        },
+        {
+          "id_expediente": "142114",
+          "numero_expediente": "2533-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 428-2026 / Expediente 2533-D-2026"
+        },
+        {
+          "id_expediente": "140929",
+          "numero_expediente": "1494-P-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 436-2026 / Expediente 1494-P-2026"
+        },
+        {
+          "id_expediente": "141661",
+          "numero_expediente": "2124-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 434-2026 / Expediente 2124-D-2026"
+        },
+        {
+          "id_expediente": "141932",
+          "numero_expediente": "2374-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 435-2026 / Expediente 2374-D-2026"
+        },
+        {
+          "id_expediente": "141955",
+          "numero_expediente": "2395-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 439-2026 / Expediente 2395-D-2026"
+        },
+        {
+          "id_expediente": "140104",
+          "numero_expediente": "774-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Ley nro. 6974 / Despacho 289-2026"
+        },
+        {
+          "id_expediente": "141441",
+          "numero_expediente": "1937-D-2026",
+          "procesado": true,
+          "tipo": "CAMBIO DE GIRO",
+          "descripcion": "Pase a: SALUD"
+        },
+        {
+          "id_expediente": "141728",
+          "numero_expediente": "2180-D-2026",
+          "procesado": true,
+          "tipo": "CAMBIO DE GIRO",
+          "descripcion": "Pase a: TRÁNSITO Y TRANSPORTE; JUSTICIA"
+        }
+      ],
+      "sanciones": [
+        {
+          "id_expediente": "141816",
+          "numero_expediente": "2267-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 384-2026 / Expediente 2267-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141827",
+          "numero_expediente": "2278-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 385-2026 / Expediente 2278-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141891",
+          "numero_expediente": "2341-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 387-2026 / Expediente 2341-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142026",
+          "numero_expediente": "2452-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 388-2026 / Expediente 2452-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142112",
+          "numero_expediente": "2531-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 389-2026 / Expediente 2531-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141732",
+          "numero_expediente": "2185-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 390-2026 / Expediente 2185-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140369",
+          "numero_expediente": "1008-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 391-2026 / Expediente 1008-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142172",
+          "numero_expediente": "2587-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 392-2026 / Expediente 2587-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142157",
+          "numero_expediente": "2573-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 394-2026 / Expediente 2573-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141865",
+          "numero_expediente": "2316-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 395-2026 / Expediente 2316-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141697",
+          "numero_expediente": "2156-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 396-2026 / Expediente 2156-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141694",
+          "numero_expediente": "2153-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 397-2026 / Expediente 2153-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140956",
+          "numero_expediente": "1520-P-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 398-2026 / Expediente 1520-P-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140958",
+          "numero_expediente": "1522-P-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 399-2026 / Expediente 1522-P-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141553",
+          "numero_expediente": "2033-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 401-2026 / Expediente 2033-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141628",
+          "numero_expediente": "2096-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 402-2026 / Expediente 2096-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141766",
+          "numero_expediente": "2220-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 403-2026 / Expediente 2220-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141774",
+          "numero_expediente": "2224-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 404-2026 / Expediente 2224-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141780",
+          "numero_expediente": "2230-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 405-2026 / Expediente 2230-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141792",
+          "numero_expediente": "2242-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 406-2026 / Expediente 2242-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141828",
+          "numero_expediente": "2280-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 407-2026 / Expediente 2280-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141913",
+          "numero_expediente": "2360-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 408-2026 / Expediente 2360-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141946",
+          "numero_expediente": "2387-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 409-2026 / Expediente 2387-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141983",
+          "numero_expediente": "2422-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 410-2026 / Expediente 2422-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142089",
+          "numero_expediente": "2509-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 411-2026 / Expediente 2509-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141518",
+          "numero_expediente": "2001-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 412-2026 / Expediente 2001-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141145",
+          "numero_expediente": "1685-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 413-2026 / Expediente 1685-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141573",
+          "numero_expediente": "2054-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 414-2026 / Expediente 2054-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142051",
+          "numero_expediente": "2473-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 415-2026 / Expediente 2473-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141958",
+          "numero_expediente": "2398-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 416-2026 / Expediente 2398-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141648",
+          "numero_expediente": "2115-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 417-2026 / Expediente 2115-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141907",
+          "numero_expediente": "2354-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 418-2026 / Expediente 2354-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140853",
+          "numero_expediente": "1428-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 419-2026 / Expediente 1428-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141556",
+          "numero_expediente": "2036-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 420-2026 / Expediente 2036-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "139783",
+          "numero_expediente": "456-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 421-2026 / Expediente 456-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141904",
+          "numero_expediente": "2351-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 422-2026 / Expediente 2351-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142028",
+          "numero_expediente": "2454-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 423-2026 / Expediente 2454-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142047",
+          "numero_expediente": "2469-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 424-2026 / Expediente 2469-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142114",
+          "numero_expediente": "2533-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 428-2026 / Expediente 2533-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140929",
+          "numero_expediente": "1494-P-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 436-2026 / Expediente 1494-P-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141955",
+          "numero_expediente": "2395-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 439-2026 / Expediente 2395-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141899",
+          "numero_expediente": "2348-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley con sanción inicial / Expediente 2348-D-2026",
+          "alcance": "inicial"
+        },
+        {
+          "id_expediente": "141598",
+          "numero_expediente": "2075-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 389-2026 / Expediente 2075-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141599",
+          "numero_expediente": "2076-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 390-2026 / Expediente 2076-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141923",
+          "numero_expediente": "2367-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 391-2026 / Expediente 2367-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141578",
+          "numero_expediente": "2056-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 392-2026 / Expediente 2056-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141835",
+          "numero_expediente": "2286-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 393-2026 / Expediente 2286-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142096",
+          "numero_expediente": "2516-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 394-2026 / Expediente 2516-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142165",
+          "numero_expediente": "2580-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 396-2026 / Expediente 2580-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141464",
+          "numero_expediente": "1960-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 397-2026 / Expediente 1960-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141875",
+          "numero_expediente": "2326-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 399-2026 / Expediente 2326-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142022",
+          "numero_expediente": "2449-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 400-2026 / Expediente 2449-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "139899",
+          "numero_expediente": "581-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 401-2026 / Expediente 581-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141233",
+          "numero_expediente": "1757-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 402-2026 / Expediente 1757-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141629",
+          "numero_expediente": "2097-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 403-2026 / Expediente 2097-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142110",
+          "numero_expediente": "2529-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 406-2026 / Expediente 2529-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141854",
+          "numero_expediente": "2305-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 407-2026 / Expediente 2305-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141952",
+          "numero_expediente": "2393-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 408-2026 / Expediente 2393-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140548",
+          "numero_expediente": "1173-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 409-2026 / Expediente 1173-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142040",
+          "numero_expediente": "2466-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 410-2026 / Expediente 2466-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141953",
+          "numero_expediente": "2394-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 411-2026 / Expediente 2394-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141705",
+          "numero_expediente": "2164-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 412-2026 / Expediente 2164-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141544",
+          "numero_expediente": "2024-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 413-2026 / Expediente 2024-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141609",
+          "numero_expediente": "2082-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 414-2026 / Expediente 2082-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142152",
+          "numero_expediente": "2569-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 415-2026 / Expediente 2569-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142069",
+          "numero_expediente": "2489-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 416-2026 / Expediente 2489-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142137",
+          "numero_expediente": "2556-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 418-2026 / Expediente 2556-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141561",
+          "numero_expediente": "2039-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 419-2026 / Expediente 2039-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141552",
+          "numero_expediente": "2032-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 420-2026 / Expediente 2032-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141640",
+          "numero_expediente": "2106-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 421-2026 / Expediente 2106-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141801",
+          "numero_expediente": "2253-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 422-2026 / Expediente 2253-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142037",
+          "numero_expediente": "2461-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 423-2026 / Expediente 2461-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141959",
+          "numero_expediente": "2399-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 424-2026 / Expediente 2399-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142072",
+          "numero_expediente": "2492-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 425-2026 / Expediente 2492-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141990",
+          "numero_expediente": "2427-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 426-2026 / Expediente 2427-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141138",
+          "numero_expediente": "1678-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 427-2026 / Expediente 1678-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141970",
+          "numero_expediente": "2408-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 428-2026 / Expediente 2408-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141506",
+          "numero_expediente": "1995-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 430-2026 / Expediente 1995-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141698",
+          "numero_expediente": "2157-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 431-2026 / Expediente 2157-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141661",
+          "numero_expediente": "2124-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 434-2026 / Expediente 2124-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141932",
+          "numero_expediente": "2374-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 435-2026 / Expediente 2374-D-2026",
+          "alcance": "definitiva"
+        }
+      ],
       "votaciones_nominales": [],
-      "sanciones_despacho": [],
-      "cambios_giro": [],
+      "sanciones_despacho": [
+        {
+          "id_expediente": "140104",
+          "numero_expediente": "774-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Ley nro. 6974 / Despacho 289-2026"
+        }
+      ],
+      "cambios_giro": [
+        {
+          "id_expediente": "141441",
+          "numero_expediente": "1937-D-2026",
+          "tipo": "CAMBIO DE GIRO",
+          "descripcion": "Pase a: SALUD"
+        },
+        {
+          "id_expediente": "141728",
+          "numero_expediente": "2180-D-2026",
+          "tipo": "CAMBIO DE GIRO",
+          "descripcion": "Pase a: TRÁNSITO Y TRANSPORTE; JUSTICIA"
+        }
+      ],
       "resumen_items_recinto": {
-        "total": 0,
-        "sanciones_expediente": 0,
-        "sanciones_despacho": 0,
-        "cambios_giro": 0
+        "total": 84,
+        "sanciones_expediente": 81,
+        "sanciones_despacho": 1,
+        "cambios_giro": 2
       }
     }
   ],
@@ -26398,9 +28056,9 @@
     ],
     "fuente_tipo_item": "GetAsuntoConsideradoItemByIdSesion",
     "tipos_oficiales_observados": {
-      "cambio de giro": 36,
-      "sancion de un despacho": 250,
-      "sancion de un expediente": 376
+      "cambio de giro": 38,
+      "sancion de un despacho": 251,
+      "sancion de un expediente": 457
     },
     "alcance_sancion": "inicial, definitiva o no_especificada según descripción oficial"
   }

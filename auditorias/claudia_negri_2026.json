@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-08-31T13:51:06.240508+00:00",
+  "generado_en": "2026-08-31T20:51:14.905199+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,10 +9,10 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2023-11-17",
+    "fecha_mas_antigua_obtenida": "2023-11-22",
     "fecha_mas_reciente_obtenida": "2026-08-31",
-    "ids_del_anio_en_ventana": 2717,
-    "ids_revisados_acumulados": 2717,
+    "ids_del_anio_en_ventana": 2727,
+    "ids_revisados_acumulados": 2727,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -21,7 +21,7 @@
     "autoría_principal": 41,
     "coautoría": 174,
     "fichas_oficiales_completas": 215,
-    "con_evidencia_sancion": 61,
+    "con_evidencia_sancion": 72,
     "problemas": 0
   },
   "por_tipo": {
@@ -30,18 +30,18 @@
     "LEY": 59
   },
   "por_estado_actual": {
-    "en_comision": 115,
+    "en_comision": 111,
     "archivado": 59,
+    "sancionado": 22,
     "despacho": 15,
-    "ingresado": 12,
-    "sancionado": 11,
+    "ingresado": 5,
     "con_dictamen": 3
   },
   "por_etapa_ciclo": {
-    "en_comision": 127,
+    "en_comision": 116,
     "archivado": 59,
-    "con_dictamen": 18,
-    "sancionado": 11
+    "sancionado": 22,
+    "con_dictamen": 18
   },
   "control_832_2026": {
     "encontrados": 1,
@@ -93,8 +93,8 @@
     "id_sesion": "1151",
     "fecha": "2026-08-27",
     "realizada": true,
-    "asuntos_considerados": 0,
-    "sanciones": 0,
+    "asuntos_considerados": 84,
+    "sanciones": 81,
     "votaciones_nominales": 0,
     "version_taquigrafica_disponible": false
   },
@@ -134,14 +134,14 @@
       "tipo_oficial": "DECLARACION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "DGDP",
+      "ubicacion": "SP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
         "fecha": "2026-08-31",
-        "oficina": "DGDP",
-        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "oficina": "SP",
+        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -332,22 +332,29 @@
       ],
       "cantidad_autores": 10,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
-      "etapa_ciclo": "en_comision",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
       "ubicacion": "MEP",
       "giros": [
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-27",
+        "fecha": "2026-08-31",
         "oficina": "MEP",
-        "descripcion": "EN MEP PARA REALIZAR DISTINTAS TAREAS (ESPERANDO RECEPCION)"
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
         "radar_ingresos",
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142051",
@@ -423,22 +430,29 @@
       ],
       "cantidad_autores": 19,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
-      "etapa_ciclo": "en_comision",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
       "ubicacion": "MEP",
       "giros": [
         "CULTURA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-27",
+        "fecha": "2026-08-31",
         "oficina": "MEP",
-        "descripcion": "EN MEP PARA REALIZAR DISTINTAS TAREAS (ESPERANDO RECEPCION)"
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
         "radar_ingresos",
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142047",
@@ -607,22 +621,29 @@
       ],
       "cantidad_autores": 10,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
-      "etapa_ciclo": "en_comision",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
       "ubicacion": "MEP",
       "giros": [
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-27",
+        "fecha": "2026-08-31",
         "oficina": "MEP",
-        "descripcion": "EN MEP PARA REALIZAR DISTINTAS TAREAS (ESPERANDO RECEPCION)"
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
         "radar_ingresos",
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141958",
@@ -694,22 +715,29 @@
       ],
       "cantidad_autores": 4,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
-      "etapa_ciclo": "en_comision",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
       "ubicacion": "MEP",
       "giros": [
         "EDUCACIÓN, CIENCIA Y TECNOLOGÍA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-27",
+        "fecha": "2026-08-31",
         "oficina": "MEP",
-        "descripcion": "EN MEP PARA REALIZAR DISTINTAS TAREAS (ESPERANDO RECEPCION)"
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
         "radar_ingresos",
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141913",
@@ -748,22 +776,29 @@
       ],
       "cantidad_autores": 20,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "en_comision",
-      "etapa_ciclo": "en_comision",
-      "ubicacion": "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
+      "ubicacion": "MEP",
       "giros": [
         "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-07",
-        "oficina": "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN",
-        "descripcion": "EN COMISION"
+        "fecha": "2026-08-31",
+        "oficina": "MEP",
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES (ESPERANDO RECEPCION)"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
         "radar_ingresos",
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141907",
@@ -1061,21 +1096,28 @@
       ],
       "cantidad_autores": 11,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "en_comision",
-      "etapa_ciclo": "en_comision",
-      "ubicacion": "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
+      "ubicacion": "MEP",
       "giros": [
         "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-07-06",
-        "oficina": "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA",
-        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-08-31",
+        "oficina": "MEP",
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141640",
@@ -1135,21 +1177,28 @@
       ],
       "cantidad_autores": 5,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "ingresado",
-      "etapa_ciclo": "en_comision",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
       "ubicacion": "MEP",
       "giros": [
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-27",
+        "fecha": "2026-08-31",
         "oficina": "MEP",
-        "descripcion": "EN MEP PARA REALIZAR DISTINTAS TAREAS (ESPERANDO RECEPCION)"
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141609",
@@ -1212,21 +1261,28 @@
       ],
       "cantidad_autores": 1,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "en_comision",
-      "etapa_ciclo": "en_comision",
-      "ubicacion": "COMUNICACIÓN SOCIAL, MEDIOS DE COMUNICACIÓN Y TECNOLOGÍAS DE LA COMUNICACIÓN",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
+      "ubicacion": "MEP",
       "giros": [
         "COMUNICACIÓN SOCIAL, MEDIOS DE COMUNICACIÓN Y TECNOLOGÍAS DE LA COMUNICACIÓN"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-07-02",
-        "oficina": "COMUNICACIÓN SOCIAL, MEDIOS DE COMUNICACIÓN Y TECNOLOGÍAS DE LA COMUNICACIÓN",
-        "descripcion": "EN COMISION"
+        "fecha": "2026-08-31",
+        "oficina": "MEP",
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141573",
@@ -1332,21 +1388,28 @@
       ],
       "cantidad_autores": 1,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
-      "etapa_ciclo": "en_comision",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
       "ubicacion": "MEP",
       "giros": [
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-27",
+        "fecha": "2026-08-31",
         "oficina": "MEP",
-        "descripcion": "EN MEP PARA REALIZAR DISTINTAS TAREAS (ESPERANDO RECEPCION)"
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141518",
@@ -2121,21 +2184,28 @@
       ],
       "cantidad_autores": 1,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
-      "etapa_ciclo": "en_comision",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
       "ubicacion": "MEP",
       "giros": [
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-27",
+        "fecha": "2026-08-31",
         "oficina": "MEP",
-        "descripcion": "EN MEP PARA REALIZAR DISTINTAS TAREAS (ESPERANDO RECEPCION)"
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141145",
@@ -2165,21 +2235,28 @@
       ],
       "cantidad_autores": 11,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "en_comision",
-      "etapa_ciclo": "en_comision",
-      "ubicacion": "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
+      "ubicacion": "MEP",
       "giros": [
         "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-06-01",
-        "oficina": "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA",
-        "descripcion": "EN COMISION"
+        "fecha": "2026-08-31",
+        "oficina": "MEP",
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141138",
@@ -9302,9 +9379,9 @@
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-10",
+        "fecha": "2026-08-31",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

@@ -1,0 +1,323 @@
+name: Auditar y reparar Descentralizacion
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+env:
+  TARGET_URL: https://cepoes.org/presupuesto/descentralizacion/
+
+jobs:
+  auditar-reparar:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      SFTP_HOST: ${{ secrets.HOSTINGER_SFTP_HOST }}
+      SFTP_PORT: ${{ secrets.HOSTINGER_SFTP_PORT }}
+      SFTP_USER: ${{ secrets.HOSTINGER_SFTP_USER }}
+      SFTP_PASSWORD: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+      REMOTE_DIR: ${{ secrets.HOSTINGER_REMOTE_DIR }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Aplicar correcciones auditadas
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          target = "https://cepoes.org/presupuesto/descentralizacion/"
+          lastmod = "2026-08-30"
+
+          # sitemap.xml: una sola entrada y lastmod obligatorio.
+          p = Path("deploy/site-overlay/sitemap.xml")
+          text = p.read_text(encoding="utf-8")
+          pattern = re.compile(
+              r"<url>\s*<loc>" + re.escape(target) +
+              r"</loc>\s*(?:<lastmod>[^<]+</lastmod>\s*)?</url>"
+          )
+          matches = list(pattern.finditer(text))
+          if len(matches) != 1:
+              raise SystemExit(f"Se esperaba una única entrada de Descentralización en sitemap.xml; hay {len(matches)}")
+          m = matches[0]
+          entry = f"  <url><loc>{target}</loc><lastmod>{lastmod}</lastmod></url>"
+          text = text[:m.start()] + entry + text[m.end():]
+          if not text.endswith("\n"):
+              text += "\n"
+          p.write_text(text, encoding="utf-8")
+
+          # sitemap.txt: una sola entrada, sin duplicados.
+          p = Path("deploy/site-overlay/sitemap.txt")
+          lines = [x.strip() for x in p.read_text(encoding="utf-8").splitlines() if x.strip()]
+          lines = [x for x in lines if x != target] + [target]
+          if len(lines) != len(set(lines)):
+              raise SystemExit("sitemap.txt ya contiene URLs duplicadas ajenas a Descentralización")
+          p.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+          # Página: evitar cabecera duplicada y activar controles globales.
+          p = Path("deploy/site-overlay/presupuesto/descentralizacion/index.html")
+          html = p.read_text(encoding="utf-8")
+          html = re.sub(r'<header class="top">.*?</header>\s*', '', html, count=1, flags=re.S)
+          canonical = '<link rel="canonical" href="https://cepoes.org/presupuesto/descentralizacion/">'
+          if canonical not in html:
+              if "</head>" not in html:
+                  raise SystemExit("La página de Descentralización no tiene </head>")
+              html = html.replace("</head>", canonical + "\n</head>", 1)
+          common = '<script defer src="/assets/common.js?v=254"></script>'
+          if "/assets/common.js" not in html:
+              if "</body>" not in html:
+                  raise SystemExit("La página de Descentralización no tiene </body>")
+              html = html.replace("</body>", common + "\n</body>", 1)
+          p.write_text(html, encoding="utf-8")
+
+          # Buscador global: hacer encontrable la nueva sección.
+          p = Path("deploy/site-overlay/assets/common.js")
+          js = p.read_text(encoding="utf-8")
+          if "x.url==='/presupuesto/descentralizacion/'" not in js:
+              anchor = "if(!index.some(x=>x.url==='/prensa/'))"
+              if anchor not in js:
+                  raise SystemExit("No se encontró el ancla estable del índice de búsqueda en common.js")
+              item = (
+                  "if(!index.some(x=>x.url==='/presupuesto/descentralizacion/'))"
+                  "index.push({title:'Descentralización y Comunas',url:'/presupuesto/descentralizacion/',"
+                  "group:'Datos',type:'Presupuesto y Estado',summary:'Presupuesto administrado por las 15 Comunas, "
+                  "competencias transferidas y matriz de transparencia institucional.',"
+                  "tags:['descentralizacion','comunas','presupuesto comunal','ley 1777','ley 5629','transparencia','participacion']});"
+              )
+              js = js.replace(anchor, item + anchor, 1)
+          p.write_text(js, encoding="utf-8")
+
+          print("✓ correcciones aplicadas en working tree")
+          PY
+
+      - name: Auditoria estatica completa
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "1/7 · Python"
+          python - <<'PY'
+          from pathlib import Path
+          import py_compile
+          files=list(Path('.').rglob('*.py'))
+          for p in files:
+              py_compile.compile(str(p), doraise=True)
+          print(f"✓ {len(files)} archivos Python")
+          PY
+
+          echo "2/7 · JavaScript"
+          while IFS= read -r -d '' f; do node --check "$f"; done < <(find . -type f -name '*.js' -print0)
+          echo "✓ JavaScript"
+
+          echo "3/7 · JSON y XML"
+          python - <<'PY'
+          from pathlib import Path
+          import json, re, xml.etree.ElementTree as ET
+
+          for p in Path('.').rglob('*.json'):
+              json.loads(p.read_text(encoding='utf-8'))
+
+          p=Path('deploy/site-overlay/sitemap.xml')
+          text=p.read_text(encoding='utf-8')
+          root=ET.parse(p).getroot()
+          urls=[u for u in root.iter() if u.tag.split('}',1)[-1]=='url']
+          locs=[]
+          for u in urls:
+              loc=next((x for x in list(u) if x.tag.split('}',1)[-1]=='loc'),None)
+              last=next((x for x in list(u) if x.tag.split('}',1)[-1]=='lastmod'),None)
+              assert loc is not None and (loc.text or '').startswith('https://cepoes.org/')
+              assert last is not None and re.fullmatch(r'\d{4}-\d{2}-\d{2}',(last.text or '').strip()), (loc.text, last.text if last is not None else None)
+              locs.append((loc.text or '').strip())
+          assert len(locs)==len(set(locs)), 'sitemap.xml tiene URLs duplicadas'
+          assert 'https://cepoes.org/presupuesto/descentralizacion/' in locs
+          assert '</urlset>' in text and 'ns0:' not in text
+          print(f"✓ JSON + sitemap.xml · {len(locs)} URLs")
+          PY
+
+          echo "4/7 · Datos principales"
+          python verificar_descentralizacion_comunas.py
+          python verificar_salud_mental.py
+          python verificar_presupuesto.py
+          python verificar_presupuesto_analitico.py
+          python verificar_presupuesto_historico.py
+          python verificar_presupuesto_territorial.py
+          python verificar_migraciones.py
+          python verificar_personas_mayores.py
+          python verificar_deporte_salud.py
+          python verificar_estructura_productiva.py
+          python verificar_estructura_actual.py
+          python verificar_dinamica_productiva.py
+          python verificar_accesibilidad_deportiva.py
+          python verificar_accesibilidad_peatonal.py
+          python verificar_territorio.py
+          python verificar_legislatura.py
+          python verificar_area_legislativa.py
+          python verificar_analisis_automatico.py
+
+          echo "5/7 · Contrato Descentralización"
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          b=json.loads(Path('deploy/site-overlay/assets/data/descentralizacion-comunas.json').read_text(encoding='utf-8'))
+          t=json.loads(Path('deploy/site-overlay/assets/data/descentralizacion-transparencia-2024.json').read_text(encoding='utf-8'))
+          c=json.loads(Path('deploy/site-overlay/assets/data/descentralizacion-competencias.json').read_text(encoding='utf-8'))
+          assert b['schema']=='cepoes-descentralizacion-comunas-v2' and b['status']=='VALIDADO'
+          assert len(b['comunas'])==15 and {x['comuna'] for x in b['comunas']}==set(range(1,16))
+          assert len(t['comunas'])==15 and {x['comuna'] for x in t['comunas']}==set(range(1,16))
+          assert len(c['competencias'])>=6
+          assert abs(sum(x['administrado']['sancionado'] for x in b['comunas'])-b['headline']['presupuesto_administrado_comunas_sancionado'])<1
+          print('✓ contrato de datos de Descentralización')
+          PY
+
+          echo "6/7 · Integración fuente"
+          python - <<'PY'
+          from pathlib import Path
+          prep=Path('deploy/preparar_sitio_publico.py').read_text(encoding='utf-8')
+          page=Path('deploy/site-overlay/presupuesto/descentralizacion/index.html').read_text(encoding='utf-8')
+          common=Path('deploy/site-overlay/assets/common.js').read_text(encoding='utf-8')
+          assert '("/presupuesto/descentralizacion/", "Descentralización")' in prep
+          assert '<header class="top">' not in page
+          assert 'https://cepoes.org/presupuesto/descentralizacion/' in page
+          assert '/assets/common.js?v=254' in page
+          assert "x.url==='/presupuesto/descentralizacion/'" in common
+          print('✓ navegación, canonical, JS global y buscador')
+          PY
+
+          echo "7/7 · Diff"
+          git diff --check
+          echo "✓ AUDITORIA ESTATICA COMPLETA"
+
+      - name: Verificar acceso a produccion
+        shell: bash
+        run: |
+          set -euo pipefail
+          for v in SFTP_HOST SFTP_USER SFTP_PASSWORD REMOTE_DIR; do
+            [ -n "${!v:-}" ] || { echo "Falta $v" >&2; exit 1; }
+          done
+          echo "SFTP_PORT=${SFTP_PORT:-65002}" >> "$GITHUB_ENV"
+          tcp_ok=0
+          for intento in 1 2 3; do
+            if timeout 15 bash -c "cat < /dev/null > /dev/tcp/$SFTP_HOST/${SFTP_PORT:-65002}"; then tcp_ok=1; break; fi
+            echo "TCP no disponible · intento $intento/3" >&2
+            sleep $((intento*3))
+          done
+          [ "$tcp_ok" -eq 1 ] || { echo "ERROR: SFTP no accesible por TCP" >&2; exit 31; }
+          echo "✓ TCP SFTP"
+
+      - name: Instalar cliente SFTP
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+      - name: Construir sitio exactamente sobre produccion
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf _audit_site
+          mkdir -p _audit_site
+
+          ok=0
+          for intento in 1 2 3; do
+            rm -rf _audit_site/* _audit_site/.[!.]* _audit_site/..?* 2>/dev/null || true
+            if lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set cmd:fail-exit yes
+          set net:max-retries 4
+          set net:timeout 30
+          mirror --verbose --parallel=1 "$REMOTE_DIR" _audit_site
+          bye
+          EOF
+            then ok=1; break; fi
+            echo "Mirror falló · intento $intento/3" >&2
+            sleep $((intento*5))
+          done
+          [ "$ok" -eq 1 ] || { echo "ERROR: no se pudo espejar producción" >&2; exit 32; }
+          test -s _audit_site/index.html || { echo "Producción espejada sin index.html" >&2; exit 33; }
+
+          cp -a deploy/site-overlay/. _audit_site/
+          if [ -s deploy/delete-paths.txt ]; then
+            while IFS= read -r rel; do
+              rel="${rel%%#*}"
+              rel="$(echo "$rel" | xargs)"
+              [ -z "$rel" ] && continue
+              case "$rel" in /*|*".."*) echo "Ruta de borrado no permitida: $rel" >&2; exit 1;; esac
+              rm -rf -- "_audit_site/$rel"
+            done < deploy/delete-paths.txt
+          fi
+
+          python deploy/preparar_sitio_publico.py _audit_site
+          python validar_sitio_despliegue.py _audit_site
+          echo "✓ VALIDADOR OFICIAL COMPLETO SOBRE COPIA DE PRODUCCION"
+
+      - name: Auditoria especifica del sitio construido
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check _audit_site/assets/descentralizacion-observatorio.js
+          python - <<'PY'
+          from pathlib import Path
+          import json, re, xml.etree.ElementTree as ET
+          root=Path('_audit_site')
+          page=(root/'presupuesto/descentralizacion/index.html').read_text(encoding='utf-8')
+          hub=(root/'presupuesto/index.html').read_text(encoding='utf-8')
+          assert page.count('<nav class="site-nav">')==1
+          assert page.count('<footer class="footer">')==1
+          assert 'class="active" href="/presupuesto/descentralizacion/"' in page
+          assert 'href="/presupuesto/descentralizacion/"' in hub
+          assert 'https://cepoes.org/presupuesto/descentralizacion/' in page
+          assert '/assets/common.js?v=254' in page
+          for name in ['descentralizacion-comunas.json','descentralizacion-transparencia-2024.json','descentralizacion-competencias.json']:
+              json.loads((root/'assets/data'/name).read_text(encoding='utf-8'))
+          tree=ET.parse(root/'sitemap.xml')
+          locs=[(x.text or '').strip() for x in tree.getroot().iter() if x.tag.split('}',1)[-1]=='loc']
+          assert locs.count('https://cepoes.org/presupuesto/descentralizacion/')==1
+          print('✓ AUDITORIA DE DESCENTRALIZACION SOBRE BUILD REAL')
+          PY
+
+      - name: Commit solo despues de pasar todo
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "cepoes-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add deploy/site-overlay/sitemap.xml \
+                  deploy/site-overlay/sitemap.txt \
+                  deploy/site-overlay/presupuesto/descentralizacion/index.html \
+                  deploy/site-overlay/assets/common.js
+          if git diff --cached --quiet; then
+            echo "Sin cambios: correcciones ya presentes."
+          else
+            git commit -m "fix: cerrar integracion de descentralizacion"
+            git push origin HEAD:main
+          fi
+
+      - name: Disparar deploy oficial
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          code=$(curl -sS -o /tmp/dispatch.out -w '%{http_code}' \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/workflows/desplegar-hostinger.yml/dispatches" \
+            -d '{"ref":"main"}')
+          if [ "$code" != "204" ]; then
+            echo "No se pudo disparar el deploy · HTTP $code" >&2
+            cat /tmp/dispatch.out >&2
+            exit 1
+          fi
+          echo "✓ Deploy oficial disparado sobre main ya auditado"

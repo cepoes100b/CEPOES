@@ -70,6 +70,7 @@ ensure_sitemap_url(root,'/territorio/estructura-productiva/')
 ensure_sitemap_url(root,'/territorio/deporte-salud/')
 ensure_sitemap_url(root,'/presupuesto/ejecucion/')
 ensure_sitemap_url(root,'/presupuesto/territorio/')
+ensure_sitemap_url(root,'/presupuesto/descentralizacion/')
 ensure_sitemap_url(root,'/temas/')
 ensure_sitemap_url(root,'/observatorio/personas-mayores/')
 
@@ -79,6 +80,9 @@ required=[
     'assets/arquitectura.css','assets/data/taxonomia.json','temas/index.html',
     'observatorio/personas-mayores/index.html','assets/personas-mayores.css',
     'assets/personas-mayores.js','assets/data/personas-mayores.json',
+    'presupuesto/descentralizacion/index.html','assets/descentralizacion-observatorio.js',
+    'assets/data/descentralizacion-comunas.json','assets/data/descentralizacion-transparencia-2024.json',
+    'assets/data/descentralizacion-competencias.json',
     'legislatura/index.html','territorio/endeudamiento/index.html',
     'territorio/migraciones/index.html','territorio/estructura-productiva/index.html',
     'territorio/deporte-salud/index.html',
@@ -153,10 +157,17 @@ assert personas_data.get('schema')=='cepoes-personas-mayores-v1' and personas_da
 assert personas_data['indicadores']['canasta_inquilinos']['valor']>personas_data['indicadores']['canasta_propietarios']['valor']
 presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'Cargando último trimestre oficial' not in presupuesto and 'cargando…' not in presupuesto and '<b>—</b>' not in presupuesto, 'Fallback vacío en Presupuesto'
-for rel,url in [('presupuesto/ejecucion/index.html','https://cepoes.org/presupuesto/ejecucion/'),('presupuesto/territorio/index.html','https://cepoes.org/presupuesto/territorio/')]:
+assert 'href="/presupuesto/descentralizacion/"' in presupuesto, 'Presupuesto no enlaza Descentralización'
+for rel,url in [('presupuesto/ejecucion/index.html','https://cepoes.org/presupuesto/ejecucion/'),('presupuesto/territorio/index.html','https://cepoes.org/presupuesto/territorio/'),('presupuesto/descentralizacion/index.html','https://cepoes.org/presupuesto/descentralizacion/')]:
     s=(root/rel).read_text(encoding='utf-8',errors='replace')
     canonical=re.search(r'<link\b(?=[^>]*\brel=["\']canonical["\'])[^>]*>',s,re.I)
     assert canonical and re.search(rf'\bhref=["\']{re.escape(url)}["\']',canonical.group(0),re.I), f'Canonical incorrecto: {rel}'
+descentralizacion=(root/'presupuesto'/'descentralizacion'/'index.html').read_text(encoding='utf-8',errors='replace')
+assert '/assets/descentralizacion-observatorio.js' in descentralizacion, 'Falta JS de Descentralización'
+assert '/assets/common.js' in descentralizacion, 'Falta common.js en Descentralización'
+assert '/assets/site.css' in descentralizacion, 'Falta site.css en Descentralización'
+assert descentralizacion.count('<nav class="site-nav">')==1, 'Navegación global duplicada en Descentralización'
+assert 'class="active" href="/presupuesto/descentralizacion/"' in descentralizacion, 'Subnav de Descentralización no activa'
 htaccess=(root/'.htaccess').read_text(encoding='utf-8',errors='replace')
 for rule in ['Redirect 301 /observatorio/presupuesto/ /presupuesto/ejecucion/','Redirect 301 /territorio/presupuesto/ /presupuesto/territorio/']:
     assert rule in htaccess, f'Falta redirect: {rule}'
@@ -220,6 +231,7 @@ assert 'https://cepoes.org/territorio/estructura-productiva/' in locs
 assert 'https://cepoes.org/territorio/deporte-salud/' in locs
 assert 'https://cepoes.org/presupuesto/ejecucion/' in locs
 assert 'https://cepoes.org/presupuesto/territorio/' in locs
+assert 'https://cepoes.org/presupuesto/descentralizacion/' in locs
 assert 'https://cepoes.org/temas/' in locs
 assert 'https://cepoes.org/observatorio/personas-mayores/' in locs
 assert 'https://cepoes.org/observatorio/presupuesto/' not in locs

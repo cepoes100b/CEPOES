@@ -116,7 +116,7 @@ FOOTER = (
 
 def active_link(rel: str, href: str) -> str:
     path = "/" + rel.lstrip("/").removesuffix("index.html")
-    active = path == href or ("#" not in href and href != "/territorio/" and path.startswith(href))
+    active = path == href or ("#" not in href and href not in {"/territorio/", "/presupuesto/"} and path.startswith(href))
     return ' class="active"' if active else ""
 
 
@@ -657,6 +657,7 @@ def normalize_html(path: Path, site: Path) -> None:
     canonical_routes = {
         "/presupuesto/ejecucion/index.html": "https://cepoes.org/presupuesto/ejecucion/",
         "/presupuesto/territorio/index.html": "https://cepoes.org/presupuesto/territorio/",
+        "/presupuesto/descentralizacion/index.html": "https://cepoes.org/presupuesto/descentralizacion/",
     }
     if rel in canonical_routes:
         target = canonical_routes[rel]

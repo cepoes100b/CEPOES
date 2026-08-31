@@ -1,0 +1,164 @@
+name: Corregir mapa Salud Mental V2
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cepoes-corregir-mapa-salud-mental-v2
+  cancel-in-progress: false
+
+jobs:
+  corregir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Auditar versión actual
+        shell: bash
+        run: |
+          set -euo pipefail
+          JS=deploy/site-overlay/assets/salud-mental.js
+          CSS=deploy/site-overlay/assets/salud-mental.css
+          HTML=deploy/site-overlay/observatorio/salud-mental/index.html
+          test -s "$JS" && test -s "$CSS" && test -s "$HTML"
+          test -s deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson
+          if grep -q 'COMMUNES_URL' "$JS" && grep -q 'salud-mental.js?v=2' "$HTML"; then
+            echo "V2 ya aplicada."
+          else
+            [ "$(git hash-object "$JS")" = "7769138de96d8c3012ededb5467d6c8cd8aa271e" ] || { echo "JS cambió desde la instantánea auditada; no se sobrescribe." >&2; exit 41; }
+            [ "$(git hash-object "$CSS")" = "1d80506ae52c8e0e3ff48c3e14eda9fc857b2a99" ] || { echo "CSS cambió desde la instantánea auditada; no se sobrescribe." >&2; exit 42; }
+            [ "$(git hash-object "$HTML")" = "cdb8257e31147aad438180f0da210408e5db45e4" ] || { echo "HTML cambió desde la instantánea auditada; no se sobrescribe." >&2; exit 43; }
+            echo "✓ Interfaz V1 coincide con la instantánea auditada."
+          fi
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path("deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson").read_text(encoding="utf-8"))
+          fs=d.get("features") or []
+          assert d.get("type")=="FeatureCollection"
+          assert len(fs)==15
+          assert {int(f["properties"]["comuna"]) for f in fs}==set(range(1,16))
+          print("✓ GeoJSON válido · 15 comunas")
+          PY
+
+      - name: Aplicar mapa comunal V2
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+
+          js_path=Path("deploy/site-overlay/assets/salud-mental.js")
+          css_path=Path("deploy/site-overlay/assets/salud-mental.css")
+          html_path=Path("deploy/site-overlay/observatorio/salud-mental/index.html")
+          validator_path=Path("validar_sitio_despliegue.py")
+
+          js=js_path.read_text(encoding="utf-8")
+          if 'const COMMUNES_URL = "/assets/data/estructura-productiva/comunas.geojson";' not in js:
+              anchor='  const DATA_URL = "/assets/data/salud-mental.json";'
+              if anchor not in js: raise SystemExit("No se encontró DATA_URL")
+              js=js.replace(anchor,anchor+'\n  const COMMUNES_URL = "/assets/data/estructura-productiva/comunas.geojson";',1)
+              start=js.find("  function renderCesac(data){")
+              end=js.find("  async function init(){",start)
+              if start<0 or end<0: raise SystemExit("No se encontró renderCesac V1")
+              js=js[:start]+'  function geometryRings(geometry){\n    if(!geometry) return [];\n    if(geometry.type==="Polygon") return [geometry.coordinates];\n    if(geometry.type==="MultiPolygon") return geometry.coordinates;\n    return [];\n  }\n  function featurePoints(feature){\n    const out=[];\n    geometryRings(feature?.geometry).forEach(poly=>poly.forEach(ring=>ring.forEach(([lon,lat])=>{\n      lon=Number(lon); lat=Number(lat);\n      if(Number.isFinite(lon)&&Number.isFinite(lat)) out.push([lon,lat]);\n    })));\n    return out;\n  }\n  function renderCesac(data, communes){\n    const items=(data.red_atencion_caba?.cesac_con_salud_mental||[]).map(x=>({...x,pt:parsePoint(x.geometry),cn:communeNumber(x.comuna)}));\n    text("sm-cesac-summary",`${items.length} CeSAC con Psicología y/o Psiquiatría en la cartera oficial publicada.`);\n    const select=document.getElementById("sm-cesac-comuna"), list=document.getElementById("sm-cesac-list"), svg=document.getElementById("sm-cesac-map");\n    if(!select||!list||!svg) return;\n    const features=(communes?.features||[]).filter(f=>Number.isFinite(Number(f?.properties?.comuna)));\n    if(features.length!==15) throw new Error(`GeoJSON de comunas inválido: ${features.length} features`);\n    [...new Set(items.map(x=>x.cn).filter(Boolean))].sort((a,b)=>Number(a)-Number(b)).forEach(c=>{\n      const o=document.createElement("option"); o.value=c; o.textContent=`Comuna ${c}`; select.append(o);\n    });\n    const W=720,H=520,P=34;\n    function makeProjection(targetFeatures){\n      const pts=targetFeatures.flatMap(featurePoints);\n      if(!pts.length) throw new Error("La geometría seleccionada no tiene coordenadas");\n      const lons=pts.map(p=>p[0]), lats=pts.map(p=>p[1]);\n      const minLon=Math.min(...lons),maxLon=Math.max(...lons),minLat=Math.min(...lats),maxLat=Math.max(...lats);\n      const midLat=(minLat+maxLat)/2, xFactor=Math.cos(midLat*Math.PI/180);\n      const spanX=Math.max((maxLon-minLon)*xFactor,1e-9), spanY=Math.max(maxLat-minLat,1e-9);\n      const scale=Math.min((W-2*P)/spanX,(H-2*P)/spanY)*.93;\n      const cx=(minLon+maxLon)/2, cy=(minLat+maxLat)/2;\n      return ([lon,lat])=>({x:W/2+(Number(lon)-cx)*xFactor*scale,y:H/2-(Number(lat)-cy)*scale});\n    }\n    function pathForFeature(feature,project){\n      const chunks=[];\n      geometryRings(feature.geometry).forEach(poly=>poly.forEach(ring=>{\n        const pts=ring.map(project);\n        if(pts.length) chunks.push(`M${pts.map(p=>`${p.x.toFixed(2)},${p.y.toFixed(2)}`).join("L")}Z`);\n      }));\n      return chunks.join(" ");\n    }\n    function labelPoint(feature,project){\n      const pts=featurePoints(feature);\n      const lon=pts.reduce((a,p)=>a+p[0],0)/pts.length;\n      const lat=pts.reduce((a,p)=>a+p[1],0)/pts.length;\n      return project([lon,lat]);\n    }\n    function paint(){\n      const c=select.value;\n      const selectedFeature=c ? features.find(f=>String(f.properties.comuna)===String(c)) : null;\n      const mapFeatures=selectedFeature ? [selectedFeature] : features;\n      const shown=items.filter(x=>!c||x.cn===c);\n      const project=makeProjection(mapFeatures);\n      svg.innerHTML="";\n      svg.append(svgEl("rect",{x:1,y:1,width:W-2,height:H-2,rx:16,class:"sm-map-background"}));\n      mapFeatures.slice().sort((a,b)=>Number(a.properties.comuna)-Number(b.properties.comuna)).forEach(feature=>{\n        const comuna=String(feature.properties.comuna);\n        const path=svgEl("path",{d:pathForFeature(feature,project),class:`sm-map-commune${c&&comuna===String(c)?" is-selected":""}`,"fill-rule":"evenodd","data-comuna":comuna});\n        const title=svgEl("title");\n        title.textContent=`Comuna ${comuna}${feature.properties.barrios?` · ${feature.properties.barrios}`:""}`;\n        path.append(title); svg.append(path);\n      });\n      mapFeatures.forEach(feature=>{\n        const p=labelPoint(feature,project);\n        const label=svgEl("text",{x:p.x,y:p.y+4,"text-anchor":"middle",class:`sm-map-label${c?" is-selected":""}`});\n        label.textContent=c?`Comuna ${feature.properties.comuna}`:String(feature.properties.comuna);\n        svg.append(label);\n      });\n      shown.filter(x=>x.pt).forEach(x=>{\n        const p=project([x.pt.lon,x.pt.lat]);\n        const circle=svgEl("circle",{cx:p.x,cy:p.y,r:c?7:5,class:"sm-map-point"});\n        const title=svgEl("title"); title.textContent=`${x.nombre} · ${x.barrio} · ${x.comuna}`;\n        circle.append(title); svg.append(circle);\n      });\n      list.innerHTML="";\n      shown.sort((a,b)=>String(a.nombre).localeCompare(String(b.nombre),"es")).forEach(x=>{\n        const d=document.createElement("div"); d.className="sm-cesac-item";\n        d.innerHTML=`<strong>${x.nombre}</strong><span>${x.direccion} · ${x.barrio} · ${x.comuna}</span><small>${x.telefono||"Sin teléfono publicado"}</small>${x.web?`<a href="${x.web}" target="_blank" rel="noopener">Ficha oficial ↗</a>`:""}`;\n        list.append(d);\n      });\n    }\n    select.addEventListener("change",paint);\n    paint();\n  }\n'+js[end:]
+              old = '      const r=await fetch(DATA_URL,{cache:"no-store"}); if(!r.ok) throw new Error(`HTTP ${r.status}`);\n      const d=await r.json();'
+              new = '      const [r,g]=await Promise.all([\n        fetch(DATA_URL,{cache:"no-store"}),\n        fetch(COMMUNES_URL,{cache:"no-store"})\n      ]);\n      if(!r.ok) throw new Error(`Salud mental HTTP ${r.status}`);\n      if(!g.ok) throw new Error(`Comunas HTTP ${g.status}`);\n      const d=await r.json();\n      const communes=await g.json();'
+              if old not in js: raise SystemExit("No se encontró fetch V1")
+              js=js.replace(old,new,1)
+              call="      drawSeries(d); renderJurisdictions(d); renderCesac(d);"
+              if call not in js: raise SystemExit("No se encontró llamada renderCesac V1")
+              js=js.replace(call,"      drawSeries(d); renderJurisdictions(d); renderCesac(d, communes);",1)
+              js_path.write_text(js,encoding="utf-8")
+              print("✓ JS V2 aplicado")
+          else:
+              print("✓ JS V2 ya presente")
+
+          css=css_path.read_text(encoding="utf-8")
+          if "/* Salud Mental V2 · base cartográfica de comunas */" not in css:
+              css=css.rstrip()+"\n"+'/* Salud Mental V2 · base cartográfica de comunas */\n.sm-map-background{fill:#f5f9fa;stroke:rgba(22,35,47,.08);stroke-width:1}\n.sm-map-commune{fill:#dce9ec;stroke:#78909b;stroke-width:1.35;vector-effect:non-scaling-stroke;transition:fill .15s ease,stroke .15s ease}\n.sm-map-commune.is-selected{fill:#c6e4e7;stroke:var(--sm-a);stroke-width:2.6}\n.sm-map-label{fill:#49616b;font-size:14px;font-weight:800;paint-order:stroke;stroke:#f5f9fa;stroke-width:3px;stroke-linejoin:round;pointer-events:none}\n.sm-map-label.is-selected{fill:#173b43;font-size:18px}\n.sm-map-point{filter:drop-shadow(0 1px 1px rgba(0,0,0,.18))}\n[data-theme="dark"] .sm-map-background{fill:#17272e;stroke:rgba(255,255,255,.08)}\n[data-theme="dark"] .sm-map-commune{fill:#294048;stroke:#77909a}\n[data-theme="dark"] .sm-map-commune.is-selected{fill:#285a60;stroke:#7bd1d9}\n[data-theme="dark"] .sm-map-label{fill:#d6e4e8;stroke:#17272e}\n[data-theme="dark"] .sm-map-label.is-selected{fill:#fff}\n'
+              css_path.write_text(css,encoding="utf-8")
+              print("✓ CSS cartográfico agregado")
+
+          html=html_path.read_text(encoding="utf-8")
+          html=html.replace('/assets/salud-mental.css?v=1','/assets/salud-mental.css?v=2')
+          html=html.replace('/assets/salud-mental.js?v=1','/assets/salud-mental.js?v=2')
+          html=html.replace(
+              "Los puntos se ubican con las coordenadas publicadas por BA Data. El gráfico no representa áreas de cobertura ni tiempos de viaje.",
+              "La base cartográfica muestra los límites de las 15 comunas de CABA; los puntos usan las coordenadas publicadas por BA Data. El mapa no representa áreas de cobertura ni tiempos de viaje."
+          )
+          html_path.write_text(html,encoding="utf-8")
+          print("✓ HTML actualizado a V2")
+
+          v=validator_path.read_text(encoding="utf-8")
+          v=v.replace("'/assets/salud-mental.css?v=1'","'/assets/salud-mental.css?v=2'")
+          v=v.replace("'/assets/salud-mental.js?v=1'","'/assets/salud-mental.js?v=2'")
+          anchor="assert '/assets/data/salud-mental.json' in sm_js, 'JS de Salud mental no enlaza el dataset validado'"
+          geo="assert '/assets/data/estructura-productiva/comunas.geojson' in sm_js, 'JS de Salud mental no enlaza la geometría comunal'"
+          if geo not in v:
+              if anchor not in v: raise SystemExit("Falta control HTML→JS→JSON del hotfix anterior")
+              v=v.replace(anchor,anchor+"\n"+geo,1)
+          validator_path.write_text(v,encoding="utf-8")
+          print("✓ Validador V2 actualizado")
+
+          PY
+
+      - name: Validar V2
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check deploy/site-overlay/assets/salud-mental.js
+          python -m py_compile validar_sitio_despliegue.py
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          js=Path("deploy/site-overlay/assets/salud-mental.js").read_text(encoding="utf-8")
+          css=Path("deploy/site-overlay/assets/salud-mental.css").read_text(encoding="utf-8")
+          html=Path("deploy/site-overlay/observatorio/salud-mental/index.html").read_text(encoding="utf-8")
+          geo=json.loads(Path("deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson").read_text(encoding="utf-8"))
+          for token in ["COMMUNES_URL","geometryRings","pathForFeature","sm-map-commune","renderCesac(d, communes)","makeProjection(mapFeatures)"]:
+              assert token in js, token
+          for token in ["sm-map-commune","sm-map-label","is-selected"]:
+              assert token in css, token
+          assert '/assets/salud-mental.js?v=2' in html
+          assert '/assets/salud-mental.css?v=2' in html
+          assert 'límites de las 15 comunas' in html
+          assert len(geo["features"])==15
+          print("✓ Salud Mental V2 · mapa CABA + 15 comunas + encuadre por filtro")
+          PY
+
+      - name: Mostrar diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          git diff --stat
+          git diff -- deploy/site-overlay/assets/salud-mental.js deploy/site-overlay/assets/salud-mental.css deploy/site-overlay/observatorio/salud-mental/index.html validar_sitio_despliegue.py | head -n 700
+
+      - name: Commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "cepoes-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add deploy/site-overlay/assets/salud-mental.js deploy/site-overlay/assets/salud-mental.css deploy/site-overlay/observatorio/salud-mental/index.html validar_sitio_despliegue.py
+          if git diff --cached --quiet; then
+            echo "Sin cambios: mapa Salud Mental V2 ya aplicado."
+          else
+            git commit -m "fix: dibujar mapa comunal en salud mental"
+            git push origin HEAD:main
+          fi
+
+      - name: Confirmar
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "✓ Mapa Salud Mental V2 instalado."
+          echo "Luego ejecutar manualmente: Desplegar sitio en Hostinger"

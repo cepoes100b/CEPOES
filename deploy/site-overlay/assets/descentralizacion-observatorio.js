@@ -28,7 +28,19 @@
 
   $('#content-body').hidden = true;
 
-  document.addEventListener('DOMContentLoaded', () => Promise.all([
+  document.addEventListener('DOMContentLoaded', () => {
+    const geoPromise = (async () => {
+      if (!window.d3) throw new Error('biblioteca cartográfica no disponible');
+      for (const url of GEO_COMUNAS) {
+        try {
+          const candidate = await d3.json(url);
+          if (candidate?.features?.length >= 15) return candidate;
+        } catch (_) {}
+      }
+      throw new Error('cartografía no disponible');
+    })();
+
+    return Promise.all([
     fetch('/assets/data/descentralizacion-comunas.json', {cache: 'no-store'}).then(r => { if (!r.ok) throw new Error('presupuesto comunal'); return r.json(); }),
     fetch('/assets/data/descentralizacion-transparencia-2024.json', {cache: 'no-store'}).then(r => r.json()),
     fetch('/assets/data/descentralizacion-competencias.json', {cache: 'no-store'}).then(r => r.json())
@@ -69,7 +81,7 @@
 
     const ranking = () => {
       const rows = [...budgetBy.entries()].map(([c, b]) => ({c, v: current.get(b)})).filter(x => Number.isFinite(x.v)).sort((a, b) => b.v - a.v);
-      $('#ranking').innerHTML = rows.map((x, i) => `<button data-c="${x.c}"><span>${i + 1}. Comuna ${x.c}</span><strong>${current.fmt(x.v)}</strong></button>`).join('');
+      $('#ranking').innerHTML = rows.map((x, i) => `<button class="${x.c === selected ? 'selected' : ''}" data-c="${x.c}"><span>${i + 1}. Comuna ${x.c}</span><strong>${current.fmt(x.v)}</strong></button>`).join('');
     };
     const drawMap = () => {
       ranking();
@@ -106,16 +118,17 @@
     $('#matrix-body').addEventListener('click', e => { const b = e.target.closest('[data-c]'); if (b) { renderDetail(b.dataset.c); $('#territorial').scrollIntoView({behavior: 'smooth'}); } });
     $('#competencias').innerHTML = (comp.competencias || []).map(x => `<article><div class="eyebrow">${x.tipo.replaceAll('_', ' ')}</div><h3>${x.nombre}</h3><p>${x.lectura}</p><small>${x.base}</small><span class="state ${x.estado_instrumental.includes('pendiente') ? 'warn' : 'ok'}">${x.estado_instrumental.replaceAll('_', ' ')}</span></article>`).join('');
 
-    try {
-      for (const url of GEO_COMUNAS) { try { const g = await d3.json(url); if (g?.features?.length >= 15) { geo = g; break; } } catch (_) {} }
-      if (!geo) throw new Error('cartografía no disponible');
-      $('#map-status').textContent = 'Límites oficiales de Comunas · BA Data (GCBA)';
-    } catch (_) {
-      $('#map-status').textContent = 'La cartografía no cargó. El selector y el ranking comunal siguen disponibles.';
-    }
     renderDetail(1);
     $('#loading').hidden = true;
     $('#content').hidden = false;
     $('#content-body').hidden = false;
-  }).catch(err => { $('#loading').innerHTML = `<strong>No se pudo cargar el observatorio.</strong><br>Falló la carga de ${err.message}.`; }));
+    try {
+      geo = await geoPromise;
+      $('#map-status').textContent = 'Límites oficiales de Comunas · BA Data (GCBA)';
+      drawMap();
+    } catch (_) {
+      $('#map-status').textContent = 'La cartografía no cargó. El selector y el ranking comunal siguen disponibles.';
+    }
+  }).catch(err => { $('#loading').innerHTML = `<strong>No se pudo cargar el observatorio.</strong><br>Falló la carga de ${err.message}.`; });
+  });
 })();

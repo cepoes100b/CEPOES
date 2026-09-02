@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-09-02T10:47:53-03:00",
+  "actualizado_en": "2026-09-02T17:46:25-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -16,14 +16,14 @@
     "sesiones": 6,
     "sesiones_realizadas": 6,
     "registros_presentismo": 363,
-    "asuntos_considerados": 876,
+    "asuntos_considerados": 1006,
     "votaciones_asuntos": 48,
     "votos_nominales": 2907,
     "expedientes_votados_unicos": 47,
     "fallas": 0,
-    "items_recinto": 876,
+    "items_recinto": 1006,
     "sanciones_expediente": 510,
-    "sanciones_despacho": 328,
+    "sanciones_despacho": 458,
     "cambios_giro": 38,
     "sanciones_por_alcance": {
       "definitiva": 504,
@@ -28343,6 +28343,916 @@
           "descripcion": "Declaración nro. 316-2026 / Despacho 300-2026"
         },
         {
+          "id_expediente": "140785",
+          "numero_expediente": "1372-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 326-2026 / Despacho 301-2026"
+        },
+        {
+          "id_expediente": "141053",
+          "numero_expediente": "1608-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 317-2026 / Despacho 302-2026"
+        },
+        {
+          "id_expediente": "139460",
+          "numero_expediente": "136-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 327-2026 / Despacho 303-2026"
+        },
+        {
+          "id_expediente": "139518",
+          "numero_expediente": "231-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 318-2026 / Despacho 304-2026"
+        },
+        {
+          "id_expediente": "139527",
+          "numero_expediente": "243-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 328-2026 / Despacho 305-2026"
+        },
+        {
+          "id_expediente": "139540",
+          "numero_expediente": "252-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 329-2026 / Despacho 306-2026"
+        },
+        {
+          "id_expediente": "139542",
+          "numero_expediente": "254-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 319-2026 / Despacho 307-2026"
+        },
+        {
+          "id_expediente": "139735",
+          "numero_expediente": "390-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 330-2026 / Despacho 308-2026"
+        },
+        {
+          "id_expediente": "139732",
+          "numero_expediente": "441-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 331-2026 / Despacho 309-2026"
+        },
+        {
+          "id_expediente": "139349",
+          "numero_expediente": "206-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 320-2026 / Despacho 310-2026"
+        },
+        {
+          "id_expediente": "140144",
+          "numero_expediente": "811-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 321-2026 / Despacho 311-2026"
+        },
+        {
+          "id_expediente": "140146",
+          "numero_expediente": "814-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 332-2026 / Despacho 312-2026"
+        },
+        {
+          "id_expediente": "140466",
+          "numero_expediente": "1097-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 322-2026 / Despacho 313-2026"
+        },
+        {
+          "id_expediente": "140496",
+          "numero_expediente": "1126-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 323-2026 / Despacho 314-2026"
+        },
+        {
+          "id_expediente": "140515",
+          "numero_expediente": "1142-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 324-2026 / Despacho 315-2026"
+        },
+        {
+          "id_expediente": "140943",
+          "numero_expediente": "1507-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 333-2026 / Despacho 316-2026"
+        },
+        {
+          "id_expediente": "141045",
+          "numero_expediente": "1600-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 334-2026 / Despacho 317-2026"
+        },
+        {
+          "id_expediente": "139462",
+          "numero_expediente": "138-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 325-2026 / Despacho 318-2026"
+        },
+        {
+          "id_expediente": "140230",
+          "numero_expediente": "889-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 335-2026 / Despacho 319-2026"
+        },
+        {
+          "id_expediente": "140510",
+          "numero_expediente": "1137-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 336-2026 / Despacho 320-2026"
+        },
+        {
+          "id_expediente": "140529",
+          "numero_expediente": "1156-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 337-2026 / Despacho 321-2026"
+        },
+        {
+          "id_expediente": "140793",
+          "numero_expediente": "1380-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 326-2026 / Despacho 322-2026"
+        },
+        {
+          "id_expediente": "141036",
+          "numero_expediente": "1591-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 327-2026 / Despacho 323-2026"
+        },
+        {
+          "id_expediente": "141037",
+          "numero_expediente": "1592-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 338-2026 / Despacho 324-2026"
+        },
+        {
+          "id_expediente": "140231",
+          "numero_expediente": "890-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 339-2026 / Despacho 325-2026"
+        },
+        {
+          "id_expediente": "139887",
+          "numero_expediente": "569-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 328-2026 / Despacho 326-2026"
+        },
+        {
+          "id_expediente": "140601",
+          "numero_expediente": "1220-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 329-2026 / Despacho 327-2026"
+        },
+        {
+          "id_expediente": "140749",
+          "numero_expediente": "1337-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 330-2026 / Despacho 328-2026"
+        },
+        {
+          "id_expediente": "140701",
+          "numero_expediente": "1301-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 331-2026 / Despacho 329-2026"
+        },
+        {
+          "id_expediente": "139560",
+          "numero_expediente": "269-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 340-2026 / Despacho 330-2026"
+        },
+        {
+          "id_expediente": "139621",
+          "numero_expediente": "320-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 341-2026 / Despacho 331-2026"
+        },
+        {
+          "id_expediente": "139628",
+          "numero_expediente": "452-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 332-2026 / Despacho 332-2026"
+        },
+        {
+          "id_expediente": "139664",
+          "numero_expediente": "350-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 342-2026 / Despacho 333-2026"
+        },
+        {
+          "id_expediente": "139777",
+          "numero_expediente": "484-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 343-2026 / Despacho 334-2026"
+        },
+        {
+          "id_expediente": "139811",
+          "numero_expediente": "488-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 344-2026 / Despacho 335-2026"
+        },
+        {
+          "id_expediente": "140939",
+          "numero_expediente": "1503-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 345-2026 / Despacho 336-2026"
+        },
+        {
+          "id_expediente": "141342",
+          "numero_expediente": "1855-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 346-2026 / Despacho 337-2026"
+        },
+        {
+          "id_expediente": "140555",
+          "numero_expediente": "1179-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 347-2026 / Despacho 338-2026"
+        },
+        {
+          "id_expediente": "139357",
+          "numero_expediente": "60-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 348-2026 / Despacho 340-2026"
+        },
+        {
+          "id_expediente": "140938",
+          "numero_expediente": "1502-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 349-2026 / Despacho 341-2026"
+        },
+        {
+          "id_expediente": "140806",
+          "numero_expediente": "1393-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 350-2026 / Despacho 342-2026"
+        },
+        {
+          "id_expediente": "141270",
+          "numero_expediente": "1793-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 351-2026 / Despacho 343-2026"
+        },
+        {
+          "id_expediente": "140947",
+          "numero_expediente": "1513-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 352-2026 / Despacho 344-2026"
+        },
+        {
+          "id_expediente": "141269",
+          "numero_expediente": "1792-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 353-2026 / Despacho 345-2026"
+        },
+        {
+          "id_expediente": "141306",
+          "numero_expediente": "1827-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 354-2026 / Despacho 346-2026"
+        },
+        {
+          "id_expediente": "141436",
+          "numero_expediente": "1932-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 355-2026 / Despacho 347-2026"
+        },
+        {
+          "id_expediente": "141443",
+          "numero_expediente": "1939-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 356-2026 / Despacho 348-2026"
+        },
+        {
+          "id_expediente": "141271",
+          "numero_expediente": "1794-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 333-2026 / Despacho 349-2026"
+        },
+        {
+          "id_expediente": "141102",
+          "numero_expediente": "1648-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 334-2026 / Despacho 350-2026"
+        },
+        {
+          "id_expediente": "139650",
+          "numero_expediente": "358-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 357-2026 / Despacho 351-2026"
+        },
+        {
+          "id_expediente": "140624",
+          "numero_expediente": "1238-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 358-2026 / Despacho 352-2026"
+        },
+        {
+          "id_expediente": "139757",
+          "numero_expediente": "432-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 359-2026 / Despacho 353-2026"
+        },
+        {
+          "id_expediente": "140219",
+          "numero_expediente": "877-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 335-2026 / Despacho 354-2026"
+        },
+        {
+          "id_expediente": "140150",
+          "numero_expediente": "817-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 360-2026 / Despacho 355-2026"
+        },
+        {
+          "id_expediente": "140711",
+          "numero_expediente": "1307-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 361-2026 / Despacho 356-2026"
+        },
+        {
+          "id_expediente": "141479",
+          "numero_expediente": "1971-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 336-2026 / Despacho 357-2026"
+        },
+        {
+          "id_expediente": "140468",
+          "numero_expediente": "1099-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 337-2026 / Despacho 359-2026"
+        },
+        {
+          "id_expediente": "141184",
+          "numero_expediente": "1715-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 362-2026 / Despacho 360-2026"
+        },
+        {
+          "id_expediente": "141047",
+          "numero_expediente": "1602-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 363-2026 / Despacho 361-2026"
+        },
+        {
+          "id_expediente": "141019",
+          "numero_expediente": "1575-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 338-2026 / Despacho 362-2026"
+        },
+        {
+          "id_expediente": "139603",
+          "numero_expediente": "433-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 339-2026 / Despacho 363-2026"
+        },
+        {
+          "id_expediente": "139746",
+          "numero_expediente": "392-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 364-2026 / Despacho 364-2026"
+        },
+        {
+          "id_expediente": "139687",
+          "numero_expediente": "393-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 340-2026 / Despacho 365-2026"
+        },
+        {
+          "id_expediente": "139654",
+          "numero_expediente": "366-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 365-2026 / Despacho 366-2026"
+        },
+        {
+          "id_expediente": "140981",
+          "numero_expediente": "1545-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 366-2026 / Despacho 367-2026"
+        },
+        {
+          "id_expediente": "141191",
+          "numero_expediente": "1721-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 341-2026 / Despacho 368-2026"
+        },
+        {
+          "id_expediente": "140201",
+          "numero_expediente": "860-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 367-2026 / Despacho 369-2026"
+        },
+        {
+          "id_expediente": "139307",
+          "numero_expediente": "141-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 342-2026 / Despacho 370-2026"
+        },
+        {
+          "id_expediente": "141020",
+          "numero_expediente": "1576-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 343-2026 / Despacho 372-2026"
+        },
+        {
+          "id_expediente": "140937",
+          "numero_expediente": "1501-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 368-2026 / Despacho 373-2026"
+        },
+        {
+          "id_expediente": "140885",
+          "numero_expediente": "1455-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 369-2026 / Despacho 374-2026"
+        },
+        {
+          "id_expediente": "140732",
+          "numero_expediente": "1323-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 344-2026 / Despacho 375-2026"
+        },
+        {
+          "id_expediente": "141258",
+          "numero_expediente": "1781-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 370-2026 / Despacho 376-2026"
+        },
+        {
+          "id_expediente": "141581",
+          "numero_expediente": "2059-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 345-2026 / Despacho 377-2026"
+        },
+        {
+          "id_expediente": "140952",
+          "numero_expediente": "1518-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 371-2026 / Despacho 378-2026"
+        },
+        {
+          "id_expediente": "141287",
+          "numero_expediente": "1809-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 346-2026 / Despacho 379-2026"
+        },
+        {
+          "id_expediente": "140950",
+          "numero_expediente": "1516-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 372-2026 / Despacho 380-2026"
+        },
+        {
+          "id_expediente": "140949",
+          "numero_expediente": "1515-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 373-2026 / Despacho 381-2026"
+        },
+        {
+          "id_expediente": "140953",
+          "numero_expediente": "1519-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 374-2026 / Despacho 382-2026"
+        },
+        {
+          "id_expediente": "140951",
+          "numero_expediente": "1517-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 375-2026 / Despacho 383-2026"
+        },
+        {
+          "id_expediente": "141514",
+          "numero_expediente": "1997-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 347-2026 / Despacho 384-2026"
+        },
+        {
+          "id_expediente": "140792",
+          "numero_expediente": "1378-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 376-2026 / Despacho 385-2026"
+        },
+        {
+          "id_expediente": "139888",
+          "numero_expediente": "570-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 348-2026 / Despacho 386-2026"
+        },
+        {
+          "id_expediente": "141580",
+          "numero_expediente": "2058-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 349-2026 / Despacho 387-2026"
+        },
+        {
+          "id_expediente": "141246",
+          "numero_expediente": "1770-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 350-2026 / Despacho 389-2026"
+        },
+        {
+          "id_expediente": "141256",
+          "numero_expediente": "1779-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 351-2026 / Despacho 390-2026"
+        },
+        {
+          "id_expediente": "139558",
+          "numero_expediente": "267-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 352-2026 / Despacho 391-2026"
+        },
+        {
+          "id_expediente": "140440",
+          "numero_expediente": "1071-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 377-2026 / Despacho 392-2026"
+        },
+        {
+          "id_expediente": "140751",
+          "numero_expediente": "1339-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 353-2026 / Despacho 393-2026"
+        },
+        {
+          "id_expediente": "140621",
+          "numero_expediente": "1235-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 378-2026 / Despacho 394-2026"
+        },
+        {
+          "id_expediente": "140922",
+          "numero_expediente": "1486-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 379-2026 / Despacho 395-2026"
+        },
+        {
+          "id_expediente": "141076",
+          "numero_expediente": "1628-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 354-2026 / Despacho 396-2026"
+        },
+        {
+          "id_expediente": "141261",
+          "numero_expediente": "1784-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 380-2026 / Despacho 397-2026"
+        },
+        {
+          "id_expediente": "141376",
+          "numero_expediente": "1882-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 355-2026 / Despacho 398-2026"
+        },
+        {
+          "id_expediente": "140970",
+          "numero_expediente": "1534-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 356-2026 / Despacho 399-2026"
+        },
+        {
+          "id_expediente": "140859",
+          "numero_expediente": "1433-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 357-2026 / Despacho 400-2026"
+        },
+        {
+          "id_expediente": "140323",
+          "numero_expediente": "965-P-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 381-2026 / Despacho 401-2026"
+        },
+        {
+          "id_expediente": "140192",
+          "numero_expediente": "853-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 358-2026 / Despacho 402-2026"
+        },
+        {
+          "id_expediente": "139559",
+          "numero_expediente": "268-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 359-2026 / Despacho 403-2026"
+        },
+        {
+          "id_expediente": "140894",
+          "numero_expediente": "1465-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 360-2026 / Despacho 404-2026"
+        },
+        {
+          "id_expediente": "140587",
+          "numero_expediente": "1208-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 361-2026 / Despacho 405-2026"
+        },
+        {
+          "id_expediente": "140752",
+          "numero_expediente": "1340-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 382-2026 / Despacho 407-2026"
+        },
+        {
+          "id_expediente": "140765",
+          "numero_expediente": "1353-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 362-2026 / Despacho 408-2026"
+        },
+        {
+          "id_expediente": "141030",
+          "numero_expediente": "1586-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 363-2026 / Despacho 409-2026"
+        },
+        {
+          "id_expediente": "141046",
+          "numero_expediente": "1601-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 364-2026 / Despacho 410-2026"
+        },
+        {
+          "id_expediente": "141239",
+          "numero_expediente": "1763-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 365-2026 / Despacho 411-2026"
+        },
+        {
+          "id_expediente": "141157",
+          "numero_expediente": "1691-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 383-2026 / Despacho 412-2026"
+        },
+        {
+          "id_expediente": "140579",
+          "numero_expediente": "1200-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 366-2026 / Despacho 413-2026"
+        },
+        {
+          "id_expediente": "140370",
+          "numero_expediente": "1009-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 367-2026 / Despacho 414-2026"
+        },
+        {
+          "id_expediente": "140614",
+          "numero_expediente": "1231-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 368-2026 / Despacho 415-2026"
+        },
+        {
+          "id_expediente": "140620",
+          "numero_expediente": "1234-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 369-2026 / Despacho 416-2026"
+        },
+        {
+          "id_expediente": "139277",
+          "numero_expediente": "103-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 370-2026 / Despacho 417-2026"
+        },
+        {
+          "id_expediente": "139276",
+          "numero_expediente": "108-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 371-2026 / Despacho 418-2026"
+        },
+        {
+          "id_expediente": "140192",
+          "numero_expediente": "853-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 372-2026 / Despacho 402-2026"
+        },
+        {
+          "id_expediente": "141245",
+          "numero_expediente": "1769-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 372-2026 / Despacho 420-2026"
+        },
+        {
+          "id_expediente": "139275",
+          "numero_expediente": "147-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 373-2026 / Despacho 421-2026"
+        },
+        {
+          "id_expediente": "141051",
+          "numero_expediente": "1606-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 374-2026 / Despacho 422-2026"
+        },
+        {
+          "id_expediente": "140980",
+          "numero_expediente": "1544-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 375-2026 / Despacho 423-2026"
+        },
+        {
+          "id_expediente": "141001",
+          "numero_expediente": "1562-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 384-2026 / Despacho 424-2026"
+        },
+        {
+          "id_expediente": "141026",
+          "numero_expediente": "1582-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 376-2026 / Despacho 425-2026"
+        },
+        {
+          "id_expediente": "141034",
+          "numero_expediente": "1590-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 377-2026 / Despacho 426-2026"
+        },
+        {
+          "id_expediente": "141064",
+          "numero_expediente": "1617-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 378-2026 / Despacho 427-2026"
+        },
+        {
+          "id_expediente": "141158",
+          "numero_expediente": "1692-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 385-2026 / Despacho 428-2026"
+        },
+        {
+          "id_expediente": "141365",
+          "numero_expediente": "1873-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 386-2026 / Despacho 429-2026"
+        },
+        {
+          "id_expediente": "141377",
+          "numero_expediente": "1883-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 387-2026 / Despacho 430-2026"
+        },
+        {
+          "id_expediente": "141393",
+          "numero_expediente": "1898-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 379-2026 / Despacho 431-2026"
+        },
+        {
+          "id_expediente": "141454",
+          "numero_expediente": "1950-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 388-2026 / Despacho 432-2026"
+        },
+        {
+          "id_expediente": "140605",
+          "numero_expediente": "1224-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 380-2026 / Despacho 433-2026"
+        },
+        {
+          "id_expediente": "141063",
+          "numero_expediente": "1616-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 381-2026 / Despacho 434-2026"
+        },
+        {
+          "id_expediente": "139510",
+          "numero_expediente": "221-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 382-2026 / Despacho 435-2026"
+        },
+        {
           "id_expediente": "141441",
           "numero_expediente": "1937-D-2026",
           "procesado": true,
@@ -36675,6 +37585,408 @@
           "descripcion": "Declaración nro. 316-2026 / Despacho 300-2026"
         },
         {
+          "id_expediente": "141053",
+          "numero_expediente": "1608-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 317-2026 / Despacho 302-2026"
+        },
+        {
+          "id_expediente": "139518",
+          "numero_expediente": "231-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 318-2026 / Despacho 304-2026"
+        },
+        {
+          "id_expediente": "139542",
+          "numero_expediente": "254-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 319-2026 / Despacho 307-2026"
+        },
+        {
+          "id_expediente": "139349",
+          "numero_expediente": "206-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 320-2026 / Despacho 310-2026"
+        },
+        {
+          "id_expediente": "140144",
+          "numero_expediente": "811-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 321-2026 / Despacho 311-2026"
+        },
+        {
+          "id_expediente": "140466",
+          "numero_expediente": "1097-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 322-2026 / Despacho 313-2026"
+        },
+        {
+          "id_expediente": "140496",
+          "numero_expediente": "1126-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 323-2026 / Despacho 314-2026"
+        },
+        {
+          "id_expediente": "140515",
+          "numero_expediente": "1142-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 324-2026 / Despacho 315-2026"
+        },
+        {
+          "id_expediente": "139462",
+          "numero_expediente": "138-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 325-2026 / Despacho 318-2026"
+        },
+        {
+          "id_expediente": "140793",
+          "numero_expediente": "1380-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 326-2026 / Despacho 322-2026"
+        },
+        {
+          "id_expediente": "141036",
+          "numero_expediente": "1591-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 327-2026 / Despacho 323-2026"
+        },
+        {
+          "id_expediente": "139887",
+          "numero_expediente": "569-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 328-2026 / Despacho 326-2026"
+        },
+        {
+          "id_expediente": "140601",
+          "numero_expediente": "1220-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 329-2026 / Despacho 327-2026"
+        },
+        {
+          "id_expediente": "140749",
+          "numero_expediente": "1337-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 330-2026 / Despacho 328-2026"
+        },
+        {
+          "id_expediente": "140701",
+          "numero_expediente": "1301-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 331-2026 / Despacho 329-2026"
+        },
+        {
+          "id_expediente": "139628",
+          "numero_expediente": "452-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 332-2026 / Despacho 332-2026"
+        },
+        {
+          "id_expediente": "141271",
+          "numero_expediente": "1794-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 333-2026 / Despacho 349-2026"
+        },
+        {
+          "id_expediente": "141102",
+          "numero_expediente": "1648-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 334-2026 / Despacho 350-2026"
+        },
+        {
+          "id_expediente": "140219",
+          "numero_expediente": "877-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 335-2026 / Despacho 354-2026"
+        },
+        {
+          "id_expediente": "141479",
+          "numero_expediente": "1971-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 336-2026 / Despacho 357-2026"
+        },
+        {
+          "id_expediente": "140468",
+          "numero_expediente": "1099-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 337-2026 / Despacho 359-2026"
+        },
+        {
+          "id_expediente": "141019",
+          "numero_expediente": "1575-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 338-2026 / Despacho 362-2026"
+        },
+        {
+          "id_expediente": "139603",
+          "numero_expediente": "433-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 339-2026 / Despacho 363-2026"
+        },
+        {
+          "id_expediente": "139687",
+          "numero_expediente": "393-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 340-2026 / Despacho 365-2026"
+        },
+        {
+          "id_expediente": "141191",
+          "numero_expediente": "1721-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 341-2026 / Despacho 368-2026"
+        },
+        {
+          "id_expediente": "139307",
+          "numero_expediente": "141-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 342-2026 / Despacho 370-2026"
+        },
+        {
+          "id_expediente": "141020",
+          "numero_expediente": "1576-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 343-2026 / Despacho 372-2026"
+        },
+        {
+          "id_expediente": "140732",
+          "numero_expediente": "1323-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 344-2026 / Despacho 375-2026"
+        },
+        {
+          "id_expediente": "141581",
+          "numero_expediente": "2059-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 345-2026 / Despacho 377-2026"
+        },
+        {
+          "id_expediente": "141287",
+          "numero_expediente": "1809-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 346-2026 / Despacho 379-2026"
+        },
+        {
+          "id_expediente": "141514",
+          "numero_expediente": "1997-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 347-2026 / Despacho 384-2026"
+        },
+        {
+          "id_expediente": "139888",
+          "numero_expediente": "570-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 348-2026 / Despacho 386-2026"
+        },
+        {
+          "id_expediente": "141580",
+          "numero_expediente": "2058-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 349-2026 / Despacho 387-2026"
+        },
+        {
+          "id_expediente": "141246",
+          "numero_expediente": "1770-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 350-2026 / Despacho 389-2026"
+        },
+        {
+          "id_expediente": "141256",
+          "numero_expediente": "1779-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 351-2026 / Despacho 390-2026"
+        },
+        {
+          "id_expediente": "139558",
+          "numero_expediente": "267-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 352-2026 / Despacho 391-2026"
+        },
+        {
+          "id_expediente": "140751",
+          "numero_expediente": "1339-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 353-2026 / Despacho 393-2026"
+        },
+        {
+          "id_expediente": "141076",
+          "numero_expediente": "1628-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 354-2026 / Despacho 396-2026"
+        },
+        {
+          "id_expediente": "141376",
+          "numero_expediente": "1882-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 355-2026 / Despacho 398-2026"
+        },
+        {
+          "id_expediente": "140970",
+          "numero_expediente": "1534-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 356-2026 / Despacho 399-2026"
+        },
+        {
+          "id_expediente": "140859",
+          "numero_expediente": "1433-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 357-2026 / Despacho 400-2026"
+        },
+        {
+          "id_expediente": "140192",
+          "numero_expediente": "853-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 358-2026 / Despacho 402-2026"
+        },
+        {
+          "id_expediente": "139559",
+          "numero_expediente": "268-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 359-2026 / Despacho 403-2026"
+        },
+        {
+          "id_expediente": "140894",
+          "numero_expediente": "1465-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 360-2026 / Despacho 404-2026"
+        },
+        {
+          "id_expediente": "140587",
+          "numero_expediente": "1208-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 361-2026 / Despacho 405-2026"
+        },
+        {
+          "id_expediente": "140765",
+          "numero_expediente": "1353-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 362-2026 / Despacho 408-2026"
+        },
+        {
+          "id_expediente": "141030",
+          "numero_expediente": "1586-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 363-2026 / Despacho 409-2026"
+        },
+        {
+          "id_expediente": "141046",
+          "numero_expediente": "1601-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 364-2026 / Despacho 410-2026"
+        },
+        {
+          "id_expediente": "141239",
+          "numero_expediente": "1763-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 365-2026 / Despacho 411-2026"
+        },
+        {
+          "id_expediente": "140579",
+          "numero_expediente": "1200-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 366-2026 / Despacho 413-2026"
+        },
+        {
+          "id_expediente": "140370",
+          "numero_expediente": "1009-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 367-2026 / Despacho 414-2026"
+        },
+        {
+          "id_expediente": "140614",
+          "numero_expediente": "1231-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 368-2026 / Despacho 415-2026"
+        },
+        {
+          "id_expediente": "140620",
+          "numero_expediente": "1234-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 369-2026 / Despacho 416-2026"
+        },
+        {
+          "id_expediente": "139277",
+          "numero_expediente": "103-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 370-2026 / Despacho 417-2026"
+        },
+        {
+          "id_expediente": "139276",
+          "numero_expediente": "108-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 371-2026 / Despacho 418-2026"
+        },
+        {
+          "id_expediente": "140192",
+          "numero_expediente": "853-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 372-2026 / Despacho 402-2026"
+        },
+        {
+          "id_expediente": "141245",
+          "numero_expediente": "1769-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 372-2026 / Despacho 420-2026"
+        },
+        {
+          "id_expediente": "139275",
+          "numero_expediente": "147-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 373-2026 / Despacho 421-2026"
+        },
+        {
+          "id_expediente": "141051",
+          "numero_expediente": "1606-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 374-2026 / Despacho 422-2026"
+        },
+        {
+          "id_expediente": "140980",
+          "numero_expediente": "1544-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 375-2026 / Despacho 423-2026"
+        },
+        {
+          "id_expediente": "141026",
+          "numero_expediente": "1582-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 376-2026 / Despacho 425-2026"
+        },
+        {
+          "id_expediente": "141034",
+          "numero_expediente": "1590-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 377-2026 / Despacho 426-2026"
+        },
+        {
+          "id_expediente": "141064",
+          "numero_expediente": "1617-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 378-2026 / Despacho 427-2026"
+        },
+        {
+          "id_expediente": "141393",
+          "numero_expediente": "1898-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 379-2026 / Despacho 431-2026"
+        },
+        {
+          "id_expediente": "140605",
+          "numero_expediente": "1224-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 380-2026 / Despacho 433-2026"
+        },
+        {
+          "id_expediente": "141063",
+          "numero_expediente": "1616-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 381-2026 / Despacho 434-2026"
+        },
+        {
+          "id_expediente": "139510",
+          "numero_expediente": "221-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 382-2026 / Despacho 435-2026"
+        },
+        {
           "id_expediente": "140984",
           "numero_expediente": "1548-D-2026",
           "tipo": "SANCION DE UN DESPACHO",
@@ -36915,6 +38227,384 @@
           "descripcion": "Resolución nro. 325-2026 / Despacho 298-2026"
         },
         {
+          "id_expediente": "140785",
+          "numero_expediente": "1372-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 326-2026 / Despacho 301-2026"
+        },
+        {
+          "id_expediente": "139460",
+          "numero_expediente": "136-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 327-2026 / Despacho 303-2026"
+        },
+        {
+          "id_expediente": "139527",
+          "numero_expediente": "243-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 328-2026 / Despacho 305-2026"
+        },
+        {
+          "id_expediente": "139540",
+          "numero_expediente": "252-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 329-2026 / Despacho 306-2026"
+        },
+        {
+          "id_expediente": "139735",
+          "numero_expediente": "390-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 330-2026 / Despacho 308-2026"
+        },
+        {
+          "id_expediente": "139732",
+          "numero_expediente": "441-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 331-2026 / Despacho 309-2026"
+        },
+        {
+          "id_expediente": "140146",
+          "numero_expediente": "814-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 332-2026 / Despacho 312-2026"
+        },
+        {
+          "id_expediente": "140943",
+          "numero_expediente": "1507-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 333-2026 / Despacho 316-2026"
+        },
+        {
+          "id_expediente": "141045",
+          "numero_expediente": "1600-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 334-2026 / Despacho 317-2026"
+        },
+        {
+          "id_expediente": "140230",
+          "numero_expediente": "889-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 335-2026 / Despacho 319-2026"
+        },
+        {
+          "id_expediente": "140510",
+          "numero_expediente": "1137-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 336-2026 / Despacho 320-2026"
+        },
+        {
+          "id_expediente": "140529",
+          "numero_expediente": "1156-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 337-2026 / Despacho 321-2026"
+        },
+        {
+          "id_expediente": "141037",
+          "numero_expediente": "1592-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 338-2026 / Despacho 324-2026"
+        },
+        {
+          "id_expediente": "140231",
+          "numero_expediente": "890-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 339-2026 / Despacho 325-2026"
+        },
+        {
+          "id_expediente": "139560",
+          "numero_expediente": "269-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 340-2026 / Despacho 330-2026"
+        },
+        {
+          "id_expediente": "139621",
+          "numero_expediente": "320-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 341-2026 / Despacho 331-2026"
+        },
+        {
+          "id_expediente": "139664",
+          "numero_expediente": "350-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 342-2026 / Despacho 333-2026"
+        },
+        {
+          "id_expediente": "139777",
+          "numero_expediente": "484-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 343-2026 / Despacho 334-2026"
+        },
+        {
+          "id_expediente": "139811",
+          "numero_expediente": "488-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 344-2026 / Despacho 335-2026"
+        },
+        {
+          "id_expediente": "140939",
+          "numero_expediente": "1503-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 345-2026 / Despacho 336-2026"
+        },
+        {
+          "id_expediente": "141342",
+          "numero_expediente": "1855-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 346-2026 / Despacho 337-2026"
+        },
+        {
+          "id_expediente": "140555",
+          "numero_expediente": "1179-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 347-2026 / Despacho 338-2026"
+        },
+        {
+          "id_expediente": "139357",
+          "numero_expediente": "60-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 348-2026 / Despacho 340-2026"
+        },
+        {
+          "id_expediente": "140938",
+          "numero_expediente": "1502-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 349-2026 / Despacho 341-2026"
+        },
+        {
+          "id_expediente": "140806",
+          "numero_expediente": "1393-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 350-2026 / Despacho 342-2026"
+        },
+        {
+          "id_expediente": "141270",
+          "numero_expediente": "1793-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 351-2026 / Despacho 343-2026"
+        },
+        {
+          "id_expediente": "140947",
+          "numero_expediente": "1513-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 352-2026 / Despacho 344-2026"
+        },
+        {
+          "id_expediente": "141269",
+          "numero_expediente": "1792-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 353-2026 / Despacho 345-2026"
+        },
+        {
+          "id_expediente": "141306",
+          "numero_expediente": "1827-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 354-2026 / Despacho 346-2026"
+        },
+        {
+          "id_expediente": "141436",
+          "numero_expediente": "1932-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 355-2026 / Despacho 347-2026"
+        },
+        {
+          "id_expediente": "141443",
+          "numero_expediente": "1939-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 356-2026 / Despacho 348-2026"
+        },
+        {
+          "id_expediente": "139650",
+          "numero_expediente": "358-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 357-2026 / Despacho 351-2026"
+        },
+        {
+          "id_expediente": "140624",
+          "numero_expediente": "1238-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 358-2026 / Despacho 352-2026"
+        },
+        {
+          "id_expediente": "139757",
+          "numero_expediente": "432-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 359-2026 / Despacho 353-2026"
+        },
+        {
+          "id_expediente": "140150",
+          "numero_expediente": "817-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 360-2026 / Despacho 355-2026"
+        },
+        {
+          "id_expediente": "140711",
+          "numero_expediente": "1307-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 361-2026 / Despacho 356-2026"
+        },
+        {
+          "id_expediente": "141184",
+          "numero_expediente": "1715-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 362-2026 / Despacho 360-2026"
+        },
+        {
+          "id_expediente": "141047",
+          "numero_expediente": "1602-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 363-2026 / Despacho 361-2026"
+        },
+        {
+          "id_expediente": "139746",
+          "numero_expediente": "392-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 364-2026 / Despacho 364-2026"
+        },
+        {
+          "id_expediente": "139654",
+          "numero_expediente": "366-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 365-2026 / Despacho 366-2026"
+        },
+        {
+          "id_expediente": "140981",
+          "numero_expediente": "1545-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 366-2026 / Despacho 367-2026"
+        },
+        {
+          "id_expediente": "140201",
+          "numero_expediente": "860-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 367-2026 / Despacho 369-2026"
+        },
+        {
+          "id_expediente": "140937",
+          "numero_expediente": "1501-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 368-2026 / Despacho 373-2026"
+        },
+        {
+          "id_expediente": "140885",
+          "numero_expediente": "1455-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 369-2026 / Despacho 374-2026"
+        },
+        {
+          "id_expediente": "141258",
+          "numero_expediente": "1781-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 370-2026 / Despacho 376-2026"
+        },
+        {
+          "id_expediente": "140952",
+          "numero_expediente": "1518-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 371-2026 / Despacho 378-2026"
+        },
+        {
+          "id_expediente": "140950",
+          "numero_expediente": "1516-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 372-2026 / Despacho 380-2026"
+        },
+        {
+          "id_expediente": "140949",
+          "numero_expediente": "1515-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 373-2026 / Despacho 381-2026"
+        },
+        {
+          "id_expediente": "140953",
+          "numero_expediente": "1519-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 374-2026 / Despacho 382-2026"
+        },
+        {
+          "id_expediente": "140951",
+          "numero_expediente": "1517-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 375-2026 / Despacho 383-2026"
+        },
+        {
+          "id_expediente": "140792",
+          "numero_expediente": "1378-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 376-2026 / Despacho 385-2026"
+        },
+        {
+          "id_expediente": "140440",
+          "numero_expediente": "1071-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 377-2026 / Despacho 392-2026"
+        },
+        {
+          "id_expediente": "140621",
+          "numero_expediente": "1235-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 378-2026 / Despacho 394-2026"
+        },
+        {
+          "id_expediente": "140922",
+          "numero_expediente": "1486-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 379-2026 / Despacho 395-2026"
+        },
+        {
+          "id_expediente": "141261",
+          "numero_expediente": "1784-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 380-2026 / Despacho 397-2026"
+        },
+        {
+          "id_expediente": "140323",
+          "numero_expediente": "965-P-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 381-2026 / Despacho 401-2026"
+        },
+        {
+          "id_expediente": "140752",
+          "numero_expediente": "1340-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 382-2026 / Despacho 407-2026"
+        },
+        {
+          "id_expediente": "141157",
+          "numero_expediente": "1691-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 383-2026 / Despacho 412-2026"
+        },
+        {
+          "id_expediente": "141001",
+          "numero_expediente": "1562-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 384-2026 / Despacho 424-2026"
+        },
+        {
+          "id_expediente": "141158",
+          "numero_expediente": "1692-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 385-2026 / Despacho 428-2026"
+        },
+        {
+          "id_expediente": "141365",
+          "numero_expediente": "1873-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 386-2026 / Despacho 429-2026"
+        },
+        {
+          "id_expediente": "141377",
+          "numero_expediente": "1883-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 387-2026 / Despacho 430-2026"
+        },
+        {
+          "id_expediente": "141454",
+          "numero_expediente": "1950-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 388-2026 / Despacho 432-2026"
+        },
+        {
           "id_expediente": "141734",
           "numero_expediente": "2187-D-2026",
           "tipo": "SANCION DE UN DESPACHO",
@@ -36984,9 +38674,9 @@
         }
       ],
       "resumen_items_recinto": {
-        "total": 214,
+        "total": 344,
         "sanciones_expediente": 134,
-        "sanciones_despacho": 78,
+        "sanciones_despacho": 208,
         "cambios_giro": 2
       }
     }
@@ -37004,7 +38694,7 @@
     "fuente_tipo_item": "GetAsuntoConsideradoItemByIdSesion",
     "tipos_oficiales_observados": {
       "cambio de giro": 38,
-      "sancion de un despacho": 328,
+      "sancion de un despacho": 458,
       "sancion de un expediente": 510
     },
     "alcance_sancion": "inicial, definitiva o no_especificada según descripción oficial"

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-01T20:54:45.602981+00:00",
+  "generado_en": "2026-09-02T13:56:47.294820+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,9 +10,9 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2023-11-27",
-    "fecha_mas_reciente_obtenida": "2026-09-01",
-    "ids_del_anio_en_ventana": 2749,
-    "ids_revisados_acumulados": 2749,
+    "fecha_mas_reciente_obtenida": "2026-09-02",
+    "ids_del_anio_en_ventana": 2750,
+    "ids_revisados_acumulados": 2750,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,11 +30,11 @@
     "LEY": 59
   },
   "por_estado_actual": {
-    "en_comision": 110,
+    "en_comision": 111,
     "archivado": 60,
     "sancionado": 27,
     "despacho": 12,
-    "ingresado": 5,
+    "ingresado": 4,
     "con_dictamen": 3
   },
   "por_etapa_ciclo": {
@@ -99,7 +99,7 @@
     "id_sesion": "1151",
     "fecha": "2026-08-27",
     "realizada": true,
-    "asuntos_considerados": 201,
+    "asuntos_considerados": 214,
     "sanciones": 134,
     "votaciones_nominales": 16,
     "version_taquigrafica_disponible": false
@@ -221,16 +221,16 @@
       ],
       "cantidad_autores": 19,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "TURISMO Y DEPORTES",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "TURISMO Y DEPORTES"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-31",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-02",
+        "oficina": "TURISMO Y DEPORTES",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

@@ -7,25 +7,9 @@ from pathlib import Path
 
 
 def patch(source: str) -> str:
-    # Eliminar versiones previas para que el parche sea idempotente.
-    source = re.sub(
-        r'<section\b[^>]*\bclass=["\'][^"\']*\bobservatory-(?:people|mental)-bridge\b[^"\']*["\'][^>]*>.*?</section>',
-        '',
-        source,
-        flags=re.S | re.I,
-    )
-    source = re.sub(
-        r'<section\b[^>]*\bid=["\']observatorio-salud-cuidados["\'][^>]*>.*?</section>',
-        '',
-        source,
-        flags=re.S | re.I,
-    )
-    source = re.sub(
-        r'<style\b[^>]*\bid=["\']observatorio-health-hub-style["\'][^>]*>.*?</style>',
-        '',
-        source,
-        flags=re.S | re.I,
-    )
+    source = re.sub(r'<section\b[^>]*\bclass=["\'][^"\']*\bobservatory-(?:people|mental)-bridge\b[^"\']*["\'][^>]*>.*?</section>', '', source, flags=re.S | re.I)
+    source = re.sub(r'<section\b[^>]*\bid=["\']observatorio-salud-cuidados["\'][^>]*>.*?</section>', '', source, flags=re.S | re.I)
+    source = re.sub(r'<style\b[^>]*\bid=["\']observatorio-health-hub-style["\'][^>]*>.*?</style>', '', source, flags=re.S | re.I)
 
     style = '''<style id="observatorio-health-hub-style">
 #observatorio-salud-cuidados{background:var(--soft,#f3f7fa);border-top:1px solid rgba(23,33,38,.08);border-bottom:1px solid rgba(23,33,38,.08)}
@@ -54,28 +38,28 @@ def patch(source: str) -> str:
         raise SystemExit('No se encontró </head>')
     source = source.replace('</head>', style + '</head>', 1)
 
-    # Insertar Salud en la barra secundaria, antes de Agenda.
-    sub = re.search(r'(<nav\b[^>]*\bclass=["\'][^"\']*\bsubnav\b[^"\']*["\'][^>]*>.*?<div\b[^>]*\bclass=["\'][^"\']*\bsubnav-in\b[^"\']*["\'][^>]*>)(.*?)(</div>.*?</nav>)', source, flags=re.S | re.I)
-    if not sub:
-        raise SystemExit('No se encontró subnav del Observatorio')
-    links = sub.group(2)
-    links = re.sub(r'<a\b[^>]*href=["\'][^"\']*#observatorio-salud-cuidados["\'][^>]*>\s*Salud\s*</a>', '', links, flags=re.I)
+    # Quitar un eventual enlace Salud previo y reinsertarlo antes de Agenda.
+    source = re.sub(r'<a\b[^>]*href=["\'][^"\']*#observatorio-salud-cuidados["\'][^>]*>\s*Salud\s*</a>', '', source, flags=re.I)
     salud = '<a href="/observatorio/#observatorio-salud-cuidados">Salud</a>'
-    agenda = re.search(r'<a\b[^>]*>\s*Agenda\s*</a>', links, flags=re.I)
+    agenda = re.search(r'<a\b[^>]*>\s*Agenda\s*</a>', source, flags=re.I)
     if agenda:
-        links = links[:agenda.start()] + salud + links[agenda.start():]
+        source = source[:agenda.start()] + salud + source[agenda.start():]
     else:
-        links += salud
-    source = source[:sub.start()] + sub.group(1) + links + sub.group(3) + source[sub.end():]
+        sub = re.search(r'<nav\b[^>]*class=["\'][^"\']*subnav[^"\']*["\'][^>]*>', source, flags=re.I)
+        if not sub:
+            raise SystemExit('No se encontró subnav del Observatorio')
+        end = source.find('</nav>', sub.end())
+        if end < 0:
+            raise SystemExit('Subnav sin cierre')
+        source = source[:end] + salud + source[end:]
 
-    # El bloque debe ser lo primero después de la cabecera editorial.
+    # Insertar inmediatamente después del header principal del Observatorio.
     main = re.search(r'<main\b[^>]*>', source, flags=re.I)
-    if not main:
-        raise SystemExit('No se encontró <main>')
-    header = re.search(r'<header\b[^>]*>.*?</header>', source[main.end():], flags=re.S | re.I)
+    start = main.end() if main else 0
+    header = re.search(r'<header\b[^>]*>.*?</header>', source[start:], flags=re.S | re.I)
     if not header:
-        raise SystemExit('No se encontró header dentro de main')
-    insert_at = main.end() + header.end()
+        raise SystemExit('No se encontró header del Observatorio')
+    insert_at = start + header.end()
     source = source[:insert_at] + block + source[insert_at:]
 
     required = [
@@ -84,7 +68,7 @@ def patch(source: str) -> str:
         '>Natalidad y demografía<',
         '>Salud reproductiva<',
         '>Personas mayores<',
-        '/observatorio/#observatorio-salud-cuidados',
+        '/observatorio/#observatorio-salud-cuidados">Salud</a>',
     ]
     missing = [x for x in required if x not in source]
     if missing:
@@ -98,8 +82,7 @@ def main() -> None:
     if len(sys.argv) != 2:
         raise SystemExit('uso: parche_observatorio_salud.py RUTA_HTML')
     path = Path(sys.argv[1])
-    source = path.read_text(encoding='utf-8')
-    patched = patch(source)
+    patched = patch(path.read_text(encoding='utf-8'))
     path.write_text(patched, encoding='utf-8')
     print('Observatorio: Salud y cuidados insertado server-side · 4 accesos · subnav Salud OK')
 

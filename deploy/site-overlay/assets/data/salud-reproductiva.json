@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-03T17:20:00Z",
+  "scope": "CABA",
+  "paev": {
+    "official_page": "https://buenosaires.gob.ar/gcaba_historico/protocolo-de-acompanamiento-al-embarazo-vulnerable",
+    "official_description": "El GCBA presenta el PAEV como un dispositivo gratuito y confidencial de información, escucha, orientación y articulación, con respeto de la autonomía y el proyecto de vida.",
+    "public_outcome_series_located": false,
+    "public_outcome_series_note": "Al 3 de septiembre de 2026 CEPOES no localizó en las fuentes oficiales relevadas una serie pública de casos, decisiones, derivaciones, tiempos de acceso o resultados del PAEV. Esto describe el relevamiento, no prueba que el registro administrativo no exista."
+  },
+  "ive_ile": {
+    "official_series_period": "2016–2025",
+    "series_page": "https://www.estadisticaciudad.gob.ar/eyc/banco-datos/personas-asistidas-con-interrupcion-voluntaria-del-embarazo-ive-interrupcion-legal-del-embarazo-ile-en-establecimientos-de-salud-dependientes-del-gcba-por-tipo-ciudad-de-buenos-aires-anos-2016-2/",
+    "xlsx": "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2024/12/S_REPR_AX02.xlsx",
+    "source": "IDECBA sobre Coordinación de Salud Sexual, VIH, ITS y TBC · Ministerio de Salud GCBA"
+  },
+  "documented_facts": [
+    {"id": "autonomy", "label": "Autonomía declarada", "detail": "La página oficial indica que las derivaciones deben respetar la voluntad de la mujer y que el acompañamiento debe permitir decisiones informadas.", "source": "GCBA · PAEV"},
+    {"id": "osc_funding", "label": "Participación financiada de OSC", "detail": "El Anexo IF-2025-31919855 de la Resolución 427/MDHYHGC/2025 incluye proyectos denominados “Plan de capacitación e implementación del protocolo PAEV” y “Diseño e implementación del modelo operativo de acompañamiento en CeSAC”.", "source": "Boletín Oficial CABA · Res. 427/2025 y Anexo"},
+    {"id": "legislature_request", "label": "Pedido institucional de información", "detail": "La Resolución 489/2025 de la Legislatura pidió al Ejecutivo normativa, modalidad de implementación, equipos, evaluación, estadísticas, presupuesto, confidencialidad, objeción de conciencia y vínculos con OSC.", "source": "Legislatura CABA · Resolución 489/2025"}
+  ],
+  "transparency_matrix": [
+    {"dimension": "Norma específica de creación", "status": "no_localizada", "note": "La página oficial relevada no identifica una norma de creación; la Legislatura pidió que se informe."},
+    {"dimension": "Criterio de vulnerabilidad", "status": "parcial", "note": "La descripción pública enumera dimensiones sociales, económicas, sanitarias y emocionales, sin publicar una regla operativa de clasificación."},
+    {"dimension": "Cobertura: casos por edad y comuna", "status": "no_localizada", "note": "No se localizó una serie pública PAEV; fue requerida por la Legislatura."},
+    {"dimension": "Preferencia inicial y decisión final", "status": "no_localizada", "note": "Variable necesaria para auditar neutralidad; no localizada en la publicación oficial relevada."},
+    {"dimension": "Tiempo hasta IVE/ILE cuando se solicita", "status": "no_localizada", "note": "Indicador clave por el plazo legal de acceso; no localizado para PAEV."},
+    {"dimension": "Indicadores y evaluación externa", "status": "no_localizada", "note": "La Legislatura solicitó mecanismos, indicadores e informes parciales."},
+    {"dimension": "OSC participantes y rol operativo", "status": "parcial", "note": "Hay evidencia administrativa de proyectos financiados vinculados a implementación; falta una nómina pública consolidada con funciones y resultados."},
+    {"dimension": "Presupuesto y transferencias", "status": "parcial", "note": "Existe un marco de financiamiento a proyectos de OSC; falta consolidar cuánto corresponde al PAEV y su ejecución."},
+    {"dimension": "Reclamos, abandonos y objeciones", "status": "no_localizada", "note": "No se localizó publicación periódica de estas variables para PAEV."}
+  ],
+  "sources": [
+    {"id": "paev_gcba", "name": "GCBA · PAEV", "url": "https://buenosaires.gob.ar/gcaba_historico/protocolo-de-acompanamiento-al-embarazo-vulnerable"},
+    {"id": "res427", "name": "Boletín Oficial · Resolución 427/MDHYHGC/2025", "url": "https://documentosboletinoficial.buenosaires.gob.ar/publico/ck_PE-RES-MDHYHGC-MDHYHGC-427-25-7177.pdf"},
+    {"id": "anexo427", "name": "Boletín Oficial · Anexo IF-2025-31919855", "url": "https://documentosboletinoficial.buenosaires.gob.ar/publico/PE-RES-MDHYHGC-MDHYHGC-427-25-ANX.pdf"},
+    {"id": "res489", "name": "Legislatura · Resolución 489/2025", "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=221534"},
+    {"id": "proyecto_control", "name": "Legislatura · Proyecto de pedido de informes sobre PAEV", "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=219944"},
+    {"id": "idecba_ive", "name": "IDECBA · IVE/ILE 2016–2025", "url": "https://www.estadisticaciudad.gob.ar/eyc/banco-datos/personas-asistidas-con-interrupcion-voluntaria-del-embarazo-ive-interrupcion-legal-del-embarazo-ile-en-establecimientos-de-salud-dependientes-del-gcba-por-tipo-ciudad-de-buenos-aires-anos-2016-2/"}
+  ],
+  "monitoring": {"last_checked_at": null, "source_hashes": {}, "review_required": false}
+}

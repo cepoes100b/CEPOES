@@ -37,27 +37,39 @@ def extract_links(page):
         if m:out.append((int(m.group(1)),urljoin(DEIS,html.unescape(href))))
     return sorted(set(out))
 
+def parse_number(value):
+    s=str(value or '').strip().replace('\u00a0','').replace(' ','')
+    if not s:return None
+    try:
+        if ',' in s and '.' in s:
+            s=s.replace('.','').replace(',','.') if s.rfind(',')>s.rfind('.') else s.replace(',','')
+        elif ',' in s:s=s.replace(',','.')
+        return float(s)
+    except ValueError:return None
+
 def parse_total(raw,expected=None):
     text=decode(raw);sample=text[:50000]
     try:delim=csv.Sniffer().sniff(sample,delimiters=',;\t|').delimiter
     except csv.Error:delim=','
     rows=list(csv.DictReader(io.StringIO(text),delimiter=delim))
     if not rows:return None
-    cols=rows[0].keys();ranked=[]
+    cols=list(rows[0].keys());ranked=[]
     for c in cols:
         nc=norm(c);score=sum(k in nc for k in ('cant','cantidad','frecuencia','total','nacidos'))
         if not score:continue
         total=0;ok=0
         for r in rows:
-            s=str(r.get(c,'')).strip().replace('.','').replace(',','.')
-            try:v=float(s)
-            except ValueError:continue
-            if v>=0 and abs(v-round(v))<1e-8:total+=int(v);ok+=1
-        if ok and 100000<=total<=1000000:ranked.append((score,total,c))
+            v=parse_number(r.get(c,''))
+            if v is None:continue
+            if v>=0 and abs(v-round(v))<1e-8:total+=int(round(v));ok+=1
+        if ok and 100000<=total<=1000000:ranked.append((score,total,c,ok))
     if expected:
         exact=[x for x in ranked if x[1]==expected]
         if exact:return exact[0][1]
-    return max(ranked,default=(0,None,None))[1]
+    if ranked:return max(ranked)[1]
+    print('DEIS diagnóstico · delimitador=',repr(delim),'filas=',len(rows),'columnas=',cols)
+    print('DEIS diagnóstico · primera fila=',{c:rows[0].get(c) for c in cols})
+    return None
 
 def main():
     d=json.loads(DATA.read_text(encoding='utf-8'));links=extract_links(get(DEIS))

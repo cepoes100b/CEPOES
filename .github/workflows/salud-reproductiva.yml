@@ -1,0 +1,27 @@
+name: Revisar salud reproductiva y PAEV
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 11 * * 1'
+permissions:
+  contents: write
+concurrency:
+  group: cepoes-salud-reproductiva
+  cancel-in-progress: false
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with: {python-version: '3.12'}
+      - run: python actualizar_salud_reproductiva.py
+      - run: python verificar_salud_reproductiva.py
+      - name: Guardar estado validado
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "cepoes-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add salud_reproductiva.json deploy/site-overlay/assets/data/salud-reproductiva.json
+          if git diff --cached --quiet; then echo "Sin cambios."; else git commit -m "datos: revisar salud reproductiva PAEV"; git push; fi

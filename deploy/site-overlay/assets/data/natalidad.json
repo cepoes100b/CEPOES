@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-03T17:20:00Z",
+  "latest_deis_file_year": 2024,
+  "update_pending": false,
+  "argentina": {
+    "births": [
+      {"year": 2014, "value": 777012, "source": "UNICEF sobre DEIS"},
+      {"year": 2020, "value": 533299, "source": "DEIS"},
+      {"year": 2024, "value": 413135, "source": "DEIS / UNICEF"}
+    ],
+    "tgf": [
+      {"year": 1980, "value": 3.3},
+      {"year": 1991, "value": 2.9},
+      {"year": 2001, "value": 2.4},
+      {"year": 2010, "value": 2.3},
+      {"year": 2019, "value": 1.8}
+    ],
+    "replacement_reference": 2.1
+  },
+  "caba": {
+    "tgf": [
+      {"year": 2010, "value": 1.91}, {"year": 2011, "value": 1.91},
+      {"year": 2012, "value": 1.85}, {"year": 2013, "value": 1.84},
+      {"year": 2014, "value": 1.85}, {"year": 2015, "value": 1.78},
+      {"year": 2016, "value": 1.70}, {"year": 2017, "value": 1.54},
+      {"year": 2018, "value": 1.53}, {"year": 2019, "value": 1.48},
+      {"year": 2020, "value": 1.20}, {"year": 2021, "value": 1.14},
+      {"year": 2022, "value": 1.10}, {"year": 2023, "value": 1.09},
+      {"year": 2024, "value": 0.99}
+    ],
+    "births_2024": 21366,
+    "birth_rate_2024_per_1000": 6.9,
+    "mean_maternal_age_2024": 32.5
+  },
+  "events": [
+    {"date": "2020-12-30", "label": "Sanción Ley 27.610"},
+    {"date": "2021-01-24", "label": "Entrada en vigencia de la IVE"}
+  ],
+  "sources": [
+    {"id": "deis_nacidos", "name": "DEIS · Nacidos vivos", "url": "https://www.argentina.gob.ar/salud/deis/datos/nacidosvivos"},
+    {"id": "renaper", "name": "RENAPER · Natalidad y fecundidad 1980–2019", "url": "https://www.argentina.gob.ar/node/275379"},
+    {"id": "idecba_tgf", "name": "IDECBA · Tasa global de fecundidad", "url": "https://www.estadisticaciudad.gob.ar/si/demog/principal-indicador?indicador=a2a1"},
+    {"id": "unicef_monitor", "name": "UNICEF · Monitor de natalidad", "url": "https://www.unicef.org/argentina/comunicados-prensa/monitor-natalidad"}
+  ]
+}

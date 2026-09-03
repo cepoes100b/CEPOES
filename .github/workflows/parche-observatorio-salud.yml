@@ -1,4 +1,5 @@
 name: Mantener Salud visible en Observatorio
+# Activación inicial del parche server-side.
 
 on:
   push:

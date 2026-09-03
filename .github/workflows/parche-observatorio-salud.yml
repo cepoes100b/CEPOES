@@ -1,0 +1,117 @@
+name: Mantener Salud visible en Observatorio
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "deploy/parche_observatorio_salud.py"
+      - ".github/workflows/parche-observatorio-salud.yml"
+  workflow_run:
+    workflows: ["Desplegar sitio en Hostinger"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cepoes-hostinger-production
+  cancel-in-progress: false
+
+jobs:
+  parche:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      SFTP_HOST: ${{ secrets.HOSTINGER_SFTP_HOST }}
+      SFTP_PORT: ${{ secrets.HOSTINGER_SFTP_PORT }}
+      SFTP_USER: ${{ secrets.HOSTINGER_SFTP_USER }}
+      SFTP_PASSWORD: ${{ secrets.HOSTINGER_SFTP_PASSWORD }}
+      REMOTE_DIR: ${{ secrets.HOSTINGER_REMOTE_DIR }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Verificar configuración
+        shell: bash
+        run: |
+          set -euo pipefail
+          for v in SFTP_HOST SFTP_USER SFTP_PASSWORD REMOTE_DIR; do
+            test -n "${!v:-}" || { echo "Falta $v" >&2; exit 1; }
+          done
+          echo "SFTP_PORT=${SFTP_PORT:-65002}" >> "$GITHUB_ENV"
+
+      - name: Instalar cliente SFTP
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+      - name: Descargar portada actual del Observatorio
+        shell: bash
+        run: |
+          set -euo pipefail
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set cmd:fail-exit yes
+          set net:max-retries 3
+          set net:timeout 30
+          get "$REMOTE_DIR/observatorio/index.html" -o /tmp/observatorio.html
+          bye
+          EOF
+          test -s /tmp/observatorio.html
+          cp /tmp/observatorio.html /tmp/observatorio.before.html
+
+      - name: Insertar Salud y cuidados server-side
+        run: python deploy/parche_observatorio_salud.py /tmp/observatorio.html
+
+      - name: Validar HTML resultante
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'id="observatorio-salud-cuidados"' /tmp/observatorio.html
+          grep -q '>Natalidad y demografía<' /tmp/observatorio.html
+          grep -q '>Salud reproductiva<' /tmp/observatorio.html
+          grep -q '>Salud mental<' /tmp/observatorio.html
+          grep -q '>Personas mayores<' /tmp/observatorio.html
+          grep -q '/observatorio/#observatorio-salud-cuidados">Salud</a>' /tmp/observatorio.html
+
+      - name: Publicar sólo la portada del Observatorio
+        id: publish
+        shell: bash
+        run: |
+          set -euo pipefail
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set cmd:fail-exit yes
+          set net:max-retries 3
+          set net:timeout 30
+          put /tmp/observatorio.html -o "$REMOTE_DIR/observatorio/index.html"
+          bye
+          EOF
+
+      - name: Smoke test específico
+        id: smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          Q="health=${GITHUB_RUN_ID}-$(date +%s)"
+          curl --retry 4 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS \
+            -H "Cache-Control: no-cache" -H "Pragma: no-cache" \
+            "https://cepoes.org/observatorio/?${Q}" -o /tmp/live-observatorio.html
+          grep -q 'id="observatorio-salud-cuidados"' /tmp/live-observatorio.html
+          grep -q '>Natalidad y demografía<' /tmp/live-observatorio.html
+          grep -q '>Salud reproductiva<' /tmp/live-observatorio.html
+          grep -q '/observatorio/#observatorio-salud-cuidados">Salud</a>' /tmp/live-observatorio.html
+          echo "Producción OK: bloque Salud visible en HTML y subnav"
+
+      - name: Restaurar si falla el smoke test
+        if: failure() && steps.publish.outcome == 'success'
+        shell: bash
+        run: |
+          echo "Smoke falló: restaurando portada anterior" >&2
+          lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
+          set sftp:auto-confirm yes
+          set cmd:fail-exit yes
+          put /tmp/observatorio.before.html -o "$REMOTE_DIR/observatorio/index.html"
+          bye
+          EOF

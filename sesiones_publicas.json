@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-09-02T17:46:25-03:00",
+  "actualizado_en": "2026-09-03T10:47:17-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -10,11 +10,11 @@
   },
   "periodo_consultado": {
     "desde": "01/01/2026",
-    "hasta": "02/09/2026"
+    "hasta": "03/09/2026"
   },
   "resumen": {
-    "sesiones": 6,
-    "sesiones_realizadas": 6,
+    "sesiones": 8,
+    "sesiones_realizadas": 8,
     "registros_presentismo": 363,
     "asuntos_considerados": 1006,
     "votaciones_asuntos": 48,
@@ -38678,6 +38678,115 @@
         "sanciones_expediente": 134,
         "sanciones_despacho": 208,
         "cambios_giro": 2
+      }
+    },
+    {
+      "id_sesion": "1152",
+      "nro_orden_lp": "10680",
+      "ano_parlamentario": "2026",
+      "fecha": "2026-09-03",
+      "tipo": {
+        "id": "4",
+        "abreviatura": "ESP",
+        "descripcion": "ESPECIAL"
+      },
+      "datos_recinto": {
+        "id_sesion_recinto": "",
+        "periodo": "",
+        "fecha": "",
+        "reunion": ""
+      },
+      "realizada": true,
+      "criterio_realizada": "documento_labor",
+      "documentos": {
+        "acuerdo_labor": {
+          "id_documento": "226330",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=226330"
+        },
+        "informe_prelabor": null,
+        "version_taquigrafica": null,
+        "asuntos_considerados": null
+      },
+      "urls": {
+        "votaciones": "https://parlamentaria.legislatura.gob.ar/pages/sesion_votaciones.aspx?IdSesion=1152",
+        "info_sesion": "https://parlamentaria.legislatura.gob.ar/InfoSesion/1152",
+        "reporte_presentismo": "https://parlamentaria.legislatura.gob.ar/ReportesPDFGen/VisualizadorReportes.aspx?iTipoReporte=100&IdSesion=1152"
+      },
+      "presentismo": {
+        "total": 0,
+        "presentes": 0,
+        "ausentes": 0,
+        "porcentaje_asistencia": null,
+        "presidente": "",
+        "secretarios": "",
+        "registros": []
+      },
+      "asuntos_considerados": [],
+      "sanciones": [],
+      "votaciones_nominales": [],
+      "sanciones_despacho": [],
+      "cambios_giro": [],
+      "resumen_items_recinto": {
+        "total": 0,
+        "sanciones_expediente": 0,
+        "sanciones_despacho": 0,
+        "cambios_giro": 0
+      }
+    },
+    {
+      "id_sesion": "1153",
+      "nro_orden_lp": "10681",
+      "ano_parlamentario": "2026",
+      "fecha": "2026-09-03",
+      "tipo": {
+        "id": "1",
+        "abreviatura": "ORD",
+        "descripcion": "ORDINARIA"
+      },
+      "datos_recinto": {
+        "id_sesion_recinto": "",
+        "periodo": "",
+        "fecha": "",
+        "reunion": ""
+      },
+      "realizada": true,
+      "criterio_realizada": "documento_labor",
+      "documentos": {
+        "acuerdo_labor": {
+          "id_documento": "226505",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=226505"
+        },
+        "informe_prelabor": {
+          "id_documento": "226408",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=226408"
+        },
+        "version_taquigrafica": null,
+        "asuntos_considerados": null
+      },
+      "urls": {
+        "votaciones": "https://parlamentaria.legislatura.gob.ar/pages/sesion_votaciones.aspx?IdSesion=1153",
+        "info_sesion": "https://parlamentaria.legislatura.gob.ar/InfoSesion/1153",
+        "reporte_presentismo": "https://parlamentaria.legislatura.gob.ar/ReportesPDFGen/VisualizadorReportes.aspx?iTipoReporte=100&IdSesion=1153"
+      },
+      "presentismo": {
+        "total": 0,
+        "presentes": 0,
+        "ausentes": 0,
+        "porcentaje_asistencia": null,
+        "presidente": "",
+        "secretarios": "",
+        "registros": []
+      },
+      "asuntos_considerados": [],
+      "sanciones": [],
+      "votaciones_nominales": [],
+      "sanciones_despacho": [],
+      "cambios_giro": [],
+      "resumen_items_recinto": {
+        "total": 0,
+        "sanciones_expediente": 0,
+        "sanciones_despacho": 0,
+        "cambios_giro": 0
       }
     }
   ],

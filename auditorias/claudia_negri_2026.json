@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-02T20:55:20.224704+00:00",
+  "generado_en": "2026-09-03T13:56:09.499957+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,9 +10,9 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2023-11-28",
-    "fecha_mas_reciente_obtenida": "2026-09-02",
-    "ids_del_anio_en_ventana": 2762,
-    "ids_revisados_acumulados": 2762,
+    "fecha_mas_reciente_obtenida": "2026-09-03",
+    "ids_del_anio_en_ventana": 2765,
+    "ids_revisados_acumulados": 2765,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -96,12 +96,12 @@
     ]
   },
   "ultima_sesion_detectada": {
-    "id_sesion": "1151",
-    "fecha": "2026-08-27",
+    "id_sesion": "1152",
+    "fecha": "2026-09-03",
     "realizada": true,
-    "asuntos_considerados": 344,
-    "sanciones": 134,
-    "votaciones_nominales": 16,
+    "asuntos_considerados": 0,
+    "sanciones": 0,
+    "votaciones_nominales": 0,
     "version_taquigrafica_disponible": false
   },
   "problemas": [],

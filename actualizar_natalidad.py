@@ -55,7 +55,7 @@ def parse_total(raw,expected=None):
     if not rows:return None
     cols=list(rows[0].keys());ranked=[]
     for c in cols:
-        nc=norm(c);score=sum(k in nc for k in ('cant','cantidad','frecuencia','total','nacidos'))
+        nc=norm(c);score=sum(k in nc for k in ('cant','cantidad','frecuencia','cuenta','total','nacidos'))
         if not score:continue
         total=0;ok=0
         for r in rows:

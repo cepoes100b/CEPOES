@@ -30,6 +30,14 @@
         const debt=sub.querySelector('a[href="/territorio/endeudamiento/"]'); debt?sub.insertBefore(a,debt):sub.appendChild(a);
       }
     }
+    if(sub && (location.pathname==='/observatorio/'||location.pathname==='/observatorio/index.html')){
+      const href='/observatorio/#observatorio-salud-cuidados';
+      if(!sub.querySelector(`a[href="${href}"]`)){
+        const a=document.createElement('a');a.href=href;a.textContent='Salud';
+        const agenda=[...sub.querySelectorAll('a')].find(x=>x.textContent.trim()==='Agenda');
+        agenda?sub.insertBefore(a,agenda):sub.appendChild(a);
+      }
+    }
     initObservatorioHealth();
     initSearch();
     initPress();
@@ -37,9 +45,9 @@
   function initObservatorioHealth(){
     if(location.pathname!=='/observatorio/'&&location.pathname!=='/observatorio/index.html')return;
     if(document.getElementById('observatorio-salud-cuidados'))return;
-    const target=[...document.querySelectorAll('h2')].find(h=>h.textContent.trim()==='El Observatorio')?.closest('section');
     const main=document.querySelector('main');
     if(!main)return;
+    const hero=main.querySelector(':scope > header')||main.querySelector('.page-hero');
     const section=document.createElement('section');
     section.id='observatorio-salud-cuidados';
     section.className='section alt';
@@ -50,7 +58,7 @@
     document.head.appendChild(style);
     const legacy=['/observatorio/personas-mayores/','/observatorio/salud-mental/'];
     legacy.forEach(href=>document.querySelectorAll(`a[href="${href}"]`).forEach(a=>{if(!a.closest('#observatorio-salud-cuidados')&&!a.closest('nav')&&!a.closest('footer'))a.classList.add('obs-health-legacy-hidden')}));
-    if(target)target.before(section);else main.appendChild(section);
+    if(hero)hero.after(section);else main.prepend(section);
   }
   function initPress(){
     if(location.pathname.startsWith('/prensa/'))return;

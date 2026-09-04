@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-09-03T17:45:46-03:00",
+  "actualizado_en": "2026-09-04T10:47:32-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -10,7 +10,7 @@
   },
   "periodo_consultado": {
     "desde": "01/01/2026",
-    "hasta": "03/09/2026"
+    "hasta": "04/09/2026"
   },
   "resumen": {
     "sesiones": 8,
@@ -39285,7 +39285,7 @@
         "ausentes": 2,
         "porcentaje_asistencia": 96.67,
         "presidente": "LOPEZ, Matias MODARELLI, Juan P.",
-        "secretarios": "SCHILLAGI, Pablo J. Gribaudo, Christian MISH, Augusto",
+        "secretarios": "SCHILLAGI, Pablo J. GRIBAUDO, Christian MISH, Augusto",
         "registros": [
           {
             "id_legislador": "30922",

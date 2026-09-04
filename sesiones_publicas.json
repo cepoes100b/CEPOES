@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-09-04T10:47:32-03:00",
+  "actualizado_en": "2026-09-04T17:45:26-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -16,18 +16,18 @@
     "sesiones": 8,
     "sesiones_realizadas": 8,
     "registros_presentismo": 483,
-    "asuntos_considerados": 1008,
+    "asuntos_considerados": 1058,
     "votaciones_asuntos": 48,
     "votos_nominales": 2907,
     "expedientes_votados_unicos": 47,
     "fallas": 0,
-    "items_recinto": 1008,
-    "sanciones_expediente": 512,
+    "items_recinto": 1058,
+    "sanciones_expediente": 562,
     "sanciones_despacho": 458,
     "cambios_giro": 38,
     "sanciones_por_alcance": {
-      "definitiva": 506,
-      "inicial": 6
+      "definitiva": 555,
+      "inicial": 7
     }
   },
   "fallas": [],
@@ -39272,7 +39272,10 @@
           "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=226408"
         },
         "version_taquigrafica": null,
-        "asuntos_considerados": null
+        "asuntos_considerados": {
+          "id_documento": "226531",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=226531"
+        }
       },
       "urls": {
         "votaciones": "https://parlamentaria.legislatura.gob.ar/pages/sesion_votaciones.aspx?IdSesion=1153",
@@ -39285,7 +39288,7 @@
         "ausentes": 2,
         "porcentaje_asistencia": 96.67,
         "presidente": "LOPEZ, Matias MODARELLI, Juan P.",
-        "secretarios": "SCHILLAGI, Pablo J. GRIBAUDO, Christian MISH, Augusto",
+        "secretarios": "SCHILLAGI, Pablo J. GRIBAUDO, Christian MISH, Augusto CZERNIKOWSKI, Alberto",
         "registros": [
           {
             "id_legislador": "30922",
@@ -39769,14 +39772,716 @@
           }
         ]
       },
-      "asuntos_considerados": [],
-      "sanciones": [],
+      "asuntos_considerados": [
+        {
+          "id_expediente": "139418",
+          "numero_expediente": "30-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6999 / Expediente 30-D-2026"
+        },
+        {
+          "id_expediente": "141209",
+          "numero_expediente": "1740-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley con sanción inicial / Expediente 1740-D-2026"
+        },
+        {
+          "id_expediente": "137617",
+          "numero_expediente": "1713-D-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6997 / Expediente 1713-D-2025"
+        },
+        {
+          "id_expediente": "138695",
+          "numero_expediente": "2729-P-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6996 / Expediente 2729-P-2025"
+        },
+        {
+          "id_expediente": "131220",
+          "numero_expediente": "1356-D-2024",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6995 / Expediente 1356-D-2024"
+        },
+        {
+          "id_expediente": "137923",
+          "numero_expediente": "1998-D-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6994 / Expediente 1998-D-2025"
+        },
+        {
+          "id_expediente": "130515",
+          "numero_expediente": "716-D-2024",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6993 / Expediente 716-D-2024"
+        },
+        {
+          "id_expediente": "137944",
+          "numero_expediente": "2017-C-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6990 / Expediente 2017-C-2025"
+        },
+        {
+          "id_expediente": "137985",
+          "numero_expediente": "2054-D-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6989 / Expediente 2054-D-2025"
+        },
+        {
+          "id_expediente": "138069",
+          "numero_expediente": "2131-C-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6988 / Expediente 2131-C-2025"
+        },
+        {
+          "id_expediente": "138097",
+          "numero_expediente": "2155-J-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6987 / Expediente 2155-J-2025"
+        },
+        {
+          "id_expediente": "138308",
+          "numero_expediente": "2362-P-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6986 / Expediente 2362-P-2025"
+        },
+        {
+          "id_expediente": "139010",
+          "numero_expediente": "3028-D-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6985 / Expediente 3028-D-2025"
+        },
+        {
+          "id_expediente": "139017",
+          "numero_expediente": "3036-D-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6984 / Expediente 3036-D-2025"
+        },
+        {
+          "id_expediente": "140826",
+          "numero_expediente": "1404-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6983 / Expediente 1404-D-2026"
+        },
+        {
+          "id_expediente": "140827",
+          "numero_expediente": "1405-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6981 / Expediente 1405-D-2026"
+        },
+        {
+          "id_expediente": "138824",
+          "numero_expediente": "2852-D-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6980 / Expediente 2852-D-2025"
+        },
+        {
+          "id_expediente": "138844",
+          "numero_expediente": "2871-D-2025",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6979 / Expediente 2871-D-2025"
+        },
+        {
+          "id_expediente": "142255",
+          "numero_expediente": "2666-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 551-2026 / Expediente 2666-D-2026"
+        },
+        {
+          "id_expediente": "142267",
+          "numero_expediente": "2678-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 546-2026 / Expediente 2678-D-2026"
+        },
+        {
+          "id_expediente": "142256",
+          "numero_expediente": "2667-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 544-2026 / Expediente 2667-D-2026"
+        },
+        {
+          "id_expediente": "142249",
+          "numero_expediente": "2658-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 493-2026 / Expediente 2658-D-2026"
+        },
+        {
+          "id_expediente": "142234",
+          "numero_expediente": "2645-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 542-2026 / Expediente 2645-D-2026"
+        },
+        {
+          "id_expediente": "141797",
+          "numero_expediente": "2251-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 541-2026 / Expediente 2251-D-2026"
+        },
+        {
+          "id_expediente": "141927",
+          "numero_expediente": "2371-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 492-2026 / Expediente 2371-D-2026"
+        },
+        {
+          "id_expediente": "142181",
+          "numero_expediente": "2595-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 491-2026 / Expediente 2595-D-2026"
+        },
+        {
+          "id_expediente": "142179",
+          "numero_expediente": "2594-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 490-2026 / Expediente 2594-D-2026"
+        },
+        {
+          "id_expediente": "142170",
+          "numero_expediente": "2585-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 539-2026 / Expediente 2585-D-2026"
+        },
+        {
+          "id_expediente": "142229",
+          "numero_expediente": "2640-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 538-2026 / Expediente 2640-D-2026"
+        },
+        {
+          "id_expediente": "142198",
+          "numero_expediente": "2611-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 537-2026 / Expediente 2611-D-2026"
+        },
+        {
+          "id_expediente": "142245",
+          "numero_expediente": "2654-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 487-2026 / Expediente 2654-D-2026"
+        },
+        {
+          "id_expediente": "142248",
+          "numero_expediente": "2657-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 486-2026 / Expediente 2657-D-2026"
+        },
+        {
+          "id_expediente": "142032",
+          "numero_expediente": "2458-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 485-2026 / Expediente 2458-D-2026"
+        },
+        {
+          "id_expediente": "142203",
+          "numero_expediente": "2616-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 536-2026 / Expediente 2616-D-2026"
+        },
+        {
+          "id_expediente": "142208",
+          "numero_expediente": "2621-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 484-2026 / Expediente 2621-D-2026"
+        },
+        {
+          "id_expediente": "141924",
+          "numero_expediente": "2368-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 535-2026 / Expediente 2368-D-2026"
+        },
+        {
+          "id_expediente": "141658",
+          "numero_expediente": "2121-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 483-2026 / Expediente 2121-D-2026"
+        },
+        {
+          "id_expediente": "141422",
+          "numero_expediente": "1926-P-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 482-2026 / Expediente 1926-P-2026"
+        },
+        {
+          "id_expediente": "141624",
+          "numero_expediente": "2092-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 488-2026 / Expediente 2092-D-2026"
+        },
+        {
+          "id_expediente": "140632",
+          "numero_expediente": "1244-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 489-2026 / Expediente 1244-D-2026"
+        },
+        {
+          "id_expediente": "142043",
+          "numero_expediente": "2468-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 540-2026 / Expediente 2468-D-2026"
+        },
+        {
+          "id_expediente": "142257",
+          "numero_expediente": "2668-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 543-2026 / Expediente 2668-D-2026"
+        },
+        {
+          "id_expediente": "141858",
+          "numero_expediente": "2309-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 494-2026 / Expediente 2309-D-2026"
+        },
+        {
+          "id_expediente": "142108",
+          "numero_expediente": "2527-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 547-2026 / Expediente 2527-D-2026"
+        },
+        {
+          "id_expediente": "141558",
+          "numero_expediente": "2085-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 548-2026 / Expediente 2085-D-2026"
+        },
+        {
+          "id_expediente": "134214",
+          "numero_expediente": "3194-C-2024",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6991 / Expediente 3194-C-2024"
+        },
+        {
+          "id_expediente": "141264",
+          "numero_expediente": "1787-J-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6992 / Expediente 1787-J-2026"
+        },
+        {
+          "id_expediente": "141882",
+          "numero_expediente": "2332-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6998 / Expediente 2332-D-2026"
+        },
+        {
+          "id_expediente": "142289",
+          "numero_expediente": "2698-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 550-2026 / Expediente 2698-D-2026"
+        },
+        {
+          "id_expediente": "142258",
+          "numero_expediente": "2671-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 545-2026 / Expediente 2671-D-2026"
+        }
+      ],
+      "sanciones": [
+        {
+          "id_expediente": "141924",
+          "numero_expediente": "2368-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 535-2026 / Expediente 2368-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142203",
+          "numero_expediente": "2616-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 536-2026 / Expediente 2616-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142198",
+          "numero_expediente": "2611-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 537-2026 / Expediente 2611-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142229",
+          "numero_expediente": "2640-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 538-2026 / Expediente 2640-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142170",
+          "numero_expediente": "2585-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 539-2026 / Expediente 2585-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142043",
+          "numero_expediente": "2468-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 540-2026 / Expediente 2468-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141797",
+          "numero_expediente": "2251-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 541-2026 / Expediente 2251-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142234",
+          "numero_expediente": "2645-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 542-2026 / Expediente 2645-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142257",
+          "numero_expediente": "2668-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 543-2026 / Expediente 2668-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142256",
+          "numero_expediente": "2667-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 544-2026 / Expediente 2667-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142258",
+          "numero_expediente": "2671-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 545-2026 / Expediente 2671-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142267",
+          "numero_expediente": "2678-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 546-2026 / Expediente 2678-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142108",
+          "numero_expediente": "2527-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 547-2026 / Expediente 2527-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141558",
+          "numero_expediente": "2085-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 548-2026 / Expediente 2085-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142289",
+          "numero_expediente": "2698-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 550-2026 / Expediente 2698-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142255",
+          "numero_expediente": "2666-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 551-2026 / Expediente 2666-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141209",
+          "numero_expediente": "1740-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley con sanción inicial / Expediente 1740-D-2026",
+          "alcance": "inicial"
+        },
+        {
+          "id_expediente": "138844",
+          "numero_expediente": "2871-D-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6979 / Expediente 2871-D-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "138824",
+          "numero_expediente": "2852-D-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6980 / Expediente 2852-D-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140827",
+          "numero_expediente": "1405-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6981 / Expediente 1405-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140826",
+          "numero_expediente": "1404-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6983 / Expediente 1404-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "139017",
+          "numero_expediente": "3036-D-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6984 / Expediente 3036-D-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "139010",
+          "numero_expediente": "3028-D-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6985 / Expediente 3028-D-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "138308",
+          "numero_expediente": "2362-P-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6986 / Expediente 2362-P-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "138097",
+          "numero_expediente": "2155-J-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6987 / Expediente 2155-J-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "138069",
+          "numero_expediente": "2131-C-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6988 / Expediente 2131-C-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "137985",
+          "numero_expediente": "2054-D-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6989 / Expediente 2054-D-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "137944",
+          "numero_expediente": "2017-C-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6990 / Expediente 2017-C-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "134214",
+          "numero_expediente": "3194-C-2024",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6991 / Expediente 3194-C-2024",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141264",
+          "numero_expediente": "1787-J-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6992 / Expediente 1787-J-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "130515",
+          "numero_expediente": "716-D-2024",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6993 / Expediente 716-D-2024",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "137923",
+          "numero_expediente": "1998-D-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6994 / Expediente 1998-D-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "131220",
+          "numero_expediente": "1356-D-2024",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6995 / Expediente 1356-D-2024",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "138695",
+          "numero_expediente": "2729-P-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6996 / Expediente 2729-P-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "137617",
+          "numero_expediente": "1713-D-2025",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6997 / Expediente 1713-D-2025",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141882",
+          "numero_expediente": "2332-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6998 / Expediente 2332-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "139418",
+          "numero_expediente": "30-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6999 / Expediente 30-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141422",
+          "numero_expediente": "1926-P-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 482-2026 / Expediente 1926-P-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141658",
+          "numero_expediente": "2121-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 483-2026 / Expediente 2121-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142208",
+          "numero_expediente": "2621-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 484-2026 / Expediente 2621-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142032",
+          "numero_expediente": "2458-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 485-2026 / Expediente 2458-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142248",
+          "numero_expediente": "2657-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 486-2026 / Expediente 2657-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142245",
+          "numero_expediente": "2654-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 487-2026 / Expediente 2654-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141624",
+          "numero_expediente": "2092-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 488-2026 / Expediente 2092-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140632",
+          "numero_expediente": "1244-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 489-2026 / Expediente 1244-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142179",
+          "numero_expediente": "2594-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 490-2026 / Expediente 2594-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142181",
+          "numero_expediente": "2595-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 491-2026 / Expediente 2595-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141927",
+          "numero_expediente": "2371-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 492-2026 / Expediente 2371-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "142249",
+          "numero_expediente": "2658-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 493-2026 / Expediente 2658-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141858",
+          "numero_expediente": "2309-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 494-2026 / Expediente 2309-D-2026",
+          "alcance": "definitiva"
+        }
+      ],
       "votaciones_nominales": [],
       "sanciones_despacho": [],
       "cambios_giro": [],
       "resumen_items_recinto": {
-        "total": 0,
-        "sanciones_expediente": 0,
+        "total": 50,
+        "sanciones_expediente": 50,
         "sanciones_despacho": 0,
         "cambios_giro": 0
       }
@@ -39796,7 +40501,7 @@
     "tipos_oficiales_observados": {
       "cambio de giro": 38,
       "sancion de un despacho": 458,
-      "sancion de un expediente": 512
+      "sancion de un expediente": 562
     },
     "alcance_sancion": "inicial, definitiva o no_especificada según descripción oficial"
   }

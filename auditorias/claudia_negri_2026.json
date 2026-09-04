@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-04T13:57:15.451146+00:00",
+  "generado_en": "2026-09-04T20:55:07.807699+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,38 +9,38 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2023-11-29",
+    "fecha_mas_antigua_obtenida": "2023-11-30",
     "fecha_mas_reciente_obtenida": "2026-09-04",
-    "ids_del_anio_en_ventana": 2774,
-    "ids_revisados_acumulados": 2774,
+    "ids_del_anio_en_ventana": 2781,
+    "ids_revisados_acumulados": 2781,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
-    "expedientes_seguimiento_institucional": 218,
-    "expedientes_auditados": 218,
+    "expedientes_seguimiento_institucional": 219,
+    "expedientes_auditados": 219,
     "autoría_principal": 43,
-    "coautoría": 175,
-    "fichas_oficiales_completas": 218,
-    "con_evidencia_sancion": 86,
+    "coautoría": 176,
+    "fichas_oficiales_completas": 219,
+    "con_evidencia_sancion": 88,
     "problemas": 0
   },
   "por_tipo": {
     "DECLARACION": 90,
-    "RESOLUCION": 69,
+    "RESOLUCION": 70,
     "LEY": 59
   },
   "por_estado_actual": {
     "en_comision": 111,
     "archivado": 61,
-    "sancionado": 35,
+    "sancionado": 37,
     "despacho": 4,
-    "ingresado": 4,
-    "con_dictamen": 3
+    "con_dictamen": 3,
+    "ingresado": 3
   },
   "por_etapa_ciclo": {
-    "en_comision": 115,
+    "en_comision": 114,
     "archivado": 61,
-    "sancionado": 35,
+    "sancionado": 37,
     "con_dictamen": 7
   },
   "control_832_2026": {
@@ -107,6 +107,60 @@
   "problemas": [],
   "expedientes": [
     {
+      "id_expediente": "142310",
+      "numero": "2717-D-2026",
+      "fecha_ingreso": "2026-09-04T13:19:31",
+      "sumario": "SE DECLARA HUÉSPED DE HONOR A SU SANTIDAD PAPA LEÓN XIV, CON MOTIVO DE SU VISITA OFICIAL A LA REPÚBLICA ARGENTINA.-",
+      "rol_claudia": "coautora",
+      "rol_recalculado": "coautora",
+      "autoría_confirmada": true,
+      "rol_consistente": true,
+      "autores": [
+        "NEIRA, CLAUDIA",
+        "BARROETAVEÑA, MATÍAS",
+        "BIELLI, MARÍA",
+        "CAPORICCIO, FRANCISCO",
+        "FERREÑO, CLAUDIO AMÉRICO",
+        "FREIRE, VICTORIA",
+        "GEMINIANI, NOEMÍ",
+        "GONZÁLEZ, ANDREA MARIANA",
+        "GRILLO, ALEJANDRO OMAR",
+        "IAÑEZ, BERENICE",
+        "LA BLUNDA, ANDRÉS",
+        "LAMMENS , MATÍAS",
+        "MOCHI, FEDERICO",
+        "MODARELLI, JUAN PABLO",
+        "NEGRI, CLAUDIA",
+        "PEÑAFORT, GRACIANA",
+        "ROSSEN, BÁRBARA",
+        "SALVATIERRA, ALEJANDRO",
+        "SANTORO, LEANDRO",
+        "VELÁZQUEZ, DELFINA"
+      ],
+      "cantidad_autores": 20,
+      "tipo_oficial": "RESOLUCION",
+      "estado_actual": "ingresado",
+      "etapa_ciclo": "en_comision",
+      "ubicacion": "DGDP",
+      "giros": [
+        "(GIRO AUN NO ASIGNADO)"
+      ],
+      "ultimo_movimiento": {
+        "fecha": "2026-09-04",
+        "oficina": "DGDP",
+        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+      },
+      "evidencia_sancion": false,
+      "fuentes_sancion": [],
+      "fuentes_captura": [
+        "radar_ingresos",
+        "seguimiento_institucional"
+      ],
+      "ficha_oficial_completa": true,
+      "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142310",
+      "es_832_2026": false
+    },
+    {
       "id_expediente": "142304",
       "numero": "2711-D-2026",
       "fecha_ingreso": "2026-09-03T15:22:32",
@@ -120,16 +174,16 @@
       ],
       "cantidad_autores": 1,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "SP",
+      "ubicacion": "SALUD",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-03",
-        "oficina": "SP",
-        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-04",
+        "oficina": "SALUD",
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -203,22 +257,29 @@
       ],
       "cantidad_autores": 14,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "en_comision",
-      "etapa_ciclo": "en_comision",
-      "ubicacion": "TURISMO Y DEPORTES",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
+      "ubicacion": "MEP",
       "giros": [
         "TURISMO Y DEPORTES"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-03",
-        "oficina": "TURISMO Y DEPORTES",
-        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-04",
+        "oficina": "MEP",
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES (ESPERANDO RECEPCION)"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
         "radar_ingresos",
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142257",
@@ -291,22 +352,29 @@
       ],
       "cantidad_autores": 1,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
-      "etapa_ciclo": "en_comision",
+      "estado_actual": "sancionado",
+      "etapa_ciclo": "sancionado",
       "ubicacion": "MEP",
       "giros": [
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-03",
+        "fecha": "2026-09-04",
         "oficina": "MEP",
-        "descripcion": "EN MEP PARA REALIZAR DISTINTAS TAREAS (ESPERANDO RECEPCION)"
+        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
       },
-      "evidencia_sancion": false,
-      "fuentes_sancion": [],
+      "evidencia_sancion": true,
+      "fuentes_sancion": [
+        "estado_actual",
+        "etapa_ciclo",
+        "ficha_oficial.hitos.tuvo_sancion",
+        "ficha_oficial.sanciones",
+        "actividad_recinto"
+      ],
       "fuentes_captura": [
         "radar_ingresos",
-        "seguimiento_institucional"
+        "seguimiento_institucional",
+        "recinto"
       ],
       "ficha_oficial_completa": true,
       "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142234",

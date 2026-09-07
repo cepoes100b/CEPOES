@@ -6,7 +6,17 @@ import requests
 ROOT=Path('ladefe_tableau_inventory')
 inv=json.loads((ROOT/'inventory.json').read_text(encoding='utf-8'))
 embeds=inv.get('embeds',[])
-preferred=['1_1Aspectosdemogrficos_Informacincensal','2_1aTasasdepobreza','5_4aJusticiajuvenilAdolescentesyjvenes']
+# One representative workbook per current monitoring axis.
+preferred=[
+    '1_1Aspectosdemogrficos_Informacincensal',
+    '2_1aTasasdepobreza',
+    '3_3dMatrculaECNivelSecundario',
+    '4_2aNatalidad',
+    '5_4aJusticiajuvenilAdolescentesyjvenes',
+    '6_1Inversinpblicapresupuestonacional',
+    '7_1SaludsexualyreproductivaFecundidadadolescente',
+    '8_3aNNyAmigrantes_Losmigrantesenloscensosnacionales',
+]
 by_wb={e.get('workbook'):e for e in embeds}
 targets=[by_wb[x] for x in preferred if x in by_wb]
 headers={'User-Agent':'Mozilla/5.0','Accept':'*/*'}
@@ -29,17 +39,17 @@ def inspect_body(body,ctype):
 
 for e in targets:
     wb=e['workbook']
+    # The .twb endpoint on Tableau Public returns the downloadable packaged workbook
+    # for these public views, including the .hyper extract.
     urls=[
         ('workbook_twb',f'https://public.tableau.com/workbooks/{wb}.twb?showVizHome=no'),
-        ('workbook_twbx',f'https://public.tableau.com/workbooks/{wb}.twbx?showVizHome=no'),
-        ('view_pdf',e['tableau_url'].split('?',1)[0]+'.pdf?:showVizHome=no'),
     ]
     for probe,url in urls:
         try:
             r=requests.get(url,headers=headers,timeout=60,allow_redirects=True)
             body=r.content; ctype=r.headers.get('content-type',''); kind,detail=inspect_body(body,ctype)
             safe=re.sub(r'[^A-Za-z0-9._-]+','_',wb)
-            ext={'workbook_twb':'.twb','workbook_twbx':'.twbx','view_pdf':'.pdf'}[probe]
+            ext='.twb'
             if r.status_code==200 and len(body)>0:
                 (ROOT/f'download_{safe}_{probe}{ext}').write_bytes(body[:100_000_000])
             rows.append({'workbook':wb,'probe':probe,'url':url,'status':r.status_code,'content_type':ctype,'bytes':len(body),'kind':kind,'final_url':r.url,'detail':detail})

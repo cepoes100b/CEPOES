@@ -69,7 +69,7 @@ def discover_links(page_url,html,host,prefix):
  return out
 def crawl(start,max_pages,delay,timeout):
  start=canonical_page_url(start); parsed=urlparse(start); host=parsed.netloc; prefix="/monitoreo/"
- s=requests.Session(); s.headers.update({"User-Agent":"Mozilla/5.0 (compatible; LADEFE-Tableau-Inventory/1.0)","Accept-Language":"es-AR,es;q=0.9,en;q=0.5"})
+ s=requests.Session(); s.verify=False; requests.packages.urllib3.disable_warnings(); s.headers.update({"User-Agent":"Mozilla/5.0 (compatible; LADEFE-Tableau-Inventory/1.0)","Accept-Language":"es-AR,es;q=0.9,en;q=0.5"})
  q=deque([start]); queued={start}; visited=set(); pages=[]; embeds=[]
  while q and len(visited)<max_pages:
   u=q.popleft()

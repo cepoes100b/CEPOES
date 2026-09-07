@@ -33,6 +33,8 @@ jobs:
             --timeout 8 \
             --workers 16 \
             --out ladefe_tableau_inventory
+      - name: Probe Tableau Public CSV exports
+        run: python tmp_ladefe/probe_tableau_exports.py
       - name: Show summary
         if: always()
         shell: bash

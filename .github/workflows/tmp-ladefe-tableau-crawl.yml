@@ -39,6 +39,8 @@ jobs:
         run: python tmp_ladefe/inspect_hyper.py
       - name: Compare global snapshots
         run: python tmp_ladefe/scan_snapshot_counts.py
+      - name: Analyze master Hyper model
+        run: python tmp_ladefe/analyze_master_hyper.py
       - name: Show summary
         if: always()
         shell: bash

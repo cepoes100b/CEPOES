@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-09-07T10:48:35-03:00",
+  "actualizado_en": "2026-09-07T17:47:25-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -16,17 +16,17 @@
     "sesiones": 8,
     "sesiones_realizadas": 8,
     "registros_presentismo": 483,
-    "asuntos_considerados": 1058,
+    "asuntos_considerados": 1060,
     "votaciones_asuntos": 48,
     "votos_nominales": 2907,
     "expedientes_votados_unicos": 47,
     "fallas": 0,
-    "items_recinto": 1058,
-    "sanciones_expediente": 562,
-    "sanciones_despacho": 458,
+    "items_recinto": 1060,
+    "sanciones_expediente": 563,
+    "sanciones_despacho": 459,
     "cambios_giro": 38,
     "sanciones_por_alcance": {
-      "definitiva": 555,
+      "definitiva": 556,
       "inicial": 7
     }
   },
@@ -27685,8 +27685,8 @@
           "descripcion": "Resolución nro. 449-2026 / Expediente 2139-D-2026"
         },
         {
-          "id_expediente": "139812",
-          "numero_expediente": "489-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "procesado": true,
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Declaración nro. 466-2026 / Expediente 489-D-2026"
@@ -27795,6 +27795,13 @@
           "procesado": true,
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Declaración nro. 452-2026 / Expediente 2303-D-2026"
+        },
+        {
+          "id_expediente": "141942",
+          "numero_expediente": "2383-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 436-2026 / Expediente 2383-D-2026"
         },
         {
           "id_expediente": "140104",
@@ -29253,6 +29260,13 @@
           "descripcion": "Declaración nro. 382-2026 / Despacho 435-2026"
         },
         {
+          "id_expediente": "141975",
+          "numero_expediente": "2413-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 466-2026 / Despacho 489-2026"
+        },
+        {
           "id_expediente": "141441",
           "numero_expediente": "1937-D-2026",
           "procesado": true,
@@ -29773,8 +29787,8 @@
           "alcance": "definitiva"
         },
         {
-          "id_expediente": "139812",
-          "numero_expediente": "489-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Declaración nro. 466-2026 / Expediente 489-D-2026",
           "alcance": "definitiva"
@@ -30113,6 +30127,13 @@
           "numero_expediente": "2374-D-2026",
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Resolución nro. 435-2026 / Expediente 2374-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "141942",
+          "numero_expediente": "2383-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 436-2026 / Expediente 2383-D-2026",
           "alcance": "definitiva"
         },
         {
@@ -38053,6 +38074,12 @@
           "descripcion": "Declaración nro. 465-2026 / Despacho 494-2026"
         },
         {
+          "id_expediente": "141975",
+          "numero_expediente": "2413-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 466-2026 / Despacho 489-2026"
+        },
+        {
           "id_expediente": "140973",
           "numero_expediente": "1538-D-2026",
           "tipo": "SANCION DE UN DESPACHO",
@@ -38674,9 +38701,9 @@
         }
       ],
       "resumen_items_recinto": {
-        "total": 344,
-        "sanciones_expediente": 134,
-        "sanciones_despacho": 208,
+        "total": 346,
+        "sanciones_expediente": 135,
+        "sanciones_despacho": 209,
         "cambios_giro": 2
       }
     },
@@ -40503,8 +40530,8 @@
     "fuente_tipo_item": "GetAsuntoConsideradoItemByIdSesion",
     "tipos_oficiales_observados": {
       "cambio de giro": 38,
-      "sancion de un despacho": 458,
-      "sancion de un expediente": 562
+      "sancion de un despacho": 459,
+      "sancion de un expediente": 563
     },
     "alcance_sancion": "inicial, definitiva o no_especificada según descripción oficial"
   }

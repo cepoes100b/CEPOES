@@ -12,35 +12,27 @@ permissions:
 jobs:
   crawl:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
       - name: Install crawler dependencies
         run: python -m pip install --disable-pip-version-check requests beautifulsoup4
-
       - name: Connectivity diagnostic
         shell: bash
         run: |
-          set -euo pipefail
-          echo 'DNS:'
           getent hosts ladefe.gob.ar || true
-          echo 'HEAD:'
-          curl -L -I --max-time 30 -A 'Mozilla/5.0' https://ladefe.gob.ar/monitoreo/ || true
-
+          curl -k -L -I --max-time 10 -A 'Mozilla/5.0' https://ladefe.gob.ar/monitoreo/ || true
       - name: Crawl LADEFE monitoring tree
         run: |
           python tmp_ladefe/crawl_ladefe_tableau.py \
             --start https://ladefe.gob.ar/monitoreo/ \
-            --max-pages 500 \
-            --delay 0.15 \
-            --timeout 30 \
+            --max-pages 250 \
+            --timeout 8 \
+            --workers 16 \
             --out ladefe_tableau_inventory
-
       - name: Show summary
         if: always()
         shell: bash
@@ -51,11 +43,9 @@ jobs:
           p=json.load(open('ladefe_tableau_inventory/inventory.json',encoding='utf-8'))
           print(json.dumps(p.get('summary',{}),ensure_ascii=False,indent=2))
           print('\nUNIQUE WORKBOOK/VIEWS')
-          for x in p.get('unique_workbook_views',[]):
-              print(x['workbook_view'], '->', len(x['pages']), 'page(s)')
+          for x in p.get('unique_workbook_views',[]): print(x['workbook_view'], '->', len(x['pages']), 'page(s)')
           PY
           fi
-
       - name: Upload inventory
         if: always()
         uses: actions/upload-artifact@v4

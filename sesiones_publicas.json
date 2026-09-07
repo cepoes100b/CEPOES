@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-09-04T17:45:26-03:00",
+  "actualizado_en": "2026-09-07T10:48:35-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -10,7 +10,7 @@
   },
   "periodo_consultado": {
     "desde": "01/01/2026",
-    "hasta": "04/09/2026"
+    "hasta": "07/09/2026"
   },
   "resumen": {
     "sesiones": 8,
@@ -29134,8 +29134,8 @@
           "descripcion": "Declaración nro. 371-2026 / Despacho 418-2026"
         },
         {
-          "id_expediente": "140192",
-          "numero_expediente": "853-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "procesado": true,
           "tipo": "SANCION DE UN DESPACHO",
           "descripcion": "Declaración nro. 372-2026 / Despacho 402-2026"
@@ -37915,8 +37915,8 @@
           "descripcion": "Declaración nro. 371-2026 / Despacho 418-2026"
         },
         {
-          "id_expediente": "140192",
-          "numero_expediente": "853-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "tipo": "SANCION DE UN DESPACHO",
           "descripcion": "Declaración nro. 372-2026 / Despacho 402-2026"
         },
@@ -38705,7 +38705,10 @@
         },
         "informe_prelabor": null,
         "version_taquigrafica": null,
-        "asuntos_considerados": null
+        "asuntos_considerados": {
+          "id_documento": "226532",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=226532"
+        }
       },
       "urls": {
         "votaciones": "https://parlamentaria.legislatura.gob.ar/pages/sesion_votaciones.aspx?IdSesion=1152",

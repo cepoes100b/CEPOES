@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-04T20:55:07.807699+00:00",
+  "generado_en": "2026-09-07T13:58:06.980290+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,9 +10,9 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2023-11-30",
-    "fecha_mas_reciente_obtenida": "2026-09-04",
-    "ids_del_anio_en_ventana": 2781,
-    "ids_revisados_acumulados": 2781,
+    "fecha_mas_reciente_obtenida": "2026-09-07",
+    "ids_del_anio_en_ventana": 2783,
+    "ids_revisados_acumulados": 2783,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {

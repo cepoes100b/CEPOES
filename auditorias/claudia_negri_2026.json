@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-09T13:59:07.798076+00:00",
+  "generado_en": "2026-09-09T20:56:59.777699+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,39 +9,39 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2023-12-06",
+    "fecha_mas_antigua_obtenida": "2023-12-07",
     "fecha_mas_reciente_obtenida": "2026-09-09",
-    "ids_del_anio_en_ventana": 2829,
-    "ids_revisados_acumulados": 2829,
+    "ids_del_anio_en_ventana": 2851,
+    "ids_revisados_acumulados": 2851,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
-    "expedientes_seguimiento_institucional": 222,
-    "expedientes_auditados": 222,
+    "expedientes_seguimiento_institucional": 224,
+    "expedientes_auditados": 224,
     "autoría_principal": 43,
-    "coautoría": 179,
-    "fichas_oficiales_completas": 222,
+    "coautoría": 181,
+    "fichas_oficiales_completas": 224,
     "con_evidencia_sancion": 91,
     "problemas": 0
   },
   "por_tipo": {
     "DECLARACION": 92,
-    "RESOLUCION": 71,
-    "LEY": 59
+    "RESOLUCION": 72,
+    "LEY": 60
   },
   "por_estado_actual": {
-    "en_comision": 112,
+    "en_comision": 111,
     "archivado": 61,
     "sancionado": 40,
-    "ingresado": 5,
+    "ingresado": 7,
     "con_dictamen": 3,
-    "despacho": 1
+    "despacho": 2
   },
   "por_etapa_ciclo": {
-    "en_comision": 117,
+    "en_comision": 118,
     "archivado": 61,
     "sancionado": 40,
-    "con_dictamen": 4
+    "con_dictamen": 5
   },
   "control_832_2026": {
     "encontrados": 1,
@@ -107,6 +107,93 @@
   "problemas": [],
   "expedientes": [
     {
+      "id_expediente": "142384",
+      "numero": "2788-D-2026",
+      "fecha_ingreso": "2026-09-09T16:21:52",
+      "sumario": "SE MODIFICA LA LEY 6171 DE REGULACIÓN DE LA COBRANZA EXTRAJUDICIAL",
+      "rol_claudia": "coautora",
+      "rol_recalculado": "coautora",
+      "autoría_confirmada": true,
+      "rol_consistente": true,
+      "autores": [
+        "SANTORO, LEANDRO",
+        "CAPORICCIO, FRANCISCO",
+        "FERREÑO, CLAUDIO AMÉRICO",
+        "FREIRE, VICTORIA",
+        "GONZÁLEZ, ANDREA MARIANA",
+        "GRILLO, ALEJANDRO OMAR",
+        "IAÑEZ, BERENICE",
+        "LAMMENS , MATÍAS",
+        "MOCHI, FEDERICO",
+        "NEGRI, CLAUDIA",
+        "NEIRA, CLAUDIA",
+        "ROSSEN, BÁRBARA",
+        "SUÁREZ, GUILLERMO"
+      ],
+      "cantidad_autores": 13,
+      "tipo_oficial": "LEY",
+      "estado_actual": "ingresado",
+      "etapa_ciclo": "en_comision",
+      "ubicacion": "DGDP",
+      "giros": [
+        "(GIRO AUN NO ASIGNADO)"
+      ],
+      "ultimo_movimiento": {
+        "fecha": "2026-09-09",
+        "oficina": "DGDP",
+        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+      },
+      "evidencia_sancion": false,
+      "fuentes_sancion": [],
+      "fuentes_captura": [
+        "radar_ingresos",
+        "seguimiento_institucional"
+      ],
+      "ficha_oficial_completa": true,
+      "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142384",
+      "es_832_2026": false
+    },
+    {
+      "id_expediente": "142374",
+      "numero": "2778-D-2026",
+      "fecha_ingreso": "2026-09-09T14:29:03",
+      "sumario": "INFORMES RELATIVOS A LOS INCENDIOS PRODUCIDOS EN EL SERVICIO DE GUARDIA DEL HOSPITAL BRAULIO MOYANO LOS DÍAS SÁBADO 29 DE AGOSTO Y LUNES 7 DE SEPTIEMBRE DEL CORRIENTE AÑO",
+      "rol_claudia": "coautora",
+      "rol_recalculado": "coautora",
+      "autoría_confirmada": true,
+      "rol_consistente": true,
+      "autores": [
+        "IAÑEZ, BERENICE",
+        "GONZÁLEZ, ANDREA MARIANA",
+        "MOCHI, FEDERICO",
+        "NEGRI, CLAUDIA",
+        "NEIRA, CLAUDIA",
+        "SALVATIERRA, ALEJANDRO"
+      ],
+      "cantidad_autores": 6,
+      "tipo_oficial": "RESOLUCION",
+      "estado_actual": "ingresado",
+      "etapa_ciclo": "en_comision",
+      "ubicacion": "SP",
+      "giros": [
+        "(GIRO AUN NO ASIGNADO)"
+      ],
+      "ultimo_movimiento": {
+        "fecha": "2026-09-09",
+        "oficina": "SP",
+        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+      },
+      "evidencia_sancion": false,
+      "fuentes_sancion": [],
+      "fuentes_captura": [
+        "radar_ingresos",
+        "seguimiento_institucional"
+      ],
+      "ficha_oficial_completa": true,
+      "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142374",
+      "es_832_2026": false
+    },
+    {
       "id_expediente": "142344",
       "numero": "2749-D-2026",
       "fecha_ingreso": "2026-09-08T14:01:55",
@@ -124,14 +211,14 @@
       "tipo_oficial": "RESOLUCION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "SP",
+      "ubicacion": "MEP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-08",
-        "oficina": "SP",
-        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-09",
+        "oficina": "MEP",
+        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -163,14 +250,14 @@
       "tipo_oficial": "DECLARACION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "SP",
+      "ubicacion": "MEP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-08",
-        "oficina": "SP",
-        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-09",
+        "oficina": "MEP",
+        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -215,14 +302,14 @@
       "tipo_oficial": "DECLARACION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "SP",
+      "ubicacion": "MEP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-08",
-        "oficina": "SP",
-        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-09",
+        "oficina": "MEP",
+        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -276,7 +363,7 @@
       "ultimo_movimiento": {
         "fecha": "2026-09-09",
         "oficina": "CULTURA",
-        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -1004,16 +1091,16 @@
       ],
       "cantidad_autores": 15,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "en_comision",
-      "etapa_ciclo": "en_comision",
-      "ubicacion": "POLÍTICAS DE PROMOCIÓN E INTEGRACIÓN SOCIAL",
+      "estado_actual": "despacho",
+      "etapa_ciclo": "con_dictamen",
+      "ubicacion": "DGDP",
       "giros": [
         "POLÍTICAS DE PROMOCIÓN E INTEGRACIÓN SOCIAL"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-19",
-        "oficina": "POLÍTICAS DE PROMOCIÓN E INTEGRACIÓN SOCIAL",
-        "descripcion": "EN COMISION"
+        "fecha": "2026-09-09",
+        "oficina": "DGDP",
+        "descripcion": "DESPACHO ESPERANDO NUMERACION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -1169,7 +1256,6 @@
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,
@@ -1224,7 +1310,6 @@
       "fuentes_sancion": [],
       "fuentes_captura": [
         "agenda",
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,
@@ -1273,7 +1358,6 @@
       ],
       "fuentes_captura": [
         "agenda",
-        "radar_ingresos",
         "seguimiento_institucional",
         "recinto"
       ],
@@ -1315,7 +1399,6 @@
       "fuentes_sancion": [],
       "fuentes_captura": [
         "agenda",
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,
@@ -9392,9 +9475,9 @@
         "AMBIENTE"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-04",
+        "fecha": "2026-09-09",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [

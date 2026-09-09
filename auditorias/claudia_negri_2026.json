@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-08T20:56:59.166022+00:00",
+  "generado_en": "2026-09-09T13:59:07.798076+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,10 +9,10 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2023-12-05",
-    "fecha_mas_reciente_obtenida": "2026-09-08",
-    "ids_del_anio_en_ventana": 2823,
-    "ids_revisados_acumulados": 2823,
+    "fecha_mas_antigua_obtenida": "2023-12-06",
+    "fecha_mas_reciente_obtenida": "2026-09-09",
+    "ids_del_anio_en_ventana": 2829,
+    "ids_revisados_acumulados": 2829,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,10 +30,10 @@
     "LEY": 59
   },
   "por_estado_actual": {
-    "en_comision": 111,
+    "en_comision": 112,
     "archivado": 61,
     "sancionado": 40,
-    "ingresado": 6,
+    "ingresado": 5,
     "con_dictamen": 3,
     "despacho": 1
   },
@@ -267,16 +267,16 @@
       ],
       "cantidad_autores": 20,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "CULTURA",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "CULTURA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-08",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-09",
+        "oficina": "CULTURA",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

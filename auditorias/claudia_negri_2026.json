@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-09T20:56:59.777699+00:00",
+  "generado_en": "2026-09-10T13:57:16.499391+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,9 +10,9 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2023-12-07",
-    "fecha_mas_reciente_obtenida": "2026-09-09",
-    "ids_del_anio_en_ventana": 2851,
-    "ids_revisados_acumulados": 2851,
+    "fecha_mas_reciente_obtenida": "2026-09-10",
+    "ids_del_anio_en_ventana": 2852,
+    "ids_revisados_acumulados": 2852,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,10 +30,10 @@
     "LEY": 60
   },
   "por_estado_actual": {
-    "en_comision": 111,
+    "en_comision": 114,
     "archivado": 61,
     "sancionado": 40,
-    "ingresado": 7,
+    "ingresado": 4,
     "con_dictamen": 3,
     "despacho": 2
   },
@@ -209,16 +209,16 @@
       ],
       "cantidad_autores": 3,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "SALUD",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-09",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-10",
+        "oficina": "SALUD",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -248,16 +248,16 @@
       ],
       "cantidad_autores": 5,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "DISCAPACIDAD",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "DISCAPACIDAD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-09",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-10",
+        "oficina": "DISCAPACIDAD",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -300,16 +300,16 @@
       ],
       "cantidad_autores": 18,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "CULTURA",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "CULTURA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-09",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-10",
+        "oficina": "CULTURA",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

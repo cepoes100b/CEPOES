@@ -1,12 +1,12 @@
 {
-  "eyebrow": "Legislatura · Salud y derechos",
-  "title": "El dolor también es desigual",
-  "summary": "La Legislatura porteña aprobó la iniciativa de Claudia Negri para garantizar el acceso universal, gratuito y equitativo a la analgesia peridural durante el trabajo de parto. CEPOES abre desde ahora el seguimiento de su implementación.",
-  "url": "/publicaciones/notas/el-dolor-tambien-es-desigual/",
+  "eyebrow": "10 de septiembre · Salud mental",
+  "title": "Prevenir es garantizar que la ayuda llegue a tiempo",
+  "summary": "En CABA se registraron 236 muertes por suicidio en 2025, 38% más que en 2024. El dato no explica causas: obliga a mirar prevención, acceso oportuno y capacidad real de la red pública.",
+  "url": "/publicaciones/notas/prevenir-es-garantizar-ayuda-a-tiempo/",
   "cta": "Leer la nota y los datos",
   "datum": {
-  "value": "57",
-  "label": "afirmativos · 0 negativos · 0 abstenciones",
-  "source": "Legislatura CABA · 27 de agosto de 2026 · Seguimiento CEPOES"
-}
+    "value": "236",
+    "label": "muertes por suicidio registradas en CABA · 2025",
+    "source": "SNIC · +38,0% interanual · tasa 7,97 por 100.000 habitantes de 5 años y más"
+  }
 }

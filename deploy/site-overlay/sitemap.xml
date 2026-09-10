@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://cepoes.org/</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://cepoes.org/</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cepoes.org/cepoes/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/cepoes/metodologia/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/legislatura/</loc><lastmod>2026-08-24</lastmod></url>
@@ -26,7 +26,7 @@
   <url><loc>https://cepoes.org/presupuesto/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/presupuesto/diagnostico/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/propuestas/</loc><lastmod>2026-08-24</lastmod></url>
-  <url><loc>https://cepoes.org/publicaciones/</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://cepoes.org/publicaciones/</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cepoes.org/publicaciones/boletines/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/publicaciones/boletines/boletin-01-mayo-2026/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/publicaciones/boletines/boletin-02-junio-2026/</loc><lastmod>2026-08-24</lastmod></url>
@@ -34,6 +34,8 @@
   <url><loc>https://cepoes.org/publicaciones/boletines/boletin-04-agosto-2026/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/publicaciones/informe-coyuntura-01-junio-2026/</loc><lastmod>2026-08-24</lastmod></url>
   <url><loc>https://cepoes.org/publicaciones/informes/</loc><lastmod>2026-08-24</lastmod></url>
+  <url><loc>https://cepoes.org/publicaciones/notas/</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://cepoes.org/publicaciones/notas/prevenir-es-garantizar-ayuda-a-tiempo/</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://cepoes.org/prensa/</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://cepoes.org/prensa/brecha-acceso-deporte/</loc><lastmod>2026-08-25</lastmod></url>
   <url><loc>https://cepoes.org/prensa/migraciones-geografia-comunal/</loc><lastmod>2026-08-25</lastmod></url>

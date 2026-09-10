@@ -1,6 +1,6 @@
 (()=>{'use strict';
 const API='https://nriexnijkjamrmfivfmd.supabase.co/rest/v1/press_notes',KEY='sb_publishable_i2WWiop8sCom0yVZZ7xC8g_NGJCiddq',$=id=>document.getElementById(id);let notes=[],type='';
-const esc=s=>String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 const fmt=d=>new Date(d).toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
 const analyses=[

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-10T20:56:13.351576+00:00",
+  "generado_en": "2026-09-11T13:57:57.460990+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -30,12 +30,12 @@
     "LEY": 60
   },
   "por_estado_actual": {
-    "en_comision": 114,
+    "en_comision": 116,
     "archivado": 61,
     "sancionado": 40,
-    "ingresado": 4,
     "con_dictamen": 3,
-    "despacho": 2
+    "despacho": 2,
+    "ingresado": 2
   },
   "por_etapa_ciclo": {
     "en_comision": 118,
@@ -132,16 +132,18 @@
       ],
       "cantidad_autores": 13,
       "tipo_oficial": "LEY",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "DEFENSA DE CONSUMIDORES Y USUARIOS",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "DEFENSA DE CONSUMIDORES Y USUARIOS",
+        "JUSTICIA",
+        "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-10",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-11",
+        "oficina": "DEFENSA DE CONSUMIDORES Y USUARIOS",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -172,16 +174,16 @@
       ],
       "cantidad_autores": 6,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "SALUD",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-10",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-11",
+        "oficina": "SALUD",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

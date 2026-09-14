@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-09-11T10:48:15-03:00",
+  "actualizado_en": "2026-09-14T17:47:29-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -10,23 +10,23 @@
   },
   "periodo_consultado": {
     "desde": "01/01/2026",
-    "hasta": "11/09/2026"
+    "hasta": "14/09/2026"
   },
   "resumen": {
     "sesiones": 8,
     "sesiones_realizadas": 8,
     "registros_presentismo": 483,
-    "asuntos_considerados": 1152,
+    "asuntos_considerados": 1157,
     "votaciones_asuntos": 71,
     "votos_nominales": 4287,
     "expedientes_votados_unicos": 66,
     "fallas": 0,
-    "items_recinto": 1152,
-    "sanciones_expediente": 565,
-    "sanciones_despacho": 549,
+    "items_recinto": 1157,
+    "sanciones_expediente": 567,
+    "sanciones_despacho": 552,
     "cambios_giro": 38,
     "sanciones_por_alcance": {
-      "definitiva": 558,
+      "definitiva": 560,
       "inicial": 7
     }
   },
@@ -40126,8 +40126,8 @@
           "descripcion": "Ley nro. 6991 / Expediente 3194-C-2024"
         },
         {
-          "id_expediente": "141264",
-          "numero_expediente": "1787-J-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "procesado": true,
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Ley nro. 6992 / Expediente 1787-J-2026"
@@ -40154,18 +40154,32 @@
           "descripcion": "Declaración nro. 545-2026 / Expediente 2671-D-2026"
         },
         {
-          "id_expediente": "139764",
-          "numero_expediente": "454-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "procesado": true,
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Resolución nro. 455-2026 / Expediente 454-D-2026"
         },
         {
-          "id_expediente": "139848",
-          "numero_expediente": "523-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "procesado": true,
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Resolución nro. 474-2026 / Expediente 523-D-2026"
+        },
+        {
+          "id_expediente": "141821",
+          "numero_expediente": "2272-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 549-2026 / Expediente 2272-D-2026"
+        },
+        {
+          "id_expediente": "140890",
+          "numero_expediente": "1461-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6982 / Expediente 1461-D-2026"
         },
         {
           "id_expediente": "141260",
@@ -40707,8 +40721,8 @@
           "descripcion": "Declaración nro. 526-2026 / Despacho 532-2026"
         },
         {
-          "id_expediente": "141520",
-          "numero_expediente": "2003-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "procesado": true,
           "tipo": "SANCION DE UN DESPACHO",
           "descripcion": "Declaración nro. 527-2026 / Despacho 532-2026"
@@ -40796,6 +40810,27 @@
           "procesado": true,
           "tipo": "SANCION DE UN DESPACHO",
           "descripcion": "Ley nro. 6978 / Despacho 449-2026"
+        },
+        {
+          "id_expediente": "141344",
+          "numero_expediente": "1857-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 455-2026 / Despacho 454-2026"
+        },
+        {
+          "id_expediente": "139951",
+          "numero_expediente": "632-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 474-2026 / Despacho 523-2026"
+        },
+        {
+          "id_expediente": "141546",
+          "numero_expediente": "2026-D-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 527-2026 / Despacho 535-2026"
         }
       ],
       "sanciones": [
@@ -40898,6 +40933,13 @@
           "alcance": "definitiva"
         },
         {
+          "id_expediente": "141821",
+          "numero_expediente": "2272-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Declaración nro. 549-2026 / Expediente 2272-D-2026",
+          "alcance": "definitiva"
+        },
+        {
           "id_expediente": "142289",
           "numero_expediente": "2698-D-2026",
           "tipo": "SANCION DE UN EXPEDIENTE",
@@ -40937,6 +40979,13 @@
           "numero_expediente": "1405-D-2026",
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Ley nro. 6981 / Expediente 1405-D-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140890",
+          "numero_expediente": "1461-D-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6982 / Expediente 1461-D-2026",
           "alcance": "definitiva"
         },
         {
@@ -41003,8 +41052,8 @@
           "alcance": "definitiva"
         },
         {
-          "id_expediente": "141264",
-          "numero_expediente": "1787-J-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Ley nro. 6992 / Expediente 1787-J-2026",
           "alcance": "definitiva"
@@ -41059,15 +41108,15 @@
           "alcance": "definitiva"
         },
         {
-          "id_expediente": "139764",
-          "numero_expediente": "454-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Resolución nro. 455-2026 / Expediente 454-D-2026",
           "alcance": "definitiva"
         },
         {
-          "id_expediente": "139848",
-          "numero_expediente": "523-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Resolución nro. 474-2026 / Expediente 523-D-2026",
           "alcance": "definitiva"
@@ -51848,10 +51897,16 @@
           "descripcion": "Declaración nro. 526-2026 / Despacho 532-2026"
         },
         {
-          "id_expediente": "141520",
-          "numero_expediente": "2003-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "tipo": "SANCION DE UN DESPACHO",
           "descripcion": "Declaración nro. 527-2026 / Despacho 532-2026"
+        },
+        {
+          "id_expediente": "141546",
+          "numero_expediente": "2026-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Declaración nro. 527-2026 / Despacho 535-2026"
         },
         {
           "id_expediente": "141616",
@@ -51906,6 +51961,12 @@
           "numero_expediente": "1783-D-2026",
           "tipo": "SANCION DE UN DESPACHO",
           "descripcion": "Resolución nro. 454-2026 / Despacho 437-2026"
+        },
+        {
+          "id_expediente": "141344",
+          "numero_expediente": "1857-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 455-2026 / Despacho 454-2026"
         },
         {
           "id_expediente": "141137",
@@ -52016,6 +52077,12 @@
           "descripcion": "Resolución nro. 473-2026 / Despacho 509-2026"
         },
         {
+          "id_expediente": "139951",
+          "numero_expediente": "632-D-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 474-2026 / Despacho 523-2026"
+        },
+        {
           "id_expediente": "140849",
           "numero_expediente": "1424-D-2026",
           "tipo": "SANCION DE UN DESPACHO",
@@ -52060,9 +52127,9 @@
       ],
       "cambios_giro": [],
       "resumen_items_recinto": {
-        "total": 142,
-        "sanciones_expediente": 52,
-        "sanciones_despacho": 90,
+        "total": 147,
+        "sanciones_expediente": 54,
+        "sanciones_despacho": 93,
         "cambios_giro": 0
       }
     }
@@ -52080,8 +52147,8 @@
     "fuente_tipo_item": "GetAsuntoConsideradoItemByIdSesion",
     "tipos_oficiales_observados": {
       "cambio de giro": 38,
-      "sancion de un despacho": 549,
-      "sancion de un expediente": 565
+      "sancion de un despacho": 552,
+      "sancion de un expediente": 567
     },
     "alcance_sancion": "inicial, definitiva o no_especificada según descripción oficial"
   }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-09-15T10:49:12-03:00",
+  "actualizado_en": "2026-09-15T17:47:22-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -16,17 +16,17 @@
     "sesiones": 8,
     "sesiones_realizadas": 8,
     "registros_presentismo": 483,
-    "asuntos_considerados": 1157,
+    "asuntos_considerados": 1158,
     "votaciones_asuntos": 71,
     "votos_nominales": 4287,
     "expedientes_votados_unicos": 66,
     "fallas": 0,
-    "items_recinto": 1157,
-    "sanciones_expediente": 567,
+    "items_recinto": 1158,
+    "sanciones_expediente": 568,
     "sanciones_despacho": 552,
     "cambios_giro": 38,
     "sanciones_por_alcance": {
-      "definitiva": 560,
+      "definitiva": 561,
       "inicial": 7
     }
   },
@@ -40182,6 +40182,13 @@
           "descripcion": "Ley nro. 6982 / Expediente 1461-D-2026"
         },
         {
+          "id_expediente": "131721",
+          "numero_expediente": "1787-D-2024",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6992 / Expediente 1787-D-2024"
+        },
+        {
           "id_expediente": "141260",
           "numero_expediente": "1783-D-2026",
           "procesado": true,
@@ -41049,6 +41056,13 @@
           "numero_expediente": "3194-C-2024",
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Ley nro. 6991 / Expediente 3194-C-2024",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "131721",
+          "numero_expediente": "1787-D-2024",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Ley nro. 6992 / Expediente 1787-D-2024",
           "alcance": "definitiva"
         },
         {
@@ -52127,8 +52141,8 @@
       ],
       "cambios_giro": [],
       "resumen_items_recinto": {
-        "total": 147,
-        "sanciones_expediente": 54,
+        "total": 148,
+        "sanciones_expediente": 55,
         "sanciones_despacho": 93,
         "cambios_giro": 0
       }
@@ -52148,7 +52162,7 @@
     "tipos_oficiales_observados": {
       "cambio de giro": 38,
       "sancion de un despacho": 552,
-      "sancion de un expediente": 567
+      "sancion de un expediente": 568
     },
     "alcance_sancion": "inicial, definitiva o no_especificada según descripción oficial"
   }

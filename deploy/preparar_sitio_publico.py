@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=11"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=12"
 
 
 TOPICS = [

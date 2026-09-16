@@ -95,3 +95,7 @@
 @media(max-width:1450px) and (min-width:1241px){.site-nav .nav-in{gap:14px}.site-nav .nav-links{gap:14px;font-size:.8rem}.site-nav .nav-cta{padding:8px 12px}}
 @media(max-width:1240px) and (min-width:761px){.site-nav .nav-links{display:none;position:absolute;left:0;right:0;top:72px;box-sizing:border-box;padding:18px 24px;border-bottom:1px solid var(--borde);background:var(--panel);flex-direction:column;align-items:stretch}.site-nav .nav-links.open{display:flex}.site-nav .nav-links a:not(.nav-cta){display:block}.site-nav .menu-btn{display:inline-flex}}
 @media(max-width:760px){.site-nav .brand-sub strong{font-size:.58rem;letter-spacing:.08em}}
+/* Ejecución presupuestaria: restituye la columna editorial en escritorio.
+   site.css limita correctamente los componentes internos, pero su selector
+   .budget-page .wrap también anulaba el ancho máximo global fuera de móvil. */
+@media(min-width:761px){.budget-page .wrap{max-width:var(--max)}}

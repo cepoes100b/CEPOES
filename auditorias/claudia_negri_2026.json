@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-15T20:57:25.150699+00:00",
+  "generado_en": "2026-09-16T13:59:30.979739+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,9 +10,9 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-01-10",
-    "fecha_mas_reciente_obtenida": "2026-09-15",
-    "ids_del_anio_en_ventana": 2925,
-    "ids_revisados_acumulados": 2925,
+    "fecha_mas_reciente_obtenida": "2026-09-16",
+    "ids_del_anio_en_ventana": 2926,
+    "ids_revisados_acumulados": 2926,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,18 +30,18 @@
     "LEY": 62
   },
   "por_estado_actual": {
-    "en_comision": 117,
-    "archivado": 62,
-    "sancionado": 39,
+    "en_comision": 116,
+    "archivado": 63,
+    "sancionado": 38,
     "ingresado": 5,
-    "con_dictamen": 3,
+    "con_dictamen": 4,
     "despacho": 1
   },
   "por_etapa_ciclo": {
-    "en_comision": 122,
-    "archivado": 62,
-    "sancionado": 39,
-    "con_dictamen": 4
+    "en_comision": 121,
+    "archivado": 63,
+    "sancionado": 38,
+    "con_dictamen": 5
   },
   "control_832_2026": {
     "encontrados": 1,
@@ -65,23 +65,21 @@
         ],
         "cantidad_autores": 6,
         "tipo_oficial": "LEY",
-        "estado_actual": "sancionado",
-        "etapa_ciclo": "sancionado",
-        "ubicacion": "MEP",
+        "estado_actual": "archivado",
+        "etapa_ciclo": "archivado",
+        "ubicacion": "ARCHIVO",
         "giros": [
           "SALUD",
           "MUJERES, GÉNEROS Y DIVERSIDADES",
           "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
         ],
         "ultimo_movimiento": {
-          "fecha": "2026-09-01",
-          "oficina": "MEP",
-          "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES (ESPERANDO RECEPCION)"
+          "fecha": "2026-09-16",
+          "oficina": "ARCHIVO",
+          "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
         },
         "evidencia_sancion": true,
         "fuentes_sancion": [
-          "estado_actual",
-          "etapa_ciclo",
           "ficha_oficial.hitos.tuvo_sancion",
           "ficha_oficial.sanciones"
         ],
@@ -125,14 +123,14 @@
       "tipo_oficial": "LEY",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "DGDP",
+      "ubicacion": "SP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
         "fecha": "2026-09-15",
-        "oficina": "DGDP",
-        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "oficina": "SP",
+        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -569,16 +567,16 @@
       ],
       "cantidad_autores": 1,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "en_comision",
-      "etapa_ciclo": "en_comision",
+      "estado_actual": "con_dictamen",
+      "etapa_ciclo": "con_dictamen",
       "ubicacion": "SALUD",
       "giros": [
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-03",
+        "fecha": "2026-09-16",
         "oficina": "SALUD",
-        "descripcion": "EN COMISION"
+        "descripcion": "DICTAMEN FIRMADO. ESPERANDO ENVIO A DGDP"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -5404,23 +5402,21 @@
       ],
       "cantidad_autores": 6,
       "tipo_oficial": "LEY",
-      "estado_actual": "sancionado",
-      "etapa_ciclo": "sancionado",
-      "ubicacion": "MEP",
+      "estado_actual": "archivado",
+      "etapa_ciclo": "archivado",
+      "ubicacion": "ARCHIVO",
       "giros": [
         "SALUD",
         "MUJERES, GÉNEROS Y DIVERSIDADES",
         "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-01",
-        "oficina": "MEP",
-        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-16",
+        "oficina": "ARCHIVO",
+        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
-        "estado_actual",
-        "etapa_ciclo",
         "ficha_oficial.hitos.tuvo_sancion",
         "ficha_oficial.sanciones"
       ],

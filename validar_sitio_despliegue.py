@@ -124,7 +124,7 @@ for p in html:
     assert s.count('<footer class="footer">')==1, f'Footer no canónico: {rel}'
     assert len(re.findall(r'name=["\']theme-color["\']',s,re.I))==1, f'theme-color inválido: {rel}'
     assert len(re.findall(r'/assets/arquitectura\.css',s,re.I))==1, f'CSS de arquitectura duplicado: {rel}'
-    assert '/assets/arquitectura.css?v=15' in s, f'CSS de arquitectura sin versión vigente: {rel}'
+    assert '/assets/arquitectura.css?v=16' in s, f'CSS de arquitectura sin versión vigente: {rel}'
     assert 'href="/prensa/"' in s, f'Falta Prensa en navegación: {rel}'
     nav_block=re.search(r'<nav class="site-nav">.*?</nav>',s,re.S)
     footer_block=re.search(r'<footer class="footer">.*?</footer>',s,re.S)
@@ -141,6 +141,7 @@ assert 'const merged=new Map()' in common_search, 'Buscador sin deduplicación p
 architecture_css=(root/'assets'/'arquitectura.css').read_text(encoding='utf-8',errors='replace')
 for token in ['max-width:1450px','max-width:1240px','min-width:761px','.site-nav .nav-links.open{display:flex}']:
     assert token in architecture_css, f'Navegación adaptable incompleta: {token}'
+assert '@media(min-width:761px){.budget-page .wrap{max-width:var(--max)}}' in architecture_css, 'Ejecución presupuestaria sin ancho editorial en escritorio'
 
 home=(root/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home-leg-recent">—']:
@@ -227,6 +228,8 @@ assert len(sm_data.get('red_atencion_caba',{}).get('efectores_especializados') o
 assert sm_data.get('contraste_deis',{}).get('estado') in {'ACTUALIZADO','ULTIMO_DATO_VALIDADO'}
 presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'Cargando último trimestre oficial' not in presupuesto and 'cargando…' not in presupuesto and '<b>—</b>' not in presupuesto, 'Fallback vacío en Presupuesto'
+ejecucion=(root/'presupuesto'/'ejecucion'/'index.html').read_text(encoding='utf-8',errors='replace')
+assert not re.search(r'id=["\']data-date["\'][^>]*>\s*cargando', ejecucion, re.I), 'Fecha de actualización pendiente en Ejecución'
 descentralizacion=(root/'presupuesto'/'descentralizacion'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Descentralización: cuánto administran las Comunas','id="commune-map"','id="ranking"','id="selected-title"','Ver competencias transferidas y pendientes','/assets/descentralizacion-observatorio.js?v=4']:
     assert token in descentralizacion, f'Descentralización incompleta: {token}'

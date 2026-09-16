@@ -15,7 +15,7 @@ def patch_territorio_navigation(site_root: Path) -> None:
     for p in site_root.rglob('*.html'):
         s=p.read_text(encoding='utf-8',errors='replace')
         original=s
-        s=re.sub(r'(/assets/common\.js)(?:\?v=\d+)?', r'\1?v=254', s)
+        s=re.sub(r'(/assets/common\.js)(?:\?v=\d+)?', r'\1?v=255', s)
         rel=p.relative_to(site_root).as_posix()
         if rel.startswith('territorio/'):
             sport='/territorio/deporte-salud/'
@@ -124,9 +124,23 @@ for p in html:
     assert s.count('<footer class="footer">')==1, f'Footer no canónico: {rel}'
     assert len(re.findall(r'name=["\']theme-color["\']',s,re.I))==1, f'theme-color inválido: {rel}'
     assert len(re.findall(r'/assets/arquitectura\.css',s,re.I))==1, f'CSS de arquitectura duplicado: {rel}'
+    assert '/assets/arquitectura.css?v=15' in s, f'CSS de arquitectura sin versión vigente: {rel}'
     assert 'href="/prensa/"' in s, f'Falta Prensa en navegación: {rel}'
+    nav_block=re.search(r'<nav class="site-nav">.*?</nav>',s,re.S)
+    footer_block=re.search(r'<footer class="footer">.*?</footer>',s,re.S)
+    assert nav_block and 'href="/balance/"' in nav_block.group(0), f'Falta Balance en navegación: {rel}'
+    assert footer_block and 'href="/balance/"' in footer_block.group(0), f'Falta Balance en footer: {rel}'
     assert 'href="/observatorio/presupuesto/"' not in s, f'Enlace presupuestario antiguo: {rel}'
     assert 'href="/territorio/presupuesto/"' not in s, f'Enlace territorial antiguo: {rel}'
+
+common_search=(root/'assets'/'common.js').read_text(encoding='utf-8',errors='replace')
+for route in ['/balance/','/balance/vivienda-y-alquiler/','/balance/salud-publica/','/balance/presupuesto-y-modelo-de-gestion/']:
+    assert route in common_search, f'Falta indexar en búsqueda: {route}'
+assert "group:'Balance'" in common_search and 'x.priority||0' in common_search, 'Buscador sin grupo o prioridad de Balance'
+assert 'const merged=new Map()' in common_search, 'Buscador sin deduplicación por URL'
+architecture_css=(root/'assets'/'arquitectura.css').read_text(encoding='utf-8',errors='replace')
+for token in ['max-width:1450px','max-width:1240px','min-width:761px','.site-nav .nav-links.open{display:flex}']:
+    assert token in architecture_css, f'Navegación adaptable incompleta: {token}'
 
 home=(root/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home-leg-recent">—']:

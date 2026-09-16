@@ -228,8 +228,9 @@ assert len(sm_data.get('red_atencion_caba',{}).get('efectores_especializados') o
 assert sm_data.get('contraste_deis',{}).get('estado') in {'ACTUALIZADO','ULTIMO_DATO_VALIDADO'}
 presupuesto=(root/'presupuesto'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'Cargando último trimestre oficial' not in presupuesto and 'cargando…' not in presupuesto and '<b>—</b>' not in presupuesto, 'Fallback vacío en Presupuesto'
-ejecucion=(root/'presupuesto'/'ejecucion'/'index.html').read_text(encoding='utf-8',errors='replace')
-assert not re.search(r'id=["\']data-date["\'][^>]*>\s*cargando', ejecucion, re.I), 'Fecha de actualización pendiente en Ejecución'
+for modulo in ['ejecucion', 'territorio', 'diagnostico']:
+    presupuesto_modulo=(root/'presupuesto'/modulo/'index.html').read_text(encoding='utf-8',errors='replace')
+    assert not re.search(r'id=["\']data-date["\'][^>]*>\s*cargando', presupuesto_modulo, re.I), f'Fecha de actualización pendiente en presupuesto/{modulo}'
 descentralizacion=(root/'presupuesto'/'descentralizacion'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Descentralización: cuánto administran las Comunas','id="commune-map"','id="ranking"','id="selected-title"','Ver competencias transferidas y pendientes','/assets/descentralizacion-observatorio.js?v=4']:
     assert token in descentralizacion, f'Descentralización incompleta: {token}'

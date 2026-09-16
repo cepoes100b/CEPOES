@@ -677,7 +677,11 @@ def apply_fallbacks(source: str, rel: str) -> str:
             f'<a class="budget-signal-card" href="/presupuesto/diagnostico/#territorio"><span class="eyebrow">Territorio</span><h3>Prioridad de lectura territorial</h3><strong>{html.escape(terr["nombre"])}</strong><p>{terr["dimensiones_debajo_caba"]} de 10 dimensiones debajo de CABA.</p><span class="more">Ver detalle →</span></a>'
         )
         source = re.sub(r'(<div class="budget-hub-signals" id="budget-hub-signals">).*?(</div></div></div></section>)', lambda m: m.group(1) + cards + m.group(2), source, count=1, flags=re.S)
-    elif rel == "/presupuesto/ejecucion/index.html":
+    elif rel in {
+        "/presupuesto/ejecucion/index.html",
+        "/presupuesto/territorio/index.html",
+        "/presupuesto/diagnostico/index.html",
+    }:
         source = replace_id_text(source, "data-date", fmt_date(budget["generado"]))
     return source
 

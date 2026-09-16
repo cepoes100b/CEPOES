@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=14"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=15"
 
 
 TOPICS = [
@@ -39,7 +39,7 @@ def active_for(path: Path, site: Path) -> str:
     rel = "/" + path.relative_to(site).as_posix()
     if rel.endswith("index.html"):
         rel = rel[: -len("index.html")]
-    for section in ("observatorio", "presupuesto", "territorio", "legislatura", "publicaciones", "propuestas", "prensa", "cepoes"):
+    for section in ("observatorio", "balance", "presupuesto", "territorio", "legislatura", "publicaciones", "propuestas", "prensa", "cepoes"):
         if rel.startswith(f"/{section}/"):
             return section
     return ""
@@ -48,6 +48,7 @@ def active_for(path: Path, site: Path) -> str:
 def nav(active: str) -> str:
     items = [
         ("observatorio", "/observatorio/", "Observatorio"),
+        ("balance", "/balance/", "Balance"),
         ("presupuesto", "/presupuesto/", "Presupuesto"),
         ("territorio", "/territorio/", "Territorio"),
         ("legislatura", "/legislatura/", "Legislatura"),
@@ -86,6 +87,7 @@ SEARCH = (
     '<div class="search-filters" id="site-search-filters">'
     '<button class="chip active" data-search-filter="Todo">Todo</button>'
     '<button class="chip" data-search-filter="Datos">Datos</button>'
+    '<button class="chip" data-search-filter="Balance">Balance</button>'
     '<button class="chip" data-search-filter="Publicaciones">Publicaciones</button>'
     '<button class="chip" data-search-filter="Territorio">Territorio</button>'
     '<button class="chip" data-search-filter="Propuestas">Propuestas</button>'
@@ -100,7 +102,8 @@ FOOTER = (
     '<footer class="footer"><div class="wrap"><div class="footer-grid"><div class="footer-about">'
     '<a class="logo" href="/">CEP<b>OES</b></a><p>Datos, investigación y propuestas para CABA, desde los barrios.</p>'
     '<strong class="footer-100">SOMOS 100 BARRIOS</strong></div><div class="footer-links"><h5>Explorar</h5><ul>'
-    '<li><a href="/observatorio/">Observatorio</a></li><li><a href="/presupuesto/">Presupuesto</a></li>'
+    '<li><a href="/observatorio/">Observatorio</a></li><li><a href="/balance/">Balance</a></li>'
+    '<li><a href="/presupuesto/">Presupuesto</a></li>'
     '<li><a href="/territorio/">Territorio</a></li><li><a href="/territorio/equipamientos/">Qué hay en tu barrio</a></li>'
     '<li><a href="/legislatura/">Legislatura</a></li><li><a href="/publicaciones/">Publicaciones</a></li>'
     '<li><a href="/propuestas/">Propuestas</a></li><li><a href="/prensa/">Prensa</a></li>'

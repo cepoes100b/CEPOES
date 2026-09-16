@@ -84,10 +84,12 @@ ensure_sitemap_url(root,'/observatorio/salud-mental/')
 ensure_sitemap_url(root,'/balance/')
 ensure_sitemap_url(root,'/balance/vivienda-y-alquiler/')
 ensure_sitemap_url(root,'/balance/salud-publica/')
+ensure_sitemap_url(root,'/balance/presupuesto-y-modelo-de-gestion/')
 
 required=[
     'index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','balance/index.html',
     'balance/vivienda-y-alquiler/index.html','balance/salud-publica/index.html',
+    'balance/presupuesto-y-modelo-de-gestion/index.html',
     'assets/site.css','assets/common.js','assets/data.js','assets/favicon.svg',
     'assets/arquitectura.css','assets/data/taxonomia.json','temas/index.html',
     'observatorio/personas-mayores/index.html','assets/personas-mayores.css',
@@ -143,6 +145,7 @@ for token in ['Balance de gestión 2007–2026','Decisiones públicas','Impacto 
     assert token in balance, f'Portada de Balance incompleta: {token}'
 assert 'href="/balance/vivienda-y-alquiler/"' in balance, 'Balance no enlaza el dossier publicado de Vivienda'
 assert 'href="/balance/salud-publica/"' in balance, 'Balance no enlaza el dossier publicado de Salud'
+assert 'href="/balance/presupuesto-y-modelo-de-gestion/"' in balance, 'Balance no enlaza el dossier publicado de Presupuesto'
 housing=(root/'balance'/'vivienda-y-alquiler'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Vivienda y alquiler','Dos salarios mínimos para un monoambiente','−15%','−27%','Desigualdad territorial','Qué decisiones explican el resultado','Qué propone CEPOES','Alcance de esta primera versión','/publicaciones/boletines/boletin-04-agosto-2026/']:
     assert token in housing, f'Dossier de Vivienda incompleto: {token}'
@@ -153,6 +156,11 @@ for token in ['Salud pública','El piso más bajo en cuatro años','−12%','34'
     assert token in health, f'Dossier de Salud incompleto: {token}'
 assert health.count('class="housing-kpi"')==3, 'El dossier de Salud debe mostrar exactamente tres indicadores principales'
 assert '2007–2026 completo' not in health, 'El dossier de Salud no debe presentar como completa una serie todavía parcial'
+budget=(root/'balance'/'presupuesto-y-modelo-de-gestion'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['Presupuesto y modelo de gestión','El gasto cae, pero no en todas partes','−10%','+34%','−7%','Pagar más; controlar menos','Qué revela la ejecución','Tres dossiers, una misma pregunta','Qué propone CEPOES','Alcance de esta primera versión','/publicaciones/boletines/boletin-04-agosto-2026/']:
+    assert token in budget, f'Dossier de Presupuesto incompleto: {token}'
+assert budget.count('class="housing-kpi"')==3, 'El dossier de Presupuesto debe mostrar exactamente tres indicadores principales'
+assert '2007–2026 completo' not in budget, 'El dossier de Presupuesto no debe presentar como completa una serie todavía parcial'
 proposals=(root/'propuestas'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Una Ciudad posible','Un banco de políticas públicas en construcción','instrumentos, responsables, costos, plazos, metas e indicadores']:
     assert token in proposals, f'Portada de propuestas no migrada: {token}'

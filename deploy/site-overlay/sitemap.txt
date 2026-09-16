@@ -2,6 +2,7 @@ https://cepoes.org/
 https://cepoes.org/balance/
 https://cepoes.org/balance/vivienda-y-alquiler/
 https://cepoes.org/balance/salud-publica/
+https://cepoes.org/balance/presupuesto-y-modelo-de-gestion/
 https://cepoes.org/cepoes/
 https://cepoes.org/cepoes/metodologia/
 https://cepoes.org/legislatura/

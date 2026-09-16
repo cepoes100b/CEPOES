@@ -82,9 +82,11 @@ ensure_sitemap_url(root,'/temas/')
 ensure_sitemap_url(root,'/observatorio/personas-mayores/')
 ensure_sitemap_url(root,'/observatorio/salud-mental/')
 ensure_sitemap_url(root,'/balance/')
+ensure_sitemap_url(root,'/balance/vivienda-y-alquiler/')
 
 required=[
     'index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','balance/index.html',
+    'balance/vivienda-y-alquiler/index.html',
     'assets/site.css','assets/common.js','assets/data.js','assets/favicon.svg',
     'assets/arquitectura.css','assets/data/taxonomia.json','temas/index.html',
     'observatorio/personas-mayores/index.html','assets/personas-mayores.css',
@@ -138,6 +140,12 @@ assert home.count('home-strategy-card')==3, 'La home debe mostrar exactamente tr
 balance=(root/'balance'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Balance de gestión 2007–2026','Decisiones públicas','Impacto territorial','Capacidad estatal','Vivienda y alquiler','Salud pública','Presupuesto y modelo de gestión']:
     assert token in balance, f'Portada de Balance incompleta: {token}'
+assert 'href="/balance/vivienda-y-alquiler/"' in balance, 'Balance no enlaza el dossier publicado de Vivienda'
+housing=(root/'balance'/'vivienda-y-alquiler'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['Vivienda y alquiler','Dos salarios mínimos para un monoambiente','−15%','−27%','Desigualdad territorial','Qué decisiones explican el resultado','Qué propone CEPOES','Alcance de esta primera versión','/publicaciones/boletines/boletin-04-agosto-2026/']:
+    assert token in housing, f'Dossier de Vivienda incompleto: {token}'
+assert housing.count('class="housing-kpi"')==3, 'El dossier debe mostrar exactamente tres indicadores principales'
+assert '2007–2026 completo' not in housing, 'El dossier no debe presentar como completa una serie todavía parcial'
 proposals=(root/'propuestas'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Una Ciudad posible','Un banco de políticas públicas en construcción','instrumentos, responsables, costos, plazos, metas e indicadores']:
     assert token in proposals, f'Portada de propuestas no migrada: {token}'

@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=10"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=11"
 
 
 TOPICS = [
@@ -376,6 +376,27 @@ def restructure_home(source: str) -> str:
     )
     source = replace_class_element(source, "header", "home-hero", hero)
 
+    pillars = (
+        '<section class="section home-strategy-section" aria-labelledby="home-strategy-title"><div class="wrap">'
+        '<div class="home-strategy-head"><div><span class="eyebrow">Tres recorridos para comprender la Ciudad</span>'
+        '<h2 id="home-strategy-title">Del diagnóstico a una alternativa</h2></div>'
+        '<p>Entrá por la pregunta que necesitás responder. Los datos, el territorio, las decisiones de gobierno y las propuestas se conectan en un mismo recorrido.</p></div>'
+        '<div class="home-strategy-grid">'
+        '<a class="home-strategy-card is-now" href="/observatorio/"><span class="home-strategy-number">01</span>'
+        '<span class="eyebrow">¿Qué está pasando?</span><h3>La Ciudad hoy</h3>'
+        '<p>Indicadores, mapas y comparaciones para reconocer los problemas actuales y sus desigualdades territoriales.</p>'
+        '<span class="home-strategy-link">Explorar el diagnóstico →</span></a>'
+        '<a class="home-strategy-card is-balance" href="/balance/"><span class="home-strategy-number">02</span>'
+        '<span class="eyebrow">¿Cómo llegamos hasta acá?</span><h3>Balance de gestión 2007–2026</h3>'
+        '<p>Decisiones, prioridades y resultados que ayudan a explicar la Ciudad construida durante este ciclo político.</p>'
+        '<span class="home-strategy-link">Recorrer el balance →</span></a>'
+        '<a class="home-strategy-card is-future" href="/propuestas/"><span class="home-strategy-number">03</span>'
+        '<span class="eyebrow">¿Qué proponemos hacer?</span><h3>Una Ciudad posible</h3>'
+        '<p>Políticas públicas vinculadas con evidencia, territorios, instrumentos, metas y condiciones de implementación.</p>'
+        '<span class="home-strategy-link">Conocer las propuestas →</span></a>'
+        '</div></div></section>'
+    )
+
     kpis = "".join([
         comparison_card("Inflación · IPCBA", f'+{fmt_number(ipc["var_m"][-1])}%', fmt_period(ipc["meses"][-1]), ipc["var_m"][-1]-ipc["var_m"][-2], f'frente al mes anterior · {fmt_number(ipc["var_ia"][-1])}% interanual', "var(--lH)"),
         comparison_card("Desocupación", f'{fmt_number(employment["desocupacion"][-1])}%', fmt_period(employment["trimestres"][-1]), employment["desocupacion"][-1]-employment["desocupacion"][-2], f'frente al trimestre anterior · {fmt_number(employment["desocupacion"][-1]-employment["desocupacion"][-5])} p.p. interanual', "var(--lB)"),
@@ -404,6 +425,7 @@ def restructure_home(source: str) -> str:
 
     sections: dict[str, str] = {}
     order = [
+        "home-strategy-section",
         "home-kpi-section",
         "home-offer-section",
         "home-latest-section",
@@ -415,6 +437,8 @@ def restructure_home(source: str) -> str:
     for redundant in ("home-territory-section", "home-topics-section", "home-recent-section"):
         source, _ = pop_class_element(source, "section", redundant)
     source, _ = pop_class_element(source, "section", "home-pulse-section")
+    source, _ = pop_class_element(source, "section", "home-strategy-section")
+    sections["home-strategy-section"] = pillars
     sections["home-kpi-section"] = kpi_section
     sections["home-offer-section"] = offer_section
     latest = sections.get("home-latest-section", "")
@@ -447,6 +471,26 @@ def restructure_home(source: str) -> str:
     if '/assets/home-redesign.js?v=1' not in result:
         result = result.replace('</body>', '<script defer src="/assets/home-redesign.js?v=1"></script></body>', 1)
     return result
+
+
+def restructure_proposals(source: str) -> str:
+    """Reframe the existing proposal list as the public policy pillar."""
+    source = source.replace("Agenda de políticas públicas — CEPOES", "Una Ciudad posible — CEPOES")
+    source = source.replace("Agenda de políticas públicas", "Una Ciudad posible")
+    source = source.replace(
+        "Del diagnóstico a la alternativa: líneas de intervención surgidas de los análisis y publicaciones de CEPOES.",
+        "Propuestas para transformar la Ciudad, construidas a partir del diagnóstico, el territorio y la evaluación de las decisiones públicas.",
+    )
+    source = source.replace("Propuestas surgidas del análisis", "Un banco de políticas públicas en construcción")
+    source = source.replace(
+        "Los boletines de CEPOES no se limitan al diagnóstico: cada edición incorpora líneas de política pública vinculadas con los problemas analizados.",
+        "Cada propuesta parte de un problema verificable y avanzará hacia una ficha con instrumentos, responsables, costos, plazos, metas e indicadores. Las primeras líneas conservan el vínculo con la evidencia que les dio origen.",
+    )
+    source = source.replace(
+        "Las propuestas se leen sobre comunas y barrios, no sólo sobre promedios generales.",
+        "Las alternativas se evalúan sobre comunas y barrios, no sólo sobre promedios generales.",
+    )
+    return source
 
 
 def apply_fallbacks(source: str, rel: str) -> str:
@@ -694,6 +738,8 @@ def normalize_html(path: Path, site: Path) -> None:
     source = apply_fallbacks(source, rel)
     if rel == "/index.html":
         source = restructure_home(source)
+    elif rel == "/propuestas/index.html":
+        source = restructure_proposals(source)
     path.write_text(source, encoding="utf-8")
 
 

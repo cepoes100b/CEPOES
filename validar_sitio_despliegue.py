@@ -99,7 +99,8 @@ required=[
     'territorio/migraciones/index.html','territorio/estructura-productiva/index.html',
     'territorio/deporte-salud/index.html',
     'presupuesto/ejecucion/index.html','presupuesto/territorio/index.html',
-    'presupuesto/descentralizacion/index.html','assets/descentralizacion-observatorio.js',
+    'presupuesto/descentralizacion/index.html','assets/descentralizacion.css',
+    'assets/descentralizacion-observatorio.js',
     'assets/data/descentralizacion-comunas.json','assets/data/descentralizacion-transparencia-2024.json',
     'assets/data/descentralizacion-competencias.json',
     'assets/deporte-salud.js','assets/deporte-salud.css','assets/data/deporte-salud.json',
@@ -232,9 +233,11 @@ for modulo in ['ejecucion', 'territorio', 'diagnostico']:
     presupuesto_modulo=(root/'presupuesto'/modulo/'index.html').read_text(encoding='utf-8',errors='replace')
     assert not re.search(r'id=["\']data-date["\'][^>]*>\s*cargando', presupuesto_modulo, re.I), f'Fecha de actualización pendiente en presupuesto/{modulo}'
 descentralizacion=(root/'presupuesto'/'descentralizacion'/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['Descentralización: cuánto administran las Comunas','id="commune-map"','id="ranking"','id="selected-title"','Ver competencias transferidas y pendientes','/assets/descentralizacion-observatorio.js?v=4']:
+for token in ['Descentralización: cuánto administran las Comunas','class="budget-decentralization-page"','class="page-hero"','class="breadcrumbs"','/assets/descentralizacion.css?v=1','id="commune-map"','id="ranking"','id="selected-title"','Ver competencias transferidas y pendientes','/assets/descentralizacion-observatorio.js?v=4']:
     assert token in descentralizacion, f'Descentralización incompleta: {token}'
 assert descentralizacion.count('id="content"')==1 and descentralizacion.count('id="content-body"')==1, 'Contenedores de Descentralización duplicados'
+assert '<style' not in descentralizacion, 'Descentralización conserva CSS incrustado'
+assert not re.search(r'id=["\']data-date["\'][^>]*>\s*cargando', descentralizacion, re.I), 'Fecha de actualización pendiente en Descentralización'
 dc_js=(root/'assets'/'descentralizacion-observatorio.js').read_text(encoding='utf-8',errors='replace')
 for token in ['estructura-productiva/comunas.geojson','drawMap','renderDetail','descentralizacion-transparencia-2024.json']:
     assert token in dc_js, f'JS de Descentralización incompleto: {token}'

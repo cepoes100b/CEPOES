@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=15"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=16"
 
 
 TOPICS = [
@@ -249,6 +249,18 @@ def fmt_period(value: str) -> str:
     if m := re.fullmatch(r"(\d{4})-(\d{2})", str(value)):
         return f"{months[m.group(2)]} {m.group(1)}"
     return str(value)
+
+
+def fmt_date(value: str) -> str:
+    months = (
+        "enero", "febrero", "marzo", "abril", "mayo", "junio",
+        "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+    )
+    try:
+        parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return str(value)
+    return f"{parsed.day} de {months[parsed.month - 1]} de {parsed.year}"
 
 
 def fmt_number(value: float, digits: int = 1) -> str:
@@ -665,6 +677,8 @@ def apply_fallbacks(source: str, rel: str) -> str:
             f'<a class="budget-signal-card" href="/presupuesto/diagnostico/#territorio"><span class="eyebrow">Territorio</span><h3>Prioridad de lectura territorial</h3><strong>{html.escape(terr["nombre"])}</strong><p>{terr["dimensiones_debajo_caba"]} de 10 dimensiones debajo de CABA.</p><span class="more">Ver detalle →</span></a>'
         )
         source = re.sub(r'(<div class="budget-hub-signals" id="budget-hub-signals">).*?(</div></div></div></section>)', lambda m: m.group(1) + cards + m.group(2), source, count=1, flags=re.S)
+    elif rel == "/presupuesto/ejecucion/index.html":
+        source = replace_id_text(source, "data-date", fmt_date(budget["generado"]))
     return source
 
 

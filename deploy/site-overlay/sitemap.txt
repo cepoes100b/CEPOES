@@ -116,3 +116,5 @@ https://cepoes.org/territorio/mapa-tematico/
 https://cepoes.org/presupuesto/territorio/
 https://cepoes.org/territorio/migraciones/
 https://cepoes.org/presupuesto/descentralizacion/
+https://cepoes.org/publicaciones/informes/personas-mayores-caba/
+https://cepoes.org/publicaciones/informes/situacion-de-calle-caba/

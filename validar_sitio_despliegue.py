@@ -107,6 +107,12 @@ required=[
     'assets/data/deporte-accesibilidad.json','assets/data/deporte-accesibilidad-peatonal.json',
     'assets/estructura-productiva.js','assets/estructura-productiva-bootstrap.js','assets/estructura-productiva.css',
     'assets/data/estructura-productiva/actual.json','assets/data/estructura-productiva/comunas.geojson',
+    'assets/informes-tematicos.css','assets/publicaciones/personas-mayores-caba.svg',
+    'assets/publicaciones/situacion-calle-caba.svg',
+    'publicaciones/informes/personas-mayores-caba/index.html',
+    'publicaciones/informes/personas-mayores-caba/informe-personas-mayores-caba-cepoes.pdf',
+    'publicaciones/informes/situacion-de-calle-caba/index.html',
+    'publicaciones/informes/situacion-de-calle-caba/informe-situacion-de-calle-caba-cepoes.pdf',
 ]
 for rel in required:
     p=root/rel
@@ -143,6 +149,29 @@ architecture_css=(root/'assets'/'arquitectura.css').read_text(encoding='utf-8',e
 for token in ['max-width:1450px','max-width:1240px','min-width:761px','.site-nav .nav-links.open{display:flex}']:
     assert token in architecture_css, f'Navegación adaptable incompleta: {token}'
 assert '@media(min-width:761px){.budget-page .wrap{max-width:var(--max)}}' in architecture_css, 'Ejecución presupuestaria sin ancho editorial en escritorio'
+
+for report_rel, required_tokens in {
+    'publicaciones/informes/personas-mayores-caba/index.html': [
+        'Personas mayores en la Ciudad de Buenos Aires',
+        'Autoría institucional:',
+        'informe-personas-mayores-caba-cepoes.pdf',
+        'Fuentes y metodología',
+    ],
+    'publicaciones/informes/situacion-de-calle-caba/index.html': [
+        'Situación de calle en la Ciudad de Buenos Aires',
+        'Autoría institucional:',
+        'informe-situacion-de-calle-caba-cepoes.pdf',
+        'Dos mediciones, dos universos',
+        '5.176',
+        '3.563',
+    ],
+}.items():
+    report_html=(root/report_rel).read_text(encoding='utf-8',errors='replace')
+    for token in required_tokens:
+        assert token in report_html, f'Informe temático incompleto ({report_rel}): {token}'
+reports_index=(root/'publicaciones/informes/index.html').read_text(encoding='utf-8',errors='replace')
+for route in ['/publicaciones/informes/personas-mayores-caba/','/publicaciones/informes/situacion-de-calle-caba/']:
+    assert route in reports_index and route in common_search, f'Informe no integrado en archivo o buscador: {route}'
 
 home=(root/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home-leg-recent">—']:

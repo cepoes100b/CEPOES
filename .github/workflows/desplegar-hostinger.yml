@@ -211,6 +211,10 @@ jobs:
             https://cepoes.org/assets/data/deporte-accesibilidad-peatonal.json \
             https://cepoes.org/territorio/endeudamiento/ \
             https://cepoes.org/territorio/migraciones/ \
+            https://cepoes.org/publicaciones/informes/personas-mayores-caba/ \
+            https://cepoes.org/publicaciones/informes/personas-mayores-caba/informe-personas-mayores-caba-cepoes.pdf \
+            https://cepoes.org/publicaciones/informes/situacion-de-calle-caba/ \
+            https://cepoes.org/publicaciones/informes/situacion-de-calle-caba/informe-situacion-de-calle-caba-cepoes.pdf \
             https://cepoes.org/legislatura/; do
             echo "Probando $url sin caché"
             curl "${CURL_COMMON[@]}" "${url}?${SMOKE_Q}" >/dev/null

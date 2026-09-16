@@ -81,9 +81,10 @@ ensure_sitemap_url(root,'/presupuesto/territorio/')
 ensure_sitemap_url(root,'/temas/')
 ensure_sitemap_url(root,'/observatorio/personas-mayores/')
 ensure_sitemap_url(root,'/observatorio/salud-mental/')
+ensure_sitemap_url(root,'/balance/')
 
 required=[
-    'index.html','404.html','robots.txt','sitemap.xml','site.webmanifest',
+    'index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','balance/index.html',
     'assets/site.css','assets/common.js','assets/data.js','assets/favicon.svg',
     'assets/arquitectura.css','assets/data/taxonomia.json','temas/index.html',
     'observatorio/personas-mayores/index.html','assets/personas-mayores.css',
@@ -127,12 +128,19 @@ for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home
     assert token not in home, f'Fallback vacío en home: {token}'
 for redundant in ['home-pulse-section','home-territory-section','home-topics-section','home-recent-section']:
     assert redundant not in home, f'Bloque redundante reapareció en home: {redundant}'
-home_order=['home-editorial-hero','home-kpi-section','home-offer-section','home-latest-section','home-products-section','home-about-section']
+home_order=['home-editorial-hero','home-strategy-section','home-kpi-section','home-offer-section','home-latest-section','home-products-section','home-about-section']
 home_positions=[home.find(token) for token in home_order]
 assert all(pos>=0 for pos in home_positions) and home_positions==sorted(home_positions), f'Jerarquía de home inválida: {home_positions}'
-for token in ['home-editorial-datum','home-comparison-grid','home-neighborhood-form','home-subscription-form','Leer la versión web →','/assets/home-redesign.js?v=1']:
+for token in ['home-editorial-datum','home-strategy-grid','La Ciudad hoy','Balance de gestión 2007–2026','Una Ciudad posible','href="/balance/"','home-comparison-grid','home-neighborhood-form','home-subscription-form','Leer la versión web →','/assets/home-redesign.js?v=1']:
     assert token in home, f'Bloque de portada incompleto: {token}'
 assert home.count('class="home-comparison-card"')==4, 'La home debe mostrar exactamente cuatro datos comparados'
+assert home.count('home-strategy-card')==3, 'La home debe mostrar exactamente tres recorridos estratégicos'
+balance=(root/'balance'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['Balance de gestión 2007–2026','Decisiones públicas','Impacto territorial','Capacidad estatal','Vivienda y alquiler','Salud pública','Presupuesto y modelo de gestión']:
+    assert token in balance, f'Portada de Balance incompleta: {token}'
+proposals=(root/'propuestas'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['Una Ciudad posible','Un banco de políticas públicas en construcción','instrumentos, responsables, costos, plazos, metas e indicadores']:
+    assert token in proposals, f'Portada de propuestas no migrada: {token}'
 # La editorial de portada debe coincidir con la configuración editorial vigente.
 editorial_path = root/'assets'/'data'/'home-editorial.json'
 assert editorial_path.is_file(), 'Falta assets/data/home-editorial.json'

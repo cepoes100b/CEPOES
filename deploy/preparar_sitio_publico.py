@@ -683,6 +683,9 @@ def apply_fallbacks(source: str, rel: str) -> str:
         "/presupuesto/diagnostico/index.html",
     }:
         source = replace_id_text(source, "data-date", fmt_date(budget["generado"]))
+    elif rel == "/presupuesto/descentralizacion/index.html":
+        decentralization = load_json("deploy/site-overlay/assets/data/descentralizacion-comunas.json")
+        source = replace_id_text(source, "data-date", fmt_date(decentralization["generated_at"]))
     return source
 
 

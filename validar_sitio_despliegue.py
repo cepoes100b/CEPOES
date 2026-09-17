@@ -182,6 +182,9 @@ for token in ['/assets/informes-tematicos.css?v=1','/assets/endeudamiento-inform
     assert token in debt_report, f'Informe de endeudamiento fuera del sistema visual común: {token}'
 
 home=(root/'index.html').read_text(encoding='utf-8',errors='replace')
+assert home.count('class="home-event-banner"')==1, 'El banner del Encuentro debe aparecer exactamente una vez'
+assert home.count('id="home-event-title"')==1, 'Título del banner del Encuentro duplicado'
+assert home.count('/assets/emsp-2026-poster.jpg')==1, 'Afiche del Encuentro duplicado en portada'
 for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home-leg-recent">—']:
     assert token not in home, f'Fallback vacío en home: {token}'
 for redundant in ['home-pulse-section','home-territory-section','home-topics-section','home-recent-section']:

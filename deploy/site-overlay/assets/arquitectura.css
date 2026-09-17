@@ -92,8 +92,8 @@
 .site-nav .brand .logo{line-height:1.15}
 .site-nav .brand-sub{line-height:1.05}
 @media(max-width:1400px){.site-nav .brand{flex-direction:column;align-items:flex-start;gap:1px}.site-nav .brand-sep{display:none}.site-nav .brand-sub{display:flex}.site-nav .brand-sub small{display:none}.site-nav .brand-sub strong{font:800 .62rem Poppins,sans-serif;letter-spacing:.1em;color:var(--marca)}}
-@media(max-width:1450px) and (min-width:1241px){.site-nav .nav-in{gap:14px}.site-nav .nav-links{gap:14px;font-size:.8rem}.site-nav .nav-cta{padding:8px 12px}}
-@media(max-width:1240px) and (min-width:761px){.site-nav .nav-links{display:none;position:absolute;left:0;right:0;top:72px;box-sizing:border-box;padding:18px 24px;border-bottom:1px solid var(--borde);background:var(--panel);flex-direction:column;align-items:stretch}.site-nav .nav-links.open{display:flex}.site-nav .nav-links a:not(.nav-cta){display:block}.site-nav .menu-btn{display:inline-flex}}
+@media(max-width:1450px) and (min-width:1361px){.site-nav .nav-in{gap:14px}.site-nav .nav-links{gap:14px;font-size:.8rem}.site-nav .nav-cta{padding:8px 12px}}
+@media(max-width:1360px) and (min-width:761px){.site-nav .nav-links{display:none;position:absolute;left:0;right:0;top:72px;box-sizing:border-box;padding:18px 24px;border-bottom:1px solid var(--borde);background:var(--panel);flex-direction:column;align-items:stretch}.site-nav .nav-links.open{display:flex}.site-nav .nav-links a:not(.nav-cta){display:block}.site-nav .menu-btn{display:inline-flex}}
 @media(max-width:760px){.site-nav .brand-sub strong{font-size:.58rem;letter-spacing:.08em}}
 /* Ejecución presupuestaria: restituye la columna editorial en escritorio.
    site.css limita correctamente los componentes internos, pero su selector
@@ -127,3 +127,6 @@
 @media(max-width:980px){.home-event-card,.event-hero-grid,.event-intro{grid-template-columns:1fr}.home-event-poster{min-height:0;max-height:none;padding:18px}.home-event-poster img{width:auto;max-width:100%;height:auto;max-height:520px}.event-poster-frame{max-width:420px;transform:none}.event-schedule{grid-template-columns:repeat(2,minmax(0,1fr))}.event-commissions{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.home-event-banner{padding:20px 0 34px}.home-event-card{border-radius:18px}.home-event-copy{padding:26px 22px}.home-event-copy h2{font-size:2.3rem}.home-event-actions .btn,.event-actions .btn{width:100%;box-sizing:border-box;text-align:center}.home-event-poster{padding:14px}.home-event-poster img{max-height:440px}.event-hero h1{font-size:clamp(2.75rem,15vw,4.2rem)}.event-schedule,.event-commissions,.event-method,.event-organizers{grid-template-columns:1fr}.event-commissions{padding:0}.event-poster-frame{max-width:300px}}
 @media print{.home-event-banner .home-event-actions,.event-actions{display:none}.event-hero{padding:30px 0;background:#fff!important;color:#16232f}.event-hero h1,.event-hero .event-tagline{color:#16232f}.event-poster-frame{max-width:250px;box-shadow:none}}
+
+/* Publicaciones: una misma familia de tapas y proporciones en todos los informes. */
+.report-thumb img,.report-row-thumb img{display:block;width:100%;aspect-ratio:5/7;object-fit:cover;border-radius:8px;background:#172a4a}

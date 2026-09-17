@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=16"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=17"
 
 
 TOPICS = [
@@ -478,7 +478,22 @@ def restructure_home(source: str) -> str:
         )
         latest = latest.replace('</div></div></div></section>', '</div>' + subscription + '</div></div></section>', 1)
         sections["home-latest-section"] = latest
-    block = "".join(sections[name] for name in order if sections[name])
+    event_banner = (
+        '<section class="home-event-banner" aria-labelledby="home-event-title"><div class="wrap">'
+        '<div class="home-event-card"><div class="home-event-copy">'
+        '<span class="eyebrow">Convocatoria abierta · Salud pública</span>'
+        '<p class="home-event-kicker">Facultad de Ciencias Médicas · UBA</p>'
+        '<h2 id="home-event-title">Encuentro Metropolitano de Salud Pública</h2>'
+        '<p class="home-event-deck">Una jornada de debate y construcción colectiva para transformar experiencias, conocimientos e ideas en propuestas para un Plan de Gobierno en Salud para la Ciudad.</p>'
+        '<div class="home-event-facts" aria-label="Datos del encuentro"><span><b>19 SEP</b> Sábado</span>'
+        '<span><b>9 a 17 h</b> Jornada</span><span><b>Paraguay 2155</b> Facultad de Medicina</span></div>'
+        '<div class="home-event-actions"><a class="btn btn-primary" href="/encuentro-metropolitano-salud-publica/">Conocer el encuentro →</a>'
+        '<a class="btn btn-outline" href="https://forms.gle/aSMH9gguVfeXHp27A" rel="noopener" target="_blank">Inscribirme ↗</a></div>'
+        '</div><a class="home-event-poster" href="/encuentro-metropolitano-salud-publica/" aria-label="Ver información y programa del Encuentro Metropolitano de Salud Pública">'
+        '<img src="/assets/emsp-2026-poster.jpg" alt="Afiche del Encuentro Metropolitano de Salud Pública" width="900" height="1118" loading="lazy"></a>'
+        '</div></div></section>'
+    )
+    block = event_banner + "".join(sections[name] for name in order if sections[name])
     footer_at = source.find('<dialog', source.find('</header>'))
     if footer_at < 0:
         footer_at = source.find('<footer')

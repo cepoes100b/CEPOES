@@ -109,6 +109,7 @@ required=[
     'assets/data/estructura-productiva/actual.json','assets/data/estructura-productiva/comunas.geojson',
     'assets/informes-tematicos.css','assets/publicaciones/personas-mayores-caba.svg',
     'assets/publicaciones/situacion-calle-caba.svg',
+    'assets/endeudamiento-informe.css',
     'publicaciones/informes/personas-mayores-caba/index.html',
     'publicaciones/informes/personas-mayores-caba/informe-personas-mayores-caba-cepoes.pdf',
     'publicaciones/informes/situacion-de-calle-caba/index.html',
@@ -152,18 +153,22 @@ assert '@media(min-width:761px){.budget-page .wrap{max-width:var(--max)}}' in ar
 
 for report_rel, required_tokens in {
     'publicaciones/informes/personas-mayores-caba/index.html': [
-        'Personas mayores en la Ciudad de Buenos Aires',
+        'LAS PERSONAS MAYORES EN LA CIUDAD AUTÓNOMA DE BUENOS AIRES',
         'Autoría institucional:',
         'informe-personas-mayores-caba-cepoes.pdf',
-        'Fuentes y metodología',
+        'class="article full-report"',
+        'TABLA 2: RESIDENCIAS DE LARGA ESTADÍA EN EL ENTORNO URBANO',
+        'REFERENCIAS BIBLIOGRÁFICAS',
     ],
     'publicaciones/informes/situacion-de-calle-caba/index.html': [
-        'Situación de calle en la Ciudad de Buenos Aires',
+        'La cara más helada del invierno en Buenos Aires',
         'Autoría institucional:',
         'informe-situacion-de-calle-caba-cepoes.pdf',
-        'Dos mediciones, dos universos',
+        'class="article full-report"',
+        'La economía del margen: changas, reciclaje e ingresos de subsistencia',
         '5.176',
         '3.563',
+        '68,8%',
     ],
 }.items():
     report_html=(root/report_rel).read_text(encoding='utf-8',errors='replace')
@@ -172,6 +177,9 @@ for report_rel, required_tokens in {
 reports_index=(root/'publicaciones/informes/index.html').read_text(encoding='utf-8',errors='replace')
 for route in ['/publicaciones/informes/personas-mayores-caba/','/publicaciones/informes/situacion-de-calle-caba/']:
     assert route in reports_index and route in common_search, f'Informe no integrado en archivo o buscador: {route}'
+debt_report=(root/'publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['/assets/informes-tematicos.css?v=1','/assets/endeudamiento-informe.css?v=1','class="site-nav"','class="subnav"','Autoría institucional:','data-pdf-viewer=','Leer PDF']:
+    assert token in debt_report, f'Informe de endeudamiento fuera del sistema visual común: {token}'
 
 home=(root/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home-leg-recent">—']:

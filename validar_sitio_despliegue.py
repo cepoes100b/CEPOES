@@ -154,7 +154,7 @@ assert '@media(min-width:761px){.budget-page .wrap{max-width:var(--max)}}' in ar
 for report_rel, required_tokens in {
     'publicaciones/informes/personas-mayores-caba/index.html': [
         'LAS PERSONAS MAYORES EN LA CIUDAD AUTÓNOMA DE BUENOS AIRES',
-        'Autoría institucional:',
+        '<p class="byline">CEPOES</p>',
         'informe-personas-mayores-caba-cepoes.pdf',
         'class="article full-report"',
         'TABLA 2: RESIDENCIAS DE LARGA ESTADÍA EN EL ENTORNO URBANO',
@@ -162,7 +162,7 @@ for report_rel, required_tokens in {
     ],
     'publicaciones/informes/situacion-de-calle-caba/index.html': [
         'La cara más helada del invierno en Buenos Aires',
-        'Autoría institucional:',
+        '<p class="byline">CEPOES</p>',
         'informe-situacion-de-calle-caba-cepoes.pdf',
         'class="article full-report"',
         'La economía del margen: changas, reciclaje e ingresos de subsistencia',
@@ -178,7 +178,7 @@ reports_index=(root/'publicaciones/informes/index.html').read_text(encoding='utf
 for route in ['/publicaciones/informes/personas-mayores-caba/','/publicaciones/informes/situacion-de-calle-caba/']:
     assert route in reports_index and route in common_search, f'Informe no integrado en archivo o buscador: {route}'
 debt_report=(root/'publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['/assets/informes-tematicos.css?v=1','/assets/endeudamiento-informe.css?v=1','class="site-nav"','class="subnav"','Autoría institucional:','data-pdf-viewer=','Leer PDF']:
+for token in ['/assets/informes-tematicos.css?v=1','/assets/endeudamiento-informe.css?v=1','class="site-nav"','class="subnav"','<p class="byline">CEPOES</p>','data-pdf-viewer=','Leer PDF']:
     assert token in debt_report, f'Informe de endeudamiento fuera del sistema visual común: {token}'
 
 home=(root/'index.html').read_text(encoding='utf-8',errors='replace')

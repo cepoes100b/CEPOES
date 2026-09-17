@@ -174,13 +174,16 @@ for report_rel, required_tokens in {
     ],
 }.items():
     report_html=(root/report_rel).read_text(encoding='utf-8',errors='replace')
-    for token in required_tokens + ['class="web-report"','/assets/informes-web.css?v=1','/assets/informes-web.js?v=1','Descargar informe completo','data-copy-citation','Cita sugerida']:
+    for token in required_tokens + ['class="web-report"','/assets/informes-web.css?v=2','/assets/informes-web.js?v=1','Descargar informe completo','data-copy-citation','Cita sugerida']:
         assert token in report_html, f'Informe temático incompleto ({report_rel}): {token}'
     assert report_html.count('<nav class="site-nav">')==1, f'Menú duplicado en {report_rel}'
     assert report_html.count('<footer class="footer">')==1, f'Footer duplicado en {report_rel}'
     assert report_html.count('Descargar informe completo')==2, f'CTA de descarga inconsistente en {report_rel}'
     assert report_html.count('data-copy-citation')==1, f'Copiar cita duplicado o ausente en {report_rel}'
     assert 'full-report' not in report_html and 'bol-cierre' not in report_html, f'Plantilla extensa anterior en {report_rel}'
+reports_css=(root/'assets/informes-web.css').read_text(encoding='utf-8',errors='replace')
+for selector in [r'\.web-report \.wr-hero h1', r'\.web-report \.wr-download h3']:
+    assert re.search(rf'{selector}\{{[^}}]*color:#fff(?:;|\}})', reports_css), f'Contraste insuficiente en fondo oscuro: {selector}'
 reports_index=(root/'publicaciones/informes/index.html').read_text(encoding='utf-8',errors='replace')
 for route in [
     '/publicaciones/informes/personas-mayores-caba/',
@@ -334,7 +337,7 @@ report_paths = [
 ]
 for report_path in report_paths:
     report=(root/report_path).read_text(encoding='utf-8',errors='replace')
-    for token in ['<main class="web-report">','Descargar informe completo','/assets/informes-web.css?v=1','/assets/informes-web.js?v=1','data-copy-citation','Cita sugerida']:
+    for token in ['<main class="web-report">','Descargar informe completo','/assets/informes-web.css?v=2','/assets/informes-web.js?v=1','data-copy-citation','Cita sugerida']:
         assert token in report, f'Informe web incompleto ({report_path}): {token}'
     assert report.count('<main class="web-report">') == 1, f'Informe web duplicado: {report_path}'
     assert report.count('<footer class="footer">') == 1, f'Footer duplicado: {report_path}'

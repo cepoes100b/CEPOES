@@ -453,6 +453,13 @@ def restructure_home(source: str) -> str:
         source, _ = pop_class_element(source, "section", redundant)
     source, _ = pop_class_element(source, "section", "home-pulse-section")
     source, _ = pop_class_element(source, "section", "home-strategy-section")
+    # La portada se reconstruye sobre una copia de producción. Retirar todas las
+    # instancias ya publicadas evita sumar otro banner en cada despliegue.
+    while "home-event-banner" in source:
+        cleaned, removed = pop_class_element(source, "section", "home-event-banner")
+        if not removed:
+            break
+        source = cleaned
     sections["home-strategy-section"] = pillars
     sections["home-kpi-section"] = kpi_section
     sections["home-offer-section"] = offer_section

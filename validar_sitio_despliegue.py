@@ -15,7 +15,7 @@ def patch_territorio_navigation(site_root: Path) -> None:
     for p in site_root.rglob('*.html'):
         s=p.read_text(encoding='utf-8',errors='replace')
         original=s
-        s=re.sub(r'(/assets/common\.js)(?:\?v=\d+)?', r'\1?v=255', s)
+        s=re.sub(r'(/assets/common\.js)(?:\?v=\d+)?', r'\1?v=256', s)
         rel=p.relative_to(site_root).as_posix()
         if rel.startswith('territorio/'):
             sport='/territorio/deporte-salud/'
@@ -107,9 +107,9 @@ required=[
     'assets/data/deporte-accesibilidad.json','assets/data/deporte-accesibilidad-peatonal.json',
     'assets/estructura-productiva.js','assets/estructura-productiva-bootstrap.js','assets/estructura-productiva.css',
     'assets/data/estructura-productiva/actual.json','assets/data/estructura-productiva/comunas.geojson',
-    'assets/informes-tematicos.css','assets/publicaciones/personas-mayores-caba.svg',
-    'assets/publicaciones/situacion-calle-caba.svg',
-    'assets/endeudamiento-informe.css',
+    'assets/informes-web.css','assets/informes-web.js','assets/publicaciones/personas-mayores-caba.svg',
+    'assets/publicaciones/situacion-calle-caba.svg','assets/publicaciones/endeudamiento-caba.svg',
+    'assets/publicaciones/coyuntura-productiva-caba.svg',
     'publicaciones/informes/personas-mayores-caba/index.html',
     'publicaciones/informes/personas-mayores-caba/informe-personas-mayores-caba-cepoes.pdf',
     'publicaciones/informes/situacion-de-calle-caba/index.html',
@@ -132,7 +132,9 @@ for p in html:
     assert s.count('<footer class="footer">')==1, f'Footer no canónico: {rel}'
     assert len(re.findall(r'name=["\']theme-color["\']',s,re.I))==1, f'theme-color inválido: {rel}'
     assert len(re.findall(r'/assets/arquitectura\.css',s,re.I))==1, f'CSS de arquitectura duplicado: {rel}'
-    assert '/assets/arquitectura.css?v=18' in s, f'CSS de arquitectura sin versión vigente: {rel}'
+    assert '/assets/arquitectura.css?v=19' in s, f'CSS de arquitectura sin versión vigente: {rel}'
+    if '/assets/common.js' in s:
+        assert '/assets/common.js?v=256' in s, f'JS común sin versión vigente: {rel}'
     assert 'href="/prensa/"' in s, f'Falta Prensa en navegación: {rel}'
     nav_block=re.search(r'<nav class="site-nav">.*?</nav>',s,re.S)
     footer_block=re.search(r'<footer class="footer">.*?</footer>',s,re.S)
@@ -147,39 +149,51 @@ for route in ['/balance/','/balance/vivienda-y-alquiler/','/balance/salud-public
 assert "group:'Balance'" in common_search and 'x.priority||0' in common_search, 'Buscador sin grupo o prioridad de Balance'
 assert 'const merged=new Map()' in common_search, 'Buscador sin deduplicación por URL'
 architecture_css=(root/'assets'/'arquitectura.css').read_text(encoding='utf-8',errors='replace')
-for token in ['max-width:1450px','max-width:1240px','min-width:761px','.site-nav .nav-links.open{display:flex}']:
+for token in ['max-width:1450px','max-width:1360px','min-width:761px','.site-nav .nav-links.open{display:flex}']:
     assert token in architecture_css, f'Navegación adaptable incompleta: {token}'
 assert '@media(min-width:761px){.budget-page .wrap{max-width:var(--max)}}' in architecture_css, 'Ejecución presupuestaria sin ancho editorial en escritorio'
 
 for report_rel, required_tokens in {
     'publicaciones/informes/personas-mayores-caba/index.html': [
-        'LAS PERSONAS MAYORES EN LA CIUDAD AUTÓNOMA DE BUENOS AIRES',
-        '<p class="byline">CEPOES</p>',
+        'Personas mayores en Buenos Aires',
         'informe-personas-mayores-caba-cepoes.pdf',
-        'class="article full-report"',
-        'TABLA 2: RESIDENCIAS DE LARGA ESTADÍA EN EL ENTORNO URBANO',
-        'REFERENCIAS BIBLIOGRÁFICAS',
+        '22,2%', '27,6%',
     ],
     'publicaciones/informes/situacion-de-calle-caba/index.html': [
-        'La cara más helada del invierno en Buenos Aires',
-        '<p class="byline">CEPOES</p>',
+        'Más personas sin techo en Buenos Aires',
         'informe-situacion-de-calle-caba-cepoes.pdf',
-        'class="article full-report"',
-        'La economía del margen: changas, reciclaje e ingresos de subsistencia',
         '5.176',
         '3.563',
-        '68,8%',
+        '+27,8%',
+    ],
+    'publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/index.html': [
+        'Endeudarse para llegar a fin de mes', '2,04 M', '313.571', '12,37%',
+    ],
+    'publicaciones/informe-coyuntura-01-junio-2026/index.html': [
+        'Producción y empleo: una recuperación desigual', '59,8%', '−310.930', '+30,7%',
     ],
 }.items():
     report_html=(root/report_rel).read_text(encoding='utf-8',errors='replace')
-    for token in required_tokens:
+    for token in required_tokens + ['class="web-report"','/assets/informes-web.css?v=1','/assets/informes-web.js?v=1','Descargar informe completo','data-copy-citation','Cita sugerida']:
         assert token in report_html, f'Informe temático incompleto ({report_rel}): {token}'
+    assert report_html.count('<nav class="site-nav">')==1, f'Menú duplicado en {report_rel}'
+    assert report_html.count('<footer class="footer">')==1, f'Footer duplicado en {report_rel}'
+    assert report_html.count('Descargar informe completo')==2, f'CTA de descarga inconsistente en {report_rel}'
+    assert report_html.count('data-copy-citation')==1, f'Copiar cita duplicado o ausente en {report_rel}'
+    assert 'full-report' not in report_html and 'bol-cierre' not in report_html, f'Plantilla extensa anterior en {report_rel}'
 reports_index=(root/'publicaciones/informes/index.html').read_text(encoding='utf-8',errors='replace')
-for route in ['/publicaciones/informes/personas-mayores-caba/','/publicaciones/informes/situacion-de-calle-caba/']:
+for route in [
+    '/publicaciones/informes/personas-mayores-caba/',
+    '/publicaciones/informes/situacion-de-calle-caba/',
+    '/publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/',
+    '/publicaciones/informe-coyuntura-01-junio-2026/',
+]:
     assert route in reports_index and route in common_search, f'Informe no integrado en archivo o buscador: {route}'
-debt_report=(root/'publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['/assets/informes-tematicos.css?v=1','/assets/endeudamiento-informe.css?v=1','class="site-nav"','class="subnav"','<p class="byline">CEPOES</p>','data-pdf-viewer=','Leer PDF']:
-    assert token in debt_report, f'Informe de endeudamiento fuera del sistema visual común: {token}'
+for token in ['/assets/publicaciones/personas-mayores-caba.svg','/assets/publicaciones/situacion-calle-caba.svg','/assets/publicaciones/endeudamiento-caba.svg','/assets/publicaciones/coyuntura-productiva-caba.svg']:
+    assert token in reports_index, f'Tapa unificada ausente en archivo de informes: {token}'
+assert '/assets/publicaciones/informe-endeudamiento-caba.jpg' not in reports_index
+assert '/assets/publicaciones/informe-coyuntura-01.jpg' not in reports_index
+assert 'data-pdf-viewer' not in reports_index and 'Leer online' not in reports_index, 'El archivo de informes conserva accesos redundantes al visor'
 
 home=(root/'index.html').read_text(encoding='utf-8',errors='replace')
 assert home.count('class="home-event-banner"')==1, 'El banner del Encuentro debe aparecer exactamente una vez'

@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=18"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=19"
 
 
 TOPICS = [
@@ -716,6 +716,7 @@ def normalize_html(path: Path, site: Path) -> None:
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
+    source = re.sub(r'/assets/common\.js(?:\?v=\d+)?', '/assets/common.js?v=256', source)
     source = source.replace('href="/observatorio/presupuesto/"', 'href="/presupuesto/ejecucion/"')
     source = source.replace('href="/territorio/presupuesto/"', 'href="/presupuesto/territorio/"')
     source = re.sub(r'/assets/endeudamiento\.js(?:\?v=\d+)?', '/assets/endeudamiento.js?v=232', source)

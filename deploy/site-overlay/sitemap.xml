@@ -120,4 +120,10 @@
   <url><loc>https://cepoes.org/balance/presupuesto-y-modelo-de-gestion/</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://cepoes.org/publicaciones/informes/personas-mayores-caba/</loc><lastmod>2026-09-16</lastmod></url>
   <url><loc>https://cepoes.org/publicaciones/informes/situacion-de-calle-caba/</loc><lastmod>2026-09-16</lastmod></url>
+  <url>
+    <loc>https://cepoes.org/encuentro-metropolitano-salud-publica/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>

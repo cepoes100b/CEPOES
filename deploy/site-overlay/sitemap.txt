@@ -118,3 +118,4 @@ https://cepoes.org/territorio/migraciones/
 https://cepoes.org/presupuesto/descentralizacion/
 https://cepoes.org/publicaciones/informes/personas-mayores-caba/
 https://cepoes.org/publicaciones/informes/situacion-de-calle-caba/
+https://cepoes.org/encuentro-metropolitano-salud-publica/

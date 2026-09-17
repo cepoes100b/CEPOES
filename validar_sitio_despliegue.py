@@ -326,10 +326,19 @@ for slug in ['boletin-01-mayo-2026','boletin-02-junio-2026','boletin-03-julio-20
 debt_note=(root/'publicaciones'/'notas'/'el-boca-river-de-la-mora'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['25,5%','9,1%','La Boca','Núñez','estimación territorial agregada','/territorio/endeudamiento/']:
     assert token in debt_note, f'Nota de endeudamiento incompleta: {token}'
-report=(root/'publicaciones'/'informe-coyuntura-01-junio-2026'/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['class="bol inf"','Descargar PDF','/assets/informe-html.css?v=1','/assets/publicaciones-html-cepoes.css?v=3','/assets/boletines-html.js?v=1']:
-    assert token in report, f'Informe HTML incompleto: {token}'
-assert report.count('class="bol inf"') == 1 and '</style>' not in report, 'El informe contiene estilos incrustados como texto'
+report_paths = [
+    'publicaciones/informe-coyuntura-01-junio-2026/index.html',
+    'publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/index.html',
+    'publicaciones/informes/personas-mayores-caba/index.html',
+    'publicaciones/informes/situacion-de-calle-caba/index.html',
+]
+for report_path in report_paths:
+    report=(root/report_path).read_text(encoding='utf-8',errors='replace')
+    for token in ['<main class="web-report">','Descargar informe completo','/assets/informes-web.css?v=1','/assets/informes-web.js?v=1','data-copy-citation','Cita sugerida']:
+        assert token in report, f'Informe web incompleto ({report_path}): {token}'
+    assert report.count('<main class="web-report">') == 1, f'Informe web duplicado: {report_path}'
+    assert report.count('<footer class="footer">') == 1, f'Footer duplicado: {report_path}'
+    assert '</style>' not in report, f'El informe contiene estilos incrustados como texto: {report_path}'
 deporte=(root/'territorio'/'deporte-salud'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert all(token not in deporte for token in ('Siguiente etapa', 'El siguiente salto', 'Una etapa posterior')), 'Deporte y salud expone contenido futuro'
 migraciones=(root/'territorio'/'migraciones'/'index.html').read_text(encoding='utf-8',errors='replace')

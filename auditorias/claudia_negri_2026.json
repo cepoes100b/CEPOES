@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-18T13:58:19.333513+00:00",
+  "generado_en": "2026-09-18T23:00:05.270454+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,10 +9,10 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2024-01-30",
+    "fecha_mas_antigua_obtenida": "2024-02-05",
     "fecha_mas_reciente_obtenida": "2026-09-18",
-    "ids_del_anio_en_ventana": 2954,
-    "ids_revisados_acumulados": 2954,
+    "ids_del_anio_en_ventana": 2968,
+    "ids_revisados_acumulados": 2968,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -225,9 +225,9 @@
         "PROTECCIÓN Y USO DEL ESPACIO PÚBLICO"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-17",
+        "fecha": "2026-09-18",
         "oficina": "PROTECCIÓN Y USO DEL ESPACIO PÚBLICO",
-        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -311,9 +311,9 @@
         "SEGURIDAD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-17",
+        "fecha": "2026-09-18",
         "oficina": "SEGURIDAD",
-        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -595,6 +595,7 @@
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
+        "agenda",
         "radar_ingresos",
         "seguimiento_institucional"
       ],
@@ -712,9 +713,9 @@
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-16",
+        "fecha": "2026-09-18",
         "oficina": "DGDP",
-        "descripcion": "DESPACHO ESPERANDO NUMERACION (ESPERANDO RECEPCION)"
+        "descripcion": "DESPACHO NUMERADO. ESPERANDO INICIO DE PLAZO DE OBSERVACIONES"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -1329,7 +1330,6 @@
         "actividad_recinto"
       ],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional",
         "recinto"
       ],
@@ -1380,7 +1380,6 @@
       "fuentes_sancion": [],
       "fuentes_captura": [
         "agenda",
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,

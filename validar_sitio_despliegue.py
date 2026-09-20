@@ -385,8 +385,24 @@ assert 'https://cepoes.org/presupuesto/territorio/' in locs
 assert 'https://cepoes.org/temas/' in locs
 assert 'https://cepoes.org/observatorio/personas-mayores/' in locs
 assert 'https://cepoes.org/presupuesto/descentralizacion/' in locs
+assert 'https://cepoes.org/prensa/crianza-sala-de-3-vacantes/' in locs
 assert 'https://cepoes.org/observatorio/presupuesto/' not in locs
 assert 'https://cepoes.org/territorio/presupuesto/' not in locs
+
+press=json.loads((root/'assets/data/prensa.json').read_text(encoding='utf-8'))
+press_slugs={n.get('slug') for n in press.get('notas',[]) if n.get('estado')=='aprobada'}
+assert 'crianza-sala-de-3-vacantes' in press_slugs
+press_js=(root/'assets/prensa.js').read_text(encoding='utf-8',errors='replace')
+press_note_js=(root/'assets/prensa-nota.js').read_text(encoding='utf-8',errors='replace')
+assert "[...local,...live]" in press_js and 'crianza-sala-de-3-vacantes' in press_note_js
+assert (root/'prensa/crianza-sala-de-3-vacantes/index.html').exists()
+
+offer_html=(root/'territorio/equipamientos/index.html').read_text(encoding='utf-8',errors='replace')
+offer_js=(root/'assets/equipamientos.js').read_text(encoding='utf-8',errors='replace')
+for token in ['Oferta territorial de la Ciudad','equipment-level','Nivel educativo']:
+    assert token in offer_html, f'Oferta territorial incompleta: {token}'
+for token in ['EDU_LEVELS','educationLevels','nivel',"type==='educacion'&&level"]:
+    assert token in offer_js, f'Filtro educativo incompleto: {token}'
 
 manifest=json.loads((root/'site.webmanifest').read_text(encoding='utf-8'))
 assert manifest.get('name')=='CEPOES'

@@ -1,12 +1,12 @@
 {
-  "eyebrow": "10 de septiembre · Salud mental",
-  "title": "Prevenir es garantizar que la ayuda llegue a tiempo",
-  "summary": "En CABA se registraron 236 muertes por suicidio en 2025, 38% más que en 2024. El dato no explica causas: obliga a mirar prevención, acceso oportuno y capacidad real de la red pública.",
-  "url": "/publicaciones/notas/prevenir-es-garantizar-ayuda-a-tiempo/",
-  "cta": "Leer la nota y los datos",
+  "eyebrow": "20 de septiembre · Educación e infancias",
+  "title": "Criar cuesta más de $1 millón: el desafío detrás de la sala de 3",
+  "summary": "La nueva obligatoriedad desde los 3 años amplía un derecho. Los últimos datos muestran por qué su implementación exige vacantes, cercanía y capacidad pública medible en cada comuna.",
+  "url": "/publicaciones/notas/criar-en-caba-cuesta-mas-de-un-millon/",
+  "cta": "Leer el análisis y los datos",
   "datum": {
-    "value": "236",
-    "label": "muertes por suicidio registradas en CABA · 2025",
-    "source": "SNIC · +38,0% interanual · tasa 7,97 por 100.000 habitantes de 5 años y más"
+    "value": "$1,26 M",
+    "label": "costo mensual estimado para un niño de 3 años · agosto 2026",
+    "source": "IDECBA · 59% corresponde al valor del cuidado · cálculo para hogares propietarios"
   }
 }

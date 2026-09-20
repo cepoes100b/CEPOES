@@ -255,6 +255,11 @@ for field, token in editorial_required.items():
         f'La portada no coincide con home-editorial.json · '
         f'{field}: {token}'
     )
+crianza=(root/'publicaciones'/'notas'/'criar-en-buenos-aires-sala-de-3'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['$1,26 M','114.770','400','469','74','La sala de 3 es obligatoria','Qué no significan estos números','/territorio/equipamientos/']:
+    assert token in crianza, f'Nota de crianza incompleta: {token}'
+assert (root/'assets'/'nota-crianza.css').is_file(), 'Falta el CSS de la nota de crianza'
+assert 'criar-en-buenos-aires-sala-de-3' in (root/'publicaciones'/'notas'/'index.html').read_text(encoding='utf-8'), 'La nueva nota no aparece en el archivo de notas'
 observatorio=(root/'observatorio'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'id="obs-pulse"></div>' not in observatorio, 'Señales vacías en Observatorio'
 assert observatorio.count('id="obs-pulse"')==1, 'Contenedor de señales duplicado en Observatorio'

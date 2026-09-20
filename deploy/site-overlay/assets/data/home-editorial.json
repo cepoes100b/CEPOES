@@ -1,12 +1,12 @@
 {
-  "eyebrow": "10 de septiembre · Salud mental",
-  "title": "Prevenir es garantizar que la ayuda llegue a tiempo",
-  "summary": "En CABA se registraron 236 muertes por suicidio en 2025, 38% más que en 2024. El dato no explica causas: obliga a mirar prevención, acceso oportuno y capacidad real de la red pública.",
-  "url": "/publicaciones/notas/prevenir-es-garantizar-ayuda-a-tiempo/",
-  "cta": "Leer la nota y los datos",
+  "eyebrow": "Nuevos datos · Infancias, cuidados y educación",
+  "title": "Criar en Buenos Aires cuesta más de $1 millón por mes",
+  "summary": "La sala de 3 ya es obligatoria. La nueva canasta de crianza y la distribución de 114.770 niñas y niños de 0 a 4 años muestran por qué garantizar vacantes públicas suficientes es una política educativa, de cuidados y de ingresos.",
+  "url": "/publicaciones/notas/criar-en-buenos-aires-sala-de-3/",
+  "cta": "Leer el análisis completo",
   "datum": {
-    "value": "236",
-    "label": "muertes por suicidio registradas en CABA · 2025",
-    "source": "SNIC · +38,0% interanual · tasa 7,97 por 100.000 habitantes de 5 años y más"
+    "value": "$1,26 M",
+    "label": "costo mensual de crianza a los 3 años · agosto de 2026",
+    "source": "IDECBA · $746.610 corresponden al cuidado · estimación para hogares propietarios, sin alquiler"
   }
 }

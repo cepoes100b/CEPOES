@@ -114,6 +114,14 @@ required=[
     'publicaciones/informes/personas-mayores-caba/informe-personas-mayores-caba-cepoes.pdf',
     'publicaciones/informes/situacion-de-calle-caba/index.html',
     'publicaciones/informes/situacion-de-calle-caba/informe-situacion-de-calle-caba-cepoes.pdf',
+    'publicaciones/informes/educacion-pisa-fepba-2025/index.html',
+    'publicaciones/informes/educacion-pisa-fepba-2025/informe-educacion-pisa-fepba-cepoes.pdf',
+    'publicaciones/informes/educacion-pisa-fepba-2025/comunicado-educacion-pisa-fepba-cepoes.pdf',
+    'publicaciones/informes/plataformas-juventudes-caba/index.html',
+    'publicaciones/informes/plataformas-juventudes-caba/informe-plataformas-juventudes-cepoes.pdf',
+    'assets/informes-ejes.css',
+    'assets/publicaciones/educacion-pisa-fepba.svg',
+    'assets/publicaciones/plataformas-juventudes.svg',
 ]
 for rel in required:
     p=root/rel
@@ -166,6 +174,20 @@ for report_rel, required_tokens in {
         '3.563',
         '+27,8%',
     ],
+    'publicaciones/informes/educacion-pisa-fepba-2025/index.html': [
+        'Dos evaluaciones, dos respuestas opuestas',
+        'informe-educacion-pisa-fepba-cepoes.pdf',
+        'comunicado-educacion-pisa-fepba-cepoes.pdf',
+        '−17',
+        'Corrección metodológica de la versión web',
+    ],
+    'publicaciones/informes/plataformas-juventudes-caba/index.html': [
+        'Seis años de registro y ningún número',
+        'informe-plataformas-juventudes-cepoes.pdf',
+        'RUTRAMUR',
+        '350.500',
+        'Estas cifras no son estadística oficial',
+    ],
     'publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/index.html': [
         'Endeudarse para llegar a fin de mes', '2,04 M', '313.571', '12,37%',
     ],
@@ -188,11 +210,13 @@ reports_index=(root/'publicaciones/informes/index.html').read_text(encoding='utf
 for route in [
     '/publicaciones/informes/personas-mayores-caba/',
     '/publicaciones/informes/situacion-de-calle-caba/',
+    '/publicaciones/informes/educacion-pisa-fepba-2025/',
+    '/publicaciones/informes/plataformas-juventudes-caba/',
     '/publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/',
     '/publicaciones/informe-coyuntura-01-junio-2026/',
 ]:
     assert route in reports_index and route in common_search, f'Informe no integrado en archivo o buscador: {route}'
-for token in ['/assets/publicaciones/personas-mayores-caba.svg','/assets/publicaciones/situacion-calle-caba.svg','/assets/publicaciones/endeudamiento-caba.svg','/assets/publicaciones/coyuntura-productiva-caba.svg']:
+for token in ['/assets/publicaciones/personas-mayores-caba.svg','/assets/publicaciones/situacion-calle-caba.svg','/assets/publicaciones/educacion-pisa-fepba.svg','/assets/publicaciones/plataformas-juventudes.svg','/assets/publicaciones/endeudamiento-caba.svg','/assets/publicaciones/coyuntura-productiva-caba.svg']:
     assert token in reports_index, f'Tapa unificada ausente en archivo de informes: {token}'
 assert '/assets/publicaciones/informe-endeudamiento-caba.jpg' not in reports_index
 assert '/assets/publicaciones/informe-coyuntura-01.jpg' not in reports_index
@@ -339,6 +363,8 @@ report_paths = [
     'publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/index.html',
     'publicaciones/informes/personas-mayores-caba/index.html',
     'publicaciones/informes/situacion-de-calle-caba/index.html',
+    'publicaciones/informes/educacion-pisa-fepba-2025/index.html',
+    'publicaciones/informes/plataformas-juventudes-caba/index.html',
 ]
 for report_path in report_paths:
     report=(root/report_path).read_text(encoding='utf-8',errors='replace')
@@ -386,16 +412,23 @@ assert 'https://cepoes.org/temas/' in locs
 assert 'https://cepoes.org/observatorio/personas-mayores/' in locs
 assert 'https://cepoes.org/presupuesto/descentralizacion/' in locs
 assert 'https://cepoes.org/prensa/crianza-sala-de-3-vacantes/' in locs
+assert 'https://cepoes.org/prensa/educacion-pisa-fepba-resultados/' in locs
+assert 'https://cepoes.org/prensa/plataformas-rutramur-sin-datos/' in locs
+assert 'https://cepoes.org/publicaciones/informes/educacion-pisa-fepba-2025/' in locs
+assert 'https://cepoes.org/publicaciones/informes/plataformas-juventudes-caba/' in locs
 assert 'https://cepoes.org/observatorio/presupuesto/' not in locs
 assert 'https://cepoes.org/territorio/presupuesto/' not in locs
 
 press=json.loads((root/'assets/data/prensa.json').read_text(encoding='utf-8'))
 press_slugs={n.get('slug') for n in press.get('notas',[]) if n.get('estado')=='aprobada'}
-assert 'crianza-sala-de-3-vacantes' in press_slugs
+for slug in ['crianza-sala-de-3-vacantes','educacion-pisa-fepba-resultados','plataformas-rutramur-sin-datos']:
+    assert slug in press_slugs, f'Falta nota de prensa aprobada: {slug}'
 press_js=(root/'assets/prensa.js').read_text(encoding='utf-8',errors='replace')
 press_note_js=(root/'assets/prensa-nota.js').read_text(encoding='utf-8',errors='replace')
-assert "[...local,...live]" in press_js and 'crianza-sala-de-3-vacantes' in press_note_js
-assert (root/'prensa/crianza-sala-de-3-vacantes/index.html').exists()
+assert "[...local,...live]" in press_js
+for slug in ['crianza-sala-de-3-vacantes','educacion-pisa-fepba-resultados','plataformas-rutramur-sin-datos']:
+    assert slug in press_note_js
+    assert (root/'prensa'/slug/'index.html').exists()
 
 offer_html=(root/'territorio/equipamientos/index.html').read_text(encoding='utf-8',errors='replace')
 offer_js=(root/'assets/equipamientos.js').read_text(encoding='utf-8',errors='replace')

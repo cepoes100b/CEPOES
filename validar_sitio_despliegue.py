@@ -199,9 +199,9 @@ assert '/assets/publicaciones/informe-coyuntura-01.jpg' not in reports_index
 assert 'data-pdf-viewer' not in reports_index and 'Leer online' not in reports_index, 'El archivo de informes conserva accesos redundantes al visor'
 
 home=(root/'index.html').read_text(encoding='utf-8',errors='replace')
-assert home.count('class="home-event-banner"')==1, 'El banner del Encuentro debe aparecer exactamente una vez'
-assert home.count('id="home-event-title"')==1, 'Título del banner del Encuentro duplicado'
-assert home.count('/assets/emsp-2026-poster.jpg')==1, 'Afiche del Encuentro duplicado en portada'
+assert 'class="home-event-banner"' not in home, 'El banner vencido del Encuentro reapareció en la portada'
+assert 'id="home-event-title"' not in home, 'El título del banner vencido reapareció en la portada'
+assert '/assets/emsp-2026-poster.jpg' not in home, 'El afiche del Encuentro reapareció en la portada'
 for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home-leg-recent">—']:
     assert token not in home, f'Fallback vacío en home: {token}'
 for redundant in ['home-pulse-section','home-territory-section','home-topics-section','home-recent-section']:

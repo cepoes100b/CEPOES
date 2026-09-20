@@ -15,7 +15,7 @@ def patch_territorio_navigation(site_root: Path) -> None:
     for p in site_root.rglob('*.html'):
         s=p.read_text(encoding='utf-8',errors='replace')
         original=s
-        s=re.sub(r'(/assets/common\.js)(?:\?v=\d+)?', r'\1?v=256', s)
+        s=re.sub(r'(/assets/common\.js)(?:\?v=\d+)?', r'\1?v=257', s)
         rel=p.relative_to(site_root).as_posix()
         if rel.startswith('territorio/'):
             sport='/territorio/deporte-salud/'
@@ -85,6 +85,7 @@ ensure_sitemap_url(root,'/balance/')
 ensure_sitemap_url(root,'/balance/vivienda-y-alquiler/')
 ensure_sitemap_url(root,'/balance/salud-publica/')
 ensure_sitemap_url(root,'/balance/presupuesto-y-modelo-de-gestion/')
+ensure_sitemap_url(root,'/lo-nuevo/')
 
 required=[
     'index.html','404.html','robots.txt','sitemap.xml','site.webmanifest','balance/index.html',
@@ -114,6 +115,14 @@ required=[
     'publicaciones/informes/personas-mayores-caba/informe-personas-mayores-caba-cepoes.pdf',
     'publicaciones/informes/situacion-de-calle-caba/index.html',
     'publicaciones/informes/situacion-de-calle-caba/informe-situacion-de-calle-caba-cepoes.pdf',
+    'publicaciones/informes/educacion-pisa-fepba-2025/index.html',
+    'publicaciones/informes/educacion-pisa-fepba-2025/informe-educacion-pisa-fepba-cepoes.pdf',
+    'publicaciones/informes/educacion-pisa-fepba-2025/comunicado-educacion-pisa-fepba-cepoes.pdf',
+    'publicaciones/informes/plataformas-juventudes-caba/index.html',
+    'publicaciones/informes/plataformas-juventudes-caba/informe-plataformas-juventudes-cepoes.pdf',
+    'assets/informes-ejes.css','lo-nuevo/index.html','assets/lo-nuevo.css','assets/lo-nuevo.js',
+    'assets/publicaciones/educacion-pisa-fepba.svg',
+    'assets/publicaciones/plataformas-juventudes.svg',
 ]
 for rel in required:
     p=root/rel
@@ -132,19 +141,21 @@ for p in html:
     assert s.count('<footer class="footer">')==1, f'Footer no canónico: {rel}'
     assert len(re.findall(r'name=["\']theme-color["\']',s,re.I))==1, f'theme-color inválido: {rel}'
     assert len(re.findall(r'/assets/arquitectura\.css',s,re.I))==1, f'CSS de arquitectura duplicado: {rel}'
-    assert '/assets/arquitectura.css?v=19' in s, f'CSS de arquitectura sin versión vigente: {rel}'
+    assert '/assets/arquitectura.css?v=20' in s, f'CSS de arquitectura sin versión vigente: {rel}'
     if '/assets/common.js' in s:
-        assert '/assets/common.js?v=256' in s, f'JS común sin versión vigente: {rel}'
+        assert '/assets/common.js?v=257' in s, f'JS común sin versión vigente: {rel}'
     assert 'href="/prensa/"' in s, f'Falta Prensa en navegación: {rel}'
     nav_block=re.search(r'<nav class="site-nav">.*?</nav>',s,re.S)
     footer_block=re.search(r'<footer class="footer">.*?</footer>',s,re.S)
     assert nav_block and 'href="/balance/"' in nav_block.group(0), f'Falta Balance en navegación: {rel}'
+    assert nav_block and 'href="/lo-nuevo/"' in nav_block.group(0), f'Falta Lo nuevo en navegación: {rel}'
     assert footer_block and 'href="/balance/"' in footer_block.group(0), f'Falta Balance en footer: {rel}'
+    assert footer_block and 'href="/lo-nuevo/"' in footer_block.group(0), f'Falta Lo nuevo en footer: {rel}'
     assert 'href="/observatorio/presupuesto/"' not in s, f'Enlace presupuestario antiguo: {rel}'
     assert 'href="/territorio/presupuesto/"' not in s, f'Enlace territorial antiguo: {rel}'
 
 common_search=(root/'assets'/'common.js').read_text(encoding='utf-8',errors='replace')
-for route in ['/balance/','/balance/vivienda-y-alquiler/','/balance/salud-publica/','/balance/presupuesto-y-modelo-de-gestion/']:
+for route in ['/balance/','/balance/vivienda-y-alquiler/','/balance/salud-publica/','/balance/presupuesto-y-modelo-de-gestion/','/lo-nuevo/']:
     assert route in common_search, f'Falta indexar en búsqueda: {route}'
 assert "group:'Balance'" in common_search and 'x.priority||0' in common_search, 'Buscador sin grupo o prioridad de Balance'
 assert 'const merged=new Map()' in common_search, 'Buscador sin deduplicación por URL'
@@ -165,6 +176,20 @@ for report_rel, required_tokens in {
         '5.176',
         '3.563',
         '+27,8%',
+    ],
+    'publicaciones/informes/educacion-pisa-fepba-2025/index.html': [
+        'Dos evaluaciones, dos respuestas opuestas',
+        'informe-educacion-pisa-fepba-cepoes.pdf',
+        'comunicado-educacion-pisa-fepba-cepoes.pdf',
+        '−17',
+        'Corrección metodológica de la versión web',
+    ],
+    'publicaciones/informes/plataformas-juventudes-caba/index.html': [
+        'Seis años de registro y ningún número',
+        'informe-plataformas-juventudes-cepoes.pdf',
+        'RUTRAMUR',
+        '350.500',
+        'Estas cifras no son estadística oficial',
     ],
     'publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/index.html': [
         'Endeudarse para llegar a fin de mes', '2,04 M', '313.571', '12,37%',
@@ -188,11 +213,13 @@ reports_index=(root/'publicaciones/informes/index.html').read_text(encoding='utf
 for route in [
     '/publicaciones/informes/personas-mayores-caba/',
     '/publicaciones/informes/situacion-de-calle-caba/',
+    '/publicaciones/informes/educacion-pisa-fepba-2025/',
+    '/publicaciones/informes/plataformas-juventudes-caba/',
     '/publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/',
     '/publicaciones/informe-coyuntura-01-junio-2026/',
 ]:
     assert route in reports_index and route in common_search, f'Informe no integrado en archivo o buscador: {route}'
-for token in ['/assets/publicaciones/personas-mayores-caba.svg','/assets/publicaciones/situacion-calle-caba.svg','/assets/publicaciones/endeudamiento-caba.svg','/assets/publicaciones/coyuntura-productiva-caba.svg']:
+for token in ['/assets/publicaciones/personas-mayores-caba.svg','/assets/publicaciones/situacion-calle-caba.svg','/assets/publicaciones/educacion-pisa-fepba.svg','/assets/publicaciones/plataformas-juventudes.svg','/assets/publicaciones/endeudamiento-caba.svg','/assets/publicaciones/coyuntura-productiva-caba.svg']:
     assert token in reports_index, f'Tapa unificada ausente en archivo de informes: {token}'
 assert '/assets/publicaciones/informe-endeudamiento-caba.jpg' not in reports_index
 assert '/assets/publicaciones/informe-coyuntura-01.jpg' not in reports_index
@@ -209,10 +236,16 @@ for redundant in ['home-pulse-section','home-territory-section','home-topics-sec
 home_order=['home-editorial-hero','home-strategy-section','home-kpi-section','home-offer-section','home-latest-section','home-products-section','home-about-section']
 home_positions=[home.find(token) for token in home_order]
 assert all(pos>=0 for pos in home_positions) and home_positions==sorted(home_positions), f'Jerarquía de home inválida: {home_positions}'
-for token in ['home-editorial-datum','home-strategy-grid','La Ciudad hoy','Balance de gestión 2007–2026','Una Ciudad posible','href="/balance/"','home-comparison-grid','home-neighborhood-form','home-subscription-form','Leer la versión web →','/assets/home-redesign.js?v=1']:
+for token in ['home-editorial-datum','home-strategy-grid','La Ciudad hoy','Balance de gestión 2007–2026','Una Ciudad posible','href="/balance/"','home-comparison-grid','home-neighborhood-form','home-subscription-form','home-new-link','href="/lo-nuevo/"','Leer la versión web →','/assets/home-redesign.js?v=1']:
     assert token in home, f'Bloque de portada incompleto: {token}'
 assert home.count('class="home-comparison-card"')==4, 'La home debe mostrar exactamente cuatro datos comparados'
 assert home.count('home-strategy-card')==3, 'La home debe mostrar exactamente tres recorridos estratégicos'
+new_page=(root/'lo-nuevo'/'index.html').read_text(encoding='utf-8',errors='replace')
+for token in ['<h1>Lo nuevo</h1>','id="new-search"','id="new-type"','id="new-topic"','Qué entra en “Lo nuevo”','/assets/lo-nuevo.css?v=1','/assets/lo-nuevo.js?v=1']:
+    assert token in new_page, f'Página Lo nuevo incompleta: {token}'
+assert len(re.findall(r'<article class="[^"]*\bnew-card\b',new_page))==12, 'Lo nuevo debe mostrar doce contenidos recientes'
+for route in ['/publicaciones/informes/educacion-pisa-fepba-2025/','/publicaciones/informes/plataformas-juventudes-caba/','/publicaciones/notas/criar-en-buenos-aires-sala-de-3/','/prensa/crianza-sala-de-3-vacantes/','/balance/salud-publica/']:
+    assert route in new_page, f'Contenido reciente no integrado en Lo nuevo: {route}'
 balance=(root/'balance'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Balance de gestión 2007–2026','Decisiones públicas','Impacto territorial','Capacidad estatal','Vivienda y alquiler','Salud pública','Presupuesto y modelo de gestión']:
     assert token in balance, f'Portada de Balance incompleta: {token}'
@@ -339,6 +372,8 @@ report_paths = [
     'publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/index.html',
     'publicaciones/informes/personas-mayores-caba/index.html',
     'publicaciones/informes/situacion-de-calle-caba/index.html',
+    'publicaciones/informes/educacion-pisa-fepba-2025/index.html',
+    'publicaciones/informes/plataformas-juventudes-caba/index.html',
 ]
 for report_path in report_paths:
     report=(root/report_path).read_text(encoding='utf-8',errors='replace')
@@ -385,8 +420,32 @@ assert 'https://cepoes.org/presupuesto/territorio/' in locs
 assert 'https://cepoes.org/temas/' in locs
 assert 'https://cepoes.org/observatorio/personas-mayores/' in locs
 assert 'https://cepoes.org/presupuesto/descentralizacion/' in locs
+assert 'https://cepoes.org/prensa/crianza-sala-de-3-vacantes/' in locs
+assert 'https://cepoes.org/prensa/educacion-pisa-fepba-resultados/' in locs
+assert 'https://cepoes.org/prensa/plataformas-rutramur-sin-datos/' in locs
+assert 'https://cepoes.org/publicaciones/informes/educacion-pisa-fepba-2025/' in locs
+assert 'https://cepoes.org/publicaciones/informes/plataformas-juventudes-caba/' in locs
+assert 'https://cepoes.org/lo-nuevo/' in locs
 assert 'https://cepoes.org/observatorio/presupuesto/' not in locs
 assert 'https://cepoes.org/territorio/presupuesto/' not in locs
+
+press=json.loads((root/'assets/data/prensa.json').read_text(encoding='utf-8'))
+press_slugs={n.get('slug') for n in press.get('notas',[]) if n.get('estado')=='aprobada'}
+for slug in ['crianza-sala-de-3-vacantes','educacion-pisa-fepba-resultados','plataformas-rutramur-sin-datos']:
+    assert slug in press_slugs, f'Falta nota de prensa aprobada: {slug}'
+press_js=(root/'assets/prensa.js').read_text(encoding='utf-8',errors='replace')
+press_note_js=(root/'assets/prensa-nota.js').read_text(encoding='utf-8',errors='replace')
+assert "[...local,...live]" in press_js
+for slug in ['crianza-sala-de-3-vacantes','educacion-pisa-fepba-resultados','plataformas-rutramur-sin-datos']:
+    assert slug in press_note_js
+    assert (root/'prensa'/slug/'index.html').exists()
+
+offer_html=(root/'territorio/equipamientos/index.html').read_text(encoding='utf-8',errors='replace')
+offer_js=(root/'assets/equipamientos.js').read_text(encoding='utf-8',errors='replace')
+for token in ['Oferta territorial de la Ciudad','equipment-level','Nivel educativo']:
+    assert token in offer_html, f'Oferta territorial incompleta: {token}'
+for token in ['EDU_LEVELS','educationLevels','nivel',"type==='educacion'&&level"]:
+    assert token in offer_js, f'Filtro educativo incompleto: {token}'
 
 manifest=json.loads((root/'site.webmanifest').read_text(encoding='utf-8'))
 assert manifest.get('name')=='CEPOES'

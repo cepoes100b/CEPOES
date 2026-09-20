@@ -91,6 +91,7 @@
 /* Marca del header: "SOMOS 100 BARRIOS" visible en todos los anchos */
 .site-nav .brand .logo{line-height:1.15}
 .site-nav .brand-sub{line-height:1.05}
+.site-nav .nav-links .nav-new{color:#087b69;font-weight:850}.site-nav .nav-links .nav-new:before{content:"";display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;background:#16a085;box-shadow:0 0 0 4px rgba(22,160,133,.13)}.site-nav .nav-links .nav-new.active{color:var(--texto)}.home-new-link{display:inline-flex;margin:0 0 20px;color:var(--marca);font-weight:850;text-decoration:none}.home-new-link:hover{text-decoration:underline}
 @media(max-width:1400px){.site-nav .brand{flex-direction:column;align-items:flex-start;gap:1px}.site-nav .brand-sep{display:none}.site-nav .brand-sub{display:flex}.site-nav .brand-sub small{display:none}.site-nav .brand-sub strong{font:800 .62rem Poppins,sans-serif;letter-spacing:.1em;color:var(--marca)}}
 @media(max-width:1450px) and (min-width:1361px){.site-nav .nav-in{gap:14px}.site-nav .nav-links{gap:14px;font-size:.8rem}.site-nav .nav-cta{padding:8px 12px}}
 @media(max-width:1360px) and (min-width:761px){.site-nav .nav-links{display:none;position:absolute;left:0;right:0;top:72px;box-sizing:border-box;padding:18px 24px;border-bottom:1px solid var(--borde);background:var(--panel);flex-direction:column;align-items:stretch}.site-nav .nav-links.open{display:flex}.site-nav .nav-links a:not(.nav-cta){display:block}.site-nav .menu-btn{display:inline-flex}}

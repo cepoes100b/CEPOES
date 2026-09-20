@@ -15,7 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=19"
+ARCHITECTURE_CSS = "/assets/arquitectura.css?v=20"
 
 
 TOPICS = [
@@ -39,6 +39,8 @@ def active_for(path: Path, site: Path) -> str:
     rel = "/" + path.relative_to(site).as_posix()
     if rel.endswith("index.html"):
         rel = rel[: -len("index.html")]
+    if rel.startswith("/lo-nuevo/"):
+        return "new"
     for section in ("observatorio", "balance", "presupuesto", "territorio", "legislatura", "publicaciones", "propuestas", "prensa", "cepoes"):
         if rel.startswith(f"/{section}/"):
             return section
@@ -55,10 +57,12 @@ def nav(active: str) -> str:
         ("publicaciones", "/publicaciones/", "Publicaciones"),
         ("propuestas", "/propuestas/", "Propuestas"),
         ("prensa", "/prensa/", "Prensa"),
+        ("new", "/lo-nuevo/", "Lo nuevo"),
         ("cepoes", "/cepoes/", "CEPOES"),
     ]
     links = "".join(
-        f'<a{(" class=\"active\"" if key == active else "")} href="{url}">{label}</a>'
+        f'<a class="{" ".join(filter(None, ["nav-new" if key == "new" else "", "active" if key == active else ""]))}" href="{url}">{label}</a>'
+        if key == "new" or key == active else f'<a href="{url}">{label}</a>'
         for key, url, label in items
     )
     return (
@@ -107,6 +111,7 @@ FOOTER = (
     '<li><a href="/territorio/">Territorio</a></li><li><a href="/territorio/equipamientos/">Qué hay en tu barrio</a></li>'
     '<li><a href="/legislatura/">Legislatura</a></li><li><a href="/publicaciones/">Publicaciones</a></li>'
     '<li><a href="/propuestas/">Propuestas</a></li><li><a href="/prensa/">Prensa</a></li>'
+    '<li><a href="/lo-nuevo/">Lo nuevo</a></li>'
     '<li><a href="/temas/">Explorar por tema</a></li></ul></div>'
     '<div class="footer-links"><h5>CEPOES</h5><ul><li><a href="/cepoes/">Quiénes somos</a></li>'
     '<li><a href="/cepoes/metodologia/">Metodología y fuentes</a></li>'
@@ -476,6 +481,7 @@ def restructure_home(source: str) -> str:
         latest = re.sub(r'<a class="btn btn-outline"[^>]*>Leer online</a>', '', latest)
         subscription = (
             '<div class="home-subscription"><span class="eyebrow">Recibir novedades</span><h3>El boletín, en tu correo</h3>'
+            '<a class="home-new-link" href="/lo-nuevo/">Ver todo lo nuevo en CEPOES →</a>'
             '<form id="home-subscription-form"><label for="home-subscription-email">Correo electrónico</label>'
             '<div><input autocomplete="email" id="home-subscription-email" name="email" placeholder="tu@email.com" required type="email">'
             '<button class="btn btn-primary" type="submit">Suscribirme</button></div>'
@@ -701,7 +707,7 @@ def normalize_html(path: Path, site: Path) -> None:
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
-    source = re.sub(r'/assets/common\.js(?:\?v=\d+)?', '/assets/common.js?v=256', source)
+    source = re.sub(r'/assets/common\.js(?:\?v=\d+)?', '/assets/common.js?v=257', source)
     source = source.replace('href="/observatorio/presupuesto/"', 'href="/presupuesto/ejecucion/"')
     source = source.replace('href="/territorio/presupuesto/"', 'href="/presupuesto/territorio/"')
     source = re.sub(r'/assets/endeudamiento\.js(?:\?v=\d+)?', '/assets/endeudamiento.js?v=232', source)

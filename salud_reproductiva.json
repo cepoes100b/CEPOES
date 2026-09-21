@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-14T11:29:46Z",
+  "generated_at": "2026-09-21T11:28:58Z",
   "scope": "CABA",
   "paev": {
     "official_page": "https://buenosaires.gob.ar/gcaba_historico/protocolo-de-acompanamiento-al-embarazo-vulnerable",
@@ -114,13 +114,13 @@
     }
   ],
   "monitoring": {
-    "last_checked_at": "2026-09-14T11:29:46Z",
+    "last_checked_at": "2026-09-21T11:28:58Z",
     "source_hashes": {
-      "paev_gcba": "dcf1c9072c6cdea000e1c4e5ba5645f80422fab239256f57ab1a6f27e6299958",
+      "paev_gcba": "040069ffa3302e8fcb1d84107192e5494d6139d0f76e489c0d96f539b5a9035c",
       "res427": "26dc690f0acdabd577a7fd69cf4dd950051f2a06b7888384c06a1ccb5130c227",
       "anexo427": "0e7817a8d213dfc7ead5b45cbdd59f72d697be760fd16ff2342c3c081e418f61",
       "res489": "850f999c1c402c9168c54400726cd58f5e2fec769d75c1f9c846de7940fec9b7",
-      "idecba_ive": "e4ee676937a327f56731a9e3de264f3bb38a1539d2204872200be064f5255002",
+      "idecba_ive": "dfd0bb79fd37254dc595d105842fc4caf85118b0a1e0953053327df1ff7e2e2d",
       "idecba_ive_xlsx": "3d286be786834dd6e14f661cfdc1fc2b3579a653390196b736fe056ba6d9f4a9"
     },
     "review_required": true

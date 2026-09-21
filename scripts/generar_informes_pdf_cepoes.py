@@ -223,7 +223,7 @@ EDUCATION = {
     "index": ["Síntesis", "Lo que dice PISA", "Evaluaciones porteñas", "Cómo pueden ser ciertas", "Contexto y alcance", "Propuestas y fuentes"],
     "filename": "informe-educacion-pisa-fepba-cepoes.pdf",
     "pdf_dir": "publicaciones/informes/educacion-pisa-fepba-2025",
-    "thumb": "educacion-pisa-fepba.svg",
+    "thumb": "educacion-pisa-fepba-2026-09.svg",
 }
 
 EDU_SECTIONS = [
@@ -301,7 +301,7 @@ PLATFORMS = {
     "index": ["Síntesis", "Cuánta gente", "Cruce con juventudes", "Norma y riesgo", "Propuestas", "Alcance y fuentes"],
     "filename": "informe-plataformas-juventudes-cepoes.pdf",
     "pdf_dir": "publicaciones/informes/plataformas-juventudes-caba",
-    "thumb": "plataformas-juventudes.svg",
+    "thumb": "plataformas-juventudes-2026-09.svg",
 }
 
 PLAT_SECTIONS = [

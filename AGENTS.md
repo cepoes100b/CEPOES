@@ -79,6 +79,7 @@ Toda intervención debe sostener tres objetivos simultáneos:
 - El thumbnail de cada informe debe derivar de esa misma portada y conservar fondo, proporción, tipografía, colores, jerarquía y marca. Antes de publicar, comparar visualmente PDF, miniatura y plantilla; no aceptar diseños paralelos o excepciones ad hoc.
 - Al adaptar un informe aprobado a la plantilla, preservar el contenido y las fuentes. Sólo corregir errores verificables; los cambios de diseño no autorizan resumir ni reescribir el documento.
 - Expresar los alcances y límites metodológicos en forma afirmativa: indicar qué mide cada fuente, para qué se utiliza y hasta dónde permite interpretar. Evitar cierres construidos como listas repetitivas de “no afirma”, “no demuestra” o “no permite”, salvo que una negación puntual sea indispensable para prevenir una lectura engañosa.
+- En las páginas de informes debe ofrecerse una sola descarga: el informe completo en PDF con la plantilla CEPOES. Los materiales de comunicación derivados se publican como notas de prensa web asociadas al informe, no como comunicados descargables.
 
 ## Seguridad y privacidad
 

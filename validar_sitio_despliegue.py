@@ -127,9 +127,10 @@ required=[
     'publicaciones/informes/situacion-de-calle-caba/informe-situacion-de-calle-caba-cepoes.pdf',
     'publicaciones/informes/educacion-pisa-fepba-2025/index.html',
     'publicaciones/informes/educacion-pisa-fepba-2025/informe-educacion-pisa-fepba-cepoes.pdf',
-    'publicaciones/informes/educacion-pisa-fepba-2025/comunicado-educacion-pisa-fepba-cepoes.pdf',
     'publicaciones/informes/plataformas-juventudes-caba/index.html',
     'publicaciones/informes/plataformas-juventudes-caba/informe-plataformas-juventudes-cepoes.pdf',
+    'prensa/personas-mayores-desigualdad-cuidados/index.html',
+    'prensa/situacion-calle-respuesta-habitacional/index.html',
     'assets/informes-ejes.css','lo-nuevo/index.html','assets/lo-nuevo.css','assets/lo-nuevo.js',
     'assets/publicaciones/educacion-pisa-fepba-2026-09.svg',
     'assets/publicaciones/plataformas-juventudes-2026-09.svg',
@@ -190,7 +191,6 @@ for report_rel, required_tokens in {
     'publicaciones/informes/educacion-pisa-fepba-2025/index.html': [
         'Dos evaluaciones, dos respuestas opuestas',
         'informe-educacion-pisa-fepba-cepoes.pdf',
-        'comunicado-educacion-pisa-fepba-cepoes.pdf',
         '−17',
         'Corrección metodológica de la versión web',
     ],
@@ -213,7 +213,13 @@ for report_rel, required_tokens in {
         assert token in report_html, f'Informe temático incompleto ({report_rel}): {token}'
     assert report_html.count('<nav class="site-nav">')==1, f'Menú duplicado en {report_rel}'
     assert report_html.count('<footer class="footer">')==1, f'Footer duplicado en {report_rel}'
-    assert report_html.count('Descargar informe completo')==2, f'CTA de descarga inconsistente en {report_rel}'
+    assert report_html.count('Descargar informe completo')>=1, f'CTA de descarga ausente en {report_rel}'
+    report_downloads=set(re.findall(r'<a[^>]+download[^>]+href="([^"]+\.pdf)"',report_html,re.I))
+    if not report_downloads:
+        report_downloads=set(re.findall(r'<a[^>]+href="([^"]+\.pdf)"[^>]+download',report_html,re.I))
+    assert len(report_downloads)==1, f'El informe debe ofrecer un único PDF descargable ({report_rel}): {report_downloads}'
+    assert 'Leer nota de prensa' in report_html, f'Falta la nota de prensa asociada: {report_rel}'
+    assert 'Descargar comunicado' not in report_html and not re.search(r'comunicado[^"\']*\.pdf',report_html,re.I), f'El informe conserva un comunicado descargable: {report_rel}'
     assert report_html.count('data-copy-citation')==1, f'Copiar cita duplicado o ausente en {report_rel}'
     assert 'full-report' not in report_html and 'bol-cierre' not in report_html, f'Plantilla extensa anterior en {report_rel}'
 reports_css=(root/'assets/informes-web.css').read_text(encoding='utf-8',errors='replace')
@@ -264,8 +270,8 @@ assert home.count('home-strategy-card')==3, 'La home debe mostrar exactamente tr
 new_page=(root/'lo-nuevo'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['<h1>Lo nuevo</h1>','id="new-search"','id="new-type"','id="new-topic"','Qué entra en “Lo nuevo”','/assets/lo-nuevo.css?v=1','/assets/lo-nuevo.js?v=1']:
     assert token in new_page, f'Página Lo nuevo incompleta: {token}'
-assert len(re.findall(r'<article class="[^"]*\bnew-card\b',new_page))==12, 'Lo nuevo debe mostrar doce contenidos recientes'
-for route in ['/publicaciones/informes/educacion-pisa-fepba-2025/','/publicaciones/informes/plataformas-juventudes-caba/','/publicaciones/notas/criar-en-buenos-aires-sala-de-3/','/prensa/crianza-sala-de-3-vacantes/','/balance/salud-publica/']:
+assert len(re.findall(r'<article class="[^"]*\bnew-card\b',new_page))==14, 'Lo nuevo debe mostrar catorce contenidos recientes'
+for route in ['/publicaciones/informes/educacion-pisa-fepba-2025/','/publicaciones/informes/plataformas-juventudes-caba/','/publicaciones/notas/criar-en-buenos-aires-sala-de-3/','/prensa/crianza-sala-de-3-vacantes/','/prensa/personas-mayores-desigualdad-cuidados/','/prensa/situacion-calle-respuesta-habitacional/','/balance/salud-publica/']:
     assert route in new_page, f'Contenido reciente no integrado en Lo nuevo: {route}'
 balance=(root/'balance'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Balance de gestión 2007–2026','Decisiones públicas','Impacto territorial','Capacidad estatal','Vivienda y alquiler','Salud pública','Presupuesto y modelo de gestión']:
@@ -403,6 +409,12 @@ for report_path in report_paths:
     assert report.count('<main class="web-report">') == 1, f'Informe web duplicado: {report_path}'
     assert report.count('<footer class="footer">') == 1, f'Footer duplicado: {report_path}'
     assert '</style>' not in report, f'El informe contiene estilos incrustados como texto: {report_path}'
+    download_targets=set(re.findall(r'<a[^>]+download[^>]+href="([^"]+\.pdf)"',report,re.I))
+    if not download_targets:
+        download_targets=set(re.findall(r'<a[^>]+href="([^"]+\.pdf)"[^>]+download',report,re.I))
+    assert len(download_targets)==1, f'El informe debe ofrecer un único PDF descargable ({report_path}): {download_targets}'
+    assert 'Leer nota de prensa' in report, f'Falta la nota de prensa asociada: {report_path}'
+    assert 'Descargar comunicado' not in report and not re.search(r'comunicado[^"\']*\.pdf',report,re.I), f'El informe conserva un comunicado descargable: {report_path}'
 deporte=(root/'territorio'/'deporte-salud'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert all(token not in deporte for token in ('Siguiente etapa', 'El siguiente salto', 'Una etapa posterior')), 'Deporte y salud expone contenido futuro'
 migraciones=(root/'territorio'/'migraciones'/'index.html').read_text(encoding='utf-8',errors='replace')
@@ -444,6 +456,8 @@ assert 'https://cepoes.org/presupuesto/descentralizacion/' in locs
 assert 'https://cepoes.org/prensa/crianza-sala-de-3-vacantes/' in locs
 assert 'https://cepoes.org/prensa/educacion-pisa-fepba-resultados/' in locs
 assert 'https://cepoes.org/prensa/plataformas-rutramur-sin-datos/' in locs
+assert 'https://cepoes.org/prensa/personas-mayores-desigualdad-cuidados/' in locs
+assert 'https://cepoes.org/prensa/situacion-calle-respuesta-habitacional/' in locs
 assert 'https://cepoes.org/publicaciones/informes/educacion-pisa-fepba-2025/' in locs
 assert 'https://cepoes.org/publicaciones/informes/plataformas-juventudes-caba/' in locs
 assert 'https://cepoes.org/lo-nuevo/' in locs
@@ -452,12 +466,12 @@ assert 'https://cepoes.org/territorio/presupuesto/' not in locs
 
 press=json.loads((root/'assets/data/prensa.json').read_text(encoding='utf-8'))
 press_slugs={n.get('slug') for n in press.get('notas',[]) if n.get('estado')=='aprobada'}
-for slug in ['crianza-sala-de-3-vacantes','educacion-pisa-fepba-resultados','plataformas-rutramur-sin-datos']:
+for slug in ['crianza-sala-de-3-vacantes','educacion-pisa-fepba-resultados','plataformas-rutramur-sin-datos','personas-mayores-desigualdad-cuidados','situacion-calle-respuesta-habitacional']:
     assert slug in press_slugs, f'Falta nota de prensa aprobada: {slug}'
 press_js=(root/'assets/prensa.js').read_text(encoding='utf-8',errors='replace')
 press_note_js=(root/'assets/prensa-nota.js').read_text(encoding='utf-8',errors='replace')
 assert "[...local,...live]" in press_js
-for slug in ['crianza-sala-de-3-vacantes','educacion-pisa-fepba-resultados','plataformas-rutramur-sin-datos']:
+for slug in ['crianza-sala-de-3-vacantes','educacion-pisa-fepba-resultados','plataformas-rutramur-sin-datos','personas-mayores-desigualdad-cuidados','situacion-calle-respuesta-habitacional']:
     assert slug in press_note_js
     assert (root/'prensa'/slug/'index.html').exists()
 

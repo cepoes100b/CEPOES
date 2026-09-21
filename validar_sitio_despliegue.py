@@ -131,8 +131,8 @@ required=[
     'publicaciones/informes/plataformas-juventudes-caba/index.html',
     'publicaciones/informes/plataformas-juventudes-caba/informe-plataformas-juventudes-cepoes.pdf',
     'assets/informes-ejes.css','lo-nuevo/index.html','assets/lo-nuevo.css','assets/lo-nuevo.js',
-    'assets/publicaciones/educacion-pisa-fepba.svg',
-    'assets/publicaciones/plataformas-juventudes.svg',
+    'assets/publicaciones/educacion-pisa-fepba-2026-09.svg',
+    'assets/publicaciones/plataformas-juventudes-2026-09.svg',
 ]
 for rel in required:
     p=root/rel
@@ -240,7 +240,7 @@ for route in [
     '/publicaciones/informe-coyuntura-01-junio-2026/',
 ]:
     assert route in reports_index and route in common_search, f'Informe no integrado en archivo o buscador: {route}'
-for token in ['/assets/publicaciones/personas-mayores-caba.svg','/assets/publicaciones/situacion-calle-caba.svg','/assets/publicaciones/educacion-pisa-fepba.svg','/assets/publicaciones/plataformas-juventudes.svg','/assets/publicaciones/endeudamiento-caba.svg','/assets/publicaciones/coyuntura-productiva-caba.svg']:
+for token in ['/assets/publicaciones/personas-mayores-caba.svg','/assets/publicaciones/situacion-calle-caba.svg','/assets/publicaciones/educacion-pisa-fepba-2026-09.svg','/assets/publicaciones/plataformas-juventudes-2026-09.svg','/assets/publicaciones/endeudamiento-caba.svg','/assets/publicaciones/coyuntura-productiva-caba.svg']:
     assert token in reports_index, f'Tapa unificada ausente en archivo de informes: {token}'
 assert '/assets/publicaciones/informe-endeudamiento-caba.jpg' not in reports_index
 assert '/assets/publicaciones/informe-coyuntura-01.jpg' not in reports_index

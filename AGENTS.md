@@ -78,6 +78,7 @@ Toda intervención debe sostener tres objetivos simultáneos:
 - Todo informe completo en PDF debe respetar la plantilla editorial CEPOES: portada azul institucional con número, mes y año; metadatos e índice; interiores con encabezado, jerarquía tipográfica, tablas del sistema gráfico y pie institucional. La versión HTML funciona como síntesis y no reemplaza el informe completo.
 - El thumbnail de cada informe debe derivar de esa misma portada y conservar fondo, proporción, tipografía, colores, jerarquía y marca. Antes de publicar, comparar visualmente PDF, miniatura y plantilla; no aceptar diseños paralelos o excepciones ad hoc.
 - Al adaptar un informe aprobado a la plantilla, preservar el contenido y las fuentes. Sólo corregir errores verificables; los cambios de diseño no autorizan resumir ni reescribir el documento.
+- Expresar los alcances y límites metodológicos en forma afirmativa: indicar qué mide cada fuente, para qué se utiliza y hasta dónde permite interpretar. Evitar cierres construidos como listas repetitivas de “no afirma”, “no demuestra” o “no permite”, salvo que una negación puntual sea indispensable para prevenir una lectura engañosa.
 
 ## Seguridad y privacidad
 

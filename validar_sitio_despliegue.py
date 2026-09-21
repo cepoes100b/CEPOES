@@ -9,6 +9,16 @@ root=Path(sys.argv[1] if len(sys.argv)>1 else '_site').resolve()
 assert root.is_dir(), root
 
 
+def contrast_ratio(foreground: str, background: str) -> float:
+    """Relación WCAG entre dos colores hexadecimales sRGB."""
+    def luminance(value: str) -> float:
+        rgb=[int(value[i:i+2],16)/255 for i in (1,3,5)]
+        linear=[x/12.92 if x<=.04045 else ((x+.055)/1.055)**2.4 for x in rgb]
+        return .2126*linear[0]+.7152*linear[1]+.0722*linear[2]
+    a,b=sorted((luminance(foreground),luminance(background)),reverse=True)
+    return (a+.05)/(b+.05)
+
+
 def patch_territorio_navigation(site_root: Path) -> None:
     """Normaliza accesos HTML reales y pequeños ajustes de integración."""
     changed=[]
@@ -199,7 +209,7 @@ for report_rel, required_tokens in {
     ],
 }.items():
     report_html=(root/report_rel).read_text(encoding='utf-8',errors='replace')
-    for token in required_tokens + ['class="web-report"','/assets/informes-web.css?v=2','/assets/informes-web.js?v=1','Descargar informe completo','data-copy-citation','Cita sugerida']:
+    for token in required_tokens + ['class="web-report"','/assets/informes-web.css?v=3','/assets/informes-web.js?v=1','Descargar informe completo','data-copy-citation','Cita sugerida']:
         assert token in report_html, f'Informe temático incompleto ({report_rel}): {token}'
     assert report_html.count('<nav class="site-nav">')==1, f'Menú duplicado en {report_rel}'
     assert report_html.count('<footer class="footer">')==1, f'Footer duplicado en {report_rel}'
@@ -209,7 +219,18 @@ for report_rel, required_tokens in {
 reports_css=(root/'assets/informes-web.css').read_text(encoding='utf-8',errors='replace')
 for selector in [r'\.web-report \.wr-hero h1', r'\.web-report \.wr-download h3']:
     assert re.search(rf'{selector}\{{[^}}]*color:#fff(?:;|\}})', reports_css), f'Contraste insuficiente en fondo oscuro: {selector}'
+dark_surface=re.search(r'--wr-navy:(#[0-9a-fA-F]{6})',reports_css)
+download_outline=re.search(r'\.web-report \.wr-download \.btn-outline\{[^}}]*color:(#[0-9a-fA-F]{6})',reports_css)
+assert dark_surface and download_outline, 'Los botones secundarios sobre panel oscuro deben declarar color explícito'
+assert contrast_ratio(download_outline.group(1),dark_surface.group(1))>=4.5, 'Botón secundario con contraste WCAG insuficiente sobre panel oscuro'
+assert re.search(r'\.web-report \.wr-download \.btn-outline:hover,\.web-report \.wr-download \.btn-outline:focus-visible\{[^}}]*background:#fff;[^}}]*color:#172a4a',reports_css), 'Botón secundario sin estados hover/focus legibles'
 reports_index=(root/'publicaciones/informes/index.html').read_text(encoding='utf-8',errors='replace')
+publications_index=(root/'publicaciones/index.html').read_text(encoding='utf-8',errors='replace')
+archive_latest=re.findall(r'<article class="report-row">.*?<a\s+class="report-row-thumb"\s+href="([^"]+)"',reports_index,re.S)[:5]
+landing_latest=re.findall(r'<article class="report-feature" data-publications-latest-report>.*?<a\s+class="report-thumb"\s+href="([^"]+)"',publications_index,re.S)
+assert len(archive_latest)==5 and len(landing_latest)==5, 'Publicaciones debe mostrar exactamente los cinco informes más recientes'
+assert landing_latest==archive_latest, f'Publicaciones no refleja los últimos informes del archivo: {landing_latest} != {archive_latest}'
+assert 'Ver todos los informes →' in publications_index and 'href="/publicaciones/informes/"' in publications_index, 'Publicaciones no ofrece acceso al archivo completo de informes'
 for route in [
     '/publicaciones/informes/personas-mayores-caba/',
     '/publicaciones/informes/situacion-de-calle-caba/',
@@ -377,7 +398,7 @@ report_paths = [
 ]
 for report_path in report_paths:
     report=(root/report_path).read_text(encoding='utf-8',errors='replace')
-    for token in ['<main class="web-report">','Descargar informe completo','/assets/informes-web.css?v=2','/assets/informes-web.js?v=1','data-copy-citation','Cita sugerida']:
+    for token in ['<main class="web-report">','Descargar informe completo','/assets/informes-web.css?v=3','/assets/informes-web.js?v=1','data-copy-citation','Cita sugerida']:
         assert token in report, f'Informe web incompleto ({report_path}): {token}'
     assert report.count('<main class="web-report">') == 1, f'Informe web duplicado: {report_path}'
     assert report.count('<footer class="footer">') == 1, f'Footer duplicado: {report_path}'

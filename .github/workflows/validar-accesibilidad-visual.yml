@@ -1,0 +1,30 @@
+name: Validar accesibilidad visual
+
+on:
+  pull_request:
+    paths:
+      - "deploy/site-overlay/**/*.css"
+      - "deploy/site-overlay/**/*.html"
+      - "deploy/preparar_sitio_publico.py"
+      - "validar_contraste_visual.py"
+      - ".github/workflows/validar-accesibilidad-visual.yml"
+  push:
+    branches: [main]
+    paths:
+      - "deploy/site-overlay/**/*.css"
+      - "deploy/site-overlay/**/*.html"
+      - "deploy/preparar_sitio_publico.py"
+      - "validar_contraste_visual.py"
+      - ".github/workflows/validar-accesibilidad-visual.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contrastes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Validar tokens y contrastes críticos
+        run: python validar_contraste_visual.py

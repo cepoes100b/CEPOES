@@ -131,3 +131,90 @@
 
 /* Publicaciones: una misma familia de tapas y proporciones en todos los informes. */
 .report-thumb img,.report-row-thumb img{display:block;width:100%;aspect-ratio:5/7;object-fit:cover;border-radius:8px;background:#172a4a}
+
+/* CEPOES ACCESSIBILITY SYSTEM v1 */
+:root{
+  --bg:var(--papel);
+  --fondo:var(--papel);
+  --card:var(--panel);
+  --surface:var(--panel);
+  --ink:var(--tinta);
+  --text:var(--tinta2);
+  --muted:var(--gris);
+  --soft:var(--papel2);
+  --border:var(--borde);
+  --line:var(--borde);
+  --accent:var(--marca-osc);
+  --cta-ink:#102430;
+  --focus-ring:#005f85;
+  --gris:#536d83;
+  --gris2:#536d83;
+  --lA:#0079a8;
+  --lB:#b52d22;
+  --lD:#087b58;
+  --lE:#5d3aa8;
+  --lH:#8c5c00;
+  --lN:#9a4c16
+}
+[data-theme="dark"]{
+  --gris:#afc0cd;
+  --gris2:#9cb2c3;
+  --cta-ink:#102430;
+  --focus-ring:#8fdcf5;
+  --lA:#8fdcf5;
+  --lB:#ff9b91;
+  --lD:#7ce0b7;
+  --lE:#c6b2ff;
+  --lH:#ffd07a;
+  --lN:#f2a77a
+}
+.btn-primary,
+.nav-cta,
+.chip.active,
+.commune-code,
+.tag{
+  color:var(--cta-ink)!important
+}
+.brand-sub strong{color:var(--marca-osc)}
+.nav-new{color:#087b69!important}
+[data-theme="dark"] .nav-new{color:#7ce0d0!important}
+.home-strategy-card.is-balance{--pillar:#9a522a}
+[data-theme="dark"] .home-strategy-card.is-balance{--pillar:#f2a77a}
+[data-theme="dark"] .home-neighborhood-band,
+[data-theme="dark"] .observatory-health-hub,
+[data-theme="dark"] .balance-hero{
+  background:var(--papel2);
+  color:var(--tinta)
+}
+[data-theme="dark"] .obs-health-card{
+  background:var(--panel);
+  color:var(--tinta2)
+}
+[data-theme="dark"] .obs-health-card strong,
+[data-theme="dark"] .obs-health-card h3,
+[data-theme="dark"] .home-neighborhood-band h2,
+[data-theme="dark"] .balance-hero h1{
+  color:var(--tinta)
+}
+[data-theme="dark"] .home-neighborhood-band .eyebrow,
+[data-theme="dark"] .observatory-health-hub .eyebrow,
+[data-theme="dark"] .observatory-health-hub .more{
+  color:var(--marca-osc)
+}
+[data-theme="dark"] .housing-conclusion,
+[data-theme="dark"] .health-dossier .housing-conclusion,
+[data-theme="dark"] .budget-dossier .housing-conclusion{
+  background:var(--panel);
+  color:var(--tinta)
+}
+[data-theme="dark"] .housing-conclusion p,
+[data-theme="dark"] .health-dossier .housing-conclusion p,
+[data-theme="dark"] .budget-dossier .housing-conclusion p{
+  color:var(--tinta2)
+}
+:where(a,button,input,select,textarea,summary):focus-visible{
+  outline:3px solid var(--focus-ring)!important;
+  outline-offset:3px
+}
+::placeholder{color:var(--gris);opacity:1}
+/* CEPOES ACCESSIBILITY SYSTEM v1 END */

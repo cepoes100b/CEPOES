@@ -225,6 +225,12 @@ assert dark_surface and download_outline, 'Los botones secundarios sobre panel o
 assert contrast_ratio(download_outline.group(1),dark_surface.group(1))>=4.5, 'Botón secundario con contraste WCAG insuficiente sobre panel oscuro'
 assert re.search(r'\.web-report \.wr-download \.btn-outline:hover,\.web-report \.wr-download \.btn-outline:focus-visible\{[^}}]*background:#fff;[^}}]*color:#172a4a',reports_css), 'Botón secundario sin estados hover/focus legibles'
 reports_index=(root/'publicaciones/informes/index.html').read_text(encoding='utf-8',errors='replace')
+publications_index=(root/'publicaciones/index.html').read_text(encoding='utf-8',errors='replace')
+archive_latest=re.findall(r'<article class="report-row">.*?<a\s+class="report-row-thumb"\s+href="([^"]+)"',reports_index,re.S)[:5]
+landing_latest=re.findall(r'<article class="report-feature" data-publications-latest-report>.*?<a\s+class="report-thumb"\s+href="([^"]+)"',publications_index,re.S)
+assert len(archive_latest)==5 and len(landing_latest)==5, 'Publicaciones debe mostrar exactamente los cinco informes más recientes'
+assert landing_latest==archive_latest, f'Publicaciones no refleja los últimos informes del archivo: {landing_latest} != {archive_latest}'
+assert 'Ver todos los informes →' in publications_index and 'href="/publicaciones/informes/"' in publications_index, 'Publicaciones no ofrece acceso al archivo completo de informes'
 for route in [
     '/publicaciones/informes/personas-mayores-caba/',
     '/publicaciones/informes/situacion-de-calle-caba/',

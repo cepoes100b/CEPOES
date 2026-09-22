@@ -38,6 +38,8 @@ def main() -> int:
         errors.append("interfaz: Nivel educativo debe estar oculto por defecto")
     if "const active=type==='educacion'" not in javascript:
         errors.append("interfaz: Nivel educativo debe activarse sólo en la capa educacion")
+    if "els.levelControl.style.display=active?'grid':'none'" not in javascript:
+        errors.append("interfaz: Nivel educativo debe ocultarse sin depender de la caché CSS")
     if ".equipment-tools .equipment-level-control[hidden]{display:none}" not in css:
         errors.append("interfaz: falta proteger el estado hidden del filtro Nivel educativo")
     docs = {}

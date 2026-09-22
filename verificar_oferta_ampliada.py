@@ -9,6 +9,7 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent
 DIR = BASE / "equipamientos"
 CAT = DIR / "catalogo.json"
+SEARCH = DIR / "busqueda.json"
 
 REQUIRED = {
     "educacion","salud","espacios-verdes",
@@ -42,6 +43,21 @@ def main() -> int:
     health_meta = layers.get("salud") or {}
     if health_meta.get("file") != "salud-integrada.json":
         errors.append("salud: el catálogo debe apuntar a salud-integrada.json")
+    if not SEARCH.exists():
+        errors.append("falta equipamientos/busqueda.json")
+    else:
+        try:
+            search = json.loads(SEARCH.read_text(encoding="utf-8"))
+            search_items = search.get("items") or []
+            search_layers = {str(x.get("layer") or "") for x in search_items}
+            if len(search_items) < 10000:
+                errors.append(f"índice de búsqueda demasiado pequeño ({len(search_items)})")
+            if search_layers - set(layers):
+                errors.append("índice de búsqueda referencia capas ajenas al catálogo")
+            if {"vados", "rampas-accesibilidad-2016"} & search_layers:
+                errors.append("el índice ciudadano incluye inventarios técnicos de alta densidad")
+        except Exception as e:
+            errors.append(f"índice de búsqueda inválido: {e}")
 
     print(f"Oferta territorial · {len(layers)} capas")
     total_all = 0

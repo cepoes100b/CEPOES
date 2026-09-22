@@ -242,6 +242,42 @@ def write_layer(cfg, items, state):
     return meta | {"file": p.name, "total": len(items)}
 
 
+def write_search_index(catalog_layers):
+    """Genera un índice ciudadano compacto; los inventarios técnicos quedan en el catálogo avanzado."""
+    excluded = {"vados", "rampas-accesibilidad-2016"}
+    keep = (
+        "id", "nombre", "comuna", "barrio", "direccion", "ubicacion", "tipo",
+        "clasificacion", "sector", "coord", "telefono", "web", "especialidad",
+        "especialidades", "atencion", "oferta", "detalle", "detalle2",
+    )
+    records = []
+    for layer in catalog_layers:
+        if layer["id"] in excluded:
+            continue
+        path = OUT / layer["file"]
+        if not path.exists():
+            continue
+        doc = json.loads(path.read_text(encoding="utf-8"))
+        for source in doc.get("items") or []:
+            item = {key: source[key] for key in keep if source.get(key) not in (None, "", [], {})}
+            item["layer"] = layer["id"]
+            records.append(item)
+    payload = {
+        "version": 1,
+        "generado": datetime.date.today().isoformat(),
+        "excluded": sorted(excluded),
+        "total": len(records),
+        "items": records,
+    }
+    encoded = json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+    path = OUT / "busqueda.json"
+    path.write_text(encoded, encoding="utf-8")
+    public_path = BASE / "deploy" / "site-overlay" / "assets" / "data" / "equipamientos-busqueda.json"
+    public_path.parent.mkdir(parents=True, exist_ok=True)
+    public_path.write_text(encoded, encoding="utf-8")
+    print(f"  ✔ índice de búsqueda: {len(records)} registros · {path.stat().st_size//1024} KB")
+
+
 def main() -> int:
     official, barrio_comuna = official_territory()
     state = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else {"datasets": {}}
@@ -326,6 +362,7 @@ def main() -> int:
         "archivos": {x["id"]: {"url": f"equipamientos/{x['file']}", "total": x["total"]} for x in catalog_layers},
     }
     (OUT / "index.json").write_text(json.dumps(index, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    write_search_index(catalog_layers)
     print(f"\nOferta territorial: {len(catalog_layers)} capas · {sum(x['total'] for x in catalog_layers)} registros")
     if errors:
         print(f"  ~ {len(errors)} capa(s) con error; el verificador decidirá si se publica")

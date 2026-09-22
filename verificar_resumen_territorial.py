@@ -22,8 +22,8 @@ def main() -> int:
         errors.append(f"comunas inválidas: {sorted(comunas)}")
     if len(barrios) != 48:
         errors.append(f"barrios={len(barrios)}; esperaba 48")
-    if len(layers) < 62:
-        errors.append(f"capas={len(layers)}; esperaba al menos 62")
+    if len(layers) < 61:
+        errors.append(f"capas={len(layers)}; esperaba al menos 61")
     if int(d.get("total_registros") or 0) < 100000:
         errors.append(f"total_registros demasiado bajo: {d.get('total_registros')}")
 

@@ -28,40 +28,50 @@
 <script defer="" src="/assets/common.js?v=256"></script>
 <script defer="" src="/assets/pdf-viewer.js?v=2211"></script>
 <script defer="" src="/assets/data.js?v=227"></script>
-<script defer="" src="/assets/equipamientos.js?v=2214"></script>
+<script defer="" src="/assets/equipamientos.js?v=2300"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"CEPOES","url":"https://cepoes.org/","description":"Centro de Estudios Políticos, Económicos y Sociales de Somos 100 Barrios."}</script>
-<script defer="True" src="/assets/related.js?v=233"></script><link href="/assets/arquitectura.css?v=21" rel="stylesheet"></head>
+<script defer="True" src="/assets/related.js?v=233"></script><link href="/assets/arquitectura.css?v=30" rel="stylesheet"></head>
 <body data-related-tags="salud,educacion,territorio,ambiente,transporte,cultura">
 <nav class="site-nav"><div class="wrap nav-in"><a class="brand" href="/"><span class="logo">CEP<b>OES</b></span><span class="brand-sep"></span><span class="brand-sub"><small>Centro de estudios de</small><strong>SOMOS 100 BARRIOS</strong></span></a><div class="nav-links"><a href="/observatorio/">Observatorio</a><a href="/balance/">Balance</a><a href="/presupuesto/">Presupuesto</a><a class="active" href="/territorio/">Territorio</a><a href="/legislatura/">Legislatura</a><a href="/publicaciones/">Publicaciones</a><a href="/propuestas/">Propuestas</a><a href="/prensa/">Prensa</a><a href="/cepoes/">CEPOES</a><a class="nav-cta" href="/territorio/equipamientos/">Qué hay en tu barrio →</a></div><button aria-label="Buscar en CEPOES" class="search-btn" data-search-open title="Buscar en CEPOES"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle><path d="m16 16 4 4"></path></svg></button><button aria-label="Cambiar tema" class="theme-btn" data-theme-toggle>◐</button><button aria-label="Abrir menú" class="menu-btn" data-menu-toggle>☰</button></div></nav>
 <nav aria-label="Navegación territorial" class="subnav territory-subnav"><div class="wrap territory-nav"><div class="territory-desktop"><div class="territory-primary"><a href="/territorio/#comunas">Comunas</a><a href="/territorio/barrios/">Barrios</a><a class="active" href="/territorio/equipamientos/">Oferta territorial</a><a href="/territorio/mapa-tematico/">Mapa temático</a><a href="/territorio/comparar/">Comparar</a><a href="/territorio/brechas/">Brechas</a></div><details class="territory-topics"><summary>Temas territoriales <span aria-hidden="true">⌄</span></summary><div class="territory-topics-menu"><a href="/territorio/endeudamiento/">Endeudamiento</a><a href="/territorio/migraciones/">Migraciones</a><a href="/territorio/estructura-productiva/">Estructura productiva</a><a href="/territorio/deporte-salud/">Deporte y salud</a><a href="/observatorio/salud-mental/">Salud mental</a><a href="/observatorio/personas-mayores/">Personas mayores</a><a href="/presupuesto/territorio/">Presupuesto</a></div></details></div><details class="territory-mobile"><summary><span>Explorar Territorio</span><span aria-hidden="true">⌄</span></summary><div class="territory-mobile-menu"><strong>Explorar</strong><div><a href="/territorio/#comunas">Comunas</a><a href="/territorio/barrios/">Barrios</a><a class="active" href="/territorio/equipamientos/">Oferta territorial</a><a href="/territorio/mapa-tematico/">Mapa temático</a><a href="/territorio/comparar/">Comparar</a><a href="/territorio/brechas/">Brechas</a></div><strong>Temas territoriales</strong><div><a href="/territorio/endeudamiento/">Endeudamiento</a><a href="/territorio/migraciones/">Migraciones</a><a href="/territorio/estructura-productiva/">Estructura productiva</a><a href="/territorio/deporte-salud/">Deporte y salud</a><a href="/observatorio/salud-mental/">Salud mental</a><a href="/observatorio/personas-mayores/">Personas mayores</a><a href="/presupuesto/territorio/">Presupuesto</a></div></div></details></div></nav>
 <header class="page-hero"><div class="wrap"><div class="breadcrumbs"><a href="/">CEPOES</a> / <a href="/territorio/">Territorio</a> / Oferta territorial de la Ciudad</div><span class="eyebrow">Territorio · Oferta territorial</span><h1>Oferta territorial de la Ciudad</h1><p>Explorá establecimientos, servicios e infraestructura pública y comunitaria de los 48 barrios. Filtrá por tema, comuna o barrio y accedé a cada registro oficial.</p><div class="meta-row"><span>Última actualización: <b id="data-date">cargando…</b></span><span>Fuentes: <b>BA Data (GCBA) · fuentes oficiales primarias</b></span><span>Elaboración: <b>CEPOES</b></span></div></div></header>
 <section class="section alt equipment-explorer-section"><div class="wrap">
-<div class="offer-overview panel">
-<div><span class="eyebrow">Catálogo oficial</span><strong id="offer-layer-count">61</strong><small>capas de información territorial</small></div>
-<div><span class="eyebrow">Registros</span><strong id="offer-record-count">106.255</strong><small>registros explorables</small></div>
-<p>No hace falta recorrer 61 datasets. Elegí un tema, un barrio o escribí qué necesitás y CEPOES te lleva a la capa correspondiente.</p>
+<div class="offer-search-panel panel" id="equipment-search-panel">
+<div class="offer-entry-copy"><span class="eyebrow">Buscar en toda la Ciudad</span><h2>¿Qué necesitás encontrar?</h2><p>Buscá directamente un establecimiento, servicio, dirección o tema. Después podés acotar por zona.</p></div>
+<form class="offer-global-search" id="equipment-global-form" role="search">
+<label><span class="sr-only">Buscar establecimientos y servicios</span><input autocomplete="off" id="equipment-global-search" minlength="2" placeholder="Ej.: Hospital Italiano, escuela primaria, club, vacunación…" type="search"/></label>
+<button class="btn btn-primary" type="submit">Buscar</button>
+</form>
+<div class="offer-location-actions">
+<button class="btn btn-secondary" id="equipment-near-me" type="button">⌖ Usar mi ubicación</button>
+<label><span>Radio</span><select id="equipment-radius"><option value="1">1 km</option><option value="3" selected>3 km</option><option value="5">5 km</option><option value="10">10 km</option></select></label>
+<small>Tu ubicación se usa únicamente en este dispositivo y no se almacena.</small>
 </div>
-<div class="offer-entry-panel panel">
-<div class="offer-entry-copy"><span class="eyebrow">Empezar a explorar</span><h2>¿Qué querés encontrar?</h2><p>La búsqueda de arriba del listado encuentra capas; después, dentro de cada capa, podés buscar nombres, direcciones, servicios y otros atributos.</p></div>
 <div class="offer-entry-controls">
-<label class="equipment-layer-search"><span>Buscar por tema o capa</span><input autocomplete="off" id="equipment-layer-search" placeholder="Ej.: escuelas, geriátricos, clubes, Wi-Fi, monumentos…" type="search"/></label>
 <label><span>Comuna</span><select id="equipment-comuna"><option value="">Toda CABA</option><option value="1">Comuna 1</option><option value="2">Comuna 2</option><option value="3">Comuna 3</option><option value="4">Comuna 4</option><option value="5">Comuna 5</option><option value="6">Comuna 6</option><option value="7">Comuna 7</option><option value="8">Comuna 8</option><option value="9">Comuna 9</option><option value="10">Comuna 10</option><option value="11">Comuna 11</option><option value="12">Comuna 12</option><option value="13">Comuna 13</option><option value="14">Comuna 14</option><option value="15">Comuna 15</option></select></label>
 <label><span>Barrio</span><select id="equipment-barrio"><option value="">Todos los barrios</option></select></label>
 </div>
 <div class="offer-scope-banner" hidden="" id="equipment-scope-banner"></div>
+<div aria-live="polite" class="offer-global-status" id="equipment-global-status">Escribí al menos dos caracteres o usá tu ubicación.</div>
+<div class="offer-global-results" id="equipment-global-results"></div>
+<div class="equipment-more-wrap"><button class="btn btn-secondary" hidden id="equipment-global-more" type="button">Mostrar más resultados</button></div>
 </div>
-<div class="offer-catalog-head offer-quick-head"><div><span class="eyebrow">Accesos rápidos</span><h2>Lo más consultado</h2></div><p>Ocho entradas directas a capas de uso frecuente. El catálogo completo está organizado por temas más abajo.</p></div>
+<div class="offer-overview" aria-label="Alcance del catálogo"><span><strong id="offer-layer-count">61</strong> fuentes oficiales</span><span><strong id="offer-record-count">106.255</strong> registros disponibles</span></div>
+<div class="offer-catalog-head offer-quick-head"><div><span class="eyebrow">Accesos rápidos</span><h2>Explorá por tema</h2></div><button class="chip" id="equipment-open-catalog" aria-expanded="false" type="button">Ver las 61 fuentes</button></div>
 <div aria-label="Accesos rápidos a capas de oferta territorial" class="offer-quick-grid" id="equipment-quick-grid"></div>
-<div class="offer-catalog-head"><div><span class="eyebrow">Explorar por tema</span><h2>17 familias de información</h2></div><p>Las 61 capas se agrupan en temas comprensibles. Elegí uno para ver sólo las capas relacionadas.</p></div>
+<div id="equipment-advanced" hidden>
+<div class="offer-catalog-head"><div><span class="eyebrow">Exploración avanzada</span><h2>17 familias de información</h2></div><p>Accedé al catálogo técnico completo, organizado por temas y fuentes.</p></div>
+<label class="equipment-layer-search"><span>Buscar una fuente</span><input autocomplete="off" id="equipment-layer-search" placeholder="Ej.: escuelas, geriátricos, Wi-Fi…" type="search"/></label>
 <div aria-label="Categorías de información territorial" class="offer-category-grid" id="equipment-category-grid"></div>
 <div class="equipment-catalog-panel panel">
 <div class="equipment-catalog-title"><div><span class="eyebrow" id="equipment-category-eyebrow">Capas disponibles</span><h3 id="equipment-category-title">Elegí un tema</h3></div><button class="chip" id="equipment-show-all" type="button">Ver todas las categorías</button></div>
 <div class="offer-layer-grid" id="equipment-layer-grid"><div class="territory-live-unavailable">Cargando catálogo oficial…</div></div>
 </div>
+</div>
 <div class="section-head equipment-heading"><div><span class="eyebrow" id="equipment-eyebrow">Listado oficial</span><h2 id="equipment-title">Cargando datos oficiales…</h2></div><span class="territory-live-date" id="equipment-date"></span></div>
 <p class="section-sub" id="equipment-lead">Seleccioná una capa para ver y filtrar sus registros.</p>
 <div class="equipment-layer-notice" hidden="" id="equipment-layer-notice"></div>
-<div class="equipment-tools panel">
+<div class="equipment-tools panel" hidden id="equipment-layer-tools">
 <label class="equipment-search"><span>Buscar en esta capa</span><input autocomplete="off" id="equipment-search" placeholder="Nombre, dirección, servicio…" type="search"/></label>
 <label><span id="equipment-filter-label">Tipo</span><select id="equipment-filter"><option value="">Todos</option></select></label>
 <label class="equipment-level-control" hidden id="equipment-level-control"><span>Nivel educativo</span><select id="equipment-level"><option value="">Todos los niveles</option></select></label>

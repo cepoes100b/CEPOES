@@ -218,3 +218,6 @@
 }
 ::placeholder{color:var(--gris);opacity:1}
 /* CEPOES ACCESSIBILITY SYSTEM v1 END */
+
+/* Oferta territorial: los filtros específicos no deben ocupar espacio fuera de su capa. */
+.equipment-tools .equipment-level-control[hidden]{display:none}

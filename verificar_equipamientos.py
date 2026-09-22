@@ -9,6 +9,9 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent
 DIR = BASE / "equipamientos"
 TERR = BASE / "territorio.json"
+EQUIPMENT_HTML = BASE / "deploy/site-overlay/territorio/equipamientos/index.html"
+EQUIPMENT_JS = BASE / "deploy/site-overlay/assets/equipamientos.js"
+ARCHITECTURE_CSS = BASE / "deploy/site-overlay/assets/arquitectura.css"
 
 FILES = {
     "educacion": ("educacion.json", 500, 5000),
@@ -24,6 +27,19 @@ def load(name):
 def main() -> int:
     errors, notices = [], []
     terr = json.loads(TERR.read_text(encoding="utf-8"))
+
+    # El nivel educativo es un filtro exclusivo de la capa de establecimientos
+    # educativos. Estas comprobaciones evitan que una regla visual vuelva a
+    # convertirlo accidentalmente en un filtro general del catálogo.
+    html = EQUIPMENT_HTML.read_text(encoding="utf-8")
+    javascript = EQUIPMENT_JS.read_text(encoding="utf-8")
+    css = ARCHITECTURE_CSS.read_text(encoding="utf-8")
+    if 'class="equipment-level-control" hidden' not in html:
+        errors.append("interfaz: Nivel educativo debe estar oculto por defecto")
+    if "const active=type==='educacion'" not in javascript:
+        errors.append("interfaz: Nivel educativo debe activarse sólo en la capa educacion")
+    if ".equipment-tools .equipment-level-control[hidden]{display:none}" not in css:
+        errors.append("interfaz: falta proteger el estado hidden del filtro Nivel educativo")
     docs = {}
     for key, (name, lo, hi) in FILES.items():
         try:

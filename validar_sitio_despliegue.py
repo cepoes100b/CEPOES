@@ -152,7 +152,7 @@ for p in html:
     assert s.count('<footer class="footer">')==1, f'Footer no canónico: {rel}'
     assert len(re.findall(r'name=["\']theme-color["\']',s,re.I))==1, f'theme-color inválido: {rel}'
     assert len(re.findall(r'/assets/arquitectura\.css',s,re.I))==1, f'CSS de arquitectura duplicado: {rel}'
-    assert '/assets/arquitectura.css?v=21' in s, f'CSS de arquitectura sin versión vigente: {rel}'
+    assert '/assets/arquitectura.css?v=30' in s, f'CSS de arquitectura sin versión vigente: {rel}'
     if '/assets/common.js' in s:
         assert '/assets/common.js?v=257' in s, f'JS común sin versión vigente: {rel}'
     assert 'href="/prensa/"' in s, f'Falta Prensa en navegación: {rel}'

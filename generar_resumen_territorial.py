@@ -1,7 +1,7 @@
 """Genera un resumen liviano de Oferta territorial por comuna y barrio.
 
 El objetivo es permitir radiografias, comparaciones y mapas tematicos sin que el
-navegador tenga que descargar las 62 capas individuales (mas de 100 mil registros).
+navegador tenga que descargar las 61 capas individuales (mas de 100 mil registros).
 Los conteos representan registros de las fuentes oficiales; no se suman como si
 fueran una unica magnitud cuando las capas miden objetos de naturaleza distinta.
 
@@ -36,7 +36,7 @@ FEATURED = {
     },
     "salud": {
         "label": "Salud",
-        "layers": ["salud", "salud-privada", "centros-medicos-barriales"],
+        "layers": ["salud", "centros-medicos-barriales"],
         "unit": "establecimientos y centros",
     },
     "mayores": {

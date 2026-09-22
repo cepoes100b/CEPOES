@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import sys
+from collections import Counter
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent
@@ -11,7 +12,7 @@ CAT = DIR / "catalogo.json"
 
 REQUIRED = {
     "educacion","salud","espacios-verdes",
-    "centros-medicos-barriales","salud-privada","estaciones-saludables",
+    "centros-medicos-barriales","estaciones-saludables",
     "bibliotecas","espacios-culturales","instituciones-colectividades",
     "polideportivos","programas-deportivos","clubes","estadios",
     "centros-primera-infancia","centros-accion-familiar","casas-nnya","hogares-paradores",
@@ -34,8 +35,13 @@ def main() -> int:
         errors.append("faltan capas: " + ", ".join(missing))
     if extra_errors:
         errors.extend(["generador: " + str(x) for x in extra_errors])
-    if len(layers) < 29:
-        errors.append(f"catálogo tiene {len(layers)} capas; esperaba al menos 29")
+    if len(layers) < 28:
+        errors.append(f"catálogo tiene {len(layers)} capas; esperaba al menos 28")
+    if "salud-privada" in layers:
+        errors.append("salud-privada debe estar integrada en la capa salud")
+    health_meta = layers.get("salud") or {}
+    if health_meta.get("file") != "salud-integrada.json":
+        errors.append("salud: el catálogo debe apuntar a salud-integrada.json")
 
     print(f"Oferta territorial · {len(layers)} capas")
     total_all = 0
@@ -76,6 +82,12 @@ def main() -> int:
             errors.append(f"{lid}: cobertura territorial baja ({coverage:.0%})")
         if named != n:
             errors.append(f"{lid}: {n-named} registros sin etiqueta visible")
+        if lid == "salud":
+            sectors = Counter(str(x.get("sector") or "") for x in items)
+            if set(sectors) != {"Público", "Privado"}:
+                errors.append(f"salud: sectores inválidos o incompletos ({dict(sectors)})")
+            if not sectors["Público"] or not sectors["Privado"]:
+                errors.append("salud: deben existir establecimientos públicos y privados")
         print(f"  · {lid:30} {n:5} · territorio {coverage:5.0%} · coord {coords/n:5.0%}")
 
     print(f"\nTotal de registros explorables: {total_all}")

@@ -39,7 +39,7 @@ CATEGORIES = [
 # Los tres primeros archivos ya son producidos por generar_equipamientos_runner.py.
 CORE_LAYERS = [
     {"id":"educacion","label":"Establecimientos educativos","category":"educacion","file":"educacion.json","description":"Padrón de establecimientos educativos activos.","filter_label":"Gestión","filter_field":"sector"},
-    {"id":"salud","label":"Hospitales y CeSAC","category":"salud","file":"salud.json","description":"Hospitales públicos y Centros de Salud y Acción Comunitaria.","filter_label":"Tipo","filter_field":"tipo"},
+    {"id":"salud","label":"Hospitales y centros de salud","category":"salud","file":"salud-integrada.json","description":"Hospitales y centros de salud públicos y privados de la Ciudad.","filter_label":"Tipo","filter_field":"tipo"},
     {"id":"espacios-verdes","label":"Espacios verdes","category":"ambiente","file":"espacios-verdes.json","description":"Parques, plazas, plazoletas y otros espacios verdes públicos.","filter_label":"Tipo","filter_field":"clasificacion"},
 ]
 
@@ -47,7 +47,7 @@ CORE_LAYERS = [
 # de DATASETS_TERRITORIO. Los alias se resuelven sin distinguir mayúsculas ni tildes.
 LAYERS = [
     {"id":"centros-medicos-barriales","source":"centros_medicos_barriales","label":"Centros Médicos Barriales","category":"salud","type":"Centro Médico Barrial","name":["nombre"],"address":["direccion"],"phone":["telefono"],"web":["web"],"detail":["esp"],"detail2":["area_progr"],"geometry":["geometry"],"description":"Centros médicos barriales del sistema de salud de la Ciudad."},
-    {"id":"salud-privada","source":"salud_privada","label":"Centros de salud privados","category":"salud","type":"Centro privado","name":["nombre","fna","nam"],"address":["direccion","dir","dom_norma"],"phone":["telefono","tel"],"web":["web"],"detail":["tipo","tip","gna"],"geometry":["geometry"],"description":"Hospitales, sanatorios y clínicas privadas registrados en la Ciudad."},
+    {"id":"salud-privada","source":"salud_privada","label":"Centros de salud privados","category":"salud","type":"Centro privado","name":["nombre","fna","nam"],"address":["direccion","dir","dom_norma"],"phone":["telefono","tel"],"web":["web"],"detail":["tipo","tip","gna"],"geometry":["geometry"],"description":"Hospitales, sanatorios y clínicas privadas registrados en la Ciudad.","catalog":False},
     {"id":"estaciones-saludables","source":"estaciones_saludables","label":"Estaciones Saludables","category":"salud","type":["tipo","estructura"],"name":["nombre"],"address":["direccion","ubicacion"],"schedule":["horario","horarios","dias_horarios"],"detail":["servicio","servicios"],"geometry":["geometry"],"description":"Puntos de prevención y promoción de hábitos saludables."},
 
     {"id":"bibliotecas","source":"bibliotecas","label":"Bibliotecas","category":"cultura","type":["tip","tipo","gna"],"name":["fna","nombre","nam"],"address":["dir","direccion"],"phone":["tel","telefono"],"email":["ema","email"],"web":["web"],"detail":["sag","dependencia"],"geometry":["geometry"],"description":"Bibliotecas de la Red del Gobierno de la Ciudad."},
@@ -260,10 +260,40 @@ def main() -> int:
                 seen.add(key)
                 items.append(item)
             items.sort(key=lambda x: (x.get("comuna") or 99, G.norm(x.get("barrio")), G.norm(x.get("nombre"))))
-            generated.append(write_layer(cfg, items, state))
+            layer_meta = write_layer(cfg, items, state)
+            if cfg.get("catalog", True):
+                generated.append(layer_meta)
         except Exception as e:
             errors.append(f"{cfg['id']}: {type(e).__name__}: {e}")
             print("  ✘", errors[-1])
+
+    # Salud se presenta como una única capa pública/privada. Los archivos base
+    # se conservan separados para no alterar indicadores que dependen de la red
+    # pública, pero el catálogo y la interfaz consumen esta vista integrada.
+    public_health = json.loads((OUT / "salud.json").read_text(encoding="utf-8"))
+    private_health = json.loads((OUT / "salud-privada.json").read_text(encoding="utf-8"))
+    health_items = []
+    for sector, source in (("Público", public_health), ("Privado", private_health)):
+        prefix = "publico" if sector == "Público" else "privado"
+        for source_item in source.get("items") or []:
+            item = dict(source_item)
+            item["id"] = f"{prefix}-{item.get('id')}"
+            item["sector"] = sector
+            health_items.append(item)
+    health_items.sort(key=lambda x: (x.get("comuna") or 99, G.norm(x.get("barrio")), G.norm(x.get("nombre"))))
+    health_core = next(x for x in CORE_LAYERS if x["id"] == "salud")
+    health_doc = {
+        "version": 2,
+        "generado": datetime.date.today().isoformat(),
+        "fuente": "BA Data (GCBA) · red pública y establecimientos privados de salud",
+        "layer": health_core,
+        "total": len(health_items),
+        "items": health_items,
+    }
+    (OUT / health_core["file"]).write_text(
+        json.dumps(health_doc, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
+    )
+    print(f"  ✔ salud integrada: {len(health_items)} registros")
 
     # Incorporar las capas core al mismo catálogo sin duplicar sus archivos.
     catalog_layers = []

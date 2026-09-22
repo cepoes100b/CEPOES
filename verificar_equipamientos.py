@@ -40,8 +40,16 @@ def main() -> int:
         errors.append("interfaz: Nivel educativo debe activarse sólo en la capa educacion")
     if "els.levelControl.style.display=active?'grid':'none'" not in javascript:
         errors.append("interfaz: Nivel educativo debe ocultarse sin depender de la caché CSS")
-    if ".equipment-tools .equipment-level-control[hidden]{display:none}" not in css:
+    if ".equipment-tools .equipment-level-control[hidden]" not in css:
         errors.append("interfaz: falta proteger el estado hidden del filtro Nivel educativo")
+    if 'class="equipment-sector-control" hidden' not in html:
+        errors.append("interfaz: el filtro Sector de salud debe estar oculto por defecto")
+    if "function buildSector(){const active=type==='salud'" not in javascript:
+        errors.append("interfaz: Sector debe activarse sólo en la capa salud")
+    if "els.sectorControl.style.display=active?'grid':'none'" not in javascript:
+        errors.append("interfaz: Sector debe ocultarse sin depender de la caché CSS")
+    if ".equipment-tools .equipment-sector-control[hidden]" not in css:
+        errors.append("interfaz: falta proteger el estado hidden del filtro Sector")
     docs = {}
     for key, (name, lo, hi) in FILES.items():
         try:

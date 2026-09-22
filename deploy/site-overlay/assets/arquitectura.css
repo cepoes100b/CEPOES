@@ -220,4 +220,16 @@
 /* CEPOES ACCESSIBILITY SYSTEM v1 END */
 
 /* Oferta territorial: los filtros específicos no deben ocupar espacio fuera de su capa. */
-.equipment-tools .equipment-level-control[hidden]{display:none}
+.equipment-tools .equipment-level-control[hidden],
+.equipment-tools .equipment-sector-control[hidden]{display:none}
+.equipment-tools.has-sector-filter{
+  grid-template-columns:minmax(250px,1.5fr) repeat(3,minmax(150px,.8fr))
+}
+@media(max-width:1050px){
+  .equipment-tools.has-sector-filter{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .equipment-tools.has-sector-filter .equipment-search{grid-column:1/-1}
+}
+@media(max-width:470px){
+  .equipment-tools.has-sector-filter{grid-template-columns:1fr}
+  .equipment-tools.has-sector-filter .equipment-search{grid-column:auto}
+}

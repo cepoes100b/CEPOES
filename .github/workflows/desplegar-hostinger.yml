@@ -7,6 +7,8 @@ on:
       - "deploy/site-overlay/**"
       - "deploy/preparar_sitio_publico.py"
       - "deploy/delete-paths.txt"
+      - "generar_oferta_ampliada.py"
+      - "equipamientos/**"
       - "validar_sitio_despliegue.py"
       - "notificar_indexnow.py"
       - ".github/workflows/desplegar-hostinger.yml"
@@ -104,6 +106,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python - <<'PY'
+          import json
+          import generar_oferta_ampliada as oferta
+
+          catalogo = json.loads((oferta.OUT / "catalogo.json").read_text(encoding="utf-8"))
+          oferta.write_search_index(catalogo["layers"])
+          PY
           test -d deploy/site-overlay
           cp -a deploy/site-overlay/. _site/
           if [ -s deploy/delete-paths.txt ]; then

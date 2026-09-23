@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import re
 from collections import Counter
 from pathlib import Path
@@ -11,6 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 WORKFLOWS = ROOT / ".github" / "workflows"
+ARCHIVE = ROOT / "docs" / "seguridad" / "workflows-retirados"
 RETIREMENT_CLASSES = {"archivar", "eliminar después de retención"}
 
 # La clasificación no desactiva archivos. Documenta la decisión propuesta y obliga
@@ -105,10 +107,16 @@ def inspect(path: Path) -> dict[str, str]:
 
 def inventory() -> list[dict[str, str]]:
     files = sorted(path.name for path in WORKFLOWS.glob("*.yml"))
-    missing = sorted(set(files) - set(DECISIONS))
-    stale = sorted(set(DECISIONS) - set(files))
+    expected = {
+        name for name, (classification, _decision) in DECISIONS.items()
+        if classification not in RETIREMENT_CLASSES
+    }
+    missing = sorted(set(files) - expected)
+    stale = sorted(expected - set(files))
+    retired_still_active = sorted(set(files) & retirement_candidates())
     assert not missing, "Workflows sin clasificar: " + ", ".join(missing)
-    assert not stale, "Clasificaciones sin workflow: " + ", ".join(stale)
+    assert not stale, "Workflows activos esperados ausentes: " + ", ".join(stale)
+    assert not retired_still_active, "Workflows retirados aún ejecutables: " + ", ".join(retired_still_active)
     rows = []
     for name in files:
         classification, decision = DECISIONS[name]
@@ -116,13 +124,43 @@ def inventory() -> list[dict[str, str]]:
     return rows
 
 
-def validate_retirement_matrix(path: Path) -> None:
-    source = path.read_text(encoding="utf-8")
-    documented = set(re.findall(r"(?m)^\| `([^`]+\.yml)` \|", source))
-    expected = {
+def retirement_candidates() -> set[str]:
+    return {
         name for name, (classification, _decision) in DECISIONS.items()
         if classification in RETIREMENT_CLASSES
     }
+
+
+def validate_archive_manifest(path: Path) -> None:
+    source = path.read_text(encoding="utf-8")
+    rows = re.findall(
+        r"(?m)^\| `([^`]+\.yml)` \| `([0-9a-f]{64})` \| (archivar|eliminar después de retención) \|",
+        source,
+    )
+    manifest = {name: (digest, classification) for name, digest, classification in rows}
+    expected = retirement_candidates()
+    archived = {path.name[:-4] for path in ARCHIVE.glob("*.yml.txt")}
+    assert archived == expected, (
+        "Archivo no ejecutable desincronizado: faltan "
+        + ", ".join(sorted(expected - archived))
+        + "; sobran "
+        + ", ".join(sorted(archived - expected))
+    )
+    assert set(manifest) == expected, "Manifiesto de retiro incompleto o con filas inesperadas"
+    for name in sorted(expected):
+        archived_path = ARCHIVE / f"{name}.txt"
+        digest = hashlib.sha256(archived_path.read_bytes()).hexdigest()
+        expected_digest, expected_classification = manifest[name]
+        assert digest == expected_digest, f"Checksum inválido para {name}"
+        assert DECISIONS[name][0] == expected_classification, f"Clasificación inválida para {name}"
+    assert "7c3c386b918aaecff858f0fbf01fdace07b1f783" in source, "Falta el commit de origen"
+    print(f"Archivo R2-A2: {len(archived)} workflows no ejecutables con checksum válido")
+
+
+def validate_retirement_matrix(path: Path) -> None:
+    source = path.read_text(encoding="utf-8")
+    documented = set(re.findall(r"(?m)^\| `([^`]+\.yml)` \|", source))
+    expected = retirement_candidates()
     missing = sorted(expected - documented)
     unexpected = sorted(documented - expected)
     assert not missing, "Candidatos ausentes en la matriz de retiro: " + ", ".join(missing)
@@ -146,14 +184,15 @@ def markdown(rows: list[dict[str, str]]) -> str:
         "",
         "**Corte:** 23 de septiembre de 2026  ",
         f"**Cobertura:** {len(rows)} workflows activos en `.github/workflows/`  ",
-        "**Alcance:** clasificación y evidencia estática; este documento no desactiva workflows.",
+        "**Archivo no ejecutable:** 23 workflows históricos bajo `docs/seguridad/workflows-retirados/`  ",
+        "**Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.",
         "",
         "## Resumen",
         "",
         "| Clasificación | Cantidad |",
         "| --- | ---: |",
     ]
-    for label in ("operativo", "migrar", "archivar", "eliminar después de retención"):
+    for label in ("operativo", "migrar"):
         lines.append(f"| {label} | {counts[label]} |")
     lines.extend([
         "",
@@ -169,7 +208,7 @@ def markdown(rows: list[dict[str, str]]) -> str:
         "",
         "## Regla de transición",
         "",
-        "Ningún elemento clasificado como `migrar`, `archivar` o `eliminar después de retención` se mueve o elimina sin un PR separado, confirmación de reemplazo y evidencia de que no cumple una función única.",
+        "Los cinco elementos clasificados como `migrar` permanecen activos hasta contar con reemplazo probado y un PR específico. Los 23 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.",
         "",
     ])
     return "\n".join(lines)
@@ -179,6 +218,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", type=Path)
     parser.add_argument("--check-retirement-matrix", type=Path)
+    parser.add_argument("--check-archive-manifest", type=Path)
     parser.add_argument("--markdown", action="store_true")
     args = parser.parse_args()
     rows = inventory()
@@ -191,6 +231,9 @@ def main() -> None:
         checked = True
     if args.check_retirement_matrix:
         validate_retirement_matrix(args.check_retirement_matrix)
+        checked = True
+    if args.check_archive_manifest:
+        validate_archive_manifest(args.check_archive_manifest)
         checked = True
     if args.markdown:
         print(output)

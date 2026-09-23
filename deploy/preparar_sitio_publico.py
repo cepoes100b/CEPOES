@@ -4,18 +4,41 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import json
 import re
 import shutil
 import unicodedata
 from datetime import datetime, timedelta
+from functools import lru_cache
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
 ARCHITECTURE_CSS = "/assets/arquitectura.css?v=30"
+
+
+@lru_cache(maxsize=512)
+def css_revision(path: Path) -> str:
+    """El contenido, y no un contador manual, define la versión pública del CSS."""
+    return hashlib.sha256(path.read_bytes()).hexdigest()[:12]
+
+
+def version_local_stylesheets(source: str, site: Path) -> str:
+    def replace(match: re.Match[str]) -> str:
+        asset = site / match.group(2).lstrip("/")
+        if not asset.is_file():
+            return match.group(0)
+        return f"{match.group(1)}{match.group(2)}?v={css_revision(asset)}{match.group(3)}"
+
+    return re.sub(
+        r'(<link\b[^>]*\bhref=["\'])(/assets/[\w./-]+\.css)(?:\?[^"\']*)?(["\'][^>]*>)',
+        replace,
+        source,
+        flags=re.I,
+    )
 
 
 TOPICS = [
@@ -779,6 +802,7 @@ def normalize_html(path: Path, site: Path) -> None:
         source = restructure_home(source)
     elif rel == "/propuestas/index.html":
         source = restructure_proposals(source)
+    source = version_local_stylesheets(source, site)
     path.write_text(source, encoding="utf-8")
 
 

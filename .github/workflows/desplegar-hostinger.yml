@@ -171,6 +171,9 @@ jobs:
       - name: Normalizar navegación y fallbacks públicos
         run: python deploy/preparar_sitio_publico.py _site
 
+      - name: Bloquear despliegue con contrastes críticos deficientes
+        run: python validar_contraste_visual.py
+
       - name: Validar sitio antes de publicar
         run: python validar_sitio_despliegue.py _site
 

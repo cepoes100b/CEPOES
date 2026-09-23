@@ -191,6 +191,7 @@ def validate_workflow_inventory() -> None:
         "--check-archive-manifest",
         "docs/seguridad/workflows-retirados/README.md",
     )
+    run("python", "validar_rutas_publicacion.py")
 
 
 def create_runtime_fixture(site: Path) -> None:
@@ -213,6 +214,43 @@ def create_runtime_fixture(site: Path) -> None:
     run("python", "generar_estado_datos.py", str(site))
 
 
+def create_canonical_publication_fixture(site: Path) -> None:
+    observatory = site / "observatorio" / "index.html"
+    observatory.parent.mkdir(parents=True)
+    observatory.write_text(
+        """<!doctype html><html><head></head><body>
+        <nav class="subnav"><a href="/observatorio/agenda/">Agenda</a></nav>
+        <main><header><h1>Observatorio</h1></header><section>Contenido</section></main>
+        </body></html>""",
+        encoding="utf-8",
+    )
+
+    for relative in ("legislatura/index.html", "legislatura/detalle/index.html"):
+        target = site / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(
+            "<!doctype html><html><head><title>Legislatura</title></head><body></body></html>",
+            encoding="utf-8",
+        )
+
+    assets = site / "assets"
+    assets.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(
+        ROOT / "deploy/site-overlay/assets/legislatura-public-bridge.js",
+        assets / "legislatura-public-bridge.js",
+    )
+
+    run("python", "deploy/preparar_legislatura_publica.py", str(site))
+    run("python", "deploy/parche_observatorio_salud.py", str(observatory))
+    run("python", "deploy/preparar_puente_legislatura.py", str(site))
+    run("python", "deploy/validar_publicacion_canonica.py", str(site))
+
+    # Los transformadores deben poder ejecutarse otra vez sin duplicar salida.
+    run("python", "deploy/parche_observatorio_salud.py", str(observatory))
+    run("python", "deploy/preparar_puente_legislatura.py", str(site))
+    run("python", "deploy/validar_publicacion_canonica.py", str(site))
+
+
 def validate_product_contracts() -> None:
     run("python", "validar_contraste_visual.py")
     with tempfile.TemporaryDirectory(prefix="cepoes-r2-") as directory:
@@ -220,6 +258,8 @@ def validate_product_contracts() -> None:
         create_runtime_fixture(site)
         run("python", "validar_busqueda_global.py", str(site))
         run("python", "validar_r1_runtime.py", str(site))
+    with tempfile.TemporaryDirectory(prefix="cepoes-r2-publicacion-") as directory:
+        create_canonical_publication_fixture(Path(directory))
     print("Contratos de producto: contraste, búsqueda y runtime R1 válidos")
 
 

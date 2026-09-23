@@ -4,12 +4,15 @@
 from __future__ import annotations
 
 import re
+import tempfile
 from pathlib import Path
+from importlib.util import module_from_spec, spec_from_file_location
 
 ROOT = Path(__file__).resolve().parent
 ARCH = ROOT / "deploy/site-overlay/assets/arquitectura.css"
 CRIANZA = ROOT / "deploy/site-overlay/assets/nota-crianza.css"
 PREP = ROOT / "deploy/preparar_sitio_publico.py"
+CRIANZA_HTML = ROOT / "deploy/site-overlay/publicaciones/notas/criar-en-buenos-aires-sala-de-3/index.html"
 
 REQUIRED_ALIASES = {
     "--bg": "--papel",
@@ -60,10 +63,49 @@ def main() -> None:
         pattern = rf"{re.escape(alias)}\s*:\s*var\({re.escape(source)}\)"
         assert re.search(pattern, architecture), f"Falta el alias semántico {alias} → {source}"
 
-    assert '--cc-surface:#16232f' in crianza
-    assert '--cc-surface:#102430' in crianza
+    light = re.search(r'\.cc-page\{([^}]*)\}', crianza).group(1)
+    dark = re.search(r'\[data-theme="dark"\] \.cc-page\{([^}]*)\}', crianza).group(1)
+    def token(block: str, name: str) -> str:
+        match = re.search(rf'{re.escape(name)}\s*:\s*(#[0-9a-fA-F]{{3,6}})', block)
+        assert match, f"Falta el token {name}"
+        value = match.group(1)
+        if len(value) == 4:
+            value = '#' + ''.join(ch * 2 for ch in value[1:])
+        return value
+
+    surface_pairs = (
+        ('Texto principal', '--cc-surface-ink', 4.5),
+        ('Texto secundario', '--cc-surface-muted', 4.5),
+        ('Volanta', '--cc-surface-kicker', 4.5),
+    )
+    for theme, block in (('claro', light), ('oscuro', dark)):
+        surface = token(block, '--cc-surface')
+        for label, ink, threshold in surface_pairs:
+            value = token(block, ink) if re.search(rf'{ink}\s*:', block) else token(light, ink)
+            ratio = contrast(value, surface)
+            print(f"{theme}: {label} / superficie: {ratio:.2f}:1")
+            assert ratio >= threshold, f"{theme}: {label} / superficie: {ratio:.2f}:1"
+    assert '.cc-page .cc-split-card h3{color:var(--cc-surface-ink)' in crianza
+    assert '.cc-page .cc-split-card p{margin:0;color:var(--cc-surface-muted)' in crianza
+    assert '.cc-page .cc-split-card .eyebrow{color:var(--cc-surface-kicker)' in crianza
     assert "background:var(--cc-ink)" not in crianza, "La tinta vuelve a usarse como superficie"
-    assert 'ARCHITECTURE_CSS = "/assets/arquitectura.css?v=21"' in normalizer
+    assert 'source = version_local_stylesheets(source, site)' in normalizer
+
+    spec = spec_from_file_location('prepare_site', PREP)
+    module = module_from_spec(spec)
+    spec.loader.exec_module(module)
+    with tempfile.TemporaryDirectory() as directory:
+        asset = Path(directory) / 'assets/nota-crianza.css'
+        asset.parent.mkdir()
+        asset.write_text('body{color:red}', encoding='utf-8')
+        sample = '<link href="/assets/nota-crianza.css?v=2" rel="stylesheet">'
+        first = module.version_local_stylesheets(sample, Path(directory))
+        assert '?v=2' not in first
+        asset.write_text('body{color:blue}', encoding='utf-8')
+        module.css_revision.cache_clear()
+        second = module.version_local_stylesheets(first, Path(directory))
+        assert first != second, 'Cambió el CSS pero no su URL'
+    assert 'class="cc-split-card"' in CRIANZA_HTML.read_text(encoding='utf-8')
 
     failures = []
     for label, (foreground, background, required) in PAIRS.items():

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-22T23:26:50.521948+00:00",
+  "generado_en": "2026-09-23T18:10:31.336020+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,10 +9,10 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2024-02-09",
-    "fecha_mas_reciente_obtenida": "2026-09-21",
-    "ids_del_anio_en_ventana": 2990,
-    "ids_revisados_acumulados": 2990,
+    "fecha_mas_antigua_obtenida": "2024-02-22",
+    "fecha_mas_reciente_obtenida": "2026-09-23",
+    "ids_del_anio_en_ventana": 3018,
+    "ids_revisados_acumulados": 3018,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,17 +30,17 @@
     "LEY": 64
   },
   "por_estado_actual": {
-    "en_comision": 120,
-    "archivado": 81,
-    "sancionado": 20,
-    "ingresado": 5,
+    "en_comision": 123,
+    "archivado": 84,
+    "sancionado": 17,
     "con_dictamen": 3,
-    "despacho": 2
+    "despacho": 2,
+    "ingresado": 2
   },
   "por_etapa_ciclo": {
     "en_comision": 125,
-    "archivado": 81,
-    "sancionado": 20,
+    "archivado": 84,
+    "sancionado": 17,
     "con_dictamen": 5
   },
   "control_832_2026": {
@@ -135,16 +135,16 @@
       ],
       "cantidad_autores": 18,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "SP",
+      "ubicacion": "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-21",
-        "oficina": "SP",
-        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-23",
+        "oficina": "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN",
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -181,16 +181,18 @@
       ],
       "cantidad_autores": 12,
       "tipo_oficial": "LEY",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "TRÁNSITO Y TRANSPORTE",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "TRÁNSITO Y TRANSPORTE",
+        "OBRAS Y SERVICIOS PÚBLICOS",
+        "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-21",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-23",
+        "oficina": "TRÁNSITO Y TRANSPORTE",
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -226,16 +228,18 @@
       ],
       "cantidad_autores": 11,
       "tipo_oficial": "LEY",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "PLANEAMIENTO URBANO",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "PLANEAMIENTO URBANO",
+        "AMBIENTE",
+        "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-21",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-22",
+        "oficina": "PLANEAMIENTO URBANO",
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -1230,7 +1234,6 @@
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,
@@ -2169,9 +2172,9 @@
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-16",
+        "fecha": "2026-09-22",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -2487,21 +2490,19 @@
       ],
       "cantidad_autores": 12,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "sancionado",
-      "etapa_ciclo": "sancionado",
-      "ubicacion": "MEP",
+      "estado_actual": "archivado",
+      "etapa_ciclo": "archivado",
+      "ubicacion": "ARCHIVO",
       "giros": [
         "CULTURA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-06-24",
-        "oficina": "MEP",
-        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
+        "fecha": "2026-09-23",
+        "oficina": "ARCHIVO",
+        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
-        "estado_actual",
-        "etapa_ciclo",
         "ficha_oficial.hitos.tuvo_sancion",
         "ficha_oficial.sanciones",
         "actividad_recinto"
@@ -4685,21 +4686,19 @@
       ],
       "cantidad_autores": 6,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "sancionado",
-      "etapa_ciclo": "sancionado",
-      "ubicacion": "MEP",
+      "estado_actual": "archivado",
+      "etapa_ciclo": "archivado",
+      "ubicacion": "ARCHIVO",
       "giros": [
         "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-05-15",
-        "oficina": "MEP",
-        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
+        "fecha": "2026-09-23",
+        "oficina": "ARCHIVO",
+        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
-        "estado_actual",
-        "etapa_ciclo",
         "ficha_oficial.hitos.tuvo_sancion",
         "ficha_oficial.sanciones",
         "actividad_recinto"
@@ -7103,21 +7102,19 @@
       ],
       "cantidad_autores": 4,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "sancionado",
-      "etapa_ciclo": "sancionado",
-      "ubicacion": "MEP",
+      "estado_actual": "archivado",
+      "etapa_ciclo": "archivado",
+      "ubicacion": "ARCHIVO",
       "giros": [
         "MUJERES, GÉNEROS Y DIVERSIDADES"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-06-22",
-        "oficina": "MEP",
-        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-23",
+        "oficina": "ARCHIVO",
+        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
-        "estado_actual",
-        "etapa_ciclo",
         "ficha_oficial.hitos.tuvo_sancion",
         "ficha_oficial.sanciones"
       ],
@@ -7155,9 +7152,9 @@
         "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-16",
+        "fecha": "2026-09-23",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -9111,9 +9108,9 @@
         "AMBIENTE"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-16",
+        "fecha": "2026-09-22",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -9574,9 +9571,9 @@
         "COMUNICACIÓN SOCIAL, MEDIOS DE COMUNICACIÓN Y TECNOLOGÍAS DE LA COMUNICACIÓN"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-16",
+        "fecha": "2026-09-23",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -9999,9 +9996,9 @@
         "EDUCACIÓN, CIENCIA Y TECNOLOGÍA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-07-15",
+        "fecha": "2026-09-22",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

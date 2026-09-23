@@ -188,6 +188,8 @@ def validate_workflow_inventory() -> None:
         "docs/seguridad/inventario-workflows-r2.md",
         "--check-retirement-matrix",
         "docs/seguridad/matriz-retiro-workflows-r2.md",
+        "--check-archive-manifest",
+        "docs/seguridad/workflows-retirados/README.md",
     )
 
 

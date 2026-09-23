@@ -1,9 +1,11 @@
 # CEPOES — Matriz de retiro de workflows históricos R2-A2
 
 **Corte:** 23 de septiembre de 2026  
-**Base verificada:** `main` en `e75da214f9ba8146e5e92bae528e2a429a0d9dd3`  
+**Base verificada:** `main` en `7c3c386b918aaecff858f0fbf01fdace07b1f783`  
 **Cobertura:** 23 workflows clasificados como `archivar` o `eliminar después de retención`  
 **Alcance:** evidencia y plan de transición; este documento no desactiva, mueve ni elimina workflows.
+
+**Implementación propuesta:** el PR de desactivación mueve los 23 archivos a `docs/seguridad/workflows-retirados/` con extensión `.yml.txt`, checksum SHA-256 y commit de origen. La fusión permanece sujeta a autorización explícita.
 
 ## 1. Resultado
 
@@ -75,4 +77,3 @@ El PR de desactivación sólo puede fusionarse si:
 - el inventario activo queda sincronizado;
 - `R2 / controles obligatorios` y los checks específicos finalizan en verde;
 - no modifica Hostinger, DNS, credenciales, accesos, analítica ni el ruleset.
-

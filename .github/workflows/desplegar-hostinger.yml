@@ -6,6 +6,10 @@ on:
     paths:
       - "deploy/site-overlay/**"
       - "deploy/preparar_sitio_publico.py"
+      - "deploy/preparar_legislatura_publica.py"
+      - "deploy/parche_observatorio_salud.py"
+      - "deploy/preparar_puente_legislatura.py"
+      - "deploy/validar_publicacion_canonica.py"
       - "deploy/delete-paths.txt"
       - "generar_oferta_ampliada.py"
       - "generar_indice_busqueda_equipamientos.py"
@@ -13,6 +17,8 @@ on:
       - "generar_estado_datos.py"
       - "deploy/search-registry.json"
       - "equipamientos/**"
+      - "legislatura_publica.json"
+      - "sesiones_publicas.json"
       - "validar_sitio_despliegue.py"
       - "validar_busqueda_global.py"
       - "validar_r1_runtime.py"
@@ -126,6 +132,7 @@ jobs:
               rm -rf -- "_site/$rel"
             done < deploy/delete-paths.txt
           fi
+          python deploy/preparar_legislatura_publica.py _site
           python generar_indice_busqueda_global.py _site
           python generar_estado_datos.py _site
 
@@ -177,6 +184,16 @@ jobs:
 
       - name: Normalizar navegación y fallbacks públicos
         run: python deploy/preparar_sitio_publico.py _site
+
+      - name: Integrar módulos públicos en el build canónico
+        shell: bash
+        run: |
+          set -euo pipefail
+          python deploy/parche_observatorio_salud.py _site/observatorio/index.html
+          python deploy/preparar_puente_legislatura.py _site
+
+      - name: Validar módulos migrados al publicador canónico
+        run: python deploy/validar_publicacion_canonica.py _site
 
       - name: Bloquear despliegue con contrastes críticos deficientes
         run: python validar_contraste_visual.py
@@ -235,7 +252,10 @@ jobs:
             https://cepoes.org/publicaciones/informes/personas-mayores-caba/informe-personas-mayores-caba-cepoes.pdf \
             https://cepoes.org/publicaciones/informes/situacion-de-calle-caba/ \
             https://cepoes.org/publicaciones/informes/situacion-de-calle-caba/informe-situacion-de-calle-caba-cepoes.pdf \
-            https://cepoes.org/legislatura/; do
+            https://cepoes.org/legislatura/ \
+            https://cepoes.org/assets/legislatura-public-bridge.js \
+            https://cepoes.org/legislatura_publica.json \
+            https://cepoes.org/sesiones_publicas.json; do
             echo "Probando $url sin caché"
             curl "${CURL_COMMON[@]}" "${url}?${SMOKE_Q}" >/dev/null
           done
@@ -268,6 +288,32 @@ jobs:
           grep -q 'deporte-accesibilidad-peatonal.json' /tmp/deporte-salud.js || { echo "JS Deporte y salud no consume accesibilidad peatonal" >&2; exit 43; }
           grep -q 'accessMethod' /tmp/deporte-salud.js || { echo "JS Deporte y salud no implementa selector V3" >&2; exit 44; }
           echo "Deporte y salud V3: frontend público geométrico + peatonal válido"
+
+          curl "${CURL_COMMON[@]}" "https://cepoes.org/observatorio/?${SMOKE_Q}" -o /tmp/observatorio.html
+          grep -q 'id="observatorio-salud-cuidados"' /tmp/observatorio.html
+          grep -q '>Natalidad y demografía<' /tmp/observatorio.html
+          grep -q '>Salud reproductiva<' /tmp/observatorio.html
+          grep -q '>Personas mayores<' /tmp/observatorio.html
+          grep -q '/observatorio/#observatorio-salud-cuidados">Salud</a>' /tmp/observatorio.html
+
+          curl "${CURL_COMMON[@]}" "https://cepoes.org/legislatura/?${SMOKE_Q}" -o /tmp/legislatura.html
+          grep -q 'legislatura-public-bridge.js?v=20260827-2' /tmp/legislatura.html
+          curl "${CURL_COMMON[@]}" "https://cepoes.org/assets/legislatura-public-bridge.js?${SMOKE_Q}" -o /tmp/legislatura-public-bridge.js
+          grep -q '__CEPOES_LEGISLATURA_PUBLIC_BRIDGE__' /tmp/legislatura-public-bridge.js
+
+          curl "${CURL_COMMON[@]}" "https://cepoes.org/legislatura_publica.json?${SMOKE_Q}" -o /tmp/legislatura_publica.json
+          curl "${CURL_COMMON[@]}" "https://cepoes.org/sesiones_publicas.json?${SMOKE_Q}" -o /tmp/sesiones_publicas.json
+          python - <<'PY'
+          import json
+          leg=json.load(open('/tmp/legislatura_publica.json',encoding='utf-8'))
+          ses=json.load(open('/tmp/sesiones_publicas.json',encoding='utf-8'))
+          rows=leg.get('expedientes') or []
+          total=int((leg.get('universo_consolidado') or {}).get('total') or 0)
+          assert total >= 1000 and len(rows) == total
+          assert len([x for x in rows if 'claudia negri' in (x.get('autor') or '').lower() or 'negri, claudia' in (x.get('autor') or '').lower()]) >= 200
+          assert ses
+          print(f'Legislatura pública: {len(rows)} expedientes y sesiones válidas')
+          PY
 
       - name: Restaurar versión anterior si falla publicación o smoke test
         if: failure() && steps.publish.outcome == 'success'

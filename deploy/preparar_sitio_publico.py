@@ -17,7 +17,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
-ARCHITECTURE_CSS = "/assets/arquitectura.css?v=30"
+ARCHITECTURE_CSS = "/assets/arquitectura.css"
 
 
 @lru_cache(maxsize=512)

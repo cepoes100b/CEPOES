@@ -12,6 +12,7 @@ on:
       - "verificar_estructura_actual.py"
       - "validar_sitio_despliegue.py"
       - ".github/workflows/validar-estructura-productiva-ui.yml"
+
   push:
     branches: [main]
     paths:
@@ -22,11 +23,14 @@ on:
       - "validar_sitio_despliegue.py"
       - ".github/workflows/validar-estructura-productiva-ui.yml"
 
+permissions:
+  contents: read
+
 jobs:
   validar:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
       - name: Sintaxis JavaScript y Python
         run: |
           node --check deploy/site-overlay/assets/estructura-productiva.js

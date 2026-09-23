@@ -25,6 +25,9 @@ SECRET_PATTERNS = {
     "URL con credenciales": re.compile(r"\b(?:https?|sftp)://[^\s/:]+:[^\s/@]+@"),
 }
 
+ACTION_USE = re.compile(r"^\s*-?\s*uses:\s*([^\s#]+)")
+FULL_SHA_REF = re.compile(r"^[^@]+@[0-9a-fA-F]{40}$")
+
 SENSITIVE_NAMES = {
     ".env",
     ".env.local",
@@ -83,6 +86,21 @@ def validate_workflow_yaml() -> None:
             assert isinstance(document, dict), f"Workflow vacío o inválido: {path}"
         print(f"Workflows YAML válidos: {len(files)}")
 
+    allowed_permissions = {
+        "actions", "attestations", "checks", "contents", "deployments", "discussions",
+        "id-token", "issues", "models", "packages", "pages", "pull-requests",
+        "security-events", "statuses",
+    }
+    for path in files:
+        workflow_source = path.read_text(encoding="utf-8")
+        assert re.search(r"(?m)^on:\s*$", workflow_source), f"Falta el bloque on en {path}"
+        assert re.search(r"(?m)^jobs:\s*$", workflow_source), f"Falta el bloque jobs en {path}"
+        permission_block = re.search(r"(?ms)^permissions:\s*\n(.*?)(?=^[A-Za-z_-][A-Za-z0-9_-]*:\s*(?:\n|$))", workflow_source)
+        if permission_block:
+            keys = set(re.findall(r"(?m)^  ([A-Za-z-]+):", permission_block.group(1)))
+            unknown = sorted(keys - allowed_permissions)
+            assert not unknown, f"Claves ajenas dentro de permissions en {path}: {unknown}"
+
     source = R2_WORKFLOW.read_text(encoding="utf-8")
     trigger = source.split("permissions:", 1)[0]
     assert "name: R2" in source, "El nombre estable del workflow R2 cambió"
@@ -103,6 +121,12 @@ def validate_secret_detector() -> None:
     assert findings_in_text("-----BEGIN " + "PRIVATE KEY-----")
     assert findings_in_text("sftp://" + "usuario:clave@example.test/ruta")
     print("Detector de secretos: pruebas internas correctas")
+
+
+def validate_action_pin_detector() -> None:
+    assert FULL_SHA_REF.fullmatch("actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09")
+    assert not FULL_SHA_REF.fullmatch("actions/checkout@v5")
+    print("Detector de acciones sin SHA: pruebas internas correctas")
 
 
 def scan_diff(base_sha: str | None) -> None:
@@ -130,6 +154,7 @@ def scan_diff(base_sha: str | None) -> None:
         check=True,
     ).stdout
     findings: list[str] = []
+    unpinned_actions: list[str] = []
     current = "archivo desconocido"
     new_line = 0
     for line in patch.splitlines():
@@ -139,15 +164,24 @@ def scan_diff(base_sha: str | None) -> None:
             match = re.search(r"\+(\d+)", line)
             new_line = int(match.group(1)) if match else 0
         elif line.startswith("+") and not line.startswith("+++"):
-            for label in findings_in_text(line[1:]):
+            added = line[1:]
+            for label in findings_in_text(added):
                 findings.append(f"{current}:{new_line} ({label})")
+            action = ACTION_USE.match(added)
+            if current.startswith(".github/workflows/") and action and not FULL_SHA_REF.fullmatch(action.group(1)):
+                unpinned_actions.append(f"{current}:{new_line} ({action.group(1)})")
             new_line += 1
         elif not line.startswith("-"):
             new_line += 1
 
     assert not unsafe_names, "Archivos sensibles agregados o modificados: " + ", ".join(unsafe_names)
     assert not findings, "Posibles secretos agregados:\n- " + "\n- ".join(findings)
+    assert not unpinned_actions, "Acciones nuevas sin SHA completo:\n- " + "\n- ".join(unpinned_actions)
     print(f"Secretos en diff: {len(names)} archivos revisados, sin hallazgos")
+
+
+def validate_workflow_inventory() -> None:
+    run("python", "auditar_workflows_r2.py", "--check", "docs/seguridad/inventario-workflows-r2.md")
 
 
 def create_runtime_fixture(site: Path) -> None:
@@ -192,7 +226,9 @@ def main() -> None:
     validate_python()
     validate_workflow_yaml()
     validate_secret_detector()
+    validate_action_pin_detector()
     scan_diff(args.base_sha)
+    validate_workflow_inventory()
     validate_product_contracts()
     print("R2 / controles obligatorios: APROBADO")
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import json, re, sys
+import hashlib, json, re, sys
 from datetime import date
 from pathlib import Path
 import xml.etree.ElementTree as ET
@@ -152,7 +152,13 @@ for p in html:
     assert s.count('<footer class="footer">')==1, f'Footer no canónico: {rel}'
     assert len(re.findall(r'name=["\']theme-color["\']',s,re.I))==1, f'theme-color inválido: {rel}'
     assert len(re.findall(r'/assets/arquitectura\.css',s,re.I))==1, f'CSS de arquitectura duplicado: {rel}'
-    assert '/assets/arquitectura.css?v=30' in s, f'CSS de arquitectura sin versión vigente: {rel}'
+    for match in re.finditer(r'<link\b[^>]*href=["\'](/assets/[\w./-]+\.css)(?:\?v=([0-9a-f]{12}))?["\'][^>]*>', s, re.I):
+        asset, revision = match.groups()
+        css_path = root / asset.lstrip('/')
+        assert css_path.is_file(), f'CSS inexistente en {rel}: {asset}'
+        expected = hashlib.sha256(css_path.read_bytes()).hexdigest()[:12]
+        assert revision == expected, f'CSS sin versión de contenido vigente en {rel}: {asset}'
+    assert re.search(r'/assets/arquitectura\.css\?v=[0-9a-f]{12}', s), f'CSS de arquitectura sin versión vigente: {rel}'
     if '/assets/common.js' in s:
         assert '/assets/common.js?v=257' in s, f'JS común sin versión vigente: {rel}'
     assert 'href="/prensa/"' in s, f'Falta Prensa en navegación: {rel}'
@@ -209,7 +215,7 @@ for report_rel, required_tokens in {
     ],
 }.items():
     report_html=(root/report_rel).read_text(encoding='utf-8',errors='replace')
-    for token in required_tokens + ['class="web-report"','/assets/informes-web.css?v=3','/assets/informes-web.js?v=1','Descargar informe completo','data-copy-citation','Cita sugerida']:
+    for token in required_tokens + ['class="web-report"','/assets/informes-web.css','/assets/informes-web.js?v=1','Descargar informe completo','data-copy-citation','Cita sugerida']:
         assert token in report_html, f'Informe temático incompleto ({report_rel}): {token}'
     assert report_html.count('<nav class="site-nav">')==1, f'Menú duplicado en {report_rel}'
     assert report_html.count('<footer class="footer">')==1, f'Footer duplicado en {report_rel}'
@@ -268,7 +274,7 @@ for token in ['home-editorial-datum','home-strategy-grid','La Ciudad hoy','Balan
 assert home.count('class="home-comparison-card"')==4, 'La home debe mostrar exactamente cuatro datos comparados'
 assert home.count('home-strategy-card')==3, 'La home debe mostrar exactamente tres recorridos estratégicos'
 new_page=(root/'lo-nuevo'/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['<h1>Lo nuevo</h1>','id="new-search"','id="new-type"','id="new-topic"','Qué entra en “Lo nuevo”','/assets/lo-nuevo.css?v=1','/assets/lo-nuevo.js?v=1']:
+for token in ['<h1>Lo nuevo</h1>','id="new-search"','id="new-type"','id="new-topic"','Qué entra en “Lo nuevo”','/assets/lo-nuevo.css','/assets/lo-nuevo.js?v=1']:
     assert token in new_page, f'Página Lo nuevo incompleta: {token}'
 assert len(re.findall(r'<article class="[^"]*\bnew-card\b',new_page))==14, 'Lo nuevo debe mostrar catorce contenidos recientes'
 for route in ['/publicaciones/informes/educacion-pisa-fepba-2025/','/publicaciones/informes/plataformas-juventudes-caba/','/publicaciones/notas/criar-en-buenos-aires-sala-de-3/','/prensa/crianza-sala-de-3-vacantes/','/prensa/personas-mayores-desigualdad-cuidados/','/prensa/situacion-calle-respuesta-habitacional/','/balance/salud-publica/']:
@@ -335,7 +341,7 @@ personas_data=json.loads((root/'assets/data/personas-mayores.json').read_text(en
 assert personas_data.get('schema')=='cepoes-personas-mayores-v1' and personas_data.get('status')=='VALIDADO'
 assert personas_data['indicadores']['canasta_inquilinos']['valor']>personas_data['indicadores']['canasta_propietarios']['valor']
 salud_mental=(root/'observatorio'/'salud-mental'/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['Salud mental: mirar la tendencia sin perder de vista el territorio','5.209','11,84','236','7,97','0800-999-0091','/assets/salud-mental.css?v=2','/assets/salud-mental.js?v=2']:
+for token in ['Salud mental: mirar la tendencia sin perder de vista el territorio','5.209','11,84','236','7,97','0800-999-0091','/assets/salud-mental.css','/assets/salud-mental.js?v=2']:
     assert token in salud_mental, f'Eje Salud mental incompleto: {token}'
 sm_js=(root/'assets/salud-mental.js').read_text(encoding='utf-8',errors='replace')
 assert '/assets/data/salud-mental.json' in sm_js, 'JS de Salud mental no enlaza el dataset validado'
@@ -355,7 +361,7 @@ for modulo in ['ejecucion', 'territorio', 'diagnostico']:
     presupuesto_modulo=(root/'presupuesto'/modulo/'index.html').read_text(encoding='utf-8',errors='replace')
     assert not re.search(r'id=["\']data-date["\'][^>]*>\s*cargando', presupuesto_modulo, re.I), f'Fecha de actualización pendiente en presupuesto/{modulo}'
 descentralizacion=(root/'presupuesto'/'descentralizacion'/'index.html').read_text(encoding='utf-8',errors='replace')
-for token in ['Descentralización: cuánto administran las Comunas','class="budget-decentralization-page"','class="page-hero"','class="breadcrumbs"','/assets/descentralizacion.css?v=1','id="commune-map"','id="ranking"','id="selected-title"','Ver competencias transferidas y pendientes','/assets/descentralizacion-observatorio.js?v=4']:
+for token in ['Descentralización: cuánto administran las Comunas','class="budget-decentralization-page"','class="page-hero"','class="breadcrumbs"','/assets/descentralizacion.css','id="commune-map"','id="ranking"','id="selected-title"','Ver competencias transferidas y pendientes','/assets/descentralizacion-observatorio.js?v=4']:
     assert token in descentralizacion, f'Descentralización incompleta: {token}'
 assert descentralizacion.count('id="content"')==1 and descentralizacion.count('id="content-body"')==1, 'Contenedores de Descentralización duplicados'
 assert '<style' not in descentralizacion, 'Descentralización conserva CSS incrustado'
@@ -387,7 +393,7 @@ for token in ['id="archivo-por-tema"','Notas de prensa','/temas/#vivienda-y-habi
     assert token in publicaciones, f'Archivo editorial incompleto: {token}'
 for slug in ['boletin-01-mayo-2026','boletin-02-junio-2026','boletin-03-julio-2026','boletin-04-agosto-2026']:
     bulletin=(root/'publicaciones'/'boletines'/slug/'index.html').read_text(encoding='utf-8',errors='replace')
-    for token in ['class="bol"','Descargar PDF','/assets/boletines-html.css?v=1','/assets/publicaciones-html-cepoes.css?v=3','/assets/boletines-html.js?v=1']:
+    for token in ['class="bol"','Descargar PDF','/assets/boletines-html.css','/assets/publicaciones-html-cepoes.css','/assets/boletines-html.js?v=1']:
         assert token in bulletin, f'Boletín HTML incompleto ({slug}): {token}'
     assert bulletin.count('class="bol"') == 1 and '</style>' not in bulletin, f'CSS visible como texto en {slug}'
     assert '.html"' not in bulletin, f'Navegación plana sin normalizar en {slug}'
@@ -404,7 +410,7 @@ report_paths = [
 ]
 for report_path in report_paths:
     report=(root/report_path).read_text(encoding='utf-8',errors='replace')
-    for token in ['<main class="web-report">','Descargar informe completo','/assets/informes-web.css?v=3','/assets/informes-web.js?v=1','data-copy-citation','Cita sugerida']:
+    for token in ['<main class="web-report">','Descargar informe completo','/assets/informes-web.css','/assets/informes-web.js?v=1','data-copy-citation','Cita sugerida']:
         assert token in report, f'Informe web incompleto ({report_path}): {token}'
     assert report.count('<main class="web-report">') == 1, f'Informe web duplicado: {report_path}'
     assert report.count('<footer class="footer">') == 1, f'Footer duplicado: {report_path}'

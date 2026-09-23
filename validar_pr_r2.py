@@ -181,7 +181,14 @@ def scan_diff(base_sha: str | None) -> None:
 
 
 def validate_workflow_inventory() -> None:
-    run("python", "auditar_workflows_r2.py", "--check", "docs/seguridad/inventario-workflows-r2.md")
+    run(
+        "python",
+        "auditar_workflows_r2.py",
+        "--check",
+        "docs/seguridad/inventario-workflows-r2.md",
+        "--check-retirement-matrix",
+        "docs/seguridad/matriz-retiro-workflows-r2.md",
+    )
 
 
 def create_runtime_fixture(site: Path) -> None:

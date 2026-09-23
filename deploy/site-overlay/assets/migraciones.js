@@ -3,7 +3,7 @@ const MIG_GEO=[
   'https://raw.githubusercontent.com/OpenDataCordoba/barrios/refs/heads/main/caba_comunas.geojson'
 ];
 
-document.addEventListener('DOMContentLoaded', async()=>{
+document.addEventListener('DOMContentLoaded', async()=>{try{
   const nf=new Intl.NumberFormat('es-AR'), n1=new Intl.NumberFormat('es-AR',{minimumFractionDigits:1,maximumFractionDigits:1});
   const pct=v=>n1.format(v)+'%';
   const D=await fetch('/assets/data/migraciones.json?v=235').then(r=>{if(!r.ok)throw new Error('datos');return r.json()});
@@ -70,4 +70,4 @@ document.addEventListener('DOMContentLoaded', async()=>{
   compareBars('mig-schooling-bars',sch.values,{total:'Total CABA',caba:'Nacidos en CABA',resto_pais:'Resto del país',exterior:'Nacidos en el exterior'});
   compareBars('mig-poverty-bars',pov.values,{total:'Total CABA',caba:'Nacidos en CABA',prov_ba:'Provincia de Buenos Aires',otra_provincia:'Otra provincia',pais_limitrofe:'País limítrofe',otro_pais:'Otro país'});
   const updated=D.updated_at?new Date(D.updated_at):null; set('mig-refresh-status',`Actualización automática activa · último conjunto validado: ${updated&&!Number.isNaN(updated)?updated.toLocaleString('es-AR',{dateStyle:'medium',timeStyle:'short'}):D.generated||'s/d'}.`);
-}).catch(e=>{console.warn('Migraciones:',e);const s=document.getElementById('migration-map-status');if(s)s.textContent='No se pudieron cargar los datos de migraciones.'});
+}catch(e){console.warn('Migraciones:',e);const s=document.getElementById('migration-map-status');if(s)s.textContent='No se pudieron cargar los datos de migraciones. Probá nuevamente más tarde.'}});

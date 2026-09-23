@@ -731,6 +731,10 @@ def normalize_html(path: Path, site: Path) -> None:
         return
     source = path.read_text(encoding="utf-8")
     source = re.sub(r'/assets/common\.js(?:\?v=\d+)?', '/assets/common.js?v=258', source)
+    source = re.sub(r'/assets/thematic-map\.js(?:\?v=\d+)?', '/assets/thematic-map.js?v=258', source)
+    source = re.sub(r'/assets/brechas\.js(?:\?v=\d+)?', '/assets/brechas.js?v=258', source)
+    source = re.sub(r'/assets/migraciones\.js(?:\?v=\d+)?', '/assets/migraciones.js?v=258', source)
+    source = re.sub(r'/assets/related\.js(?:\?v=\d+)?', '/assets/related.js?v=258', source)
     source = re.sub(r'/assets/informes-web\.css(?:\?v=\d+)?', '/assets/informes-web.css?v=3', source)
     source = source.replace('href="/observatorio/presupuesto/"', 'href="/presupuesto/ejecucion/"')
     source = source.replace('href="/territorio/presupuesto/"', 'href="/presupuesto/territorio/"')

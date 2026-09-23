@@ -65,6 +65,7 @@ def main() -> None:
 <meta name="description" content="Estado, cobertura y fecha de actualización de las principales fuentes de datos publicadas por CEPOES.">
 <link rel="canonical" href="https://cepoes.org/datos/estado/">
 <link rel="stylesheet" href="/assets/style.css?v=226">
+<script defer src="/assets/common-r1.js?v=258"></script>
 </head>
 <body data-related-tags="datos-publicos,metodologia,fuentes">
 <main id="contenido">
@@ -85,4 +86,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

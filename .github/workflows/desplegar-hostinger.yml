@@ -10,10 +10,12 @@ on:
       - "generar_oferta_ampliada.py"
       - "generar_indice_busqueda_equipamientos.py"
       - "generar_indice_busqueda_global.py"
+      - "generar_estado_datos.py"
       - "deploy/search-registry.json"
       - "equipamientos/**"
       - "validar_sitio_despliegue.py"
       - "validar_busqueda_global.py"
+      - "validar_r1_runtime.py"
       - "notificar_indexnow.py"
       - ".github/workflows/desplegar-hostinger.yml"
   workflow_dispatch:
@@ -125,6 +127,7 @@ jobs:
             done < deploy/delete-paths.txt
           fi
           python generar_indice_busqueda_global.py _site
+          python generar_estado_datos.py _site
 
       - name: Ajustar texto público de seguimiento institucional
         shell: bash
@@ -181,6 +184,8 @@ jobs:
       - name: Validar búsqueda global canónica
         run: python validar_busqueda_global.py
 
+      - name: Validar confianza y robustez R1
+        run: python validar_r1_runtime.py _site
 
       - name: Validar sitio antes de publicar
         run: python validar_sitio_despliegue.py _site

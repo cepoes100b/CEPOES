@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-23T18:10:31.336020+00:00",
+  "generado_en": "2026-09-23T23:19:03.715535+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,10 +9,10 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2024-02-22",
+    "fecha_mas_antigua_obtenida": "2024-02-28",
     "fecha_mas_reciente_obtenida": "2026-09-23",
-    "ids_del_anio_en_ventana": 3018,
-    "ids_revisados_acumulados": 3018,
+    "ids_del_anio_en_ventana": 3033,
+    "ids_revisados_acumulados": 3033,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -74,9 +74,9 @@
           "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
         ],
         "ultimo_movimiento": {
-          "fecha": "2026-09-16",
+          "fecha": "2026-09-23",
           "oficina": "ARCHIVO",
-          "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+          "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
         },
         "evidencia_sancion": true,
         "fuentes_sancion": [
@@ -1097,7 +1097,6 @@
         "actividad_recinto"
       ],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional",
         "recinto"
       ],
@@ -1136,7 +1135,6 @@
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,
@@ -1193,7 +1191,6 @@
         "actividad_recinto"
       ],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional",
         "recinto"
       ],
@@ -5567,9 +5564,9 @@
         "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-16",
+        "fecha": "2026-09-23",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [

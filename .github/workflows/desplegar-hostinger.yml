@@ -9,8 +9,11 @@ on:
       - "deploy/delete-paths.txt"
       - "generar_oferta_ampliada.py"
       - "generar_indice_busqueda_equipamientos.py"
+      - "generar_indice_busqueda_global.py"
+      - "deploy/search-registry.json"
       - "equipamientos/**"
       - "validar_sitio_despliegue.py"
+      - "validar_busqueda_global.py"
       - "notificar_indexnow.py"
       - ".github/workflows/desplegar-hostinger.yml"
   workflow_dispatch:
@@ -121,6 +124,7 @@ jobs:
               rm -rf -- "_site/$rel"
             done < deploy/delete-paths.txt
           fi
+          python generar_indice_busqueda_global.py _site
 
       - name: Ajustar texto público de seguimiento institucional
         shell: bash
@@ -173,6 +177,10 @@ jobs:
 
       - name: Bloquear despliegue con contrastes críticos deficientes
         run: python validar_contraste_visual.py
+
+      - name: Validar búsqueda global canónica
+        run: python validar_busqueda_global.py
+
 
       - name: Validar sitio antes de publicar
         run: python validar_sitio_despliegue.py _site

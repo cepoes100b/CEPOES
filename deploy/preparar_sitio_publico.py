@@ -120,7 +120,7 @@ SEARCH = (
     '<button class="chip" data-search-filter="Propuestas">Propuestas</button>'
     '<button class="chip" data-search-filter="Legislatura">Legislatura</button>'
     '<a class="chip" href="/temas/">Explorar temas</a></div>'
-    '<div class="search-results" id="site-search-results"><p class="search-empty">Escribí al menos dos caracteres para buscar.</p>'
+    '<div aria-live="polite" aria-atomic="false" class="search-results" id="site-search-results"><p class="search-empty">Escribí al menos dos caracteres para buscar.</p>'
     '</div></div></dialog>'
 )
 
@@ -730,7 +730,7 @@ def normalize_html(path: Path, site: Path) -> None:
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
-    source = re.sub(r'/assets/common\.js(?:\?v=\d+)?', '/assets/common.js?v=257', source)
+    source = re.sub(r'/assets/common\.js(?:\?v=\d+)?', '/assets/common.js?v=258', source)
     source = re.sub(r'/assets/informes-web\.css(?:\?v=\d+)?', '/assets/informes-web.css?v=3', source)
     source = source.replace('href="/observatorio/presupuesto/"', 'href="/presupuesto/ejecucion/"')
     source = source.replace('href="/territorio/presupuesto/"', 'href="/presupuesto/territorio/"')

@@ -182,7 +182,7 @@ jobs:
         run: python validar_contraste_visual.py
 
       - name: Validar búsqueda global canónica
-        run: python validar_busqueda_global.py
+        run: python validar_busqueda_global.py _site
 
       - name: Validar confianza y robustez R1
         run: python validar_r1_runtime.py _site

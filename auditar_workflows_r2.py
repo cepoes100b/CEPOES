@@ -11,6 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 WORKFLOWS = ROOT / ".github" / "workflows"
+RETIREMENT_CLASSES = {"archivar", "eliminar después de retención"}
 
 # La clasificación no desactiva archivos. Documenta la decisión propuesta y obliga
 # a revisar explícitamente cualquier workflow nuevo antes de incorporarlo.
@@ -115,6 +116,29 @@ def inventory() -> list[dict[str, str]]:
     return rows
 
 
+def validate_retirement_matrix(path: Path) -> None:
+    source = path.read_text(encoding="utf-8")
+    documented = set(re.findall(r"(?m)^\| `([^`]+\.yml)` \|", source))
+    expected = {
+        name for name, (classification, _decision) in DECISIONS.items()
+        if classification in RETIREMENT_CLASSES
+    }
+    missing = sorted(expected - documented)
+    unexpected = sorted(documented - expected)
+    assert not missing, "Candidatos ausentes en la matriz de retiro: " + ", ".join(missing)
+    assert not unexpected, "Workflows inesperados en la matriz de retiro: " + ", ".join(unexpected)
+    assert len(documented) == 23, f"La matriz debe cubrir 23 candidatos; cubre {len(documented)}"
+    required_contracts = (
+        "este documento no desactiva, mueve ni elimina workflows",
+        "Retención:",
+        "Gate para el próximo PR",
+        "no modifica Hostinger, DNS, credenciales, accesos, analítica ni el ruleset",
+    )
+    for contract in required_contracts:
+        assert contract in source, f"Falta contrato de seguridad en la matriz: {contract}"
+    print(f"Matriz de retiro R2-A2: {len(documented)} candidatos documentados")
+
+
 def markdown(rows: list[dict[str, str]]) -> str:
     counts = Counter(row["classification"] for row in rows)
     lines = [
@@ -154,17 +178,23 @@ def markdown(rows: list[dict[str, str]]) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", type=Path)
+    parser.add_argument("--check-retirement-matrix", type=Path)
     parser.add_argument("--markdown", action="store_true")
     args = parser.parse_args()
     rows = inventory()
     output = markdown(rows)
+    checked = False
     if args.check:
         current = args.check.read_text(encoding="utf-8")
         assert current.rstrip() == output.rstrip(), f"Inventario desactualizado: {args.check}"
         print(f"Inventario R2-A2: {len(rows)} workflows clasificados y sincronizados")
-    elif args.markdown:
+        checked = True
+    if args.check_retirement_matrix:
+        validate_retirement_matrix(args.check_retirement_matrix)
+        checked = True
+    if args.markdown:
         print(output)
-    else:
+    elif not checked:
         counts = Counter(row["classification"] for row in rows)
         print(f"Inventario R2-A2 válido: {len(rows)} workflows · {dict(counts)}")
 

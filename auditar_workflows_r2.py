@@ -33,6 +33,7 @@ DECISIONS = {
     "diagnosticar_fuente_presupuesto.yml": ("archivar", "Diagnóstico manual puntual; no forma parte del pipeline regular."),
     "dinamica-productiva.yml": ("operativo", "Actualización de dinámica productiva."),
     "endeudamiento-mensual.yml": ("operativo", "Pipeline mensual de endeudamiento."),
+    "ensayar-restauracion-durable.yml": ("operativo", "Ensayo manual sin producción desde un release durable validado."),
     "estructura-productiva-actual.yml": ("operativo", "Actualización vigente de estructura productiva."),
     "estructura-productiva.yml": ("operativo", "Base estructural RUS 2017; salida diferenciada y publicación por el disparador canónico."),
     "explorar-red-peatonal.yml": ("operativo", "Generación controlada de artefactos de red peatonal."),

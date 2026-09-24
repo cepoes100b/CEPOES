@@ -192,6 +192,7 @@ def validate_workflow_inventory() -> None:
         "docs/seguridad/workflows-retirados/README.md",
     )
     run("python", "validar_rutas_publicacion.py")
+    run("python", "validar_rollback_durable.py")
 
 
 def create_runtime_fixture(site: Path) -> None:

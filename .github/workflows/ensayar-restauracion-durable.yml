@@ -1,0 +1,143 @@
+name: Ensayar restauración durable
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "deploy/crear_release_durable.py"
+      - "deploy/restaurar_release_durable.py"
+      - "validar_rollback_durable.py"
+      - ".github/workflows/desplegar-hostinger.yml"
+      - ".github/workflows/ensayar-restauracion-durable.yml"
+  workflow_dispatch:
+    inputs:
+      source_run_id:
+        description: "Run ID de un despliegue canónico terminado"
+        required: true
+        type: string
+      source_run_attempt:
+        description: "Intento del run seleccionado"
+        required: true
+        default: "1"
+        type: string
+      source_commit:
+        description: "SHA completo esperado del despliegue"
+        required: true
+        type: string
+      source_digest:
+        description: "Digest sha256 informado en el resumen del despliegue"
+        required: true
+        type: string
+      asset:
+        description: "Versión que se restaurará en el runner efímero"
+        required: true
+        default: before
+        type: choice
+        options:
+          - before
+          - candidate
+
+permissions:
+  actions: read
+  contents: read
+  packages: read
+
+concurrency:
+  group: cepoes-restore-test-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  contratos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+      - name: Validar contratos de backup y restauración
+        run: python validar_rollback_durable.py
+
+  restaurar-desde-artefacto:
+    if: github.event_name == 'workflow_dispatch'
+    needs: contratos
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SOURCE_RUN_ID: ${{ inputs.source_run_id }}
+      SOURCE_RUN_ATTEMPT: ${{ inputs.source_run_attempt }}
+      SOURCE_COMMIT: ${{ inputs.source_commit }}
+      SOURCE_DIGEST: ${{ inputs.source_digest }}
+      RESTORE_ASSET: ${{ inputs.asset }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Verificar la ejecución fuente
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SOURCE_RUN_ID" =~ ^[0-9]+$ ]]
+          [[ "$SOURCE_RUN_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
+          [[ "$SOURCE_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$SOURCE_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
+          gh run view "$SOURCE_RUN_ID" --repo "$GITHUB_REPOSITORY" --json conclusion,headSha,name > /tmp/source-run.json
+          python - <<'PY'
+          import json, os
+          data=json.load(open('/tmp/source-run.json', encoding='utf-8'))
+          assert data['name'] == 'Desplegar sitio en Hostinger', data
+          assert data['conclusion'] == 'success', data
+          assert data['headSha'] == os.environ['SOURCE_COMMIT'], data
+          print('Ejecución fuente canónica, exitosa y asociada al commit esperado')
+          PY
+
+      - name: Descargar el release desde el registro privado
+        shell: bash
+        run: |
+          set -euo pipefail
+          package_owner="${GITHUB_REPOSITORY_OWNER,,}"
+          package_name="cepoes-durable-backups"
+          image="ghcr.io/${package_owner}/${package_name}:${SOURCE_RUN_ID}-${SOURCE_RUN_ATTEMPT}@${SOURCE_DIGEST}"
+          owner_type="$(gh api "/users/${GITHUB_REPOSITORY_OWNER}" --jq '.type')"
+          case "$owner_type" in
+            User) package_endpoint="users/${GITHUB_REPOSITORY_OWNER}/packages/container/${package_name}" ;;
+            Organization) package_endpoint="orgs/${GITHUB_REPOSITORY_OWNER}/packages/container/${package_name}" ;;
+            *) echo "Tipo de propietario GitHub no admitido: $owner_type" >&2; exit 34 ;;
+          esac
+
+          visibility="$(gh api "/${package_endpoint}" --jq '.visibility')"
+          [ "$visibility" = "private" ] || { echo "El paquete fuente no es privado" >&2; exit 34; }
+
+          echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker pull "$image"
+          container="$(docker create "$image")"
+          trap 'docker rm -f "$container" >/dev/null 2>&1 || true' EXIT
+          mkdir _release-source
+          docker cp "$container:/release/." _release-source/
+
+      - name: Restaurar en destino controlado y verificar hashes
+        run: |
+          python deploy/restaurar_release_durable.py \
+            --release-dir _release-source \
+            --target _restore-test \
+            --report restore-report.json \
+            --asset "$RESTORE_ASSET" \
+            --expected-run-id "$SOURCE_RUN_ID" \
+            --expected-run-attempt "$SOURCE_RUN_ATTEMPT" \
+            --expected-commit "$SOURCE_COMMIT" \
+            --expected-source-digest "$SOURCE_DIGEST"
+
+      - name: Ejecutar smoke local sobre la restauración
+        run: |
+          python deploy/validar_publicacion_canonica.py _restore-test
+          python validar_busqueda_global.py _restore-test
+          python validar_r1_runtime.py _restore-test
+          python validar_sitio_despliegue.py _restore-test
+
+      - name: Conservar acta del ensayo
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: cepoes-restore-test-${{ github.run_id }}
+          path: restore-report.json
+          if-no-files-found: error
+          retention-days: 90

@@ -17,7 +17,7 @@ Esta capa automatiza la publicación del sitio sin convertir el repositorio de d
 
 `Ensayar restauración durable` recibe el run ID, intento, commit y digest de un despliegue canónico exitoso. Descarga por digest su release desde el paquete privado, verifica identidad y hashes, restaura `before` o `candidate` en un runner efímero y ejecuta los validadores del sitio. No usa secretos SFTP, no referencia el entorno `production` y no escribe en Hostinger. El acta JSON del ensayo —sin contenido del sitio— se conserva durante 90 días.
 
-El workflow de despliegue comprueba mediante la API de GitHub que el paquete `cepoes-durable-backups` mantiene visibilidad `private`. Si no puede confirmarlo, aborta antes de cualquier escritura SFTP. El digest inmutable que se necesita para el ensayo queda registrado en el resumen del run.
+El workflow comprueba la privacidad de `cepoes-durable-backups` de forma efectiva: una descarga anónima debe ser rechazada por autenticación y la misma imagen por digest debe descargarse con el token del workflow. Si cualquiera de las dos pruebas falla, aborta antes de toda escritura SFTP. El digest inmutable necesario para el ensayo queda registrado en el resumen del run.
 
 La restauración real sobre producción permanece deshabilitada. Habilitarla requiere autorización específica, revisión del destino y una publicación controlada.
 

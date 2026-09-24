@@ -98,15 +98,16 @@ jobs:
           package_owner="${GITHUB_REPOSITORY_OWNER,,}"
           package_name="cepoes-durable-backups"
           image="ghcr.io/${package_owner}/${package_name}:${SOURCE_RUN_ID}-${SOURCE_RUN_ATTEMPT}@${SOURCE_DIGEST}"
-          owner_type="$(gh api "/users/${GITHUB_REPOSITORY_OWNER}" --jq '.type')"
-          case "$owner_type" in
-            User) package_endpoint="users/${GITHUB_REPOSITORY_OWNER}/packages/container/${package_name}" ;;
-            Organization) package_endpoint="orgs/${GITHUB_REPOSITORY_OWNER}/packages/container/${package_name}" ;;
-            *) echo "Tipo de propietario GitHub no admitido: $owner_type" >&2; exit 34 ;;
-          esac
 
-          visibility="$(gh api "/${package_endpoint}" --jq '.visibility')"
-          [ "$visibility" = "private" ] || { echo "El paquete fuente no es privado" >&2; exit 34; }
+          docker logout ghcr.io >/dev/null 2>&1 || true
+          if docker pull "$image" > /tmp/package-anonymous-pull.log 2>&1; then
+            echo "El release fuente permite descarga anónima" >&2
+            exit 34
+          fi
+          grep -Eiq 'denied|unauthorized|authentication required' /tmp/package-anonymous-pull.log || {
+            echo "No se pudo demostrar que el rechazo anónimo se deba a autenticación" >&2
+            exit 34
+          }
 
           echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
           docker pull "$image"

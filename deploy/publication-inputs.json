@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "description": "Entradas versionadas que deben activar y validar el publicador canónico de CEPOES.",
+  "inputs": [
+    {"path": "deploy/site-overlay/**", "reason": "Árbol público versionado"},
+    {"path": "deploy/preparar_sitio_publico.py", "reason": "Normalización del sitio"},
+    {"path": "deploy/preparar_legislatura_publica.py", "reason": "Copia pública legislativa"},
+    {"path": "deploy/parche_observatorio_salud.py", "reason": "Integración del hub Salud"},
+    {"path": "deploy/preparar_puente_legislatura.py", "reason": "Integración del frontend legislativo"},
+    {"path": "deploy/validar_publicacion_canonica.py", "reason": "Contrato de módulos migrados"},
+    {"path": "deploy/delete-paths.txt", "reason": "Borrados públicos declarativos"},
+    {"path": "deploy/publication-inputs.json", "reason": "Manifiesto canónico de entradas"},
+    {"path": "generar_indice_busqueda_equipamientos.py", "reason": "Índice ciudadano de equipamientos"},
+    {"path": "generar_indice_busqueda_global.py", "reason": "Índice transversal del sitio"},
+    {"path": "generar_estado_datos.py", "reason": "Página de frescura de datos"},
+    {"path": "deploy/search-registry.json", "reason": "Registro de búsqueda canónico"},
+    {"path": "equipamientos/**", "reason": "Catálogo y capas territoriales"},
+    {"path": "legislatura_publica.json", "reason": "Universo legislativo público"},
+    {"path": "sesiones_publicas.json", "reason": "Sesiones legislativas públicas"},
+    {"path": "territorio.json", "reason": "Perfiles territoriales del estado de datos"},
+    {"path": "presupuesto.json", "reason": "Presupuesto del estado de datos"},
+    {"path": "validar_contraste_visual.py", "reason": "Gate de contraste"},
+    {"path": "validar_sitio_despliegue.py", "reason": "Gate integral prepublicación"},
+    {"path": "validar_busqueda_global.py", "reason": "Gate de búsqueda"},
+    {"path": "validar_r1_runtime.py", "reason": "Gate de robustez y confianza"},
+    {"path": "notificar_indexnow.py", "reason": "Notificación posterior al despliegue"},
+    {"path": "validar_rutas_publicacion.py", "reason": "Control del publicador y sus entradas"},
+    {"path": ".github/workflows/desplegar-hostinger.yml", "reason": "Definición del publicador canónico"}
+  ]
+}

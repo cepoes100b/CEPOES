@@ -1,15 +1,16 @@
-# CEPOES — Matriz de retiro de workflows históricos R2-A2
+# CEPOES — Matriz de retiro de workflows R2-A2 / R2-A3.2
 
 **Corte:** 23 de septiembre de 2026  
-**Base verificada:** `main` en `7c3c386b918aaecff858f0fbf01fdace07b1f783`  
-**Cobertura:** 23 workflows clasificados como `archivar` o `eliminar después de retención`  
+**Base verificada R2-A2:** `main` en `7c3c386b918aaecff858f0fbf01fdace07b1f783`\
+**Base verificada R2-A3.2:** `main` en `39448a96d12d14c409d7cbe20791435702f9736e`\
+**Cobertura:** 26 workflows clasificados como `archivar` o `eliminar después de retención`\
 **Alcance:** evidencia y plan de transición; este documento no desactiva, mueve ni elimina workflows.
 
-**Implementación propuesta:** el PR de desactivación mueve los 23 archivos a `docs/seguridad/workflows-retirados/` con extensión `.yml.txt`, checksum SHA-256 y commit de origen. La fusión permanece sujeta a autorización explícita.
+**Implementación:** R2-A2 movió 23 archivos a `docs/seguridad/workflows-retirados/`. R2-A3.2 propone mover otros 3 escritores laterales con extensión `.yml.txt`, checksum SHA-256 y commit de origen. La nueva fusión permanece sujeta a autorización explícita.
 
 ## 1. Resultado
 
-Los 23 candidatos son instaladores, reparaciones o publicadores puntuales con ejecución exclusivamente manual mediante `workflow_dispatch`. Ninguno aporta hoy una actualización programada o un control requerido por pull requests. Sus resultados vigentes están versionados y cubiertos por pipelines o verificadores canónicos.
+Los 23 candidatos originales son instaladores, reparaciones o publicadores puntuales con ejecución exclusivamente manual mediante `workflow_dispatch`. Los tres candidatos R2-A3.2 son escritores SFTP laterales que ya fueron absorbidos por el publicador canónico y conservarlos activos genera duplicación y riesgo de divergencia. Ninguno de los 26 aporta hoy una función operativa única ni un control requerido por pull requests.
 
 La conclusión es **retirable con transición controlada**, no “eliminar de inmediato”. La desactivación debe realizarse en otro pull request y sólo después de una última comprobación de reemplazos, historial de ejecuciones y controles verdes.
 
@@ -39,6 +40,7 @@ La conclusión es **retirable con transición controlada**, no “eliminar de in
 | `instalar_extractor_salud_mental_v2.yml` | Instalar extractor V2 | Reemplazado por V3, V4 y el `actualizar_salud_mental.py` vigente | No; versión supersedida | eliminar después de retención | medio |
 | `instalar_extractor_salud_mental_v3.yml` | Instalar extractor V3 | Reemplazado por V4 y el script canónico vigente | No; versión supersedida | eliminar después de retención | medio |
 | `instalar_extractor_salud_mental_v4.yml` | Instalar último extractor previo al pipeline estable | `actualizar_salud_mental.py` y `salud-mental.yml` ejecutan la actualización vigente | No; instalador histórico del script actual | archivar | medio |
+| `instalar-puente-legislatura.yml` | Inyectar y publicar por SFTP el puente público de Legislatura | R2-A3.1 ejecuta `preparar_puente_legislatura.py` y valida el resultado dentro del build canónico | No; quedó absorbido y publicado con smoke verde en el despliegue `35910256770` | archivar | alto |
 | `instalar_observatorio_descentralizacion (1).yml` | Primera copia del instalador del observatorio | Reemplazado por el instalador v2 y por activos versionados | No; copia nominal supersedida | eliminar después de retención | medio |
 | `instalar_observatorio_descentralizacion_v2.yml` | Instalar página, datos y JS de Descentralización | Activos vigentes y contrato completo en `validar_sitio_despliegue.py` | No; instalador de producto ya materializado | archivar | medio |
 | `instalar_salud_mental_descentralizacion.yml` | Integrar pipelines de Salud Mental y Descentralización | `salud-mental.yml` y `descentralizacion-comunas.yml` operan por separado | No; integración puntual ya aplicada | archivar | medio |
@@ -47,12 +49,14 @@ La conclusión es **retirable con transición controlada**, no “eliminar de in
 | `integrar_descentralizacion_presupuesto.yml` | Primera integración de Descentralización en Presupuesto | Reemplazada por v2/v3 y por página/activos vigentes | No; versión supersedida | eliminar después de retención | medio |
 | `integrar_descentralizacion_presupuesto_v2.yml` | Segunda integración de Descentralización en Presupuesto | Reemplazada por v3 seguro y contrato actual de despliegue | No; versión supersedida | eliminar después de retención | medio |
 | `integrar_descentralizacion_presupuesto_v3_seguro.yml` | Última integración puntual, con controles previos | Página, sitemaps, datos y JS están versionados y validados en cada despliegue | No; el resultado final está materializado | archivar | medio |
+| `parche-observatorio-salud.yml` | Parchear y republicar por SFTP la portada del Observatorio después del deploy | R2-A3.1 ejecuta `parche_observatorio_salud.py` y valida una sola sección Salud dentro del build canónico | No; tras el despliegue verde falló su smoke legado y restauró, demostrando que la segunda escritura es innecesaria | archivar | alto |
+| `publicar-datos-legislativos.yml` | Generar y subir por SFTP los JSON legislativos fuera del deploy general | R2-A3.1 genera y valida ambos JSON en `_site` y los publica en la misma sincronización y rollback | No; quedó absorbido y verificado por el smoke canónico | archivar | alto |
 | `reparar_sitemap_xml.yml` | Normalizar una vez el namespace y las entradas del sitemap | `validar_sitio_despliegue.py` parsea el XML, exige URLs y bloquea duplicados | No; reparación puntual ya aplicada | archivar | medio |
 
 ## 4. Evidencia transversal
 
-- Los 23 archivos coinciden byte por byte con los blobs del `main` verificado.
-- Los 23 sólo declaran `workflow_dispatch`; no tienen `schedule`, `push`, `pull_request` ni `workflow_run`.
+- Los 23 archivos R2-A2 coinciden byte por byte con los blobs de su `main` verificado y sólo declaran `workflow_dispatch`.
+- Los 3 archivos R2-A3.2 coinciden byte por byte con `main` `39448a96d12d14c409d7cbe20791435702f9736e` y conservan sus disparadores originales sólo dentro del archivo no ejecutable.
 - Ninguno apareció entre las 30 ejecuciones más recientes del repositorio consultadas al corte. Esto prueba ausencia reciente, pero no reemplaza la revisión completa del historial antes de desactivarlos.
 - Salud Mental conserva pipeline, actualizador, verificador, página, JS, CSS y dataset versionados.
 - Descentralización conserva pipeline, generador, verificador, página, JS, CSS y tres datasets versionados.
@@ -61,10 +65,10 @@ La conclusión es **retirable con transición controlada**, no “eliminar de in
 ## 5. Secuencia de retiro propuesta
 
 1. **Reconciliar nuevamente `main` y el historial de ejecución** inmediatamente antes del cambio.
-2. **Mover los 23 workflows fuera de `.github/workflows/`** en un PR exclusivo, como archivos no ejecutables bajo `docs/seguridad/workflows-retirados/`, preservando nombre, checksum y commit de origen.
-3. **Actualizar el inventario y su verificador** para exigir que sólo los 28 operativos y los 5 a migrar permanezcan activos.
+2. **Mover los 3 escritores R2-A3.2 fuera de `.github/workflows/`** en un PR exclusivo, como archivos no ejecutables bajo `docs/seguridad/workflows-retirados/`, preservando nombre, checksum y commit de origen.
+3. **Actualizar el inventario y su verificador** para exigir que sólo los 28 operativos y los 2 pendientes de migración permanezcan activos, con un único escritor SFTP.
 4. **Ejecutar R2, todos los validadores afectados y un build local**, sin publicar el sitio.
-5. **Conservar indefinidamente los 15 archivables** y observar durante 90 días los 8 marcados para eliminación.
+5. **Conservar indefinidamente los 18 archivables** y observar durante 90 días los 8 marcados para eliminación.
 6. **Eliminar sólo las ocho copias con retención cumplida** en otro PR, siempre que no exista pedido de restauración o evidencia de función única.
 
 ## 6. Gate para el próximo PR

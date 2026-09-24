@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bloquea nuevas rutas de escritura mientras R2-A3 migra las existentes."""
+"""Exige que sólo el publicador canónico pueda escribir en producción."""
 
 from __future__ import annotations
 
@@ -12,9 +12,6 @@ CANONICAL = WORKFLOWS / "desplegar-hostinger.yml"
 
 TRANSITION_WRITERS = {
     "desplegar-hostinger.yml",
-    "instalar-puente-legislatura.yml",
-    "parche-observatorio-salud.yml",
-    "publicar-datos-legislativos.yml",
 }
 
 WRITER_MARKERS = (
@@ -60,8 +57,8 @@ def main() -> None:
     assert canonical.count("mirror -R --verbose --parallel=2 --no-perms --no-umask _site") == 1
 
     print(
-        "Rutas de publicación R2-A3: 1 canónica + 3 legadas controladas; "
-        "sin nuevos escritores"
+        "Rutas de publicación R2-A3: 1 publicador canónico; "
+        "sin escritores laterales"
     )
 
 

@@ -113,10 +113,12 @@ def workflow_contracts() -> None:
     assert "packages: write" in deploy
     assert "ghcr.io/${package_owner}/${package_name}" in deploy
     assert "docker push" in deploy
-    assert "visibility" in deploy and '"private"' in deploy
+    assert "docker logout ghcr.io" in deploy and "package-anonymous-pull.log" in deploy
+    assert "descarga anónima" in deploy
     assert "workflow_dispatch:" in restore and "pull_request:" in restore
     assert "actions: read" in restore and "contents: read" in restore and "packages: read" in restore
     assert "source_digest:" in restore and "docker pull" in restore
+    assert "docker logout ghcr.io" in restore and "package-anonymous-pull.log" in restore
     assert "gh run download" not in restore
     assert "environment: production" not in restore
     for forbidden in ("HOSTINGER_", "SFTP_", "lftp", "mirror -R", "secrets."):

@@ -7,7 +7,7 @@ Cada ejecución canónica que llega a producción conserva dos estados exactos:
 - `before`: copia de la producción anterior a la publicación;
 - `candidate`: sitio validado que se publicará.
 
-Ambos estados se comprimen de forma determinista, se inventarían archivo por archivo y se acompañan con hashes SHA-256. La custodia se realiza como una imagen OCI en el paquete privado `cepoes-durable-backups` de GitHub Container Registry (GHCR). El workflow aborta antes de SFTP si la API de GitHub no confirma visibilidad `private`.
+Ambos estados se comprimen de forma determinista, se inventarían archivo por archivo y se acompañan con hashes SHA-256. La custodia se realiza como una imagen OCI en el paquete privado `cepoes-durable-backups` de GitHub Container Registry (GHCR). Antes de SFTP, el workflow exige que la descarga anónima sea rechazada por autenticación y que la descarga autenticada por digest funcione.
 
 La restauración sobre Hostinger permanece deliberadamente deshabilitada. El workflow disponible restaura únicamente en un runner efímero y no recibe secretos SFTP ni acceso al entorno `production`.
 
@@ -42,7 +42,7 @@ El resumen del run de despliegue registra además la referencia OCI completa con
 2. Copiar del resumen del run el run ID, intento, commit y digest `sha256:…`.
 3. Ejecutar manualmente `Ensayar restauración durable` y seleccionar `before` o `candidate`.
 4. El workflow verifica que el run corresponde al publicador canónico, que fue exitoso y que el commit coincide.
-5. Confirma que el paquete sigue siendo privado, descarga la imagen por digest, valida los hashes y extrae el contenido con protección contra traversal.
+5. Confirma que una descarga anónima es rechazada, descarga con autenticación la imagen por digest, valida los hashes y extrae el contenido con protección contra traversal.
 6. Ejecuta los validadores y smoke tests locales sobre el directorio efímero.
 7. Conserva durante 90 días un acta JSON sin contenido del sitio y con `production_written: false`.
 

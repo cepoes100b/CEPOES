@@ -37,6 +37,7 @@ DECISIONS = {
     "estructura-productiva-actual.yml": ("operativo", "Actualización vigente de estructura productiva."),
     "estructura-productiva.yml": ("operativo", "Base estructural RUS 2017; salida diferenciada y publicación por el disparador canónico."),
     "explorar-red-peatonal.yml": ("operativo", "Generación controlada de artefactos de red peatonal."),
+    "inicializar-paquete-respaldo-privado.yml": ("operativo", "Inicialización manual y temporal de un paquete vacío para verificar privacidad antes de almacenar respaldos."),
     "instalar-puente-legislatura.yml": ("archivar", "Puente absorbido y validado dentro del build/publicador canónico en R2-A3.1."),
     "instalar_descentralizacion_v2.yml": ("eliminar después de retención", "Instalador reemplazado por versiones posteriores."),
     "instalar_descentralizacion_v2_1.yml": ("archivar", "Último instalador de la serie; conservar evidencia antes de retirar."),

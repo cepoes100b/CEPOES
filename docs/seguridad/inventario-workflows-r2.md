@@ -9,8 +9,8 @@
 
 | Clasificación | Cantidad |
 | --- | ---: |
-| operativo | 28 |
-| migrar | 2 |
+| operativo | 30 |
+| migrar | 0 |
 
 ## Inventario
 
@@ -22,8 +22,8 @@
 | desplegar-hostinger.yml | workflow_dispatch, push | contents:read | SFTP, secretos | operativo | Publicador canónico del sitio con validación y rollback inmediato. |
 | dinamica-productiva.yml | workflow_dispatch, schedule, push | contents:write | git commit | operativo | Actualización de dinámica productiva. |
 | endeudamiento-mensual.yml | workflow_dispatch, schedule | contents:write | git push, git commit | operativo | Pipeline mensual de endeudamiento. |
-| estructura-productiva-actual.yml | workflow_dispatch, schedule, push, pull_request | contents:write, actions:write | git commit, acciones:write | operativo | Actualización vigente de estructura productiva. |
-| estructura-productiva.yml | workflow_dispatch, schedule, push | contents:write | git commit | migrar | Consolidar con estructura-productiva-actual para evitar dos rutas solapadas. |
+| estructura-productiva-actual.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git commit | operativo | Actualización vigente de estructura productiva. |
+| estructura-productiva.yml | workflow_dispatch, schedule, push | contents:write | git commit | operativo | Base estructural RUS 2017; salida diferenciada y publicación por el disparador canónico. |
 | explorar-red-peatonal.yml | workflow_dispatch, push | contents:read | sin escritura detectada | operativo | Generación controlada de artefactos de red peatonal. |
 | legislatura.yml | workflow_dispatch, schedule | contents:write | git commit | operativo | Pipeline regular de datos legislativos. |
 | migraciones.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de migraciones. |
@@ -31,7 +31,7 @@
 | personas-mayores.yml | workflow_dispatch, schedule, push, pull_request | implícito | git push, git commit | operativo | Pipeline regular de Personas Mayores. |
 | prensa-borradores.yml | workflow_dispatch, schedule, push | contents:read, id-token:write | sin escritura detectada | operativo | Generación programada de borradores de prensa. |
 | presupuesto.yml | workflow_dispatch, schedule | contents:write | git commit | operativo | Pipeline regular del observatorio presupuestario. |
-| reintentar-deploy-hostinger.yml | push, workflow_run | actions:write, contents:read | acciones:write | migrar | Incorporar el reintento al publicador canónico sin un segundo controlador. |
+| reintentar-deploy-hostinger.yml | workflow_run | actions:write, contents:read | acciones:write | operativo | Reintenta sólo jobs fallidos del publicador canónico de main, hasta tres intentos. |
 | salud-mental.yml | workflow_dispatch, schedule | contents:write | git push, git commit | operativo | Pipeline regular de Salud Mental. |
 | salud-reproductiva.yml | workflow_dispatch, schedule, pull_request | contents:write | sin escritura detectada | operativo | Pipeline regular de Salud Reproductiva. |
 | territorio.yml | workflow_dispatch, schedule, push | contents:write | git commit | operativo | Pipeline territorial regular. |
@@ -49,4 +49,4 @@
 
 ## Regla de transición
 
-Los dos elementos clasificados como `migrar` permanecen activos hasta contar con reemplazo probado y un PR específico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.
+No quedan workflows activos clasificados como `migrar`. Los dos productores de estructura productiva conservan salidas distintas y publican únicamente mediante el disparador por cambios del publicador canónico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.

@@ -34,7 +34,7 @@ DECISIONS = {
     "dinamica-productiva.yml": ("operativo", "Actualización de dinámica productiva."),
     "endeudamiento-mensual.yml": ("operativo", "Pipeline mensual de endeudamiento."),
     "estructura-productiva-actual.yml": ("operativo", "Actualización vigente de estructura productiva."),
-    "estructura-productiva.yml": ("migrar", "Consolidar con estructura-productiva-actual para evitar dos rutas solapadas."),
+    "estructura-productiva.yml": ("operativo", "Base estructural RUS 2017; salida diferenciada y publicación por el disparador canónico."),
     "explorar-red-peatonal.yml": ("operativo", "Generación controlada de artefactos de red peatonal."),
     "instalar-puente-legislatura.yml": ("archivar", "Puente absorbido y validado dentro del build/publicador canónico en R2-A3.1."),
     "instalar_descentralizacion_v2.yml": ("eliminar después de retención", "Instalador reemplazado por versiones posteriores."),
@@ -58,7 +58,7 @@ DECISIONS = {
     "prensa-borradores.yml": ("operativo", "Generación programada de borradores de prensa."),
     "presupuesto.yml": ("operativo", "Pipeline regular del observatorio presupuestario."),
     "publicar-datos-legislativos.yml": ("archivar", "JSON legislativos absorbidos y validados dentro del build/publicador canónico en R2-A3.1."),
-    "reintentar-deploy-hostinger.yml": ("migrar", "Incorporar el reintento al publicador canónico sin un segundo controlador."),
+    "reintentar-deploy-hostinger.yml": ("operativo", "Reintenta sólo jobs fallidos del publicador canónico de main, hasta tres intentos."),
     "reparar_sitemap_xml.yml": ("archivar", "Reparación puntual ya cubierta por validaciones del despliegue."),
     "salud-mental.yml": ("operativo", "Pipeline regular de Salud Mental."),
     "salud-reproductiva.yml": ("operativo", "Pipeline regular de Salud Reproductiva."),
@@ -212,7 +212,7 @@ def markdown(rows: list[dict[str, str]]) -> str:
         "",
         "## Regla de transición",
         "",
-        "Los dos elementos clasificados como `migrar` permanecen activos hasta contar con reemplazo probado y un PR específico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.",
+        "No quedan workflows activos clasificados como `migrar`. Los dos productores de estructura productiva conservan salidas distintas y publican únicamente mediante el disparador por cambios del publicador canónico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.",
         "",
     ])
     return "\n".join(lines)

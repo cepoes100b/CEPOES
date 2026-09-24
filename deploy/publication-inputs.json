@@ -10,6 +10,7 @@
     {"path": "deploy/validar_publicacion_canonica.py", "reason": "Contrato de módulos migrados"},
     {"path": "deploy/delete-paths.txt", "reason": "Borrados públicos declarativos"},
     {"path": "deploy/publication-inputs.json", "reason": "Manifiesto canónico de entradas"},
+    {"path": "deploy/crear_release_durable.py", "reason": "Empaquetado y manifiesto del release"},
     {"path": "generar_indice_busqueda_equipamientos.py", "reason": "Índice ciudadano de equipamientos"},
     {"path": "generar_indice_busqueda_global.py", "reason": "Índice transversal del sitio"},
     {"path": "generar_estado_datos.py", "reason": "Página de frescura de datos"},
@@ -25,6 +26,7 @@
     {"path": "validar_r1_runtime.py", "reason": "Gate de robustez y confianza"},
     {"path": "notificar_indexnow.py", "reason": "Notificación posterior al despliegue"},
     {"path": "validar_rutas_publicacion.py", "reason": "Control del publicador y sus entradas"},
+    {"path": "validar_rollback_durable.py", "reason": "Contrato de respaldo y restauración"},
     {"path": ".github/workflows/desplegar-hostinger.yml", "reason": "Definición del publicador canónico"}
   ]
 }

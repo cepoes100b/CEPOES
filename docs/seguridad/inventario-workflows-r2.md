@@ -1,7 +1,7 @@
 # CEPOES — Inventario R2-A2 de GitHub Actions
 
 **Corte:** 23 de septiembre de 2026  
-**Cobertura:** 30 workflows activos en `.github/workflows/`\
+**Cobertura:** 31 workflows activos en `.github/workflows/`\
 **Archivo no ejecutable:** 26 workflows históricos bajo `docs/seguridad/workflows-retirados/`\
 **Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.
 
@@ -9,7 +9,7 @@
 
 | Clasificación | Cantidad |
 | --- | ---: |
-| operativo | 30 |
+| operativo | 31 |
 | migrar | 0 |
 
 ## Inventario
@@ -19,9 +19,10 @@
 | actualizar.yml | workflow_dispatch, schedule | contents:write | git commit | operativo | Actualización automática general de datos. |
 | analizar-legislatura.yml | workflow_dispatch, schedule, push | contents:read, id-token:write | secretos | operativo | Análisis legislativo programado con identidad federada. |
 | descentralizacion-comunas.yml | workflow_dispatch, schedule | contents:write | git push, git commit | operativo | Actualización programada de datos comunales. |
-| desplegar-hostinger.yml | workflow_dispatch, push | contents:read | SFTP, secretos | operativo | Publicador canónico del sitio con validación y rollback inmediato. |
+| desplegar-hostinger.yml | workflow_dispatch, push | contents:read, packages:write | SFTP, secretos | operativo | Publicador canónico del sitio con validación y rollback inmediato. |
 | dinamica-productiva.yml | workflow_dispatch, schedule, push | contents:write | git commit | operativo | Actualización de dinámica productiva. |
 | endeudamiento-mensual.yml | workflow_dispatch, schedule | contents:write | git push, git commit | operativo | Pipeline mensual de endeudamiento. |
+| ensayar-restauracion-durable.yml | workflow_dispatch, pull_request | actions:read, contents:read, packages:read | sin escritura detectada | operativo | Ensayo manual sin producción desde un release durable validado. |
 | estructura-productiva-actual.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git commit | operativo | Actualización vigente de estructura productiva. |
 | estructura-productiva.yml | workflow_dispatch, schedule, push | contents:write | git commit | operativo | Base estructural RUS 2017; salida diferenciada y publicación por el disparador canónico. |
 | explorar-red-peatonal.yml | workflow_dispatch, push | contents:read | sin escritura detectada | operativo | Generación controlada de artefactos de red peatonal. |

@@ -1,4 +1,4 @@
-name: Inicializar paquete privado de respaldo
+# R2-A4: inicializador temporal sin acceso a producción; base revalidada sobre main 274919b.\nname: Inicializar paquete privado de respaldo
 
 on:
   workflow_dispatch:

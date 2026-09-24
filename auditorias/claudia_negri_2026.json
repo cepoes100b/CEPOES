@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-23T23:19:03.715535+00:00",
+  "generado_en": "2026-09-24T18:10:11.556403+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,23 +9,23 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2024-02-28",
-    "fecha_mas_reciente_obtenida": "2026-09-23",
-    "ids_del_anio_en_ventana": 3033,
-    "ids_revisados_acumulados": 3033,
+    "fecha_mas_antigua_obtenida": "2024-02-29",
+    "fecha_mas_reciente_obtenida": "2026-09-24",
+    "ids_del_anio_en_ventana": 3046,
+    "ids_revisados_acumulados": 3046,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
-    "expedientes_seguimiento_institucional": 231,
-    "expedientes_auditados": 231,
-    "autoría_principal": 43,
+    "expedientes_seguimiento_institucional": 232,
+    "expedientes_auditados": 232,
+    "autoría_principal": 44,
     "coautoría": 188,
-    "fichas_oficiales_completas": 231,
+    "fichas_oficiales_completas": 232,
     "con_evidencia_sancion": 91,
     "problemas": 0
   },
   "por_tipo": {
-    "DECLARACION": 93,
+    "DECLARACION": 94,
     "RESOLUCION": 74,
     "LEY": 64
   },
@@ -34,11 +34,11 @@
     "archivado": 84,
     "sancionado": 17,
     "con_dictamen": 3,
-    "despacho": 2,
-    "ingresado": 2
+    "ingresado": 3,
+    "despacho": 2
   },
   "por_etapa_ciclo": {
-    "en_comision": 125,
+    "en_comision": 126,
     "archivado": 84,
     "sancionado": 17,
     "con_dictamen": 5
@@ -104,6 +104,41 @@
   },
   "problemas": [],
   "expedientes": [
+    {
+      "id_expediente": "142590",
+      "numero": "2986-D-2026",
+      "fecha_ingreso": "2026-09-24T12:35:34",
+      "sumario": "SE DECLARA DE INTERÉS SANITARIO A LAS XXXIX JORNADAS MULTIDISCIPLINARIAS, XXVII JORNADAS DE ENFERMERÍA Y VIII JORNADAS DE ESPECIALIDADES DE ASISTENCIA TÉCNICA A LA SALUD DEL HOSPITAL DR. JOSÉ MARÍA RAMOS MEJÍA.-",
+      "rol_claudia": "autora",
+      "rol_recalculado": "autora",
+      "autoría_confirmada": true,
+      "rol_consistente": true,
+      "autores": [
+        "NEGRI, CLAUDIA"
+      ],
+      "cantidad_autores": 1,
+      "tipo_oficial": "DECLARACION",
+      "estado_actual": "ingresado",
+      "etapa_ciclo": "en_comision",
+      "ubicacion": "DGDP",
+      "giros": [
+        "(GIRO AUN NO ASIGNADO)"
+      ],
+      "ultimo_movimiento": {
+        "fecha": "2026-09-24",
+        "oficina": "DGDP",
+        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+      },
+      "evidencia_sancion": false,
+      "fuentes_sancion": [],
+      "fuentes_captura": [
+        "radar_ingresos",
+        "seguimiento_institucional"
+      ],
+      "ficha_oficial_completa": true,
+      "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142590",
+      "es_832_2026": false
+    },
     {
       "id_expediente": "142522",
       "numero": "2918-D-2026",
@@ -1049,7 +1084,6 @@
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,

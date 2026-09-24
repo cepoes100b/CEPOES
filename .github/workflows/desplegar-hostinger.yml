@@ -1,3 +1,4 @@
+# R2-A3: único workflow autorizado para escribir el sitio en producción.
 name: Desplegar sitio en Hostinger
 
 on:

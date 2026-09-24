@@ -1,7 +1,7 @@
 # CEPOES — Inventario R2-A2 de GitHub Actions
 
 **Corte:** 23 de septiembre de 2026  
-**Cobertura:** 31 workflows activos en `.github/workflows/`\
+**Cobertura:** 32 workflows activos en `.github/workflows/`\
 **Archivo no ejecutable:** 26 workflows históricos bajo `docs/seguridad/workflows-retirados/`\
 **Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.
 
@@ -9,7 +9,7 @@
 
 | Clasificación | Cantidad |
 | --- | ---: |
-| operativo | 31 |
+| operativo | 32 |
 | migrar | 0 |
 
 ## Inventario
@@ -26,6 +26,7 @@
 | estructura-productiva-actual.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git commit | operativo | Actualización vigente de estructura productiva. |
 | estructura-productiva.yml | workflow_dispatch, schedule, push | contents:write | git commit | operativo | Base estructural RUS 2017; salida diferenciada y publicación por el disparador canónico. |
 | explorar-red-peatonal.yml | workflow_dispatch, push | contents:read | sin escritura detectada | operativo | Generación controlada de artefactos de red peatonal. |
+| inicializar-paquete-respaldo-privado.yml | workflow_dispatch | contents:read, packages:write | sin escritura detectada | operativo | Inicialización manual y temporal de un paquete vacío para verificar privacidad antes de almacenar respaldos. |
 | legislatura.yml | workflow_dispatch, schedule | contents:write | git commit | operativo | Pipeline regular de datos legislativos. |
 | migraciones.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de migraciones. |
 | natalidad.yml | workflow_dispatch, schedule, pull_request | contents:write | sin escritura detectada | operativo | Pipeline regular de natalidad y demografía. |

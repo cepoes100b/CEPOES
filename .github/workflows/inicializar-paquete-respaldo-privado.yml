@@ -1,0 +1,83 @@
+# R2-A4: inicializador temporal sin acceso a producción; base revalidada sobre main 274919b.\nname: Inicializar paquete privado de respaldo
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: cepoes-bootstrap-private-backup-package
+  cancel-in-progress: false
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      PACKAGE_NAME: cepoes-durable-backups-v2
+
+    steps:
+      - name: Crear imagen vacía de inicialización
+        shell: bash
+        run: |
+          set -euo pipefail
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          image="ghcr.io/${owner}/${PACKAGE_NAME}:bootstrap-${GITHUB_RUN_ID}"
+
+          mkdir -p _bootstrap
+          printf '%s\n'             'Paquete inicial vacío para verificar privacidad.'             'No contiene respaldos, archivos del sitio ni credenciales.'             > _bootstrap/README.txt
+          cat > _bootstrap/Dockerfile <<EOF
+          FROM scratch
+          LABEL org.opencontainers.image.source="https://github.com/${GITHUB_REPOSITORY}"
+          LABEL org.opencontainers.image.description="Inicialización vacía para verificar privacidad antes de almacenar respaldos"
+          COPY README.txt /README.txt
+          EOF
+
+          echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker build --tag "$image" _bootstrap
+          docker push "$image" | tee /tmp/bootstrap-push.log
+
+          digest="$(sed -n 's/^.*digest: \(sha256:[0-9a-f]\{64\}\).*$/\1/p' /tmp/bootstrap-push.log | tail -1)"
+          [[ "$digest" =~ ^sha256:[0-9a-f]{64}$ ]]
+
+          {
+            echo "IMAGE=${image}"
+            echo "DIGEST=${digest}"
+          } >> "$GITHUB_ENV"
+
+      - name: Verificar que la descarga anónima sea rechazada
+        shell: bash
+        run: |
+          set -euo pipefail
+          docker logout ghcr.io >/dev/null 2>&1 || true
+          docker image rm "$IMAGE" >/dev/null 2>&1 || true
+
+          if docker pull "$IMAGE@$DIGEST" > /tmp/anonymous-pull.log 2>&1; then
+            echo "El paquete fue creado con lectura pública. No usar para respaldos." >&2
+            exit 33
+          fi
+
+          grep -Eiq 'denied|unauthorized|authentication required' /tmp/anonymous-pull.log || {
+            echo "La descarga anónima falló por una causa distinta de autenticación." >&2
+            sed -n '1,20p' /tmp/anonymous-pull.log >&2
+            exit 34
+          }
+
+      - name: Verificar descarga autenticada por digest
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker pull "$IMAGE@$DIGEST" >/dev/null
+
+          {
+            echo "### Paquete privado inicializado"
+            echo "- Paquete: `ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/${PACKAGE_NAME}`"
+            echo "- Digest: `${DIGEST}`"
+            echo "- Contenido: marcador vacío sin datos del sitio"
+            echo "- Privacidad: descarga anónima rechazada"
+            echo "- Integridad: descarga autenticada por digest aprobada"
+          } >> "$GITHUB_STEP_SUMMARY"

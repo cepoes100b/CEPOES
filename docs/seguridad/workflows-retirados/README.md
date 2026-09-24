@@ -1,9 +1,10 @@
 # CEPOES — Archivo no ejecutable de workflows retirados
 
-**Origen:** `main` `7c3c386b918aaecff858f0fbf01fdace07b1f783`  
+**Origen R2-A2:** `main` `7c3c386b918aaecff858f0fbf01fdace07b1f783`\
+**Origen R2-A3.2:** `main` `39448a96d12d14c409d7cbe20791435702f9736e`\
 **Corte:** 23 de septiembre de 2026  
-**Cobertura:** 23 workflows históricos  
-**Estado:** propuesta de desactivación reversible; estos archivos sólo dejan de ser ejecutables si el PR que los mueve fuera de `.github/workflows/` es fusionado.
+**Cobertura:** 26 workflows históricos\
+**Estado:** 23 workflows retirados en R2-A2 y 3 escritores laterales propuestos para retiro reversible en R2-A3.2.
 
 Los archivos conservan exactamente sus bytes de origen y agregan únicamente el sufijo `.txt`. GitHub Actions sólo reconoce workflows dentro de `.github/workflows/`; esta ubicación preserva la evidencia sin ofrecer ejecución manual accidental.
 
@@ -25,6 +26,7 @@ Los archivos conservan exactamente sus bytes de origen y agregan únicamente el 
 | `instalar_extractor_salud_mental_v2.yml` | `8462182d98b7f2d8c89dd62e0a5040258deb50ec8b1db435b499b6a6ad002e40` | eliminar después de retención | 90 días desde la fusión |
 | `instalar_extractor_salud_mental_v3.yml` | `fb1541fc41cf920868ba37bb9fcac4815746bd3ccb9c25f05f513e37353c36d7` | eliminar después de retención | 90 días desde la fusión |
 | `instalar_extractor_salud_mental_v4.yml` | `93be676e63006d0881595363402f2ff0625b6dcab34b1c749197494881869d35` | archivar | indefinida |
+| `instalar-puente-legislatura.yml` | `d43bb701128be7e0fb960c291c1345820408b48d6c0047ce8579c42fde1e14f7` | archivar | indefinida |
 | `instalar_observatorio_descentralizacion (1).yml` | `d089a4537740e9ee98bae7b1eee31a866b1aa37b3087266d6aafd14895413b5b` | eliminar después de retención | 90 días desde la fusión |
 | `instalar_observatorio_descentralizacion_v2.yml` | `e540a1c64415b48753c4ce9f9f32db0b86562f8d82a74af76dd52db3687a1b07` | archivar | indefinida |
 | `instalar_salud_mental_descentralizacion.yml` | `b471941700335f209fb5248c5c16dabe0a80ec0d10ed2e75721d8983151736c4` | archivar | indefinida |
@@ -33,6 +35,8 @@ Los archivos conservan exactamente sus bytes de origen y agregan únicamente el 
 | `integrar_descentralizacion_presupuesto.yml` | `78cfa74193940dcad14f99bf53f17cb830e3a6fa9b6a918f4e1cbf6c08185ba5` | eliminar después de retención | 90 días desde la fusión |
 | `integrar_descentralizacion_presupuesto_v2.yml` | `e5390db37ec5ca08ae1dfcce3b9510b7a8fa7dd2e9f112d5e1060d84ef4f1ed3` | eliminar después de retención | 90 días desde la fusión |
 | `integrar_descentralizacion_presupuesto_v3_seguro.yml` | `259826980df7e3e0c375a111890296a860d09bc9603f583bc51ef1f48e0ff0ed` | archivar | indefinida |
+| `parche-observatorio-salud.yml` | `4d3fb21ec8f894bfbe3525f4086ab9c9cbe867faf3a57be0b37b27520775534a` | archivar | indefinida |
+| `publicar-datos-legislativos.yml` | `01084684077368cf73640f69b1332a9d6ebe33b632599d11001bb4a6e8090545` | archivar | indefinida |
 | `reparar_sitemap_xml.yml` | `91d93dc1018b60413eb13c0a45387af481b68e6bdea3ad2ae20f33f47eb9b637` | archivar | indefinida |
 
 ## Restauración

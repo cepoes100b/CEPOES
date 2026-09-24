@@ -1,8 +1,8 @@
 # CEPOES — Inventario R2-A2 de GitHub Actions
 
 **Corte:** 23 de septiembre de 2026  
-**Cobertura:** 33 workflows activos en `.github/workflows/`  
-**Archivo no ejecutable:** 23 workflows históricos bajo `docs/seguridad/workflows-retirados/`  
+**Cobertura:** 30 workflows activos en `.github/workflows/`\
+**Archivo no ejecutable:** 26 workflows históricos bajo `docs/seguridad/workflows-retirados/`\
 **Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.
 
 ## Resumen
@@ -10,7 +10,7 @@
 | Clasificación | Cantidad |
 | --- | ---: |
 | operativo | 28 |
-| migrar | 5 |
+| migrar | 2 |
 
 ## Inventario
 
@@ -25,15 +25,12 @@
 | estructura-productiva-actual.yml | workflow_dispatch, schedule, push, pull_request | contents:write, actions:write | git commit, acciones:write | operativo | Actualización vigente de estructura productiva. |
 | estructura-productiva.yml | workflow_dispatch, schedule, push | contents:write | git commit | migrar | Consolidar con estructura-productiva-actual para evitar dos rutas solapadas. |
 | explorar-red-peatonal.yml | workflow_dispatch, push | contents:read | sin escritura detectada | operativo | Generación controlada de artefactos de red peatonal. |
-| instalar-puente-legislatura.yml | workflow_dispatch, push | contents:read | SFTP, secretos | migrar | Absorber el puente en el build/publicador canónico. |
 | legislatura.yml | workflow_dispatch, schedule | contents:write | git commit | operativo | Pipeline regular de datos legislativos. |
 | migraciones.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de migraciones. |
 | natalidad.yml | workflow_dispatch, schedule, pull_request | contents:write | sin escritura detectada | operativo | Pipeline regular de natalidad y demografía. |
-| parche-observatorio-salud.yml | workflow_dispatch, push, workflow_run | contents:read | SFTP, secretos | migrar | Integrar el parche al overlay y despliegue canónicos. |
 | personas-mayores.yml | workflow_dispatch, schedule, push, pull_request | implícito | git push, git commit | operativo | Pipeline regular de Personas Mayores. |
 | prensa-borradores.yml | workflow_dispatch, schedule, push | contents:read, id-token:write | sin escritura detectada | operativo | Generación programada de borradores de prensa. |
 | presupuesto.yml | workflow_dispatch, schedule | contents:write | git commit | operativo | Pipeline regular del observatorio presupuestario. |
-| publicar-datos-legislativos.yml | workflow_dispatch, workflow_run | contents:read | SFTP, secretos | migrar | Mantener sólo como publicador acotado o absorberlo en el canónico. |
 | reintentar-deploy-hostinger.yml | push, workflow_run | actions:write, contents:read | acciones:write | migrar | Incorporar el reintento al publicador canónico sin un segundo controlador. |
 | salud-mental.yml | workflow_dispatch, schedule | contents:write | git push, git commit | operativo | Pipeline regular de Salud Mental. |
 | salud-reproductiva.yml | workflow_dispatch, schedule, pull_request | contents:write | sin escritura detectada | operativo | Pipeline regular de Salud Reproductiva. |
@@ -52,4 +49,4 @@
 
 ## Regla de transición
 
-Los cinco elementos clasificados como `migrar` permanecen activos hasta contar con reemplazo probado y un PR específico. Los 23 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.
+Los dos elementos clasificados como `migrar` permanecen activos hasta contar con reemplazo probado y un PR específico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.

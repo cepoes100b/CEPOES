@@ -36,7 +36,7 @@ DECISIONS = {
     "estructura-productiva-actual.yml": ("operativo", "Actualización vigente de estructura productiva."),
     "estructura-productiva.yml": ("migrar", "Consolidar con estructura-productiva-actual para evitar dos rutas solapadas."),
     "explorar-red-peatonal.yml": ("operativo", "Generación controlada de artefactos de red peatonal."),
-    "instalar-puente-legislatura.yml": ("migrar", "Absorber el puente en el build/publicador canónico."),
+    "instalar-puente-legislatura.yml": ("archivar", "Puente absorbido y validado dentro del build/publicador canónico en R2-A3.1."),
     "instalar_descentralizacion_v2.yml": ("eliminar después de retención", "Instalador reemplazado por versiones posteriores."),
     "instalar_descentralizacion_v2_1.yml": ("archivar", "Último instalador de la serie; conservar evidencia antes de retirar."),
     "instalar_extractor_salud_mental_v2.yml": ("eliminar después de retención", "Extractor reemplazado por v3/v4."),
@@ -53,11 +53,11 @@ DECISIONS = {
     "legislatura.yml": ("operativo", "Pipeline regular de datos legislativos."),
     "migraciones.yml": ("operativo", "Pipeline regular de migraciones."),
     "natalidad.yml": ("operativo", "Pipeline regular de natalidad y demografía."),
-    "parche-observatorio-salud.yml": ("migrar", "Integrar el parche al overlay y despliegue canónicos."),
+    "parche-observatorio-salud.yml": ("archivar", "Hub Salud absorbido y validado dentro del build/publicador canónico en R2-A3.1."),
     "personas-mayores.yml": ("operativo", "Pipeline regular de Personas Mayores."),
     "prensa-borradores.yml": ("operativo", "Generación programada de borradores de prensa."),
     "presupuesto.yml": ("operativo", "Pipeline regular del observatorio presupuestario."),
-    "publicar-datos-legislativos.yml": ("migrar", "Mantener sólo como publicador acotado o absorberlo en el canónico."),
+    "publicar-datos-legislativos.yml": ("archivar", "JSON legislativos absorbidos y validados dentro del build/publicador canónico en R2-A3.1."),
     "reintentar-deploy-hostinger.yml": ("migrar", "Incorporar el reintento al publicador canónico sin un segundo controlador."),
     "reparar_sitemap_xml.yml": ("archivar", "Reparación puntual ya cubierta por validaciones del despliegue."),
     "salud-mental.yml": ("operativo", "Pipeline regular de Salud Mental."),
@@ -153,7 +153,11 @@ def validate_archive_manifest(path: Path) -> None:
         expected_digest, expected_classification = manifest[name]
         assert digest == expected_digest, f"Checksum inválido para {name}"
         assert DECISIONS[name][0] == expected_classification, f"Clasificación inválida para {name}"
-    assert "7c3c386b918aaecff858f0fbf01fdace07b1f783" in source, "Falta el commit de origen"
+    for origin in (
+        "7c3c386b918aaecff858f0fbf01fdace07b1f783",
+        "39448a96d12d14c409d7cbe20791435702f9736e",
+    ):
+        assert origin in source, f"Falta el commit de origen {origin}"
     print(f"Archivo R2-A2: {len(archived)} workflows no ejecutables con checksum válido")
 
 
@@ -165,7 +169,7 @@ def validate_retirement_matrix(path: Path) -> None:
     unexpected = sorted(documented - expected)
     assert not missing, "Candidatos ausentes en la matriz de retiro: " + ", ".join(missing)
     assert not unexpected, "Workflows inesperados en la matriz de retiro: " + ", ".join(unexpected)
-    assert len(documented) == 23, f"La matriz debe cubrir 23 candidatos; cubre {len(documented)}"
+    assert len(documented) == 26, f"La matriz debe cubrir 26 candidatos; cubre {len(documented)}"
     required_contracts = (
         "este documento no desactiva, mueve ni elimina workflows",
         "Retención:",
@@ -183,8 +187,8 @@ def markdown(rows: list[dict[str, str]]) -> str:
         "# CEPOES — Inventario R2-A2 de GitHub Actions",
         "",
         "**Corte:** 23 de septiembre de 2026  ",
-        f"**Cobertura:** {len(rows)} workflows activos en `.github/workflows/`  ",
-        "**Archivo no ejecutable:** 23 workflows históricos bajo `docs/seguridad/workflows-retirados/`  ",
+        f"**Cobertura:** {len(rows)} workflows activos en `.github/workflows/`\\",
+        "**Archivo no ejecutable:** 26 workflows históricos bajo `docs/seguridad/workflows-retirados/`\\",
         "**Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.",
         "",
         "## Resumen",
@@ -208,7 +212,7 @@ def markdown(rows: list[dict[str, str]]) -> str:
         "",
         "## Regla de transición",
         "",
-        "Los cinco elementos clasificados como `migrar` permanecen activos hasta contar con reemplazo probado y un PR específico. Los 23 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.",
+        "Los dos elementos clasificados como `migrar` permanecen activos hasta contar con reemplazo probado y un PR específico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.",
         "",
     ])
     return "\n".join(lines)

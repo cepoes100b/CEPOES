@@ -109,7 +109,7 @@ SEARCH = (
     '<div class="search-head"><div><span class="eyebrow">CEPOES</span><strong id="site-search-title">Buscar en el sitio</strong></div>'
     '<button aria-label="Cerrar búsqueda" class="search-close" data-search-close type="button">×</button></div>'
     '<label class="search-field"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"></circle>'
-    '<path d="m16 16 4 4"></path></svg><input autocomplete="off" id="site-search-input" '
+    '<path d="m16 16 4 4"></path></svg><input aria-label="Buscar en CEPOES" autofocus autocomplete="off" id="site-search-input" '
     'placeholder="Indicadores, comunas, expedientes, publicaciones, propuestas…" type="search"></label>'
     '<div class="search-filters" id="site-search-filters">'
     '<button class="chip active" data-search-filter="Todo">Todo</button>'
@@ -741,7 +741,7 @@ def normalize_html(path: Path, site: Path) -> None:
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
-    source = re.sub(r'/assets/common(?:-r1)?\.js(?:\?v=\d+)?', '/assets/common-r1.js?v=258', source)
+    source = re.sub(r'/assets/common(?:-r1)?\.js(?:\?v=\d+)?', '/assets/common-r1.js?v=259', source)
     source = re.sub(r'/assets/thematic-map\.js(?:\?v=\d+)?', '/assets/thematic-map.js?v=258', source)
     source = re.sub(r'/assets/brechas\.js(?:\?v=\d+)?', '/assets/brechas.js?v=258', source)
     source = re.sub(r'/assets/migraciones\.js(?:\?v=\d+)?', '/assets/migraciones.js?v=258', source)

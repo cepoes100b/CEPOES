@@ -56,9 +56,11 @@ def main() -> None:
         "Edge Function",
     )
     assert "SUPABASE_SERVICE_ROLE_KEY" in function
-    assert "sb_secret_" not in function and "service_role" not in function.lower().replace(
-        "supabase_service_role_key", ""
-    ), "No incluir credenciales de servicio"
+    secret_key_prefix = "sb_" + "secret_"
+    scrubbed = function.lower().replace("supabase_service_role_key", "")
+    assert secret_key_prefix not in function and "service_role" not in scrubbed, (
+        "No incluir credenciales de servicio"
+    )
 
     print("Suscripción segura: contrato backend preparado")
 

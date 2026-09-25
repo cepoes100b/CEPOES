@@ -45,7 +45,7 @@ def main() -> None:
         status = (site / "datos/estado/index.html").read_text(encoding="utf-8")
         for token in ("Fuente", "Último conjunto", "Cobertura", "Estado", "Disponible"):
             assert token in status, f"Estado de datos incompleto: {token}"
-        assert "/assets/common-r1.js?v=258" in status, "Estado de datos no carga la interacción global"
+        assert "/assets/common-r1.js?v=259" in status, "Estado de datos no carga la interacción global"
 
     print("R1 runtime: fechas, fallbacks, Migraciones, relacionados, rótulo y estado de datos válidos")
 

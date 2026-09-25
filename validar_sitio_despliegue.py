@@ -272,6 +272,18 @@ assert all(pos>=0 for pos in home_positions) and home_positions==sorted(home_pos
 for token in ['home-editorial-datum','home-strategy-grid','La Ciudad hoy','Balance de gestión 2007–2026','Una Ciudad posible','href="/balance/"','home-comparison-grid','home-neighborhood-form','home-subscription-form','home-new-link','href="/lo-nuevo/"','Leer la versión web →','/assets/home-redesign.js?v=1']:
     assert token in home, f'Bloque de portada incompleto: {token}'
 assert home.count('class="home-comparison-card"')==4, 'La home debe mostrar exactamente cuatro datos comparados'
+assert home.count('class="home-comparison-source-link"')==4, 'Cada dato comparado debe enlazar su fuente oficial'
+for source_url in [
+    'https://www.estadisticaciudad.gob.ar/eyc/operativos/indice-precios-consumidor-ipcba/',
+    'https://www.estadisticaciudad.gob.ar/eyc/categoria-banco-datos/tasas-de-actividad-empleo-y-desocupacion/',
+    'https://www.estadisticaciudad.gob.ar/eyc/operativos/producto-geografico-bruto-pgb/',
+    'https://www.estadisticaciudad.gob.ar/eyc/categoria-banco-datos/linea-de-pobreza-e-indigencia/',
+]:
+    assert f'href="{source_url}"' in home, f'Fuente oficial ausente en home: {source_url}'
+assert 'Datos generados el ' in home and 'enlaza la fuente oficial' in home, 'La home debe informar fecha y trazabilidad de los indicadores'
+source_data=json.loads((Path(__file__).resolve().parent/'datos.json').read_text(encoding='utf-8'))
+latest_unemployment=f'{source_data["empleo"]["desocupacion"][-1]:.1f}'.replace('.',',')+'%'
+assert latest_unemployment in home, f'La home no refleja la última desocupación disponible: {latest_unemployment}'
 assert home.count('home-strategy-card')==3, 'La home debe mostrar exactamente tres recorridos estratégicos'
 new_page=(root/'lo-nuevo'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['<h1>Lo nuevo</h1>','id="new-search"','id="new-type"','id="new-topic"','Qué entra en “Lo nuevo”','/assets/lo-nuevo.css','/assets/lo-nuevo.js?v=1']:

@@ -23,6 +23,7 @@ on:
       - "sesiones_publicas.json"
       - "territorio.json"
       - "presupuesto.json"
+      - "datos.json"
       - "validar_contraste_visual.py"
       - "validar_sitio_despliegue.py"
       - "validar_busqueda_global.py"

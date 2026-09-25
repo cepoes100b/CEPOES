@@ -385,7 +385,16 @@ def slugify(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", value).strip("-")
 
 
-def comparison_card(label: str, value: str, period: str, change: float, comparison: str, color: str) -> str:
+def comparison_card(
+    label: str,
+    value: str,
+    period: str,
+    change: float,
+    comparison: str,
+    color: str,
+    source_label: str,
+    source_url: str,
+) -> str:
     if abs(change) < .05:
         direction, icon, verb = "flat", "→", "Sin cambios"
     elif change > 0:
@@ -398,6 +407,8 @@ def comparison_card(label: str, value: str, period: str, change: float, comparis
         f'<span class="home-comparison-label">{html.escape(label)}</span>'
         f'<strong>{html.escape(value)}</strong><span class="home-comparison-period">{html.escape(period)}</span>'
         f'<p class="home-comparison-change is-{direction}"><b>{icon} {verb} {delta} p.p.</b> {html.escape(comparison)}</p>'
+        f'<a class="home-comparison-source-link" href="{html.escape(source_url, quote=True)}" target="_blank" rel="noopener">'
+        f'Fuente: {html.escape(source_label)} ↗</a>'
         '</article>'
     )
 
@@ -441,16 +452,16 @@ def restructure_home(source: str) -> str:
     )
 
     kpis = "".join([
-        comparison_card("Inflación · IPCBA", f'+{fmt_number(ipc["var_m"][-1])}%', fmt_period(ipc["meses"][-1]), ipc["var_m"][-1]-ipc["var_m"][-2], f'frente al mes anterior · {fmt_number(ipc["var_ia"][-1])}% interanual', "var(--lH)"),
-        comparison_card("Desocupación", f'{fmt_number(employment["desocupacion"][-1])}%', fmt_period(employment["trimestres"][-1]), employment["desocupacion"][-1]-employment["desocupacion"][-2], f'frente al trimestre anterior · {fmt_number(employment["desocupacion"][-1]-employment["desocupacion"][-5])} p.p. interanual', "var(--lB)"),
-        comparison_card("Actividad · PGB", f'+{fmt_number(pgb["total"][-1])}% i.a.', fmt_period(pgb["trimestres"][-1]), pgb["total"][-1]-pgb["total"][-2], 'frente a la variación interanual del trimestre anterior', "var(--lA)"),
-        comparison_card("Pobreza", f'{fmt_number(poverty["pob_per_pct"][-1])}%', fmt_period(poverty["periodos"][-1]), poverty["pob_per_pct"][-1]-poverty["pob_per_pct"][-5], 'frente al mismo trimestre del año anterior', "var(--lE)"),
+        comparison_card("Inflación · IPCBA", f'+{fmt_number(ipc["var_m"][-1])}%', fmt_period(ipc["meses"][-1]), ipc["var_m"][-1]-ipc["var_m"][-2], f'frente al mes anterior · {fmt_number(ipc["var_ia"][-1])}% interanual', "var(--lH)", "IDECBA · IPCBA", "https://www.estadisticaciudad.gob.ar/eyc/operativos/indice-precios-consumidor-ipcba/"),
+        comparison_card("Desocupación", f'{fmt_number(employment["desocupacion"][-1])}%', fmt_period(employment["trimestres"][-1]), employment["desocupacion"][-1]-employment["desocupacion"][-2], f'frente al trimestre anterior · {fmt_number(employment["desocupacion"][-1]-employment["desocupacion"][-5])} p.p. interanual', "var(--lB)", "IDECBA · Mercado de trabajo", "https://www.estadisticaciudad.gob.ar/eyc/categoria-banco-datos/tasas-de-actividad-empleo-y-desocupacion/"),
+        comparison_card("Actividad · PGB", f'+{fmt_number(pgb["total"][-1])}% i.a.', fmt_period(pgb["trimestres"][-1]), pgb["total"][-1]-pgb["total"][-2], 'frente a la variación interanual del trimestre anterior', "var(--lA)", "IDECBA · PGB", "https://www.estadisticaciudad.gob.ar/eyc/operativos/producto-geografico-bruto-pgb/"),
+        comparison_card("Pobreza", f'{fmt_number(poverty["pob_per_pct"][-1])}%', fmt_period(poverty["periodos"][-1]), poverty["pob_per_pct"][-1]-poverty["pob_per_pct"][-5], 'frente al mismo trimestre del año anterior', "var(--lE)", "IDECBA · Pobreza e indigencia", "https://www.estadisticaciudad.gob.ar/eyc/categoria-banco-datos/linea-de-pobreza-e-indigencia/"),
     ])
     kpi_section = (
         '<section class="section alt home-kpi-section"><div class="wrap"><div class="section-head"><div>'
         '<span class="eyebrow">Cuatro datos para situarse</span><h2>La comparación le da sentido al número</h2>'
         '</div></div><div class="home-comparison-grid">' + kpis + '</div>'
-        '<p class="source home-comparison-source">Fuentes: IDECBA · INDEC · Elaboración CEPOES. Cada tarjeta conserva el período de referencia.</p>'
+        f'<p class="source home-comparison-source">Datos generados el {fmt_date(data["generado"])} a partir de IDECBA. Cada tarjeta conserva su período de referencia y enlaza la fuente oficial.</p>'
         '</div></section>'
     )
 

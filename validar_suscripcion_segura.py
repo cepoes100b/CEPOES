@@ -6,6 +6,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 MIGRATION = ROOT / "supabase/migrations/20260925143000_harden_newsletter_double_opt_in.sql"
 FUNCTION = ROOT / "supabase/functions/newsletter-subscribe/index.ts"
+LOGIC = ROOT / "supabase/functions/newsletter-subscribe/logic.js"
+TESTS = ROOT / "tests/newsletter_logic.test.mjs"
 
 
 def require(source: str, tokens: list[str], label: str) -> None:
@@ -16,6 +18,8 @@ def require(source: str, tokens: list[str], label: str) -> None:
 def main() -> None:
     migration = MIGRATION.read_text(encoding="utf-8")
     function = FUNCTION.read_text(encoding="utf-8")
+    logic = LOGIC.read_text(encoding="utf-8")
+    tests = TESTS.read_text(encoding="utf-8")
 
     require(
         migration,
@@ -39,8 +43,8 @@ def main() -> None:
         function,
         [
             'npm:@supabase/supabase-js@2.95.0',
+            'from "./logic.js"',
             "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-            'outcome?.action === "newsletter_subscribe"',
             "TURNSTILE_ALLOWED_HOSTNAMES",
             "RATE_LIMIT_SALT",
             "newsletter_check_rate_limit",
@@ -60,6 +64,25 @@ def main() -> None:
     scrubbed = function.lower().replace("supabase_service_role_key", "")
     assert secret_key_prefix not in function and "service_role" not in scrubbed, (
         "No incluir credenciales de servicio"
+    )
+
+    require(
+        logic,
+        [
+            "isAllowedTurnstileOutcome",
+            'outcome?.action === "newsletter_subscribe"',
+            "isValidConfirmationToken",
+            "isInsideResendCooldown",
+        ],
+        "Lógica comprobable",
+    )
+    require(
+        tests,
+        [
+            "Turnstile exige éxito, acción y hostname esperados",
+            "aplica quince minutos de espera",
+        ],
+        "Pruebas unitarias",
     )
 
     print("Suscripción segura: contrato backend preparado")

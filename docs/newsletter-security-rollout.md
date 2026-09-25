@@ -45,10 +45,15 @@ No registrar valores secretos en GitHub, logs, documentación ni código.
 
 Este PR no debe aplicarse parcialmente en producción.
 
-1. Crear una rama de desarrollo de Supabase o un proyecto de prueba.
-2. Aplicar la migración y desplegar `newsletter-subscribe` con verificación JWT desactivada.
-3. Configurar los secretos sólo en el entorno de prueba.
-4. Probar:
+1. Validar gratuitamente el contrato estático y las funciones puras con
+   `python validar_suscripcion_segura.py` y
+   `node --test tests/newsletter_logic.test.mjs`.
+2. Para la prueba integrada, usar una rama de desarrollo de Supabase o un
+   proyecto de prueba sólo si se autoriza expresamente su costo. La validación
+   local no modifica producción ni sustituye esa prueba integrada.
+3. Aplicar la migración y desplegar `newsletter-subscribe` con verificación JWT desactivada.
+4. Configurar los secretos sólo en el entorno de prueba.
+5. Probar:
    - origen no permitido: 403;
    - cuerpo inválido: 400;
    - Turnstile inválido: 400;
@@ -59,17 +64,17 @@ Este PR no debe aplicarse parcialmente en producción.
    - token vencido, reutilizado o modificado: rechazo;
    - ninguna lectura pública de correos;
    - asesores de seguridad sin nuevos hallazgos críticos.
-5. Preparar un segundo PR de frontend que:
+6. Preparar un segundo PR de frontend que:
    - renderice Turnstile con la site key pública;
    - envíe `email`, `consent`, `company` y `turnstile_token` a la Edge Function;
    - deje de usar `/rest/v1/newsletter_subscriptions`;
    - informe “Revisá tu correo para confirmar” y no “Te sumamos”.
-6. En ventana coordinada:
+7. En ventana coordinada:
    - desplegar función y secretos;
    - ejecutar la migración;
    - fusionar/publicar el frontend;
    - realizar smoke test completo.
-7. Si el frontend no completa el smoke, revertir su publicación. Si la función falla antes del cambio de portada, no ejecutar la migración.
+8. Si el frontend no completa el smoke, revertir su publicación. Si la función falla antes del cambio de portada, no ejecutar la migración.
 
 ## Rollback
 

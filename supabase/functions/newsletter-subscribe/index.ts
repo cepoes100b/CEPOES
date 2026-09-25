@@ -1,4 +1,12 @@
 import { createClient } from "npm:@supabase/supabase-js@2.95.0";
+import {
+  clientIpFromForwardedFor,
+  isAllowedTurnstileOutcome,
+  isInsideResendCooldown,
+  isValidConfirmationToken,
+  isValidEmail,
+  normalizeEmail,
+} from "./logic.js";
 
 const PUBLIC_SITE = "https://cepoes.org/";
 const FUNCTION_PATH = "/functions/v1/newsletter-subscribe";
@@ -6,7 +14,6 @@ const ALLOWED_ORIGINS = new Set([
   "https://cepoes.org",
   "https://www.cepoes.org",
 ]);
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const encoder = new TextEncoder();
 
 function json(status: number, body: unknown, origin?: string) {
@@ -73,10 +80,7 @@ async function hmacSha256(value: string, secret: string) {
 }
 
 function clientIp(req: Request) {
-  return (req.headers.get("x-forwarded-for") || "")
-    .split(",")[0]
-    .trim()
-    .slice(0, 80);
+  return clientIpFromForwardedFor(req.headers.get("x-forwarded-for"));
 }
 
 async function verifyTurnstile(token: string, ip: string) {
@@ -101,9 +105,7 @@ async function verifyTurnstile(token: string, ip: string) {
       .map((value) => value.trim())
       .filter(Boolean),
   );
-  return outcome?.success === true &&
-    outcome?.action === "newsletter_subscribe" &&
-    allowedHostnames.has(String(outcome?.hostname || ""));
+  return isAllowedTurnstileOutcome(outcome, allowedHostnames);
 }
 
 async function sendConfirmation(email: string, rawToken: string) {
@@ -134,7 +136,7 @@ async function sendConfirmation(email: string, rawToken: string) {
 
 async function confirm(req: Request) {
   const token = new URL(req.url).searchParams.get("token") || "";
-  if (!/^[A-Za-z0-9_-]{40,60}$/.test(token)) return redirect("invalid");
+  if (!isValidConfirmationToken(token)) return redirect("invalid");
   const tokenHash = await sha256(token);
   const db = admin();
   const { data, error } = await db
@@ -171,10 +173,10 @@ async function subscribe(req: Request, origin: string) {
   }
 
   if (String(body.company || "").trim()) return json(202, { ok: true }, origin);
-  const email = String(body.email || "").trim().toLowerCase();
+  const email = normalizeEmail(body.email);
   const consent = body.consent === true;
   const turnstileToken = String(body.turnstile_token || "");
-  if (!consent || email.length > 254 || !EMAIL_RE.test(email)) {
+  if (!consent || !isValidEmail(email)) {
     return json(400, { ok: false }, origin);
   }
 
@@ -203,9 +205,8 @@ async function subscribe(req: Request, origin: string) {
   if (existingError) throw existingError;
   if (existing?.status === "active") return json(202, { ok: true }, origin);
 
-  if (existing?.last_requested_at) {
-    const elapsed = Date.now() - Date.parse(existing.last_requested_at);
-    if (elapsed < 15 * 60 * 1000) return json(202, { ok: true }, origin);
+  if (isInsideResendCooldown(existing?.last_requested_at)) {
+    return json(202, { ok: true }, origin);
   }
 
   const rawToken = randomToken();

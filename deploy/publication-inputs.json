@@ -20,6 +20,7 @@
     {"path": "sesiones_publicas.json", "reason": "Sesiones legislativas públicas"},
     {"path": "territorio.json", "reason": "Perfiles territoriales del estado de datos"},
     {"path": "presupuesto.json", "reason": "Presupuesto del estado de datos"},
+    {"path": "datos.json", "reason": "Indicadores principales de la portada"},
     {"path": "validar_contraste_visual.py", "reason": "Gate de contraste"},
     {"path": "validar_sitio_despliegue.py", "reason": "Gate integral prepublicación"},
     {"path": "validar_busqueda_global.py", "reason": "Gate de búsqueda"},

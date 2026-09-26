@@ -18,6 +18,7 @@
     {"query":"migraciones","title":"Migraciones en CABA","url":"/territorio/migraciones/","group":"Territorio","type":"Datos","summary":"Migración internacional e interna, distribución y condiciones de vida.","tags":["migraciones","eah","censo"],"priority":20},
     {"query":"estructura productiva","title":"Estructura productiva de CABA","url":"/territorio/estructura-productiva/","group":"Territorio","type":"Datos","summary":"Empresas, actividad comercial, habilitaciones y especialización por comuna.","tags":["estructura productiva","empresas","comercio"],"priority":20},
     {"query":"endeudamiento","title":"Endeudamiento de los hogares","url":"/territorio/endeudamiento/","group":"Territorio","type":"Datos","summary":"Deuda, mora y desigualdad territorial de los hogares.","tags":["endeudamiento","deuda","mora"],"priority":20},
+    {"query":"tormenta negra","title":"Seguridad y derechos en barrios populares","url":"/territorio/seguridad-barrios-populares/","group":"Territorio","type":"Monitor","summary":"Seguimiento de operativos masivos, balances oficiales y preguntas sobre seguridad y derechos.","tags":["tormenta negra","seguridad","barrios populares","derechos","operativos"],"priority":30},
     {"query":"deporte y salud","title":"Deporte y vida saludable en CABA","url":"/territorio/deporte-salud/","group":"Territorio","type":"Datos","summary":"Clubes, polideportivos, Estaciones Saludables y CeSAC por comuna.","tags":["deporte","salud","clubes","polideportivos"],"priority":20},
     {"query":"legislatura","title":"Legislatura de la Ciudad","url":"/legislatura/","group":"Legislatura","type":"Seguimiento legislativo","summary":"Expedientes, comisiones, reuniones y actividad legislativa oficial.","tags":["legislatura","expedientes","comisiones"],"priority":20},
     {"query":"publicaciones","title":"Publicaciones","url":"/publicaciones/","group":"Publicaciones","type":"Archivo editorial","summary":"Boletines, informes, notas y análisis de CEPOES.","tags":["publicaciones","informes","boletines"],"priority":20},
@@ -34,4 +35,3 @@
     {"query":"estado de los datos","title":"Estado de los datos","url":"/datos/estado/","group":"Datos","type":"Transparencia operativa","summary":"Actualización, cobertura y disponibilidad de las fuentes principales.","tags":["estado de los datos","fuentes","actualizacion"],"priority":20}
   ]
 }
-

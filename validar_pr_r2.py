@@ -254,6 +254,8 @@ def create_canonical_publication_fixture(site: Path) -> None:
 
 def validate_product_contracts() -> None:
     run("python", "validar_contraste_visual.py")
+    run("python", "validar_suscripcion_segura.py")
+    run("node", "--test", "tests/newsletter_logic.test.mjs")
     with tempfile.TemporaryDirectory(prefix="cepoes-r2-") as directory:
         site = Path(directory)
         create_runtime_fixture(site)

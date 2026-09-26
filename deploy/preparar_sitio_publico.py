@@ -164,6 +164,7 @@ def territory_subnav(rel: str) -> str:
         ("/territorio/endeudamiento/", "Endeudamiento"),
         ("/territorio/migraciones/", "Migraciones"),
         ("/territorio/estructura-productiva/", "Estructura productiva"),
+        ("/territorio/seguridad-barrios-populares/", "Seguridad y derechos"),
         ("/territorio/deporte-salud/", "Deporte y salud"),
         ("/observatorio/salud-mental/", "Salud mental"),
         ("/observatorio/personas-mayores/", "Personas mayores"),

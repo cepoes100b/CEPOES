@@ -1,0 +1,9 @@
+# Monitor de seguridad y derechos en barrios populares
+
+El archivo `deploy/site-overlay/assets/data/seguridad-barrios-operativos.json` registra **episodios**, no personas ni hechos delictivos individuales. El primer corte (26/9/2026) reproduce cifras atribuidas al GCBA. `null` significa información no publicada o aún no verificada; nunca se convierte en cero. El despliegue anunciado como “más de 1.500” se conserva como umbral, no como recuento exacto. La lista de 15 territorios respeta la denominación comunicada por el Gobierno y no equivale a 15 unidades estadísticas independientes.
+
+Actualizar cada episodio sólo al contar con documento fechado y URL. Guardar el balance original; si una cifra cambia, registrar fuente, fecha y motivo en una nueva revisión Git. Separar detenciones iniciales de destino procesal. No publicar testimonios identificables, direcciones de incidentes ni datos de niños o adolescentes. Los relatos recibidos deben corroborarse, solicitar consentimiento, ofrecer respuesta a los organismos señalados y publicarse sólo agregados anonimizados.
+
+La página pública `/territorio/seguridad-barrios-populares/` carga este JSON desde `/assets/data/seguridad-barrios-operativos.json`, copia que el publicador conserva en la capa pública. La revisión es editorial: episodio nuevo dentro de 48 horas; verificación semanal de avances; síntesis mensual. Se pide información desagregada al GCBA bajo Ley 104 sobre efectivos, horas, controles, actas, costos, quejas y resultados posteriores.
+
+Fuentes auxiliares para contexto: [BA Data Delitos](https://data.buenosaires.gob.ar/dataset/delitos) (actualización anual), [BA Data Barrios Populares](https://data.buenosaires.gob.ar/dataset/barrios-populares), [Defensoría del Pueblo](https://defensoria.org.ar/categoria-biblioteca/seguridad-y-violencia-institucional/). Estas series no se deben presentar como evaluación causal de un operativo puntual.

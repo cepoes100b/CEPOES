@@ -150,8 +150,18 @@ def process(item: dict) -> dict:
 
 def main() -> int:
     resources=discover(); old=existing_map(); periods=[]; reused=0; updated=0
+    discovered={x["periodo"] for x in resources}
+    for period, prev in old.items():
+        if period not in discovered and prev.get("resource"):
+            resources.append({
+                "ejercicio":prev["ejercicio"],
+                "trimestre":prev["trimestre"],
+                "periodo":period,
+                "resource":prev["resource"],
+            })
+    resources=sorted(resources,key=lambda x:(x["ejercicio"],x["trimestre"]))
     if not resources:
-        raise RuntimeError("No se descubrieron recursos trimestrales")
+        raise RuntimeError("No se descubrieron recursos trimestrales ni existe serie previa reutilizable")
     for item in resources:
         prev=old.get(item["periodo"])
         if (prev and prev.get("parser_rev")==PARSER_REV

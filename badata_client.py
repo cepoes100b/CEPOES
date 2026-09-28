@@ -6,6 +6,7 @@ reconstruye el listado de recursos desde la página pública del dataset.
 from __future__ import annotations
 
 import re
+import time
 from urllib.parse import urljoin
 
 import requests
@@ -94,26 +95,37 @@ def _package_from_html(dataset: str, response: requests.Response) -> dict:
 
 def package_show(dataset: str) -> dict:
     api_error = None
-    try:
-        r = requests.get(API, params={"id": dataset}, timeout=TIMEOUT, headers=HEADERS)
-        r.raise_for_status()
+    for attempt in range(4):
         try:
-            payload = r.json()
-        except ValueError as exc:
+            r = requests.get(API, params={"id": dataset}, timeout=TIMEOUT, headers=HEADERS)
+            r.raise_for_status()
+            try:
+                payload = r.json()
+            except ValueError as exc:
+                api_error = exc
+            else:
+                if payload.get("success") and payload.get("result"):
+                    result = payload["result"]
+                    result["_cepoes_catalog_mode"] = "ckan-api"
+                    result["_cepoes_dataset_url"] = urljoin(DATASET_URL, dataset)
+                    return result
+                api_error = RuntimeError(f"CKAN no devolvió el dataset {dataset}")
+        except requests.RequestException as exc:
             api_error = exc
-        else:
-            if payload.get("success") and payload.get("result"):
-                result = payload["result"]
-                result["_cepoes_catalog_mode"] = "ckan-api"
-                result["_cepoes_dataset_url"] = urljoin(DATASET_URL, dataset)
-                return result
-            api_error = RuntimeError(f"CKAN no devolvió el dataset {dataset}")
-    except requests.RequestException as exc:
-        api_error = exc
+        if attempt < 3:
+            time.sleep(2 * (attempt + 1))
 
     page_url = urljoin(DATASET_URL, dataset)
-    page = requests.get(page_url, timeout=TIMEOUT, headers=HEADERS, allow_redirects=True)
-    page.raise_for_status()
-    package = _package_from_html(dataset, page)
-    package["_cepoes_api_error"] = type(api_error).__name__ if api_error else None
-    return package
+    page_error = None
+    for attempt in range(3):
+        try:
+            page = requests.get(page_url, timeout=TIMEOUT, headers=HEADERS, allow_redirects=True)
+            page.raise_for_status()
+            package = _package_from_html(dataset, page)
+            package["_cepoes_api_error"] = type(api_error).__name__ if api_error else None
+            return package
+        except Exception as exc:
+            page_error = exc
+            if attempt < 2:
+                time.sleep(2 * (attempt + 1))
+    raise RuntimeError(f"BA Data inaccesible para {dataset}: API={api_error}; HTML={page_error}")

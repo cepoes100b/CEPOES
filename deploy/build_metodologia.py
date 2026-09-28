@@ -121,18 +121,6 @@ SHEETS = [
     ]),
 ]
 
-CODE_PATHS = {
-    "observatorio": "generar_datos.py",
-    "territorio": "generar_territorio.py",
-    "brechas": "deploy/site-overlay/assets/brechas.js",
-    "endeudamiento": "generar_endeudamiento_barrios.py",
-    "presupuesto": "generar_presupuesto.py",
-    "legislatura": "actualizar_legislatura.py",
-    "migraciones": "actualizar_migraciones.py",
-    "salud-mental": "actualizar_salud_mental.py",
-}
-
-
 def frame(title, description, path, body):
     return f'''<!doctype html><html data-theme="light" lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#16232f"><title>{escape(title)} — CEPOES</title><meta name="description" content="{escape(description, quote=True)}"><link rel="canonical" href="https://cepoes.org{path}"><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="/assets/site.css" rel="stylesheet"><link href="/assets/arquitectura.css" rel="stylesheet"><link href="/assets/metodologia.css?v=1" rel="stylesheet"><script defer src="/assets/common-r1.js?v=259"></script></head><body><nav class="site-nav"><div class="wrap nav-in"><a class="brand" href="/"><span class="logo">CEP<b>OES</b></span><span class="brand-sub"><strong>SOMOS 100 BARRIOS</strong></span></a><div class="nav-links"><a href="/observatorio/">Observatorio</a><a href="/balance/">Balance</a><a href="/presupuesto/">Presupuesto</a><a href="/territorio/">Territorio</a><a href="/legislatura/">Legislatura</a><a href="/publicaciones/">Publicaciones</a><a href="/propuestas/">Propuestas</a><a href="/prensa/">Prensa</a><a href="/lo-nuevo/">Lo nuevo</a><a class="active" href="/cepoes/">CEPOES</a></div><button aria-label="Buscar en CEPOES" class="search-btn" data-search-open>⌕</button><button aria-label="Cambiar tema" class="theme-btn" data-theme-toggle>◐</button><button aria-label="Abrir menú" class="menu-btn" data-menu-toggle>☰</button></div></nav><main id="contenido" class="method-page">{body}</main><footer class="footer"><div class="wrap footer-grid"><div><a class="logo" href="/">CEP<b>OES</b></a><p>Datos, investigación y propuestas para CABA, desde los barrios.</p><strong>SOMOS 100 BARRIOS</strong></div><div><h5>CEPOES</h5><a href="/cepoes/">Quiénes somos</a><a href="{BASE}">Metodología y fuentes</a><a href="mailto:contacto@cepoes.org">contacto@cepoes.org</a></div></div><div class="wrap footer-copy">© 2026 CEPOES · Somos 100 Barrios</div></footer></body></html>'''
 
@@ -145,8 +133,7 @@ def hero(title, deck, slug=""):
 def sheet_page(d):
     toc = ''.join(a('#' + key, title) for key, title, _ in d['sections'])
     content = ''.join(section(*item) for item in d['sections'])
-    code_url = 'https://github.com/cepoes100b/CEPOES/blob/main/' + CODE_PATHS[d['slug']]
-    content += section('trazabilidad', 'Consultar el producto y sus fuentes', f'<p>La fecha de esta ficha indica cuándo se revisaron sus reglas; el último período disponible se consulta en el producto. El código público permite examinar la transformación utilizada. Si detectás una diferencia entre esta ficha y una visualización, escribí a {a("mailto:contacto@cepoes.org", "contacto@cepoes.org")} con el enlace y período.</p><div class="method-links">{a(d["product"], "Explorar el producto →")}{a(code_url, "Ver transformación en GitHub ↗")}{a("/datos/estado/", "Estado de los datos →")}{a(BASE, "Todas las metodologías →")}</div>')
+    content += section('trazabilidad', 'Consultar el producto y sus fuentes', f'<p>La fecha de esta ficha indica cuándo se revisaron sus reglas; el último período disponible se consulta en el producto. Si detectás una diferencia entre esta ficha y una visualización, escribí a {a("mailto:contacto@cepoes.org", "contacto@cepoes.org")} con el enlace y período.</p><div class="method-links">{a(d["product"], "Explorar el producto →")}{a("/datos/estado/", "Estado de los datos →")}{a(BASE, "Todas las metodologías →")}</div>')
     body = hero(d['title'], d['deck'], d['slug']) + f'<div class="section"><div class="wrap method-layout"><article><p class="method-kicker">Ficha técnica · {escape(d["tag"])}</p><div class="method-note"><p><strong>Fuente:</strong> {escape(d["source"])}<br><strong>Escala:</strong> {escape(d["scale"])}<br><strong>Frecuencia:</strong> {escape(d["frequency"])}</p></div>{content}</article><aside class="method-index" aria-label="Contenido de la ficha"><strong>En esta ficha</strong>{toc}{a("#trazabilidad", "Producto y consultas")}{a(BASE, "Volver al índice")}</aside></div></div>'
     return frame('Ficha técnica: ' + d['title'], d['deck'], BASE + d['slug'] + '/', body)
 

@@ -43,8 +43,10 @@ def main() -> None:
             assert path.is_file(), f"Falta {rel}"
             assert token in path.read_text(encoding="utf-8"), f"Falta {token} en {rel}"
         status = (site / "datos/estado/index.html").read_text(encoding="utf-8")
-        for token in ("Fuente", "Último conjunto", "Cobertura", "Estado", "Disponible"):
+        for token in ("Conjuntos publicados", "Procesado", "Cobertura", "Ficha técnica", "Procesamiento y período no son lo mismo"):
             assert token in status, f"Estado de datos incompleto: {token}"
+        assert status.count('class="state-card"') == 6, "El estado de datos debe cubrir seis conjuntos"
+        assert "github.com/cepoes100b/CEPOES" not in status, "Estado de datos enlaza al repositorio"
         assert "/assets/common-r1.js?v=259" in status, "Estado de datos no carga la interacción global"
 
     print("R1 runtime: fechas, fallbacks, Migraciones, relacionados, rótulo y estado de datos válidos")

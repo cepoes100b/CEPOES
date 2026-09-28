@@ -16,7 +16,7 @@ from pathlib import Path
 import requests
 from openpyxl import load_workbook
 
-from fuentes_territorio import BA_DATA_API, DATASETS_TERRITORIO
+from fuentes_territorio import DATASETS_TERRITORIO\nfrom badata_client import package_show as badata_package_show
 
 BASE = Path(__file__).resolve().parent
 DIR = BASE / "badata"
@@ -52,11 +52,7 @@ def get(url: str, **kwargs):
 
 
 def package_show(dataset: str) -> dict:
-    r = get(BA_DATA_API, params={"id": dataset})
-    payload = r.json()
-    if not payload.get("success") or not payload.get("result"):
-        raise RuntimeError(f"CKAN no devolvió el dataset {dataset}")
-    return payload["result"]
+    return badata_package_show(dataset)
 
 
 def normal_format(v: str) -> str:

@@ -13,7 +13,7 @@ import re
 from pathlib import Path
 from urllib.parse import urljoin
 
-import requests
+import requests\n\nfrom badata_client import package_show as badata_package_show
 
 BASE = Path(__file__).resolve().parent
 WORK = BASE / "badata" / "presupuesto"
@@ -36,12 +36,20 @@ QUARTERS = {
 
 
 def package_show(dataset: str) -> dict:
-    r = requests.get(API, params={"id": dataset}, timeout=TIMEOUT)
-    r.raise_for_status()
-    payload = r.json()
-    if not payload.get("success"):
-        raise RuntimeError(f"BA Data no devolvió el dataset {dataset}")
-    return payload["result"]
+    return badata_package_show(dataset)
+
+
+def latest_executed_package() -> tuple[str, dict]:
+    year = dt.datetime.now(dt.timezone.utc).year
+    errors = []
+    for dataset in (f"presupuesto-ejecutado-{year}", f"presupuesto-ejecutado-{year - 1}", "presupuesto-ejecutado"):
+        try:
+            pkg = package_show(dataset)
+            choose_executed(pkg)
+            return dataset, pkg
+        except Exception as exc:
+            errors.append(f"{dataset}: {type(exc).__name__}: {exc}")
+    raise RuntimeError("No se pudo resolver Presupuesto Ejecutado: " + " | ".join(errors))
 
 
 def is_csv(resource: dict) -> bool:
@@ -130,7 +138,7 @@ def meta(resource: dict) -> dict:
 
 
 def main() -> int:
-    executed_pkg = package_show("presupuesto-ejecutado")
+    executed_dataset, executed_pkg = latest_executed_package()
     sanctioned_pkg = package_show("presupuesto-sancionado")
     executed, year, quarter = choose_executed(executed_pkg)
     sanctioned = choose_sanctioned(sanctioned_pkg, year)
@@ -147,7 +155,7 @@ def main() -> int:
         "trimestre": quarter,
         "fuente": "BA Data · Ministerio de Hacienda y Finanzas GCBA",
         "dataset_ejecutado": {
-            "url": "https://data.buenosaires.gob.ar/dataset/presupuesto-ejecutado",
+            "url": f"https://data.buenosaires.gob.ar/dataset/{executed_dataset}",
             "updated": executed_pkg.get("metadata_modified"),
             "resource": meta(executed),
             "bytes": exec_size,

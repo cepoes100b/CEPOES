@@ -216,5 +216,22 @@
       "partida_especifica": "no",
       "evidencia": "Actas publicadas; Junta no administra la web; reclamos canalizados por distintos medios, sin acreditación específica de plazo y expediente para todos los casos."
     }
-  ]
+  ],
+  "last_checked_at": "2026-09-28",
+  "freshness": {
+    "classification": "baseline_historica_vigente",
+    "note": "La matriz sigue describiendo el autorreporte oficial de las 15 Juntas Comunales de julio-agosto de 2024; no se localizó una respuesta oficial consolidada posterior de alcance equivalente. No debe interpretarse como auditoría del cumplimiento actual.",
+    "current_context": [
+      {
+        "name": "Disposición 3/DGAIGA/2026",
+        "url": "https://boletinoficial.buenosaires.gob.ar/normativaba/norma/850289",
+        "relevance": "Aprueba el procedimiento general para implementación, seguimiento y monitoreo del Plan de Transparencia Activa de la Ley 104; no reemplaza el baseline específico de Ley 5.629 por comuna."
+      },
+      {
+        "name": "Disposición 1/DGAIGA/2026",
+        "url": "https://boletinoficial.buenosaires.gob.ar/normativaba/norma/855833",
+        "relevance": "Aprueba el procedimiento para cargar información institucional en el marco del Plan de Transparencia Activa; es contexto normativo general, no una nueva respuesta de las 15 Juntas."
+      }
+    ]
+  }
 }

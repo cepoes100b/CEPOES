@@ -131,5 +131,10 @@
       "url": "https://data.buenosaires.gob.ar/dataset/hospitales-con-maternidades",
       "supports": "universo georreferenciado de maternidades públicas"
     }
-  ]
+  ],
+  "last_checked_at": "2026-09-28",
+  "last_check": {
+    "result": "sin_novedad_oficial_localizada",
+    "note": "En la revisión del 28/09/2026 no se localizó en las fuentes oficiales relevadas una fecha de promulgación o reglamentación posterior a la sanción del 27/08/2026. Se conserva el estado jurídico publicado hasta contar con una fuente oficial que lo modifique."
+  }
 }

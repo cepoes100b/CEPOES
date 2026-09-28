@@ -742,6 +742,23 @@ def normalize_html(path: Path, site: Path) -> None:
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
+    # Product notes should lead to their own documented definitions. The
+    # institutional footer is replaced with the canonical hub link below.
+    method_sheets = {
+        "/observatorio/index.html": "observatorio",
+        "/territorio/equipamientos/index.html": "territorio",
+        "/territorio/brechas/index.html": "brechas",
+        "/territorio/endeudamiento/index.html": "endeudamiento",
+        "/presupuesto/index.html": "presupuesto",
+        "/legislatura/index.html": "legislatura",
+        "/territorio/migraciones/index.html": "migraciones",
+        "/observatorio/salud-mental/index.html": "salud-mental",
+    }
+    if rel in method_sheets:
+        source = source.replace(
+            'href="/cepoes/metodologia/"',
+            f'href="/cepoes/metodologia/{method_sheets[rel]}/"',
+        )
     source = re.sub(r'/assets/common(?:-r1)?\.js(?:\?v=\d+)?', '/assets/common-r1.js?v=259', source)
     source = re.sub(r'/assets/thematic-map\.js(?:\?v=\d+)?', '/assets/thematic-map.js?v=258', source)
     source = re.sub(r'/assets/brechas\.js(?:\?v=\d+)?', '/assets/brechas.js?v=258', source)

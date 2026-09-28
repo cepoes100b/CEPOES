@@ -5,6 +5,14 @@ https://cepoes.org/balance/salud-publica/
 https://cepoes.org/balance/presupuesto-y-modelo-de-gestion/
 https://cepoes.org/cepoes/
 https://cepoes.org/cepoes/metodologia/
+https://cepoes.org/cepoes/metodologia/observatorio/
+https://cepoes.org/cepoes/metodologia/territorio/
+https://cepoes.org/cepoes/metodologia/brechas/
+https://cepoes.org/cepoes/metodologia/endeudamiento/
+https://cepoes.org/cepoes/metodologia/presupuesto/
+https://cepoes.org/cepoes/metodologia/legislatura/
+https://cepoes.org/cepoes/metodologia/migraciones/
+https://cepoes.org/cepoes/metodologia/salud-mental/
 https://cepoes.org/legislatura/
 https://cepoes.org/observatorio/
 https://cepoes.org/observatorio/personas-mayores/

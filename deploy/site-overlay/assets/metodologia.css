@@ -27,10 +27,13 @@
 .method-page .method-table th{font-weight:800;background:var(--papel2,#edf5f6)}
 .method-page .method-table td:first-child{font-weight:700}
 .method-page .method-table-wrap{overflow-x:auto}
+.method-page .method-table a{text-decoration:underline;text-underline-offset:3px;color:var(--method-accent)}
 .method-page a{overflow-wrap:anywhere}
 .method-page .method-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
 .method-page .method-links a{display:inline-flex;align-items:center;padding:10px 14px;border:1px solid var(--borde,#d9e3e7);border-radius:10px;background:var(--panel,#fff);font-weight:700;text-decoration:none}
 .method-page .method-links a:hover{border-color:var(--method-accent)}
 .method-page .method-kicker{color:var(--method-accent);font-size:.76rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+@media(min-width:1200px){.method-page #criterios .method-cards{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:851px) and (max-width:1199px){.method-page #criterios .method-cards{grid-template-columns:1fr}}
 @media(max-width:850px){.method-page .method-layout{grid-template-columns:1fr}.method-page .method-index{position:static;order:-1}.method-page .method-cards{grid-template-columns:1fr}}
 @media(max-width:600px){.method-page .method-table{min-width:580px}.method-page .method-meta{display:grid}.method-page .method-card{padding:19px}}

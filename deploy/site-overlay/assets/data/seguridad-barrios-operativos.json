@@ -1,6 +1,6 @@
 {
   "schema": "cepoes-seguridad-barrios-v1",
-  "fecha_revision": "2026-09-26",
+  "fecha_revision": "2026-09-27",
   "operativos": [
     {
       "id": "tormenta-negra-2026-09-24",
@@ -17,6 +17,19 @@
       "personas_controladas": null,
       "costo": null,
       "denuncias_documentadas_por_cepoes": null,
+      "registros_posteriores": {
+        "cels": {
+          "fecha": "2026-09-25",
+          "url": "https://www.cels.org.ar/web/2026/09/tormenta-negra-ocupacion-barrios/",
+          "detenciones_mpd_citadas": 13,
+          "denuncias": "El CELS dice haber registrado violencia policial, uso de gases y balas de goma, retiro de pertenencias y herramientas de trabajo, y personas lesionadas."
+        },
+        "reaccion_curas_villeros": {
+          "fecha": "2026-09-26",
+          "url": "https://www.lanacion.com.ar/politica/preocupa-en-sectores-de-la-iglesia-un-megaoperativo-de-seguridad-simultaneo-en-15-villas-portenas-nid26092026/",
+          "resumen": "Según LA NACION, curas de villas y barrios populares manifestaron preocupación por la espectacularidad del operativo y sus efectos sobre las fuentes de trabajo."
+        }
+      },
       "fuente_oficial": "https://buenosaires.gob.ar/gcaba_historico/noticias/tormenta-negra-megaoperativo-simultaneo-en-las-villas-con-mas-de-1500",
       "fuentes_de_contraste": [
         "https://www.eldiarioar.com/politica/jorge-macri-desplego-1-500-policias-15-villas-portenas-detener-17-personas_1_13538552.html",

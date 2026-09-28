@@ -149,7 +149,14 @@ def process(item: dict) -> dict:
 
 
 def main() -> int:
-    resources=discover(); old=existing_map(); periods=[]; reused=0; updated=0
+    old=existing_map(); periods=[]; reused=0; updated=0
+    try:
+        resources=discover()
+    except Exception as exc:
+        if not old:
+            raise
+        print(f"BA Data inestable: se reutiliza la serie histórica validada ({type(exc).__name__}: {exc})")
+        resources=[]
     discovered={x["periodo"] for x in resources}
     for period, prev in old.items():
         if period not in discovered and prev.get("resource"):

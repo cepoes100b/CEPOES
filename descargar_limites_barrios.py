@@ -21,7 +21,13 @@ OUT.parent.mkdir(exist_ok=True)
 
 
 def main() -> int:
-    payload = package_show("barrios")
+    try:
+        payload = package_show("barrios")
+    except Exception as exc:
+        if OUT.exists() and OUT.stat().st_size > 1000:
+            print(f"BA Data inestable: se conserva barrios.geojson validado ({type(exc).__name__}: {exc})")
+            return 0
+        raise
     resources = payload.get("resources") or []
     rx = re.compile(r"^Barrios \(GeoJSON\)$", re.I)
     matches = [x for x in resources if rx.search(x.get("name") or "")]

@@ -13,7 +13,7 @@ from pathlib import Path
 
 import requests
 
-from fuentes_territorio import BA_DATA_API
+from badata_client import package_show
 
 BASE = Path(__file__).resolve().parent
 OUT = BASE / "badata" / "barrios.geojson"
@@ -21,12 +21,14 @@ OUT.parent.mkdir(exist_ok=True)
 
 
 def main() -> int:
-    r = requests.get(BA_DATA_API, params={"id": "barrios"}, timeout=(10, 90), headers={"User-Agent": "CEPOES-data-pipeline/1.0 (+https://cepoes.org)"})
-    r.raise_for_status()
-    payload = r.json()
-    if not payload.get("success") or not payload.get("result"):
-        raise RuntimeError("BA Data no devolvió el dataset barrios")
-    resources = payload["result"].get("resources") or []
+    try:
+        payload = package_show("barrios")
+    except Exception as exc:
+        if OUT.exists() and OUT.stat().st_size > 1000:
+            print(f"BA Data inestable: se conserva barrios.geojson validado ({type(exc).__name__}: {exc})")
+            return 0
+        raise
+    resources = payload.get("resources") or []
     rx = re.compile(r"^Barrios \(GeoJSON\)$", re.I)
     matches = [x for x in resources if rx.search(x.get("name") or "")]
     if not matches:

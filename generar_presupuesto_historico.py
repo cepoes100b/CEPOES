@@ -33,26 +33,37 @@ PARSER_REV = 2
 
 
 def discover() -> list[dict]:
-    pkg = package_show("presupuesto-ejecutado")
     out=[]
-    for r in pkg.get("resources") or []:
-        name=str(r.get("name") or "")
-        if not is_csv(r) or "presupuesto ejecutado" not in name.lower():
+    current_year=dt.datetime.now(dt.timezone.utc).year
+    datasets=[f"presupuesto-ejecutado-{year}" for year in range(SINCE_YEAR,current_year+1)]
+    datasets.append("presupuesto-ejecutado")
+    errors=[]
+    for dataset in datasets:
+        try:
+            pkg=package_show(dataset)
+        except Exception as exc:
+            errors.append(f"{dataset}: {type(exc).__name__}: {exc}")
             continue
-        parsed=parse_exec_name(name)
-        if not parsed or parsed[0] < SINCE_YEAR:
-            continue
-        y,q=parsed
-        out.append({
-            "ejercicio":y,"trimestre":q,"periodo":f"{y}-T{q}",
-            "resource":{"id":r.get("id"),"name":name,"url":resource_url(r),
-                        "last_modified":r.get("last_modified") or r.get("metadata_modified")}
-        })
+        for r in pkg.get("resources") or []:
+            name=str(r.get("name") or "")
+            if not is_csv(r) or "presupuesto ejecutado" not in name.lower():
+                continue
+            parsed=parse_exec_name(name)
+            if not parsed or parsed[0] < SINCE_YEAR:
+                continue
+            y,q=parsed
+            out.append({
+                "ejercicio":y,"trimestre":q,"periodo":f"{y}-T{q}",
+                "resource":{"id":r.get("id"),"name":name,"url":resource_url(r),
+                            "last_modified":r.get("last_modified") or r.get("metadata_modified")}
+            })
     unique={}
     for x in out:
         key=x["periodo"]
         if key not in unique or str(x["resource"].get("last_modified") or "") > str(unique[key]["resource"].get("last_modified") or ""):
             unique[key]=x
+    if not unique and errors:
+        raise RuntimeError("No se pudo descubrir la serie histórica: " + " | ".join(errors))
     return sorted(unique.values(), key=lambda x:(x["ejercicio"],x["trimestre"]))
 
 
@@ -138,9 +149,26 @@ def process(item: dict) -> dict:
 
 
 def main() -> int:
-    resources=discover(); old=existing_map(); periods=[]; reused=0; updated=0
+    old=existing_map(); periods=[]; reused=0; updated=0
+    try:
+        resources=discover()
+    except Exception as exc:
+        if not old:
+            raise
+        print(f"BA Data inestable: se reutiliza la serie histórica validada ({type(exc).__name__}: {exc})")
+        resources=[]
+    discovered={x["periodo"] for x in resources}
+    for period, prev in old.items():
+        if period not in discovered and prev.get("resource"):
+            resources.append({
+                "ejercicio":prev["ejercicio"],
+                "trimestre":prev["trimestre"],
+                "periodo":period,
+                "resource":prev["resource"],
+            })
+    resources=sorted(resources,key=lambda x:(x["ejercicio"],x["trimestre"]))
     if not resources:
-        raise RuntimeError("No se descubrieron recursos trimestrales")
+        raise RuntimeError("No se descubrieron recursos trimestrales ni existe serie previa reutilizable")
     for item in resources:
         prev=old.get(item["periodo"])
         if (prev and prev.get("parser_rev")==PARSER_REV

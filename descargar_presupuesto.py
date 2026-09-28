@@ -15,6 +15,8 @@ from urllib.parse import urljoin
 
 import requests
 
+from badata_client import package_show as badata_package_show
+
 BASE = Path(__file__).resolve().parent
 WORK = BASE / "badata" / "presupuesto"
 STATE = BASE / "estado_presupuesto.json"
@@ -36,12 +38,20 @@ QUARTERS = {
 
 
 def package_show(dataset: str) -> dict:
-    r = requests.get(API, params={"id": dataset}, timeout=TIMEOUT)
-    r.raise_for_status()
-    payload = r.json()
-    if not payload.get("success"):
-        raise RuntimeError(f"BA Data no devolvió el dataset {dataset}")
-    return payload["result"]
+    return badata_package_show(dataset)
+
+
+def latest_executed_package() -> tuple[str, dict]:
+    year = dt.datetime.now(dt.timezone.utc).year
+    errors = []
+    for dataset in (f"presupuesto-ejecutado-{year}", f"presupuesto-ejecutado-{year - 1}", "presupuesto-ejecutado"):
+        try:
+            pkg = package_show(dataset)
+            choose_executed(pkg)
+            return dataset, pkg
+        except Exception as exc:
+            errors.append(f"{dataset}: {type(exc).__name__}: {exc}")
+    raise RuntimeError("No se pudo resolver Presupuesto Ejecutado: " + " | ".join(errors))
 
 
 def is_csv(resource: dict) -> bool:
@@ -129,11 +139,30 @@ def meta(resource: dict) -> dict:
     }
 
 
+def _state_fallback() -> tuple[str, dict, dict, int, int]:
+    if not STATE.exists():
+        raise RuntimeError("No existe estado presupuestario previo para fallback")
+    state = json.loads(STATE.read_text(encoding="utf-8"))
+    year = int(state["ejercicio"])
+    quarter = int(state["trimestre"])
+    executed = dict(state["dataset_ejecutado"]["resource"])
+    sanctioned = dict(state["dataset_sancionado"]["resource"])
+    return f"presupuesto-ejecutado-{year}", executed, sanctioned, year, quarter
+
+
 def main() -> int:
-    executed_pkg = package_show("presupuesto-ejecutado")
-    sanctioned_pkg = package_show("presupuesto-sancionado")
-    executed, year, quarter = choose_executed(executed_pkg)
-    sanctioned = choose_sanctioned(sanctioned_pkg, year)
+    try:
+        executed_dataset, executed_pkg = latest_executed_package()
+        sanctioned_pkg = package_show("presupuesto-sancionado")
+        executed, year, quarter = choose_executed(executed_pkg)
+        sanctioned = choose_sanctioned(sanctioned_pkg, year)
+        executed_updated = executed_pkg.get("metadata_modified")
+        sanctioned_updated = sanctioned_pkg.get("metadata_modified")
+    except Exception as exc:
+        print(f"BA Data inestable: se usa el último recurso oficial validado ({type(exc).__name__}: {exc})")
+        executed_dataset, executed, sanctioned, year, quarter = _state_fallback()
+        executed_updated = None
+        sanctioned_updated = None
 
     exec_path = WORK / "ejecutado.csv"
     sanc_path = WORK / "sancionado.csv"
@@ -147,14 +176,14 @@ def main() -> int:
         "trimestre": quarter,
         "fuente": "BA Data · Ministerio de Hacienda y Finanzas GCBA",
         "dataset_ejecutado": {
-            "url": "https://data.buenosaires.gob.ar/dataset/presupuesto-ejecutado",
-            "updated": executed_pkg.get("metadata_modified"),
+            "url": f"https://data.buenosaires.gob.ar/dataset/{executed_dataset}",
+            "updated": executed_updated,
             "resource": meta(executed),
             "bytes": exec_size,
         },
         "dataset_sancionado": {
             "url": "https://data.buenosaires.gob.ar/dataset/presupuesto-sancionado",
-            "updated": sanctioned_pkg.get("metadata_modified"),
+            "updated": sanctioned_updated,
             "resource": meta(sanctioned),
             "bytes": sanc_size,
         },

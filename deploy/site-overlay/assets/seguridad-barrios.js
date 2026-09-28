@@ -51,6 +51,18 @@
         }
         card.append(section);
       }
+      if (op.control_legislativo) {
+        const control = op.control_legislativo;
+        const section = document.createElement('section'); section.className = 'sb-followup';
+        section.append(text('h4', 'Control legislativo'));
+        section.append(text('p', `${control.expediente}, presentado el 21 de septiembre: propone encomendar a la Auditoría General de la Ciudad un examen especial del primer operativo Tormenta Negra. Es un proyecto; no consta que la auditoría haya sido aprobada ni realizada.`));
+        section.append(text('p', `Estado consultado el 28 de septiembre: ${control.estado}. Último movimiento registrado: 23 de septiembre.`));
+        section.append(text('p', 'El sumario del expediente fecha el operativo el 13 de mayo; las crónicas y el registro de este monitor lo sitúan el 14 de mayo. La diferencia documental está pendiente de aclaración.'));
+        const source = text('p', 'Fuente: ', 'sb-source');
+        const link = text('a', 'expediente en la Legislatura ↗'); link.href = control.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        source.append(link); section.append(source);
+        card.append(section);
+      }
       const p = text('p', 'Fuente: ', 'sb-source'); const a = text('a', 'parte del Gobierno de la Ciudad ↗');
       a.href = op.fuente_oficial; a.target = '_blank'; a.rel = 'noopener noreferrer'; p.append(a); card.append(p);
       target.append(card);

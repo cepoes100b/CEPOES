@@ -13,7 +13,9 @@ import re
 from pathlib import Path
 from urllib.parse import urljoin
 
-import requests\n\nfrom badata_client import package_show as badata_package_show
+import requests
+
+from badata_client import package_show as badata_package_show
 
 BASE = Path(__file__).resolve().parent
 WORK = BASE / "badata" / "presupuesto"

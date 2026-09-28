@@ -16,7 +16,8 @@ from pathlib import Path
 import requests
 from openpyxl import load_workbook
 
-from fuentes_territorio import DATASETS_TERRITORIO\nfrom badata_client import package_show as badata_package_show
+from fuentes_territorio import DATASETS_TERRITORIO
+from badata_client import package_show as badata_package_show
 
 BASE = Path(__file__).resolve().parent
 DIR = BASE / "badata"

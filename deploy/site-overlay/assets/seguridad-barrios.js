@@ -33,13 +33,31 @@
       metric(dl, 'Vehículos secuestrados', op.vehiculos_secuestrados);
       metric(dl, 'Costo del despliegue', op.costo);
       card.append(dl, text('p', `Estado: ${op.estado}.`, 'sb-source'));
+      if (op.registros_posteriores) {
+        const follow = op.registros_posteriores;
+        const section = document.createElement('section'); section.className = 'sb-followup';
+        section.append(text('h4', 'Registros y cuestionamientos posteriores'));
+        if (follow.cels) {
+          section.append(text('p', `Detenciones: ${op.detenciones_iniciales} según el GCBA; ${follow.cels.detenciones_mpd_citadas} registradas por el Ministerio Público de la Defensa, según el CELS. Falta cotejar el registro original y los criterios y horarios de ambos recuentos.`));
+          section.append(text('p', `${follow.cels.denuncias} Estas denuncias se atribuyen al CELS; CEPOES aún no las verificó de forma independiente ni dispone de una resolución judicial sobre ellas.`));
+          const source = text('p', 'Fuente: ', 'sb-source');
+          const link = text('a', 'publicación del CELS (25/9) ↗'); link.href = follow.cels.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+          source.append(link); section.append(source);
+        }
+        if (follow.reaccion_curas_villeros) {
+          const reaction = text('p', `${follow.reaccion_curas_villeros.resumen} `);
+          const link = text('a', 'Crónica del 26/9 ↗'); link.href = follow.reaccion_curas_villeros.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+          reaction.append(link); section.append(reaction);
+        }
+        card.append(section);
+      }
       const p = text('p', 'Fuente: ', 'sb-source'); const a = text('a', 'parte del Gobierno de la Ciudad ↗');
       a.href = op.fuente_oficial; a.target = '_blank'; a.rel = 'noopener noreferrer'; p.append(a); card.append(p);
       target.append(card);
     }
     const updated = document.getElementById('sb-updated');
     if (updated) updated.textContent = new Date(data.fecha_revision + 'T12:00:00Z').toLocaleDateString('es-AR', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
-    status.textContent = `${data.operativos.length} operativos registrados. Cifras iniciales atribuidas al Gobierno de la Ciudad.`;
+    status.textContent = `${data.operativos.length} operativos registrados. Cifras iniciales del Gobierno de la Ciudad; las fuentes posteriores se identifican en cada ficha.`;
   } catch (error) {
     target.replaceChildren();
     status.textContent = 'Las fichas no están disponibles en este momento. Consultá los partes oficiales enlazados abajo o escribinos para solicitar los datos.';

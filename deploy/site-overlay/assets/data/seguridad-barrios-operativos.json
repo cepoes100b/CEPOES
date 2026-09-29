@@ -7,10 +7,35 @@
       "fecha": "2026-09-24",
       "nombre": "Tormenta Negra",
       "barrios_reportados": 15,
-      "territorios": ["31", "21-24", "La Carbonilla", "Fraga", "Rodrigo Bueno", "Mitre", "15 (Ciudad Oculta)", "20", "INTA", "Bermejo", "Mugica", "1-11-14", "Cildañez", "Piletones", "Fátima"],
-      "efectivos_y_agentes": {"valor_minimo": 1500, "calificador": "más de", "desagregacion": null},
+      "territorios": [
+        "31",
+        "21-24",
+        "La Carbonilla",
+        "Fraga",
+        "Rodrigo Bueno",
+        "Mitre",
+        "15 (Ciudad Oculta)",
+        "20",
+        "INTA",
+        "Bermejo",
+        "Mugica",
+        "1-11-14",
+        "Cildañez",
+        "Piletones",
+        "Fátima"
+      ],
+      "efectivos_y_agentes": {
+        "valor_minimo": 1500,
+        "calificador": "más de",
+        "desagregacion": null
+      },
       "detenciones_iniciales": 17,
-      "detenciones_desglose": {"comercializacion_estupefacientes": 11, "tenencia_estupefacientes": 3, "tentativa_robo": 2, "pedido_captura": 1},
+      "detenciones_desglose": {
+        "comercializacion_estupefacientes": 11,
+        "tenencia_estupefacientes": 3,
+        "tentativa_robo": 2,
+        "pedido_captura": 1
+      },
       "vehiculos_secuestrados": 192,
       "autos_abandonados_removidos": 26,
       "situacion_procesal_posterior": null,
@@ -47,15 +72,38 @@
         "https://www.eldiarioar.com/politica/jorge-macri-desplego-1-500-policias-15-villas-portenas-detener-17-personas_1_13538552.html",
         "https://www.pagina12.com.ar/2026/09/25/testimonios-desde-los-barrios-contra-el-operativo-tormenta-negra/"
       ],
-      "estado": "balance inicial del Gobierno; seguimiento independiente en curso"
+      "estado": "balance inicial del Gobierno; seguimiento independiente en curso",
+      "locales_inspeccionados": 30,
+      "comercios_clausurados": 12,
+      "fuente_oficial_revision": "2026-09-27"
     },
     {
       "id": "tormenta-negra-2026-05-14",
       "fecha": "2026-05-14",
       "nombre": "Tormenta Negra",
       "barrios_reportados": 15,
-      "territorios": ["31", "1-11-14", "21-24 y Zavaleta", "15 (Ciudad Oculta)", "20", "Fraga", "La Carbonilla", "Rodrigo Bueno", "Piletones", "Fátima", "Ramón Carrillo", "INTA-Bermejo", "Padre Mugica", "Cildañez", "Mitre"],
-      "efectivos_y_agentes": {"valor_minimo": 1500, "calificador": "más de", "desagregacion": null},
+      "territorios": [
+        "31",
+        "1-11-14",
+        "21-24 y Zavaleta",
+        "15 (Ciudad Oculta)",
+        "20",
+        "Fraga",
+        "La Carbonilla",
+        "Rodrigo Bueno",
+        "Piletones",
+        "Fátima",
+        "Ramón Carrillo",
+        "INTA-Bermejo",
+        "Padre Mugica",
+        "Cildañez",
+        "Mitre"
+      ],
+      "efectivos_y_agentes": {
+        "valor_minimo": 1500,
+        "calificador": "más de",
+        "desagregacion": null
+      },
       "detenciones_iniciales": 27,
       "detenciones_desglose": null,
       "vehiculos_secuestrados": 177,
@@ -89,7 +137,9 @@
         }
       ],
       "fuente_oficial": "https://buenosaires.gob.ar/gcaba_historico/noticias/megaoperativo-en-las-villas-hubo-27-detenidos-con-secuestro-de-droga-y-5",
-      "fuentes_de_contraste": ["https://www.eldiarioar.com/sociedad/repudian-operativo-tormenta-negra-jorge-macri-show-represivo-criminaliza_1_13224869.html"],
+      "fuentes_de_contraste": [
+        "https://www.eldiarioar.com/sociedad/repudian-operativo-tormenta-negra-jorge-macri-show-represivo-criminaliza_1_13224869.html"
+      ],
       "estado": "balance inicial del Gobierno; seguimiento independiente pendiente"
     }
   ]

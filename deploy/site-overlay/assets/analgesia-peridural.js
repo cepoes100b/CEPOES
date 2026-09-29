@@ -5,10 +5,11 @@ const statusLabel={pendiente:'Pendiente',relevar:'A relevar',cumplido:'Cumplido'
 const fmt=n=>new Intl.NumberFormat('es-AR').format(n);
 async function init(){
   try{
-    const r=await fetch('/assets/data/analgesia-peridural.json?v=20260827',{cache:'no-store'});
+    const r=await fetch('/assets/data/analgesia-peridural.json?v=20260928',{cache:'no-store'});
     if(!r.ok)throw Error(r.status);
     const d=await r.json();
-    const updated=$('[data-monitor-updated]'); if(updated)updated.textContent=`Actualización: ${new Date(d.updated_at+'T12:00:00').toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'})}`;
+    const updated=$('[data-monitor-updated]'); if(updated)updated.textContent=`Actualización del dato: ${new Date(d.updated_at+'T12:00:00').toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'})}`;
+    const checked=$('[data-monitor-checked]'); if(checked&&d.last_checked_at)checked.textContent=`Fuentes verificadas: ${new Date(d.last_checked_at+'T12:00:00').toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'})}`;
     const rows=$('#implementation-rows');
     if(rows)rows.innerHTML=d.implementation_indicators.map(x=>`<tr><th scope="row">${esc(x.label)}</th><td><span class="monitor-status is-${esc(x.status)}">${esc(statusLabel[x.status]||x.status)}</span></td><td>${esc(x.value)}</td></tr>`).join('');
     const births=$('#birth-bars');

@@ -32,6 +32,8 @@
       metric(dl, 'Detenciones iniciales', op.detenciones_iniciales);
       metric(dl, 'Situación procesal posterior', op.situacion_procesal_posterior);
       metric(dl, 'Vehículos secuestrados', op.vehiculos_secuestrados);
+      if (Number.isInteger(op.locales_inspeccionados)) metric(dl, 'Locales inspeccionados', op.locales_inspeccionados);
+      if (Number.isInteger(op.comercios_clausurados)) metric(dl, 'Locales clausurados', op.comercios_clausurados);
       metric(dl, 'Costo del despliegue', op.costo);
       card.append(dl, text('p', `Estado: ${op.estado}.`, 'sb-source'));
       if (op.registros_posteriores) {

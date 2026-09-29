@@ -9,6 +9,7 @@
     if (className) node.className = className;
     return node;
   };
+  const formatDate = value => new Date(value + 'T12:00:00Z').toLocaleDateString('es-AR', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
   const metric = (list, label, value) => {
     list.append(text('dt', label), text('dd', value === null ? 'Sin dato público verificado' : String(value), value === null ? 'sb-missing' : ''));
   };
@@ -22,7 +23,7 @@
       if (unique.has(op.id) || !/^\d{4}-\d{2}-\d{2}$/.test(op.fecha) || !Number.isInteger(op.detenciones_iniciales) || !Number.isInteger(op.barrios_reportados) || !op.fuente_oficial?.startsWith('https://')) throw new Error('Ficha incompleta');
       unique.add(op.id);
       const card = document.createElement('article'); card.className = 'sb-card';
-      const time = text('time', new Date(op.fecha + 'T12:00:00Z').toLocaleDateString('es-AR', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' }));
+      const time = text('time', formatDate(op.fecha));
       time.dateTime = op.fecha;
       card.append(time, text('h3', op.nombre));
       const dl = document.createElement('dl');
@@ -51,16 +52,19 @@
         }
         card.append(section);
       }
-      if (op.control_legislativo) {
-        const control = op.control_legislativo;
+      if (Array.isArray(op.control_legislativo) && op.control_legislativo.length) {
         const section = document.createElement('section'); section.className = 'sb-followup';
         section.append(text('h4', 'Control legislativo'));
-        section.append(text('p', `${control.expediente}, presentado el 21 de septiembre: propone encomendar a la Auditoría General de la Ciudad un examen especial del primer operativo Tormenta Negra. Es un proyecto; no consta que la auditoría haya sido aprobada ni realizada.`));
-        section.append(text('p', `Estado consultado el 28 de septiembre: ${control.estado}. Último movimiento registrado: 23 de septiembre.`));
-        section.append(text('p', 'El sumario del expediente fecha el operativo el 13 de mayo; las crónicas y el registro de este monitor lo sitúan el 14 de mayo. La diferencia documental está pendiente de aclaración.'));
-        const source = text('p', 'Fuente: ', 'sb-source');
-        const link = text('a', 'expediente en la Legislatura ↗'); link.href = control.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
-        source.append(link); section.append(source);
+        for (const control of op.control_legislativo) {
+          const entry = document.createElement('div'); entry.className = 'sb-legislative-entry';
+          entry.append(text('p', `${control.tipo} ${control.expediente} (presentado el ${formatDate(control.fecha_presentacion)}). ${control.objeto}`));
+          entry.append(text('p', `Estado al ${formatDate(control.fecha_consulta)}: ${control.estado}. Último movimiento registrado: ${formatDate(control.ultimo_movimiento)}.`));
+          if (control.nota) entry.append(text('p', control.nota));
+          const source = text('p', 'Fuente: ', 'sb-source');
+          const link = text('a', `expediente ${control.expediente} en la Legislatura ↗`); link.href = control.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+          source.append(link); entry.append(source);
+          section.append(entry);
+        }
         card.append(section);
       }
       const p = text('p', 'Fuente: ', 'sb-source'); const a = text('a', 'parte del Gobierno de la Ciudad ↗');
@@ -68,7 +72,7 @@
       target.append(card);
     }
     const updated = document.getElementById('sb-updated');
-    if (updated) updated.textContent = new Date(data.fecha_revision + 'T12:00:00Z').toLocaleDateString('es-AR', { day:'numeric', month:'long', year:'numeric', timeZone:'UTC' });
+    if (updated) updated.textContent = formatDate(data.fecha_revision);
     status.textContent = `${data.operativos.length} operativos registrados. Cifras iniciales del Gobierno de la Ciudad; las fuentes posteriores se identifican en cada ficha.`;
   } catch (error) {
     target.replaceChildren();

@@ -42,7 +42,7 @@
         section.append(text('h4', 'Registros y cuestionamientos posteriores'));
         if (follow.cels) {
           section.append(text('p', `Detenciones: ${op.detenciones_iniciales} según el GCBA; ${follow.cels.detenciones_mpd_citadas} registradas por el Ministerio Público de la Defensa, según el CELS. Falta cotejar el registro original y los criterios y horarios de ambos recuentos.`));
-          section.append(text('p', `${follow.cels.denuncias} Estas denuncias se atribuyen al CELS; CEPOES aún no las verificó de forma independiente ni dispone de una resolución judicial sobre ellas.`));
+          section.append(text('p', `${follow.cels.denuncias} Estas denuncias se atribuyen al CELS; aún no están verificadas de forma independiente ni se dispone de una resolución judicial sobre ellas.`));
           const source = text('p', 'Fuente: ', 'sb-source');
           const link = text('a', 'publicación del CELS (25/9) ↗'); link.href = follow.cels.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
           source.append(link); section.append(source);

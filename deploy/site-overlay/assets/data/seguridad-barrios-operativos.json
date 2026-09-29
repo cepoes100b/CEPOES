@@ -1,6 +1,6 @@
 {
   "schema": "cepoes-seguridad-barrios-v1",
-  "fecha_revision": "2026-09-28",
+  "fecha_revision": "2026-09-29",
   "operativos": [
     {
       "id": "tormenta-negra-2026-09-24",
@@ -42,6 +42,18 @@
       "personas_controladas": null,
       "costo": null,
       "denuncias_documentadas_por_cepoes": null,
+      "control_legislativo": [
+        {
+          "expediente": "3010-D-2026",
+          "tipo": "Proyecto de declaración",
+          "fecha_presentacion": "2026-09-25",
+          "fecha_consulta": "2026-09-29",
+          "ultimo_movimiento": "2026-09-28",
+          "estado": "En Mesa de Entradas Parlamentaria, esperando envío a comisión; el registro todavía no informa giro",
+          "objeto": "Propone expresar el repudio de la Legislatura al operativo del 24 de septiembre. Claudia Negri figura entre sus firmantes. La declaración no consta aprobada.",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142620"
+        }
+      ],
       "registros_posteriores": {
         "cels": {
           "fecha": "2026-09-25",
@@ -101,6 +113,29 @@
       "personas_controladas": null,
       "costo": null,
       "denuncias_documentadas_por_cepoes": null,
+      "control_legislativo": [
+        {
+          "expediente": "1813-D-2026",
+          "tipo": "Proyecto de resolución",
+          "fecha_presentacion": "2026-06-05",
+          "fecha_consulta": "2026-09-29",
+          "ultimo_movimiento": "2026-06-08",
+          "estado": "En la Comisión de Desarrollo Económico y Mercosur",
+          "objeto": "Solicita informes al Ejecutivo sobre inspecciones, clausuras, decomisos, restitución de bienes y actividades económicas afectadas. El pedido sigue en comisión; no consta respuesta del Ejecutivo.",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141291"
+        },
+        {
+          "expediente": "2926-D-2026",
+          "tipo": "Proyecto de resolución",
+          "fecha_presentacion": "2026-09-21",
+          "fecha_consulta": "2026-09-29",
+          "ultimo_movimiento": "2026-09-23",
+          "estado": "Girado a la Junta de Ética, Acuerdos y Organismos de Control; el registro indica en comisión, esperando recepción",
+          "objeto": "Propone encomendar a la Auditoría General de la Ciudad un examen especial del primer operativo. La auditoría no consta aprobada ni realizada.",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142530",
+          "nota": "El sumario del expediente fecha el operativo el 13 de mayo; las crónicas y este monitor lo sitúan el 14 de mayo. La diferencia documental está pendiente de aclaración."
+        }
+      ],
       "fuente_oficial": "https://buenosaires.gob.ar/gcaba_historico/noticias/megaoperativo-en-las-villas-hubo-27-detenidos-con-secuestro-de-droga-y-5",
       "fuentes_de_contraste": [
         "https://www.eldiarioar.com/sociedad/repudian-operativo-tormenta-negra-jorge-macri-show-represivo-criminaliza_1_13224869.html"

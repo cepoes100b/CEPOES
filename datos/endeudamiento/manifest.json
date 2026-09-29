@@ -1,1 +1,1 @@
-{"schema":"cepoes-endeudamiento-manifest-v1","actualizado_utc":"2026-08-28T22:39:34.567397+00:00","ultimo_periodo":"2026-07","periodos":["2026-06","2026-07"],"archivos":{"2026-06":"2026-06.json","2026-07":"2026-07.json"},"fuente":"BCRA / Padrón ARCA — elaboración CEPOES"}
+{"schema":"cepoes-endeudamiento-manifest-v1","actualizado_utc":"2026-09-29T19:00:13.757018+00:00","ultimo_periodo":"2026-08","periodos":["2026-06","2026-07","2026-08"],"archivos":{"2026-06":"2026-06.json","2026-07":"2026-07.json","2026-08":"2026-08.json"},"fuente":"BCRA / Padrón ARCA — elaboración CEPOES"}

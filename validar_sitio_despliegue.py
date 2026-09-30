@@ -288,9 +288,21 @@ assert home.count('home-strategy-card')==3, 'La home debe mostrar exactamente tr
 new_page=(root/'lo-nuevo'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['<h1>Lo nuevo</h1>','id="new-search"','id="new-type"','id="new-topic"','Qué entra en “Lo nuevo”','/assets/lo-nuevo.css','/assets/lo-nuevo.js?v=1']:
     assert token in new_page, f'Página Lo nuevo incompleta: {token}'
-assert len(re.findall(r'<article class="[^"]*\bnew-card\b',new_page))==14, 'Lo nuevo debe mostrar catorce contenidos recientes'
-for route in ['/publicaciones/informes/educacion-pisa-fepba-2025/','/publicaciones/informes/plataformas-juventudes-caba/','/publicaciones/notas/criar-en-buenos-aires-sala-de-3/','/prensa/crianza-sala-de-3-vacantes/','/prensa/personas-mayores-desigualdad-cuidados/','/prensa/situacion-calle-respuesta-habitacional/','/balance/salud-publica/']:
-    assert route in new_page, f'Contenido reciente no integrado en Lo nuevo: {route}'
+new_registry=json.loads((root/'assets'/'data'/'lo-nuevo.json').read_text(encoding='utf-8'))
+new_entries=new_registry['entries']
+assert new_registry['version']==1 and 0<len(new_entries)<=80, 'Registro de novedades inválido'
+assert len(re.findall(r'<article class="[^"]*new-card(?:[ "]|$)',new_page))==len(new_entries), 'Tarjetas y registro de novedades no coinciden'
+new_urls=[entry['url'] for entry in new_entries]
+assert len(new_urls)==len(set(new_urls)), 'Novedades duplicadas'
+assert [entry['date'] for entry in new_entries]==sorted((entry['date'] for entry in new_entries),reverse=True), 'Novedades fuera de orden cronológico'
+for entry in new_entries:
+    route=entry['url']
+    assert route.startswith('/') and route.endswith('/') and '..' not in route, f'Ruta de novedad inválida: {route}'
+    assert (root/route.strip('/')/'index.html').is_file(), f'Novedad sin página pública: {route}'
+    assert f'href="{route}"' in new_page, f'Novedad no representada: {route}'
+    assert re.fullmatch(r'\d{4}-\d{2}-\d{2}',entry['date']), f'Fecha de novedad inválida: {route}'
+    assert entry['type'] in {'informe','analisis','prensa','balance','herramienta','datos'}, f'Tipo de novedad inválido: {route}'
+assert 'Se actualiza automáticamente con cada publicación del sitio' in new_page, 'Lo nuevo debe explicar su actualización automática'
 balance=(root/'balance'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Balance de gestión 2007–2026','Decisiones públicas','Impacto territorial','Capacidad estatal','Vivienda y alquiler','Salud pública','Presupuesto y modelo de gestión']:
     assert token in balance, f'Portada de Balance incompleta: {token}'
@@ -576,3 +588,4 @@ assert not blocked, f'Archivos no publicables: {blocked[:10]}'
 key=(root/'indexnow-key.txt').read_text(encoding='utf-8').strip()
 assert re.fullmatch(r'[A-Za-z0-9_-]{8,128}',key), 'IndexNow key inválida'
 print(f'OK sitio: {len(html)} HTML · {len(barrios)} barrios · {len(urls)} URLs indexables · estructura productiva + deporte/salud V3 validados · sin crudos')
+

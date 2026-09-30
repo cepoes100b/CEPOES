@@ -12,11 +12,11 @@ jobs:
   detectar:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-python@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.12'
-      - uses: actions/cache/restore@v6
+      - uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: monitor-tierras
           key: tierras-${{ github.run_id }}
@@ -27,12 +27,12 @@ jobs:
           python scripts/test_monitor_tierras.py
       - name: Consultar fuentes y preservar documentos
         run: python scripts/monitor_tierras.py --output monitor-tierras
-      - uses: actions/cache/save@v6
+      - uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         if: always()
         with:
           path: monitor-tierras
           key: tierras-${{ github.run_id }}
-      - uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         if: always()
         with:
           name: fuentes-tierras-${{ github.run_id }}

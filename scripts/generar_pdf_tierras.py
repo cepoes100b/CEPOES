@@ -4,6 +4,12 @@ from pathlib import Path
 p=argparse.ArgumentParser();p.add_argument('--contenido',default='docs/tierras-contenido.json');p.add_argument('--plantilla',default='scripts/generar_informes_pdf_cepoes.py');p.add_argument('--sitio',default='deploy/site-overlay');args=p.parse_args()
 spec=importlib.util.spec_from_file_location('plantilla',args.plantilla);t=importlib.util.module_from_spec(spec);spec.loader.exec_module(t)
 data=json.loads(Path(args.contenido).read_text());t.SITE_ROOT=Path(args.sitio)
+# La portada ya presenta título y subtítulo; los interiores comienzan con el informe y las secciones.
+original_story=t.section_story
+def section_story(report, sections):
+ story=original_story(report, sections)
+ return [story[0], story[1], story[5], *story[6:]]
+t.section_story=section_story
 # La miniatura procede de la misma portada PDF, sin un diseño paralelo.
 original=t.thumbnail_svg;data['report']['thumb']='tierras-y-soberania-preview.svg'
 pdf=t.build(data['report'],data['sections']);(t.SITE_ROOT/'assets/publicaciones/tierras-y-soberania-preview.svg').unlink()

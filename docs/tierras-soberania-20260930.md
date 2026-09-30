@@ -49,3 +49,12 @@ Consulta local real del 30/09/2026 18:06 UTC: tres primeras capturas correctas. 
 513 filas / 512 IDs, 31 >15%, nulos y sumas, concordancia de porcentajes con hectáreas y colores: correctos. Navegador: búsqueda sin acentos, resultado vacío, restablecimiento, filtro >15, selección, escritorio 1440 px y móvil 390 px, temas claro/oscuro sin desbordamiento. Leyenda revisada tras corregir estilo global. PDF cinco páginas e interiores revisados; documento editable cuatro páginas.
 
 No modifica portada, buscador, suscripción, autenticación ni zona privada. La ruta sólo se incorpora a producción después de aprobación del PR. No se ejecutaron workflows de publicación. Pendiente final: autorización explícita para fusionar/desplegar según AGENTS.md.
+# Revisión editorial y de integración del 30 de septiembre de 2026
+
+- La página omitía la carga de Poppins e Inter: el encabezado canónico usaba fuentes de reemplazo. La plantilla ahora carga la misma familia y pesos del sitio; el contenido hereda Inter y los títulos conservan Poppins.
+- Los selectores de layout se restringen al módulo `.tierras` para preservar navegación, logo y componentes comunes.
+- La navegación común dispone de un ancho máximo de 1600 px; adelanta la marca apilada a 1450 px y la separación compacta a 1600 px. Con fuentes reales, el encabezado anterior excedía el viewport a 1440 px. Se conserva tamaño y peso del logo y se evita comprimirlo.
+- Se agrega Tierras y soberanía al menú territorial de escritorio y móvil. El normalizador inserta un acceso visible y persistente, sin depender de JavaScript, en Territorio y Publicaciones. Su ejecución repetida no duplica bloques.
+- El informe y la síntesis se reorientan a extranjerización, concentración, recuperación de la Ley de Tierras y soberanía. La crítica al efecto político del fallo se expresa como posición editorial, diferenciada de su alcance procesal.
+- Se retiran utilidad para CEPOES, implementación del monitor, condiciones de publicación y notas de trabajo de la pieza pública. DOCX y PDF provienen del mismo contenido revisado; PDF y miniatura conservan la plantilla institucional.
+- Se preservan datos RNTR, geometrías, controles y monitor. La fecha registral sigue siendo agosto de 2025; no se incorporan nuevos propietarios o eventos sin documentos.

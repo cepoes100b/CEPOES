@@ -17,6 +17,8 @@ on:
       - "generar_indice_busqueda_equipamientos.py"
       - "generar_indice_busqueda_global.py"
       - "generar_estado_datos.py"
+      - "generar_lo_nuevo.py"
+      - "test_lo_nuevo.py"
       - "deploy/search-registry.json"
       - "equipamientos/**"
       - "legislatura_publica.json"
@@ -204,6 +206,11 @@ jobs:
           python deploy/parche_observatorio_salud.py _site/observatorio/index.html
           python deploy/preparar_puente_legislatura.py _site
 
+      - name: Generar y verificar novedades automáticas
+        run: |
+          python -m unittest test_lo_nuevo.py
+          python generar_lo_nuevo.py _site --previous _rollback
+
       - name: Validar módulos migrados al publicador canónico
         run: python deploy/validar_publicacion_canonica.py _site
 
@@ -317,6 +324,8 @@ jobs:
 
           for url in \
             https://cepoes.org/ \
+            https://cepoes.org/lo-nuevo/ \
+            https://cepoes.org/assets/data/lo-nuevo.json \
             https://cepoes.org/observatorio/ \
             https://cepoes.org/observatorio/personas-mayores/ \
             https://cepoes.org/territorio/ \

@@ -32,3 +32,6 @@ jobs:
         env:
           R2_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: python validar_pr_r2.py
+
+      - name: Verificar novedades automáticas
+        run: python -m unittest test_lo_nuevo.py

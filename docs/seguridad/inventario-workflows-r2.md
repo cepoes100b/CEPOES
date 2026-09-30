@@ -1,7 +1,7 @@
 # CEPOES — Inventario R2-A2 de GitHub Actions
 
-**Corte:** 23 de septiembre de 2026  
-**Cobertura:** 32 workflows activos en `.github/workflows/`\
+**Corte:** 30 de septiembre de 2026  
+**Cobertura:** 33 workflows activos en `.github/workflows/`\
 **Archivo no ejecutable:** 26 workflows históricos bajo `docs/seguridad/workflows-retirados/`\
 **Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.
 
@@ -9,7 +9,7 @@
 
 | Clasificación | Cantidad |
 | --- | ---: |
-| operativo | 32 |
+| operativo | 33 |
 | migrar | 0 |
 
 ## Inventario
@@ -29,6 +29,7 @@
 | inicializar-paquete-respaldo-privado.yml | workflow_dispatch | contents:read, packages:write | sin escritura detectada | operativo | Inicialización manual y temporal de un paquete vacío para verificar privacidad antes de almacenar respaldos. |
 | legislatura.yml | workflow_dispatch, schedule | contents:write | git commit | operativo | Pipeline regular de datos legislativos. |
 | migraciones.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de migraciones. |
+| monitor-tierras.yml | workflow_dispatch, schedule | contents:read | sin escritura detectada | operativo | Consulta documental de RNTR y DNU; sólo lectura, revisión editorial y sin publicación automática. |
 | natalidad.yml | workflow_dispatch, schedule, pull_request | contents:write | sin escritura detectada | operativo | Pipeline regular de natalidad y demografía. |
 | personas-mayores.yml | workflow_dispatch, schedule, push, pull_request | implícito | git push, git commit | operativo | Pipeline regular de Personas Mayores. |
 | prensa-borradores.yml | workflow_dispatch, schedule, push | contents:read, id-token:write | sin escritura detectada | operativo | Generación programada de borradores de prensa. |

@@ -3,17 +3,17 @@
     "slug": "tierras-y-soberania",
     "short_name": "Tierras y soberanía",
     "number": "T.01",
-    "title": "Ley de Tierras y control del territorio",
-    "subtitle": "El fallo de la Corte, la concentración territorial y la respuesta legislativa",
-    "description": "Informe y propuesta de observatorio · 30 de septiembre de 2026",
-    "sources_cover": "CSJN / RNTR / normativa / IGN",
+    "title": "Extranjerización de tierras y soberanía nacional",
+    "subtitle": "Por qué necesitamos recuperar la Ley de Tierras y proteger el territorio",
+    "description": "Informe para difusión · 30 de septiembre de 2026",
+    "sources_cover": "RNTR / normativa / CSJN / IGN",
     "theme": "Soberanía y desarrollo",
     "scope": "Argentina",
     "index": [
-      "El fallo y el régimen de tierras",
       "La concentración territorial",
-      "Propuesta política y mapa",
-      "Monitoreo y fuentes"
+      "La protección de la Ley de Tierras",
+      "La derogación y el papel de la Corte",
+      "Una política de soberanía y desarrollo"
     ],
     "pdf_dir": "territorio/tierras-y-soberania",
     "filename": "CEPOES_Ley_de_Tierras_2026-09-30.pdf",
@@ -21,51 +21,21 @@
   },
   "sections": [
     {
-      "title": "La decisión que está en juego",
+      "title": "La concentración territorial exige una respuesta nacional",
       "items": [
         [
           "p",
-          "La protección de las tierras rurales forma parte de la capacidad del Estado para orientar el desarrollo, regular la concentración de la propiedad y preservar recursos estratégicos. La respuesta política que proponemos es recuperar una regulación nacional efectiva, sostener la publicidad de los registros y hacer visible dónde se concentra la propiedad extranjera. El mapa y el seguimiento institucional deben aportar evidencia para esa discusión.",
+          "Defendemos la recuperación de la Ley de Tierras. La tierra rural es una base del desarrollo productivo, de la vida de las comunidades y de la soberanía nacional. Decidir quién puede adquirirla, cuánto puede concentrar y bajo qué controles es una responsabilidad pública. La derogación impulsada por el gobierno de Javier Milei debilita esa capacidad y favorece la expansión de la propiedad extranjera sobre el territorio.",
           "body"
         ],
         [
           "p",
-          "Qué cambia con el fallo del 29 de septiembre",
-          "report"
-        ],
-        [
-          "p",
-          "La sentencia completa del 29 de septiembre, en los expedientes FLP 47574/2023/CS1 y FLP 47574/2023/1/RH1, revoca la decisión de la Cámara Federal de La Plata y rechaza la demanda del CECIM. Los considerandos 5 y 7 desarrollan la falta de legitimación y de caso colectivo. El considerando 9 deja expresamente sin resolver la constitucionalidad del artículo 154 del DNU 70/2023 y preserva las facultades del Congreso. Se leyó la copia íntegra publicada por Palabras del Derecho. [1]",
+          "El Registro Nacional de Tierras Rurales informa 13.262.725,64 hectáreas extranjerizadas, equivalentes al 4,97% de la superficie rural relevada. El catálogo oficial identifica agosto de 2025 como última actualización. Son datos registrales de ese corte: su lectura muestra la magnitud del problema y dónde se concentra. [4]",
           "body"
         ],
         [
           "p",
-          "La revocación remueve la sentencia de Cámara que había declarado inconstitucional la derogación. La Corte no aprobó la validez de fondo del DNU. Su artículo 154 dispone la derogación de la Ley 26.737. [2] El alcance de cada operación requiere contrastar otras normas y decisiones aplicables.",
-          "body"
-        ],
-        [
-          "p",
-          "Qué protegía el régimen de la Ley 26 737",
-          "report"
-        ],
-        [
-          "p",
-          "La ley fijaba un límite del 15% para la titularidad o posesión extranjera de tierras rurales a escala nacional, provincial y subprovincial; un máximo por nacionalidad del 30% de aquel cupo; y 1.000 hectáreas en la zona núcleo, con equivalencias para otras regiones. Incluía restricciones sobre inmuebles con cuerpos de agua de envergadura y permanentes o ribereños y controles registrales. Sus artículos 8, 9, 10 y 14 sustentan estas reglas. El artículo 17 preservaba derechos adquiridos. [3]",
-          "body"
-        ],
-        [
-          "p",
-          "La derogación de este régimen debe analizarse junto con las reglas provinciales, ambientales y de seguridad fronteriza que correspondan a cada operación. La expresión “venta sin ningún límite” es demasiado amplia para describir todas esas situaciones.",
-          "body"
-        ]
-      ]
-    },
-    {
-      "title": "La concentración que el promedio nacional oculta",
-      "items": [
-        [
-          "p",
-          "El PDF oficial enlazado por el RNTR registra 13.262.725,64 hectáreas extranjerizadas sobre 266.643.212,84 hectáreas rurales: 4,97%. La página oficial identifica agosto de 2025 como su última actualización. Se trata de una fotografía registral de ese corte, que debe conservar su fecha al publicarse. [4]",
+          "El promedio nacional puede dar una impresión de baja incidencia que cambia al mirar los departamentos. En San Carlos, Salta, el porcentaje llega al 59,82%; en Molinos, al 57,79%; en General Lamadrid, La Rioja, al 56,70%; y en Lácar, Neuquén, al 54,17%. Estos territorios superan ampliamente el 4,97% nacional. La política de tierras debe atender esa concentración local, además de la extensión total registrada.",
           "body"
         ],
         [
@@ -135,142 +105,137 @@
         ],
         [
           "p",
-          "Fuente: RNTR, PDF oficial por departamento, publicación identificada por la página como agosto de 2025. Selección ilustrativa, no ranking exhaustivo. [4]",
+          "Fuente: RNTR, PDF por departamento, publicación identificada como agosto de 2025. Casos seleccionados para mostrar la concentración territorial; la tabla completa está disponible en el mapa de Tierras y soberanía. [4]",
           "body"
         ],
         [
           "p",
-          "Una corrección que mejora el mapa",
-          "report"
-        ],
-        [
-          "p",
-          "El anexo del Observatorio de Tierras incluye entre los casos que exceden el límite a Malargüe y Chilecito, mostrando valores redondeados del 15%. El PDF oficial informa 14,74% y 14,86%, respectivamente. Para clasificar territorios se utilizará el valor decimal original, antes de redondear. El procesamiento completo del PDF identifica 513 registros territoriales: 31 tienen porcentajes publicados superiores al 15%. Los 513 registros corresponden a 512 identificadores de Georef: el PDF repite Ituzaingó, Corrientes, con una fila sin superficie rural. Ambas se conservan en la tabla y el mapa utiliza la fila con superficie informada. La suma de hectáreas departamentales difiere del total nacional en 6,44 ha; se preservan las celdas vacías y los valores originales. [4, 5]",
+          "El procesamiento del documento oficial identifica 31 registros departamentales con porcentajes publicados superiores al 15%. Ese umbral corresponde al cupo que establecía la Ley 26.737. Los porcentajes describen una situación territorial acumulada: para determinar la legalidad de una adquisición se deben revisar su fecha y los derechos adquiridos que la propia ley preservaba. [3, 4]",
           "body"
         ],
         [
           "p",
-          "Cómo interpretar estos datos",
-          "report"
-        ],
-        [
-          "p",
-          "El indicador mide superficie rural registrada como extranjerizada dentro de una jurisdicción. La situación de cada compra requiere revisar su fecha, titularidad y régimen aplicable: un porcentaje superior al antiguo cupo no basta para atribuir una infracción, porque existían derechos adquiridos. [3]",
-          "body"
-        ],
-        [
-          "p",
-          "El cruce con agua, glaciares y proyectos productivos ayuda a identificar territorios que merecen investigación. La coincidencia dentro de un departamento describe un contexto territorial; la propiedad de una parcela o una superposición física requiere geometrías y documentos específicos. La nacionalidad del propietario, el control societario y una concesión minera son variables distintas.",
+          "La extranjerización plantea preguntas sobre el destino de la producción, la apropiación de la renta y la capacidad de orientar el uso del suelo. La titularidad de tierras, el acceso al agua y el aprovechamiento de recursos naturales exigen controles específicos. El mapa departamental permite localizar concentraciones; la identificación de propietarios y de parcelas requiere documentación adicional.",
           "body"
         ]
       ]
     },
     {
-      "title": "Propuesta política y utilidad para CEPOES",
+      "title": "La Ley de Tierras como instrumento de soberanía",
       "items": [
         [
           "p",
-          "Proponemos defender una regulación nacional sobre la adquisición y concentración de tierras rurales, reforzar los registros públicos y vincular las decisiones sobre recursos con un proyecto de desarrollo productivo. La inversión debe evaluarse por su aporte a empleo, capacidades tecnológicas, encadenamientos locales y captación de renta, junto con las obligaciones ambientales y territoriales.",
+          "La Ley 26.737, sancionada en 2011 durante la presidencia de Cristina Fernández de Kirchner, creó un régimen de protección al dominio nacional sobre las tierras rurales. Estableció reglas para limitar la concentración extranjera y conocer la propiedad y posesión del territorio. Recuperar esa protección debe ser una prioridad de la política nacional. [3]",
           "body"
         ],
         [
           "p",
-          "La Ley 26.122 exige pronunciamientos expresos: aceptar o rechazar el decreto sin enmiendas (artículo 23); el rechazo de ambas cámaras implica su derogación, preservando derechos adquiridos (artículo 24). La recuperación del régimen de tierras debe abordarse expresamente. Al 30 de septiembre se anunció un pedido de sesión especial en Diputados; convocatoria, quórum y votación requieren corroboración parlamentaria. [7, 8]",
-          "body"
-        ],
-        [
-          "p",
-          "Para un observatorio centrado en CABA, este módulo nacional tiene sentido como dossier específico de soberanía y desarrollo. El vínculo con la Ciudad pasa por el debate institucional nacional y por los circuitos económicos de producción, abastecimiento y renta. Los datos rurales no se trasladarán a los barrios porteños ni a la propiedad urbana.",
-          "body"
-        ],
-        [
-          "p",
-          "Mapa y monitor propuestos",
-          "report"
-        ],
-        [
-          "table",
-          [
-            "Componente",
-            "Función inicial",
-            "Condición de calidad"
-          ],
-          [
-            [
-              "Mapa territorial",
-              "Consultar provincias y departamentos, hectáreas y porcentajes",
-              "Fuente, corte y superficie de referencia visibles"
-            ],
-            [
-              "Ficha territorial",
-              "Reunir indicadores, recursos y hechos documentados",
-              "Precisar si ubicación es exacta o aproximada"
-            ],
-            [
-              "Seguimiento institucional",
-              "Ordenar normas, expedientes, fallos y votaciones",
-              "Texto oficial y estado de trámite comprobado"
-            ],
-            [
-              "Archivo de cambios",
-              "Comparar versiones del mismo indicador",
-              "Conservar método y equivalencias territoriales"
-            ]
-          ],
-          [
-            115,
-            170,
-            186
-          ]
-        ],
-        [
-          "p",
-          "Reconocimiento del trabajo existente",
+          "Los límites que protegían el territorio",
           "report"
         ],
         [
           "p",
-          "El mapa desarrollado por Thomás Artopoulos para el Observatorio de Tierras constituye una referencia central. Su repositorio público contiene geometrías departamentales, una página de 12,9 MB y una base de conflictos. No se encontró una licencia de reutilización en el árbol revisado. Se conserva un acceso atribuido al mapa externo. El mapa propio de CEPOES utiliza el PDF del RNTR y geometrías oficiales de Georef, versión 13.0.0, abril de 2026 [9], simplificadas para su visualización. Ofrece selección territorial, ficha, búsqueda y tabla equivalente. Las capas de recursos y conflictos requieren fuentes y permisos específicos. [6]",
+          "El artículo 8 fijaba un máximo del 15% de titularidad o posesión extranjera, computado a escala nacional, provincial y municipal o equivalente. Esa combinación de escalas impedía que un promedio nacional bajo justificara una concentración elevada en determinadas jurisdicciones.",
           "body"
         ],
         [
           "p",
-          "El informe de marzo de 2026 del Observatorio amplió el análisis con glaciares, comunidades indígenas y proyectos mineros. CEPOES puede construir sus propias capas desde las fuentes primarias y documentar el aporte de ese trabajo a la definición del producto. [5]",
+          "El artículo 9 limitaba la participación de una misma nacionalidad al 30% del cupo extranjero. El artículo 10 establecía un máximo de 1.000 hectáreas por titular extranjero en la zona núcleo o su superficie equivalente en otras regiones, y prohibía la adquisición de inmuebles que contuvieran o fueran ribereños de cuerpos de agua de envergadura y permanentes. [3]",
+          "body"
+        ],
+        [
+          "p",
+          "El régimen incorporaba controles y un registro nacional para relevar la propiedad y la posesión. Preservaba los derechos adquiridos de sus titulares. La ley debía complementarse con las normas ambientales, provinciales y de seguridad fronteriza aplicables a cada operación.",
+          "body"
+        ],
+        [
+          "p",
+          "Inversión productiva con condiciones públicas",
+          "report"
+        ],
+        [
+          "p",
+          "El ingreso de capitales debe contribuir a la producción, el empleo y el desarrollo regional bajo reglas que protejan el territorio. La compra de tierra por sí sola no acredita esos resultados. Una política de inversión debe exigir compromisos verificables y conservar herramientas para evitar que la concentración de la propiedad reduzca la capacidad de decisión del Estado y de las comunidades.",
+          "body"
+        ],
+        [
+          "p",
+          "La defensa de la Ley de Tierras expresa una decisión sobre el modelo de país: conservar capacidad para ordenar el uso del suelo, proteger recursos y sostener el arraigo. Debe integrarse con políticas de acceso a la tierra para productores, agricultura familiar y comunidades, así como con controles sobre la concentración nacional y extranjera.",
           "body"
         ]
       ]
     },
     {
-      "title": "Actualización y controles del monitor",
+      "title": "La derogación y el papel político de la Corte",
       "items": [
         [
           "p",
-          "La automatización existente en el repositorio de referencia consulta diariamente una planilla publicada y genera conflictos.json. El archivo contiene 51 filas, con última modificación de datos el 18 de septiembre de 2026. Las ejecuciones del 28, 29 y 30 de septiembre terminaron correctamente. El script conserva la marca de modificación si la planilla no cambia; una ejecución exitosa acredita una consulta, no un nuevo hecho territorial. [6]",
+          "El artículo 154 del DNU 70/2023 dispuso la derogación de la Ley 26.737. Con esa decisión, el gobierno de Milei buscó remover el régimen nacional específico que limitaba la extranjerización de tierras rurales. La respuesta necesaria es recuperar expresamente esa protección mediante una decisión legislativa. [2]",
           "body"
         ],
         [
           "p",
-          "El monitor de CEPOES debe separar fecha del dato, fecha de consulta y fecha de modificación. El flujo propuesto descarga documentos, conserva su versión y huella digital, detecta cambios y produce candidatos para revisión. Las novedades normativas y denuncias se aprueban editorialmente antes de publicar. Ante fallos se conserva la última versión válida y se informa la antigüedad.",
+          "El 29 de septiembre de 2026, la Corte Suprema revocó la sentencia de la Cámara Federal de La Plata y rechazó la demanda del Centro de Ex Combatientes Islas Malvinas La Plata. Fundamentó su decisión en la falta de legitimación y de caso colectivo. El considerando 9 dejó expresamente sin resolver la constitucionalidad del artículo 154 del DNU y mantuvo las facultades del Congreso. [1]",
           "body"
         ],
         [
           "p",
-          "El registro territorial necesita un identificador oficial, provincia, departamento, superficie rural, hectáreas extranjerizadas, porcentaje, corte y fuente. Los eventos institucionales necesitan organismo, expediente o norma, fecha, estado, enlace documental y revisión. Las ubicaciones aproximadas de conflictos deben etiquetarse expresamente; el centroide departamental no representa el lugar del hecho.",
+          "Consideramos que la Corte actúa políticamente a favor de la desregulación y de los intereses extranjeros que pueden beneficiarse de ella. Esa lectura se apoya en el efecto de su decisión: al remover la sentencia que había declarado inconstitucional la derogación, debilita la protección judicial de la Ley de Tierras. La fundamentación procesal no elimina las consecuencias políticas del fallo.",
           "body"
         ],
         [
           "p",
-          "Condiciones para la publicación",
+          "La Corte dejó pendiente la constitucionalidad de fondo del DNU. Esa cuestión jurídica abierta refuerza la necesidad de una respuesta legislativa que restituya límites y controles.",
+          "body"
+        ],
+        [
+          "p",
+          "El Congreso conserva la capacidad de intervenir. La Ley 26.122 regula la aceptación o el rechazo expreso de los DNU, sin enmiendas; el rechazo por ambas cámaras implica su derogación y preserva derechos adquiridos. Recuperar la Ley de Tierras requiere abordar expresamente la restitución del régimen, con un instrumento legislativo claro. [5]",
+          "body"
+        ]
+      ]
+    },
+    {
+      "title": "Recuperar la protección y orientar el desarrollo",
+      "items": [
+        [
+          "p",
+          "Proponemos recuperar el régimen de la Ley 26.737 y reforzar su aplicación. Los límites por territorio, nacionalidad y titular deben acompañarse de controles efectivos, coordinación con las provincias y registros actualizados. La protección formal necesita capacidad estatal para conocer operaciones, verificar el control societario y evitar mecanismos de elusión.",
+          "body"
+        ],
+        [
+          "p",
+          "La información pública debe permitir seguir la superficie extranjerizada, su distribución y las modificaciones de la titularidad. Un registro accesible, con criterios comparables y fechas visibles, mejora el control ciudadano y ayuda a evaluar las decisiones del Estado. La actualización debe distinguir nuevas operaciones de correcciones registrales.",
+          "body"
+        ],
+        [
+          "p",
+          "También proponemos vincular la política de tierras con la protección del agua, los derechos de las comunidades y un desarrollo productivo que genere empleo y arraigo. La soberanía se sostiene cuando la sociedad puede decidir sobre el territorio y cuando sus recursos contribuyen al bienestar de la población.",
+          "body"
+        ],
+        [
+          "p",
+          "El mapa público de Tierras y soberanía permite consultar departamentos y comparar porcentajes. Aporta evidencia para defender la protección del territorio: https://cepoes.org/territorio/tierras-y-soberania/.",
+          "body"
+        ],
+        [
+          "p",
+          "Cómo leer la información territorial",
           "report"
         ],
         [
           "p",
-          "La entrega preparada incluye mapa y tabla de 513 registros, 31 porcentajes superiores al 15%, ficha y filtros; texto completo del fallo contrastado; y controles de cobertura y datos faltantes. Se verifican escritorio, móvil y ambos temas visuales. El monitor detecta cambios en tres fuentes oficiales y conserva versiones para revisión editorial. La publicación y la activación requieren la aprobación final del repositorio; las capas de recursos y conflictos integran una etapa posterior.",
+          "La tabla conserva 513 filas y 512 identificadores territoriales. Ituzaingó, Corrientes, tiene una fila con 33,90% y otra sin superficie rural; el mapa utiliza la primera. Los vacíos se muestran como Sin informar.",
           "body"
         ],
         [
           "p",
-          "Fuentes y documentos de respaldo",
+          "La clasificación conserva decimales y valores originales. Malargüe registra 14,74% y Chilecito 14,86%. La suma departamental difiere del total nacional en 6,44 ha. Georef, con fuente IGN, aporta límites administrativos de abril de 2026; el mapa representa departamentos, no parcelas. [4, 6]",
+          "body"
+        ],
+        [
+          "p",
+          "Fuentes y documentos",
           "report"
         ],
         [
@@ -295,27 +260,12 @@
         ],
         [
           "p",
-          "[5] Observatorio de Tierras, tercer informe, 25/03/2026\nhttps://www.observatoriodetierras.ar/2026/03/tercer-informe-territorio-y-bienes.html",
+          "[5] Ley 26.122, artículos 22 a 25, texto oficial\nhttps://www.argentina.gob.ar/normativa/nacional/ley-26122-118261/texto",
           "source"
         ],
         [
           "p",
-          "[6] Repositorio del mapa y workflow de actualización de conflictos\nhttps://github.com/thomasartopoulos/mapa_extranjerizacion",
-          "source"
-        ],
-        [
-          "p",
-          "[7] Ley 26.122, artículos 22 a 25, texto oficial\nhttps://www.argentina.gob.ar/normativa/nacional/ley-26122-118261/texto",
-          "source"
-        ],
-        [
-          "p",
-          "[8] Pedido de sesión anunciado, elDiarioAR, 30/09/2026\nhttps://www.eldiarioar.com/politica/ley-tierras-pediran-sesion-diputados-voltear-dnu-70-convocan-marchar-martes-proximo_1_13551171.amp.html",
-          "source"
-        ],
-        [
-          "p",
-          "[9] Georef, descarga de la base completa y documentación oficial\nhttps://www.argentina.gob.ar/georef/descarga-de-la-base-completa",
+          "[6] Georef, descarga de la base completa y documentación oficial\nhttps://www.argentina.gob.ar/georef/descarga-de-la-base-completa",
           "source"
         ]
       ]

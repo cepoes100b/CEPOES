@@ -161,6 +161,7 @@ def territory_subnav(rel: str) -> str:
         ("/territorio/brechas/", "Brechas"),
     ]
     thematic = [
+        ("/territorio/tierras-y-soberania/", "Tierras y soberanía"),
         ("/territorio/endeudamiento/", "Endeudamiento"),
         ("/territorio/migraciones/", "Migraciones"),
         ("/territorio/estructura-productiva/", "Estructura productiva"),
@@ -835,6 +836,17 @@ def normalize_html(path: Path, site: Path) -> None:
         source = restructure_home(source)
     elif rel == "/propuestas/index.html":
         source = restructure_proposals(source)
+    if rel in {"/territorio/index.html", "/publicaciones/index.html"}:
+        entry = ('<section class="section alt" id="tierras-soberania-acceso"><div class="wrap">'
+                 '<span class="eyebrow">Soberanía nacional</span><h2>Tierras y soberanía</h2>'
+                 '<p>Más de 13 millones de hectáreas rurales extranjerizadas. Explorá la concentración territorial y por qué necesitamos recuperar la Ley de Tierras.</p>'
+                 '<a class="btn btn-outline" href="/territorio/tierras-y-soberania/">Ver mapa e informe sobre extranjerización →</a></div></section>')
+        source = re.sub(r'<section\b[^>]*id=["\']tierras-soberania-acceso["\'][^>]*>.*?</section>', '', source, flags=re.S)
+        hero = re.search(r'<header\b[^>]*class=["\'][^"\']*page-hero[^"\']*["\'][^>]*>.*?</header>', source, flags=re.S)
+        if hero:
+            source = source[:hero.end()] + entry + source[hero.end():]
+        else:
+            source = source.replace('</main>', entry + '</main>', 1)
     source = version_local_stylesheets(source, site)
     path.write_text(source, encoding="utf-8")
 
@@ -856,3 +868,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

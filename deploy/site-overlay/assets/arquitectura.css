@@ -92,8 +92,8 @@
 .site-nav .brand .logo{line-height:1.15}
 .site-nav .brand-sub{line-height:1.05}
 .site-nav .nav-links .nav-new{color:#087b69;font-weight:850}.site-nav .nav-links .nav-new:before{content:"";display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;background:#16a085;box-shadow:0 0 0 4px rgba(22,160,133,.13)}.site-nav .nav-links .nav-new.active{color:var(--texto)}.home-new-link{display:inline-flex;margin:0 0 20px;color:var(--marca);font-weight:850;text-decoration:none}.home-new-link:hover{text-decoration:underline}
-@media(max-width:1400px){.site-nav .brand{flex-direction:column;align-items:flex-start;gap:1px}.site-nav .brand-sep{display:none}.site-nav .brand-sub{display:flex}.site-nav .brand-sub small{display:none}.site-nav .brand-sub strong{font:800 .62rem Poppins,sans-serif;letter-spacing:.1em;color:var(--marca)}}
-@media(max-width:1450px) and (min-width:1361px){.site-nav .nav-in{gap:14px}.site-nav .nav-links{gap:14px;font-size:.8rem}.site-nav .nav-cta{padding:8px 12px}}
+@media(max-width:1450px){.site-nav .brand{flex-direction:column;align-items:flex-start;gap:1px}.site-nav .brand-sep{display:none}.site-nav .brand-sub{display:flex}.site-nav .brand-sub small{display:none}.site-nav .brand-sub strong{font:800 .62rem Poppins,sans-serif;letter-spacing:.1em;color:var(--marca)}}
+@media(max-width:1600px) and (min-width:1361px){.site-nav .nav-in{gap:14px}.site-nav .nav-links{gap:14px;font-size:.8rem}.site-nav .nav-cta{padding:8px 12px}}
 @media(max-width:1360px) and (min-width:761px){.site-nav .nav-links{display:none;position:absolute;left:0;right:0;top:72px;box-sizing:border-box;padding:18px 24px;border-bottom:1px solid var(--borde);background:var(--panel);flex-direction:column;align-items:stretch}.site-nav .nav-links.open{display:flex}.site-nav .nav-links a:not(.nav-cta){display:block}.site-nav .menu-btn{display:inline-flex}}
 @media(max-width:760px){.site-nav .brand-sub strong{font-size:.58rem;letter-spacing:.08em}}
 /* Ejecución presupuestaria: restituye la columna editorial en escritorio.
@@ -248,3 +248,7 @@
 @media(max-width:700px){
   .equipment-explorer-section{padding-top:22px}.offer-search-panel{margin-inline:-8px;padding:22px 16px;border-radius:16px}.offer-global-search{grid-template-columns:1fr}.offer-global-search .btn{width:100%}.offer-location-actions{align-items:stretch}.offer-location-actions .btn{flex:1 1 190px}.offer-location-actions label{flex:0 0 100px}.offer-location-actions small{flex-basis:100%;font-size:.73rem}.offer-entry-controls{grid-template-columns:1fr 1fr}.offer-result-card{grid-template-columns:1fr;padding:16px}.offer-result-actions{justify-content:flex-start}.offer-overview{display:grid;grid-template-columns:1fr 1fr;gap:8px}.offer-overview span{display:grid;gap:0;padding:12px;border:1px solid var(--border);border-radius:12px;background:var(--card)}.offer-quick-head{align-items:end}.offer-quick-head h2{font-size:1.35rem}.offer-quick-head .chip{font-size:.72rem}.equipment-heading{margin-top:35px}.equipment-table-shell{overflow:visible}}
 @media(max-width:430px){.offer-entry-controls{grid-template-columns:1fr}.offer-location-actions label{flex:1 1 90px}.offer-result-actions{display:grid;grid-template-columns:1fr 1fr}.offer-result-actions .more,.offer-result-actions .chip{text-align:center}.offer-overview{grid-template-columns:1fr 1fr}}
+
+
+/* La navegación completa conserva su escala tipográfica sin comprimir la marca. */
+.site-nav .nav-in{max-width:1600px}

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1035" role="img" aria-labelledby="title desc">
+  <title id="title">La recuperación que no llega a los barrios</title><desc id="desc">Tapa del Boletín CEPOES número 5, septiembre de 2026.</desc>
+  <rect width="800" height="1035" fill="#16232f"/><rect x="0" y="0" width="20" height="1035" fill="#39b8ae"/>
+  <text x="70" y="90" fill="#8ce4db" font-family="Poppins,Arial,sans-serif" font-size="25" font-weight="700" letter-spacing="3">LA CIUDAD QUE HABITAMOS</text>
+  <text x="70" y="145" fill="#fff" font-family="Poppins,Arial,sans-serif" font-size="24" font-weight="600">BOLETÍN CEPOES · SEPTIEMBRE 2026</text>
+  <text x="70" y="350" fill="#fff" font-family="Poppins,Arial,sans-serif" font-size="72" font-weight="800"><tspan x="70" dy="0">La recuperación</tspan><tspan x="70" dy="86">que no llega</tspan><tspan x="70" dy="86">a los barrios</tspan></text>
+  <text x="70" y="660" fill="#dce7ed" font-family="Inter,Arial,sans-serif" font-size="30"><tspan x="70" dy="0">La economía casi no crece.</tspan><tspan x="70" dy="46">Finanzas arriba; comercio, industria</tspan><tspan x="70" dy="46">e ingresos muestran otra Ciudad.</tspan></text>
+  <g transform="translate(70 825)"><rect width="660" height="2" fill="#5f7380"/><text y="65" fill="#fff" font-family="Poppins,Arial,sans-serif" font-size="34" font-weight="800">CEP<tspan fill="#39b8ae">OES</tspan></text><text y="112" fill="#b9c8d1" font-family="Inter,Arial,sans-serif" font-size="19">Datos, investigación y propuestas desde los barrios</text></g>
+  <text x="678" y="145" fill="#fff" font-family="Poppins,Arial,sans-serif" font-size="74" font-weight="800">05</text>
+</svg>

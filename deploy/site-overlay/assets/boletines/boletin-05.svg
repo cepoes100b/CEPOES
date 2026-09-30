@@ -1,10 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1035" role="img" aria-labelledby="title desc">
-  <title id="title">La recuperación que no llega a los barrios</title><desc id="desc">Tapa del Boletín CEPOES número 5, septiembre de 2026.</desc>
-  <rect width="800" height="1035" fill="#16232f"/><rect x="0" y="0" width="20" height="1035" fill="#39b8ae"/>
-  <text x="70" y="90" fill="#8ce4db" font-family="Poppins,Arial,sans-serif" font-size="25" font-weight="700" letter-spacing="3">LA CIUDAD QUE HABITAMOS</text>
-  <text x="70" y="145" fill="#fff" font-family="Poppins,Arial,sans-serif" font-size="24" font-weight="600">BOLETÍN CEPOES · SEPTIEMBRE 2026</text>
-  <text x="70" y="350" fill="#fff" font-family="Poppins,Arial,sans-serif" font-size="72" font-weight="800"><tspan x="70" dy="0">La recuperación</tspan><tspan x="70" dy="86">que no llega</tspan><tspan x="70" dy="86">a los barrios</tspan></text>
-  <text x="70" y="660" fill="#dce7ed" font-family="Inter,Arial,sans-serif" font-size="30"><tspan x="70" dy="0">La economía casi no crece.</tspan><tspan x="70" dy="46">Finanzas arriba; comercio, industria</tspan><tspan x="70" dy="46">e ingresos muestran otra Ciudad.</tspan></text>
-  <g transform="translate(70 825)"><rect width="660" height="2" fill="#5f7380"/><text y="65" fill="#fff" font-family="Poppins,Arial,sans-serif" font-size="34" font-weight="800">CEP<tspan fill="#39b8ae">OES</tspan></text><text y="112" fill="#b9c8d1" font-family="Inter,Arial,sans-serif" font-size="19">Datos, investigación y propuestas desde los barrios</text></g>
-  <text x="678" y="145" fill="#fff" font-family="Poppins,Arial,sans-serif" font-size="74" font-weight="800">05</text>
+  <title id="title">La recuperación que no llega a los barrios</title>
+  <desc id="desc">Tapa del Boletín CEPOES número 5, septiembre de 2026, con el diseño de la serie La Ciudad que habitamos.</desc>
+  <rect width="800" height="1035" fill="#ffffff"/>
+  <rect width="800" height="455" fill="#0b485a"/>
+  <rect x="610" y="452" width="145" height="4" fill="#edb521"/>
+  <g font-family="Arial,Helvetica,sans-serif">
+    <text x="58" y="48" fill="#ffffff" font-size="13" font-weight="700" letter-spacing="1.2">BOLETÍN NRO. 5 · SEPTIEMBRE 2026</text>
+    <text x="742" y="48" fill="#ffffff" font-size="13" font-weight="700" text-anchor="end">CIUDAD DE BUENOS AIRES</text>
+    <text x="58" y="112" fill="#ffffff" font-size="54" font-weight="700">CEPOES</text>
+    <text x="58" y="139" fill="#ffffff" font-size="13">Centro de Estudios en Política, Economía y Sociedad · Somos 100 Barrios</text>
+    <text x="58" y="211" fill="#ffffff" font-size="42" font-weight="700">La Ciudad que habitamos</text>
+    <text x="58" y="253" fill="#ffffff" font-size="19">La recuperación que no llega a los barrios: crecimiento concentrado,</text>
+    <text x="58" y="280" fill="#ffffff" font-size="19">ingresos rezagados y consumo cotidiano en retroceso.</text>
+    <text x="58" y="343" fill="#ffffff" font-size="15">Datos, análisis y propuestas desde el territorio.</text>
+    <line x1="74" y1="500" x2="74" y2="925" stroke="#0b485a" stroke-width="4"/>
+    <g fill="#0b485a">
+      <text x="92" y="516" font-size="19" font-weight="700">02</text><text x="145" y="516" font-size="18" font-weight="700">Resumen ejecutivo</text>
+      <text x="145" y="540" fill="#5c6c73" font-size="13">La economía apenas crece y el impulso financiero no mejora la vida cotidiana.</text>
+      <line x1="145" y1="555" x2="742" y2="555" stroke="#c9d6d9"/>
+      <text x="92" y="586" font-size="19" font-weight="700">03</text><text x="145" y="586" font-size="18" font-weight="700">Actividad económica</text>
+      <text x="145" y="610" fill="#5c6c73" font-size="13">Finanzas arriba; comercio, industria y servicios personales retroceden.</text>
+      <line x1="145" y1="625" x2="742" y2="625" stroke="#c9d6d9"/>
+      <text x="92" y="656" font-size="19" font-weight="700">04</text><text x="145" y="656" font-size="18" font-weight="700">Trabajo e ingresos</text>
+      <text x="145" y="680" fill="#5c6c73" font-size="13">Aumenta la presión laboral y los ingresos pierden contra los precios.</text>
+      <line x1="145" y1="695" x2="742" y2="695" stroke="#c9d6d9"/>
+      <text x="92" y="726" font-size="19" font-weight="700">05</text><text x="145" y="726" font-size="18" font-weight="700">Condiciones de vida</text>
+      <text x="145" y="750" fill="#5c6c73" font-size="13">La pobreza alcanza a 675.000 personas y conserva brechas territoriales.</text>
+      <line x1="145" y1="765" x2="742" y2="765" stroke="#c9d6d9"/>
+      <text x="92" y="796" font-size="19" font-weight="700">06</text><text x="145" y="796" font-size="18" font-weight="700">Consumo y comercio</text>
+      <text x="145" y="820" fill="#5c6c73" font-size="13">Supermercados y mayoristas caen; los shoppings no compensan.</text>
+      <line x1="145" y1="835" x2="742" y2="835" stroke="#c9d6d9"/>
+      <text x="92" y="866" font-size="19" font-weight="700">07</text><text x="145" y="866" font-size="18" font-weight="700">Agenda pública</text>
+      <text x="145" y="890" fill="#5c6c73" font-size="13">Financiamiento, innovación y empleo para la economía real.</text>
+      <line x1="145" y1="905" x2="742" y2="905" stroke="#c9d6d9"/>
+      <text x="92" y="936" font-size="19" font-weight="700">08</text><text x="145" y="936" font-size="18" font-weight="700">Nuevos informes</text>
+      <text x="145" y="960" fill="#5c6c73" font-size="13">Siete investigaciones recientes de CEPOES, con acceso directo.</text>
+    </g>
+    <text x="58" y="1003" fill="#5c6c73" font-size="12">CEPOES · Centro de Estudios en Política, Economía y Sociedad</text>
+    <text x="742" y="1003" fill="#5c6c73" font-size="12" text-anchor="end">www.cepoes.org</text>
+  </g>
 </svg>

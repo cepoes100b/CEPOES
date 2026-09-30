@@ -1,0 +1,5261 @@
+{
+  "fuente": "RNTR",
+  "fuente_url": "https://www.argentina.gob.ar/sites/default/files/2021/02/extranjerizacion_por_departamento_pdf.pdf",
+  "publicacion": "2025-08",
+  "sha256_pdf": "b724f5b51c2d77e687b1e56e9e17b087ee639c4f1d849b8ebd621829bff26e2e",
+  "totales": {
+    "nacion": {
+      "rural_ha": 266643212.84,
+      "extranjera_ha": 13262725.64,
+      "pct": 4.97
+    },
+    "Buenos Aires": {
+      "rural_ha": 28833860.64,
+      "extranjera_ha": 827341.13,
+      "pct": 2.87
+    },
+    "Catamarca": {
+      "rural_ha": 10311732.0,
+      "extranjera_ha": 848027.4,
+      "pct": 8.22
+    },
+    "Chaco": {
+      "rural_ha": 8994746.59,
+      "extranjera_ha": 246275.07,
+      "pct": 2.74
+    },
+    "Chubut": {
+      "rural_ha": 22229905.8,
+      "extranjera_ha": 882628.45,
+      "pct": 3.97
+    },
+    "Cordoba": {
+      "rural_ha": 16269483.71,
+      "extranjera_ha": 196834.28,
+      "pct": 1.21
+    },
+    "Corrientes": {
+      "rural_ha": 7257517.96,
+      "extranjera_ha": 554093.73,
+      "pct": 7.63
+    },
+    "Entre Rios": {
+      "rural_ha": 7641341.89,
+      "extranjera_ha": 246905.52,
+      "pct": 3.23
+    },
+    "Formosa": {
+      "rural_ha": 6382416.0,
+      "extranjera_ha": 114933.45,
+      "pct": 1.8
+    },
+    "Jujuy": {
+      "rural_ha": 5284892.88,
+      "extranjera_ha": 192680.8,
+      "pct": 3.65
+    },
+    "La Pampa": {
+      "rural_ha": 14281146.41,
+      "extranjera_ha": 345811.3,
+      "pct": 2.42
+    },
+    "La Rioja": {
+      "rural_ha": 8954885.84,
+      "extranjera_ha": 484560.27,
+      "pct": 5.41
+    },
+    "Mendoza": {
+      "rural_ha": 14829800.0,
+      "extranjera_ha": 1344090.13,
+      "pct": 9.06
+    },
+    "Misiones": {
+      "rural_ha": 2886252.94,
+      "extranjera_ha": 325756.37,
+      "pct": 11.29
+    },
+    "Neuquen": {
+      "rural_ha": 9152139.34,
+      "extranjera_ha": 504040.95,
+      "pct": 5.51
+    },
+    "Rio Negro": {
+      "rural_ha": 17679594.5,
+      "extranjera_ha": 317496.16,
+      "pct": 1.8
+    },
+    "Salta": {
+      "rural_ha": 15492908.0,
+      "extranjera_ha": 1766895.82,
+      "pct": 11.4
+    },
+    "San Juan": {
+      "rural_ha": 8563640.35,
+      "extranjera_ha": 887370.49,
+      "pct": 10.36
+    },
+    "San Luis": {
+      "rural_ha": 7566383.62,
+      "extranjera_ha": 202514.36,
+      "pct": 2.68
+    },
+    "Santa Cruz": {
+      "rural_ha": 23483545.44,
+      "extranjera_ha": 1905083.75,
+      "pct": 8.11
+    },
+    "Santa Fe": {
+      "rural_ha": 12832374.83,
+      "extranjera_ha": 219804.32,
+      "pct": 1.71
+    },
+    "Santiago del Estero": {
+      "rural_ha": 13571992.42,
+      "extranjera_ha": 670174.67,
+      "pct": 4.94
+    },
+    "Tierra del Fuego, Ant.Arg e Islas Atl.Sur": {
+      "rural_ha": 1926919.0,
+      "extranjera_ha": 89848.29,
+      "pct": 4.66
+    },
+    "Tucuman": {
+      "rural_ha": 2215732.7,
+      "extranjera_ha": 89558.94,
+      "pct": 4.04
+    }
+  },
+  "registros": [
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Adolfo Alsina",
+      "rural_ha": 566624.62,
+      "extranjera_ha": 5860.3,
+      "pct": 1.03,
+      "estado": "observado",
+      "id": "06007",
+      "id_georef": "06007"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Alberti",
+      "rural_ha": 107027.63,
+      "extranjera_ha": 623.37,
+      "pct": 0.58,
+      "estado": "observado",
+      "id": "06021",
+      "id_georef": "06021"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Almirante Brown",
+      "rural_ha": 4035.15,
+      "extranjera_ha": 476.67,
+      "pct": 11.81,
+      "estado": "observado",
+      "id": "06028",
+      "id_georef": "06028"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Ameghino",
+      "rural_ha": 177698.21,
+      "extranjera_ha": 2978.88,
+      "pct": 1.68,
+      "estado": "observado",
+      "id": "06277",
+      "id_georef": "06277"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Arrecifes",
+      "rural_ha": 119049.45,
+      "extranjera_ha": 7127.49,
+      "pct": 5.99,
+      "estado": "observado",
+      "id": "06077",
+      "id_georef": "06077"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Avellaneda",
+      "rural_ha": 311.11,
+      "extranjera_ha": 18.57,
+      "pct": 5.97,
+      "estado": "observado",
+      "id": "06035",
+      "id_georef": "06035"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Ayacucho",
+      "rural_ha": 658151.79,
+      "extranjera_ha": 10674.54,
+      "pct": 1.62,
+      "estado": "observado",
+      "id": "06042",
+      "id_georef": "06042"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Azul",
+      "rural_ha": 637720.38,
+      "extranjera_ha": 25343.3,
+      "pct": 3.97,
+      "estado": "observado",
+      "id": "06049",
+      "id_georef": "06049"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Bahia Blanca",
+      "rural_ha": 192659.35,
+      "extranjera_ha": 3710.72,
+      "pct": 1.93,
+      "estado": "observado",
+      "id": "06056",
+      "id_georef": "06056"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Balcarce",
+      "rural_ha": 401637.36,
+      "extranjera_ha": 26841.29,
+      "pct": 6.68,
+      "estado": "observado",
+      "id": "06063",
+      "id_georef": "06063"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Baradero",
+      "rural_ha": 107725.18,
+      "extranjera_ha": 1512.6,
+      "pct": 1.4,
+      "estado": "observado",
+      "id": "06070",
+      "id_georef": "06070"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Berazategui",
+      "rural_ha": 13949.65,
+      "extranjera_ha": 339.54,
+      "pct": 2.43,
+      "estado": "observado",
+      "id": "06091",
+      "id_georef": "06091"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Berisso",
+      "rural_ha": 9859.57,
+      "extranjera_ha": 215.49,
+      "pct": 2.19,
+      "estado": "observado",
+      "id": "06098",
+      "id_georef": "06098"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Bolivar",
+      "rural_ha": 471746.38,
+      "extranjera_ha": 5501.33,
+      "pct": 1.17,
+      "estado": "observado",
+      "id": "06105",
+      "id_georef": "06105"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Bragado",
+      "rural_ha": 208813.33,
+      "extranjera_ha": 4061.59,
+      "pct": 1.95,
+      "estado": "observado",
+      "id": "06112",
+      "id_georef": "06112"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Brandsen",
+      "rural_ha": 105800.67,
+      "extranjera_ha": 3001.96,
+      "pct": 2.84,
+      "estado": "observado",
+      "id": "06119",
+      "id_georef": "06119"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Campana",
+      "rural_ha": 23743.2,
+      "extranjera_ha": 11935.48,
+      "pct": 50.27,
+      "estado": "observado",
+      "id": "06126",
+      "id_georef": "06126"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Cañuelas",
+      "rural_ha": 115249.08,
+      "extranjera_ha": 5578.94,
+      "pct": 4.84,
+      "estado": "observado",
+      "id": "06134",
+      "id_georef": "06134"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Capitan Sarmiento",
+      "rural_ha": 53235.83,
+      "extranjera_ha": 1035.3,
+      "pct": 1.94,
+      "estado": "observado",
+      "id": "06140",
+      "id_georef": "06140"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Carlos Casares",
+      "rural_ha": 244460.24,
+      "extranjera_ha": 2613.09,
+      "pct": 1.07,
+      "estado": "observado",
+      "id": "06147",
+      "id_georef": "06147"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Carlos Tejedor",
+      "rural_ha": 374099.89,
+      "extranjera_ha": 5382.97,
+      "pct": 1.44,
+      "estado": "observado",
+      "id": "06154",
+      "id_georef": "06154"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Carmen de Areco",
+      "rural_ha": 97364.8,
+      "extranjera_ha": 1721.04,
+      "pct": 1.77,
+      "estado": "observado",
+      "id": "06161",
+      "id_georef": "06161"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Castelli",
+      "rural_ha": 201892.17,
+      "extranjera_ha": 2147.45,
+      "pct": 1.06,
+      "estado": "observado",
+      "id": "06168",
+      "id_georef": "06168"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Chacabuco",
+      "rural_ha": 207865.04,
+      "extranjera_ha": 4091.83,
+      "pct": 1.97,
+      "estado": "observado",
+      "id": "06210",
+      "id_georef": "06210"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Chascomus",
+      "rural_ha": 299948.64,
+      "extranjera_ha": 6981.12,
+      "pct": 2.33,
+      "estado": "observado",
+      "id": "06218",
+      "id_georef": "06218"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Chivilcoy",
+      "rural_ha": 194312.89,
+      "extranjera_ha": 1342.49,
+      "pct": 0.69,
+      "estado": "observado",
+      "id": "06224",
+      "id_georef": "06224"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Colon",
+      "rural_ha": 92386.6,
+      "extranjera_ha": 2436.08,
+      "pct": 2.64,
+      "estado": "observado",
+      "id": "06175",
+      "id_georef": "06175"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Coronel Dorrego",
+      "rural_ha": 569810.91,
+      "extranjera_ha": 5961.24,
+      "pct": 1.05,
+      "estado": "observado",
+      "id": "06189",
+      "id_georef": "06189"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Coronel Pringles",
+      "rural_ha": 502366.83,
+      "extranjera_ha": 8282.79,
+      "pct": 1.65,
+      "estado": "observado",
+      "id": "06196",
+      "id_georef": "06196"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Coronel Rosales",
+      "rural_ha": 103618.46,
+      "extranjera_ha": 2314.16,
+      "pct": 2.23,
+      "estado": "observado",
+      "id": "06182",
+      "id_georef": "06182"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Coronel Suarez",
+      "rural_ha": 571848.04,
+      "extranjera_ha": 15099.73,
+      "pct": 2.64,
+      "estado": "observado",
+      "id": "06203",
+      "id_georef": "06203"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Daireaux",
+      "rural_ha": 374901.55,
+      "extranjera_ha": 4993.72,
+      "pct": 1.33,
+      "estado": "observado",
+      "id": "06231",
+      "id_georef": "06231"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Dolores",
+      "rural_ha": 188450.99,
+      "extranjera_ha": 856.02,
+      "pct": 0.45,
+      "estado": "observado",
+      "id": "06238",
+      "id_georef": "06238"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Ensenada",
+      "rural_ha": 7059.53,
+      "extranjera_ha": 16.94,
+      "pct": 0.24,
+      "estado": "observado",
+      "id": "06245",
+      "id_georef": "06245"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Escobar",
+      "rural_ha": 13627.74,
+      "extranjera_ha": 505.2,
+      "pct": 3.71,
+      "estado": "observado",
+      "id": "06252",
+      "id_georef": "06252"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Esteban Echeverria",
+      "rural_ha": 5558.35,
+      "extranjera_ha": 543.95,
+      "pct": 9.79,
+      "estado": "observado",
+      "id": "06260",
+      "id_georef": "06260"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Exaltacion de la Cruz",
+      "rural_ha": 57504.48,
+      "extranjera_ha": 6963.7,
+      "pct": 12.11,
+      "estado": "observado",
+      "id": "06266",
+      "id_georef": "06266"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Ezeiza",
+      "rural_ha": 14632.8,
+      "extranjera_ha": 1616.05,
+      "pct": 11.04,
+      "estado": "observado",
+      "id": "06270",
+      "id_georef": "06270"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Florencio Varela",
+      "rural_ha": 11522.14,
+      "extranjera_ha": 1144.51,
+      "pct": 9.93,
+      "estado": "observado",
+      "id": "06274",
+      "id_georef": "06274"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Alvarado",
+      "rural_ha": 153526.68,
+      "extranjera_ha": 8854.96,
+      "pct": 5.77,
+      "estado": "observado",
+      "id": "06280",
+      "id_georef": "06280"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Alvear",
+      "rural_ha": 311480.77,
+      "extranjera_ha": 7021.97,
+      "pct": 2.25,
+      "estado": "observado",
+      "id": "06287",
+      "id_georef": "06287"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Arenales",
+      "rural_ha": 139937.6,
+      "extranjera_ha": 1149.26,
+      "pct": 0.82,
+      "estado": "observado",
+      "id": "06294",
+      "id_georef": "06294"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Belgrano",
+      "rural_ha": 178747.87,
+      "extranjera_ha": 2963.14,
+      "pct": 1.66,
+      "estado": "observado",
+      "id": "06301",
+      "id_georef": "06301"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Guido",
+      "rural_ha": 229324.9,
+      "extranjera_ha": 0.02,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "06308",
+      "id_georef": "06308"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Lamadrid",
+      "rural_ha": 468766.01,
+      "extranjera_ha": 9697.17,
+      "pct": 2.07,
+      "estado": "observado",
+      "id": "06322",
+      "id_georef": "06322"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Las Heras",
+      "rural_ha": 72101.2,
+      "extranjera_ha": 3273.76,
+      "pct": 4.54,
+      "estado": "observado",
+      "id": "06329",
+      "id_georef": "06329"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Lavalle",
+      "rural_ha": 265700.29,
+      "extranjera_ha": 15803.51,
+      "pct": 5.95,
+      "estado": "observado",
+      "id": "06336",
+      "id_georef": "06336"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Madariaga",
+      "rural_ha": 290533.86,
+      "extranjera_ha": 2671.8,
+      "pct": 0.92,
+      "estado": "observado",
+      "id": "06315",
+      "id_georef": "06315"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Paz",
+      "rural_ha": 116830.57,
+      "extranjera_ha": 4410.52,
+      "pct": 3.78,
+      "estado": "observado",
+      "id": "06343",
+      "id_georef": "06343"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Pinto",
+      "rural_ha": 245703.39,
+      "extranjera_ha": 5002.54,
+      "pct": 2.04,
+      "estado": "observado",
+      "id": "06351",
+      "id_georef": "06351"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Pueyrredon",
+      "rural_ha": 126395.94,
+      "extranjera_ha": 9474.59,
+      "pct": 7.5,
+      "estado": "observado",
+      "id": "06357",
+      "id_georef": "06357"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Rodriguez",
+      "rural_ha": 26707.04,
+      "extranjera_ha": 1863.94,
+      "pct": 6.98,
+      "estado": "observado",
+      "id": "06364",
+      "id_georef": "06364"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General San Martin",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "sin_superficie_rural",
+      "id": "06371",
+      "id_georef": "06371"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Viamonte",
+      "rural_ha": 211320.93,
+      "extranjera_ha": 551.68,
+      "pct": 0.26,
+      "estado": "observado",
+      "id": "06385",
+      "id_georef": "06385"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "General Villegas",
+      "rural_ha": 690042.05,
+      "extranjera_ha": 38657.89,
+      "pct": 5.6,
+      "estado": "observado",
+      "id": "06392",
+      "id_georef": "06392"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Gonzalez Chaves",
+      "rural_ha": 372133.72,
+      "extranjera_ha": 994.54,
+      "pct": 0.27,
+      "estado": "observado",
+      "id": "06014",
+      "id_georef": "06014"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Guamini",
+      "rural_ha": 445120.4,
+      "extranjera_ha": 24946.89,
+      "pct": 5.6,
+      "estado": "observado",
+      "id": "06399",
+      "id_georef": "06399"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Hipolito Yrigoyen",
+      "rural_ha": 163228.56,
+      "extranjera_ha": 2275.52,
+      "pct": 1.39,
+      "estado": "observado",
+      "id": "06406",
+      "id_georef": "06406"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Hurlingham",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "sin_superficie_rural",
+      "id": "06408",
+      "id_georef": "06408"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Ituzaingo",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "sin_superficie_rural",
+      "id": "06410",
+      "id_georef": "06410"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Jose C. Paz",
+      "rural_ha": 676.03,
+      "extranjera_ha": 21.67,
+      "pct": 3.2,
+      "estado": "observado",
+      "id": "06412",
+      "id_georef": "06412"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Juarez",
+      "rural_ha": 507017.54,
+      "extranjera_ha": 67951.46,
+      "pct": 13.4,
+      "estado": "observado",
+      "id": "06084",
+      "id_georef": "06084"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Junin",
+      "rural_ha": 207380.71,
+      "extranjera_ha": 599.07,
+      "pct": 0.29,
+      "estado": "observado",
+      "id": "06413",
+      "id_georef": "06413"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "La Costa",
+      "rural_ha": 12642.76,
+      "extranjera_ha": 82.66,
+      "pct": 0.65,
+      "estado": "observado",
+      "id": "06420",
+      "id_georef": "06420"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "La Plata",
+      "rural_ha": 64122.6,
+      "extranjera_ha": 6375.04,
+      "pct": 9.94,
+      "estado": "observado",
+      "id": "06441",
+      "id_georef": "06441"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Lanus",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "sin_superficie_rural",
+      "id": "06434",
+      "id_georef": "06434"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Laprida",
+      "rural_ha": 332109.35,
+      "extranjera_ha": 1656.4,
+      "pct": 0.5,
+      "estado": "observado",
+      "id": "06448",
+      "id_georef": "06448"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Las Flores",
+      "rural_ha": 323971.96,
+      "extranjera_ha": 6429.05,
+      "pct": 1.98,
+      "estado": "observado",
+      "id": "06455",
+      "id_georef": "06455"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Leandro N. Alem",
+      "rural_ha": 155932.08,
+      "extranjera_ha": 16113.37,
+      "pct": 10.33,
+      "estado": "observado",
+      "id": "06462",
+      "id_georef": "06462"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Lezama",
+      "rural_ha": 96138.16,
+      "extranjera_ha": 568.61,
+      "pct": 0.59,
+      "estado": "observado",
+      "id": "06466",
+      "id_georef": "06466"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Lincoln",
+      "rural_ha": 552233.49,
+      "extranjera_ha": 23380.87,
+      "pct": 4.23,
+      "estado": "observado",
+      "id": "06469",
+      "id_georef": "06469"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Loberia",
+      "rural_ha": 457870.03,
+      "extranjera_ha": 24226.11,
+      "pct": 5.29,
+      "estado": "observado",
+      "id": "06476",
+      "id_georef": "06476"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Lobos",
+      "rural_ha": 157357.98,
+      "extranjera_ha": 7931.95,
+      "pct": 5.04,
+      "estado": "observado",
+      "id": "06483",
+      "id_georef": "06483"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Lomas de Zamora",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "sin_superficie_rural",
+      "id": "06490",
+      "id_georef": "06490"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Lujan",
+      "rural_ha": 66896.7,
+      "extranjera_ha": 1145.09,
+      "pct": 1.71,
+      "estado": "observado",
+      "id": "06497",
+      "id_georef": "06497"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Magdalena",
+      "rural_ha": 179454.54,
+      "extranjera_ha": 4775.87,
+      "pct": 2.66,
+      "estado": "observado",
+      "id": "06505",
+      "id_georef": "06505"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Maipu",
+      "rural_ha": 260350.89,
+      "extranjera_ha": 8857.37,
+      "pct": 3.4,
+      "estado": "observado",
+      "id": "06511",
+      "id_georef": "06511"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Malvinas Argentinas",
+      "rural_ha": 474.42,
+      "extranjera_ha": 5.9,
+      "pct": 1.24,
+      "estado": "observado",
+      "id": "06515",
+      "id_georef": "06515"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Mar Chiquita",
+      "rural_ha": 291324.78,
+      "extranjera_ha": 4228.84,
+      "pct": 1.45,
+      "estado": "observado",
+      "id": "06518",
+      "id_georef": "06518"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Marcos Paz",
+      "rural_ha": 38041.61,
+      "extranjera_ha": 2938.54,
+      "pct": 7.72,
+      "estado": "observado",
+      "id": "06525",
+      "id_georef": "06525"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Matanza",
+      "rural_ha": 13354.74,
+      "extranjera_ha": 469.0,
+      "pct": 3.51,
+      "estado": "observado",
+      "id": "06427",
+      "id_georef": "06427"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Mercedes",
+      "rural_ha": 97868.18,
+      "extranjera_ha": 2845.59,
+      "pct": 2.91,
+      "estado": "observado",
+      "id": "06532",
+      "id_georef": "06532"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Merlo",
+      "rural_ha": 6431.03,
+      "extranjera_ha": 474.36,
+      "pct": 7.38,
+      "estado": "observado",
+      "id": "06539",
+      "id_georef": "06539"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Monte",
+      "rural_ha": 175697.9,
+      "extranjera_ha": 14137.53,
+      "pct": 8.05,
+      "estado": "observado",
+      "id": "06547",
+      "id_georef": "06547"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Monte Hermoso",
+      "rural_ha": 16028.42,
+      "extranjera_ha": 174.59,
+      "pct": 1.09,
+      "estado": "observado",
+      "id": "06553",
+      "id_georef": "06553"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Moreno",
+      "rural_ha": 4398.39,
+      "extranjera_ha": 420.8,
+      "pct": 9.57,
+      "estado": "observado",
+      "id": "06560",
+      "id_georef": "06560"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Moron",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "sin_superficie_rural",
+      "id": "06568",
+      "id_georef": "06568"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Navarro",
+      "rural_ha": 157030.73,
+      "extranjera_ha": 3954.69,
+      "pct": 2.52,
+      "estado": "observado",
+      "id": "06574",
+      "id_georef": "06574"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Necochea",
+      "rural_ha": 429155.09,
+      "extranjera_ha": 15784.02,
+      "pct": 3.68,
+      "estado": "observado",
+      "id": "06581",
+      "id_georef": "06581"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Nueve de Julio",
+      "rural_ha": 407907.96,
+      "extranjera_ha": 11639.63,
+      "pct": 2.85,
+      "estado": "observado",
+      "id": "06588",
+      "id_georef": "06588"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Olavarria",
+      "rural_ha": 708135.94,
+      "extranjera_ha": 25256.27,
+      "pct": 3.57,
+      "estado": "observado",
+      "id": "06595",
+      "id_georef": "06595"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Patagones",
+      "rural_ha": 1328234.44,
+      "extranjera_ha": 8783.31,
+      "pct": 0.66,
+      "estado": "observado",
+      "id": "06602",
+      "id_georef": "06602"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Pehuajo",
+      "rural_ha": 437198.59,
+      "extranjera_ha": 4501.17,
+      "pct": 1.03,
+      "estado": "observado",
+      "id": "06609",
+      "id_georef": "06609"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Pellegrini",
+      "rural_ha": 177019.49,
+      "extranjera_ha": 9217.42,
+      "pct": 5.21,
+      "estado": "observado",
+      "id": "06616",
+      "id_georef": "06616"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Pergamino",
+      "rural_ha": 291705.1,
+      "extranjera_ha": 3913.34,
+      "pct": 1.34,
+      "estado": "observado",
+      "id": "06623",
+      "id_georef": "06623"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Pila",
+      "rural_ha": 336780.74,
+      "extranjera_ha": 4396.95,
+      "pct": 1.31,
+      "estado": "observado",
+      "id": "06630",
+      "id_georef": "06630"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Pilar",
+      "rural_ha": 18926.84,
+      "extranjera_ha": 1742.14,
+      "pct": 9.2,
+      "estado": "observado",
+      "id": "06638",
+      "id_georef": "06638"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Pinamar",
+      "rural_ha": 3388.21,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "06644",
+      "id_georef": "06644"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Pte Peron",
+      "rural_ha": 8596.09,
+      "extranjera_ha": 1070.84,
+      "pct": 12.46,
+      "estado": "observado",
+      "id": "06648",
+      "id_georef": "06648"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Puan",
+      "rural_ha": 615166.33,
+      "extranjera_ha": 8065.52,
+      "pct": 1.31,
+      "estado": "observado",
+      "id": "06651",
+      "id_georef": "06651"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Punta Indio",
+      "rural_ha": 153729.55,
+      "extranjera_ha": 2879.98,
+      "pct": 1.87,
+      "estado": "observado",
+      "id": "06655",
+      "id_georef": "06655"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Quilmes",
+      "rural_ha": 1178.6,
+      "extranjera_ha": 55.55,
+      "pct": 4.71,
+      "estado": "observado",
+      "id": "06658",
+      "id_georef": "06658"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Ramallo",
+      "rural_ha": 90617.3,
+      "extranjera_ha": 6881.03,
+      "pct": 7.59,
+      "estado": "observado",
+      "id": "06665",
+      "id_georef": "06665"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Rauch",
+      "rural_ha": 416431.43,
+      "extranjera_ha": 9942.61,
+      "pct": 2.39,
+      "estado": "observado",
+      "id": "06672",
+      "id_georef": "06672"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Rivadavia",
+      "rural_ha": 381314.41,
+      "extranjera_ha": 9842.47,
+      "pct": 2.58,
+      "estado": "observado",
+      "id": "06679",
+      "id_georef": "06679"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Rojas",
+      "rural_ha": 199731.91,
+      "extranjera_ha": 7614.35,
+      "pct": 3.81,
+      "estado": "observado",
+      "id": "06686",
+      "id_georef": "06686"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Roque Perez",
+      "rural_ha": 150496.13,
+      "extranjera_ha": 4487.54,
+      "pct": 2.98,
+      "estado": "observado",
+      "id": "06693",
+      "id_georef": "06693"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Saavedra",
+      "rural_ha": 329441.11,
+      "extranjera_ha": 1570.65,
+      "pct": 0.48,
+      "estado": "observado",
+      "id": "06700",
+      "id_georef": "06700"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Saladillo",
+      "rural_ha": 257860.08,
+      "extranjera_ha": 5590.06,
+      "pct": 2.17,
+      "estado": "observado",
+      "id": "06707",
+      "id_georef": "06707"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Salliquelo",
+      "rural_ha": 78070.95,
+      "extranjera_ha": 613.96,
+      "pct": 0.79,
+      "estado": "observado",
+      "id": "06721",
+      "id_georef": "06721"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Salto",
+      "rural_ha": 154866.59,
+      "extranjera_ha": 4403.15,
+      "pct": 2.84,
+      "estado": "observado",
+      "id": "06714",
+      "id_georef": "06714"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "San Andres de Giles",
+      "rural_ha": 110533.67,
+      "extranjera_ha": 2203.18,
+      "pct": 1.99,
+      "estado": "observado",
+      "id": "06728",
+      "id_georef": "06728"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "San Antonio de Areco",
+      "rural_ha": 83445.68,
+      "extranjera_ha": 2889.2,
+      "pct": 3.46,
+      "estado": "observado",
+      "id": "06735",
+      "id_georef": "06735"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "San Cayetano",
+      "rural_ha": 294562.69,
+      "extranjera_ha": 15120.89,
+      "pct": 5.13,
+      "estado": "observado",
+      "id": "06742",
+      "id_georef": "06742"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "San Fernando",
+      "rural_ha": 95910.0,
+      "extranjera_ha": 2209.97,
+      "pct": 2.3,
+      "estado": "observado",
+      "id": "06749",
+      "id_georef": "06749"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "San Isidro",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "sin_superficie_rural",
+      "id": "06756",
+      "id_georef": "06756"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "San Miguel",
+      "rural_ha": 750.38,
+      "extranjera_ha": 0.41,
+      "pct": 0.06,
+      "estado": "observado",
+      "id": "06760",
+      "id_georef": "06760"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "San Nicolas",
+      "rural_ha": 59650.63,
+      "extranjera_ha": 1679.93,
+      "pct": 2.82,
+      "estado": "observado",
+      "id": "06763",
+      "id_georef": "06763"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "San Pedro",
+      "rural_ha": 114152.9,
+      "extranjera_ha": 5898.92,
+      "pct": 5.17,
+      "estado": "observado",
+      "id": "06770",
+      "id_georef": "06770"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "San Vicente",
+      "rural_ha": 57787.29,
+      "extranjera_ha": 3261.63,
+      "pct": 5.64,
+      "estado": "observado",
+      "id": "06778",
+      "id_georef": "06778"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Suipacha",
+      "rural_ha": 90527.06,
+      "extranjera_ha": 578.32,
+      "pct": 0.64,
+      "estado": "observado",
+      "id": "06784",
+      "id_georef": "06784"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Tandil",
+      "rural_ha": 467532.17,
+      "extranjera_ha": 21557.28,
+      "pct": 4.61,
+      "estado": "observado",
+      "id": "06791",
+      "id_georef": "06791"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Tapalque",
+      "rural_ha": 402552.59,
+      "extranjera_ha": 4517.36,
+      "pct": 1.12,
+      "estado": "observado",
+      "id": "06798",
+      "id_georef": "06798"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Tigre",
+      "rural_ha": 31348.14,
+      "extranjera_ha": 292.36,
+      "pct": 0.93,
+      "estado": "observado",
+      "id": "06805",
+      "id_georef": "06805"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Tordillo",
+      "rural_ha": 120652.25,
+      "extranjera_ha": 0.06,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "06812",
+      "id_georef": "06812"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Tornquist",
+      "rural_ha": 393242.44,
+      "extranjera_ha": 2882.08,
+      "pct": 0.73,
+      "estado": "observado",
+      "id": "06819",
+      "id_georef": "06819"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Trenque Lauquen",
+      "rural_ha": 516517.49,
+      "extranjera_ha": 16103.88,
+      "pct": 3.12,
+      "estado": "observado",
+      "id": "06826",
+      "id_georef": "06826"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Tres Arroyos",
+      "rural_ha": 565431.72,
+      "extranjera_ha": 18842.17,
+      "pct": 3.33,
+      "estado": "observado",
+      "id": "06833",
+      "id_georef": "06833"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Tres de Febrero",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "sin_superficie_rural",
+      "id": "06840",
+      "id_georef": "06840"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Tres Lomas",
+      "rural_ha": 117924.59,
+      "extranjera_ha": 1470.99,
+      "pct": 1.25,
+      "estado": "observado",
+      "id": "06847",
+      "id_georef": "06847"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Veinticinco de Mayo",
+      "rural_ha": 455265.41,
+      "extranjera_ha": 5906.33,
+      "pct": 1.3,
+      "estado": "observado",
+      "id": "06854",
+      "id_georef": "06854"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Vicente Lopez",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "sin_superficie_rural",
+      "id": "06861",
+      "id_georef": "06861"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Villa Gesell",
+      "rural_ha": 10608.63,
+      "extranjera_ha": 654.66,
+      "pct": 6.17,
+      "estado": "observado",
+      "id": "06868",
+      "id_georef": "06868"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Villarino",
+      "rural_ha": 1030440.46,
+      "extranjera_ha": 29786.36,
+      "pct": 2.89,
+      "estado": "observado",
+      "id": "06875",
+      "id_georef": "06875"
+    },
+    {
+      "provincia": "Buenos Aires",
+      "departamento": "Zarate",
+      "rural_ha": 48394.72,
+      "extranjera_ha": 12003.64,
+      "pct": 24.8,
+      "estado": "observado",
+      "id": "06882",
+      "id_georef": "06882"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Ambato",
+      "rural_ha": 173425.0,
+      "extranjera_ha": 4859.07,
+      "pct": 2.8,
+      "estado": "observado",
+      "id": "10007",
+      "id_georef": "10007"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Ancasti",
+      "rural_ha": 194746.0,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "10014",
+      "id_georef": "10014"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Andalgala",
+      "rural_ha": 469374.0,
+      "extranjera_ha": 25082.16,
+      "pct": 5.34,
+      "estado": "observado",
+      "id": "10021",
+      "id_georef": "10021"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Antofagasta",
+      "rural_ha": 2825718.0,
+      "extranjera_ha": 3504.69,
+      "pct": 0.12,
+      "estado": "observado",
+      "id": "10028",
+      "id_georef": "10028"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Belen",
+      "rural_ha": 1306015.0,
+      "extranjera_ha": 0.02,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "10035",
+      "id_georef": "10035"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Capayan",
+      "rural_ha": 422882.0,
+      "extranjera_ha": 3468.11,
+      "pct": 0.82,
+      "estado": "observado",
+      "id": "10042",
+      "id_georef": "10042"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Capital",
+      "rural_ha": 35633.0,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "10049",
+      "id_georef": "10049"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "El Alto",
+      "rural_ha": 193429.0,
+      "extranjera_ha": 7031.84,
+      "pct": 3.64,
+      "estado": "observado",
+      "id": "10056",
+      "id_georef": "10056"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Fray Mamerto Esquiu",
+      "rural_ha": 15670.0,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "10063",
+      "id_georef": "10063"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "La Paz",
+      "rural_ha": 992305.0,
+      "extranjera_ha": 116297.02,
+      "pct": 11.72,
+      "estado": "observado",
+      "id": "10070",
+      "id_georef": "10070"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Paclin",
+      "rural_ha": 98373.0,
+      "extranjera_ha": 20321.54,
+      "pct": 20.66,
+      "estado": "observado",
+      "id": "10077",
+      "id_georef": "10077"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Poman",
+      "rural_ha": 505485.0,
+      "extranjera_ha": 627.89,
+      "pct": 0.12,
+      "estado": "observado",
+      "id": "10084",
+      "id_georef": "10084"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Santa Maria",
+      "rural_ha": 572729.0,
+      "extranjera_ha": 53249.19,
+      "pct": 9.3,
+      "estado": "observado",
+      "id": "10091",
+      "id_georef": "10091"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Santa Rosa",
+      "rural_ha": 158668.0,
+      "extranjera_ha": 1729.98,
+      "pct": 1.09,
+      "estado": "observado",
+      "id": "10098",
+      "id_georef": "10098"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Tinogasta",
+      "rural_ha": 2288319.0,
+      "extranjera_ha": 608956.63,
+      "pct": 26.61,
+      "estado": "observado",
+      "id": "10105",
+      "id_georef": "10105"
+    },
+    {
+      "provincia": "Catamarca",
+      "departamento": "Valle Viejo",
+      "rural_ha": 58961.0,
+      "extranjera_ha": 2899.26,
+      "pct": 4.92,
+      "estado": "observado",
+      "id": "10112",
+      "id_georef": "10112"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "1 de Mayo",
+      "rural_ha": 166268.57,
+      "extranjera_ha": 2986.29,
+      "pct": 1.8,
+      "estado": "observado",
+      "id": "22126",
+      "id_georef": "22126"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "12 de Octubre",
+      "rural_ha": 253398.72,
+      "extranjera_ha": 2720.5,
+      "pct": 1.07,
+      "estado": "observado",
+      "id": "22036",
+      "id_georef": "22036"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "2 de Abril",
+      "rural_ha": 154867.13,
+      "extranjera_ha": 5791.25,
+      "pct": 3.74,
+      "estado": "observado",
+      "id": "22039",
+      "id_georef": "22039"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "25 de Mayo",
+      "rural_ha": 194759.34,
+      "extranjera_ha": 1218.56,
+      "pct": 0.63,
+      "estado": "observado",
+      "id": "22168",
+      "id_georef": "22168"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "9 de Julio",
+      "rural_ha": 209390.62,
+      "extranjera_ha": 275.58,
+      "pct": 0.13,
+      "estado": "observado",
+      "id": "22105",
+      "id_georef": "22105"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Almirante Brown",
+      "rural_ha": 1724437.48,
+      "extranjera_ha": 1336.25,
+      "pct": 0.08,
+      "estado": "observado",
+      "id": "22007",
+      "id_georef": "22007"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Bermejo",
+      "rural_ha": 208396.63,
+      "extranjera_ha": 5050.01,
+      "pct": 2.42,
+      "estado": "observado",
+      "id": "22014",
+      "id_georef": "22014"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Chacabuco",
+      "rural_ha": 136930.79,
+      "extranjera_ha": 1498.81,
+      "pct": 1.09,
+      "estado": "observado",
+      "id": "22028",
+      "id_georef": "22028"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Comandante Fernandez",
+      "rural_ha": 148192.6,
+      "extranjera_ha": 3479.24,
+      "pct": 2.35,
+      "estado": "observado",
+      "id": "22021",
+      "id_georef": "22021"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Fray Justo Santa Maria de Oro",
+      "rural_ha": 212382.69,
+      "extranjera_ha": 295.59,
+      "pct": 0.14,
+      "estado": "observado",
+      "id": "22043",
+      "id_georef": "22043"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "General Belgrano",
+      "rural_ha": 121462.13,
+      "extranjera_ha": 219.56,
+      "pct": 0.18,
+      "estado": "observado",
+      "id": "22049",
+      "id_georef": "22049"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "General Donovan",
+      "rural_ha": 113192.69,
+      "extranjera_ha": 4055.01,
+      "pct": 3.58,
+      "estado": "observado",
+      "id": "22056",
+      "id_georef": "22056"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "General Guemes",
+      "rural_ha": 2396166.76,
+      "extranjera_ha": 150586.13,
+      "pct": 6.28,
+      "estado": "observado",
+      "id": "22063",
+      "id_georef": "22063"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Independencia",
+      "rural_ha": 186560.73,
+      "extranjera_ha": 1547.44,
+      "pct": 0.83,
+      "estado": "observado",
+      "id": "22070",
+      "id_georef": "22070"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Libertad",
+      "rural_ha": 99608.69,
+      "extranjera_ha": 275.91,
+      "pct": 0.28,
+      "estado": "observado",
+      "id": "22077",
+      "id_georef": "22077"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Libertador General San Martin",
+      "rural_ha": 569103.18,
+      "extranjera_ha": 7226.34,
+      "pct": 1.27,
+      "estado": "observado",
+      "id": "22084",
+      "id_georef": "22084"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Maipu",
+      "rural_ha": 275657.24,
+      "extranjera_ha": 1000.33,
+      "pct": 0.36,
+      "estado": "observado",
+      "id": "22091",
+      "id_georef": "22091"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Mayor Jorge Luis Fontana",
+      "rural_ha": 356504.73,
+      "extranjera_ha": 8490.83,
+      "pct": 2.38,
+      "estado": "observado",
+      "id": "22098",
+      "id_georef": "22098"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "O'Higgins",
+      "rural_ha": 157513.56,
+      "extranjera_ha": 985.81,
+      "pct": 0.63,
+      "estado": "observado",
+      "id": "22112",
+      "id_georef": "22112"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Presidente de la Plaza",
+      "rural_ha": 178671.36,
+      "extranjera_ha": 110.17,
+      "pct": 0.06,
+      "estado": "observado",
+      "id": "22119",
+      "id_georef": "22119"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Quitilipi",
+      "rural_ha": 130792.25,
+      "extranjera_ha": 553.19,
+      "pct": 0.42,
+      "estado": "observado",
+      "id": "22133",
+      "id_georef": "22133"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "San Fernando",
+      "rural_ha": 181157.23,
+      "extranjera_ha": 6328.85,
+      "pct": 3.49,
+      "estado": "observado",
+      "id": "22140",
+      "id_georef": "22140"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "San Lorenzo",
+      "rural_ha": 208235.7,
+      "extranjera_ha": 1904.66,
+      "pct": 0.91,
+      "estado": "observado",
+      "id": "22147",
+      "id_georef": "22147"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Sargento Cabral",
+      "rural_ha": 101200.85,
+      "extranjera_ha": 5937.89,
+      "pct": 5.87,
+      "estado": "observado",
+      "id": "22154",
+      "id_georef": "22154"
+    },
+    {
+      "provincia": "Chaco",
+      "departamento": "Tapenaga",
+      "rural_ha": 509894.92,
+      "extranjera_ha": 32400.89,
+      "pct": 6.35,
+      "estado": "observado",
+      "id": "22161",
+      "id_georef": "22161"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Ameghino",
+      "rural_ha": 1601375.92,
+      "extranjera_ha": 33266.57,
+      "pct": 2.08,
+      "estado": "observado",
+      "id": "26028",
+      "id_georef": "26028"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Biedma",
+      "rural_ha": 1294876.77,
+      "extranjera_ha": 63994.52,
+      "pct": 4.94,
+      "estado": "observado",
+      "id": "26007",
+      "id_georef": "26007"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Cushamen",
+      "rural_ha": 1649975.64,
+      "extranjera_ha": 377875.38,
+      "pct": 22.9,
+      "estado": "observado",
+      "id": "26014",
+      "id_georef": "26014"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Escalante",
+      "rural_ha": 1403535.76,
+      "extranjera_ha": 45132.28,
+      "pct": 3.22,
+      "estado": "observado",
+      "id": "26021",
+      "id_georef": "26021"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Futaleufu",
+      "rural_ha": 871277.68,
+      "extranjera_ha": 36046.38,
+      "pct": 4.14,
+      "estado": "observado",
+      "id": "26035",
+      "id_georef": "26035"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Gaiman",
+      "rural_ha": 1149558.45,
+      "extranjera_ha": 10354.27,
+      "pct": 0.9,
+      "estado": "observado",
+      "id": "26042",
+      "id_georef": "26042"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Gastre",
+      "rural_ha": 1611642.2,
+      "extranjera_ha": 42579.64,
+      "pct": 2.64,
+      "estado": "observado",
+      "id": "26049",
+      "id_georef": "26049"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Languiñeo",
+      "rural_ha": 1489250.03,
+      "extranjera_ha": 39204.79,
+      "pct": 2.63,
+      "estado": "observado",
+      "id": "26056",
+      "id_georef": "26056"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Martires",
+      "rural_ha": 1528827.7,
+      "extranjera_ha": 12961.71,
+      "pct": 0.85,
+      "estado": "observado",
+      "id": "26063",
+      "id_georef": "26063"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Paso de Indios",
+      "rural_ha": 2223982.8,
+      "extranjera_ha": 93314.63,
+      "pct": 4.2,
+      "estado": "observado",
+      "id": "26070",
+      "id_georef": "26070"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Rawson",
+      "rural_ha": 401745.04,
+      "extranjera_ha": 348.8,
+      "pct": 0.09,
+      "estado": "observado",
+      "id": "26077",
+      "id_georef": "26077"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Rio Senguer",
+      "rural_ha": 2238065.8,
+      "extranjera_ha": 30236.57,
+      "pct": 1.35,
+      "estado": "observado",
+      "id": "26084",
+      "id_georef": "26084"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Sarmiento",
+      "rural_ha": 1333087.25,
+      "extranjera_ha": 7235.62,
+      "pct": 0.54,
+      "estado": "observado",
+      "id": "26091",
+      "id_georef": "26091"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Tehuelches",
+      "rural_ha": 1458414.2,
+      "extranjera_ha": 25113.36,
+      "pct": 1.72,
+      "estado": "observado",
+      "id": "26098",
+      "id_georef": "26098"
+    },
+    {
+      "provincia": "Chubut",
+      "departamento": "Telsen",
+      "rural_ha": 1974290.54,
+      "extranjera_ha": 64963.92,
+      "pct": 3.29,
+      "estado": "observado",
+      "id": "26105",
+      "id_georef": "26105"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Calamuchita",
+      "rural_ha": 456319.88,
+      "extranjera_ha": 2705.49,
+      "pct": 0.59,
+      "estado": "observado",
+      "id": "14007",
+      "id_georef": "14007"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Capital",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": 6.54,
+      "estado": "sin_superficie_rural",
+      "id": "14014",
+      "id_georef": "14014"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Colon",
+      "rural_ha": 221589.06,
+      "extranjera_ha": 687.01,
+      "pct": 0.31,
+      "estado": "observado",
+      "id": "14021",
+      "id_georef": "14021"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Cruz del Eje",
+      "rural_ha": 658165.6,
+      "extranjera_ha": 339.86,
+      "pct": 0.05,
+      "estado": "observado",
+      "id": "14028",
+      "id_georef": "14028"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "General Roca",
+      "rural_ha": 1268705.41,
+      "extranjera_ha": 23270.9,
+      "pct": 1.83,
+      "estado": "observado",
+      "id": "14035",
+      "id_georef": "14035"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "General San Martin",
+      "rural_ha": 494396.0,
+      "extranjera_ha": 3011.5,
+      "pct": 0.61,
+      "estado": "observado",
+      "id": "14042",
+      "id_georef": "14042"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Ischilin",
+      "rural_ha": 502776.74,
+      "extranjera_ha": 2305.08,
+      "pct": 0.46,
+      "estado": "observado",
+      "id": "14049",
+      "id_georef": "14049"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Juarez Celman",
+      "rural_ha": 789111.74,
+      "extranjera_ha": 3489.17,
+      "pct": 0.44,
+      "estado": "observado",
+      "id": "14056",
+      "id_georef": "14056"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Marcos Juarez",
+      "rural_ha": 914066.89,
+      "extranjera_ha": 13657.85,
+      "pct": 1.49,
+      "estado": "observado",
+      "id": "14063",
+      "id_georef": "14063"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Minas",
+      "rural_ha": 357653.86,
+      "extranjera_ha": 14804.02,
+      "pct": 4.14,
+      "estado": "observado",
+      "id": "14070",
+      "id_georef": "14070"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Pocho",
+      "rural_ha": 304307.37,
+      "extranjera_ha": 834.07,
+      "pct": 0.27,
+      "estado": "observado",
+      "id": "14077",
+      "id_georef": "14077"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Presidente Roque Saenz Peña",
+      "rural_ha": 820702.9,
+      "extranjera_ha": 17793.23,
+      "pct": 2.17,
+      "estado": "observado",
+      "id": "14084",
+      "id_georef": "14084"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Punilla",
+      "rural_ha": 220864.64,
+      "extranjera_ha": 6989.12,
+      "pct": 3.16,
+      "estado": "observado",
+      "id": "14091",
+      "id_georef": "14091"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Rio Cuarto",
+      "rural_ha": 1845697.65,
+      "extranjera_ha": 42877.98,
+      "pct": 2.32,
+      "estado": "observado",
+      "id": "14098",
+      "id_georef": "14098"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Rio Primero",
+      "rural_ha": 670625.95,
+      "extranjera_ha": 3659.26,
+      "pct": 0.55,
+      "estado": "observado",
+      "id": "14105",
+      "id_georef": "14105"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Rio Seco",
+      "rural_ha": 706504.0,
+      "extranjera_ha": 2403.02,
+      "pct": 0.34,
+      "estado": "observado",
+      "id": "14112",
+      "id_georef": "14112"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Rio Segundo",
+      "rural_ha": 512936.61,
+      "extranjera_ha": 2143.91,
+      "pct": 0.42,
+      "estado": "observado",
+      "id": "14119",
+      "id_georef": "14119"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "San Alberto",
+      "rural_ha": 336643.08,
+      "extranjera_ha": 5818.81,
+      "pct": 1.73,
+      "estado": "observado",
+      "id": "14126",
+      "id_georef": "14126"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "San Javier",
+      "rural_ha": 152377.05,
+      "extranjera_ha": 129.5,
+      "pct": 0.08,
+      "estado": "observado",
+      "id": "14133",
+      "id_georef": "14133"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "San Justo",
+      "rural_ha": 1544690.6,
+      "extranjera_ha": 3239.33,
+      "pct": 0.21,
+      "estado": "observado",
+      "id": "14140",
+      "id_georef": "14140"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Santa Maria",
+      "rural_ha": 310547.69,
+      "extranjera_ha": 1487.8,
+      "pct": 0.48,
+      "estado": "observado",
+      "id": "14147",
+      "id_georef": "14147"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Sobremonte",
+      "rural_ha": 324031.87,
+      "extranjera_ha": 3199.79,
+      "pct": 0.99,
+      "estado": "observado",
+      "id": "14154",
+      "id_georef": "14154"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Tercero Arriba",
+      "rural_ha": 511451.96,
+      "extranjera_ha": 11394.93,
+      "pct": 2.23,
+      "estado": "observado",
+      "id": "14161",
+      "id_georef": "14161"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Totoral",
+      "rural_ha": 303017.69,
+      "extranjera_ha": 2919.11,
+      "pct": 0.96,
+      "estado": "observado",
+      "id": "14168",
+      "id_georef": "14168"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Tulumba",
+      "rural_ha": 960151.43,
+      "extranjera_ha": 9816.13,
+      "pct": 1.02,
+      "estado": "observado",
+      "id": "14175",
+      "id_georef": "14175"
+    },
+    {
+      "provincia": "Cordoba",
+      "departamento": "Union",
+      "rural_ha": 1082148.05,
+      "extranjera_ha": 17850.86,
+      "pct": 1.65,
+      "estado": "observado",
+      "id": "14182",
+      "id_georef": "14182"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Bella Vista",
+      "rural_ha": 168886.49,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "18007",
+      "id_georef": "18007"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Beron de Astrada",
+      "rural_ha": 71281.88,
+      "extranjera_ha": 23325.02,
+      "pct": 32.72,
+      "estado": "observado",
+      "id": "18014",
+      "id_georef": "18014"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Capital",
+      "rural_ha": 45621.58,
+      "extranjera_ha": 91.31,
+      "pct": 0.2,
+      "estado": "observado",
+      "id": "18021",
+      "id_georef": "18021"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Concepcion",
+      "rural_ha": 253686.03,
+      "extranjera_ha": 34224.91,
+      "pct": 13.49,
+      "estado": "observado",
+      "id": "18028",
+      "id_georef": "18028"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Curuzu Cuatia",
+      "rural_ha": 833700.42,
+      "extranjera_ha": 86370.46,
+      "pct": 10.36,
+      "estado": "observado",
+      "id": "18035",
+      "id_georef": "18035"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Empedrado",
+      "rural_ha": 190450.42,
+      "extranjera_ha": 522.2,
+      "pct": 0.27,
+      "estado": "observado",
+      "id": "18042",
+      "id_georef": "18042"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Esquina",
+      "rural_ha": 344474.69,
+      "extranjera_ha": 26486.12,
+      "pct": 7.69,
+      "estado": "observado",
+      "id": "18049",
+      "id_georef": "18049"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "General Alvear",
+      "rural_ha": 191225.44,
+      "extranjera_ha": 10429.04,
+      "pct": 5.45,
+      "estado": "observado",
+      "id": "18056",
+      "id_georef": "18056"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "General Paz",
+      "rural_ha": 458615.95,
+      "extranjera_ha": 1997.51,
+      "pct": 0.44,
+      "estado": "observado",
+      "id": "18063",
+      "id_georef": "18063"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Goya",
+      "rural_ha": 461202.31,
+      "extranjera_ha": 45949.41,
+      "pct": 9.96,
+      "estado": "observado",
+      "id": "18070",
+      "id_georef": "18070"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Itati",
+      "rural_ha": 76265.59,
+      "extranjera_ha": 405.55,
+      "pct": 0.53,
+      "estado": "observado",
+      "id": "18077",
+      "id_georef": "18077"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Ituzaingo",
+      "rural_ha": 276890.58,
+      "extranjera_ha": 93858.71,
+      "pct": 33.9,
+      "estado": "observado",
+      "id": "18084",
+      "id_georef": "18084"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "ituzaingo",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "duplicado_en_fuente",
+      "id": "18084-duplicado",
+      "id_georef": "18084"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Lavalle",
+      "rural_ha": 136994.86,
+      "extranjera_ha": 87.01,
+      "pct": 0.06,
+      "estado": "observado",
+      "id": "18091",
+      "id_georef": "18091"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Mburucuya",
+      "rural_ha": 76884.65,
+      "extranjera_ha": 218.1,
+      "pct": 0.28,
+      "estado": "observado",
+      "id": "18098",
+      "id_georef": "18098"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Mercedes",
+      "rural_ha": 812856.06,
+      "extranjera_ha": 79262.13,
+      "pct": 9.75,
+      "estado": "observado",
+      "id": "18105",
+      "id_georef": "18105"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Monte Caseros",
+      "rural_ha": 219215.15,
+      "extranjera_ha": 6374.96,
+      "pct": 2.91,
+      "estado": "observado",
+      "id": "18112",
+      "id_georef": "18112"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Paso de los Libres",
+      "rural_ha": 468950.67,
+      "extranjera_ha": 120.0,
+      "pct": 0.03,
+      "estado": "observado",
+      "id": "18119",
+      "id_georef": "18119"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Saladas",
+      "rural_ha": 174596.13,
+      "extranjera_ha": 325.52,
+      "pct": 0.19,
+      "estado": "observado",
+      "id": "18126",
+      "id_georef": "18126"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "San Cosme",
+      "rural_ha": 56151.57,
+      "extranjera_ha": 4034.71,
+      "pct": 7.19,
+      "estado": "observado",
+      "id": "18133",
+      "id_georef": "18133"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "San Luis del Palmar",
+      "rural_ha": 211708.11,
+      "extranjera_ha": 2393.85,
+      "pct": 1.13,
+      "estado": "observado",
+      "id": "18140",
+      "id_georef": "18140"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "San Martin",
+      "rural_ha": 558432.14,
+      "extranjera_ha": 13826.38,
+      "pct": 2.48,
+      "estado": "observado",
+      "id": "18147",
+      "id_georef": "18147"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "San Miguel",
+      "rural_ha": 171818.02,
+      "extranjera_ha": 19642.7,
+      "pct": 11.43,
+      "estado": "observado",
+      "id": "18154",
+      "id_georef": "18154"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "San Roque",
+      "rural_ha": 167305.33,
+      "extranjera_ha": 11670.75,
+      "pct": 6.98,
+      "estado": "observado",
+      "id": "18161",
+      "id_georef": "18161"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Santo Tome",
+      "rural_ha": 657308.36,
+      "extranjera_ha": 92471.2,
+      "pct": 14.07,
+      "estado": "observado",
+      "id": "18168",
+      "id_georef": "18168"
+    },
+    {
+      "provincia": "Corrientes",
+      "departamento": "Sauce",
+      "rural_ha": 172995.54,
+      "extranjera_ha": 6.2,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "18175",
+      "id_georef": "18175"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Colon",
+      "rural_ha": 262914.66,
+      "extranjera_ha": 3004.43,
+      "pct": 1.14,
+      "estado": "observado",
+      "id": "30008",
+      "id_georef": "30008"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Concordia",
+      "rural_ha": 314644.69,
+      "extranjera_ha": 17864.55,
+      "pct": 5.68,
+      "estado": "observado",
+      "id": "30015",
+      "id_georef": "30015"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Diamante",
+      "rural_ha": 256878.98,
+      "extranjera_ha": 856.84,
+      "pct": 0.33,
+      "estado": "observado",
+      "id": "30021",
+      "id_georef": "30021"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Federacion",
+      "rural_ha": 347486.01,
+      "extranjera_ha": 3385.7,
+      "pct": 0.97,
+      "estado": "observado",
+      "id": "30028",
+      "id_georef": "30028"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Federal",
+      "rural_ha": 519447.49,
+      "extranjera_ha": 19619.59,
+      "pct": 3.78,
+      "estado": "observado",
+      "id": "30035",
+      "id_georef": "30035"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Feliciano",
+      "rural_ha": 316096.05,
+      "extranjera_ha": 6992.71,
+      "pct": 2.21,
+      "estado": "observado",
+      "id": "30042",
+      "id_georef": "30042"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Gualeguay",
+      "rural_ha": 665333.64,
+      "extranjera_ha": 57043.59,
+      "pct": 8.57,
+      "estado": "observado",
+      "id": "30049",
+      "id_georef": "30049"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Gualeguaychu",
+      "rural_ha": 739286.96,
+      "extranjera_ha": 22460.19,
+      "pct": 3.04,
+      "estado": "observado",
+      "id": "30056",
+      "id_georef": "30056"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Islas del Ibicuy",
+      "rural_ha": 478679.71,
+      "extranjera_ha": 6181.24,
+      "pct": 1.29,
+      "estado": "observado",
+      "id": "30063",
+      "id_georef": "30063"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "La Paz",
+      "rural_ha": 646511.23,
+      "extranjera_ha": 56636.41,
+      "pct": 8.76,
+      "estado": "observado",
+      "id": "30070",
+      "id_georef": "30070"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Nogoya",
+      "rural_ha": 453637.83,
+      "extranjera_ha": 6917.48,
+      "pct": 1.52,
+      "estado": "observado",
+      "id": "30077",
+      "id_georef": "30077"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Parana",
+      "rural_ha": 490041.32,
+      "extranjera_ha": 4686.57,
+      "pct": 0.96,
+      "estado": "observado",
+      "id": "30084",
+      "id_georef": "30084"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "San Salvador",
+      "rural_ha": 130527.15,
+      "extranjera_ha": 4.79,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "30088",
+      "id_georef": "30088"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Tala",
+      "rural_ha": 263935.54,
+      "extranjera_ha": 4320.19,
+      "pct": 1.64,
+      "estado": "observado",
+      "id": "30091",
+      "id_georef": "30091"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Uruguay",
+      "rural_ha": 512732.62,
+      "extranjera_ha": 4798.12,
+      "pct": 0.94,
+      "estado": "observado",
+      "id": "30098",
+      "id_georef": "30098"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Victoria",
+      "rural_ha": 589646.1,
+      "extranjera_ha": 12254.15,
+      "pct": 2.08,
+      "estado": "observado",
+      "id": "30105",
+      "id_georef": "30105"
+    },
+    {
+      "provincia": "Entre Rios",
+      "departamento": "Villaguay",
+      "rural_ha": 653541.91,
+      "extranjera_ha": 19878.97,
+      "pct": 3.04,
+      "estado": "observado",
+      "id": "30113",
+      "id_georef": "30113"
+    },
+    {
+      "provincia": "Formosa",
+      "departamento": "Bermejo",
+      "rural_ha": 1245569.0,
+      "extranjera_ha": 9422.87,
+      "pct": 0.76,
+      "estado": "observado",
+      "id": "34007",
+      "id_georef": "34007"
+    },
+    {
+      "provincia": "Formosa",
+      "departamento": "Formosa",
+      "rural_ha": 502819.0,
+      "extranjera_ha": 54999.26,
+      "pct": 10.94,
+      "estado": "observado",
+      "id": "34014",
+      "id_georef": "34014"
+    },
+    {
+      "provincia": "Formosa",
+      "departamento": "Laishi",
+      "rural_ha": 243204.0,
+      "extranjera_ha": 5413.3,
+      "pct": 2.23,
+      "estado": "observado",
+      "id": "34021",
+      "id_georef": "34021"
+    },
+    {
+      "provincia": "Formosa",
+      "departamento": "Matacos",
+      "rural_ha": 440167.0,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "34028",
+      "id_georef": "34028"
+    },
+    {
+      "provincia": "Formosa",
+      "departamento": "Patiño",
+      "rural_ha": 2332410.0,
+      "extranjera_ha": 22975.77,
+      "pct": 0.99,
+      "estado": "observado",
+      "id": "34035",
+      "id_georef": "34035"
+    },
+    {
+      "provincia": "Formosa",
+      "departamento": "Pilagas",
+      "rural_ha": 221328.0,
+      "extranjera_ha": 632.46,
+      "pct": 0.29,
+      "estado": "observado",
+      "id": "34042",
+      "id_georef": "34042"
+    },
+    {
+      "provincia": "Formosa",
+      "departamento": "Pilcomayo",
+      "rural_ha": 447182.0,
+      "extranjera_ha": 18070.58,
+      "pct": 4.04,
+      "estado": "observado",
+      "id": "34049",
+      "id_georef": "34049"
+    },
+    {
+      "provincia": "Formosa",
+      "departamento": "Pirane",
+      "rural_ha": 576975.0,
+      "extranjera_ha": 919.2,
+      "pct": 0.16,
+      "estado": "observado",
+      "id": "34056",
+      "id_georef": "34056"
+    },
+    {
+      "provincia": "Formosa",
+      "departamento": "Ramon Lista",
+      "rural_ha": 372762.0,
+      "extranjera_ha": 2500.0,
+      "pct": 0.67,
+      "estado": "observado",
+      "id": "34063",
+      "id_georef": "34063"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Cochinoca",
+      "rural_ha": 783117.07,
+      "extranjera_ha": 0.13,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "38007",
+      "id_georef": "38007"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "El Carmen",
+      "rural_ha": 89683.91,
+      "extranjera_ha": 13270.8,
+      "pct": 14.8,
+      "estado": "observado",
+      "id": "38014",
+      "id_georef": "38014"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Humahuaca",
+      "rural_ha": 378793.24,
+      "extranjera_ha": 98726.31,
+      "pct": 26.06,
+      "estado": "observado",
+      "id": "38028",
+      "id_georef": "38028"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Ledesma",
+      "rural_ha": 323499.28,
+      "extranjera_ha": 4843.49,
+      "pct": 1.5,
+      "estado": "observado",
+      "id": "38035",
+      "id_georef": "38035"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Manuel Belgrano",
+      "rural_ha": 188685.36,
+      "extranjera_ha": 11373.65,
+      "pct": 6.03,
+      "estado": "observado",
+      "id": "38021",
+      "id_georef": "38021"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Palpala",
+      "rural_ha": 45798.32,
+      "extranjera_ha": 2337.11,
+      "pct": 5.1,
+      "estado": "observado",
+      "id": "38042",
+      "id_georef": "38042"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Rinconada",
+      "rural_ha": 616161.3,
+      "extranjera_ha": 7501.41,
+      "pct": 1.22,
+      "estado": "observado",
+      "id": "38049",
+      "id_georef": "38049"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "San Antonio",
+      "rural_ha": 68913.86,
+      "extranjera_ha": 28.56,
+      "pct": 0.04,
+      "estado": "observado",
+      "id": "38056",
+      "id_georef": "38056"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "San Pedro",
+      "rural_ha": 213947.46,
+      "extranjera_ha": 44237.58,
+      "pct": 20.68,
+      "estado": "observado",
+      "id": "38063",
+      "id_georef": "38063"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Santa Barbara",
+      "rural_ha": 443960.24,
+      "extranjera_ha": 7637.37,
+      "pct": 1.72,
+      "estado": "observado",
+      "id": "38070",
+      "id_georef": "38070"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Santa Catalina",
+      "rural_ha": 294857.43,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "38077",
+      "id_georef": "38077"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Susques",
+      "rural_ha": 919474.11,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "38084",
+      "id_georef": "38084"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Tilcara",
+      "rural_ha": 184318.31,
+      "extranjera_ha": 10.56,
+      "pct": 0.01,
+      "estado": "observado",
+      "id": "38094",
+      "id_georef": "38094"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Tumbaya",
+      "rural_ha": 344050.45,
+      "extranjera_ha": 2713.85,
+      "pct": 0.79,
+      "estado": "observado",
+      "id": "38098",
+      "id_georef": "38098"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Valle Grande",
+      "rural_ha": 96099.32,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "38105",
+      "id_georef": "38105"
+    },
+    {
+      "provincia": "Jujuy",
+      "departamento": "Yavi",
+      "rural_ha": 293533.21,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "38112",
+      "id_georef": "38112"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Atreuco",
+      "rural_ha": 357117.3,
+      "extranjera_ha": 26586.66,
+      "pct": 7.44,
+      "estado": "observado",
+      "id": "42007",
+      "id_georef": "42007"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Caleu Caleu",
+      "rural_ha": 906836.44,
+      "extranjera_ha": 16948.15,
+      "pct": 1.87,
+      "estado": "observado",
+      "id": "42014",
+      "id_georef": "42014"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Capital",
+      "rural_ha": 249761.03,
+      "extranjera_ha": 2274.34,
+      "pct": 0.91,
+      "estado": "observado",
+      "id": "42021",
+      "id_georef": "42021"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Catrilo",
+      "rural_ha": 255192.46,
+      "extranjera_ha": 2960.23,
+      "pct": 1.16,
+      "estado": "observado",
+      "id": "42028",
+      "id_georef": "42028"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Chalileo",
+      "rural_ha": 891554.47,
+      "extranjera_ha": 5429.66,
+      "pct": 0.61,
+      "estado": "observado",
+      "id": "42049",
+      "id_georef": "42049"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Chapaleufu",
+      "rural_ha": 256514.76,
+      "extranjera_ha": 761.33,
+      "pct": 0.3,
+      "estado": "observado",
+      "id": "42056",
+      "id_georef": "42056"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Chical Co",
+      "rural_ha": 911665.4,
+      "extranjera_ha": 21763.68,
+      "pct": 2.39,
+      "estado": "observado",
+      "id": "42063",
+      "id_georef": "42063"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Conhelo",
+      "rural_ha": 504154.66,
+      "extranjera_ha": 1271.9,
+      "pct": 0.25,
+      "estado": "observado",
+      "id": "42035",
+      "id_georef": "42035"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Curaco",
+      "rural_ha": 1285738.48,
+      "extranjera_ha": 41909.28,
+      "pct": 3.26,
+      "estado": "observado",
+      "id": "42042",
+      "id_georef": "42042"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Guatrache",
+      "rural_ha": 351296.5,
+      "extranjera_ha": 2500.0,
+      "pct": 0.71,
+      "estado": "observado",
+      "id": "42070",
+      "id_georef": "42070"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Hucal",
+      "rural_ha": 603000.79,
+      "extranjera_ha": 7720.27,
+      "pct": 1.28,
+      "estado": "observado",
+      "id": "42077",
+      "id_georef": "42077"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Lihuel Calel",
+      "rural_ha": 1244777.39,
+      "extranjera_ha": 43465.72,
+      "pct": 3.49,
+      "estado": "observado",
+      "id": "42084",
+      "id_georef": "42084"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Limay Mahuida",
+      "rural_ha": 997643.96,
+      "extranjera_ha": 7421.52,
+      "pct": 0.74,
+      "estado": "observado",
+      "id": "42091",
+      "id_georef": "42091"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Loventue",
+      "rural_ha": 922703.65,
+      "extranjera_ha": 53277.98,
+      "pct": 5.77,
+      "estado": "observado",
+      "id": "42098",
+      "id_georef": "42098"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Maraco",
+      "rural_ha": 254338.97,
+      "extranjera_ha": 3135.17,
+      "pct": 1.23,
+      "estado": "observado",
+      "id": "42105",
+      "id_georef": "42105"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Puelen",
+      "rural_ha": 1298391.06,
+      "extranjera_ha": 36968.78,
+      "pct": 2.85,
+      "estado": "observado",
+      "id": "42112",
+      "id_georef": "42112"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Quemu Quemu",
+      "rural_ha": 255218.93,
+      "extranjera_ha": 9163.12,
+      "pct": 3.59,
+      "estado": "observado",
+      "id": "42119",
+      "id_georef": "42119"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Rancul",
+      "rural_ha": 492213.55,
+      "extranjera_ha": 2795.45,
+      "pct": 0.57,
+      "estado": "observado",
+      "id": "42126",
+      "id_georef": "42126"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Realico",
+      "rural_ha": 244400.89,
+      "extranjera_ha": 390.5,
+      "pct": 0.16,
+      "estado": "observado",
+      "id": "42133",
+      "id_georef": "42133"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Toay",
+      "rural_ha": 508508.46,
+      "extranjera_ha": 15652.2,
+      "pct": 3.08,
+      "estado": "observado",
+      "id": "42140",
+      "id_georef": "42140"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Trenel",
+      "rural_ha": 195279.03,
+      "extranjera_ha": 203.82,
+      "pct": 0.1,
+      "estado": "observado",
+      "id": "42147",
+      "id_georef": "42147"
+    },
+    {
+      "provincia": "La Pampa",
+      "departamento": "Utracan",
+      "rural_ha": 1294838.2,
+      "extranjera_ha": 43211.54,
+      "pct": 3.34,
+      "estado": "observado",
+      "id": "42154",
+      "id_georef": "42154"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Arauco",
+      "rural_ha": 198442.47,
+      "extranjera_ha": 1191.89,
+      "pct": 0.6,
+      "estado": "observado",
+      "id": "46007",
+      "id_georef": "46007"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Capital",
+      "rural_ha": 1360963.46,
+      "extranjera_ha": 24323.22,
+      "pct": 1.79,
+      "estado": "observado",
+      "id": "46014",
+      "id_georef": "46014"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Castro Barros",
+      "rural_ha": 142000.0,
+      "extranjera_ha": 211.2,
+      "pct": 0.15,
+      "estado": "observado",
+      "id": "46021",
+      "id_georef": "46021"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Chamical",
+      "rural_ha": 554533.49,
+      "extranjera_ha": 2.45,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "46035",
+      "id_georef": "46035"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Chilecito",
+      "rural_ha": 483920.35,
+      "extranjera_ha": 71904.29,
+      "pct": 14.86,
+      "estado": "observado",
+      "id": "46042",
+      "id_georef": "46042"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Coronel Felipe Varela",
+      "rural_ha": 918122.8,
+      "extranjera_ha": 3.5,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "46028",
+      "id_georef": "46028"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Famatina",
+      "rural_ha": 458572.53,
+      "extranjera_ha": 122.84,
+      "pct": 0.03,
+      "estado": "observado",
+      "id": "46049",
+      "id_georef": "46049"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "General Angel V. Penaloza",
+      "rural_ha": 310447.63,
+      "extranjera_ha": 0.12,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "46056",
+      "id_georef": "46056"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "General Belgrano",
+      "rural_ha": 255343.28,
+      "extranjera_ha": 0.82,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "46063",
+      "id_georef": "46063"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "General Juan F. Quiroga",
+      "rural_ha": 258391.97,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "46070",
+      "id_georef": "46070"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "General Lamadrid",
+      "rural_ha": 617003.65,
+      "extranjera_ha": 349858.1,
+      "pct": 56.7,
+      "estado": "observado",
+      "id": "46077",
+      "id_georef": "46077"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "General Ocampo",
+      "rural_ha": 212876.86,
+      "extranjera_ha": 0.37,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "46084",
+      "id_georef": "46084"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "General San Martin",
+      "rural_ha": 502857.99,
+      "extranjera_ha": 0.0,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "46091",
+      "id_georef": "46091"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Independencia",
+      "rural_ha": 712000.0,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "46105",
+      "id_georef": "46105"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Rosario Vera Peñaloza",
+      "rural_ha": 611089.32,
+      "extranjera_ha": 4.26,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "46112",
+      "id_georef": "46112"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "San Blas De Los Sauces",
+      "rural_ha": 158957.63,
+      "extranjera_ha": 0.41,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "46119",
+      "id_georef": "46119"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Sanagasta",
+      "rural_ha": 170889.87,
+      "extranjera_ha": 0.0,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "46126",
+      "id_georef": "46126"
+    },
+    {
+      "provincia": "La Rioja",
+      "departamento": "Vinchina",
+      "rural_ha": 1028472.53,
+      "extranjera_ha": 36936.8,
+      "pct": 3.59,
+      "estado": "observado",
+      "id": "46098",
+      "id_georef": "46098"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Capital",
+      "rural_ha": 1100.0,
+      "extranjera_ha": 117.02,
+      "pct": 10.64,
+      "estado": "observado",
+      "id": "50007",
+      "id_georef": "50007"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "General Alvear",
+      "rural_ha": 1443000.0,
+      "extranjera_ha": 170578.81,
+      "pct": 11.82,
+      "estado": "observado",
+      "id": "50014",
+      "id_georef": "50014"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Godoy Cruz",
+      "rural_ha": 4100.0,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "50021",
+      "id_georef": "50021"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Guaymallen",
+      "rural_ha": 10000.0,
+      "extranjera_ha": 333.51,
+      "pct": 3.34,
+      "estado": "observado",
+      "id": "50028",
+      "id_georef": "50028"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Junin",
+      "rural_ha": 25400.0,
+      "extranjera_ha": 449.73,
+      "pct": 1.77,
+      "estado": "observado",
+      "id": "50035",
+      "id_georef": "50035"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "La Paz",
+      "rural_ha": 709900.0,
+      "extranjera_ha": 89335.3,
+      "pct": 12.58,
+      "estado": "observado",
+      "id": "50042",
+      "id_georef": "50042"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Las Heras",
+      "rural_ha": 890600.0,
+      "extranjera_ha": 110796.6,
+      "pct": 12.44,
+      "estado": "observado",
+      "id": "50049",
+      "id_georef": "50049"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Lavalle",
+      "rural_ha": 1020200.0,
+      "extranjera_ha": 99115.98,
+      "pct": 9.72,
+      "estado": "observado",
+      "id": "50056",
+      "id_georef": "50056"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Lujan de Cuyo",
+      "rural_ha": 475400.0,
+      "extranjera_ha": 11838.31,
+      "pct": 2.49,
+      "estado": "observado",
+      "id": "50063",
+      "id_georef": "50063"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Maipu",
+      "rural_ha": 56800.0,
+      "extranjera_ha": 3689.73,
+      "pct": 6.5,
+      "estado": "observado",
+      "id": "50070",
+      "id_georef": "50070"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Malargue",
+      "rural_ha": 4130600.0,
+      "extranjera_ha": 608739.78,
+      "pct": 14.74,
+      "estado": "observado",
+      "id": "50077",
+      "id_georef": "50077"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Rivadavia",
+      "rural_ha": 212800.0,
+      "extranjera_ha": 2564.75,
+      "pct": 1.21,
+      "estado": "observado",
+      "id": "50084",
+      "id_georef": "50084"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "San Carlos",
+      "rural_ha": 1156900.0,
+      "extranjera_ha": 82508.3,
+      "pct": 7.13,
+      "estado": "observado",
+      "id": "50091",
+      "id_georef": "50091"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "San Martin",
+      "rural_ha": 147900.0,
+      "extranjera_ha": 20476.22,
+      "pct": 13.84,
+      "estado": "observado",
+      "id": "50098",
+      "id_georef": "50098"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "San Rafael",
+      "rural_ha": 3116300.0,
+      "extranjera_ha": 120816.24,
+      "pct": 3.88,
+      "estado": "observado",
+      "id": "50105",
+      "id_georef": "50105"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Santa Rosa",
+      "rural_ha": 850300.0,
+      "extranjera_ha": 6708.88,
+      "pct": 0.79,
+      "estado": "observado",
+      "id": "50112",
+      "id_georef": "50112"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Tunuyan",
+      "rural_ha": 330600.0,
+      "extranjera_ha": 10353.21,
+      "pct": 3.13,
+      "estado": "observado",
+      "id": "50119",
+      "id_georef": "50119"
+    },
+    {
+      "provincia": "Mendoza",
+      "departamento": "Tupungato",
+      "rural_ha": 247900.0,
+      "extranjera_ha": 5667.77,
+      "pct": 2.29,
+      "estado": "observado",
+      "id": "50126",
+      "id_georef": "50126"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "25 De Mayo",
+      "rural_ha": 166733.81,
+      "extranjera_ha": 5867.44,
+      "pct": 3.52,
+      "estado": "observado",
+      "id": "54119",
+      "id_georef": "54119"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Apostoles",
+      "rural_ha": 98033.54,
+      "extranjera_ha": 816.31,
+      "pct": 0.83,
+      "estado": "observado",
+      "id": "54007",
+      "id_georef": "54007"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Cainguas",
+      "rural_ha": 147899.19,
+      "extranjera_ha": 4867.97,
+      "pct": 3.29,
+      "estado": "observado",
+      "id": "54014",
+      "id_georef": "54014"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Candelaria",
+      "rural_ha": 84343.91,
+      "extranjera_ha": 4071.14,
+      "pct": 4.83,
+      "estado": "observado",
+      "id": "54021",
+      "id_georef": "54021"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Capital",
+      "rural_ha": 79174.15,
+      "extranjera_ha": 5064.98,
+      "pct": 6.4,
+      "estado": "observado",
+      "id": "54028",
+      "id_georef": "54028"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Concepcion",
+      "rural_ha": 71941.96,
+      "extranjera_ha": 11795.66,
+      "pct": 16.4,
+      "estado": "observado",
+      "id": "54035",
+      "id_georef": "54035"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Eldorado",
+      "rural_ha": 192507.84,
+      "extranjera_ha": 31266.08,
+      "pct": 16.24,
+      "estado": "observado",
+      "id": "54042",
+      "id_georef": "54042"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "General Belgrano",
+      "rural_ha": 261345.63,
+      "extranjera_ha": 29061.47,
+      "pct": 11.12,
+      "estado": "observado",
+      "id": "54049",
+      "id_georef": "54049"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "General San Martin",
+      "rural_ha": 148154.47,
+      "extranjera_ha": 24858.42,
+      "pct": 16.78,
+      "estado": "observado",
+      "id": "54077",
+      "id_georef": "54077"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Guarani",
+      "rural_ha": 342377.88,
+      "extranjera_ha": 2052.87,
+      "pct": 0.6,
+      "estado": "observado",
+      "id": "54056",
+      "id_georef": "54056"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Iguazu",
+      "rural_ha": 286378.35,
+      "extranjera_ha": 114406.68,
+      "pct": 39.95,
+      "estado": "observado",
+      "id": "54063",
+      "id_georef": "54063"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Leandro N. Alem",
+      "rural_ha": 101881.38,
+      "extranjera_ha": 3521.2,
+      "pct": 3.46,
+      "estado": "observado",
+      "id": "54070",
+      "id_georef": "54070"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Montecarlo",
+      "rural_ha": 173606.09,
+      "extranjera_ha": 31866.75,
+      "pct": 18.36,
+      "estado": "observado",
+      "id": "54084",
+      "id_georef": "54084"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "Obera",
+      "rural_ha": 150598.4,
+      "extranjera_ha": 8681.42,
+      "pct": 5.76,
+      "estado": "observado",
+      "id": "54091",
+      "id_georef": "54091"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "San Ignacio",
+      "rural_ha": 162969.8,
+      "extranjera_ha": 14704.95,
+      "pct": 9.02,
+      "estado": "observado",
+      "id": "54098",
+      "id_georef": "54098"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "San Javier",
+      "rural_ha": 61496.47,
+      "extranjera_ha": 736.32,
+      "pct": 1.2,
+      "estado": "observado",
+      "id": "54105",
+      "id_georef": "54105"
+    },
+    {
+      "provincia": "Misiones",
+      "departamento": "San Pedro",
+      "rural_ha": 356810.07,
+      "extranjera_ha": 32116.71,
+      "pct": 9.0,
+      "estado": "observado",
+      "id": "54112",
+      "id_georef": "54112"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Alumine",
+      "rural_ha": 459309.46,
+      "extranjera_ha": 10033.61,
+      "pct": 2.18,
+      "estado": "observado",
+      "id": "58007",
+      "id_georef": "58007"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Añelo",
+      "rural_ha": 1200184.31,
+      "extranjera_ha": 8383.63,
+      "pct": 0.7,
+      "estado": "observado",
+      "id": "58014",
+      "id_georef": "58014"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Catan Lil",
+      "rural_ha": 539730.21,
+      "extranjera_ha": 60131.3,
+      "pct": 11.14,
+      "estado": "observado",
+      "id": "58021",
+      "id_georef": "58021"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Chos Malal",
+      "rural_ha": 454562.57,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "58042",
+      "id_georef": "58042"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Collon Cura",
+      "rural_ha": 558120.39,
+      "extranjera_ha": 45339.53,
+      "pct": 8.12,
+      "estado": "observado",
+      "id": "58028",
+      "id_georef": "58028"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Confluencia",
+      "rural_ha": 644602.49,
+      "extranjera_ha": 36020.89,
+      "pct": 5.59,
+      "estado": "observado",
+      "id": "58035",
+      "id_georef": "58035"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Huiliches",
+      "rural_ha": 383223.93,
+      "extranjera_ha": 17756.65,
+      "pct": 4.63,
+      "estado": "observado",
+      "id": "58049",
+      "id_georef": "58049"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Lacar",
+      "rural_ha": 475095.11,
+      "extranjera_ha": 257346.02,
+      "pct": 54.17,
+      "estado": "observado",
+      "id": "58056",
+      "id_georef": "58056"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Loncopue",
+      "rural_ha": 546580.28,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "58063",
+      "id_georef": "58063"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Los Lagos",
+      "rural_ha": 355910.13,
+      "extranjera_ha": 23732.15,
+      "pct": 6.67,
+      "estado": "observado",
+      "id": "58070",
+      "id_georef": "58070"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Minas",
+      "rural_ha": 596740.45,
+      "extranjera_ha": 84.12,
+      "pct": 0.01,
+      "estado": "observado",
+      "id": "58077",
+      "id_georef": "58077"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Ñorquin",
+      "rural_ha": 551766.36,
+      "extranjera_ha": 18707.23,
+      "pct": 3.39,
+      "estado": "observado",
+      "id": "58084",
+      "id_georef": "58084"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Pehuenches",
+      "rural_ha": 830744.99,
+      "extranjera_ha": 11.31,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "58091",
+      "id_georef": "58091"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Picun Leufu",
+      "rural_ha": 426155.23,
+      "extranjera_ha": 2678.92,
+      "pct": 0.63,
+      "estado": "observado",
+      "id": "58098",
+      "id_georef": "58098"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Picunches",
+      "rural_ha": 594925.24,
+      "extranjera_ha": 19546.31,
+      "pct": 3.29,
+      "estado": "observado",
+      "id": "58105",
+      "id_georef": "58105"
+    },
+    {
+      "provincia": "Neuquen",
+      "departamento": "Zapala",
+      "rural_ha": 534488.18,
+      "extranjera_ha": 4269.29,
+      "pct": 0.8,
+      "estado": "observado",
+      "id": "58112",
+      "id_georef": "58112"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "25 de Mayo",
+      "rural_ha": 2415714.51,
+      "extranjera_ha": 2309.0,
+      "pct": 0.1,
+      "estado": "observado",
+      "id": "62091",
+      "id_georef": "62091"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "9 de Julio",
+      "rural_ha": 1846444.08,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "62049",
+      "id_georef": "62049"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "Adolfo Alsina",
+      "rural_ha": 835180.88,
+      "extranjera_ha": 740.2,
+      "pct": 0.09,
+      "estado": "observado",
+      "id": "62007",
+      "id_georef": "62007"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "Avellaneda",
+      "rural_ha": 1784008.47,
+      "extranjera_ha": 69506.9,
+      "pct": 3.9,
+      "estado": "observado",
+      "id": "62014",
+      "id_georef": "62014"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "Bariloche",
+      "rural_ha": 169391.01,
+      "extranjera_ha": 23050.79,
+      "pct": 13.61,
+      "estado": "observado",
+      "id": "62021",
+      "id_georef": "62021"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "Conesa",
+      "rural_ha": 982632.45,
+      "extranjera_ha": 400.0,
+      "pct": 0.04,
+      "estado": "observado",
+      "id": "62028",
+      "id_georef": "62028"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "El Cuy",
+      "rural_ha": 1729219.75,
+      "extranjera_ha": 1390.11,
+      "pct": 0.08,
+      "estado": "observado",
+      "id": "62035",
+      "id_georef": "62035"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "General Roca",
+      "rural_ha": 1511976.98,
+      "extranjera_ha": 36539.11,
+      "pct": 2.42,
+      "estado": "observado",
+      "id": "62042",
+      "id_georef": "62042"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "Ñorquinco",
+      "rural_ha": 637795.04,
+      "extranjera_ha": 34843.95,
+      "pct": 5.46,
+      "estado": "observado",
+      "id": "62056",
+      "id_georef": "62056"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "Pichi Mahuida",
+      "rural_ha": 1574918.56,
+      "extranjera_ha": 23152.67,
+      "pct": 1.47,
+      "estado": "observado",
+      "id": "62063",
+      "id_georef": "62063"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "Pilcaniyeu",
+      "rural_ha": 909273.33,
+      "extranjera_ha": 95250.41,
+      "pct": 10.48,
+      "estado": "observado",
+      "id": "62070",
+      "id_georef": "62070"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "San Antonio",
+      "rural_ha": 1321687.08,
+      "extranjera_ha": 30272.8,
+      "pct": 2.29,
+      "estado": "observado",
+      "id": "62077",
+      "id_georef": "62077"
+    },
+    {
+      "provincia": "Rio Negro",
+      "departamento": "Valcheta",
+      "rural_ha": 1961352.35,
+      "extranjera_ha": 40.21,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "62084",
+      "id_georef": "62084"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Anta",
+      "rural_ha": 2192493.0,
+      "extranjera_ha": 322087.19,
+      "pct": 14.69,
+      "estado": "observado",
+      "id": "66007",
+      "id_georef": "66007"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Cachi",
+      "rural_ha": 292038.0,
+      "extranjera_ha": 31185.75,
+      "pct": 10.68,
+      "estado": "observado",
+      "id": "66014",
+      "id_georef": "66014"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Cafayate",
+      "rural_ha": 154758.0,
+      "extranjera_ha": 35759.34,
+      "pct": 23.11,
+      "estado": "observado",
+      "id": "66021",
+      "id_georef": "66021"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Capital",
+      "rural_ha": 146518.0,
+      "extranjera_ha": 5993.48,
+      "pct": 4.09,
+      "estado": "observado",
+      "id": "66028",
+      "id_georef": "66028"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Cerrillos",
+      "rural_ha": 62863.0,
+      "extranjera_ha": 15485.59,
+      "pct": 24.63,
+      "estado": "observado",
+      "id": "66035",
+      "id_georef": "66035"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Chicoana",
+      "rural_ha": 90129.0,
+      "extranjera_ha": 14456.65,
+      "pct": 16.04,
+      "estado": "observado",
+      "id": "66042",
+      "id_georef": "66042"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "General Guemes",
+      "rural_ha": 234836.0,
+      "extranjera_ha": 67685.0,
+      "pct": 28.82,
+      "estado": "observado",
+      "id": "66049",
+      "id_georef": "66049"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "General Jose de San Martin",
+      "rural_ha": 1619368.0,
+      "extranjera_ha": 200940.88,
+      "pct": 12.41,
+      "estado": "observado",
+      "id": "66056",
+      "id_georef": "66056"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Guachipas",
+      "rural_ha": 278408.0,
+      "extranjera_ha": 94205.62,
+      "pct": 33.84,
+      "estado": "observado",
+      "id": "66063",
+      "id_georef": "66063"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Iruya",
+      "rural_ha": 351464.0,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "66070",
+      "id_georef": "66070"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "La Caldera",
+      "rural_ha": 85636.0,
+      "extranjera_ha": 7544.22,
+      "pct": 8.81,
+      "estado": "observado",
+      "id": "66077",
+      "id_georef": "66077"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "La Candelaria",
+      "rural_ha": 152410.0,
+      "extranjera_ha": 16868.66,
+      "pct": 11.07,
+      "estado": "observado",
+      "id": "66084",
+      "id_georef": "66084"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "La Poma",
+      "rural_ha": 444671.0,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "66091",
+      "id_georef": "66091"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "La Viña",
+      "rural_ha": 214943.0,
+      "extranjera_ha": 60662.71,
+      "pct": 28.22,
+      "estado": "observado",
+      "id": "66098",
+      "id_georef": "66098"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Los Andes",
+      "rural_ha": 2563086.0,
+      "extranjera_ha": 19.8,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "66105",
+      "id_georef": "66105"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Metan",
+      "rural_ha": 520256.0,
+      "extranjera_ha": 10319.45,
+      "pct": 1.98,
+      "estado": "observado",
+      "id": "66112",
+      "id_georef": "66112"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Molinos",
+      "rural_ha": 359894.0,
+      "extranjera_ha": 207985.8,
+      "pct": 57.79,
+      "estado": "observado",
+      "id": "66119",
+      "id_georef": "66119"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Oran",
+      "rural_ha": 1185676.0,
+      "extranjera_ha": 276043.86,
+      "pct": 23.28,
+      "estado": "observado",
+      "id": "66126",
+      "id_georef": "66126"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Rivadavia",
+      "rural_ha": 2594003.0,
+      "extranjera_ha": 47316.53,
+      "pct": 1.82,
+      "estado": "observado",
+      "id": "66133",
+      "id_georef": "66133"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Rosario de la Frontera",
+      "rural_ha": 539002.0,
+      "extranjera_ha": 45438.47,
+      "pct": 8.43,
+      "estado": "observado",
+      "id": "66140",
+      "id_georef": "66140"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Rosario de Lerma",
+      "rural_ha": 507070.0,
+      "extranjera_ha": 442.57,
+      "pct": 0.09,
+      "estado": "observado",
+      "id": "66147",
+      "id_georef": "66147"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "San Carlos",
+      "rural_ha": 512297.0,
+      "extranjera_ha": 306454.25,
+      "pct": 59.82,
+      "estado": "observado",
+      "id": "66154",
+      "id_georef": "66154"
+    },
+    {
+      "provincia": "Salta",
+      "departamento": "Santa Victoria",
+      "rural_ha": 391089.0,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "66161",
+      "id_georef": "66161"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "25 de Mayo",
+      "rural_ha": 590058.82,
+      "extranjera_ha": 10633.66,
+      "pct": 1.8,
+      "estado": "observado",
+      "id": "70126",
+      "id_georef": "70126"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "9 de Julio",
+      "rural_ha": 12983.76,
+      "extranjera_ha": 651.47,
+      "pct": 5.02,
+      "estado": "observado",
+      "id": "70063",
+      "id_georef": "70063"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Albardon",
+      "rural_ha": 94259.14,
+      "extranjera_ha": 82.27,
+      "pct": 0.09,
+      "estado": "observado",
+      "id": "70007",
+      "id_georef": "70007"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Angaco",
+      "rural_ha": 243415.36,
+      "extranjera_ha": 442.23,
+      "pct": 0.18,
+      "estado": "observado",
+      "id": "70014",
+      "id_georef": "70014"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Calingasta",
+      "rural_ha": 2138362.42,
+      "extranjera_ha": 258809.95,
+      "pct": 12.1,
+      "estado": "observado",
+      "id": "70021",
+      "id_georef": "70021"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Capital",
+      "rural_ha": 0.0,
+      "extranjera_ha": null,
+      "pct": null,
+      "estado": "sin_superficie_rural",
+      "id": "70028",
+      "id_georef": "70028"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Caucete",
+      "rural_ha": 735680.25,
+      "extranjera_ha": 1352.3,
+      "pct": 0.18,
+      "estado": "observado",
+      "id": "70035",
+      "id_georef": "70035"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Chimbas",
+      "rural_ha": 3718.31,
+      "extranjera_ha": 126.08,
+      "pct": 3.39,
+      "estado": "observado",
+      "id": "70042",
+      "id_georef": "70042"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Iglesia",
+      "rural_ha": 1803484.26,
+      "extranjera_ha": 450044.61,
+      "pct": 24.95,
+      "estado": "observado",
+      "id": "70049",
+      "id_georef": "70049"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Jachal",
+      "rural_ha": 1357620.63,
+      "extranjera_ha": 125485.69,
+      "pct": 9.24,
+      "estado": "observado",
+      "id": "70056",
+      "id_georef": "70056"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Pocito",
+      "rural_ha": 54319.4,
+      "extranjera_ha": 7061.86,
+      "pct": 13.0,
+      "estado": "observado",
+      "id": "70070",
+      "id_georef": "70070"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Rawson",
+      "rural_ha": 24633.89,
+      "extranjera_ha": 524.2,
+      "pct": 2.13,
+      "estado": "observado",
+      "id": "70077",
+      "id_georef": "70077"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Rivadavia",
+      "rural_ha": 9020.33,
+      "extranjera_ha": 408.36,
+      "pct": 4.53,
+      "estado": "observado",
+      "id": "70084",
+      "id_georef": "70084"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "San Martin",
+      "rural_ha": 52197.0,
+      "extranjera_ha": 10568.96,
+      "pct": 20.25,
+      "estado": "observado",
+      "id": "70091",
+      "id_georef": "70091"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Santa Lucia",
+      "rural_ha": 3545.78,
+      "extranjera_ha": 112.71,
+      "pct": 3.18,
+      "estado": "observado",
+      "id": "70098",
+      "id_georef": "70098"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Sarmiento",
+      "rural_ha": 279845.42,
+      "extranjera_ha": 10968.54,
+      "pct": 3.92,
+      "estado": "observado",
+      "id": "70105",
+      "id_georef": "70105"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Ullum",
+      "rural_ha": 417025.05,
+      "extranjera_ha": 2299.61,
+      "pct": 0.55,
+      "estado": "observado",
+      "id": "70112",
+      "id_georef": "70112"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Valle Fertil",
+      "rural_ha": 527678.41,
+      "extranjera_ha": 7576.9,
+      "pct": 1.44,
+      "estado": "observado",
+      "id": "70119",
+      "id_georef": "70119"
+    },
+    {
+      "provincia": "San Juan",
+      "departamento": "Zonda",
+      "rural_ha": 215792.12,
+      "extranjera_ha": 221.09,
+      "pct": 0.1,
+      "estado": "observado",
+      "id": "70133",
+      "id_georef": "70133"
+    },
+    {
+      "provincia": "San Luis",
+      "departamento": "Ayacucho",
+      "rural_ha": 799122.97,
+      "extranjera_ha": 19346.84,
+      "pct": 2.42,
+      "estado": "observado",
+      "id": "74007",
+      "id_georef": "74007"
+    },
+    {
+      "provincia": "San Luis",
+      "departamento": "Belgrano",
+      "rural_ha": 825214.79,
+      "extranjera_ha": 493.17,
+      "pct": 0.06,
+      "estado": "observado",
+      "id": "74014",
+      "id_georef": "74014"
+    },
+    {
+      "provincia": "San Luis",
+      "departamento": "Chacabuco",
+      "rural_ha": 235236.14,
+      "extranjera_ha": 5212.8,
+      "pct": 2.22,
+      "estado": "observado",
+      "id": "74028",
+      "id_georef": "74028"
+    },
+    {
+      "provincia": "San Luis",
+      "departamento": "Coronel Pringles",
+      "rural_ha": 384583.8,
+      "extranjera_ha": 21828.95,
+      "pct": 5.68,
+      "estado": "observado",
+      "id": "74021",
+      "id_georef": "74021"
+    },
+    {
+      "provincia": "San Luis",
+      "departamento": "General Pedernera",
+      "rural_ha": 1482336.82,
+      "extranjera_ha": 28043.83,
+      "pct": 1.89,
+      "estado": "observado",
+      "id": "74035",
+      "id_georef": "74035"
+    },
+    {
+      "provincia": "San Luis",
+      "departamento": "Gobernador Dupuy",
+      "rural_ha": 1848093.13,
+      "extranjera_ha": 58317.31,
+      "pct": 3.16,
+      "estado": "observado",
+      "id": "74042",
+      "id_georef": "74042"
+    },
+    {
+      "provincia": "San Luis",
+      "departamento": "Juan Martin de Pueyrredon",
+      "rural_ha": 1376037.94,
+      "extranjera_ha": 68507.15,
+      "pct": 4.98,
+      "estado": "observado",
+      "id": "74056",
+      "id_georef": "74056"
+    },
+    {
+      "provincia": "San Luis",
+      "departamento": "Junin",
+      "rural_ha": 268180.08,
+      "extranjera_ha": 483.57,
+      "pct": 0.18,
+      "estado": "observado",
+      "id": "74049",
+      "id_georef": "74049"
+    },
+    {
+      "provincia": "San Luis",
+      "departamento": "Libertador General San Martin",
+      "rural_ha": 347577.95,
+      "extranjera_ha": 280.72,
+      "pct": 0.08,
+      "estado": "observado",
+      "id": "74063",
+      "id_georef": "74063"
+    },
+    {
+      "provincia": "Santa Cruz",
+      "departamento": "Corpen Aike",
+      "rural_ha": 2624836.03,
+      "extranjera_ha": 133830.81,
+      "pct": 5.1,
+      "estado": "observado",
+      "id": "78007",
+      "id_georef": "78007"
+    },
+    {
+      "provincia": "Santa Cruz",
+      "departamento": "Deseado",
+      "rural_ha": 6362156.89,
+      "extranjera_ha": 222784.2,
+      "pct": 3.5,
+      "estado": "observado",
+      "id": "78014",
+      "id_georef": "78014"
+    },
+    {
+      "provincia": "Santa Cruz",
+      "departamento": "Guer Aike",
+      "rural_ha": 3363288.49,
+      "extranjera_ha": 432371.0,
+      "pct": 12.86,
+      "estado": "observado",
+      "id": "78021",
+      "id_georef": "78021"
+    },
+    {
+      "provincia": "Santa Cruz",
+      "departamento": "Lago Argentino",
+      "rural_ha": 3104064.84,
+      "extranjera_ha": 331748.48,
+      "pct": 10.69,
+      "estado": "observado",
+      "id": "78028",
+      "id_georef": "78028"
+    },
+    {
+      "provincia": "Santa Cruz",
+      "departamento": "Lago Buenos Aires",
+      "rural_ha": 2765444.22,
+      "extranjera_ha": 176362.68,
+      "pct": 6.38,
+      "estado": "observado",
+      "id": "78035",
+      "id_georef": "78035"
+    },
+    {
+      "provincia": "Santa Cruz",
+      "departamento": "Magallanes",
+      "rural_ha": 1976725.16,
+      "extranjera_ha": 509486.59,
+      "pct": 25.77,
+      "estado": "observado",
+      "id": "78042",
+      "id_georef": "78042"
+    },
+    {
+      "provincia": "Santa Cruz",
+      "departamento": "Rio Chico",
+      "rural_ha": 3287029.81,
+      "extranjera_ha": 98500.0,
+      "pct": 3.0,
+      "estado": "observado",
+      "id": "78049",
+      "id_georef": "78049"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "9 de Julio",
+      "rural_ha": 1732256.75,
+      "extranjera_ha": 42815.54,
+      "pct": 2.47,
+      "estado": "observado",
+      "id": "82077",
+      "id_georef": "82077"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "Belgrano",
+      "rural_ha": 237087.33,
+      "extranjera_ha": 3648.06,
+      "pct": 1.54,
+      "estado": "observado",
+      "id": "82007",
+      "id_georef": "82007"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "Caseros",
+      "rural_ha": 335205.1,
+      "extranjera_ha": 375.87,
+      "pct": 0.11,
+      "estado": "observado",
+      "id": "82014",
+      "id_georef": "82014"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "Castellanos",
+      "rural_ha": 639241.09,
+      "extranjera_ha": 676.06,
+      "pct": 0.11,
+      "estado": "observado",
+      "id": "82021",
+      "id_georef": "82021"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "Constitucion",
+      "rural_ha": 302272.58,
+      "extranjera_ha": 1806.4,
+      "pct": 0.6,
+      "estado": "observado",
+      "id": "82028",
+      "id_georef": "82028"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "Garay",
+      "rural_ha": 391776.85,
+      "extranjera_ha": 61629.59,
+      "pct": 15.73,
+      "estado": "observado",
+      "id": "82035",
+      "id_georef": "82035"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "General Lopez",
+      "rural_ha": 1123420.54,
+      "extranjera_ha": 39320.12,
+      "pct": 3.5,
+      "estado": "observado",
+      "id": "82042",
+      "id_georef": "82042"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "General Obligado",
+      "rural_ha": 1045417.85,
+      "extranjera_ha": 21.41,
+      "pct": 0.0,
+      "estado": "observado",
+      "id": "82049",
+      "id_georef": "82049"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "Iriondo",
+      "rural_ha": 309939.13,
+      "extranjera_ha": 219.17,
+      "pct": 0.07,
+      "estado": "observado",
+      "id": "82056",
+      "id_georef": "82056"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "La Capital",
+      "rural_ha": 243543.63,
+      "extranjera_ha": 209.38,
+      "pct": 0.09,
+      "estado": "observado",
+      "id": "82063",
+      "id_georef": "82063"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "Las Colonias",
+      "rural_ha": 603183.27,
+      "extranjera_ha": 573.45,
+      "pct": 0.1,
+      "estado": "observado",
+      "id": "82070",
+      "id_georef": "82070"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "Rosario",
+      "rural_ha": 161935.38,
+      "extranjera_ha": 206.06,
+      "pct": 0.13,
+      "estado": "observado",
+      "id": "82084",
+      "id_georef": "82084"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "San Cristobal",
+      "rural_ha": 1426935.98,
+      "extranjera_ha": 10180.45,
+      "pct": 0.71,
+      "estado": "observado",
+      "id": "82091",
+      "id_georef": "82091"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "San Javier",
+      "rural_ha": 639384.47,
+      "extranjera_ha": 19842.27,
+      "pct": 3.1,
+      "estado": "observado",
+      "id": "82098",
+      "id_georef": "82098"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "San Jeronimo",
+      "rural_ha": 416521.13,
+      "extranjera_ha": 1248.0,
+      "pct": 0.3,
+      "estado": "observado",
+      "id": "82105",
+      "id_georef": "82105"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "San Justo",
+      "rural_ha": 535734.6,
+      "extranjera_ha": 7709.93,
+      "pct": 1.44,
+      "estado": "observado",
+      "id": "82112",
+      "id_georef": "82112"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "San Lorenzo",
+      "rural_ha": 170492.08,
+      "extranjera_ha": 2835.48,
+      "pct": 1.66,
+      "estado": "observado",
+      "id": "82119",
+      "id_georef": "82119"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "San Martin",
+      "rural_ha": 475407.64,
+      "extranjera_ha": 288.83,
+      "pct": 0.06,
+      "estado": "observado",
+      "id": "82126",
+      "id_georef": "82126"
+    },
+    {
+      "provincia": "Santa Fe",
+      "departamento": "Vera",
+      "rural_ha": 2042619.42,
+      "extranjera_ha": 26198.26,
+      "pct": 1.28,
+      "estado": "observado",
+      "id": "82133",
+      "id_georef": "82133"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Aguirre",
+      "rural_ha": 368596.28,
+      "extranjera_ha": 54866.46,
+      "pct": 14.89,
+      "estado": "observado",
+      "id": "86007",
+      "id_georef": "86007"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Alberdi",
+      "rural_ha": 1350105.47,
+      "extranjera_ha": 122672.48,
+      "pct": 9.09,
+      "estado": "observado",
+      "id": "86014",
+      "id_georef": "86014"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Atamisqui",
+      "rural_ha": 224733.67,
+      "extranjera_ha": 496.6,
+      "pct": 0.22,
+      "estado": "observado",
+      "id": "86021",
+      "id_georef": "86021"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Avellaneda",
+      "rural_ha": 389500.23,
+      "extranjera_ha": 24489.82,
+      "pct": 6.29,
+      "estado": "observado",
+      "id": "86028",
+      "id_georef": "86028"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Banda",
+      "rural_ha": 358883.53,
+      "extranjera_ha": 8267.65,
+      "pct": 2.3,
+      "estado": "observado",
+      "id": "86035",
+      "id_georef": "86035"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Belgrano",
+      "rural_ha": 331057.63,
+      "extranjera_ha": 49214.18,
+      "pct": 14.87,
+      "estado": "observado",
+      "id": "86042",
+      "id_georef": "86042"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Capital",
+      "rural_ha": 206056.47,
+      "extranjera_ha": 9402.58,
+      "pct": 4.56,
+      "estado": "observado",
+      "id": "86049",
+      "id_georef": "86049"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Choya",
+      "rural_ha": 647625.93,
+      "extranjera_ha": 3996.71,
+      "pct": 0.62,
+      "estado": "observado",
+      "id": "86063",
+      "id_georef": "86063"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Copo",
+      "rural_ha": 1259397.07,
+      "extranjera_ha": 3720.69,
+      "pct": 0.3,
+      "estado": "observado",
+      "id": "86056",
+      "id_georef": "86056"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Figueroa",
+      "rural_ha": 666148.6,
+      "extranjera_ha": 29990.07,
+      "pct": 4.5,
+      "estado": "observado",
+      "id": "86070",
+      "id_georef": "86070"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "General Taboada",
+      "rural_ha": 602881.75,
+      "extranjera_ha": 16064.0,
+      "pct": 2.66,
+      "estado": "observado",
+      "id": "86077",
+      "id_georef": "86077"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Guasayan",
+      "rural_ha": 258354.9,
+      "extranjera_ha": 2236.13,
+      "pct": 0.87,
+      "estado": "observado",
+      "id": "86084",
+      "id_georef": "86084"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Jimenez",
+      "rural_ha": 482880.53,
+      "extranjera_ha": 77123.85,
+      "pct": 15.97,
+      "estado": "observado",
+      "id": "86091",
+      "id_georef": "86091"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Juan F. Ibarra",
+      "rural_ha": 908708.0,
+      "extranjera_ha": 26523.0,
+      "pct": 2.92,
+      "estado": "observado",
+      "id": "86098",
+      "id_georef": "86098"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Loreto",
+      "rural_ha": 333335.5,
+      "extranjera_ha": 25042.84,
+      "pct": 7.51,
+      "estado": "observado",
+      "id": "86105",
+      "id_georef": "86105"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Mitre",
+      "rural_ha": 366540.0,
+      "extranjera_ha": 15940.81,
+      "pct": 4.35,
+      "estado": "observado",
+      "id": "86112",
+      "id_georef": "86112"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Moreno",
+      "rural_ha": 1611751.12,
+      "extranjera_ha": 91581.4,
+      "pct": 5.68,
+      "estado": "observado",
+      "id": "86119",
+      "id_georef": "86119"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Ojo De Agua",
+      "rural_ha": 622862.77,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "86126",
+      "id_georef": "86126"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Pellegrini",
+      "rural_ha": 732936.02,
+      "extranjera_ha": 41012.72,
+      "pct": 5.6,
+      "estado": "observado",
+      "id": "86133",
+      "id_georef": "86133"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Quebrachos",
+      "rural_ha": 350392.47,
+      "extranjera_ha": 19279.51,
+      "pct": 5.5,
+      "estado": "observado",
+      "id": "86140",
+      "id_georef": "86140"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Rio Hondo",
+      "rural_ha": 203779.1,
+      "extranjera_ha": 11148.91,
+      "pct": 5.47,
+      "estado": "observado",
+      "id": "86147",
+      "id_georef": "86147"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Rivadavia",
+      "rural_ha": 337031.75,
+      "extranjera_ha": 1692.65,
+      "pct": 0.5,
+      "estado": "observado",
+      "id": "86154",
+      "id_georef": "86154"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Robles",
+      "rural_ha": 120216.0,
+      "extranjera_ha": 4410.75,
+      "pct": 3.67,
+      "estado": "observado",
+      "id": "86161",
+      "id_georef": "86161"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Salavina",
+      "rural_ha": 356049.58,
+      "extranjera_ha": 7635.96,
+      "pct": 2.14,
+      "estado": "observado",
+      "id": "86168",
+      "id_georef": "86168"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "San Martin",
+      "rural_ha": 209555.0,
+      "extranjera_ha": 19485.59,
+      "pct": 9.3,
+      "estado": "observado",
+      "id": "86175",
+      "id_georef": "86175"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Sarmiento",
+      "rural_ha": 154775.05,
+      "extranjera_ha": 2874.5,
+      "pct": 1.86,
+      "estado": "observado",
+      "id": "86182",
+      "id_georef": "86182"
+    },
+    {
+      "provincia": "Santiago del Estero",
+      "departamento": "Silipica",
+      "rural_ha": 117838.0,
+      "extranjera_ha": 1004.82,
+      "pct": 0.85,
+      "estado": "observado",
+      "id": "86189",
+      "id_georef": "86189"
+    },
+    {
+      "provincia": "Tierra del Fuego, Ant.Arg e Islas Atl.Sur",
+      "departamento": "Rio Grande",
+      "rural_ha": 637142.0,
+      "extranjera_ha": 16817.37,
+      "pct": 2.64,
+      "estado": "observado",
+      "id": "94008",
+      "id_georef": "94008"
+    },
+    {
+      "provincia": "Tierra del Fuego, Ant.Arg e Islas Atl.Sur",
+      "departamento": "Tolhuin",
+      "rural_ha": 587008.0,
+      "extranjera_ha": 73030.93,
+      "pct": 12.44,
+      "estado": "observado",
+      "id": "94011",
+      "id_georef": "94011"
+    },
+    {
+      "provincia": "Tierra del Fuego, Ant.Arg e Islas Atl.Sur",
+      "departamento": "Ushuaia",
+      "rural_ha": 702769.0,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "94015",
+      "id_georef": "94015"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Burruyacu",
+      "rural_ha": 361294.0,
+      "extranjera_ha": 32718.52,
+      "pct": 9.06,
+      "estado": "observado",
+      "id": "90007",
+      "id_georef": "90007"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Chicligasta",
+      "rural_ha": 131064.79,
+      "extranjera_ha": 5413.66,
+      "pct": 4.13,
+      "estado": "observado",
+      "id": "90021",
+      "id_georef": "90021"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Cruz Alta",
+      "rural_ha": 112101.35,
+      "extranjera_ha": 18404.43,
+      "pct": 16.42,
+      "estado": "observado",
+      "id": "90014",
+      "id_georef": "90014"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Famailla",
+      "rural_ha": 44437.42,
+      "extranjera_ha": 2364.19,
+      "pct": 5.32,
+      "estado": "observado",
+      "id": "90028",
+      "id_georef": "90028"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Graneros",
+      "rural_ha": 166696.32,
+      "extranjera_ha": 1633.54,
+      "pct": 0.98,
+      "estado": "observado",
+      "id": "90035",
+      "id_georef": "90035"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Juan B. Alberdi",
+      "rural_ha": 74552.69,
+      "extranjera_ha": 3443.94,
+      "pct": 4.62,
+      "estado": "observado",
+      "id": "90042",
+      "id_georef": "90042"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "La Cocha",
+      "rural_ha": 94678.09,
+      "extranjera_ha": 4537.95,
+      "pct": 4.79,
+      "estado": "observado",
+      "id": "90049",
+      "id_georef": "90049"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Leales",
+      "rural_ha": 194070.81,
+      "extranjera_ha": 3274.66,
+      "pct": 1.69,
+      "estado": "observado",
+      "id": "90056",
+      "id_georef": "90056"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Lules",
+      "rural_ha": 55034.49,
+      "extranjera_ha": 465.31,
+      "pct": 0.85,
+      "estado": "observado",
+      "id": "90063",
+      "id_georef": "90063"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Monteros",
+      "rural_ha": 118593.42,
+      "extranjera_ha": 3849.51,
+      "pct": 3.25,
+      "estado": "observado",
+      "id": "90070",
+      "id_georef": "90070"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Rio Chico",
+      "rural_ha": 57533.53,
+      "extranjera_ha": 4326.42,
+      "pct": 7.52,
+      "estado": "observado",
+      "id": "90077",
+      "id_georef": "90077"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "San Miguel de Tucuman",
+      "rural_ha": 252.9,
+      "extranjera_ha": null,
+      "pct": 0.0,
+      "estado": "hectareas_sin_informar",
+      "id": "90084",
+      "id_georef": "90084"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Simoca",
+      "rural_ha": 124330.86,
+      "extranjera_ha": 307.09,
+      "pct": 0.25,
+      "estado": "observado",
+      "id": "90091",
+      "id_georef": "90091"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Tafi del Valle",
+      "rural_ha": 259445.51,
+      "extranjera_ha": 2947.74,
+      "pct": 1.14,
+      "estado": "observado",
+      "id": "90098",
+      "id_georef": "90098"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Tafi Viejo",
+      "rural_ha": 111959.58,
+      "extranjera_ha": 2114.89,
+      "pct": 1.89,
+      "estado": "observado",
+      "id": "90105",
+      "id_georef": "90105"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Trancas",
+      "rural_ha": 299480.82,
+      "extranjera_ha": 3464.16,
+      "pct": 1.16,
+      "estado": "observado",
+      "id": "90112",
+      "id_georef": "90112"
+    },
+    {
+      "provincia": "Tucuman",
+      "departamento": "Yerba Buena",
+      "rural_ha": 10206.12,
+      "extranjera_ha": 292.94,
+      "pct": 2.87,
+      "estado": "observado",
+      "id": "90119",
+      "id_georef": "90119"
+    }
+  ],
+  "nota": "Las celdas vacías se conservan como null. Porcentajes publicados con dos decimales. Los límites administrativos de Georef pueden diferir del corte registral."
+}

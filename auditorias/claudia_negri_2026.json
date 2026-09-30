@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-30T00:12:06.567220+00:00",
+  "generado_en": "2026-09-30T18:48:30.891401+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,9 +10,9 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-02-29",
-    "fecha_mas_reciente_obtenida": "2026-09-29",
-    "ids_del_anio_en_ventana": 3118,
-    "ids_revisados_acumulados": 3118,
+    "fecha_mas_reciente_obtenida": "2026-09-30",
+    "ids_del_anio_en_ventana": 3132,
+    "ids_revisados_acumulados": 3132,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,18 +30,18 @@
     "LEY": 64
   },
   "por_estado_actual": {
-    "en_comision": 125,
+    "en_comision": 124,
     "archivado": 84,
     "sancionado": 17,
+    "despacho": 4,
     "ingresado": 4,
-    "con_dictamen": 3,
-    "despacho": 3
+    "con_dictamen": 3
   },
   "por_etapa_ciclo": {
-    "en_comision": 129,
+    "en_comision": 128,
     "archivado": 84,
     "sancionado": 17,
-    "con_dictamen": 6
+    "con_dictamen": 7
   },
   "control_832_2026": {
     "encontrados": 1,
@@ -139,14 +139,14 @@
       "tipo_oficial": "RESOLUCION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "SP",
+      "ubicacion": "MEP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-29",
-        "oficina": "SP",
-        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-30",
+        "oficina": "MEP",
+        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -193,14 +193,14 @@
       "tipo_oficial": "RESOLUCION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "SP",
+      "ubicacion": "MEP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-29",
-        "oficina": "SP",
-        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-09-30",
+        "oficina": "MEP",
+        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -252,9 +252,9 @@
         "SEGURIDAD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-29",
+        "fecha": "2026-09-30",
         "oficina": "SEGURIDAD",
-        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -1362,16 +1362,16 @@
       ],
       "cantidad_autores": 4,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "en_comision",
-      "etapa_ciclo": "en_comision",
-      "ubicacion": "TURISMO Y DEPORTES",
+      "estado_actual": "despacho",
+      "etapa_ciclo": "con_dictamen",
+      "ubicacion": "DGDP",
       "giros": [
         "TURISMO Y DEPORTES"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-18",
-        "oficina": "TURISMO Y DEPORTES",
-        "descripcion": "EN COMISION"
+        "fecha": "2026-09-30",
+        "oficina": "DGDP",
+        "descripcion": "DESPACHO ESPERANDO NUMERACION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

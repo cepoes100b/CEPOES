@@ -53,6 +53,7 @@ DECISIONS = {
     "integrar_descentralizacion_presupuesto_v2.yml": ("eliminar después de retención", "Versión reemplazada por v3 seguro."),
     "integrar_descentralizacion_presupuesto_v3_seguro.yml": ("archivar", "Última integración puntual; conservar evidencia."),
     "legislatura.yml": ("operativo", "Pipeline regular de datos legislativos."),
+    "monitor-tierras.yml": ("operativo", "Consulta documental de RNTR y DNU; sólo lectura, revisión editorial y sin publicación automática."),
     "migraciones.yml": ("operativo", "Pipeline regular de migraciones."),
     "natalidad.yml": ("operativo", "Pipeline regular de natalidad y demografía."),
     "parche-observatorio-salud.yml": ("archivar", "Hub Salud absorbido y validado dentro del build/publicador canónico en R2-A3.1."),
@@ -188,7 +189,7 @@ def markdown(rows: list[dict[str, str]]) -> str:
     lines = [
         "# CEPOES — Inventario R2-A2 de GitHub Actions",
         "",
-        "**Corte:** 23 de septiembre de 2026  ",
+        "**Corte:** 30 de septiembre de 2026  ",
         f"**Cobertura:** {len(rows)} workflows activos en `.github/workflows/`\\",
         "**Archivo no ejecutable:** 26 workflows históricos bajo `docs/seguridad/workflows-retirados/`\\",
         "**Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.",
@@ -250,3 +251,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

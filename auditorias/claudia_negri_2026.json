@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-29T19:05:12.387740+00:00",
+  "generado_en": "2026-09-30T00:12:06.567220+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -11,8 +11,8 @@
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-02-29",
     "fecha_mas_reciente_obtenida": "2026-09-29",
-    "ids_del_anio_en_ventana": 3115,
-    "ids_revisados_acumulados": 3115,
+    "ids_del_anio_en_ventana": 3118,
+    "ids_revisados_acumulados": 3118,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -139,14 +139,14 @@
       "tipo_oficial": "RESOLUCION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "DGDP",
+      "ubicacion": "SP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
         "fecha": "2026-09-29",
-        "oficina": "DGDP",
-        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "oficina": "SP",
+        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -193,14 +193,14 @@
       "tipo_oficial": "RESOLUCION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "DGDP",
+      "ubicacion": "SP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
         "fecha": "2026-09-29",
-        "oficina": "DGDP",
-        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "oficina": "SP",
+        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

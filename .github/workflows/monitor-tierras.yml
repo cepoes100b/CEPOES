@@ -1,0 +1,36 @@
+name: Detectar cambios en fuentes de tierras
+on:
+  schedule:
+    - cron: '30 10 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: monitor-tierras
+  cancel-in-progress: false
+jobs:
+  detectar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/cache/restore@v4
+        with:
+          path: monitor-tierras
+          key: tierras-${{ github.run_id }}
+          restore-keys: tierras-
+      - name: Consultar fuentes y preservar documentos
+        run: python scripts/monitor_tierras.py --output monitor-tierras
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: monitor-tierras
+          key: tierras-${{ github.run_id }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: fuentes-tierras-${{ github.run_id }}
+          path: monitor-tierras
+          retention-days: 30

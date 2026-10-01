@@ -1,6 +1,6 @@
 {
   "schema": "cepoes-seguridad-barrios-v1",
-  "fecha_revision": "2026-09-29",
+  "fecha_revision": "2026-10-01",
   "operativos": [
     {
       "id": "tormenta-negra-2026-09-24",
@@ -52,6 +52,16 @@
           "estado": "En Mesa de Entradas Parlamentaria, esperando envío a comisión; el registro todavía no informa giro",
           "objeto": "Propone expresar el repudio de la Legislatura al operativo del 24 de septiembre. Claudia Negri figura entre sus firmantes. La declaración no consta aprobada.",
           "url": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142620"
+        },
+        {
+          "expediente": "3015-D-2026",
+          "tipo": "Proyecto de resolución",
+          "fecha_presentacion": "2026-09-25",
+          "fecha_consulta": "2026-10-01",
+          "ultimo_movimiento": "2026-09-30",
+          "estado": "En la Comisión de Seguridad; el registro no informa dictamen, aprobación ni respuesta del Ejecutivo",
+          "objeto": "Propone requerir informes al Ejecutivo sobre el operativo del 24 de septiembre. Presentado por Berenice Iañez junto con Claudio Ferreño, Matías Lammens y Claudia Neira.",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142625"
         }
       ],
       "registros_posteriores": {

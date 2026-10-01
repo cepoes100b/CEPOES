@@ -25,11 +25,11 @@
       const card = document.createElement('article'); card.className = 'sb-card';
       const time = text('time', formatDate(op.fecha));
       time.dateTime = op.fecha;
-      card.append(time, text('h3', op.nombre));
+      card.append(time, text('h3', op.nombre), text('p', 'Balance del GCBA. Estas cifras contabilizan actuaciones del operativo; exigimos información sobre las garantías, los daños y los resultados posteriores.', 'sb-source'));
       const dl = document.createElement('dl');
       metric(dl, 'Territorios anunciados', op.barrios_reportados);
       metric(dl, 'Efectivos y agentes anunciados', `${op.efectivos_y_agentes.calificador} ${op.efectivos_y_agentes.valor_minimo.toLocaleString('es-AR')}`);
-      metric(dl, 'Detenciones iniciales', op.detenciones_iniciales);
+      metric(dl, 'Detenciones informadas por el GCBA', op.detenciones_iniciales);
       metric(dl, 'Situación procesal posterior', op.situacion_procesal_posterior);
       metric(dl, 'Vehículos secuestrados', op.vehiculos_secuestrados);
       if (Number.isInteger(op.locales_inspeccionados)) metric(dl, 'Locales inspeccionados', op.locales_inspeccionados);
@@ -42,7 +42,7 @@
         section.append(text('h4', 'Registros y cuestionamientos posteriores'));
         if (follow.cels) {
           section.append(text('p', `Detenciones: ${op.detenciones_iniciales} según el GCBA; ${follow.cels.detenciones_mpd_citadas} registradas por el Ministerio Público de la Defensa, según el CELS. Falta cotejar el registro original y los criterios y horarios de ambos recuentos.`));
-          section.append(text('p', `${follow.cels.denuncias} Estas denuncias se atribuyen al CELS; aún no están verificadas de forma independiente ni se dispone de una resolución judicial sobre ellas.`));
+          section.append(text('p', `${follow.cels.denuncias} El registro de estas denuncias corresponde al CELS. Su alcance y las responsabilidades requieren investigación; exigimos respuestas institucionales y reparación de los daños acreditados.`));
           const source = text('p', 'Fuente: ', 'sb-source');
           const link = text('a', 'publicación del CELS (25/9) ↗'); link.href = follow.cels.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
           source.append(link); section.append(source);

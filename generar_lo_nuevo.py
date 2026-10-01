@@ -34,6 +34,7 @@ class Page(HTMLParser):
         self.title = []
         self.text = []
         self.description = ''
+        self.publication_type = ''
         self.main = self.heading = self.skip = 0
         self.refs = set()
         self.excluded = False
@@ -42,6 +43,8 @@ class Page(HTMLParser):
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         if tag == 'meta':
+            if a.get('name') == 'cepoes:publication':
+                self.publication_type = a.get('content', '')
             if a.get('name') == 'description':
                 self.description = a.get('content', '')
             if a.get('name') == 'robots' and 'noindex' in a.get('content', ''):
@@ -110,11 +113,14 @@ def snapshot(root, path):
             parts.append(json.dumps(clean(value), sort_keys=True, ensure_ascii=False))
     dates = re.findall(r'"date(?:Published|Modified)"\s*:\s*"(\d{4}-\d{2}-\d{2})', source)
     return {'title': title, 'description': page.description,
+            'publication_type': page.publication_type,
             'fingerprint': hashlib.sha256('\n'.join(parts).encode()).hexdigest(),
             'declared_date': max(dates) if dates else None}
 
 
-def kind(url):
+def kind(url, publication_type=''):
+    if publication_type == 'report':
+        return 'informe'
     if url.startswith('/publicaciones/boletines/') and url != '/publicaciones/boletines/':
         return 'boletin'
     if '/informes/' in url or url.startswith('/publicaciones/informe-'):
@@ -173,7 +179,7 @@ def generate(site, previous, today=None):
         else:
             # Sin fecha comprobable, una página heredada ingresa al modificarse.
             continue
-        entries[url] = {**current, 'url': url, 'date': date, 'event': event, 'type': kind(url)}
+        entries[url] = {**current, 'url': url, 'date': date, 'event': event, 'type': kind(url, current['publication_type'])}
     entries = sorted((e for u, e in entries.items() if u in valid and 'title' in e),
                      key=lambda e: (e['date'], e['url']), reverse=True)
     cards = []
@@ -212,4 +218,3 @@ if __name__ == '__main__':
     parser.add_argument('--previous', type=Path, required=True)
     args = parser.parse_args()
     generate(args.site, args.previous)
-

@@ -99,6 +99,20 @@ class NovedadesTest(unittest.TestCase):
         self.assertEqual(entry['type'], 'boletin')
         self.assertEqual(entry['event'], 'Incorporado al archivo')
 
+    def test_web_report_classification_preserves_content_date(self):
+        path = 'territorio/seguridad/index.html'
+        self.write(self.site, path, self.page())
+        entries = generate(self.site, self.old, '2026-09-29')
+        self.assertEqual(entries[0]['type'], 'herramienta')
+        self.write(self.old, path, self.page())
+        self.write(self.old, 'assets/data/lo-nuevo.json', json.dumps({'entries': entries}))
+        self.write(self.site, path, self.page(extra='<meta name="cepoes:publication" content="report">'))
+        entry = generate(self.site, self.old, '2026-10-01')[0]
+        self.assertEqual(entry['type'], 'informe')
+        self.assertEqual(entry['date'], '2026-09-29')
+        self.assertEqual(entry['fingerprint'], entries[0]['fingerprint'])
+        self.assertIn('<span>Informe</span>', (self.site / 'lo-nuevo/index.html').read_text())
+
     def test_more_than_80_updates_do_not_drop_bulletin_or_reset_history(self):
         path = 'publicaciones/boletines/anterior/index.html'
         for root in (self.site, self.old):
@@ -114,4 +128,3 @@ class NovedadesTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

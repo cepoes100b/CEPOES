@@ -93,6 +93,30 @@ class CatalogoTest(unittest.TestCase):
         self.write('privado/informes/otro/index.html', '<main class="web-report"><h1>Privado</h1></main>')
         self.assertEqual(len(self.build()), 1)
 
+    def test_web_monitor_is_listed_without_inventing_pdf_or_cover(self):
+        url = '/territorio/seguridad/'
+        self.reports.append(dict(url=url, title='Seguridad y derechos', description='Seguimiento territorial',
+                                 kind='Informe y monitor', period='2026-10-01', format='web'))
+        self.write('territorio/seguridad/index.html', '<meta name="cepoes:publication" content="report"><main><h1>Seguridad y derechos</h1></main>')
+        self.build()
+        for path in ('publicaciones/informes/index.html', 'publicaciones/index.html'):
+            rendered = (self.root / path).read_text()
+            self.assertIn(f'href="{url}"', rendered)
+            self.assertIn('Ver informe y monitor', rendered)
+            self.assertNotIn('download', rendered)
+            self.assertNotIn('<img', rendered)
+
+    def test_web_report_requires_registry_and_explicit_source_marker(self):
+        self.add('registrado')
+        self.write('territorio/seguridad/index.html', '<meta name="cepoes:publication" content="report"><main><h1>Seguridad</h1></main>')
+        with self.assertRaisesRegex(AssertionError, 'fuera del catálogo'):
+            self.build()
+        self.reports.append(dict(url='/territorio/seguridad/', title='Seguridad', description='Seguimiento',
+                                 kind='Informe y monitor', period='2026-10-01', format='web'))
+        self.write('territorio/seguridad/index.html', '<main><h1>Seguridad</h1></main>')
+        with self.assertRaisesRegex(AssertionError, 'Falta declarar'):
+            self.build()
+
 
 if __name__ == '__main__':
     unittest.main()

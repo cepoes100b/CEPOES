@@ -18,6 +18,14 @@ SECTIONS = {'publicaciones', 'prensa', 'balance', 'territorio', 'observatorio',
 LABELS = {'informe': 'Informe', 'analisis': 'Análisis', 'prensa': 'Prensa',
           'balance': 'Balance', 'herramienta': 'Herramienta', 'datos': 'Datos'}
 MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+CANONICAL_ROUTES = {
+    '/observatorio/presupuesto/': '/presupuesto/ejecucion/',
+    '/territorio/presupuesto/': '/presupuesto/territorio/',
+}
+
+
+def canonical_url(url):
+    return CANONICAL_ROUTES.get(url, url)
 
 
 class Page(HTMLParser):
@@ -126,14 +134,18 @@ def generate(site, previous, today=None):
     template = target.read_text(encoding='utf-8')
     old_registry = previous / 'assets/data/lo-nuevo.json'
     registry = json.loads(old_registry.read_text(encoding='utf-8')) if old_registry.exists() else {'entries': []}
-    entries = {e['url']: e for e in registry['entries']}
+    entries = {}
+    for entry in registry['entries']:
+        url = canonical_url(entry['url'])
+        entries[url] = {**entry, 'url': url}
     # Migración: conserva el historial editorial de las tarjetas originales.
     if not old_registry.exists():
         for card in re.findall(r'<article\b[^>]*class="new-card[^>]*>.*?</article>', template, re.S):
             link = re.search(r'class="new-card-link" href="([^"]+)"', card)
             date = re.search(r'(\d{1,2}) (' + '|'.join(MONTHS) + r') (\d{4})', card)
             if link and date:
-                entries[link[1]] = {'url': link[1], 'date': f'{date[3]}-{MONTHS.index(date[2])+1:02d}-{int(date[1]):02d}', 'event': 'Publicado'}
+                url = canonical_url(link[1])
+                entries[url] = {'url': url, 'date': f'{date[3]}-{MONTHS.index(date[2])+1:02d}-{int(date[1]):02d}', 'event': 'Publicado'}
     valid = set()
     for path in sorted(site.rglob('index.html')):
         rel = path.relative_to(site)
@@ -142,7 +154,7 @@ def generate(site, previous, today=None):
         current = snapshot(site, path)
         if not current:
             continue
-        url = '/' + str(rel.parent).replace('\\', '/') + '/'
+        url = canonical_url('/' + str(rel.parent).replace('\\', '/') + '/')
         valid.add(url)
         old_path = previous / rel
         old = snapshot(previous, old_path) if old_path.exists() else None
@@ -195,3 +207,4 @@ if __name__ == '__main__':
     parser.add_argument('--previous', type=Path, required=True)
     args = parser.parse_args()
     generate(args.site, args.previous)
+

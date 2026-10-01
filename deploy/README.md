@@ -43,3 +43,8 @@ Ejemplo: `deploy/site-overlay/assets/site.css` → `public_html/assets/site.css`
 Esta arquitectura es una etapa de transición segura. A futuro puede migrarse el sitio completo al repositorio, pero ya elimina la necesidad de subir ZIP para cambios versionados.
 
 El procedimiento operativo, los objetivos de recuperación y las evidencias exigidas están en [`docs/seguridad/procedimiento-restauracion-r2.md`](../docs/seguridad/procedimiento-restauracion-r2.md).
+
+
+## Catálogo editorial
+
+Los informes se integran desde `deploy/reports-registry.json`; el publicador genera el archivo completo y los últimos cinco de Publicaciones. Los boletines ingresan automáticamente en Lo nuevo. Ver [contrato y verificación](../docs/publicaciones-catalogo.md).

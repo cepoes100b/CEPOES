@@ -70,6 +70,8 @@ Toda intervención debe sostener tres objetivos simultáneos:
 
 ## Calidad editorial
 
+- Todo informe publicado, incluso si acompaña a un monitor territorial, debe quedar registrado en `deploy/reports-registry.json` y aparecer siempre en Publicaciones → Informes. Generar el archivo y los cinco últimos de Publicaciones con `generar_catalogo_informes.py`; no mantener tarjetas manuales paralelas. Ver `docs/publicaciones-catalogo.md`.
+- Cada edición pública del boletín debe aparecer automáticamente en Lo nuevo como «Boletín». Preservar su fecha comprobada y verificar la integración con `test_lo_nuevo.py` antes de publicar.
 - Usar lenguaje público claro, sin jerga técnica innecesaria.
 - No confundir hallazgos descriptivos con conclusiones causales.
 - Respaldar críticas de gestión con evidencia verificable.

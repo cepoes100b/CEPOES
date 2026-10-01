@@ -34,4 +34,6 @@ jobs:
         run: python validar_pr_r2.py
 
       - name: Verificar novedades automáticas
-        run: python -m unittest test_lo_nuevo.py
+        run: |
+          python -m unittest test_lo_nuevo.py test_catalogo_informes.py
+          python generar_catalogo_informes.py deploy/site-overlay --check-source

@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "reports": [
+    {
+      "url": "/territorio/tierras-y-soberania/",
+      "title": "Tierras y soberanía",
+      "subtitle": "Extranjerización, concentración territorial y defensa de la Ley de Tierras",
+      "description": "El mapa de la extranjerización de tierras rurales, los límites de la Ley 26.737 y la disputa por recuperar una herramienta de soberanía productiva.",
+      "kind": "Informe especial · Septiembre de 2026",
+      "period": "2026-09-30",
+      "cover": "/assets/publicaciones/tierras-y-soberania.png",
+      "pdf": "/territorio/tierras-y-soberania/CEPOES_Ley_de_Tierras_2026-09-30.pdf"
+    },
+    {
+      "url": "/publicaciones/informes/educacion-pisa-fepba-2025/",
+      "title": "Dos evaluaciones, dos respuestas opuestas",
+      "subtitle": "Qué pasó con la educación porteña entre 2023 y 2025",
+      "description": "PISA registra una caída en las tres áreas mientras FEPBA y TESBA informan mejoras. Qué puede compararse, qué no y qué información debe abrir la Ciudad.",
+      "kind": "Informe temático · Septiembre de 2026",
+      "period": "2026-09",
+      "cover": "/assets/publicaciones/educacion-pisa-fepba-2026-09.svg",
+      "pdf": "/publicaciones/informes/educacion-pisa-fepba-2025/informe-educacion-pisa-fepba-cepoes.pdf"
+    },
+    {
+      "url": "/publicaciones/informes/plataformas-juventudes-caba/",
+      "title": "Seis años de registro y ningún número",
+      "subtitle": "Trabajo de plataformas y juventudes en la Ciudad",
+      "description": "El RUTRAMUR existe desde 2020, pero la Ciudad todavía no publica una cifra consolidada de repartidores ni los datos de actividad que la ley ya prevé.",
+      "kind": "Informe temático · Septiembre de 2026",
+      "period": "2026-09",
+      "cover": "/assets/publicaciones/plataformas-juventudes-2026-09.svg",
+      "pdf": "/publicaciones/informes/plataformas-juventudes-caba/informe-plataformas-juventudes-cepoes.pdf"
+    },
+    {
+      "url": "/publicaciones/informes/personas-mayores-caba/",
+      "title": "Personas mayores en la Ciudad de Buenos Aires",
+      "subtitle": "Envejecimiento, desigualdad y políticas públicas",
+      "description": "Demografía, ingresos, vivienda, salud y cuidados para comprender cómo se envejece en una Ciudad territorialmente desigual.",
+      "kind": "Informe temático · Septiembre de 2026",
+      "period": "2026-09",
+      "cover": "/assets/publicaciones/personas-mayores-caba.svg",
+      "pdf": "/publicaciones/informes/personas-mayores-caba/informe-personas-mayores-caba-cepoes.pdf"
+    },
+    {
+      "url": "/publicaciones/informes/situacion-de-calle-caba/",
+      "title": "Situación de calle en la Ciudad de Buenos Aires",
+      "subtitle": "Crecimiento, territorio y respuesta estatal",
+      "description": "El último conteo oficial, el contraste con el Censo Popular y una agenda para pasar de la contingencia a soluciones habitacionales.",
+      "kind": "Informe temático · Septiembre de 2026",
+      "period": "2026-09",
+      "cover": "/assets/publicaciones/situacion-calle-caba.svg",
+      "pdf": "/publicaciones/informes/situacion-de-calle-caba/informe-situacion-de-calle-caba-cepoes.pdf"
+    },
+    {
+      "url": "/publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/",
+      "title": "Endeudarse para llegar a fin de mes",
+      "subtitle": "Radiografía de la deuda de los hogares en CABA",
+      "description": "Más de dos millones de personas registran deudas y 313.571 están en mora. El informe combina datos oficiales, gráficos y un mapa barrial para explicar la desigualdad territorial.",
+      "kind": "Informe especial · Septiembre de 2026",
+      "period": "2026-09",
+      "cover": "/assets/publicaciones/endeudamiento-caba.svg",
+      "pdf": "/publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/endeudamiento-caba-cepoes.pdf"
+    },
+    {
+      "url": "/publicaciones/informe-coyuntura-01-junio-2026/",
+      "title": "Producción y empleo: una recuperación desigual",
+      "subtitle": "Análisis del sector real | Primer cuatrimestre 2026",
+      "description": "Análisis de la economía productiva argentina durante el primer cuatrimestre de 2026, con énfasis en capacidad instalada, industria, entramado empresario, mercado de trabajo y la situación productiva y laboral de CABA.",
+      "kind": "Informe de coyuntura · Junio de 2026",
+      "period": "2026-06",
+      "cover": "/assets/publicaciones/coyuntura-productiva-caba.svg",
+      "pdf": "/publicaciones/files/informe-coyuntura-01-junio-2026.pdf"
+    }
+  ]
+}

@@ -19,6 +19,9 @@ on:
       - "generar_estado_datos.py"
       - "generar_lo_nuevo.py"
       - "test_lo_nuevo.py"
+      - "generar_catalogo_informes.py"
+      - "test_catalogo_informes.py"
+      - "deploy/reports-registry.json"
       - "deploy/search-registry.json"
       - "equipamientos/**"
       - "legislatura_publica.json"
@@ -205,6 +208,11 @@ jobs:
           set -euo pipefail
           python deploy/parche_observatorio_salud.py _site/observatorio/index.html
           python deploy/preparar_puente_legislatura.py _site
+
+      - name: Generar y verificar catálogo de informes
+        run: |
+          python -m unittest test_catalogo_informes.py
+          python generar_catalogo_informes.py _site
 
       - name: Generar y verificar novedades automáticas
         run: |

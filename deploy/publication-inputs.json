@@ -59,6 +59,18 @@
       "reason": "Verificación del registro automático de novedades"
     },
     {
+      "path": "generar_catalogo_informes.py",
+      "reason": "Archivo completo de informes y selección automática en Publicaciones"
+    },
+    {
+      "path": "test_catalogo_informes.py",
+      "reason": "Control de cobertura del catálogo editorial"
+    },
+    {
+      "path": "deploy/reports-registry.json",
+      "reason": "Fuente única de informes publicados"
+    },
+    {
       "path": "deploy/search-registry.json",
       "reason": "Registro de búsqueda canónico"
     },

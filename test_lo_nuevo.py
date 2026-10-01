@@ -79,6 +79,39 @@ class NovedadesTest(unittest.TestCase):
         self.assertIn('href="/presupuesto/territorio/"', rendered)
         self.assertNotIn('href="/territorio/presupuesto/"', rendered)
 
+    def test_bulletin_is_visible_classified_and_keeps_date(self):
+        path = 'publicaciones/boletines/boletin-05-septiembre-2026/index.html'
+        self.write(self.site, path, self.page('Edición nueva'))
+        entries = generate(self.site, self.old, '2026-10-01')
+        self.assertEqual(entries[0]['type'], 'boletin')
+        self.assertEqual(entries[0]['event'], 'Nuevo')
+        page = (self.site / 'lo-nuevo/index.html').read_text()
+        self.assertIn('<span>Boletín</span>', page)
+        self.assertIn('<option value="boletin">Boletín</option>', page)
+        self.write(self.old, path, self.page('Edición nueva', '<link href="style.css?v=2">'))
+        self.write(self.old, 'assets/data/lo-nuevo.json', json.dumps({'entries': entries}))
+        self.assertEqual(generate(self.site, self.old, '2026-10-02')[0]['date'], '2026-10-01')
+
+    def test_old_bulletin_missing_from_feed_is_recovered_honestly(self):
+        for root in (self.site, self.old):
+            self.write(root, 'publicaciones/boletines/edicion-anterior/index.html', self.page())
+        entry = generate(self.site, self.old, '2026-10-01')[0]
+        self.assertEqual(entry['type'], 'boletin')
+        self.assertEqual(entry['event'], 'Incorporado al archivo')
+
+    def test_more_than_80_updates_do_not_drop_bulletin_or_reset_history(self):
+        path = 'publicaciones/boletines/anterior/index.html'
+        for root in (self.site, self.old):
+            self.write(root, path, self.page())
+        self.write(self.old, 'assets/data/lo-nuevo.json', json.dumps({'entries': [
+            {'url': '/publicaciones/boletines/anterior/', 'title': 'Edición', 'date': '2026-09-01', 'event': 'Publicado'}]}))
+        for i in range(85):
+            self.write(self.site, f'territorio/monitor-{i}/index.html', self.page())
+        entries = generate(self.site, self.old, '2026-10-01')
+        self.assertEqual(len(entries), 86)
+        self.assertEqual(entries[-1]['date'], '2026-09-01')
+        self.assertEqual(entries[-1]['type'], 'boletin')
+
 if __name__ == '__main__':
     unittest.main()
 

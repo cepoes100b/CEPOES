@@ -1,6 +1,6 @@
 {
   "schema": "cepoes-search-registry-v1",
-  "updated_at": "2026-09-23",
+  "updated_at": "2026-09-30",
   "entries": [
     {"query":"cepoes","title":"CEPOES","url":"/","group":"CEPOES","type":"Inicio","summary":"Datos, investigación y propuestas para la Ciudad de Buenos Aires.","tags":["cepoes","inicio"],"priority":20},
     {"query":"observatorio","title":"Observatorio","url":"/observatorio/","group":"Datos","type":"Observatorio","summary":"Indicadores y análisis para comprender la Ciudad.","tags":["observatorio","datos"],"priority":20},
@@ -23,6 +23,7 @@
     {"query":"legislatura","title":"Legislatura de la Ciudad","url":"/legislatura/","group":"Legislatura","type":"Seguimiento legislativo","summary":"Expedientes, comisiones, reuniones y actividad legislativa oficial.","tags":["legislatura","expedientes","comisiones"],"priority":20},
     {"query":"publicaciones","title":"Publicaciones","url":"/publicaciones/","group":"Publicaciones","type":"Archivo editorial","summary":"Boletines, informes, notas y análisis de CEPOES.","tags":["publicaciones","informes","boletines"],"priority":20},
     {"query":"boletines","title":"Boletines","url":"/publicaciones/boletines/","group":"Publicaciones","type":"Serie mensual","summary":"La Ciudad que habitamos, archivo de boletines mensuales.","tags":["boletines","coyuntura"],"priority":20},
+    {"query":"recuperación barrios","title":"La recuperación que no llega a los barrios","url":"/publicaciones/boletines/boletin-05-septiembre-2026/","group":"Publicaciones","type":"Boletín N.º 5","summary":"Actividad, empleo, ingresos, pobreza y consumo en CABA durante el segundo trimestre de 2026.","tags":["pbg","pgb","empleo","ingresos","pobreza","comercio","barrios"],"priority":30},
     {"query":"informes","title":"Informes","url":"/publicaciones/informes/","group":"Publicaciones","type":"Investigación","summary":"Informes temáticos y de coyuntura elaborados por CEPOES.","tags":["informes","investigacion"],"priority":20},
     {"query":"notas y análisis","title":"Notas y análisis","url":"/publicaciones/notas/","group":"Publicaciones","type":"Notas","summary":"Lecturas breves y análisis basados en datos.","tags":["notas","analisis"],"priority":20},
     {"query":"prensa","title":"Prensa","url":"/prensa/","group":"Publicaciones","type":"Notas de prensa","summary":"Hallazgos, datos citables y materiales para periodistas.","tags":["prensa","medios"],"priority":20},

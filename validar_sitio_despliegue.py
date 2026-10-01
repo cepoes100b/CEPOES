@@ -290,7 +290,7 @@ for token in ['<h1>Lo nuevo</h1>','id="new-search"','id="new-type"','id="new-top
     assert token in new_page, f'Página Lo nuevo incompleta: {token}'
 new_registry=json.loads((root/'assets'/'data'/'lo-nuevo.json').read_text(encoding='utf-8'))
 new_entries=new_registry['entries']
-assert new_registry['version']==1 and 0<len(new_entries)<=80, 'Registro de novedades inválido'
+assert new_registry['version']==1 and len(new_entries)>0, 'Registro de novedades inválido'
 assert len(re.findall(r'<article class="[^"]*new-card(?:[ "]|$)',new_page))==len(new_entries), 'Tarjetas y registro de novedades no coinciden'
 new_urls=[entry['url'] for entry in new_entries]
 assert len(new_urls)==len(set(new_urls)), 'Novedades duplicadas'
@@ -301,7 +301,7 @@ for entry in new_entries:
     assert (root/route.strip('/')/'index.html').is_file(), f'Novedad sin página pública: {route}'
     assert f'href="{route}"' in new_page, f'Novedad no representada: {route}'
     assert re.fullmatch(r'\d{4}-\d{2}-\d{2}',entry['date']), f'Fecha de novedad inválida: {route}'
-    assert entry['type'] in {'informe','analisis','prensa','balance','herramienta','datos'}, f'Tipo de novedad inválido: {route}'
+    assert entry['type'] in {'boletin','informe','analisis','prensa','balance','herramienta','datos'}, f'Tipo de novedad inválido: {route}'
 assert 'Se actualiza automáticamente con cada publicación del sitio' in new_page, 'Lo nuevo debe explicar su actualización automática'
 balance=(root/'balance'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Balance de gestión 2007–2026','Decisiones públicas','Impacto territorial','Capacidad estatal','Vivienda y alquiler','Salud pública','Presupuesto y modelo de gestión']:

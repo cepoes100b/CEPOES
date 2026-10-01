@@ -15,7 +15,7 @@ from zoneinfo import ZoneInfo
 
 SECTIONS = {'publicaciones', 'prensa', 'balance', 'territorio', 'observatorio',
             'presupuesto', 'legislatura', 'propuestas', 'cepoes', 'datos'}
-LABELS = {'informe': 'Informe', 'analisis': 'Análisis', 'prensa': 'Prensa',
+LABELS = {'boletin': 'Boletín', 'informe': 'Informe', 'analisis': 'Análisis', 'prensa': 'Prensa',
           'balance': 'Balance', 'herramienta': 'Herramienta', 'datos': 'Datos'}
 MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
 CANONICAL_ROUTES = {
@@ -115,7 +115,9 @@ def snapshot(root, path):
 
 
 def kind(url):
-    if '/informes/' in url or '/boletines/' in url:
+    if url.startswith('/publicaciones/boletines/') and url != '/publicaciones/boletines/':
+        return 'boletin'
+    if '/informes/' in url or url.startswith('/publicaciones/informe-'):
         return 'informe'
     if url.startswith('/prensa/'):
         return 'prensa'
@@ -165,12 +167,15 @@ def generate(site, previous, today=None):
             date, event = prior['date'], prior.get('event', 'Publicado')
         elif current['declared_date'] and current['declared_date'] <= today:
             date, event = current['declared_date'], 'Publicado'
+        elif kind(url) == 'boletin':
+            # Recupera ediciones anteriores sin atribuirles una fecha de publicación inventada.
+            date, event = today, 'Incorporado al archivo'
         else:
             # Sin fecha comprobable, una página heredada ingresa al modificarse.
             continue
         entries[url] = {**current, 'url': url, 'date': date, 'event': event, 'type': kind(url)}
     entries = sorted((e for u, e in entries.items() if u in valid and 'title' in e),
-                     key=lambda e: (e['date'], e['url']), reverse=True)[:80]
+                     key=lambda e: (e['date'], e['url']), reverse=True)
     cards = []
     esc = html.escape
     for e in entries:
@@ -191,7 +196,7 @@ def generate(site, previous, today=None):
     template = re.sub(r'(<select id="new-topic">).*?</select>', lambda m: m[1] + '<option value="">Todas las secciones</option>' + options + '</select>', template)
     template = template.replace('<label>Tema<select id="new-topic">', '<label>Sección<select id="new-topic">')
     template = re.sub(r'(<aside class="new-criterion"><h2>Qué entra en “Lo nuevo”</h2>)<p>.*?</p>',
-                      lambda m: m[1] + '<p>Las nuevas páginas públicas y las actualizaciones de sus contenidos o datos se incorporan con cada publicación del sitio. La fecha indica cuándo se publicó o actualizó el contenido; los cambios de estilos y navegación conservan la fecha anterior.</p>', template, flags=re.S)
+                      lambda m: m[1] + '<p>Los boletines, las nuevas páginas públicas y las actualizaciones de sus contenidos o datos se incorporan con cada publicación del sitio. La fecha indica cuándo se publicó o actualizó el contenido. Las ediciones recuperadas sin fecha comprobable se señalan como «Incorporado al archivo». Los cambios de estilos y navegación conservan la fecha anterior.</p>', template, flags=re.S)
     target.write_text(template, encoding='utf-8')
     output = site / 'assets/data/lo-nuevo.json'
     output.parent.mkdir(parents=True, exist_ok=True)

@@ -4,8 +4,8 @@ Desde el 01/10/2026, `deploy/reports-registry.json` es la fuente única de las t
 
 Al publicar un informe:
 
-1. Incorporar su página, PDF completo y miniatura de portada al sitio.
-2. Registrar URL, título, subtítulo opcional, descripción, tipo, período, portada y PDF en el catálogo. Usar `AAAA-MM-DD` si el día está comprobado o `AAAA-MM` si sólo consta el mes; conservar el orden editorial dentro del mismo período.
+1. Incorporar su página al sitio; para informes en PDF, incluir el documento completo y su miniatura de portada.
+2. Registrar URL, título, subtítulo opcional, descripción, tipo y período en el catálogo, además de portada y PDF cuando corresponda. Usar `AAAA-MM-DD` si el día está comprobado o `AAAA-MM` si sólo consta el mes; conservar el orden editorial dentro del mismo período.
 3. Ejecutar `python generar_catalogo_informes.py RUTA_DEL_SITIO` sobre el build completo. Genera todo el archivo de Informes y los cinco informes más recientes en Publicaciones con las plantillas existentes.
 
 El publicador canónico ejecuta el generador antes de Lo nuevo y bloquea la publicación si detecta un informe fuera del catálogo, rutas duplicadas, una página privada o la falta de página, PDF o portada. Detecta páginas bajo `/publicaciones/informes/`, la plantilla `web-report` y monitores que ofrecen «Descargar informe completo» con un PDF propio. Para informes en otros formatos o rutas se debe registrar la ficha igualmente. Los archivos HTML de tarjetas son salidas; no editarlos como una segunda fuente.
@@ -22,3 +22,7 @@ python generar_lo_nuevo.py RUTA_DEL_SITIO --previous RUTA_DE_PRODUCCION_ANTERIOR
 ```
 
 `--check-source` comprueba la cobertura editorial del overlay; los PDF y las portadas heredados de producción se verifican en el build completo. El workflow R2 ejecuta las pruebas y el control del overlay en cada PR. El workflow canónico de Hostinger genera y valida los dos catálogos antes de publicar.
+
+## Informes web asociados a monitores
+
+Un informe publicado como contenido web puede registrarse con `format: "web"` aunque no tenga PDF. Su página debe declarar `<meta name="cepoes:publication" content="report">`. Esa marca obliga a incluirlo en el catálogo aunque esté alojado en Territorio y lo clasifica como Informe en Lo nuevo. La tarjeta ofrece «Ver informe y monitor» y, cuando no hay portada, usa un acceso textual con icono; no presenta una tapa de PDF inexistente. Los informes de formato PDF conservan la exigencia de documento y portada. Seguridad y derechos en los barrios populares utiliza este formato y mantiene su contenido y URL territorial.

@@ -2,6 +2,15 @@
   "version": 1,
   "reports": [
     {
+      "url": "/territorio/seguridad-barrios-populares/",
+      "title": "Seguridad y derechos en los barrios populares",
+      "subtitle": "Tormenta Negra: operativos, denuncias y control público",
+      "description": "Rechazamos Tormenta Negra como política de seguridad y seguimos sus operativos, resultados, denuncias y efectos sobre los barrios populares de CABA.",
+      "kind": "Informe y monitor · Actualizado el 1 de octubre de 2026",
+      "period": "2026-10-01",
+      "format": "web"
+    },
+    {
       "url": "/territorio/tierras-y-soberania/",
       "title": "Tierras y soberanía",
       "subtitle": "Extranjerización, concentración territorial y defensa de la Ley de Tierras",

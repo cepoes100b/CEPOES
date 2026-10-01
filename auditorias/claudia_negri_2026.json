@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-10-01T00:22:40.242787+00:00",
+  "generado_en": "2026-10-01T19:15:18.277912+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,9 +10,9 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-02-29",
-    "fecha_mas_reciente_obtenida": "2026-09-30",
-    "ids_del_anio_en_ventana": 3145,
-    "ids_revisados_acumulados": 3145,
+    "fecha_mas_reciente_obtenida": "2026-10-01",
+    "ids_del_anio_en_ventana": 3157,
+    "ids_revisados_acumulados": 3157,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -144,9 +144,9 @@
         "SEGURIDAD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-30",
+        "fecha": "2026-10-01",
         "oficina": "SEGURIDAD",
-        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -886,9 +886,9 @@
         "CULTURA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-29",
+        "fecha": "2026-10-01",
         "oficina": "DGDP",
-        "descripcion": "DESPACHO ESPERANDO NUMERACION (ESPERANDO RECEPCION)"
+        "descripcion": "DESPACHO NUMERADO. ESPERANDO INICIO DE PLAZO DE OBSERVACIONES"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -1368,9 +1368,9 @@
         "TURISMO Y DEPORTES"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-30",
+        "fecha": "2026-10-01",
         "oficina": "DGDP",
-        "descripcion": "DESPACHO ESPERANDO NUMERACION (ESPERANDO RECEPCION)"
+        "descripcion": "DESPACHO NUMERADO. ESPERANDO INICIO DE PLAZO DE OBSERVACIONES"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

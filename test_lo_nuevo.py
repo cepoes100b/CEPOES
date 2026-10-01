@@ -71,5 +71,14 @@ class NovedadesTest(unittest.TestCase):
         self.assertEqual(entry['event'], 'Publicado')
 
 
+    def test_legacy_route_is_emitted_as_canonical(self):
+        self.write(self.site, 'territorio/presupuesto/index.html', self.page())
+        entries = generate(self.site, self.old, '2026-09-29')
+        rendered = (self.site / 'lo-nuevo/index.html').read_text(encoding='utf-8')
+        self.assertEqual(entries[0]['url'], '/presupuesto/territorio/')
+        self.assertIn('href="/presupuesto/territorio/"', rendered)
+        self.assertNotIn('href="/territorio/presupuesto/"', rendered)
+
 if __name__ == '__main__':
     unittest.main()
+

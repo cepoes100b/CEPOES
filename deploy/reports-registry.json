@@ -2,6 +2,16 @@
   "version": 1,
   "reports": [
     {
+      "url": "/publicaciones/informe-coyuntura-02-octubre-2026/",
+      "title": "Producción y empleo bajo presión",
+      "subtitle": "Análisis del sector real | Segundo cuatrimestre 2026",
+      "description": "La industria retrocede, los ingresos laborales pierden poder de compra y aumenta la proporción de locales desocupados en los ejes comerciales porteños. Una lectura del segundo cuatrimestre de 2026 con datos nacionales y de CABA.",
+      "kind": "Informe de coyuntura N.º 2 · Octubre de 2026",
+      "period": "2026-10-01",
+      "cover": "/assets/publicaciones/informe-coyuntura-02-octubre-2026.png",
+      "pdf": "/publicaciones/files/informe-coyuntura-02-octubre-2026.pdf"
+    },
+    {
       "url": "/territorio/seguridad-barrios-populares/",
       "title": "Seguridad y derechos en los barrios populares",
       "subtitle": "Tormenta Negra: operativos, denuncias y control público",

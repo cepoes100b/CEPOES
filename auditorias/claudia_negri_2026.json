@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-09-30T18:48:30.891401+00:00",
+  "generado_en": "2026-10-01T00:22:40.242787+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -11,8 +11,8 @@
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-02-29",
     "fecha_mas_reciente_obtenida": "2026-09-30",
-    "ids_del_anio_en_ventana": 3132,
-    "ids_revisados_acumulados": 3132,
+    "ids_del_anio_en_ventana": 3145,
+    "ids_revisados_acumulados": 3145,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,12 +30,12 @@
     "LEY": 64
   },
   "por_estado_actual": {
-    "en_comision": 124,
+    "en_comision": 126,
     "archivado": 84,
     "sancionado": 17,
     "despacho": 4,
-    "ingresado": 4,
-    "con_dictamen": 3
+    "con_dictamen": 3,
+    "ingresado": 2
   },
   "por_etapa_ciclo": {
     "en_comision": 128,
@@ -137,16 +137,16 @@
       ],
       "cantidad_autores": 20,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "SEGURIDAD",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "SEGURIDAD"
       ],
       "ultimo_movimiento": {
         "fecha": "2026-09-30",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "oficina": "SEGURIDAD",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -191,16 +191,16 @@
       ],
       "cantidad_autores": 20,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "PROTECCIÓN Y USO DEL ESPACIO PÚBLICO",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "PROTECCIÓN Y USO DEL ESPACIO PÚBLICO"
       ],
       "ultimo_movimiento": {
         "fecha": "2026-09-30",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "oficina": "PROTECCIÓN Y USO DEL ESPACIO PÚBLICO",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -1246,7 +1246,6 @@
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,

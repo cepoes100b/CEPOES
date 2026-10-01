@@ -1262,3 +1262,17 @@
 .bol .inf-tarjeta p + p { margin-top: .8rem; }
 @media print { .bol .inf-datos { display:none; } }
 
+
+/* Mantener todas las columnas visibles en pantallas pequeñas. */
+@media screen and (max-width: 640px) {
+  .bol .inf-tabla { min-width: 0; table-layout: fixed; }
+  .bol .inf-tabla th,
+  .bol .inf-tabla td {
+    padding: .7rem .65rem;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    vertical-align: top;
+  }
+  .bol .inf-tabla thead th:first-child { width: 48%; }
+  .bol .inf-tabla thead th:first-child:nth-last-child(2) { width: 68%; }
+}

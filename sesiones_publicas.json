@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-10-05T18:22:18-03:00",
+  "actualizado_en": "2026-10-06T16:04:38-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -10,20 +10,20 @@
   },
   "periodo_consultado": {
     "desde": "01/01/2026",
-    "hasta": "05/10/2026"
+    "hasta": "06/10/2026"
   },
   "resumen": {
-    "sesiones": 8,
-    "sesiones_realizadas": 8,
-    "registros_presentismo": 483,
-    "asuntos_considerados": 1158,
+    "sesiones": 9,
+    "sesiones_realizadas": 9,
+    "registros_presentismo": 543,
+    "asuntos_considerados": 1164,
     "votaciones_asuntos": 71,
     "votos_nominales": 4287,
     "expedientes_votados_unicos": 66,
     "fallas": 0,
-    "items_recinto": 1158,
+    "items_recinto": 1164,
     "sanciones_expediente": 568,
-    "sanciones_despacho": 552,
+    "sanciones_despacho": 558,
     "cambios_giro": 38,
     "sanciones_por_alcance": {
       "definitiva": 561,
@@ -52146,6 +52146,620 @@
         "sanciones_despacho": 93,
         "cambios_giro": 0
       }
+    },
+    {
+      "id_sesion": "1154",
+      "nro_orden_lp": "10682",
+      "ano_parlamentario": "2026",
+      "fecha": "2026-10-06",
+      "tipo": {
+        "id": "4",
+        "abreviatura": "ESP",
+        "descripcion": "ESPECIAL"
+      },
+      "datos_recinto": {
+        "id_sesion_recinto": "",
+        "periodo": "",
+        "fecha": "",
+        "reunion": ""
+      },
+      "realizada": true,
+      "criterio_realizada": "presentismo_quorum",
+      "documentos": {
+        "acuerdo_labor": {
+          "id_documento": "227742",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=227742"
+        },
+        "informe_prelabor": null,
+        "version_taquigrafica": null,
+        "asuntos_considerados": null
+      },
+      "urls": {
+        "votaciones": "https://parlamentaria.legislatura.gob.ar/pages/sesion_votaciones.aspx?IdSesion=1154",
+        "info_sesion": "https://parlamentaria.legislatura.gob.ar/InfoSesion/1154",
+        "reporte_presentismo": "https://parlamentaria.legislatura.gob.ar/ReportesPDFGen/VisualizadorReportes.aspx?iTipoReporte=100&IdSesion=1154"
+      },
+      "presentismo": {
+        "total": 60,
+        "presentes": 53,
+        "ausentes": 7,
+        "porcentaje_asistencia": 88.33,
+        "presidente": "MUZZIO, Clara",
+        "secretarios": "SCHILLAGI, Pablo J. GRIBAUDO, Christian MISCH, Augusto",
+        "registros": [
+          {
+            "id_legislador": "30922",
+            "nombre": "EDGARDO NESTOR",
+            "apellido": "ALIFRACO",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30946",
+            "nombre": "Laura",
+            "apellido": "Alonso",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30680",
+            "nombre": "JUAN PABLO",
+            "apellido": "ARENAZA",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30841",
+            "nombre": "MATÍAS",
+            "apellido": "BARROETAVEÑA",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30949",
+            "nombre": "Vanina",
+            "apellido": "Biasi",
+            "bloque": "Frente de Izquierda de los Trabajadores / PO",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30844",
+            "nombre": "MARÍA",
+            "apellido": "BIELLI",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30943",
+            "nombre": "Francisco",
+            "apellido": "Caporiccio",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30847",
+            "nombre": "EUGENIO",
+            "apellido": "CASIELLES",
+            "bloque": "Transformación",
+            "id_estado": "2",
+            "estado": "Ausente con aviso"
+          },
+          {
+            "id_legislador": "30912",
+            "nombre": "ALDANA BELÉN",
+            "apellido": "CRUCITTA",
+            "bloque": "Ciudadanos Unidos / UCR",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30848",
+            "nombre": "JUAN FACUNDO",
+            "apellido": "DEL GAISO",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30913",
+            "nombre": "PABLO ALEJANDRO",
+            "apellido": "DONATI",
+            "bloque": "Vamos por más",
+            "id_estado": "2",
+            "estado": "Ausente con aviso"
+          },
+          {
+            "id_legislador": "30951",
+            "nombre": "Marcelo Gregorio",
+            "apellido": "Ernst",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30935",
+            "nombre": "Juan Ignacio",
+            "apellido": "Fernández",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30880",
+            "nombre": "EMMANUEL",
+            "apellido": "FERRARIO",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30561",
+            "nombre": "CLAUDIO AMÉRICO",
+            "apellido": "FERREÑO",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30947",
+            "nombre": "Rocío",
+            "apellido": "Figueroa",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30899",
+            "nombre": "REBECA",
+            "apellido": "FLEITAS",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30933",
+            "nombre": "Andrea",
+            "apellido": "Freguia",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30916",
+            "nombre": "VICTORIA",
+            "apellido": "FREIRE",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30940",
+            "nombre": "Noemí",
+            "apellido": "Geminiani",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "2",
+            "estado": "Ausente con aviso"
+          },
+          {
+            "id_legislador": "30906",
+            "nombre": "PATRICIA INÉS",
+            "apellido": "GLIZE",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30939",
+            "nombre": "Andrea Mariana",
+            "apellido": "González",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30915",
+            "nombre": "ALEJANDRO OMAR",
+            "apellido": "GRILLO",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30896",
+            "nombre": "BERENICE",
+            "apellido": "IAÑEZ",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30910",
+            "nombre": "SILVIA",
+            "apellido": "IMAS",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30886",
+            "nombre": "MARINA",
+            "apellido": "KIENAST",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30918",
+            "nombre": "ANDRÉS",
+            "apellido": "LA BLUNDA",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30914",
+            "nombre": "MATÍAS",
+            "apellido": "LAMMENS",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "2",
+            "estado": "Ausente con aviso"
+          },
+          {
+            "id_legislador": "30853",
+            "nombre": "MATÍAS DAMIÁN",
+            "apellido": "LÓPEZ",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30944",
+            "nombre": "Silvia",
+            "apellido": "Lospennato",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30911",
+            "nombre": "FRANCISCO",
+            "apellido": "LOUPIAS",
+            "bloque": "Ciudadanos Unidos / UCR",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30878",
+            "nombre": "AMANDA",
+            "apellido": "MARTÍN",
+            "bloque": "Frente de Izquierda de los Trabajadores / PO",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30938",
+            "nombre": "Federico",
+            "apellido": "Mochi",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30892",
+            "nombre": "JUAN PABLO",
+            "apellido": "MODARELLI",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30908",
+            "nombre": "MARÍA FERNANDA",
+            "apellido": "MOLLARD",
+            "bloque": "Ciudadanos Unidos / UCR",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30898",
+            "nombre": "LUCÍA",
+            "apellido": "MONTENEGRO",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30907",
+            "nombre": "SEBASTIÁN",
+            "apellido": "NAGATA",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30936",
+            "nombre": "Claudia",
+            "apellido": "Negri",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "2",
+            "estado": "Ausente con aviso"
+          },
+          {
+            "id_legislador": "30716",
+            "nombre": "CLAUDIA",
+            "apellido": "NEIRA",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30887",
+            "nombre": "DARÍO HUGO",
+            "apellido": "NIETO",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30742",
+            "nombre": "MARÍA GRACIELA",
+            "apellido": "OCAÑA",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30932",
+            "nombre": "Nicolás",
+            "apellido": "Pakgojz",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30909",
+            "nombre": "IGNACIO JOSÉ",
+            "apellido": "PARERA",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30931",
+            "nombre": "Solana",
+            "apellido": "Pelayo",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30917",
+            "nombre": "GRACIANA",
+            "apellido": "PEÑAFORT",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30921",
+            "nombre": "MARÍA DEL PILAR",
+            "apellido": "RAMÍREZ",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30923",
+            "nombre": "SANDRA MÓNICA",
+            "apellido": "REY",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30950",
+            "nombre": "Horacio",
+            "apellido": "Rodríguez Larreta",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "2",
+            "estado": "Ausente con aviso"
+          },
+          {
+            "id_legislador": "30942",
+            "nombre": "Bárbara",
+            "apellido": "Rossen",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30900",
+            "nombre": "LEONARDO",
+            "apellido": "SAIFERT",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30941",
+            "nombre": "Alejandro",
+            "apellido": "Salvatierra",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30823",
+            "nombre": "LEANDRO",
+            "apellido": "SANTORO",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30905",
+            "nombre": "SERGIO HERNÁN",
+            "apellido": "SICILIANO",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30814",
+            "nombre": "GUILLERMO",
+            "apellido": "SUÁREZ",
+            "bloque": "Ciudadanos Unidos / UCR",
+            "id_estado": "2",
+            "estado": "Ausente con aviso"
+          },
+          {
+            "id_legislador": "30948",
+            "nombre": "Guadalupe",
+            "apellido": "Tagliaferri",
+            "bloque": "Confianza y Desarrollo",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30858",
+            "nombre": "MANUELA",
+            "apellido": "THOURTE",
+            "bloque": "Ciudadanos Unidos / UCR",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30934",
+            "nombre": "Diego",
+            "apellido": "Vartabedian",
+            "bloque": "La Libertad avanza",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30919",
+            "nombre": "DELFINA",
+            "apellido": "VELÁZQUEZ",
+            "bloque": "Fuerza por Buenos Aires",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30859",
+            "nombre": "GIMENA",
+            "apellido": "VILLAFRUELA",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          },
+          {
+            "id_legislador": "30952",
+            "nombre": "Waldo",
+            "apellido": "Wolff",
+            "bloque": "Vamos por más",
+            "id_estado": "1",
+            "estado": "Presente"
+          }
+        ]
+      },
+      "asuntos_considerados": [
+        {
+          "id_expediente": "141794",
+          "numero_expediente": "2244-O-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 495-2026 / Despacho 618-2026"
+        },
+        {
+          "id_expediente": "141796",
+          "numero_expediente": "2245-O-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 496-2026 / Despacho 619-2026"
+        },
+        {
+          "id_expediente": "141799",
+          "numero_expediente": "2246-O-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 497-2026 / Despacho 620-2026"
+        },
+        {
+          "id_expediente": "141800",
+          "numero_expediente": "2247-O-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 498-2026 / Despacho 621-2026"
+        },
+        {
+          "id_expediente": "141802",
+          "numero_expediente": "2248-O-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 499-2026 / Despacho 622-2026"
+        },
+        {
+          "id_expediente": "141805",
+          "numero_expediente": "2249-O-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 500-2026 / Despacho 623-2026"
+        }
+      ],
+      "sanciones": [],
+      "votaciones_nominales": [],
+      "sanciones_despacho": [
+        {
+          "id_expediente": "141794",
+          "numero_expediente": "2244-O-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 495-2026 / Despacho 618-2026"
+        },
+        {
+          "id_expediente": "141796",
+          "numero_expediente": "2245-O-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 496-2026 / Despacho 619-2026"
+        },
+        {
+          "id_expediente": "141799",
+          "numero_expediente": "2246-O-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 497-2026 / Despacho 620-2026"
+        },
+        {
+          "id_expediente": "141800",
+          "numero_expediente": "2247-O-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 498-2026 / Despacho 621-2026"
+        },
+        {
+          "id_expediente": "141802",
+          "numero_expediente": "2248-O-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 499-2026 / Despacho 622-2026"
+        },
+        {
+          "id_expediente": "141805",
+          "numero_expediente": "2249-O-2026",
+          "tipo": "SANCION DE UN DESPACHO",
+          "descripcion": "Resolución nro. 500-2026 / Despacho 623-2026"
+        }
+      ],
+      "cambios_giro": [],
+      "resumen_items_recinto": {
+        "total": 6,
+        "sanciones_expediente": 0,
+        "sanciones_despacho": 6,
+        "cambios_giro": 0
+      }
     }
   ],
   "normalizacion_recinto": {
@@ -52161,7 +52775,7 @@
     "fuente_tipo_item": "GetAsuntoConsideradoItemByIdSesion",
     "tipos_oficiales_observados": {
       "cambio de giro": 38,
-      "sancion de un despacho": 552,
+      "sancion de un despacho": 558,
       "sancion de un expediente": 568
     },
     "alcance_sancion": "inicial, definitiva o no_especificada según descripción oficial"

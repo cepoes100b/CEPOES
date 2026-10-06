@@ -156,6 +156,21 @@ class AtomicityAndPageTests(unittest.TestCase):
         self.assertEqual(result["estado"],"interpretable")
         self.assertEqual(result["periodo_extraible"],"2026-05")
 
+    def test_diagnostic_rejects_malformed_price_block(self):
+        with patch.object(pm,"latest_basket",return_value={"periodo":"2026-06","url":pm.KNOWN_BASKET}):
+            result=pm.source_diagnostic(self.data,object())
+        self.assertEqual(result["estado"],"bloqueada")
+        self.assertEqual(result["periodo_conservado"],"2026-05")
+
+    def test_diagnostic_rejects_parsed_values_outside_validated_ranges(self):
+        basket=pm.parse_basket(NEWS,pm.KNOWN_BASKET)
+        basket["meds"]=99.0
+        with patch.object(pm,"latest_basket",return_value=basket):
+            result=pm.source_diagnostic(self.data,object())
+        self.assertEqual(result["estado"],"bloqueada")
+        self.assertIn("precios no válidos",result["detalle"])
+        self.assertEqual(result["periodo_conservado"],"2026-05")
+
     def test_malformed_price_update_cannot_partially_replace_last_valid_block(self):
         incomplete={"periodo":"2026-05","url":pm.KNOWN_BASKET,"owner":1700000,"owner_var":2.0}
         with patch.object(pm,"get",side_effect=RuntimeError("unavailable")), \

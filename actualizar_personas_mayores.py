@@ -223,6 +223,18 @@ def validate(d):
     assert len(territory.get("equipamientos") or [])>=100
     assert all(0<=x["poblacion_80_mas_pct"]<=15 and 0<=x["centros_dia_por_mil_65"]<5 for x in territory["comunas"].values())
 
+def validated_basket_candidate(previous,basket):
+    """Una única validación del bloque de precios para productor y diagnóstico."""
+    candidate=deepcopy(previous)
+    common={"periodo":basket["periodo"],"url":basket["url"]}
+    candidate["indicadores"]["canasta_propietarios"].update(common,valor=basket["owner"],variacion_mensual=basket["owner_var"])
+    candidate["indicadores"]["canasta_inquilinos"].update(common,valor=basket["renter"],variacion_mensual=basket["renter_var"])
+    candidate["indicadores"]["medicamentos"].update(common,valor=basket["meds"])
+    try:validate(candidate)
+    except AssertionError as exc:
+        raise BasketSourceError(f"precios no válidos: {str(exc) or 'rangos o esquema fuera del contrato'}") from exc
+    return candidate
+
 def build(previous,session):
     out=deepcopy(previous);warnings=[]
     try:
@@ -235,12 +247,7 @@ def build(previous,session):
     try:
         minimum_period=max(out["indicadores"][k]["periodo"] for k in
                            ("canasta_propietarios","canasta_inquilinos","medicamentos"))
-        b=latest_basket(session,minimum_period);common={"periodo":b["periodo"],"url":b["url"]}
-        candidate=deepcopy(previous)
-        candidate["indicadores"]["canasta_propietarios"].update(common,valor=b["owner"],variacion_mensual=b["owner_var"])
-        candidate["indicadores"]["canasta_inquilinos"].update(common,valor=b["renter"],variacion_mensual=b["renter_var"])
-        candidate["indicadores"]["medicamentos"].update(common,valor=b["meds"])
-        validate(candidate)
+        candidate=validated_basket_candidate(previous,latest_basket(session,minimum_period))
         for key in ("canasta_propietarios","canasta_inquilinos","medicamentos"):
             out["indicadores"][key]=candidate["indicadores"][key]
     except Exception as exc:
@@ -282,6 +289,7 @@ def source_diagnostic(previous,session):
             "periodo_conservado":minimum_period}
     try:
         basket=latest_basket(session,minimum_period)
+        validated_basket_candidate(previous,basket)
         return {**result,"estado":"interpretable","periodo_extraible":basket["periodo"],"url":basket["url"]}
     except Exception as exc:
         return {**result,"estado":"bloqueada","detalle":str(exc)}

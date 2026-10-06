@@ -4,6 +4,7 @@ from copy import deepcopy
 import io
 import json
 from pathlib import Path
+import re
 import tempfile
 from types import SimpleNamespace
 import unittest
@@ -264,6 +265,8 @@ class WorkflowContractTests(unittest.TestCase):
         self.assertIn("contents: read",source)
         self.assertIn("persist-credentials: false",source)
         self.assertIn("--check-sources",source)
+        for action,ref in re.findall(r"uses:\s*([^@\s]+)@(\S+)",source):
+            self.assertRegex(ref,r"^[0-9a-f]{40}$",action)
         for token in ("contents: write","secrets.","git push","git commit","registrar_actualizacion"):
             self.assertNotIn(token,source)
         registry=json.loads((ROOT/"deploy/producer-workflows.json").read_text())

@@ -1,0 +1,25 @@
+name: Comprobar fuentes de Personas Mayores
+on:
+  schedule:
+    - cron: "25 13 * * *"
+  workflow_dispatch:
+  push:
+    branches-ignore: [main]
+    paths: ["actualizar_personas_mayores.py","test_personas_mayores.py","fixtures/defensoria_*",".github/workflows/personas-mayores-fuentes.yml","deploy/site-overlay/assets/data/personas-mayores.json"]
+  pull_request:
+    branches: [main]
+    paths: ["actualizar_personas_mayores.py","test_personas_mayores.py","fixtures/defensoria_*",".github/workflows/personas-mayores-fuentes.yml","deploy/site-overlay/assets/data/personas-mayores.json"]
+permissions:
+  contents: read
+concurrency: {group: "personas-mayores-fuentes-${{ github.ref }}", cancel-in-progress: false}
+jobs:
+  diagnostico:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with: {persist-credentials: false}
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - name: Comprobar frescura sin modificar datos publicados
+        run: python actualizar_personas_mayores.py --check-sources

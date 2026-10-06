@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Actualiza Personas mayores y conserva el último conjunto validado si una fuente falla."""
 from __future__ import annotations
-import argparse,csv,json,re,unicodedata
+import argparse,csv,json,os,re,unicodedata
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from copy import deepcopy
 from datetime import datetime,timezone
 from pathlib import Path
+from urllib.parse import urljoin, urlparse
 import requests
 from bs4 import BeautifulSoup
 
@@ -15,6 +16,7 @@ PAGE=ROOT/"deploy/site-overlay/observatorio/personas-mayores/index.html"
 AGES="https://www.estadisticaciudad.gob.ar/si/demog/principal-indicador?indicador=b11"
 AGING="https://www.estadisticaciudad.gob.ar/si/demog/principal-indicador?indicador=b14"
 DEFENSORIA_SITEMAP="https://defensoria.org.ar/wp-sitemap.xml"
+DEFENSORIA_LIBRARY="https://defensoria.org.ar/categoria-biblioteca/monitor-de-derechos/"
 KNOWN_BASKET="https://defensoria.org.ar/noticias/aumentos-en-el-ipm-y-la-canasta-de-consumo-para-adultos-as-mayores-durante-mayo/"
 UA="CEPOES-data-bot/1.0 (+https://cepoes.org/)";TIMEOUT=40
 MONTHS={"enero":1,"febrero":2,"marzo":3,"abril":4,"mayo":5,"junio":6,"julio":7,"agosto":8,"septiembre":9,"octubre":10,"noviembre":11,"diciembre":12}
@@ -80,7 +82,46 @@ def parse_basket(source,url):
     if not all((owner,renter,meds)):raise ValueError("estructura de canasta no reconocida")
     return {"periodo":p,"owner":int(owner.group(1).replace(".","")),"owner_var":float(owner.group(2).replace(",",".")),"renter":int(renter.group(1).replace(".","")),"renter_var":float(renter.group(2).replace(",",".")),"meds":float(meds.group(1).replace(",",".")),"url":url}
 
-def latest_basket(session):
+class BasketSourceError(ValueError):
+    """La fuente no permite acreditar que el conjunto publicado esté actualizado."""
+
+def parse_library(source):
+    """Descubre períodos de referencia, no la fecha de edición ni cifras del visor.
+
+    La biblioteca oficial enlaza los informes aunque no exista una noticia nueva.
+    La lectura de sus títulos no acredita la comparabilidad de los hogares.
+    """
+    latest={}
+    labels={"canasta":"canasta de consumo para personas adultas mayores",
+            "medicamentos":"indice de precios de medicamentos (ipm)"}
+    month_pattern="|".join(MONTHS)
+    for link in BeautifulSoup(source,"html.parser").find_all("a",href=True):
+        heading=link.find(re.compile(r"^h[1-6]$"))
+        title=norm(heading.get_text(" ",strip=True) if heading else link.get_text(" ",strip=True))
+        for kind,label in labels.items():
+            # Exige un título mensual: excluye documentos metodológicos y fechas
+            # editoriales posteriores, incluso cuando ambos aparecen en la tarjeta.
+            match=re.match(rf"^{re.escape(label)}\s*[-–—:]\s*({month_pattern})\s+(?:de\s+)?(20\d{{2}})\b",title)
+            if not match:continue
+            url=urljoin(DEFENSORIA_LIBRARY,link["href"])
+            parsed=urlparse(url)
+            official=(parsed.hostname=="defensoria.org.ar" or
+                      parsed.hostname in {"www.calameo.com","calameo.com"} and
+                      parsed.path.startswith("/defensoriacaba/read/"))
+            if parsed.scheme!="https" or not official:
+                raise BasketSourceError(f"enlace de informe no reconocido: {url}")
+            reference=f"{match.group(2)}-{MONTHS[match.group(1)]:02d}"
+            if kind not in latest or reference>latest[kind]["periodo"]:
+                latest[kind]={"periodo":reference,"url":url}
+            elif reference==latest[kind]["periodo"] and url!=latest[kind]["url"]:
+                raise BasketSourceError(f"dos informes distintos de {kind} para {reference}")
+    missing=set(labels)-set(latest)
+    if missing:
+        raise BasketSourceError("biblioteca sin informes mensuales reconocibles: "+", ".join(sorted(missing)))
+    return latest
+
+def latest_basket(session,minimum_period=""):
+    reports=parse_library(get(session,DEFENSORIA_LIBRARY).text)
     urls={KNOWN_BASKET}
     index=BeautifulSoup(get(session,DEFENSORIA_SITEMAP).text,"xml")
     maps=[loc.get_text(strip=True) for loc in index.find_all("loc") if re.search(r"/noticias-sitemap\d*\.xml$",loc.get_text(strip=True))]
@@ -103,8 +144,16 @@ def latest_basket(session):
             try:
                 url,source=future.result();parsed=parse_basket(source,url);candidates.append((parsed["periodo"],parsed))
             except Exception:pass
-    if not candidates:raise ValueError("sin publicación de canasta interpretable")
-    return max(candidates,key=lambda item:item[0])[1]
+    if not candidates:raise BasketSourceError("sin publicación de canasta interpretable")
+    latest=max(candidates,key=lambda item:item[0])[1]
+    pending=[f"{kind} {report['periodo']} ({report['url']})"
+             for kind,report in reports.items() if report["periodo"]>latest["periodo"]]
+    if pending:
+        raise BasketSourceError("hay informes oficiales más recientes que los datos extraíbles de noticias: "+
+            "; ".join(pending)+". Falta validar extracción y continuidad de hogares; se conserva el último conjunto validado.")
+    if latest["periodo"]<minimum_period:
+        raise BasketSourceError(f"la fuente retrocedería de {minimum_period} a {latest['periodo']}")
+    return latest
 
 def point_from_row(row):
     raw=(row.get("geometry") or row.get("wkt") or "").strip()
@@ -147,7 +196,24 @@ def territory_snapshot():
 
 def validate(d):
     assert d["schema"]=="cepoes-personas-mayores-v1" and d["status"]=="VALIDADO"
-    i=d["indicadores"];assert 10<=i["poblacion_65_mas"]["valor"]<=30;assert 2<=i["poblacion_80_mas"]["valor"]<=12
+    i=d["indicadores"]
+    units={"poblacion_65_mas":"%","poblacion_80_mas":"%",
+           "indice_envejecimiento":"personas de 65+ cada 100 menores de 15",
+           "canasta_propietarios":"pesos corrientes","canasta_inquilinos":"pesos corrientes",
+           "medicamentos":"% de variación mensual"}
+    thresholds={"poblacion_65_mas":"65 años y más","poblacion_80_mas":"80 años y más",
+                "indice_envejecimiento":"65 años y más / 0 a 14 años"}
+    households={"canasta_propietarios":"pareja de personas mayores con vivienda propia",
+                "canasta_inquilinos":"pareja jubilada que alquila"}
+    for key,expected in units.items():assert i[key]["unidad"]==expected,f"unidad incorrecta: {key}"
+    for key,expected in thresholds.items():assert i[key]["umbral_edad"]==expected,f"umbral incorrecto: {key}"
+    for key,expected in households.items():assert i[key]["hogar"]==expected,f"hogar incorrecto: {key}"
+    demographic={i[key]["periodo"] for key in thresholds}
+    costs={i[key]["periodo"] for key in (*households,"medicamentos")}
+    # El renderer tiene un único período para cada grupo de tarjetas.
+    assert len(demographic)==1 and all(re.fullmatch(r"(?:18|19|20)\d{2}",p) for p in demographic),"períodos demográficos incoherentes"
+    assert len(costs)==1 and all(re.fullmatch(r"20\d{2}-(?:0[1-9]|1[0-2])",p) for p in costs),"períodos de precios incoherentes"
+    assert 10<=i["poblacion_65_mas"]["valor"]<=30;assert 2<=i["poblacion_80_mas"]["valor"]<=12
     assert 50<=i["indice_envejecimiento"]["valor"]<=250
     assert 500_000<=i["canasta_propietarios"]["valor"]<i["canasta_inquilinos"]["valor"]<=15_000_000
     assert all(-10<=i[k]["variacion_mensual"]<=50 for k in ("canasta_propietarios","canasta_inquilinos"))
@@ -156,6 +222,18 @@ def validate(d):
     territory=d.get("territorio") or {};assert territory.get("nivel")=="comuna" and len(territory.get("comunas") or {})==15
     assert len(territory.get("equipamientos") or [])>=100
     assert all(0<=x["poblacion_80_mas_pct"]<=15 and 0<=x["centros_dia_por_mil_65"]<5 for x in territory["comunas"].values())
+
+def validated_basket_candidate(previous,basket):
+    """Una única validación del bloque de precios para productor y diagnóstico."""
+    candidate=deepcopy(previous)
+    common={"periodo":basket["periodo"],"url":basket["url"]}
+    candidate["indicadores"]["canasta_propietarios"].update(common,valor=basket["owner"],variacion_mensual=basket["owner_var"])
+    candidate["indicadores"]["canasta_inquilinos"].update(common,valor=basket["renter"],variacion_mensual=basket["renter_var"])
+    candidate["indicadores"]["medicamentos"].update(common,valor=basket["meds"])
+    try:validate(candidate)
+    except AssertionError as exc:
+        raise BasketSourceError(f"precios no válidos: {str(exc) or 'rangos o esquema fuera del contrato'}") from exc
+    return candidate
 
 def build(previous,session):
     out=deepcopy(previous);warnings=[]
@@ -167,16 +245,21 @@ def build(previous,session):
         out["indicadores"]["indice_envejecimiento"].update(valor=aging["valores"][0],periodo=str(aging["anios"][0]))
     except Exception as exc:warnings.append(f"IDECBA: {exc}")
     try:
-        b=latest_basket(session);common={"periodo":b["periodo"],"url":b["url"]}
-        out["indicadores"]["canasta_propietarios"].update(common,valor=b["owner"],variacion_mensual=b["owner_var"])
-        out["indicadores"]["canasta_inquilinos"].update(common,valor=b["renter"],variacion_mensual=b["renter_var"])
-        out["indicadores"]["medicamentos"].update(common,valor=b["meds"])
-    except Exception as exc:warnings.append(f"Defensoría: {exc}")
+        minimum_period=max(out["indicadores"][k]["periodo"] for k in
+                           ("canasta_propietarios","canasta_inquilinos","medicamentos"))
+        candidate=validated_basket_candidate(previous,latest_basket(session,minimum_period))
+        for key in ("canasta_propietarios","canasta_inquilinos","medicamentos"):
+            out["indicadores"][key]=candidate["indicadores"][key]
+    except Exception as exc:
+        # Se conserva el bloque completo de precios; otras fuentes pueden avanzar.
+        # Su frescura se controla en un workflow separado que nunca publica.
+        warnings.append(f"Defensoría: {exc}")
     try:out["territorio"]=territory_snapshot()
     except Exception as exc:warnings.append(f"Territorio: {exc}")
     validate(out)
     if any(out.get(k)!=previous.get(k) for k in ("indicadores","series","territorio")):
-        now=datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z");out["actualizado"]=now;out["automatizacion"]["ultima_revision_exitosa"]=now
+        now=datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z");out["actualizado"]=now
+        if not warnings:out["automatizacion"]["ultima_revision_exitosa"]=now
     return out,warnings
 
 def fmt_number(v):return f"{v:,.1f}".replace(",","X").replace(".",",").replace("X",".")
@@ -188,23 +271,59 @@ def replace_id(source,element_id,value):
     source,count=re.subn(pattern,lambda m:m.group(1)+value+m.group(2),source,count=1,flags=re.S)
     if count!=1:raise ValueError(f"marcador HTML ausente: {element_id}")
     return source
-def render_page(d):
-    source=PAGE.read_text(encoding="utf-8");original=source;i=d["indicadores"];p=i["canasta_inquilinos"]["periodo"]
+def page_values(d):
+    i=d["indicadores"];p=i["canasta_inquilinos"]["periodo"]
     values={"pm-65":fmt_number(i["poblacion_65_mas"]["valor"])+"%","pm-80":fmt_number(i["poblacion_80_mas"]["valor"])+"%","pm-aging":fmt_number(i["indice_envejecimiento"]["valor"]),"pm-owner":fmt_money(i["canasta_propietarios"]["valor"]),"pm-renter":fmt_money(i["canasta_inquilinos"]["valor"]),"pm-renter-detail":fmt_money(i["canasta_inquilinos"]["valor"]),"pm-medicine":"+"+fmt_number(i["medicamentos"]["valor"])+"%","pm-dem-period":i["poblacion_65_mas"]["periodo"],"pm-cost-period-meta":fmt_period(p),"pm-cost-period-card":fmt_period(p).capitalize()+".","pm-owner-var":"+"+fmt_number(i["canasta_propietarios"]["variacion_mensual"])+"%","pm-renter-var":"+"+fmt_number(i["canasta_inquilinos"]["variacion_mensual"])+"%","pm-renter-var-card":"+"+fmt_number(i["canasta_inquilinos"]["variacion_mensual"])+"%","pm-medicine-period":fmt_period(p)}
-    for element_id,value in values.items():source=replace_id(source,element_id,value)
+    return values
+
+def render_page(d):
+    source=PAGE.read_text(encoding="utf-8");original=source
+    for element_id,value in page_values(d).items():source=replace_id(source,element_id,value)
     if source!=original:PAGE.write_text(source,encoding="utf-8");return True
     return False
 
+def source_diagnostic(previous,session):
+    minimum_period=max(previous["indicadores"][k]["periodo"] for k in
+                       ("canasta_propietarios","canasta_inquilinos","medicamentos"))
+    result={"fuente":"Defensoría","biblioteca":DEFENSORIA_LIBRARY,
+            "periodo_conservado":minimum_period}
+    try:
+        basket=latest_basket(session,minimum_period)
+        validated_basket_candidate(previous,basket)
+        return {**result,"estado":"interpretable","periodo_extraible":basket["periodo"],"url":basket["url"]}
+    except Exception as exc:
+        return {**result,"estado":"bloqueada","detalle":str(exc)}
+
+def summarize(message):
+    summary=os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with Path(summary).open("a",encoding="utf-8") as stream:stream.write(message+"\n")
+
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument("--validate-only",action="store_true");args=ap.parse_args()
+    ap=argparse.ArgumentParser();mode=ap.add_mutually_exclusive_group()
+    mode.add_argument("--validate-only",action="store_true")
+    mode.add_argument("--check-sources",action="store_true",help="Diagnóstico de frescura de Defensoría; no modifica datos ni HTML")
+    args=ap.parse_args()
     previous=json.loads(DATA.read_text(encoding="utf-8"))
     if "territorio" not in previous:previous["territorio"]=territory_snapshot()
     validate(previous)
     if args.validate_only:print("Personas mayores VALIDADO");return
-    updated,warnings=build(previous,requests.Session());rendered=json.dumps(updated,ensure_ascii=False,indent=2)+"\n"
+    if args.check_sources:
+        diagnostic=source_diagnostic(previous,requests.Session())
+        message=json.dumps(diagnostic,ensure_ascii=False,sort_keys=True)
+        print(message);summarize("Diagnóstico de fuentes Personas Mayores: "+message)
+        if diagnostic["estado"]=="bloqueada":
+            print(f"::error::Defensoría: {diagnostic['detalle']}")
+            return 1
+        return 0
+    updated,warnings=build(previous,requests.Session())
+    rendered=json.dumps(updated,ensure_ascii=False,indent=2)+"\n"
     changed=rendered!=DATA.read_text(encoding="utf-8")
     if changed:DATA.write_text(rendered,encoding="utf-8")
     page_changed=render_page(updated)
-    for warning in warnings:print("ADVERTENCIA ·",warning)
-    print("Personas mayores:","datos actualizados" if changed or page_changed else "sin cambios validados")
-if __name__=="__main__":main()
+    for warning in warnings:print("::warning::"+warning)
+    status="datos actualizados" if changed or page_changed else "sin nuevos datos validados"
+    if warnings:status+="; resultado parcial: se conservan los bloques de las fuentes advertidas"
+    print("Personas mayores:",status);summarize("Personas mayores: "+status)
+    for warning in warnings:summarize(warning)
+if __name__=="__main__":raise SystemExit(main())

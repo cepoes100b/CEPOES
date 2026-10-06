@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
   push:
     branches-ignore: [main]
-    paths: ["actualizar_personas_mayores.py","verificar_personas_mayores.py",".github/workflows/personas-mayores.yml","deploy/site-overlay/observatorio/personas-mayores/**","deploy/site-overlay/assets/personas-mayores.*","deploy/site-overlay/assets/data/personas-mayores.json"]
+    paths: ["actualizar_personas_mayores.py","verificar_personas_mayores.py","test_personas_mayores.py","fixtures/defensoria_*",".github/workflows/personas-mayores.yml","deploy/site-overlay/observatorio/personas-mayores/**","deploy/site-overlay/assets/personas-mayores.*","deploy/site-overlay/assets/data/personas-mayores.json"]
   pull_request:
     branches: [main]
-    paths: ["actualizar_personas_mayores.py","verificar_personas_mayores.py",".github/workflows/personas-mayores.yml","deploy/site-overlay/observatorio/personas-mayores/**","deploy/site-overlay/assets/personas-mayores.*","deploy/site-overlay/assets/data/personas-mayores.json"]
+    paths: ["actualizar_personas_mayores.py","verificar_personas_mayores.py","test_personas_mayores.py","fixtures/defensoria_*",".github/workflows/personas-mayores.yml","deploy/site-overlay/observatorio/personas-mayores/**","deploy/site-overlay/assets/personas-mayores.*","deploy/site-overlay/assets/data/personas-mayores.json"]
 permissions:
   contents: write
 concurrency: {group: "personas-mayores-${{ github.ref }}", cancel-in-progress: false}
@@ -20,6 +20,8 @@ jobs:
       - uses: actions/setup-python@v6
         with: {python-version: "3.12"}
       - run: pip install -r requirements.txt
+      - name: Probar detector y coherencia de la página sin red
+        run: python -m unittest -v test_personas_mayores
       - run: python actualizar_personas_mayores.py
       - run: python verificar_personas_mayores.py
       - name: Commitear sólo si cambió un dato validado

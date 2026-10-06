@@ -58,6 +58,7 @@ DECISIONS = {
     "natalidad.yml": ("operativo", "Pipeline regular de natalidad y demografía."),
     "parche-observatorio-salud.yml": ("archivar", "Hub Salud absorbido y validado dentro del build/publicador canónico en R2-A3.1."),
     "personas-mayores.yml": ("operativo", "Pipeline regular de Personas Mayores."),
+    "personas-mayores-fuentes.yml": ("operativo", "Diagnóstico de frescura de fuentes de Personas Mayores; sólo lectura, sin producción ni publicación."),
     "prensa-borradores.yml": ("operativo", "Generación programada de borradores de prensa."),
     "presupuesto.yml": ("operativo", "Pipeline regular del observatorio presupuestario."),
     "publicar-datos-legislativos.yml": ("archivar", "JSON legislativos absorbidos y validados dentro del build/publicador canónico en R2-A3.1."),

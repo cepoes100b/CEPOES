@@ -110,20 +110,31 @@ class AtomicityAndPageTests(unittest.TestCase):
     def setUp(self):
         self.data = json.loads(pm.DATA.read_text())
         self.html = pm.PAGE.read_text()
+        environment = patch.dict(pm.os.environ, {"GITHUB_STEP_SUMMARY": ""})
+        environment.start()
+        self.addCleanup(environment.stop)
 
-    def test_build_keeps_input_and_propagates_source_error(self):
+    def test_build_preserves_prices_while_independent_data_advances(self):
         previous = deepcopy(self.data)
         ages = {"anios": [2022], "poblacion_65_mas": [18.0], "poblacion_80_mas": [5.2]}
         aging = {"anios": [2022], "valores": [120.0]}
         with patch.object(pm, "get", return_value=SimpleNamespace(text="ignored")), \
              patch.object(pm, "parse_ages", return_value=ages), \
              patch.object(pm, "parse_aging", return_value=aging), \
-             patch.object(pm, "latest_basket", side_effect=pm.BasketSourceError("new report")):
-            with self.assertRaises(pm.BasketSourceError):
-                pm.build(previous, object())
+             patch.object(pm, "latest_basket", side_effect=pm.BasketSourceError("new report")), \
+             patch.object(pm, "territory_snapshot", return_value=self.data["territorio"]):
+            result, warnings = pm.build(previous, object())
         self.assertEqual(previous, self.data)
+        self.assertEqual(result["indicadores"]["poblacion_65_mas"]["valor"], 18.0)
+        for key in ("canasta_propietarios","canasta_inquilinos","medicamentos"):
+            self.assertEqual(result["indicadores"][key], previous["indicadores"][key])
+        self.assertEqual(result["automatizacion"]["ultima_revision_exitosa"],
+                         previous["automatizacion"]["ultima_revision_exitosa"])
+        self.assertNotEqual(result["actualizado"], previous["actualizado"])
+        self.assertEqual(len(warnings), 1)
+        self.assertIn("Defensoría", warnings[0])
 
-    def test_main_returns_failure_before_writing_either_published_file(self):
+    def test_diagnostic_returns_failure_without_writing_either_published_file(self):
         with tempfile.TemporaryDirectory() as directory:
             data_path, page_path = Path(directory)/"data.json", Path(directory)/"page.html"
             data_path.write_text(json.dumps(self.data, ensure_ascii=False))
@@ -131,12 +142,47 @@ class AtomicityAndPageTests(unittest.TestCase):
             before = (data_path.read_bytes(), page_path.read_bytes())
             output = io.StringIO()
             with patch.object(pm, "DATA", data_path), patch.object(pm, "PAGE", page_path), \
-                 patch.object(pm, "build", side_effect=pm.BasketSourceError("new report")), \
-                 patch("sys.argv", ["actualizar_personas_mayores.py"]), contextlib.redirect_stdout(output):
+                 patch.object(pm, "get", side_effect=source_get()), \
+                 patch("sys.argv", ["actualizar_personas_mayores.py", "--check-sources"]), contextlib.redirect_stdout(output):
                 self.assertEqual(pm.main(), 1)
             self.assertEqual((data_path.read_bytes(), page_path.read_bytes()), before)
             self.assertIn("::error::", output.getvalue())
+            self.assertIn('"estado": "bloqueada"', output.getvalue())
             self.assertNotIn("sin cambios validados", output.getvalue())
+
+    def test_diagnostic_success_is_read_only_and_reports_extracted_period(self):
+        with patch.object(pm,"get",side_effect=source_get(catalogue())):
+            result=pm.source_diagnostic(self.data,object())
+        self.assertEqual(result["estado"],"interpretable")
+        self.assertEqual(result["periodo_extraible"],"2026-05")
+
+    def test_malformed_price_update_cannot_partially_replace_last_valid_block(self):
+        incomplete={"periodo":"2026-05","url":pm.KNOWN_BASKET,"owner":1700000,"owner_var":2.0}
+        with patch.object(pm,"get",side_effect=RuntimeError("unavailable")), \
+             patch.object(pm,"latest_basket",return_value=incomplete), \
+             patch.object(pm,"territory_snapshot",return_value=self.data["territorio"]):
+            result,warnings=pm.build(self.data,object())
+        self.assertEqual(result,self.data)
+        self.assertTrue(any("Defensoría" in warning for warning in warnings))
+
+    def test_producer_reports_partial_without_marking_whole_snapshot_fresh(self):
+        updated=deepcopy(self.data)
+        updated["indicadores"]["poblacion_65_mas"]["valor"]=18.0
+        with tempfile.TemporaryDirectory() as directory:
+            data_path,page_path=Path(directory)/"data.json",Path(directory)/"page.html"
+            data_path.write_text(json.dumps(self.data,ensure_ascii=False,indent=2)+"\n")
+            page_path.write_text(self.html)
+            output=io.StringIO()
+            with patch.object(pm,"DATA",data_path),patch.object(pm,"PAGE",page_path), \
+                 patch.object(pm,"build",return_value=(updated,["Defensoría: new report"])), \
+                 patch("sys.argv",["actualizar_personas_mayores.py"]),contextlib.redirect_stdout(output):
+                self.assertIsNone(pm.main())
+            actual=json.loads(data_path.read_text())
+            self.assertEqual(actual["indicadores"]["canasta_inquilinos"],self.data["indicadores"]["canasta_inquilinos"])
+            self.assertEqual(actual["indicadores"]["poblacion_65_mas"]["valor"],18.0)
+            validate_page(actual,page_path.read_text())
+            self.assertIn("resultado parcial",output.getvalue())
+            self.assertIn("::warning::Defensoría",output.getvalue())
 
     def test_current_page_passes(self):
         validate_page(self.data, self.html)
@@ -194,6 +240,28 @@ class AtomicityAndPageTests(unittest.TestCase):
             with patch.object(pm, "PAGE", path):
                 self.assertFalse(pm.render_page(self.data))
                 self.assertEqual(path.read_text(), self.html)
+
+
+class WorkflowContractTests(unittest.TestCase):
+    def test_diagnostic_has_read_only_permissions_and_is_not_a_producer(self):
+        path=".github/workflows/personas-mayores-fuentes.yml"
+        source=(ROOT/path).read_text()
+        self.assertIn("contents: read",source)
+        self.assertIn("persist-credentials: false",source)
+        self.assertIn("--check-sources",source)
+        for token in ("contents: write","secrets.","git push","git commit","registrar_actualizacion"):
+            self.assertNotIn(token,source)
+        registry=json.loads((ROOT/"deploy/producer-workflows.json").read_text())
+        self.assertNotIn(path,{workflow["path"] for workflow in registry["workflows"]})
+
+    def test_producer_keeps_offline_and_output_validation_before_commit(self):
+        source=(ROOT/".github/workflows/personas-mayores.yml").read_text()
+        ordered=["python -m unittest -v test_personas_mayores",
+                 "python actualizar_personas_mayores.py", "python verificar_personas_mayores.py", "git commit"]
+        positions=[source.index(token) for token in ordered]
+        self.assertEqual(positions,sorted(positions))
+        self.assertNotIn("continue-on-error",source)
+        self.assertIn("github.ref == 'refs/heads/main' && github.event_name != 'pull_request'",source)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Actualiza Personas mayores y conserva el último conjunto validado si una fuente falla."""
 from __future__ import annotations
-import argparse,csv,json,re,unicodedata
+import argparse,csv,json,os,re,unicodedata
 from concurrent.futures import ThreadPoolExecutor,as_completed
 from copy import deepcopy
 from datetime import datetime,timezone
@@ -236,18 +236,23 @@ def build(previous,session):
         minimum_period=max(out["indicadores"][k]["periodo"] for k in
                            ("canasta_propietarios","canasta_inquilinos","medicamentos"))
         b=latest_basket(session,minimum_period);common={"periodo":b["periodo"],"url":b["url"]}
-        out["indicadores"]["canasta_propietarios"].update(common,valor=b["owner"],variacion_mensual=b["owner_var"])
-        out["indicadores"]["canasta_inquilinos"].update(common,valor=b["renter"],variacion_mensual=b["renter_var"])
-        out["indicadores"]["medicamentos"].update(common,valor=b["meds"])
+        candidate=deepcopy(previous)
+        candidate["indicadores"]["canasta_propietarios"].update(common,valor=b["owner"],variacion_mensual=b["owner_var"])
+        candidate["indicadores"]["canasta_inquilinos"].update(common,valor=b["renter"],variacion_mensual=b["renter_var"])
+        candidate["indicadores"]["medicamentos"].update(common,valor=b["meds"])
+        validate(candidate)
+        for key in ("canasta_propietarios","canasta_inquilinos","medicamentos"):
+            out["indicadores"][key]=candidate["indicadores"][key]
     except Exception as exc:
-        # No convertir una fuente desactualizada o no interpretable en un run verde.
-        # build trabaja sobre una copia: el error llega a main antes de toda escritura.
-        raise BasketSourceError(f"Defensoría: {exc}") from exc
+        # Se conserva el bloque completo de precios; otras fuentes pueden avanzar.
+        # Su frescura se controla en un workflow separado que nunca publica.
+        warnings.append(f"Defensoría: {exc}")
     try:out["territorio"]=territory_snapshot()
     except Exception as exc:warnings.append(f"Territorio: {exc}")
     validate(out)
     if any(out.get(k)!=previous.get(k) for k in ("indicadores","series","territorio")):
-        now=datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z");out["actualizado"]=now;out["automatizacion"]["ultima_revision_exitosa"]=now
+        now=datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z");out["actualizado"]=now
+        if not warnings:out["automatizacion"]["ultima_revision_exitosa"]=now
     return out,warnings
 
 def fmt_number(v):return f"{v:,.1f}".replace(",","X").replace(".",",").replace("X",".")
@@ -270,21 +275,47 @@ def render_page(d):
     if source!=original:PAGE.write_text(source,encoding="utf-8");return True
     return False
 
+def source_diagnostic(previous,session):
+    minimum_period=max(previous["indicadores"][k]["periodo"] for k in
+                       ("canasta_propietarios","canasta_inquilinos","medicamentos"))
+    result={"fuente":"Defensoría","biblioteca":DEFENSORIA_LIBRARY,
+            "periodo_conservado":minimum_period}
+    try:
+        basket=latest_basket(session,minimum_period)
+        return {**result,"estado":"interpretable","periodo_extraible":basket["periodo"],"url":basket["url"]}
+    except Exception as exc:
+        return {**result,"estado":"bloqueada","detalle":str(exc)}
+
+def summarize(message):
+    summary=os.environ.get("GITHUB_STEP_SUMMARY")
+    if summary:
+        with Path(summary).open("a",encoding="utf-8") as stream:stream.write(message+"\n")
+
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument("--validate-only",action="store_true");args=ap.parse_args()
+    ap=argparse.ArgumentParser();mode=ap.add_mutually_exclusive_group()
+    mode.add_argument("--validate-only",action="store_true")
+    mode.add_argument("--check-sources",action="store_true",help="Diagnóstico de frescura de Defensoría; no modifica datos ni HTML")
+    args=ap.parse_args()
     previous=json.loads(DATA.read_text(encoding="utf-8"))
     if "territorio" not in previous:previous["territorio"]=territory_snapshot()
     validate(previous)
     if args.validate_only:print("Personas mayores VALIDADO");return
-    try:updated,warnings=build(previous,requests.Session())
-    except BasketSourceError as exc:
-        print(f"::error::{exc}")
-        print("Personas mayores: actualización bloqueada; archivos publicados conservados.")
-        return 1
+    if args.check_sources:
+        diagnostic=source_diagnostic(previous,requests.Session())
+        message=json.dumps(diagnostic,ensure_ascii=False,sort_keys=True)
+        print(message);summarize("Diagnóstico de fuentes Personas Mayores: "+message)
+        if diagnostic["estado"]=="bloqueada":
+            print(f"::error::Defensoría: {diagnostic['detalle']}")
+            return 1
+        return 0
+    updated,warnings=build(previous,requests.Session())
     rendered=json.dumps(updated,ensure_ascii=False,indent=2)+"\n"
     changed=rendered!=DATA.read_text(encoding="utf-8")
     if changed:DATA.write_text(rendered,encoding="utf-8")
     page_changed=render_page(updated)
-    for warning in warnings:print("ADVERTENCIA ·",warning)
-    print("Personas mayores:","datos actualizados" if changed or page_changed else "sin cambios validados")
+    for warning in warnings:print("::warning::"+warning)
+    status="datos actualizados" if changed or page_changed else "sin nuevos datos validados"
+    if warnings:status+="; resultado parcial: se conservan los bloques de las fuentes advertidas"
+    print("Personas mayores:",status);summarize("Personas mayores: "+status)
+    for warning in warnings:summarize(warning)
 if __name__=="__main__":raise SystemExit(main())

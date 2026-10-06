@@ -1,7 +1,7 @@
 # CEPOES — Inventario R2-A2 de GitHub Actions
 
 **Corte:** 6 de octubre de 2026
-**Cobertura:** 33 workflows activos en `.github/workflows/`\
+**Cobertura:** 34 workflows activos en `.github/workflows/`\
 **Archivo no ejecutable:** 26 workflows históricos bajo `docs/seguridad/workflows-retirados/`\
 **Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.
 
@@ -9,7 +9,7 @@
 
 | Clasificación | Cantidad |
 | --- | ---: |
-| operativo | 33 |
+| operativo | 34 |
 | migrar | 0 |
 
 ## Inventario
@@ -31,6 +31,7 @@
 | migraciones.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de migraciones. |
 | monitor-tierras.yml | workflow_dispatch, schedule | contents:read | sin escritura detectada | operativo | Consulta documental de RNTR y DNU; sólo lectura, revisión editorial y sin publicación automática. |
 | natalidad.yml | workflow_dispatch, schedule, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de natalidad y demografía. |
+| personas-mayores-fuentes.yml | workflow_dispatch, schedule, push, pull_request | contents:read | sin escritura detectada | operativo | Diagnóstico de frescura de fuentes de Personas Mayores; sólo lectura, sin producción ni publicación. |
 | personas-mayores.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de Personas Mayores. |
 | prensa-borradores.yml | workflow_dispatch, schedule, push | contents:read, id-token:write | sin escritura detectada | operativo | Generación programada de borradores de prensa. |
 | presupuesto.yml | workflow_dispatch, schedule | contents:write | git push, git commit | operativo | Pipeline regular del observatorio presupuestario. |
@@ -53,3 +54,4 @@
 ## Regla de transición
 
 No quedan workflows activos clasificados como `migrar`. Los dieciséis productores de deploy/producer-workflows.json publican únicamente mediante el encadenamiento validado workflow_run del publicador canónico; los validadores manuales sólo producen desde workflow_dispatch en main. El alcance de las salidas está documentado en docs/seguridad/productores-publicacion.md. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.
+

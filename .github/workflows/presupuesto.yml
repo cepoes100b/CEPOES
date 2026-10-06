@@ -69,9 +69,10 @@ jobs:
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "presupuesto: actualización automática $(date -u +%F)"
+          git commit -m "presupuesto: actualización automática $(date -u +%F)" -m "$(python deploy/registrar_actualizacion.py trailers)"
           for intento in 1 2 3; do
             if git push; then
+              python deploy/registrar_actualizacion.py post-push
               echo "Push OK (intento $intento)"
               exit 0
             fi

@@ -189,7 +189,7 @@ def markdown(rows: list[dict[str, str]]) -> str:
     lines = [
         "# CEPOES — Inventario R2-A2 de GitHub Actions",
         "",
-        "**Corte:** 30 de septiembre de 2026  ",
+        "**Corte:** 6 de octubre de 2026",
         f"**Cobertura:** {len(rows)} workflows activos en `.github/workflows/`\\",
         "**Archivo no ejecutable:** 26 workflows históricos bajo `docs/seguridad/workflows-retirados/`\\",
         "**Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.",
@@ -215,7 +215,7 @@ def markdown(rows: list[dict[str, str]]) -> str:
         "",
         "## Regla de transición",
         "",
-        "No quedan workflows activos clasificados como `migrar`. Los dos productores de estructura productiva conservan salidas distintas y publican únicamente mediante el disparador por cambios del publicador canónico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.",
+        "No quedan workflows activos clasificados como `migrar`. Los dos productores de estructura productiva conservan salidas distintas y publican únicamente mediante el encadenamiento validado workflow_run del publicador canónico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.",
         "",
     ])
     return "\n".join(lines)
@@ -251,4 +251,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

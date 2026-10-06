@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "repository": "cepoes100b/CEPOES",
+  "workflows": [
+    {
+      "id": 337417145,
+      "name": "Actualizar datos del observatorio",
+      "path": ".github/workflows/actualizar.yml",
+      "events": [
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 339505784,
+      "name": "Actualizar datos territoriales",
+      "path": ".github/workflows/territorio.yml",
+      "events": [
+        "push",
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 339765461,
+      "name": "Actualizar presupuesto",
+      "path": ".github/workflows/presupuesto.yml",
+      "events": [
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 339821576,
+      "name": "Actualizar núcleo legislativo",
+      "path": ".github/workflows/legislatura.yml",
+      "events": [
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 341632026,
+      "name": "Actualizar panorama productivo actual",
+      "path": ".github/workflows/estructura-productiva-actual.yml",
+      "events": [
+        "push",
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 341586229,
+      "name": "Actualizar estructura productiva",
+      "path": ".github/workflows/estructura-productiva.yml",
+      "events": [
+        "push",
+        "schedule",
+        "workflow_dispatch"
+      ]
+    }
+  ]
+}

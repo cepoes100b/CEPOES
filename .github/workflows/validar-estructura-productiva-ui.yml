@@ -10,6 +10,8 @@ on:
       - "deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson"
       - "generar_estructura_actual_v2.py"
       - "verificar_estructura_actual.py"
+      - "test_estructura_actual_ui.js"
+      - "tests/fixtures/estructura_actual.json"
       - "validar_sitio_despliegue.py"
       - ".github/workflows/validar-estructura-productiva-ui.yml"
 
@@ -36,6 +38,8 @@ jobs:
           node --check deploy/site-overlay/assets/estructura-productiva.js
           node --check deploy/site-overlay/assets/common.js
           python -m py_compile generar_estructura_actual_v2.py verificar_estructura_actual.py validar_sitio_despliegue.py
+      - name: Períodos y comparación visibles desde los datos reales
+        run: node test_estructura_actual_ui.js
       - name: HTML, cartografía, datos y criterios analíticos
         run: |
           python - <<'PY'
@@ -72,19 +76,26 @@ jobs:
           data=json.loads(Path('deploy/site-overlay/assets/data/estructura-productiva/actual.json').read_text(encoding='utf-8'))
           o=data['panorama']['empresas_registradas']; e=data['panorama']['ejes_comerciales']
           assert o['periodo']>=2024 and o['empresas']>80000
-          assert e['periodo']=={'anio':2026,'cuatrimestre':1}
-          assert e['locales_ocupados']==11605 and e['locales_relevados']==12896
-          assert len(e['comunas'])==15 and len(e['rubros'])>=15
-          expected={'1':-0.5,'2':-4.6,'3':-1.1,'4':-0.3,'5':-2.0,'6':0.0,'7':-0.4,'8':-1.7,'9':0.7,'10':-2.5,'11':0.8,'12':-1.0,'13':-3.3,'14':-2.1,'15':-3.5}
-          got={c:round(float(x['variacion_interanual_pp']),1) for c,x in e['comunas'].items()}
-          assert got==expected, got
+          assert e['periodo']['anio']>=2026 and e['periodo']['cuatrimestre'] in (1,2,3)
+          assert len(e['comunas'])==15 and len(e['rubros'])==19
 
           geo=json.loads(Path('deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson').read_text(encoding='utf-8'))
           assert geo['type']=='FeatureCollection' and len(geo['features'])==15
           assert {int(f['properties']['comuna']) for f in geo['features']}==set(range(1,16))
+          from estructura_actual_schema import validate
+          if e['periodo'] == {'anio':2026,'cuatrimestre':1} and 'periodo_verificado' not in data['fuentes']['idecba_informe']:
+              # Transición: el JSON histórico conserva su verificador vigente.
+              # El generador nuevo siempre valida estrictamente antes de escribir.
+              import verificar_estructura_actual
+              verificar_estructura_actual.main()
+          else:
+              validate(data, geo)
 
           js=Path('deploy/site-overlay/assets/estructura-productiva.js').read_text(encoding='utf-8')
-          for token in ['especializacion','prod-compare-selector','prod-matrix','prod-evolution','L.geoJSON']:
+          assert '1er cuatrimestre de 2026' not in html, 'El período visible debe venir del dataset'
+          assert 'prod-company-source' in html and 'prod-rubro-source' in html
+          for token in ['especializacion','prod-compare-selector','prod-matrix','prod-evolution','L.geoJSON',
+                        'prod-rubro-source', '${e.periodo.cuatrimestre}', '${ordinal} cuatrimestre de ${e.periodo.anio}']:
               assert token in js, token
 
           validator=Path('validar_sitio_despliegue.py').read_text(encoding='utf-8')

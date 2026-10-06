@@ -2,6 +2,7 @@ name: Actualizar datos territoriales
 
 on:
   push:
+    branches: [main]
     paths:
       - "generar_deporte_salud.py"
       - "verificar_deporte_salud.py"
@@ -145,9 +146,10 @@ jobs:
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "territorio: actualización automática $(date -u +%F)"
+          git commit -m "territorio: actualización automática $(date -u +%F)" -m "$(python deploy/registrar_actualizacion.py trailers)"
           for intento in 1 2 3; do
             if git push; then
+              python deploy/registrar_actualizacion.py post-push
               echo "Push OK (intento $intento)"
               exit 0
             fi

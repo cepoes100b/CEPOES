@@ -39,6 +39,26 @@
       "reason": "Empaquetado y manifiesto del release"
     },
     {
+      "path": "deploy/producer-workflows.json",
+      "reason": "Lista fija de productores autorizados"
+    },
+    {
+      "path": "deploy/registrar_actualizacion.py",
+      "reason": "Identidad de commits productores resistente a rebase"
+    },
+    {
+      "path": "deploy/encadenar_publicacion.py",
+      "reason": "Selección segura del SHA a publicar"
+    },
+    {
+      "path": "deploy/evidencia_publicacion.py",
+      "reason": "Marcador público y verificación de bytes"
+    },
+    {
+      "path": "test_cadena_publicacion.py",
+      "reason": "Contrato offline de cadena y antirregresión"
+    },
+    {
       "path": "generar_indice_busqueda_equipamientos.py",
       "reason": "Índice ciudadano de equipamientos"
     },

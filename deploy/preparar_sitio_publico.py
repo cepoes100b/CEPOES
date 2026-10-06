@@ -304,6 +304,9 @@ def fmt_period(value: str) -> str:
     if m := re.fullmatch(r"(\d{4})-T([1-4])", str(value)):
         ordinal = {"1": "1.er", "2": "2.º", "3": "3.er", "4": "4.º"}[m.group(2)]
         return f"{ordinal} trimestre {m.group(1)}"
+    if m := re.fullmatch(r"(\d{4})-C([1-3])", str(value)):
+        ordinal = {"1": "1.er", "2": "2.º", "3": "3.er"}[m.group(2)]
+        return f"{ordinal} cuatrimestre {m.group(1)}"
     if m := re.fullmatch(r"(\d{4})-(\d{2})", str(value)):
         return f"{months[m.group(2)]} {m.group(1)}"
     return str(value)
@@ -660,7 +663,7 @@ def apply_fallbacks(source: str, rel: str) -> str:
             f'<a class="kpi kpi-link" href="/observatorio/precios/ipc/" style="--c:var(--lB)"><div class="label">IPCBA · interanual</div><div class="value">+{fmt_number(ipc["var_ia"][-1])}%</div><div class="small">{fmt_period(ipc["meses"][-1])}</div><span class="kpi-go">Ver serie →</span></a>'
             f'<a class="kpi kpi-link" href="/observatorio/precios/ipc/" style="--c:var(--lH)"><div class="label">IPCBA · mensual</div><div class="value">+{fmt_number(ipc["var_m"][-1])}%</div><div class="small">{fmt_period(ipc["meses"][-1])}</div><span class="kpi-go">Ver serie →</span></a>'
             f'<a class="kpi kpi-link" href="/observatorio/produccion/pgb/" style="--c:var(--lA)"><div class="label">Actividad · PGB</div><div class="value">+{fmt_number(pgb["ultimo_var"])}%</div><div class="small">{fmt_period(pgb["ultimo_trim"])}</div><span class="kpi-go">Ver serie →</span></a>'
-            f'<a class="kpi kpi-link" href="/observatorio/produccion/locales-vacantes/" style="--c:var(--lN)"><div class="label">Locales vacantes</div><div class="value">{fmt_number(vacancy)}%</div><div class="small">1.er relevamiento 2026</div><span class="kpi-go">Ver serie →</span></a>'
+            f'<a class="kpi kpi-link" href="/observatorio/produccion/locales-vacantes/" style="--c:var(--lN)"><div class="label">Locales vacantes</div><div class="value">{fmt_number(vacancy)}%</div><div class="small">{fmt_period(data["comunas_locales"]["periodo"])}</div><span class="kpi-go">Ver serie →</span></a>'
             f'<a class="kpi kpi-link" href="/observatorio/trabajo/empleo/" style="--c:var(--lD)"><div class="label">Tasa de empleo</div><div class="value">{fmt_number(employment["empleo"][-1])}%</div><div class="small">{fmt_period(employment["trimestres"][-1])}</div><span class="kpi-go">Ver serie →</span></a>'
             f'<a class="kpi kpi-link" href="/observatorio/condiciones-de-vida/pobreza/" style="--c:var(--lE)"><div class="label">Pobreza</div><div class="value">{fmt_number(poverty["pob_per_pct"][-1])}%</div><div class="small">{fmt_period(poverty["periodos"][-1])}</div><span class="kpi-go">Ver serie →</span></a>'
         )
@@ -683,7 +686,15 @@ def apply_fallbacks(source: str, rel: str) -> str:
             f'<div class="pulse-grid observatory-pulse" id="obs-pulse">{signals}</div>'
             '</div></section>'
         )
-        source = re.sub(r'<section class="section alt">.*?</section>', overview, source, count=1, flags=re.S)
+        # Production is the next build's input: replace the enriched section
+        # first, preserving other .section.alt blocks and nested containers.
+        _, existing_overview = pop_class_element(source, "section", "observatory-overview")
+        if existing_overview:
+            source = source.replace(existing_overview, overview, 1)
+        else:
+            source, count = re.subn(r'<section class="section alt">.*?</section>', overview, source, count=1, flags=re.S)
+            if count != 1:
+                raise ValueError("No se encontró el panorama del Observatorio para actualizar")
         people_bridge = (
             '<section class="section observatory-people-bridge"><div class="wrap">'
             '<a class="ia-topic-card" href="/observatorio/personas-mayores/">'
@@ -695,7 +706,7 @@ def apply_fallbacks(source: str, rel: str) -> str:
             source = replace_class_element(source, "section", "observatory-people-bridge", people_bridge)
         else:
             source = source.replace(overview, overview + people_bridge, 1)
-        source = replace_id_text(source, "data-date", "26 de agosto de 2026")
+        source = replace_id_text(source, "data-date", fmt_date(data["generado"]))
 
     if rel == "/observatorio/index.html":
         mental_bridge = (

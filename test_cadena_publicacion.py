@@ -560,6 +560,117 @@ class EvidenceTests(unittest.TestCase):
                 producer.identity({**env, key: value})
 
 
+class ObservatoryFallbackTests(unittest.TestCase):
+    """El build siguiente parte del HTML publicado por el build anterior."""
+
+    LEGACY = (
+        '<html><head></head><body><nav class="subnav"><a>Agenda</a></nav>'
+        '<main><header><span id="data-date">fecha anterior</span></header>'
+        '<section class="section alt"><div>Panorama anterior</div></section>'
+        '<section class="section alt" id="conservar">Otro contenido</section>'
+        '</main></body></html>'
+    )
+
+    def setUp(self):
+        self.data = json.loads((ROOT / "datos.json").read_text(encoding="utf-8"))
+        self.other = {
+            "presupuesto.json": {"periodo": "2026-T1", "total": {
+                "ejecucion_pct": 25, "vigente": 100, "devengado": 25, "modificaciones": 0}},
+            "diagnostico_presupuestario.json": {},
+            "datos/endeudamiento/manifest.json": {"ultimo_periodo": "2026-01"},
+            "datos/endeudamiento/2026-01.json": {"caba": {"total": {
+                "deudores": 100, "personas_mora": 10, "deuda_total_pesos": 1000}}},
+            "legislatura_publica.json": {"generado": "2026-01-01"},
+        }
+
+    def render(self, source):
+        def load(name):
+            return self.data if name == "datos.json" else self.other[name]
+        with patch.object(public_site, "load_json", side_effect=load):
+            return public_site.apply_fallbacks(source, "/observatorio/index.html")
+
+    def cards(self, source):
+        return re.findall(
+            r'<a class="kpi kpi-link".*?<div class="label">(.*?)</div>'
+            r'<div class="value">(.*?)</div><div class="small">(.*?)</div>.*?</a>',
+            source, flags=re.S)
+
+    def assert_current_cards(self, source):
+        data = self.data
+        number, period = public_site.fmt_number, public_site.fmt_period
+        self.assertEqual(self.cards(source), [
+            ("IPCBA · interanual", f'+{number(data["ipcba"]["var_ia"][-1])}%', period(data["ipcba"]["meses"][-1])),
+            ("IPCBA · mensual", f'+{number(data["ipcba"]["var_m"][-1])}%', period(data["ipcba"]["meses"][-1])),
+            ("Actividad · PGB", f'+{number(data["pgb"]["ultimo_var"])}%', period(data["pgb"]["ultimo_trim"])),
+            ("Locales vacantes", f'{number(100 - data["comunas_locales"]["total"]["tasa_ocup"])}%', period(data["comunas_locales"]["periodo"])),
+            ("Tasa de empleo", f'{number(data["empleo"]["empleo"][-1])}%', period(data["empleo"]["trimestres"][-1])),
+            ("Pobreza", f'{number(data["pobreza"]["pob_per_pct"][-1])}%', period(data["pobreza"]["periodos"][-1])),
+        ])
+        self.assertIn(f'<span id="data-date">{public_site.fmt_date(data["generado"])}</span>', source)
+        self.assertEqual(source.count('class="section alt observatory-overview"'), 1)
+        self.assertEqual(source.count('id="obs-pulse"'), 1)
+        self.assertIn('<section class="section alt" id="conservar">Otro contenido</section>', source)
+
+    def advance_fixture(self):
+        # Valores de prueba: simulan un nuevo corte, nunca se publican como datos.
+        self.data = copy.deepcopy(self.data)
+        self.data["generado"] = "2027-02-08"
+        self.data["ipcba"].update(meses=["Ene-27"], var_ia=[24.6], var_m=[1.2])
+        self.data["pgb"].update(ultimo_trim="2026-T4", ultimo_var=2.3)
+        self.data["empleo"].update(trimestres=["2026-T4"], empleo=[54.6], desocupacion=[5.1])
+        self.data["pobreza"].update(periodos=["2026-T4"], pob_per_pct=[19.2])
+        self.data["comunas_locales"]["periodo"] = "2026-C3"
+        self.data["comunas_locales"]["total"]["tasa_ocup"] = 92.4
+
+    def test_legacy_and_repeated_build_use_current_data(self):
+        result = self.render(self.LEGACY)
+        self.assert_current_cards(result)
+        self.assertEqual(self.render(result), result)
+
+    def test_second_generation_refreshes_all_values_periods_and_date(self):
+        first = self.render(self.LEGACY)
+        self.advance_fixture()
+        second = self.render(first)
+        self.assert_current_cards(second)
+        self.assertIn("3.er cuatrimestre 2026", second)
+        self.assertNotIn("1.er relevamiento 2026", second)
+        self.assertNotEqual(self.cards(first), self.cards(second))
+        self.assertEqual(self.render(second), second)
+
+    def test_existing_overview_wins_over_unrelated_legacy_section(self):
+        source = self.LEGACY.replace(
+            '<div>Panorama anterior</div>',
+            '<section class="extra observatory-overview section alt">'
+            '<section>Panorama obsoleto anidado</section></section>')
+        result = self.render(source)
+        self.assert_current_cards(result)
+        self.assertNotIn("Panorama obsoleto", result)
+        self.assertIn('<section class="section alt"><section class="section alt observatory-overview">', result)
+
+    def test_missing_or_broken_overview_fails_explicitly(self):
+        for source in ("<main></main>", '<section class="section alt observatory-overview">sin cierre'):
+            with self.subTest(source=source), self.assertRaisesRegex(ValueError, "panorama del Observatorio"):
+                self.render(source)
+
+    def test_health_patch_preserves_refreshed_overview_across_builds(self):
+        from parche_observatorio_salud import patch as health_patch
+        first = health_patch(self.render(self.LEGACY))
+        self.advance_fixture()
+        second = health_patch(self.render(first))
+        self.assert_current_cards(second)
+        self.assertEqual(second.count('id="observatorio-salud-cuidados"'), 1)
+        self.assertEqual(health_patch(self.render(second)), second)
+
+    def test_cuatrimestre_labels_follow_parser_period_contract(self):
+        for raw, expected in (("2026-C1", "1.er cuatrimestre 2026"),
+                              ("2026-C2", "2.º cuatrimestre 2026"),
+                              ("2027-C3", "3.er cuatrimestre 2027"),
+                              ("2026-T2", "2.º trimestre 2026"),
+                              ("Ago-26", "Agosto 2026")):
+            with self.subTest(raw=raw):
+                self.assertEqual(public_site.fmt_period(raw), expected)
+
+
 class SubstantiveChangeTests(unittest.TestCase):
     def setUp(self):
         self.document = {"generado": "old", "fuentes": {"tabla": {"extraido": "old", "url": "https://example.test/source", "sha256": "a" * 64}},

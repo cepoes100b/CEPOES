@@ -40,12 +40,23 @@ jobs:
 
 
       - name: Verificar cadena segura de actualización a publicación
-        run: python -m unittest test_cadena_publicacion.py
+        run: python -m unittest test_cadena_publicacion.py test_endeudamiento_publico.py
 
       - name: Verificar parser de panorama actual sin red
         run: |
           pip install "requests>=2.31" "openpyxl>=3.1" pypdf
           python -m unittest test_estructura_actual.py
+
+      - name: Verificar transporte TLS y conservación de Salud Mental
+        run: python -m unittest test_salud_mental_tls.py
+
+      - name: Instalar Apache de referencia sin servicio
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends apache2-bin
+
+      - name: Probar caché pública y DirectoryIndex en loopback
+        run: python test_cache_publicacion_apache.py --repo . --output /tmp/cepoes-apache-cache-result.json
 
       - name: Comprobar endpoint público del marcador sin secretos
         run: |

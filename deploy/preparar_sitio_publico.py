@@ -215,6 +215,34 @@ def topic_chips() -> str:
     return "".join(f'<a href="/temas/#{slug}">{label}</a>' for slug, label in TOPICS)
 
 
+PUBLIC_REVALIDATION_PATHS = (
+    r"^/(index[.]html)?$",
+    r"^/datos/estado/(index[.]html)?$",
+    r"^/assets/data/estructura-productiva/actual[.]json$",
+    r"^/[.]well-known/cepoes-release[.]json$",
+)
+
+
+def prepare_public_revalidation(current: str) -> str:
+    """Revalidar sólo salidas públicas mutables; conservar las demás reglas."""
+    start, end = "# BEGIN CEPOES PUBLIC REVALIDATION", "# END CEPOES PUBLIC REVALIDATION"
+    if current.count(start) != current.count(end) or current.count(start) > 1:
+        raise ValueError("Sección de revalidación pública incompleta o duplicada")
+    conditions = "".join(f'    SetEnvIf Request_URI "{path}" CEPOES_REVALIDATE=1\n'
+                         for path in PUBLIC_REVALIDATION_PATHS)
+    block = (f"{start}\n"
+             "<IfModule mod_setenvif.c>\n" + conditions +
+             "  <IfModule mod_headers.c>\n"
+             "    Header onsuccess unset Cache-Control env=CEPOES_REVALIDATE\n"
+             '    Header always set Cache-Control "no-cache, max-age=0, must-revalidate" env=CEPOES_REVALIDATE\n'
+             "  </IfModule>\n"
+             "</IfModule>\n"
+             f"{end}")
+    if start in current:
+        return re.sub(rf"{re.escape(start)}.*?{re.escape(end)}", lambda _: block, current, flags=re.S)
+    return current + ("\n" if current and not current.endswith("\n") else "") + block + "\n"
+
+
 def prepare_canonical_routes(site: Path) -> None:
     copies = [
         (site / "observatorio" / "presupuesto", site / "presupuesto" / "ejecucion"),
@@ -237,7 +265,7 @@ def prepare_canonical_routes(site: Path) -> None:
     current = re.sub(rf"{re.escape(start)}.*?{re.escape(end)}", block, current, flags=re.S)
     if start not in current:
         current = block + "\n\n" + current.lstrip()
-    htaccess.write_text(current.rstrip() + "\n", encoding="utf-8")
+    htaccess.write_text(prepare_public_revalidation(current.rstrip() + "\n"), encoding="utf-8")
     replacements = {
         "https://cepoes.org/observatorio/presupuesto/": "https://cepoes.org/presupuesto/ejecucion/",
         "https://cepoes.org/territorio/presupuesto/": "https://cepoes.org/presupuesto/territorio/",
@@ -868,4 +896,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

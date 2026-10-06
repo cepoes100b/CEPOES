@@ -70,8 +70,10 @@ jobs:
       - name: Verificar integración de recinto
         run: python verificar_integracion_recinto.py
       - name: Commitear resultado validado si cambió
-        if: github.event_name == 'workflow_dispatch'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
+        shell: bash
         run: |
+          set -euo pipefail
           git config user.name "cepoes-bot"
           git config user.email "actions@github.com"
           git add legislatura_publica.json estado_legislatura.json sesiones_publicas.json estructura_legislativa.json
@@ -79,5 +81,15 @@ jobs:
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "legislatura: validación integral $(date -u +%F-%H%M)"
-          git push
+          git commit -m "legislatura: validación integral $(date -u +%F-%H%M)" -m "$(python deploy/registrar_actualizacion.py trailers)"
+          push_ok=0
+          for intento in 1 2 3; do
+            if git push; then
+              python deploy/registrar_actualizacion.py post-push
+              push_ok=1
+              break
+            fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || exit 1
+            sleep 3
+          done
+          [ "$push_ok" -eq 1 ] || exit 1

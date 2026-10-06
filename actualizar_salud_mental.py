@@ -10,8 +10,8 @@ Fuente principal:
 
 Fuente de contraste:
 - DEIS, defunciones por suicidio (CIE-10 X60-X84/Y87.0), mantenida separada.
-  Si datos.salud.gob.ar no responde o cambia de esquema, se conserva el último
-  contraste DEIS previamente validado en salud_mental.json.
+  Un fallo TLS o de transporte aborta antes de publicar y conserva las salidas.
+  Ante cambios de esquema se conserva el último contraste DEIS validado.
 
 El pipeline falla cerrado para la fuente principal SNIC si no reproduce los
 puntos oficiales 2025 o si las 24 jurisdicciones no suman el total nacional.
@@ -19,6 +19,7 @@ puntos oficiales 2025 o si las 24 jurisdicciones no suman el total nacional.
 from __future__ import annotations
 
 import csv
+import http.client
 import io
 import json
 import re
@@ -138,7 +139,23 @@ def norm(value: object) -> str:
     return re.sub(r"[^a-z0-9]+", "_", s).strip("_")
 
 
+class SourceDownloadError(RuntimeError):
+    """La fuente no pudo descargarse con transporte verificable."""
+
+
+def require_https(url: str) -> None:
+    if urlparse(url).scheme.lower() != "https":
+        raise SourceDownloadError("Descarga rechazada: la fuente debe usar HTTPS")
+
+
+class HTTPSOnlyRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        require_https(newurl)
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
 def request_bytes(url: str, timeout: int = 180) -> bytes:
+    require_https(url)
     req = urllib.request.Request(
         url,
         headers={
@@ -146,21 +163,19 @@ def request_bytes(url: str, timeout: int = 180) -> bytes:
             "Accept": "application/json,text/csv,text/plain,*/*",
         },
     )
+    # Verificación estándar de certificados y hostname, también tras redirecciones.
+    opener = urllib.request.build_opener(
+        urllib.request.HTTPSHandler(context=ssl.create_default_context()),
+        HTTPSOnlyRedirectHandler(),
+    )
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
+        with opener.open(req, timeout=timeout) as r:
             return r.read()
-    except urllib.error.URLError as exc:
-        host = (urlparse(url).hostname or "").lower()
-        reason = getattr(exc, "reason", None)
-        tls_error = isinstance(reason, ssl.SSLCertVerificationError) or "CERTIFICATE_VERIFY_FAILED" in str(exc)
-        if tls_error and (host == "datos.salud.gob.ar" or host.endswith(".salud.gob.ar")):
-            # Workaround acotado al host oficial de Salud; SNIC y cualquier otro
-            # dominio siguen usando validación TLS normal.
-            print(f"ADVERTENCIA TLS: reintento acotado para {host}")
-            ctx = ssl._create_unverified_context()
-            with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
-                return r.read()
-        raise
+    except (urllib.error.URLError, OSError, http.client.HTTPException) as exc:
+        raise SourceDownloadError(
+            f"Fuente no verificable ({urlparse(url).hostname}): "
+            f"{type(exc).__name__}: {exc}. Se conserva el último resultado válido."
+        ) from exc
 
 
 def get_json(url: str) -> dict:
@@ -535,6 +550,10 @@ def load_deis_with_fallback(previous: dict) -> dict:
                 "no se fusionan ambas fuentes."
             ),
         }
+    except SourceDownloadError:
+        # Un fallo TLS/transporte nunca se convierte en una actualización exitosa.
+        # main escribe ambos resultados sólo después de completar las descargas.
+        raise
     except Exception as exc:
         old = previous_deis_series(previous)
         if not old:

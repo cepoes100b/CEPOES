@@ -48,7 +48,7 @@ jobs:
       - name: Validar conjunto de migraciones
         run: python verificar_migraciones.py datos/migraciones/migraciones.json
       - name: Commitear sólo si cambió un dato validado
-        if: github.ref_name == 'main'
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
@@ -59,10 +59,15 @@ jobs:
             echo "Sin cambios en las fuentes oficiales"
             exit 0
           fi
-          git commit -m "migraciones: actualización automática $(date -u +%F)"
+          git commit -m "migraciones: actualización automática $(date -u +%F)" -m "$(python deploy/registrar_actualizacion.py trailers)"
+          push_ok=0
           for intento in 1 2 3; do
-            if git push origin HEAD:${GITHUB_REF_NAME}; then exit 0; fi
+            if git push; then
+              python deploy/registrar_actualizacion.py post-push
+              push_ok=1
+              break
+            fi
             git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || exit 1
             sleep 3
           done
-          exit 1
+          [ "$push_ok" -eq 1 ] || exit 1

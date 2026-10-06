@@ -3,7 +3,11 @@
 from __future__ import annotations
 
 import copy
+import ast
 import json
+import os
+import shutil
+import textwrap
 import re
 import subprocess
 import sys
@@ -19,12 +23,32 @@ import encadenar_publicacion as chain
 import evidencia_publicacion as evidence
 import registrar_actualizacion as producer
 import detectar_cambio_panorama as panorama_change
+import preparar_sitio_publico as public_site
 
 REGISTRY = json.loads((ROOT / "deploy/producer-workflows.json").read_text())
 PATTERNS = [item["path"] for item in json.loads((ROOT / "deploy/publication-inputs.json").read_text())["inputs"]]
 REPOSITORY = REGISTRY["repository"]
 REPOSITORY_ID = 12345
 DEFINITION = next(item for item in REGISTRY["workflows"] if item["path"].endswith("actualizar.yml"))
+
+
+NEW_PRODUCER_OUTPUTS = {
+    "descentralizacion-comunas.yml": (
+        ["deploy/site-overlay/assets/data/descentralizacion-comunas.json"], ["descentralizacion_comunas.json"]),
+    "dinamica-productiva.yml": (
+        ["deploy/site-overlay/assets/data/estructura-productiva/dinamica.json"], ["diagnostico_dinamica_productiva.txt"]),
+    "migraciones.yml": (["deploy/site-overlay/assets/data/migraciones.json"], ["datos/migraciones/migraciones.json"]),
+    "natalidad.yml": (["deploy/site-overlay/assets/data/natalidad.json"], ["natalidad.json"]),
+    "personas-mayores.yml": (
+        ["deploy/site-overlay/assets/data/personas-mayores.json", "deploy/site-overlay/observatorio/personas-mayores/index.html"], []),
+    "salud-mental.yml": (["deploy/site-overlay/assets/data/salud-mental.json"], ["salud_mental.json"]),
+    "salud-reproductiva.yml": (["deploy/site-overlay/assets/data/salud-reproductiva.json"], ["salud_reproductiva.json"]),
+    "validar-legislatura.yml": (["legislatura_publica.json", "sesiones_publicas.json"],
+                                ["estado_legislatura.json", "estructura_legislativa.json"]),
+    "validar-presupuesto.yml": (["presupuesto.json", "diagnostico_presupuestario.json"],
+        ["estado_presupuesto.json", "presupuesto_analitico.json", "presupuesto_historico.json", "presupuesto_territorial.json"]),
+    "endeudamiento-mensual.yml": (["datos/endeudamiento/manifest.json", "datos/endeudamiento/2026-10.json"], []),
+}
 
 
 def run(path: Path, *args: str, success: bool = True) -> str:
@@ -76,6 +100,89 @@ class ChainTests(unittest.TestCase):
         return chain.select_candidate(self.git, event_name, event or self.event, self.base,
                                       REPOSITORY, REPOSITORY_ID, REGISTRY, PATTERNS,
                                       sha or run(self.repo, "rev-parse", "HEAD"), github_ref)
+
+    def event_for(self, definition, source_event=None):
+        event = copy.deepcopy(self.event)
+        event["workflow_run"].update(workflow_id=definition["id"], name=definition["name"],
+                                     path=definition["path"], event=source_event or definition["events"][0])
+        return event
+
+    def test_all_registered_producers_and_each_allowed_event(self):
+        for definition in REGISTRY["workflows"]:
+            with self.subTest(workflow=definition["path"]):
+                run(self.repo, "reset", "--hard", self.base)
+                paths = NEW_PRODUCER_OUTPUTS.get(Path(definition["path"]).name, (["datos.json"], []))[0]
+                produced = self.commit(paths[0], "agregado público", values={**self.values, "workflow": definition["path"]})
+                for source_event in definition["events"]:
+                    selected = self.select(self.event_for(definition, source_event))
+                    self.assertEqual(selected["producer_sha"], produced)
+                    self.assertEqual(selected["should_deploy"], "true")
+
+    def test_each_producer_rejects_bad_origin_branch_event_identity_and_failure(self):
+        for definition in REGISTRY["workflows"]:
+            run(self.repo, "reset", "--hard", self.base)
+            self.commit("datos.json", "producto", values={**self.values, "workflow": definition["path"]})
+            changes = [("head_repository", {"full_name": "fork/CEPOES", "id": 10}),
+                       ("head_repository", {"full_name": REPOSITORY, "id": 10}),
+                       ("head_branch", "topic"), ("head_branch", None),
+                       ("event", "pull_request"), ("event", "pull_request_target"),
+                       ("event", "repository_dispatch"), ("event", "workflow_run"),
+                       ("status", "in_progress"), ("name", "nombre copiado"),
+                       ("path", ".github/workflows/otra.yml"), ("workflow_id", 1)]
+            changes += [("event", source_event) for source_event in ("push", "schedule", "workflow_dispatch")
+                        if source_event not in definition["events"]]
+            changes += [("conclusion", result) for result in ("failure", "cancelled", "timed_out", "skipped", None)]
+            for key, value in changes:
+                with self.subTest(workflow=definition["path"], field=key, value=value):
+                    event = self.event_for(definition)
+                    event["workflow_run"][key] = value
+                    with self.assertRaises(chain.Rejected):
+                        self.select(event)
+            event = self.event_for(definition)
+            event["repository"]["id"] = 10
+            with self.assertRaises(chain.Rejected):
+                self.select(event)
+
+    def test_each_producer_noop_diagnostic_old_attempt_and_already_published(self):
+        for definition in REGISTRY["workflows"]:
+            with self.subTest(workflow=definition["path"]):
+                run(self.repo, "reset", "--hard", self.base)
+                event = self.event_for(definition)
+                values = {**self.values, "workflow": definition["path"]}
+                self.assertEqual(self.select(event)["reason"], "sin-commit-producido")
+                self.commit("estado_descargas.json", "diagnóstico", values=values)
+                self.assertEqual(self.select(event)["reason"], "solo-diagnostico")
+                run(self.repo, "reset", "--hard", self.base)
+                self.commit("datos.json", "viejo", values={**values, "attempt": "1"})
+                self.assertEqual(self.select(event)["should_deploy"], "false")
+                run(self.repo, "reset", "--hard", self.base)
+                produced = self.commit("datos.json", "validado", values=values)
+                selected = chain.check_previous(self.git, self.select(event), {"commit_sha": produced}, PATTERNS)
+                self.assertEqual(selected["should_deploy"], "false")
+
+    def test_budget_diagnostic_alone_triggers_both_validated_budget_producers(self):
+        for filename in ("presupuesto.yml", "validar-presupuesto.yml"):
+            definition = next(item for item in REGISTRY["workflows"] if Path(item["path"]).name == filename)
+            source = (ROOT / definition["path"]).read_text()
+            self.assertIn("      - name: Verificar diagnóstico presupuestario\n        run: python verificar_diagnostico_presupuestario.py", source)
+            self.assertLess(source.index("python verificar_diagnostico_presupuestario.py"), source.index("git commit"))
+            for source_event in definition["events"]:
+                with self.subTest(workflow=filename, event=source_event):
+                    run(self.repo, "reset", "--hard", self.base)
+                    produced = self.commit("diagnostico_presupuestario.json", '{"fixture":"agregado"}',
+                                           values={**self.values, "workflow": definition["path"]})
+                    selected = self.select(self.event_for(definition, source_event))
+                    self.assertEqual(selected["should_deploy"], "true")
+                    self.assertEqual(selected["producer_sha"], produced)
+
+    def test_each_unlisted_secondary_output_is_explicit_noop(self):
+        for filename, (_, omitted) in NEW_PRODUCER_OUTPUTS.items():
+            definition = next(item for item in REGISTRY["workflows"] if Path(item["path"]).name == filename)
+            for output in omitted:
+                with self.subTest(workflow=filename, output=output):
+                    run(self.repo, "reset", "--hard", self.base)
+                    self.commit(output, "salida secundaria", values={**self.values, "workflow": definition["path"]})
+                    self.assertEqual(self.select(self.event_for(definition))["reason"], "solo-diagnostico")
 
     def test_valid_product_uses_output_not_input(self):
         produced = self.product()
@@ -318,6 +425,81 @@ class EvidenceTests(unittest.TestCase):
             evidence.verify_online(self.marker, "test")
         self.assertEqual(set(self.marker["files"]), set(evidence.PUBLIC_FILES))
 
+    def test_canonical_checks_precede_all_cache_busting(self):
+        with patch.object(evidence, "read_public", side_effect=self.read) as read:
+            evidence.verify_online(self.marker, "test")
+        calls = [(call.args[0], call.args[1]) for call in read.call_args_list]
+        paths = ["/" + evidence.MARKER_PATH, *evidence.PUBLIC_FILES.values()]
+        self.assertEqual(calls, [(path, None) for path in paths] + [(path, "test") for path in paths])
+        workflow = (ROOT / ".github/workflows/desplegar-hostinger.yml").read_text()
+        self.assertLess(workflow.index("run: python deploy/evidencia_publicacion.py smoke --site _site"),
+                        workflow.index('SMOKE_Q="smoke='))
+
+    def test_stale_canonical_fails_even_when_nonce_would_be_fresh(self):
+        for stale_path in ["/" + evidence.MARKER_PATH, *evidence.PUBLIC_FILES.values()]:
+            def response(path, nonce, **kwargs):
+                if nonce is None and path == stale_path:
+                    if path == "/" + evidence.MARKER_PATH:
+                        return json.dumps({**self.marker, "commit_sha": "b" * 40}).encode()
+                    return b"old canonical bytes"
+                return self.read(path, nonce, **kwargs)
+            with self.subTest(path=stale_path), patch.object(evidence, "read_public", side_effect=response) as read:
+                with self.assertRaisesRegex(ValueError, "canónic"):
+                    evidence.verify_online(self.marker, "test")
+                self.assertTrue(all(call.args[1] is None for call in read.call_args_list))
+
+    def test_ordinary_request_has_no_nonce_or_cache_request_headers(self):
+        from unittest.mock import MagicMock
+        response = MagicMock()
+        response.__enter__.return_value.read.return_value = b"public"
+        response.__enter__.return_value.headers = {"Cache-Control": "no-cache, max-age=0, must-revalidate"}
+        opener = MagicMock()
+        opener.open.return_value = response
+        with patch.object(evidence.urllib.request, "build_opener", return_value=opener):
+            self.assertEqual(evidence.read_public("/", None), b"public")
+        request = opener.open.call_args.args[0]
+        self.assertEqual(request.full_url, "https://cepoes.org/")
+        self.assertEqual(request.header_items(), [])
+
+    def test_canonical_response_without_revalidation_headers_fails(self):
+        from unittest.mock import MagicMock
+        for value in ("", "public, max-age=3600", 'no-cache="Set-Cookie"', "max-age=0, must-revalidate"):
+            response = MagicMock()
+            response.__enter__.return_value.headers = {"Cache-Control": value}
+            opener = MagicMock()
+            opener.open.return_value = response
+            with self.subTest(value=value), patch.object(evidence.urllib.request, "build_opener", return_value=opener):
+                with self.assertRaisesRegex(ValueError, "política de revalidación"):
+                    evidence.read_public("/", None)
+
+    def test_revalidation_preserves_existing_htaccess_and_is_idempotent(self):
+        existing = "# Existing production rules\nRedirect 301 /old/ /new/\n"
+        result = public_site.prepare_public_revalidation(existing)
+        self.assertTrue(result.startswith(existing))
+        self.assertEqual(public_site.prepare_public_revalidation(result), result)
+        self.assertEqual(result.count("# BEGIN CEPOES PUBLIC REVALIDATION"), 1)
+        self.assertIn('Header onsuccess unset Cache-Control env=CEPOES_REVALIDATE', result)
+        self.assertIn('Header always set Cache-Control "no-cache, max-age=0, must-revalidate" env=CEPOES_REVALIDATE', result)
+
+    def test_revalidation_scopes_only_public_mutable_routes(self):
+        def matches(path):
+            return any(re.fullmatch(pattern, path) for pattern in public_site.PUBLIC_REVALIDATION_PATHS)
+        for path in ("/", "/index.html", "/datos/estado/", "/datos/estado/index.html",
+                     "/assets/data/estructura-productiva/actual.json", "/.well-known/cepoes-release.json"):
+            with self.subTest(path=path):
+                self.assertTrue(matches(path))
+        for path in ("/privado/", "/privado/index.html", "/suscripcion/", "/publicaciones/index.html",
+                     "/assets/mapa.js", "/assets/site.css", "/assets/data/otra.json", "/datos/estado/archivo.html"):
+            with self.subTest(path=path):
+                self.assertFalse(matches(path))
+
+    def test_revalidation_rejects_partial_or_duplicate_managed_sections(self):
+        begin = "# BEGIN CEPOES PUBLIC REVALIDATION\n"
+        end = "# END CEPOES PUBLIC REVALIDATION\n"
+        for broken in (begin, end, (begin + end) * 2):
+            with self.subTest(broken=broken), self.assertRaisesRegex(ValueError, "incompleta o duplicada"):
+                public_site.prepare_public_revalidation(broken)
+
     def test_http_200_old_html_or_data_fails(self):
         for relative in evidence.PUBLIC_FILES:
             with self.subTest(relative=relative):
@@ -423,7 +605,7 @@ class WorkflowContractTests(unittest.TestCase):
         block = source.split("  workflow_run:\n", 1)[1].split("\npermissions:", 1)[0]
         names = re.findall(r'^      - "([^"]+)"$', block, re.MULTILINE)
         self.assertEqual(names, [item["name"] for item in REGISTRY["workflows"]])
-        self.assertEqual(len(set(item["id"] for item in REGISTRY["workflows"])), 6)
+        self.assertEqual(len(set(item["id"] for item in REGISTRY["workflows"])), 16)
         self.assertIn("branches: [main]", block)
         self.assertIn("types: [completed]", block)
         for item in REGISTRY["workflows"]:
@@ -432,6 +614,194 @@ class WorkflowContractTests(unittest.TestCase):
             self.assertIn(' -m "$(python deploy/registrar_actualizacion.py trailers)"', text)
             self.assertIn("if git push; then\n              python deploy/registrar_actualizacion.py post-push", text)
             self.assertNotIn("actions: write", text)
+
+    def test_new_producers_gate_commits_to_validated_main(self):
+        for filename in NEW_PRODUCER_OUTPUTS:
+            with self.subTest(workflow=filename):
+                source = (ROOT / ".github/workflows" / filename).read_text()
+                start = re.search(r"      - name: (?:Guardar|Commitear|Versionar)[^\n]*\n", source).start()
+                block = source[start:].split("\n      - name:", 1)[0]
+                event_condition = "== 'workflow_dispatch'" if filename.startswith("validar-") else "!= 'pull_request'"
+                self.assertIn("if: github.ref == 'refs/heads/main' && github.event_name " + event_condition, block)
+                self.assertIn("git diff --cached --quiet", block)
+                self.assertLess(block.index("git diff --cached --quiet"), block.index("git commit"))
+                self.assertIn('git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || exit 1', block)
+                self.assertIn('[ "$push_ok" -eq 1 ] || exit 1', block)
+                self.assertNotIn("secrets.", source)
+                import auditar_workflows_r2
+                self.assertIn("git push", auditar_workflows_r2.inspect(ROOT / ".github/workflows" / filename)["evidence"])
+        for filename in ("validar-legislatura.yml", "validar-presupuesto.yml"):
+            definition = next(item for item in REGISTRY["workflows"] if Path(item["path"]).name == filename)
+            self.assertEqual(definition["events"], ["workflow_dispatch"])
+        dynamic = (ROOT / ".github/workflows/dinamica-productiva.yml").read_text()
+        self.assertIn("if: always() && steps.generar.outputs.rc != '0'", dynamic)
+        self.assertIn('[ "$fallo" -eq 0 ] && exit 0 || exit 1', dynamic)
+
+    def test_new_commit_steps_execute_with_real_local_git_and_noop(self):
+        # Sólo bare repositories temporales: no red, workflows, fuentes ni pushes externos.
+        from test_endeudamiento_publico import manifest_fixture, period_fixture
+        with tempfile.TemporaryDirectory(prefix="cepoes-producer-steps-") as directory:
+            root = Path(directory)
+            for index, (filename, (outputs, _)) in enumerate(NEW_PRODUCER_OUTPUTS.items()):
+                with self.subTest(workflow=filename):
+                    repo = root / str(index)
+                    repo.mkdir()
+                    run(repo, "init", "-b", "main")
+                    run(repo, "config", "user.email", "actions@github.com")
+                    run(repo, "config", "user.name", "cepoes-bot")
+                    (repo / "README.md").write_text("fixture sin datos reales")
+                    run(repo, "add", "README.md")
+                    run(repo, "commit", "-m", "base")
+                    base = run(repo, "rev-parse", "HEAD")
+                    remote = root / f"remote-{index}.git"
+                    run(root, "init", "--bare", str(remote))
+                    run(repo, "remote", "add", "origin", str(remote))
+                    run(repo, "push", "-u", "origin", "main")
+                    deploy = repo / "deploy"
+                    deploy.mkdir()
+                    shutil.copy2(ROOT / "deploy/registrar_actualizacion.py", deploy)
+                    source = (ROOT / ".github/workflows" / filename).read_text()
+                    start = re.search(r"      - name: (?:Guardar|Commitear|Versionar)[^\n]*\n", source).start()
+                    block = source[start:].split("\n      - name:", 1)[0]
+                    script = textwrap.dedent(block.split("        run: |\n", 1)[1])
+                    script = script.replace("${{ steps.generar.outputs.rc }}", "0")
+                    script = script.replace("${{ needs.detectar.outputs.periodo }}", "2020-02")
+                    if filename == "endeudamiento-mensual.yml":
+                        shutil.copy2(ROOT / "deploy/validar_endeudamiento_publico.py", deploy)
+                        public = repo / "datos/endeudamiento"
+                        public.mkdir(parents=True)
+                        (public / "manifest.json").write_text(json.dumps(manifest_fixture()))
+                        for month in ("2020-01", "2020-02"):
+                            (public / f"{month}.json").write_text(json.dumps(period_fixture(month)))
+                        # Archivos ajenos presentes nunca entran en staging.
+                        (public / "matriz_cp_barrio.json").write_text("fuera de alcance")
+                        (public / "personas.json").write_text("sentinela sintética sin personas")
+                    else:
+                        paths = []
+                        for line in re.findall(r"(?m)^\s+git add ([^\n]+)", source):
+                            paths.extend(line.split())
+                        for name in paths:
+                            if name == "diagnostico_dinamica_productiva.txt":
+                                continue
+                            file = repo / name
+                            file.parent.mkdir(parents=True, exist_ok=True)
+                            file.write_text("agregado sintético validado por fixture")
+                    env = {**os.environ, "GITHUB_REPOSITORY": REPOSITORY,
+                           "GITHUB_WORKFLOW_REF": f"{REPOSITORY}/.github/workflows/{filename}@refs/heads/main",
+                           "GITHUB_RUN_ID": str(50000 + index), "GITHUB_RUN_ATTEMPT": "1",
+                           "GITHUB_SHA": base, "GITHUB_REF_NAME": "main"}
+                    result = subprocess.run(["bash", "-e", "-o", "pipefail", "-c", script],
+                                            cwd=repo, env=env, text=True, capture_output=True)
+                    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                    head = run(repo, "rev-parse", "HEAD")
+                    self.assertNotEqual(head, base)
+                    self.assertEqual(head, run(remote, "rev-parse", "main"))
+                    self.assertIn('"commit_sha": "' + head + '"', result.stdout)
+                    trailer = chain.Git(repo).trailers(head)
+                    self.assertEqual(trailer[producer.KEYS["workflow"].lower()], [".github/workflows/" + filename])
+                    changed = chain.Git(repo).changed(base, head)
+                    self.assertTrue(chain.publication_changes(changed, PATTERNS))
+                    if filename == "endeudamiento-mensual.yml":
+                        self.assertEqual(set(changed), {"datos/endeudamiento/manifest.json", "datos/endeudamiento/2020-02.json"})
+                    noop = subprocess.run(["bash", "-e", "-o", "pipefail", "-c", script],
+                                          cwd=repo, env=env, text=True, capture_output=True)
+                    self.assertEqual(noop.returncode, 0, noop.stdout + noop.stderr)
+                    self.assertEqual(run(repo, "rev-parse", "HEAD"), head)
+                    self.assertNotIn("CEPOES_POST_PUSH", noop.stdout)
+
+                    if filename == "dinamica-productiva.yml":
+                        (repo / "diagnostico_dinamica_productiva.txt").write_text("fallo sintético")
+                        failed_script = textwrap.dedent(block.split("        run: |\n", 1)[1])
+                        failed_script = failed_script.replace("${{ steps.generar.outputs.rc }}", "1")
+                        failed = subprocess.run(["bash", "-e", "-o", "pipefail", "-c", failed_script],
+                                                cwd=repo, env=env, text=True, capture_output=True)
+                        self.assertNotEqual(failed.returncode, 0)
+                        diagnostic = run(repo, "rev-parse", "HEAD")
+                        self.assertEqual(chain.Git(repo).changed(head, diagnostic), ["diagnostico_dinamica_productiva.txt"])
+                        head = diagnostic
+
+                    # Un rechazo del remoto local nunca se registra como push exitoso.
+                    reject = remote / "hooks/pre-receive"
+                    reject.write_text("#!/bin/sh\nexit 1\n")
+                    reject.chmod(0o755)
+                    if filename == "endeudamiento-mensual.yml":
+                        for name, key in (("manifest.json", "actualizado_utc"), ("2020-02.json", "generado_utc")):
+                            file = repo / "datos/endeudamiento" / name
+                            document = json.loads(file.read_text())
+                            document[key] = "2020-03-02T12:00:00+00:00"
+                            file.write_text(json.dumps(document))
+                    else:
+                        file = repo / outputs[0]
+                        file.write_text(file.read_text() + " cambio posterior")
+                    failed = subprocess.run(["bash", "-e", "-o", "pipefail", "-c", script.replace("sleep 3", ":")],
+                                            cwd=repo, env=env, text=True, capture_output=True)
+                    self.assertNotEqual(failed.returncode, 0)
+                    self.assertEqual(run(remote, "rev-parse", "main"), head)
+                    self.assertNotIn("CEPOES_POST_PUSH", failed.stdout)
+
+    def test_declared_outputs_match_workflow_staging_and_manifest(self):
+        for filename, (public, secondary) in NEW_PRODUCER_OUTPUTS.items():
+            with self.subTest(workflow=filename):
+                source = (ROOT / ".github/workflows" / filename).read_text()
+                for path in public:
+                    self.assertTrue(chain.publication_changes([path], PATTERNS), path)
+                for path in secondary:
+                    self.assertFalse(chain.publication_changes([path], PATTERNS), path)
+                if filename == "endeudamiento-mensual.yml":
+                    self.assertNotIn("git add datos/endeudamiento/*.json", source)
+                    self.assertIn('paths=$(python deploy/validar_endeudamiento_publico.py --root . --staging-paths)', source)
+                    self.assertIn('git add -- "${public_paths[@]}"', source)
+                else:
+                    staged = []
+                    for line in re.findall(r"(?m)^\s+git add ([^\n]+)", source):
+                        staged.extend(line.split())
+                    self.assertEqual(set(staged), set(public + secondary))
+
+    def test_direct_json_reads_of_public_preparers_are_covered(self):
+        direct = set()
+        dynamic = []
+        for filename, loader in (("deploy/preparar_sitio_publico.py", "load_json"),
+                                 ("generar_estado_datos.py", "load")):
+            tree = ast.parse((ROOT / filename).read_text())
+            for node in ast.walk(tree):
+                if isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == loader:
+                    self.assertEqual(len(node.args), 1)
+                    arg = node.args[0]
+                    if isinstance(arg, ast.Constant) and isinstance(arg.value, str):
+                        direct.add(arg.value)
+                    else:
+                        dynamic.append(ast.unparse(arg))
+        # Única lectura variable: el período de Endeudamiento validado por su manifest.
+        self.assertEqual(dynamic, ["f'datos/endeudamiento/{debt_file}'"])
+        legislative = ast.parse((ROOT / "deploy/preparar_legislatura_publica.py").read_text())
+        for node in ast.walk(legislative):
+            if (isinstance(node, ast.Assign) and isinstance(node.value, ast.BinOp)
+                    and isinstance(node.value.left, ast.Name) and node.value.left.id == "ROOT"
+                    and isinstance(node.value.right, ast.Constant)):
+                direct.add(node.value.right.value)
+        self.assertIn("diagnostico_presupuestario.json", direct)
+        self.assertIn("sesiones_publicas.json", direct)
+        missing = [path for path in sorted(direct) if not chain.publication_changes([path], PATTERNS)]
+        self.assertEqual(missing, [], "Dependencias directas sin disparador: " + ", ".join(missing))
+        self.assertIn("diagnostico_presupuestario.json", PATTERNS)
+        self.assertNotIn("presupuesto*.json", PATTERNS)
+        self.assertNotIn("*.json", PATTERNS)
+
+    def test_endeudamiento_patterns_exclude_matrix_raw_personal_and_invalid_paths(self):
+        for month in range(1, 13):
+            self.assertTrue(chain.publication_changes([f"datos/endeudamiento/2026-{month:02}.json"], PATTERNS))
+        for path in ("datos/endeudamiento/matriz_cp_barrio.json", "datos/endeudamiento/padron.json",
+                     "datos/endeudamiento/cuit.json", "datos/endeudamiento/personas.json",
+                     "datos/endeudamiento/raw/2026-08.json", "datos/endeudamiento/2026-00.json",
+                     "datos/endeudamiento/2026-13.json", "bcra_deudores/202608DEUDORES.7Z",
+                     "diagnostico_endeudamiento_productivo.json", "novedad_bcra.json"):
+            self.assertFalse(chain.publication_changes([path], PATTERNS), path)
+        publisher = (ROOT / ".github/workflows/desplegar-hostinger.yml").read_text()
+        self.assertLess(publisher.index("python deploy/validar_endeudamiento_publico.py --root ."),
+                        publisher.index("python deploy/preparar_sitio_publico.py"))
+        self.assertNotIn("cp -a datos/endeudamiento", publisher)
+        ci = (ROOT / ".github/workflows/validar-pr-r2.yml").read_text()
+        self.assertIn("test_cadena_publicacion.py test_endeudamiento_publico.py", ci)
 
     def test_no_secret_preflight_or_permissions_expansion(self):
         source = (ROOT / ".github/workflows/desplegar-hostinger.yml").read_text()

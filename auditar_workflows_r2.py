@@ -94,7 +94,7 @@ def inspect(path: Path) -> dict[str, str]:
     evidence = []
     for label, pattern in (
         ("SFTP", r"(?i)\blftp\b|sftp://|HOSTINGER_SFTP"),
-        ("git push", r"(?m)^\s*git push\b|git push origin"),
+        ("git push", r"(?m)(?:^\s*|[;&|]\s*|\bif\s+)git push\b"),
         ("git commit", r"(?m)^\s*git commit\b"),
         ("secretos", r"\$\{\{\s*secrets\."),
         ("acciones:write", r"(?m)^\s+actions:\s*write\b"),
@@ -215,7 +215,7 @@ def markdown(rows: list[dict[str, str]]) -> str:
         "",
         "## Regla de transición",
         "",
-        "No quedan workflows activos clasificados como `migrar`. Los dos productores de estructura productiva conservan salidas distintas y publican únicamente mediante el encadenamiento validado workflow_run del publicador canónico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.",
+        "No quedan workflows activos clasificados como `migrar`. Los dieciséis productores de deploy/producer-workflows.json publican únicamente mediante el encadenamiento validado workflow_run del publicador canónico; los validadores manuales sólo producen desde workflow_dispatch en main. El alcance de las salidas está documentado en docs/seguridad/productores-publicacion.md. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.",
         "",
     ])
     return "\n".join(lines)

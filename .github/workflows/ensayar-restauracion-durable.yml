@@ -6,6 +6,10 @@ on:
     paths:
       - "deploy/crear_release_durable.py"
       - "deploy/restaurar_release_durable.py"
+      - "deploy/validar_origen_release.py"
+      - "deploy/encadenar_publicacion.py"
+      - "deploy/evidencia_publicacion.py"
+      - "deploy/registrar_actualizacion.py"
       - "validar_rollback_durable.py"
       - ".github/workflows/desplegar-hostinger.yml"
       - ".github/workflows/ensayar-restauracion-durable.yml"
@@ -72,6 +76,10 @@ jobs:
       RESTORE_ASSET: ${{ inputs.asset }}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
 
       - name: Verificar la ejecución fuente
         shell: bash
@@ -81,15 +89,8 @@ jobs:
           [[ "$SOURCE_RUN_ATTEMPT" =~ ^[1-9][0-9]*$ ]]
           [[ "$SOURCE_COMMIT" =~ ^[0-9a-f]{40}$ ]]
           [[ "$SOURCE_DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]]
-          gh run view "$SOURCE_RUN_ID" --repo "$GITHUB_REPOSITORY" --json conclusion,headSha,name > /tmp/source-run.json
-          python - <<'PY'
-          import json, os
-          data=json.load(open('/tmp/source-run.json', encoding='utf-8'))
-          assert data['name'] == 'Desplegar sitio en Hostinger', data
-          assert data['conclusion'] == 'success', data
-          assert data['headSha'] == os.environ['SOURCE_COMMIT'], data
-          print('Ejecución fuente canónica, exitosa y asociada al commit esperado')
-          PY
+          gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${SOURCE_RUN_ID}/attempts/${SOURCE_RUN_ATTEMPT}" > /tmp/source-run.json
+          python deploy/validar_origen_release.py --run-json /tmp/source-run.json
 
       - name: Descargar el release desde el registro privado
         shell: bash
@@ -111,7 +112,10 @@ jobs:
 
           echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
           docker pull "$image"
-          container="$(docker create "$image")"
+          docker image inspect "$image" --format '{{json .Config.Labels}}' > /tmp/source-oci-labels.json
+          python deploy/validar_origen_release.py --oci-labels /tmp/source-oci-labels.json
+          # FROM scratch carece de CMD; crear para docker cp, nunca ejecutar.
+          container="$(docker create "$image" /cepoes-restore-no-execution)"
           trap 'docker rm -f "$container" >/dev/null 2>&1 || true' EXIT
           mkdir _release-source
           docker cp "$container:/release/." _release-source/

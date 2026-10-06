@@ -53,12 +53,13 @@ jobs:
             echo "Sin cambios"
             exit 0
           fi
-          git commit -m "datos: actualización automática $(date -u +%F)"
+          git commit -m "datos: actualización automática $(date -u +%F)" -m "$(python deploy/registrar_actualizacion.py trailers)"
           # La corrida puede durar varios minutos y alguien puede haber tocado
           # el repositorio mientras tanto. Se reintenta trayendo lo remoto por
           # rebase antes de empujar, en vez de fallar por no ser fast-forward.
           for intento in 1 2 3; do
             if git push; then
+              python deploy/registrar_actualizacion.py post-push
               echo "Push OK (intento $intento)"
               exit 0
             fi

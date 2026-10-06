@@ -1,6 +1,6 @@
 # CEPOES — Inventario R2-A2 de GitHub Actions
 
-**Corte:** 30 de septiembre de 2026  
+**Corte:** 6 de octubre de 2026
 **Cobertura:** 33 workflows activos en `.github/workflows/`\
 **Archivo no ejecutable:** 26 workflows históricos bajo `docs/seguridad/workflows-retirados/`\
 **Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.
@@ -19,7 +19,7 @@
 | actualizar.yml | workflow_dispatch, schedule | contents:write | git commit | operativo | Actualización automática general de datos. |
 | analizar-legislatura.yml | workflow_dispatch, schedule, push | contents:read, id-token:write | secretos | operativo | Análisis legislativo programado con identidad federada. |
 | descentralizacion-comunas.yml | workflow_dispatch, schedule | contents:write | git push, git commit | operativo | Actualización programada de datos comunales. |
-| desplegar-hostinger.yml | workflow_dispatch, push | contents:read, packages:write | SFTP, secretos | operativo | Publicador canónico del sitio con validación y rollback inmediato. |
+| desplegar-hostinger.yml | workflow_dispatch, push, workflow_run | contents:read, packages:write, contents:read | SFTP, secretos | operativo | Publicador canónico del sitio con validación y rollback inmediato. |
 | dinamica-productiva.yml | workflow_dispatch, schedule, push | contents:write | git commit | operativo | Actualización de dinámica productiva. |
 | endeudamiento-mensual.yml | workflow_dispatch, schedule | contents:write | git push, git commit | operativo | Pipeline mensual de endeudamiento. |
 | ensayar-restauracion-durable.yml | workflow_dispatch, pull_request | actions:read, contents:read, packages:read | sin escritura detectada | operativo | Ensayo manual sin producción desde un release durable validado. |
@@ -52,4 +52,4 @@
 
 ## Regla de transición
 
-No quedan workflows activos clasificados como `migrar`. Los dos productores de estructura productiva conservan salidas distintas y publican únicamente mediante el disparador por cambios del publicador canónico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.
+No quedan workflows activos clasificados como `migrar`. Los dos productores de estructura productiva conservan salidas distintas y publican únicamente mediante el encadenamiento validado workflow_run del publicador canónico. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.

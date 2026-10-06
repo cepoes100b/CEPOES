@@ -36,11 +36,14 @@ async function init(){
 function hydrate(){
   const o=state.actual.panorama.empresas_registradas,e=ejes();
   $('prod-kpi-companies').textContent=nf.format(o.empresas);$('prod-kpi-companies-sub').textContent=`OEDE/SIPA · ${o.periodo}`;
-  $('prod-kpi-shops').textContent=nf.format(e.locales_ocupados);$('prod-kpi-shops-sub').textContent=`48 ejes comerciales · ${e.periodo.anio}`;
+  $('prod-kpi-shops').textContent=nf.format(e.locales_ocupados);$('prod-kpi-shops-sub').textContent=`48 ejes comerciales · C${e.periodo.cuatrimestre} ${e.periodo.anio}`;
   $('prod-kpi-rate').textContent=pct(e.tasa_ocupacion);$('prod-kpi-rate-sub').textContent=`${nf.format(e.locales_relevados)} locales relevados`;
   const total=Object.values(state.dyn.anios||{}).reduce((a,x)=>a+(+x.total||0),0);
   $('prod-kpi-flow').textContent=nf.format(total);$('prod-kpi-flow-sub').textContent='habilitaciones aprobadas · 2024–2026';
   $('prod-generated').textContent=date(state.actual.generado);
+  const ordinal={1:'1er',2:'2do',3:'3er'}[e.periodo.cuatrimestre];
+  $('prod-company-source').textContent=`OEDE/SIPA · CABA · ${o.periodo}. Unidad: empresa con empleo asalariado registrado.`;
+  $('prod-rubro-source').textContent=`IDECBA · ${ordinal} cuatrimestre de ${e.periodo.anio}. Unidad: local comercial ocupado.`;
   renderCompanySectors();renderCityRubros();buildAnalyticControls();renderCompareSelector();renderComparison();renderMatrix();renderEvolution();buildDetailControls();renderFlowYears();
 }
 
@@ -140,11 +143,15 @@ function renderMatrix(){
 }
 
 function renderEvolution(){
+  const comp=ejes().comparacion_interanual||{};
   const el=$('prod-evolution'),cs=Object.entries(ejes().comunas).filter(([,x])=>Number.isFinite(+x.variacion_interanual_pp)&&Number.isFinite(+x.tasa_ocupacion_anterior));
-  if(cs.length!==15){el.innerHTML='<div class="productive-warning">La comparación interanual comunal no está disponible en la versión validada del tabulado.</div>';return}
+  if(cs.length!==15||comp.tasa_ocupacion_desde==null||comp.variacion_total_pp==null||!Number.isFinite(+comp.tasa_ocupacion_desde)||!Number.isFinite(+comp.variacion_total_pp)||!comp.desde||!comp.hasta){$('prod-evolution-summary').innerHTML='';el.innerHTML='<div class="productive-warning">La comparación interanual comunal no está disponible en la versión validada del tabulado.</div>';return}
   const sorted=cs.map(([id,x])=>({id,prev:+x.tasa_ocupacion_anterior,now:+x.tasa_ocupacion,delta:+x.variacion_interanual_pp})).sort((a,b)=>b.delta-a.delta),best=sorted[0],worst=sorted[sorted.length-1];
-  $('prod-evolution-summary').innerHTML=`<div><span>CABA</span><strong>91,6% → ${pct(ejes().tasa_ocupacion)}</strong><small>-1,6 p.p. interanual</small></div><div><span>Mayor mejora</span><strong>Comuna ${best.id}</strong><small>${signed(best.delta)} p.p.</small></div><div><span>Mayor caída</span><strong>Comuna ${worst.id}</strong><small>${signed(worst.delta)} p.p.</small></div>`;
-  el.innerHTML=sorted.map(x=>`<button class="productive-evolution-row" data-evo-comuna="${x.id}"><span>Comuna ${x.id}</span><div><small>2025</small><b>${pct(x.prev)}</b></div><i>→</i><div><small>2026</small><b>${pct(x.now)}</b></div><strong class="${x.delta>=0?'up':'down'}">${signed(x.delta)} p.p.</strong></button>`).join('');
+  $('prod-evolution-title').textContent=`Ocupación comercial ${comp.desde.anio} → ${comp.hasta.anio}`;
+  const bestLabel=best.delta>0?'Mayor mejora':best.delta<0?'Menor caída':'Sin variación';
+  const worstLabel=worst.delta<0?'Mayor caída':worst.delta>0?'Menor mejora':'Sin variación';
+  $('prod-evolution-summary').innerHTML=`<div><span>CABA</span><strong>${pct(comp.tasa_ocupacion_desde)} → ${pct(ejes().tasa_ocupacion)}</strong><small>${signed(comp.variacion_total_pp)} p.p. interanual</small></div><div><span>${bestLabel}</span><strong>Comuna ${best.id}</strong><small>${signed(best.delta)} p.p.</small></div><div><span>${worstLabel}</span><strong>Comuna ${worst.id}</strong><small>${signed(worst.delta)} p.p.</small></div>`;
+  el.innerHTML=sorted.map(x=>`<button class="productive-evolution-row" data-evo-comuna="${x.id}"><span>Comuna ${x.id}</span><div><small>${comp.desde.anio} C${comp.desde.cuatrimestre}</small><b>${pct(x.prev)}</b></div><i>→</i><div><small>${comp.hasta.anio} C${comp.hasta.cuatrimestre}</small><b>${pct(x.now)}</b></div><strong class="${x.delta>=0?'up':'down'}">${signed(x.delta)} p.p.</strong></button>`).join('');
   el.onclick=e=>{const b=e.target.closest('[data-evo-comuna]');if(b){state.metric='ocupacion';$('prod-map-metric').value='ocupacion';toggleRubroControl();selectComuna(b.dataset.evoComuna,true);document.getElementById('perfil-comercial').scrollIntoView({behavior:'smooth',block:'start'})}};
 }
 

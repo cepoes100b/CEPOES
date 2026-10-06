@@ -221,10 +221,14 @@ jobs:
             mensaje="territorio: actualizar base estructural RUS 2017 $(date -u +%F)"
           fi
           if git diff --cached --quiet; then [ "$fallo" -eq 0 ] && exit 0 || exit 1; fi
-          git commit -m "$mensaje"
+          git commit -m "$mensaje" -m "$(python deploy/registrar_actualizacion.py trailers)"
           push_ok=0
           for intento in 1 2 3; do
-            if git push; then push_ok=1; break; fi
+            if git push; then
+              python deploy/registrar_actualizacion.py post-push
+              push_ok=1
+              break
+            fi
             git pull --rebase --autostash origin "${GITHUB_REF_NAME:-main}" || exit 1
             sleep 3
           done

@@ -8,12 +8,18 @@ on:
     paths:
       - "generar_estructura_actual_v2.py"
       - "verificar_estructura_actual.py"
+      - "estructura_actual_schema.py"
+      - "deploy/detectar_cambio_panorama.py"
+      - "test_estructura_actual.py"
       - ".github/workflows/estructura-productiva-actual.yml"
   pull_request:
     branches: [main]
     paths:
       - "generar_estructura_actual_v2.py"
       - "verificar_estructura_actual.py"
+      - "estructura_actual_schema.py"
+      - "deploy/detectar_cambio_panorama.py"
+      - "test_estructura_actual.py"
       - ".github/workflows/estructura-productiva-actual.yml"
   schedule:
     - cron: "35 12 * * 1"
@@ -36,7 +42,7 @@ jobs:
           python-version: "3.12"
 
       - name: Instalar dependencias
-        run: pip install "requests>=2.31" "openpyxl>=3.1"
+        run: pip install "requests>=2.31" "openpyxl>=3.1" pypdf
 
       - name: Conservar versión previa
         shell: bash
@@ -91,28 +97,7 @@ jobs:
         id: cambios
         if: steps.generar.outputs.rc == '0' && steps.verificar.outputs.rc == '0'
         shell: bash
-        run: |
-          python - <<'PY' >> "$GITHUB_OUTPUT"
-          import json
-          from pathlib import Path
-          new=Path('deploy/site-overlay/assets/data/estructura-productiva/actual.json')
-          old=Path('/tmp/estructura-actual-prev.json')
-          if not old.exists():
-              print('changed=true')
-              raise SystemExit
-          a=json.loads(old.read_text(encoding='utf-8'))
-          b=json.loads(new.read_text(encoding='utf-8'))
-          a.pop('generado',None); b.pop('generado',None)
-          new_geo=Path('deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson')
-          old_geo=Path('/tmp/estructura-comunas-prev.geojson')
-          geo_changed = (not old_geo.exists()) or json.loads(old_geo.read_text(encoding='utf-8')) != json.loads(new_geo.read_text(encoding='utf-8'))
-          print('changed=' + ('true' if a != b or geo_changed else 'false'))
-          PY
-          if [ "$(tail -n 1 "$GITHUB_OUTPUT" | cut -d= -f2)" = "false" ]; then
-            cp /tmp/estructura-actual-prev.json deploy/site-overlay/assets/data/estructura-productiva/actual.json
-            cp /tmp/estructura-comunas-prev.geojson deploy/site-overlay/assets/data/estructura-productiva/comunas.geojson
-            echo "Sin cambios sustantivos: se conserva fecha de la última modificación real."
-          fi
+        run: python deploy/detectar_cambio_panorama.py >> "$GITHUB_OUTPUT"
 
       - name: Fallar PR si la actualización no valida
         if: github.event_name == 'pull_request'
@@ -151,10 +136,14 @@ jobs:
           if git diff --cached --quiet; then
             [ "$fallo" -eq 0 ] && exit 0 || exit 1
           fi
-          git commit -m "$mensaje"
+          git commit -m "$mensaje" -m "$(python deploy/registrar_actualizacion.py trailers)"
           push_ok=0
           for intento in 1 2 3; do
-            if git push; then push_ok=1; break; fi
+            if git push; then
+              python deploy/registrar_actualizacion.py post-push
+              push_ok=1
+              break
+            fi
             git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || exit 1
             sleep 3
           done

@@ -89,6 +89,22 @@ def validate_orchestration_contracts() -> None:
     assert "run_attempt < 3" in retry and "run_attempt >= 3" in retry
     assert "gh workflow run" not in retry
 
+    publisher = CANONICAL.read_text(encoding="utf-8")
+    registry = json.loads((ROOT / "deploy" / "producer-workflows.json").read_text(encoding="utf-8"))
+    workflow_run = publisher.split("  workflow_run:\n", 1)[1].split("\npermissions:", 1)[0]
+    names = re.findall(r'^      - "([^"]+)"$', workflow_run, re.MULTILINE)
+    assert names == [entry["name"] for entry in registry["workflows"]], "Lista fija de productores desincronizada"
+    assert "types: [completed]" in workflow_run and "branches: [main]" in workflow_run
+    assert "needs: select" in publisher and "needs.select.outputs.should_deploy == 'true'" in publisher
+    assert "ref: ${{ steps.current.outputs.deploy_sha }}" in publisher
+    assert '--commit "$DEPLOY_SHA"' in publisher
+    assert 'image.revision="${DEPLOY_SHA}"' in publisher
+    assert "actions: read" not in publisher and "actions: write" not in publisher
+    for entry in registry["workflows"]:
+        source = (ROOT / entry["path"]).read_text(encoding="utf-8")
+        assert "registrar_actualizacion.py trailers" in source
+        assert "registrar_actualizacion.py post-push" in source
+
 
 def main() -> None:
     writers = set()

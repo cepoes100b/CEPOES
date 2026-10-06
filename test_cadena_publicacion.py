@@ -413,10 +413,16 @@ class EvidenceTests(unittest.TestCase):
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(content)
         self.marker = evidence.create_marker(self.site, REPOSITORY, "a" * 40, "123", 1)
+        self.observatory = b"observatory current candidate"
+        observatory = self.site / "observatorio/index.html"
+        observatory.parent.mkdir()
+        observatory.write_bytes(self.observatory)
 
     def read(self, path, nonce, **kwargs):
         if path == "/" + evidence.MARKER_PATH:
             return json.dumps(self.marker).encode()
+        if path in ("/observatorio/", "/observatorio/index.html"):
+            return self.observatory
         relative = next(key for key, value in evidence.PUBLIC_FILES.items() if value == path)
         return self.contents[relative]
 
@@ -448,6 +454,61 @@ class EvidenceTests(unittest.TestCase):
                     evidence.verify_online(self.marker, "test")
                 self.assertTrue(all(call.args[1] is None for call in read.call_args_list))
 
+    def test_candidate_observatory_checks_both_aliases_before_any_nonce(self):
+        with patch.object(evidence, "read_public", side_effect=self.read) as read:
+            evidence.verify_online(self.marker, "test", candidate_site=self.site)
+        paths = ["/" + evidence.MARKER_PATH, *evidence.PUBLIC_FILES.values(),
+                 "/observatorio/", "/observatorio/index.html"]
+        self.assertEqual([(c.args[0], c.args[1]) for c in read.call_args_list],
+                         [(p, None) for p in paths] + [(p, "test") for p in paths])
+        # La verificación nueva no invalida los marcadores/restauraciones previos.
+        self.assertEqual(self.marker["schema_version"], 1)
+        self.assertEqual(set(self.marker["files"]), set(evidence.PUBLIC_FILES))
+        self.assertNotIn("observatorio/index.html", self.marker["files"])
+        self.assertEqual(evidence.validate_marker(self.marker, REPOSITORY), self.marker)
+
+    def test_stale_observatory_alias_fails_even_when_nonce_is_current(self):
+        for stale_path in ("/observatorio/", "/observatorio/index.html"):
+            def response(path, nonce, **kwargs):
+                if path == stale_path and nonce is None:
+                    return b"stale six cards"
+                return self.read(path, nonce, **kwargs)
+            with self.subTest(path=stale_path), patch.object(evidence, "read_public", side_effect=response) as read:
+                with self.assertRaisesRegex(ValueError, "bytes canónicos.*observatorio"):
+                    evidence.verify_online(self.marker, "test", candidate_site=self.site)
+                self.assertTrue(all(c.args[1] is None for c in read.call_args_list))
+
+    def test_observatory_nonce_is_also_checked_against_candidate(self):
+        for stale_path in ("/observatorio/", "/observatorio/index.html"):
+            def response(path, nonce, **kwargs):
+                if path == stale_path and nonce is not None:
+                    return b"stale response with nonce"
+                return self.read(path, nonce, **kwargs)
+            with self.subTest(path=stale_path), patch.object(evidence, "read_public", side_effect=response):
+                with self.assertRaisesRegex(ValueError, "bytes publicados.*observatorio"):
+                    evidence.verify_online(self.marker, "test", candidate_site=self.site)
+
+    def test_observatory_candidate_must_be_present_and_regular(self):
+        path = self.site / "observatorio/index.html"
+        path.unlink()
+        with patch.object(evidence, "read_public") as read:
+            with self.assertRaisesRegex(ValueError, "ruta pública regular.*observatorio"):
+                evidence.verify_online(self.marker, "test", candidate_site=self.site)
+            read.assert_not_called()
+        path.symlink_to(self.site / "index.html")
+        with patch.object(evidence, "read_public") as read:
+            with self.assertRaisesRegex(ValueError, "ruta pública regular.*observatorio"):
+                evidence.verify_online(self.marker, "test", candidate_site=self.site)
+            read.assert_not_called()
+
+    def test_smoke_cli_always_verifies_candidate_observatory(self):
+        argv = ["evidencia_publicacion.py", "smoke", "--site", str(self.site),
+                "--repository", REPOSITORY, "--run-id", "123"]
+        with patch.object(sys, "argv", argv), patch.object(evidence, "verify_online") as verify:
+            evidence.main()
+        verify.assert_called_once()
+        self.assertEqual(verify.call_args.kwargs, {"candidate_site": self.site})
+
     def test_ordinary_request_has_no_nonce_or_cache_request_headers(self):
         from unittest.mock import MagicMock
         response = MagicMock()
@@ -455,11 +516,12 @@ class EvidenceTests(unittest.TestCase):
         response.__enter__.return_value.headers = {"Cache-Control": "no-cache, max-age=0, must-revalidate"}
         opener = MagicMock()
         opener.open.return_value = response
-        with patch.object(evidence.urllib.request, "build_opener", return_value=opener):
-            self.assertEqual(evidence.read_public("/", None), b"public")
-        request = opener.open.call_args.args[0]
-        self.assertEqual(request.full_url, "https://cepoes.org/")
-        self.assertEqual(request.header_items(), [])
+        for path in ("/", "/observatorio/", "/observatorio/index.html"):
+            with self.subTest(path=path), patch.object(evidence.urllib.request, "build_opener", return_value=opener):
+                self.assertEqual(evidence.read_public(path, None), b"public")
+            request = opener.open.call_args.args[0]
+            self.assertEqual(request.full_url, "https://cepoes.org" + path)
+            self.assertEqual(request.header_items(), [])
 
     def test_canonical_response_without_revalidation_headers_fails(self):
         from unittest.mock import MagicMock
@@ -468,9 +530,10 @@ class EvidenceTests(unittest.TestCase):
             response.__enter__.return_value.headers = {"Cache-Control": value}
             opener = MagicMock()
             opener.open.return_value = response
-            with self.subTest(value=value), patch.object(evidence.urllib.request, "build_opener", return_value=opener):
-                with self.assertRaisesRegex(ValueError, "política de revalidación"):
-                    evidence.read_public("/", None)
+            for path in ("/", "/observatorio/", "/observatorio/index.html"):
+                with self.subTest(value=value, path=path), patch.object(evidence.urllib.request, "build_opener", return_value=opener):
+                    with self.assertRaisesRegex(ValueError, "política de revalidación"):
+                        evidence.read_public(path, None)
 
     def test_revalidation_preserves_existing_htaccess_and_is_idempotent(self):
         existing = "# Existing production rules\nRedirect 301 /old/ /new/\n"
@@ -484,12 +547,14 @@ class EvidenceTests(unittest.TestCase):
     def test_revalidation_scopes_only_public_mutable_routes(self):
         def matches(path):
             return any(re.fullmatch(pattern, path) for pattern in public_site.PUBLIC_REVALIDATION_PATHS)
-        for path in ("/", "/index.html", "/datos/estado/", "/datos/estado/index.html",
+        for path in ("/", "/index.html", "/observatorio/", "/observatorio/index.html",
+                     "/datos/estado/", "/datos/estado/index.html",
                      "/assets/data/estructura-productiva/actual.json", "/.well-known/cepoes-release.json"):
             with self.subTest(path=path):
                 self.assertTrue(matches(path))
         for path in ("/privado/", "/privado/index.html", "/suscripcion/", "/publicaciones/index.html",
-                     "/assets/mapa.js", "/assets/site.css", "/assets/data/otra.json", "/datos/estado/archivo.html"):
+                     "/assets/mapa.js", "/assets/site.css", "/assets/data/otra.json", "/datos/estado/archivo.html",
+                     "/observatorio/salud-mental/", "/observatorio/precios/ipc/", "/observatorio/otra.html"):
             with self.subTest(path=path):
                 self.assertFalse(matches(path))
 

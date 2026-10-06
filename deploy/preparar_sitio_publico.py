@@ -217,6 +217,7 @@ def topic_chips() -> str:
 
 PUBLIC_REVALIDATION_PATHS = (
     r"^/(index[.]html)?$",
+    r"^/observatorio/(index[.]html)?$",
     r"^/datos/estado/(index[.]html)?$",
     r"^/assets/data/estructura-productiva/actual[.]json$",
     r"^/[.]well-known/cepoes-release[.]json$",

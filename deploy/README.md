@@ -95,7 +95,8 @@ con nonce. Una respuesta canónica obsoleta hace fallar el despliegue y activa e
 rollback existente; un nonce correcto no alcanza para declarar éxito.
 
 El preparador añade a `.htaccess` una sección idempotente de revalidación sólo
-para `/`, `/index.html`, `/datos/estado/`, `/datos/estado/index.html`,
+para `/`, `/index.html`, `/observatorio/`, `/observatorio/index.html`,
+`/datos/estado/`, `/datos/estado/index.html`,
 `/assets/data/estructura-productiva/actual.json` y el marcador público.
 Emite `Cache-Control: no-cache, max-age=0, must-revalidate`, conservando el resto
 del archivo, las rutas privadas y las políticas de los demás assets. No purga
@@ -103,6 +104,14 @@ la CDN ni cambia cuentas o permisos. El smoke exige esas tres directivas por HTT
 al publicar: no elimina retroactivamente copias ya almacenadas en navegadores o
 intermediarios que todavía no consultan al servidor. Si persisten, se debe
 diagnosticar esa capa y usar sólo un mecanismo de invalidación autorizado.
+
+El smoke compara también `/observatorio/` y `/observatorio/index.html` con los
+bytes exactos de `observatorio/index.html` del candidato. Comprueba ambas URLs
+canónicas y sus cabeceras antes de cualquier sondeo con nonce, y después repite
+la comparación con nonce. Un HTML anterior, aunque devuelva HTTP 200 o el otro
+alias esté actualizado, hace fallar el despliegue y conserva el rollback
+existente. El marcador público mantiene su esquema y sus tres rutas anteriores,
+para admitir los marcadores publicados y respaldos durables previos.
 
 Se conserva la custodia privada por digest, los gates y el rollback; éste también
 cubre subidas parcialmente fallidas. Si el respaldo legacy carecía de marcador,
@@ -163,6 +172,6 @@ HTTP 502; eso no verifica disponibilidad de la fuente ni autoriza omitir TLS.
 
 La CI también ejecuta `test_cache_publicacion_apache.py` con el paquete oficial
 `apache2-bin`, sin privilegios y con configuración temporal limitada a
-`127.0.0.1`. Verifica DirectoryIndex, las seis variantes de URL pública, siete
+`127.0.0.1`. Verifica DirectoryIndex, las ocho variantes de URL pública, ocho
 controles, reglas previas e idempotencia. No inicia servicios globales. La
 compatibilidad efectiva del hosting se comprueba nuevamente al publicar.

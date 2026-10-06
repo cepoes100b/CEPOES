@@ -24,10 +24,12 @@ import urllib.request
 
 
 EXPECTED_CACHE = {"no-cache", "max-age=0", "must-revalidate"}
-TARGETS = ("/", "/index.html", "/datos/estado/", "/datos/estado/index.html",
+TARGETS = ("/", "/index.html", "/observatorio/", "/observatorio/index.html",
+           "/datos/estado/", "/datos/estado/index.html",
            "/assets/data/estructura-productiva/actual.json", "/.well-known/cepoes-release.json")
 CONTROLS = ("/assets/fixture.css", "/assets/data/otra.json", "/publicaciones/fixture/",
-            "/privado/", "/privado/index.html", "/private-marker.txt", "/legacy-cache-check")
+            "/privado/", "/privado/index.html", "/private-marker.txt", "/legacy-cache-check",
+            "/observatorio/fixture/")
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -90,6 +92,8 @@ def main() -> None:
         site.mkdir()
         fixtures = {
             "index.html": "fixture-home",
+            "observatorio/index.html": "fixture-observatory",
+            "observatorio/fixture/index.html": "fixture-other-observatory-html",
             "datos/estado/index.html": "fixture-state",
             "assets/data/estructura-productiva/actual.json": '{"fixture":"current"}',
             ".well-known/cepoes-release.json": '{"fixture":"release"}',
@@ -180,6 +184,7 @@ def main() -> None:
                 assert repeated == after, "Repetir el preparador cambió las respuestas"
                 # Las URLs canónicas terminadas en / realmente resuelven DirectoryIndex.
                 assert after["/"]["sha256"] == after["/index.html"]["sha256"]
+                assert after["/observatorio/"]["sha256"] == after["/observatorio/index.html"]["sha256"]
                 assert after["/datos/estado/"]["sha256"] == after["/datos/estado/index.html"]["sha256"]
                 result = {"ok": True, "apache": version, "listen": "127.0.0.1",
                           "target_urls": len(TARGETS), "control_urls": len(CONTROLS),

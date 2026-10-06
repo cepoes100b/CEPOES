@@ -20,6 +20,10 @@ PUBLIC_FILES = {
     "datos/estado/index.html": "/datos/estado/",
     "assets/data/estructura-productiva/actual.json": "/assets/data/estructura-productiva/actual.json",
 }
+# El smoke compara estos alias con el candidato local sin cambiar el esquema
+# de los marcadores que ya están en producción o en respaldos durables.
+OBSERVATORY_FILE = "observatorio/index.html"
+OBSERVATORY_PATHS = ("/observatorio/", "/observatorio/index.html")
 SHA = re.compile(r"[0-9a-f]{40}")
 HASH = re.compile(r"[0-9a-f]{64}")
 
@@ -54,7 +58,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def read_public(path: str, nonce: str | None, *, limit: int = 8 * 1024 * 1024) -> bytes:
-    if path not in {"/" + MARKER_PATH, *PUBLIC_FILES.values()}:
+    if path not in {"/" + MARKER_PATH, *PUBLIC_FILES.values(), *OBSERVATORY_PATHS}:
         raise ValueError("Ruta fuera de la whitelist pública")
     if nonce is not None and not re.fullmatch(r"[A-Za-z0-9-]+", nonce):
         raise ValueError("Identificador de comprobación inválido")
@@ -100,25 +104,33 @@ def create_marker(site: Path, repository: str, commit: str, run_id: str, attempt
     return marker
 
 
-def verify_online(marker: dict, nonce: str) -> None:
+def verify_online(marker: dict, nonce: str, *, candidate_site: Path | None = None) -> None:
+    routes = [(relative, url_path, marker["files"][relative])
+              for relative, url_path in PUBLIC_FILES.items()]
+    if candidate_site is not None:
+        path = candidate_site / OBSERVATORY_FILE
+        if path.is_symlink() or not path.is_file():
+            raise ValueError(f"Falta ruta pública regular: {OBSERVATORY_FILE}")
+        expected = fingerprint(path.read_bytes())
+        routes.extend((OBSERVATORY_FILE, url_path, expected) for url_path in OBSERVATORY_PATHS)
     # Primero la visita ordinaria: consultar antes con nonce podría refrescar una
     # caché compartida y ocultar que los visitantes recibían una versión anterior.
     ordinary_marker = validate_marker(json.loads(read_public("/" + MARKER_PATH, None,
                                                             limit=16 * 1024)), marker["repository"])
     if ordinary_marker != marker:
         raise ValueError("El marcador canónico no coincide con el candidato exacto")
-    for relative, url_path in PUBLIC_FILES.items():
-        if fingerprint(read_public(url_path, None)) != marker["files"][relative]:
-            raise ValueError(f"Los bytes canónicos no coinciden con el candidato: {relative}")
-        print(f"Bytes canónicos verificados: {relative} · {marker['files'][relative]['sha256']}")
+    for relative, url_path, expected in routes:
+        if fingerprint(read_public(url_path, None)) != expected:
+            raise ValueError(f"Los bytes canónicos no coinciden con el candidato: {relative} ({url_path})")
+        print(f"Bytes canónicos verificados: {relative} ({url_path}) · {expected['sha256']}")
     # Comparar metadata primero evita declarar éxito con el marker de otro build.
     observed = fetch_marker(marker["repository"], nonce)
     if observed != marker:
         raise ValueError("El marcador público no coincide con el candidato exacto")
-    for relative, url_path in PUBLIC_FILES.items():
-        if fingerprint(read_public(url_path, nonce)) != marker["files"][relative]:
-            raise ValueError(f"Los bytes publicados no coinciden con el candidato: {relative}")
-        print(f"Bytes públicos verificados: {relative} · {marker['files'][relative]['sha256']}")
+    for relative, url_path, expected in routes:
+        if fingerprint(read_public(url_path, nonce)) != expected:
+            raise ValueError(f"Los bytes publicados no coinciden con el candidato: {relative} ({url_path})")
+        print(f"Bytes públicos verificados: {relative} ({url_path}) · {expected['sha256']}")
 
 
 def main() -> None:
@@ -137,7 +149,7 @@ def main() -> None:
         marker = validate_marker(json.loads((args.site / MARKER_PATH).read_text()), args.repository)
         for attempt in range(5):
             try:
-                verify_online(marker, f"{args.run_id}-{args.run_attempt}-{time.time_ns()}")
+                verify_online(marker, f"{args.run_id}-{args.run_attempt}-{time.time_ns()}", candidate_site=args.site)
                 return
             except (OSError, ValueError) as error:
                 if attempt == 4:

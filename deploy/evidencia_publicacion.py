@@ -53,15 +53,21 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         raise ValueError("Se rechaza redirección del origen/ruta pública verificada")
 
 
-def read_public(path: str, nonce: str, *, limit: int = 8 * 1024 * 1024) -> bytes:
+def read_public(path: str, nonce: str | None, *, limit: int = 8 * 1024 * 1024) -> bytes:
     if path not in {"/" + MARKER_PATH, *PUBLIC_FILES.values()}:
         raise ValueError("Ruta fuera de la whitelist pública")
-    if not re.fullmatch(r"[A-Za-z0-9-]+", nonce):
+    if nonce is not None and not re.fullmatch(r"[A-Za-z0-9-]+", nonce):
         raise ValueError("Identificador de comprobación inválido")
-    request = urllib.request.Request(PUBLIC_ORIGIN + path + "?release_check=" + nonce,
-                                     headers={"Cache-Control": "no-cache", "Pragma": "no-cache"})
+    # None prueba exactamente la URL y los encabezados de una visita ordinaria.
+    suffix = "?release_check=" + nonce if nonce is not None else ""
+    headers = {"Cache-Control": "no-cache", "Pragma": "no-cache"} if nonce is not None else {}
+    request = urllib.request.Request(PUBLIC_ORIGIN + path + suffix, headers=headers)
     opener = urllib.request.build_opener(NoRedirect())
     with opener.open(request, timeout=40) as response:
+        if nonce is None:
+            directives = {part.strip().lower() for part in response.headers.get("Cache-Control", "").split(",")}
+            if not {"no-cache", "max-age=0", "must-revalidate"} <= directives:
+                raise ValueError(f"La ruta canónica no aplica la política de revalidación: {path}")
         data = response.read(limit + 1)
     if len(data) > limit:
         raise ValueError("Respuesta pública demasiado grande")
@@ -95,6 +101,16 @@ def create_marker(site: Path, repository: str, commit: str, run_id: str, attempt
 
 
 def verify_online(marker: dict, nonce: str) -> None:
+    # Primero la visita ordinaria: consultar antes con nonce podría refrescar una
+    # caché compartida y ocultar que los visitantes recibían una versión anterior.
+    ordinary_marker = validate_marker(json.loads(read_public("/" + MARKER_PATH, None,
+                                                            limit=16 * 1024)), marker["repository"])
+    if ordinary_marker != marker:
+        raise ValueError("El marcador canónico no coincide con el candidato exacto")
+    for relative, url_path in PUBLIC_FILES.items():
+        if fingerprint(read_public(url_path, None)) != marker["files"][relative]:
+            raise ValueError(f"Los bytes canónicos no coinciden con el candidato: {relative}")
+        print(f"Bytes canónicos verificados: {relative} · {marker['files'][relative]['sha256']}")
     # Comparar metadata primero evita declarar éxito con el marker de otro build.
     observed = fetch_marker(marker["repository"], nonce)
     if observed != marker:

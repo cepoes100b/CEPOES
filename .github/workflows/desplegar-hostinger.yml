@@ -33,7 +33,13 @@ on:
       - "sesiones_publicas.json"
       - "territorio.json"
       - "presupuesto.json"
+      - "diagnostico_presupuestario.json"
       - "datos.json"
+      - "datos/endeudamiento/manifest.json"
+      - "datos/endeudamiento/[0-9][0-9][0-9][0-9]-0[1-9].json"
+      - "datos/endeudamiento/[0-9][0-9][0-9][0-9]-1[0-2].json"
+      - "deploy/validar_endeudamiento_publico.py"
+      - "test_endeudamiento_publico.py"
       - "validar_contraste_visual.py"
       - "validar_sitio_despliegue.py"
       - "validar_busqueda_global.py"
@@ -51,6 +57,16 @@ on:
       - "Actualizar núcleo legislativo"
       - "Actualizar panorama productivo actual"
       - "Actualizar estructura productiva"
+      - "Actualizar descentralización comunal"
+      - "Actualizar dinámica productiva"
+      - "Actualizar Migraciones CABA"
+      - "Actualizar natalidad y demografía"
+      - "Actualizar Personas Mayores"
+      - "Actualizar salud mental"
+      - "Revisar salud reproductiva y PAEV"
+      - "Validar núcleo legislativo y sesiones"
+      - "Validar Observatorio Presupuestario"
+      - "Actualizar Endeudamiento BCRA"
     types: [completed]
     branches: [main]
 
@@ -222,6 +238,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python deploy/validar_endeudamiento_publico.py --root .
           python generar_indice_busqueda_equipamientos.py
           test -d deploy/site-overlay
           cp -a deploy/site-overlay/. _site/
@@ -424,14 +441,18 @@ jobs:
           bye
           EOF
 
+      - name: Comparar portada, Estado de datos y panorama publicados con el candidato
+        if: steps.current.outputs.should_deploy == 'true'
+        run: python deploy/evidencia_publicacion.py smoke --site _site
+
       - name: Smoke test de producción
         if: steps.current.outputs.should_deploy == 'true'
         id: smoke
         shell: bash
         run: |
           set -euo pipefail
-          # Hostinger/CDN puede mantener durante unos segundos el HTML/JS anterior.
-          # El smoke debe validar lo recién publicado, no una respuesta de caché.
+          # La comparación anterior ya verificó las URLs canónicas sin nonce.
+          # Estas comprobaciones adicionales validan el contenido del despliegue.
           SMOKE_Q="smoke=${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-$(date +%s)"
           CURL_COMMON=(--retry 3 --retry-delay 3 --connect-timeout 15 --max-time 40 -fsS -H "Cache-Control: no-cache" -H "Pragma: no-cache")
 
@@ -520,10 +541,6 @@ jobs:
           assert ses
           print(f'Legislatura pública: {len(rows)} expedientes y sesiones válidas')
           PY
-
-      - name: Comparar portada, Estado de datos y panorama publicados con el candidato
-        if: steps.current.outputs.should_deploy == 'true'
-        run: python deploy/evidencia_publicacion.py smoke --site _site
 
       - name: Restaurar versión anterior si falla publicación o smoke test
         if: steps.current.outputs.should_deploy == 'true' && failure() && (steps.publish.outcome == 'success' || steps.publish.outcome == 'failure')

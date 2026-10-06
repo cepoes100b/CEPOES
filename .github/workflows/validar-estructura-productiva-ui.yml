@@ -83,14 +83,7 @@ jobs:
           assert geo['type']=='FeatureCollection' and len(geo['features'])==15
           assert {int(f['properties']['comuna']) for f in geo['features']}==set(range(1,16))
           from estructura_actual_schema import validate
-          if e['periodo'] == {'anio':2026,'cuatrimestre':1} and 'periodo_verificado' not in data['fuentes']['idecba_informe']:
-              # Transición: el JSON histórico conserva su verificador vigente.
-              # El generador nuevo siempre valida estrictamente antes de escribir.
-              assert e['locales_ocupados']==11605 and e['locales_relevados']==12896
-              import verificar_estructura_actual
-              verificar_estructura_actual.main()
-          else:
-              validate(data, geo)
+          validate(data, geo)
 
           js=Path('deploy/site-overlay/assets/estructura-productiva.js').read_text(encoding='utf-8')
           assert '1er cuatrimestre de 2026' not in html, 'El período visible debe venir del dataset'

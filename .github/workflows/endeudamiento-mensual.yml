@@ -158,23 +158,31 @@ jobs:
           PY
 
       - name: Versionar únicamente agregados públicos
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "cepoes-bot"
           git config user.email "actions@github.com"
-          git add datos/endeudamiento/*.json
+          paths=$(python deploy/validar_endeudamiento_publico.py --root . --staging-paths)
+          mapfile -t public_paths <<< "$paths"
+          git add -- "${public_paths[@]}"
           if git diff --cached --quiet; then
             echo "Sin cambios públicos"
             exit 0
           fi
-          git commit -m "endeudamiento: actualización BCRA ${PERIODO:-${{ needs.detectar.outputs.periodo }}}"
+          git commit -m "endeudamiento: actualización BCRA ${PERIODO:-${{ needs.detectar.outputs.periodo }}}" -m "$(python deploy/registrar_actualizacion.py trailers)"
+          push_ok=0
           for intento in 1 2 3; do
-            if git push origin HEAD:${GITHUB_REF_NAME}; then exit 0; fi
+            if git push; then
+              python deploy/registrar_actualizacion.py post-push
+              push_ok=1
+              break
+            fi
             git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || exit 1
             sleep 3
           done
-          exit 1
+          [ "$push_ok" -eq 1 ] || exit 1
 
       - name: Eliminar archivos crudos y diagnósticos locales
         if: always()

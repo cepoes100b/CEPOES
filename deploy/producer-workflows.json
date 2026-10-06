@@ -58,6 +58,95 @@
         "schedule",
         "workflow_dispatch"
       ]
+    },
+    {
+      "id": 345939227,
+      "name": "Actualizar descentralización comunal",
+      "path": ".github/workflows/descentralizacion-comunas.yml",
+      "events": [
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 341604701,
+      "name": "Actualizar dinámica productiva",
+      "path": ".github/workflows/dinamica-productiva.yml",
+      "events": [
+        "push",
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 341396408,
+      "name": "Actualizar Migraciones CABA",
+      "path": ".github/workflows/migraciones.yml",
+      "events": [
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 349531314,
+      "name": "Actualizar natalidad y demografía",
+      "path": ".github/workflows/natalidad.yml",
+      "events": [
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 343636989,
+      "name": "Actualizar Personas Mayores",
+      "path": ".github/workflows/personas-mayores.yml",
+      "events": [
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 345939229,
+      "name": "Actualizar salud mental",
+      "path": ".github/workflows/salud-mental.yml",
+      "events": [
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 349531436,
+      "name": "Revisar salud reproductiva y PAEV",
+      "path": ".github/workflows/salud-reproductiva.yml",
+      "events": [
+        "schedule",
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 339811495,
+      "name": "Validar núcleo legislativo y sesiones",
+      "path": ".github/workflows/validar-legislatura.yml",
+      "events": [
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 339761156,
+      "name": "Validar Observatorio Presupuestario",
+      "path": ".github/workflows/validar-presupuesto.yml",
+      "events": [
+        "workflow_dispatch"
+      ]
+    },
+    {
+      "id": 340534138,
+      "name": "Actualizar Endeudamiento BCRA",
+      "path": ".github/workflows/endeudamiento-mensual.yml",
+      "events": [
+        "schedule",
+        "workflow_dispatch"
+      ]
     }
   ]
 }

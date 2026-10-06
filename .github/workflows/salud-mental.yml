@@ -31,45 +31,13 @@ jobs:
           echo "Líneas del extractor:"
           wc -l actualizar_salud_mental.py
           echo "Funciones TLS presentes:"
-          grep -nE 'def (_urlopen|get_json)|ADVERTENCIA TLS' actualizar_salud_mental.py || true
+          grep -nE 'def (request_bytes|get_json)|SourceDownloadError' actualizar_salud_mental.py || true
 
-      - name: Generar serie DEIS
-        shell: bash
-        run: |
-          set -euo pipefail
-          python - <<'PY'
-          import ssl
-          import urllib.request
-          from urllib.parse import urlparse
-          from pathlib import Path
+      - name: Probar transporte seguro sin acceder a las fuentes
+        run: python -m unittest test_salud_mental_tls.py
 
-          # Workaround acotado al portal público de Datos Salud.
-          # Se mantiene la validación TLS normal para cualquier otro host.
-          native_urlopen = urllib.request.urlopen
-          salud_ctx = ssl._create_unverified_context()
-
-          def salud_urlopen(url, *args, **kwargs):
-              target = getattr(url, "full_url", url)
-              host = (urlparse(str(target)).hostname or "").lower()
-
-              if host == "datos.salud.gob.ar" or host.endswith(".salud.gob.ar"):
-                  kwargs.setdefault("context", salud_ctx)
-                  print(f"TLS workaround acotado: {host}")
-
-              return native_urlopen(url, *args, **kwargs)
-
-          urllib.request.urlopen = salud_urlopen
-
-          script = Path("actualizar_salud_mental.py")
-          source = script.read_text(encoding="utf-8")
-          code = compile(source, str(script), "exec")
-          namespace = {
-              "__name__": "__main__",
-              "__file__": str(script),
-              "__package__": None,
-          }
-          exec(code, namespace)
-          PY
+      - name: Generar salud mental con TLS verificado
+        run: python actualizar_salud_mental.py
 
       - name: Verificar
         run: python verificar_salud_mental.py
@@ -97,6 +65,7 @@ jobs:
           PY
 
       - name: Guardar último dato validado
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
@@ -104,9 +73,16 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add salud_mental.json deploy/site-overlay/assets/data/salud-mental.json
 
-          if git diff --cached --quiet; then
-            echo "Sin cambios."
-          else
-            git commit -m "datos: actualizar salud mental DEIS"
-            git push
-          fi
+          if git diff --cached --quiet; then echo "Sin cambios."; exit 0; fi
+          git commit -m "datos: actualizar salud mental DEIS" -m "$(python deploy/registrar_actualizacion.py trailers)"
+          push_ok=0
+          for intento in 1 2 3; do
+            if git push; then
+              python deploy/registrar_actualizacion.py post-push
+              push_ok=1
+              break
+            fi
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || exit 1
+            sleep 3
+          done
+          [ "$push_ok" -eq 1 ] || exit 1

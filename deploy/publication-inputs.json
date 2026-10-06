@@ -115,8 +115,32 @@
       "reason": "Presupuesto del estado de datos"
     },
     {
+      "path": "diagnostico_presupuestario.json",
+      "reason": "Señales presupuestarias agregadas ya consumidas por el hub público"
+    },
+    {
       "path": "datos.json",
       "reason": "Indicadores principales de la portada"
+    },
+    {
+      "path": "datos/endeudamiento/manifest.json",
+      "reason": "Índice mensual agregado consumido por la portada"
+    },
+    {
+      "path": "datos/endeudamiento/[0-9][0-9][0-9][0-9]-0[1-9].json",
+      "reason": "Agregados mensuales de enero a septiembre, validados antes del build"
+    },
+    {
+      "path": "datos/endeudamiento/[0-9][0-9][0-9][0-9]-1[0-2].json",
+      "reason": "Agregados mensuales de octubre a diciembre, validados antes del build"
+    },
+    {
+      "path": "deploy/validar_endeudamiento_publico.py",
+      "reason": "Contrato estricto de entradas agregadas de Endeudamiento"
+    },
+    {
+      "path": "test_endeudamiento_publico.py",
+      "reason": "Pruebas offline de esquema agregado, privacidad y rutas"
     },
     {
       "path": "validar_contraste_visual.py",

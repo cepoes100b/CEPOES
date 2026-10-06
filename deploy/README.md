@@ -52,9 +52,11 @@ Los informes se integran desde `deploy/reports-registry.json`; el publicador gen
 ## Encadenamiento automático y SHA publicado
 
 Los commits hechos con `GITHUB_TOKEN` no generan otro evento `push`. El publicador
-canónico escucha además `workflow_run` de una lista fija de seis productores:
+canónico escucha además `workflow_run` de una lista fija de dieciséis productores:
 Observatorio (`actualizar.yml`), Territorio, Presupuesto, Legislatura, Panorama
-actual y Estructura productiva. Los IDs, nombres, rutas y eventos autorizados
+actual, Estructura productiva, Descentralización, Dinámica productiva, Migraciones,
+Natalidad, Personas Mayores, Salud Mental, Salud Reproductiva, los dos validadores
+manuales de Legislatura y Presupuesto, y Endeudamiento. Los IDs, nombres, rutas y eventos autorizados
 están en `producer-workflows.json`; se verificaron contra GitHub el 6/10/2026.
 No se agregan credenciales ni permisos Actions al publicador.
 
@@ -84,36 +86,83 @@ marcador únicamente con HTTP 404; errores de red, otro HTTP o contenido inváli
 bloquean. La lectura SFTP del respaldo debe coincidir con la producción observada.
 No se publican el inventario ni los archivos del respaldo privado.
 
+### Frescura de las rutas canónicas
+
+Antes de cualquier sondeo con nonce, el smoke compara los bytes del marcador,
+portada, Estado de los datos y panorama en sus URLs canónicas, sin query string
+ni encabezados de petición que fuercen revalidación. Luego conserva el control
+con nonce. Una respuesta canónica obsoleta hace fallar el despliegue y activa el
+rollback existente; un nonce correcto no alcanza para declarar éxito.
+
+El preparador añade a `.htaccess` una sección idempotente de revalidación sólo
+para `/`, `/index.html`, `/datos/estado/`, `/datos/estado/index.html`,
+`/assets/data/estructura-productiva/actual.json` y el marcador público.
+Emite `Cache-Control: no-cache, max-age=0, must-revalidate`, conservando el resto
+del archivo, las rutas privadas y las políticas de los demás assets. No purga
+la CDN ni cambia cuentas o permisos. El smoke exige esas tres directivas por HTTP
+al publicar: no elimina retroactivamente copias ya almacenadas en navegadores o
+intermediarios que todavía no consultan al servidor. Si persisten, se debe
+diagnosticar esa capa y usar sólo un mecanismo de invalidación autorizado.
+
 Se conserva la custodia privada por digest, los gates y el rollback; éste también
 cubre subidas parcialmente fallidas. Si el respaldo legacy carecía de marcador,
 la restauración elimina sólo ese marcador nuevo. El ensayo durable verifica el
 intento exacto, su origen canónico, la ancestría en main, la revisión OCI y el
 manifiesto; no confunde `head_sha` del evento con el SHA construido.
 
-### Inventario y límite de esta primera incorporación
+### Cobertura de productores y límites de las entradas
 
-Otros nueve workflows también escriben rutas incluidas en las entradas de
-publicación: `descentralizacion-comunas.yml`, `dinamica-productiva.yml`,
-`migraciones.yml`, `natalidad.yml`, `personas-mayores.yml`, `salud-mental.yml`,
-`salud-reproductiva.yml`, `validar-legislatura.yml` y `validar-presupuesto.yml`.
-Sus salidas se incorporan al siguiente build canónico de main, pero sus commits
-con `GITHUB_TOKEN` todavía no disparan automáticamente una publicación. Ampliar
-la lista exige agregar/verificar su identidad y trailers con los mismos tests.
-`endeudamiento-mensual.yml` escribe `datos/endeudamiento/`, que no está incluido en
-el manifiesto actual; no se amplía ese contrato en esta reparación.
+Los dieciséis productores registran identidad después de validar, conservan los
+trailers ante rebase y registran el SHA final después del push exitoso. Los diez
+productores de la segunda incorporación sólo escriben en `main`; las validaciones
+de PR y otras ramas continúan disponibles sin producir commits publicables.
+Los dos validadores manuales sólo admiten `workflow_dispatch`. Dinámica
+productiva conserva el diagnóstico de error y termina fallida aunque la escritura
+se omita por tratarse de otra rama. El [inventario de identidades y salidas](../docs/seguridad/productores-publicacion.md)
+registra evidencia, eventos admitidos y salidas secundarias fuera del manifiesto.
 
-Verificación offline: `python -m unittest test_cadena_publicacion.py` y
+Endeudamiento agrega exclusivamente `datos/endeudamiento/manifest.json` y archivos
+mensuales con nombre `AAAA-MM.json` y mes válido. Antes de versionar y antes del
+build se comprueba el esquema agregado completo, sus 48 barrios, segmentos
+numéricos, filtros y rutas. El staging se limita al manifest y al último período
+validado. La matriz territorial, diagnósticos, padrones, archivos comprimidos y
+microdatos quedan fuera. No se incorpora una copia de la carpeta al sitio ni se
+modifica la metodología o el mapa: el consumidor existente sigue siendo la portada.
+
+`diagnostico_presupuestario.json` se incorpora como ruta explícita: contiene
+agregados institucionales y comunales ya usados por el hub de Presupuesto. El
+cambio aislado de este archivo dispara el build desde ambos productores
+presupuestarios, después de sus verificaciones existentes. No se modifica el
+diagnóstico, su método ni los textos que el preparador ya genera. Una prueba
+revisa las lecturas JSON directas del preparador y Estado de los datos para
+impedir que una nueva dependencia quede fuera del manifiesto. El inventario
+explica por qué las salidas secundarias restantes no son entradas directas.
+
+Verificación offline: `python -m unittest test_cadena_publicacion.py test_endeudamiento_publico.py` y
 `python validar_rollback_durable.py`. R2 también verifica el endpoint público del
 marcador, por separado de los tests offline y sin secretos. La detección sustantiva
 del panorama ignora sólo `generado` y `fuentes.*.extraido`; un no-op restaura los
 bytes previos completos, conservando hashes, URLs, períodos y datos como criterios
 de cambio.
 
-## Transición del panorama sin activar automatismos editoriales
+## Panorama y transporte verificable
 
-Esta entrega modifica código y conserva el JSON previo en Git. El workflow del
-panorama genera el siguiente período y lo valida con `estructura_actual_schema.py`
-antes de escribir. Su push con `GITHUB_TOKEN` activa el publicador por
-`workflow_run` y no produce otro evento `push`. El CLI histórico se conserva
-hasta incorporar el JSON regenerado; luego se adopta el mismo validador estricto
-en ese punto de entrada. La interfaz usa las tasas y períodos del asset servido.
+El panorama C2 fue generado por el workflow autorizado y su commit con
+`GITHUB_TOKEN` se publica por `workflow_run`, sin producir otro evento `push`.
+El CLI canónico y el generador usan ahora el mismo `estructura_actual_schema.py`;
+ninguna salida nueva puede omitir sus controles de fuentes, períodos y conteos.
+La interfaz usa las tasas y períodos del asset servido.
+
+Salud Mental conserva su frecuencia y método. Se eliminan los dos bypass TLS
+preexistentes: todas las descargas y redirecciones deben usar HTTPS con
+certificados y hostname verificados. Errores de TLS o transporte abortan antes
+de escribir ambos JSON, sin activar una publicación. El fallback de esquema del
+contraste DEIS no absorbe esos errores. Los tests offline prueban preservación
+byte a byte. Una comprobación segura del CKAN el 6/10/2026 a las 17:11 UTC obtuvo
+HTTP 502; eso no verifica disponibilidad de la fuente ni autoriza omitir TLS.
+
+La CI también ejecuta `test_cache_publicacion_apache.py` con el paquete oficial
+`apache2-bin`, sin privilegios y con configuración temporal limitada a
+`127.0.0.1`. Verifica DirectoryIndex, las seis variantes de URL pública, siete
+controles, reglas previas e idempotencia. No inicia servicios globales. La
+compatibilidad efectiva del hosting se comprueba nuevamente al publicar.

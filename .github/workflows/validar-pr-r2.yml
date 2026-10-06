@@ -37,3 +37,22 @@ jobs:
         run: |
           python -m unittest test_lo_nuevo.py test_catalogo_informes.py
           python generar_catalogo_informes.py deploy/site-overlay --check-source
+
+
+      - name: Verificar cadena segura de actualización a publicación
+        run: python -m unittest test_cadena_publicacion.py
+
+      - name: Verificar parser de panorama actual sin red
+        run: |
+          pip install "requests>=2.31" "openpyxl>=3.1" pypdf
+          python -m unittest test_estructura_actual.py
+
+      - name: Comprobar endpoint público del marcador sin secretos
+        run: |
+          python - <<'PYMARKER'
+          import sys, time
+          sys.path.insert(0, 'deploy')
+          from evidencia_publicacion import fetch_marker
+          marker = fetch_marker('cepoes100b/CEPOES', f'ci-{time.time_ns()}')
+          print('Marcador legacy ausente (HTTP 404)' if marker is None else 'Marcador válido: ' + marker['commit_sha'])
+          PYMARKER

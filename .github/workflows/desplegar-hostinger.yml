@@ -14,6 +14,11 @@ on:
       - "deploy/delete-paths.txt"
       - "deploy/publication-inputs.json"
       - "deploy/crear_release_durable.py"
+      - "deploy/producer-workflows.json"
+      - "deploy/registrar_actualizacion.py"
+      - "deploy/encadenar_publicacion.py"
+      - "deploy/evidencia_publicacion.py"
+      - "test_cadena_publicacion.py"
       - "generar_indice_busqueda_equipamientos.py"
       - "generar_indice_busqueda_global.py"
       - "generar_estado_datos.py"
@@ -38,19 +43,56 @@ on:
       - "validar_rollback_durable.py"
       - ".github/workflows/desplegar-hostinger.yml"
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - "Actualizar datos del observatorio"
+      - "Actualizar datos territoriales"
+      - "Actualizar presupuesto"
+      - "Actualizar núcleo legislativo"
+      - "Actualizar panorama productivo actual"
+      - "Actualizar estructura productiva"
+    types: [completed]
+    branches: [main]
 
 permissions:
   contents: read
   packages: write
 
-concurrency:
-  group: cepoes-hostinger-production
-  cancel-in-progress: false
-
 jobs:
-  deploy:
-    if: github.event_name == 'workflow_dispatch' || vars.HOSTINGER_DEPLOY_ENABLED == 'true'
+  select:
+    if: (github.event_name == 'workflow_dispatch' || vars.HOSTINGER_DEPLOY_ENABLED == 'true') && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      deploy_sha: ${{ steps.select.outputs.deploy_sha }}
+      should_deploy: ${{ steps.select.outputs.should_deploy }}
+    steps:
+      - name: Leer sólo main confiable antes de autorizar producción
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verificar contratos de publicación sin secretos
+        run: |
+          python validar_rutas_publicacion.py
+          python -m unittest test_cadena_publicacion.py
+
+      - name: Fijar SHA de main y validar procedencia del productor
+        id: select
+        env:
+          REPOSITORY_ID: ${{ github.repository_id }}
+        run: python deploy/encadenar_publicacion.py --preflight-only
+
+  deploy:
+    needs: select
+    if: needs.select.outputs.should_deploy == 'true'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: cepoes-hostinger-production
+      cancel-in-progress: false
     environment: production
     env:
       SFTP_HOST: ${{ secrets.HOSTINGER_SFTP_HOST }}
@@ -60,12 +102,51 @@ jobs:
       REMOTE_DIR: ${{ secrets.HOSTINGER_REMOTE_DIR }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ needs.select.outputs.deploy_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      # Los eventos sin cambios nunca ocupan el mutex. Al obtenerlo, volver a
+      # resolver main evita publicar una selección vieja que reemplazó la cola.
+      - name: Refijar candidato y producción actual bajo exclusión mutua
+        id: current
+        env:
+          REPOSITORY_ID: ${{ github.repository_id }}
+        run: python deploy/encadenar_publicacion.py
+
+      - name: Fijar identidad del build definitivo
+        if: steps.current.outputs.should_deploy == 'true'
+        env:
+          CANDIDATE_SHA: ${{ steps.current.outputs.deploy_sha }}
+          PREVIOUS_SHA: ${{ steps.current.outputs.previous_sha }}
+        run: |
+          [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$PREVIOUS_SHA" == absent || "$PREVIOUS_SHA" =~ ^[0-9a-f]{40}$ ]]
+          echo "DEPLOY_SHA=$CANDIDATE_SHA" >> "$GITHUB_ENV"
+          echo "PREVIOUS_DEPLOY_SHA=$PREVIOUS_SHA" >> "$GITHUB_ENV"
+
+      - name: Obtener exactamente el candidato definitivo
+        if: steps.current.outputs.should_deploy == 'true'
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ steps.current.outputs.deploy_sha }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Confirmar checkout exacto y ancestría de main
+        if: steps.current.outputs.should_deploy == 'true'
+        run: |
+          test "$(git rev-parse HEAD)" = "$DEPLOY_SHA"
+          git merge-base --is-ancestor "$DEPLOY_SHA" refs/remotes/origin/main
 
       - name: Validar ruta canónica y entradas declaradas
+        if: steps.current.outputs.should_deploy == 'true'
         run: python validar_rutas_publicacion.py
 
       - name: Verificar configuración de producción
+        if: steps.current.outputs.should_deploy == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -79,11 +160,13 @@ jobs:
           echo "Configuración presente. Puerto: ${SFTP_PORT:-65002}"
 
       - name: Instalar cliente SFTP
+        if: steps.current.outputs.should_deploy == 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq lftp
 
       - name: Diagnosticar acceso SFTP
+        if: steps.current.outputs.should_deploy == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -116,6 +199,7 @@ jobs:
           echo "SFTP OK: autenticación y ruta remota accesibles"
 
       - name: Descargar producción como respaldo y base
+        if: steps.current.outputs.should_deploy == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -129,9 +213,12 @@ jobs:
           bye
           EOF
           test -s _rollback/index.html || { echo "El respaldo no contiene index.html; revisar HOSTINGER_REMOTE_DIR" >&2; exit 32; }
+          python deploy/encadenar_publicacion.py --guard-backup _rollback \
+            --deploy-sha "$DEPLOY_SHA" --expected-previous "$PREVIOUS_DEPLOY_SHA"
           cp -a _rollback/. _site/
 
       - name: Aplicar versión GitHub sobre la copia de producción
+        if: steps.current.outputs.should_deploy == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -154,6 +241,7 @@ jobs:
           python generar_estado_datos.py _site
 
       - name: Ajustar texto público de seguimiento institucional
+        if: steps.current.outputs.should_deploy == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -200,9 +288,11 @@ jobs:
           PY
 
       - name: Normalizar navegación y fallbacks públicos
+        if: steps.current.outputs.should_deploy == 'true'
         run: python deploy/preparar_sitio_publico.py _site
 
       - name: Integrar módulos públicos en el build canónico
+        if: steps.current.outputs.should_deploy == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -210,31 +300,43 @@ jobs:
           python deploy/preparar_puente_legislatura.py _site
 
       - name: Generar y verificar catálogo de informes
+        if: steps.current.outputs.should_deploy == 'true'
         run: |
           python -m unittest test_catalogo_informes.py
           python generar_catalogo_informes.py _site
 
       - name: Generar y verificar novedades automáticas
+        if: steps.current.outputs.should_deploy == 'true'
         run: |
           python -m unittest test_lo_nuevo.py
           python generar_lo_nuevo.py _site --previous _rollback
 
       - name: Validar módulos migrados al publicador canónico
+        if: steps.current.outputs.should_deploy == 'true'
         run: python deploy/validar_publicacion_canonica.py _site
 
       - name: Bloquear despliegue con contrastes críticos deficientes
+        if: steps.current.outputs.should_deploy == 'true'
         run: python validar_contraste_visual.py
 
       - name: Validar búsqueda global canónica
+        if: steps.current.outputs.should_deploy == 'true'
         run: python validar_busqueda_global.py _site
 
       - name: Validar confianza y robustez R1
+        if: steps.current.outputs.should_deploy == 'true'
         run: python validar_r1_runtime.py _site
 
       - name: Validar sitio antes de publicar
+        if: steps.current.outputs.should_deploy == 'true'
         run: python validar_sitio_despliegue.py _site
 
+      - name: Identificar públicamente el candidato y sus bytes
+        if: steps.current.outputs.should_deploy == 'true'
+        run: python deploy/evidencia_publicacion.py create --site _site --commit "$DEPLOY_SHA"
+
       - name: Preparar release durable y manifiesto
+        if: steps.current.outputs.should_deploy == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -243,12 +345,13 @@ jobs:
             --candidate _site \
             --output _release \
             --repository "$GITHUB_REPOSITORY" \
-            --commit "$GITHUB_SHA" \
+            --commit "$DEPLOY_SHA" \
             --run-id "$GITHUB_RUN_ID" \
             --run-attempt "$GITHUB_RUN_ATTEMPT" \
             --retention-days 90
 
       - name: Conservar release durable en registro privado
+        if: steps.current.outputs.should_deploy == 'true'
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
@@ -272,7 +375,7 @@ jobs:
           cat > _release-image/Dockerfile <<EOF
           FROM scratch
           LABEL org.opencontainers.image.source="https://github.com/${GITHUB_REPOSITORY}"
-          LABEL org.opencontainers.image.revision="${GITHUB_SHA}"
+          LABEL org.opencontainers.image.revision="${DEPLOY_SHA}"
           COPY payload/ /release/
           EOF
 
@@ -307,6 +410,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publicar en Hostinger por SFTP
+        if: steps.current.outputs.should_deploy == 'true'
         id: publish
         shell: bash
         run: |
@@ -321,6 +425,7 @@ jobs:
           EOF
 
       - name: Smoke test de producción
+        if: steps.current.outputs.should_deploy == 'true'
         id: smoke
         shell: bash
         run: |
@@ -416,20 +521,30 @@ jobs:
           print(f'Legislatura pública: {len(rows)} expedientes y sesiones válidas')
           PY
 
+      - name: Comparar portada, Estado de datos y panorama publicados con el candidato
+        if: steps.current.outputs.should_deploy == 'true'
+        run: python deploy/evidencia_publicacion.py smoke --site _site
+
       - name: Restaurar versión anterior si falla publicación o smoke test
-        if: failure() && steps.publish.outcome == 'success'
+        if: steps.current.outputs.should_deploy == 'true' && failure() && (steps.publish.outcome == 'success' || steps.publish.outcome == 'failure')
         shell: bash
         run: |
-          echo "Fallo posterior a la publicación: restaurando respaldo previo"
+          set -euo pipefail
+          echo "Fallo de publicación o verificación: restaurando respaldo previo"
+          marker_cleanup=""
+          if [ ! -f _rollback/.well-known/cepoes-release.json ]; then
+            marker_cleanup="rm -f \"$REMOTE_DIR/.well-known/cepoes-release.json\""
+          fi
           lftp -u "$SFTP_USER","$SFTP_PASSWORD" -p "$SFTP_PORT" "sftp://$SFTP_HOST" <<EOF
           set sftp:auto-confirm yes
           set cmd:fail-exit yes
           set net:max-retries 3
           mirror -R --verbose --parallel=2 --no-perms --no-umask _rollback "$REMOTE_DIR"
+          $marker_cleanup
           bye
           EOF
 
       - name: Avisar cambios a IndexNow
-        if: success()
+        if: success() && steps.current.outputs.should_deploy == 'true'
         continue-on-error: true
         run: python notificar_indexnow.py --sitemap _site/sitemap.xml --key-file _site/indexnow-key.txt

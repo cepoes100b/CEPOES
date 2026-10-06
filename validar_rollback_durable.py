@@ -3,7 +3,9 @@
 
 from __future__ import annotations
 
+import copy
 import io
+import sys
 import json
 import subprocess
 import tarfile
@@ -103,6 +105,61 @@ def fixture_contract() -> None:
         run("python", "-c", code, expect_success=False)
 
 
+
+def source_identity_contract() -> None:
+    sys.path.insert(0, str(ROOT / "deploy"))
+    from encadenar_publicacion import Git, Rejected
+    from validar_origen_release import validate_run, validate_oci, WORKFLOW_ID, WORKFLOW_NAME, WORKFLOW_PATH
+
+    with tempfile.TemporaryDirectory(prefix="cepoes-release-origin-") as directory:
+        repo = Path(directory)
+        def git(*args):
+            return subprocess.check_output(["git", *args], cwd=repo, text=True, stderr=subprocess.DEVNULL).strip()
+        git("init", "-b", "main")
+        git("config", "user.name", "fixture")
+        git("config", "user.email", "fixture@example.test")
+        def commit(text):
+            (repo / "file").write_text(text)
+            git("add", "file")
+            git("commit", "-m", text)
+            return git("rev-parse", "HEAD")
+        input_sha = commit("entrada del evento")
+        built_sha = commit("producto y rebase")
+        main_sha = commit("main posterior")
+        data = {"id": 123, "run_attempt": 2, "workflow_id": WORKFLOW_ID,
+                "name": WORKFLOW_NAME, "path": WORKFLOW_PATH,
+                "status": "completed", "conclusion": "success", "event": "workflow_run",
+                "head_branch": "main", "head_sha": input_sha,
+                "repository": {"full_name": "cepoes100b/CEPOES", "id": 99},
+                "head_repository": {"full_name": "cepoes100b/CEPOES", "id": 99}}
+        kwargs = dict(repository="cepoes100b/CEPOES", run_id="123", attempt=2,
+                      commit=built_sha, git=Git(repo), main_sha=main_sha)
+        validate_run(data, **kwargs)
+        assert input_sha != built_sha, "La regresión debe cubrir SHA de evento distinto del construido"
+        for key, value in (("run_attempt", 3), ("id", 999), ("workflow_id", 1),
+                           ("head_branch", "other"), ("conclusion", "failure"),
+                           ("event", "pull_request"), ("path", ".github/workflows/other.yml"),
+                           ("head_sha", main_sha), ("head_repository", {"full_name": "fork/repo", "id": 100})):
+            invalid = copy.deepcopy(data)
+            invalid[key] = value
+            try:
+                validate_run(invalid, **kwargs)
+            except Rejected:
+                pass
+            else:
+                raise AssertionError(f"Se aceptó origen de release inválido: {key}")
+        labels = {"org.opencontainers.image.source": "https://github.com/cepoes100b/CEPOES",
+                  "org.opencontainers.image.revision": built_sha}
+        validate_oci(labels, repository="cepoes100b/CEPOES", commit=built_sha)
+        for key in labels:
+            try:
+                validate_oci({**labels, key: "different"}, repository="cepoes100b/CEPOES", commit=built_sha)
+            except Rejected:
+                pass
+            else:
+                raise AssertionError("Se aceptó OCI con procedencia o SHA diferente")
+
+
 def workflow_contracts() -> None:
     deploy = DEPLOY.read_text(encoding="utf-8")
     restore = RESTORE.read_text(encoding="utf-8")
@@ -120,6 +177,13 @@ def workflow_contracts() -> None:
     assert "source_digest:" in restore and "docker pull" in restore
     assert "docker logout ghcr.io" in restore and "package-anonymous-pull.log" in restore
     assert "gh run download" not in restore
+    assert "headSha'] == os.environ['SOURCE_COMMIT']" not in restore
+    assert "/attempts/${SOURCE_RUN_ATTEMPT}" in restore
+    assert "python deploy/validar_origen_release.py --run-json" in restore
+    assert "python deploy/validar_origen_release.py --oci-labels" in restore
+    assert "fetch-depth: 0" in restore
+    assert 'docker create "$image" /cepoes-restore-no-execution' in restore
+    assert "docker start" not in restore and "docker run" not in restore
     assert "environment: production" not in restore
     for forbidden in ("HOSTINGER_", "SFTP_", "lftp", "mirror -R", "secrets."):
         assert forbidden not in restore, f"El ensayo no puede usar {forbidden}"
@@ -129,6 +193,7 @@ def workflow_contracts() -> None:
 def main() -> None:
     fixture_contract()
     workflow_contracts()
+    source_identity_contract()
     print("R2-A4: empaquetado, hashes, rechazo de alteraciones y restauración controlada válidos")
 
 

@@ -163,6 +163,8 @@ async function confirm(req: Request) {
 async function subscribe(req: Request, origin: string) {
   if (!ALLOWED_ORIGINS.has(origin)) return json(403, { ok: false }, origin);
   if (Deno.env.get("NEWSLETTER_ENABLED") !== "true") return json(503, { ok: false }, origin);
+  env("RESEND_API_KEY");
+  env("NEWSLETTER_FROM");
   const contentLength = Number(req.headers.get("content-length") || "0");
   if (contentLength > 4096) return json(413, { ok: false }, origin);
 
@@ -241,6 +243,13 @@ async function subscribe(req: Request, origin: string) {
 
 Deno.serve(async (req: Request) => {
   try {
+    if (req.method === "GET" && new URL(req.url).searchParams.get("health") === "1") {
+      const required = ["RESEND_API_KEY", "NEWSLETTER_FROM", "TURNSTILE_SECRET_KEY", "RATE_LIMIT_SALT"];
+      const missing = required.filter(name => !(Deno.env.get(name) || "").trim());
+      const keyFormat = /^re_[A-Za-z0-9_]+$/.test((Deno.env.get("RESEND_API_KEY") || "").trim());
+      const fromFormat = /(?:^|<)[^<>\s]+@cepoes\.org>?$/.test((Deno.env.get("NEWSLETTER_FROM") || "").trim());
+      return json(200, { configured: missing.length === 0 && keyFormat && fromFormat, missing, key_format_valid: keyFormat, sender_format_valid: fromFormat });
+    }
     if (req.method === "GET") return await confirm(req);
     const origin = req.headers.get("origin") || "";
     if (req.method === "OPTIONS") {
@@ -259,7 +268,8 @@ Deno.serve(async (req: Request) => {
     if (req.method !== "POST") return json(405, { ok: false }, origin);
     return await subscribe(req, origin);
   } catch (error) {
-    console.error("newsletter_subscribe_failed");
+    const category = error instanceof Error && /^missing_[A-Z_]+$/.test(error.message) ? error.message : "request_failed";
+    console.error("newsletter_subscribe_failed", category);
     return json(503, { ok: false });
   }
 });

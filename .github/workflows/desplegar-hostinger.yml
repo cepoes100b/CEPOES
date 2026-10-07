@@ -7,6 +7,7 @@ on:
     paths:
       - "deploy/site-overlay/**"
       - "deploy/preparar_sitio_publico.py"
+      - "scripts/generar_newsletter_feed.py"
       - "deploy/preparar_legislatura_publica.py"
       - "deploy/parche_observatorio_salud.py"
       - "deploy/preparar_puente_legislatura.py"

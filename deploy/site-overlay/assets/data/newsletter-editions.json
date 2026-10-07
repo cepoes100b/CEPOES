@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "editions": [
+    {
+      "edition": 1,
+      "url": "/publicaciones/boletines/boletin-01-mayo-2026/",
+      "title": "La Ciudad que ajusta donde más duele",
+      "summary": "Primer número del boletín del CEPOES: la recaudación y el gasto total crecen, pero vivienda, salud, empleo y educación registran caídas reales sostenidas."
+    },
+    {
+      "edition": 2,
+      "url": "/publicaciones/boletines/boletin-02-junio-2026/",
+      "title": "El ajuste ya no se proyecta: se ejecuta",
+      "summary": "Segundo número del boletín del CEPOES: recursos que se contraen por dos vías y un gasto social que sigue cediendo."
+    },
+    {
+      "edition": 3,
+      "url": "/publicaciones/boletines/boletin-03-julio-2026/",
+      "title": "El semestre cierra con récord de informalidad",
+      "summary": "Tercer número del boletín del CEPOES: la inflación desacelera, pero el semestre cierra con informalidad récord y un salario mínimo en su piso histórico."
+    },
+    {
+      "edition": 4,
+      "url": "/publicaciones/boletines/boletin-04-agosto-2026/",
+      "title": "El relato y los números",
+      "summary": "Cuarto número del boletín del CEPOES: la ejecución del gasto porteño queda 10% por debajo de 2022 y el relato de la fuerte inversión social no aparece en los números."
+    },
+    {
+      "edition": 5,
+      "url": "/publicaciones/boletines/boletin-05-septiembre-2026/",
+      "title": "La recuperación que no llega a los barrios",
+      "summary": "El PGB porteño apenas crece, impulsado por las finanzas, mientras pierden el comercio, la industria y los ingresos de los hogares."
+    }
+  ]
+}

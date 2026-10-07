@@ -609,8 +609,8 @@ def restructure_home(source: str) -> str:
         footer_at = source.find('<footer')
     result = source[:footer_at] + block + source[footer_at:] if footer_at >= 0 else source + block
     result = re.sub(r'<script\b[^>]*src=["\']/assets/home-redesign\.js(?:\?[^"\']*)?["\'][^>]*></script>', '', result)
-    if '/assets/home-redesign.js?v=2' not in result:
-        result = result.replace('</body>', '<script defer src="/assets/home-redesign.js?v=2"></script></body>', 1)
+    if '/assets/home-redesign.js?v=3' not in result:
+        result = result.replace('</body>', '<script defer src="/assets/home-redesign.js?v=3"></script></body>', 1)
     return result
 
 
@@ -943,6 +943,10 @@ def main() -> None:
     site = args.site.resolve()
     if not (site / "index.html").is_file():
         raise SystemExit(f"No se encontró el sitio en {site}")
+    import sys
+    sys.path.insert(0, str(ROOT))
+    from scripts.generar_newsletter_feed import generate
+    generate(site)
     prepare_canonical_routes(site)
     count = 0
     for path in site.rglob("*.html"):

@@ -120,6 +120,7 @@ async function sendConfirmation(email: string, rawToken: string) {
     },
     body: JSON.stringify({
       from: env("NEWSLETTER_FROM"),
+      reply_to: "contacto@cepoes.org",
       to: [email],
       subject: "Confirmá tu suscripción a CEPOES",
       html:

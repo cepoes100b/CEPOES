@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-10-06T21:04:37-03:00",
+  "actualizado_en": "2026-10-07T16:32:27-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -10,16 +10,16 @@
   },
   "periodo_consultado": {
     "desde": "01/01/2026",
-    "hasta": "06/10/2026"
+    "hasta": "07/10/2026"
   },
   "resumen": {
     "sesiones": 9,
     "sesiones_realizadas": 9,
     "registros_presentismo": 543,
     "asuntos_considerados": 1164,
-    "votaciones_asuntos": 71,
-    "votos_nominales": 4287,
-    "expedientes_votados_unicos": 66,
+    "votaciones_asuntos": 77,
+    "votos_nominales": 4647,
+    "expedientes_votados_unicos": 72,
     "fallas": 0,
     "items_recinto": 1164,
     "sanciones_expediente": 568,
@@ -52714,7 +52714,2708 @@
         }
       ],
       "sanciones": [],
-      "votaciones_nominales": [],
+      "votaciones_nominales": [
+        {
+          "id_votacion": "2499",
+          "id_sesion": "1154",
+          "id_expediente": "141794",
+          "expediente": {
+            "id_expediente": "141794",
+            "numero": "2244-O-2026",
+            "nro_orden": "2244",
+            "ano_parlamentario": "2026",
+            "tipo": "REMITE ACTUACIONES",
+            "origen": "OFICIAL",
+            "sumario": "PROPUESTA PARA LA COBERTURA DE SEIS (6) CARGOS DE JUEZ DE CÁMARA DE APELACIONES DEL TRABAJO DE LA CIUDAD.",
+            "autor": "CONSEJO DE LA MAGISTRATURA DE LA CIUDAD AUTONOMA DE BUENOS AIRES.,",
+            "fecha_inicio": "17/7/2026 15:21:55",
+            "url_ficha": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141794",
+            "documento": {
+              "id_documento": "225561",
+              "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=225561"
+            }
+          },
+          "asunto": "Desp.Nº 618/26",
+          "resultado": {
+            "afirmativos": 50,
+            "negativos": 2,
+            "abstenciones": 1,
+            "total_emitidos": 53
+          },
+          "detalle_nominal": [
+            {
+              "id_legislador": "30912",
+              "nombre": "ALDANA BELÉN",
+              "apellido": "CRUCITTA",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30911",
+              "nombre": "FRANCISCO",
+              "apellido": "LOUPIAS",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30908",
+              "nombre": "MARÍA FERNANDA",
+              "apellido": "MOLLARD",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30814",
+              "nombre": "GUILLERMO",
+              "apellido": "SUÁREZ",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30858",
+              "nombre": "MANUELA",
+              "apellido": "THOURTE",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30922",
+              "nombre": "EDGARDO NESTOR",
+              "apellido": "ALIFRACO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30880",
+              "nombre": "EMMANUEL",
+              "apellido": "FERRARIO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30907",
+              "nombre": "SEBASTIÁN",
+              "apellido": "NAGATA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30742",
+              "nombre": "MARÍA GRACIELA",
+              "apellido": "OCAÑA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30950",
+              "nombre": "Horacio",
+              "apellido": "Rodríguez Larreta",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30948",
+              "nombre": "Guadalupe",
+              "apellido": "Tagliaferri",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30949",
+              "nombre": "Vanina",
+              "apellido": "Biasi",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30878",
+              "nombre": "AMANDA",
+              "apellido": "MARTÍN",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30841",
+              "nombre": "MATÍAS",
+              "apellido": "BARROETAVEÑA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30844",
+              "nombre": "MARÍA",
+              "apellido": "BIELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30943",
+              "nombre": "Francisco",
+              "apellido": "Caporiccio",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30561",
+              "nombre": "CLAUDIO AMÉRICO",
+              "apellido": "FERREÑO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30916",
+              "nombre": "VICTORIA",
+              "apellido": "FREIRE",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30940",
+              "nombre": "Noemí",
+              "apellido": "Geminiani",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30939",
+              "nombre": "Andrea Mariana",
+              "apellido": "González",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30915",
+              "nombre": "ALEJANDRO OMAR",
+              "apellido": "GRILLO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30896",
+              "nombre": "BERENICE",
+              "apellido": "IAÑEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30918",
+              "nombre": "ANDRÉS",
+              "apellido": "LA BLUNDA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30914",
+              "nombre": "MATÍAS",
+              "apellido": "LAMMENS",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30938",
+              "nombre": "Federico",
+              "apellido": "Mochi",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30892",
+              "nombre": "JUAN PABLO",
+              "apellido": "MODARELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30936",
+              "nombre": "Claudia",
+              "apellido": "Negri",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30716",
+              "nombre": "CLAUDIA",
+              "apellido": "NEIRA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30917",
+              "nombre": "GRACIANA",
+              "apellido": "PEÑAFORT",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30942",
+              "nombre": "Bárbara",
+              "apellido": "Rossen",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30941",
+              "nombre": "Alejandro",
+              "apellido": "Salvatierra",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30823",
+              "nombre": "LEANDRO",
+              "apellido": "SANTORO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30919",
+              "nombre": "DELFINA",
+              "apellido": "VELÁZQUEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30680",
+              "nombre": "JUAN PABLO",
+              "apellido": "ARENAZA",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30951",
+              "nombre": "Marcelo Gregorio",
+              "apellido": "Ernst",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30935",
+              "nombre": "Juan Ignacio",
+              "apellido": "Fernández",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30899",
+              "nombre": "REBECA",
+              "apellido": "FLEITAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30933",
+              "nombre": "Andrea",
+              "apellido": "Freguia",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30910",
+              "nombre": "SILVIA",
+              "apellido": "IMAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30886",
+              "nombre": "MARINA",
+              "apellido": "KIENAST",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30898",
+              "nombre": "LUCÍA",
+              "apellido": "MONTENEGRO",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30932",
+              "nombre": "Nicolás",
+              "apellido": "Pakgojz",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30931",
+              "nombre": "Solana",
+              "apellido": "Pelayo",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30921",
+              "nombre": "MARÍA DEL PILAR",
+              "apellido": "RAMÍREZ",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30923",
+              "nombre": "SANDRA MÓNICA",
+              "apellido": "REY",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30900",
+              "nombre": "LEONARDO",
+              "apellido": "SAIFERT",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30934",
+              "nombre": "Diego",
+              "apellido": "Vartabedian",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30847",
+              "nombre": "EUGENIO",
+              "apellido": "CASIELLES",
+              "bloque": "Transformación",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30946",
+              "nombre": "Laura",
+              "apellido": "Alonso",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30848",
+              "nombre": "JUAN FACUNDO",
+              "apellido": "DEL GAISO",
+              "bloque": "Vamos por más",
+              "voto": "ABSTENCIÓN"
+            },
+            {
+              "id_legislador": "30913",
+              "nombre": "PABLO ALEJANDRO",
+              "apellido": "DONATI",
+              "bloque": "Vamos por más",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30947",
+              "nombre": "Rocío",
+              "apellido": "Figueroa",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30906",
+              "nombre": "PATRICIA INÉS",
+              "apellido": "GLIZE",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30853",
+              "nombre": "MATÍAS DAMIÁN",
+              "apellido": "LÓPEZ",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30944",
+              "nombre": "Silvia",
+              "apellido": "Lospennato",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30887",
+              "nombre": "DARÍO HUGO",
+              "apellido": "NIETO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30909",
+              "nombre": "IGNACIO JOSÉ",
+              "apellido": "PARERA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30905",
+              "nombre": "SERGIO HERNÁN",
+              "apellido": "SICILIANO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30859",
+              "nombre": "GIMENA",
+              "apellido": "VILLAFRUELA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30952",
+              "nombre": "Waldo",
+              "apellido": "Wolff",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            }
+          ]
+        },
+        {
+          "id_votacion": "2500",
+          "id_sesion": "1154",
+          "id_expediente": "141796",
+          "expediente": {
+            "id_expediente": "141796",
+            "numero": "2245-O-2026",
+            "nro_orden": "2245",
+            "ano_parlamentario": "2026",
+            "tipo": "REMITE ACTUACIONES",
+            "origen": "OFICIAL",
+            "sumario": "PROPUESTA PARA LA COBERTURA DE UN (1) CARGO DE FISCAL DE CÁMARA DE APELACIONES DEL TRABAJO DE LA CIUDAD",
+            "autor": "CONSEJO DE LA MAGISTRATURA DE LA CIUDAD AUTONOMA DE BUENOS AIRES.,",
+            "fecha_inicio": "17/7/2026 15:34:01",
+            "url_ficha": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141796",
+            "documento": {
+              "id_documento": "225563",
+              "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=225563"
+            }
+          },
+          "asunto": "Desp.Nº 619/26",
+          "resultado": {
+            "afirmativos": 50,
+            "negativos": 2,
+            "abstenciones": 1,
+            "total_emitidos": 53
+          },
+          "detalle_nominal": [
+            {
+              "id_legislador": "30912",
+              "nombre": "ALDANA BELÉN",
+              "apellido": "CRUCITTA",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30911",
+              "nombre": "FRANCISCO",
+              "apellido": "LOUPIAS",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30908",
+              "nombre": "MARÍA FERNANDA",
+              "apellido": "MOLLARD",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30814",
+              "nombre": "GUILLERMO",
+              "apellido": "SUÁREZ",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30858",
+              "nombre": "MANUELA",
+              "apellido": "THOURTE",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30922",
+              "nombre": "EDGARDO NESTOR",
+              "apellido": "ALIFRACO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30880",
+              "nombre": "EMMANUEL",
+              "apellido": "FERRARIO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30907",
+              "nombre": "SEBASTIÁN",
+              "apellido": "NAGATA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30742",
+              "nombre": "MARÍA GRACIELA",
+              "apellido": "OCAÑA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30950",
+              "nombre": "Horacio",
+              "apellido": "Rodríguez Larreta",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30948",
+              "nombre": "Guadalupe",
+              "apellido": "Tagliaferri",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30949",
+              "nombre": "Vanina",
+              "apellido": "Biasi",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30878",
+              "nombre": "AMANDA",
+              "apellido": "MARTÍN",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30841",
+              "nombre": "MATÍAS",
+              "apellido": "BARROETAVEÑA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30844",
+              "nombre": "MARÍA",
+              "apellido": "BIELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30943",
+              "nombre": "Francisco",
+              "apellido": "Caporiccio",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30561",
+              "nombre": "CLAUDIO AMÉRICO",
+              "apellido": "FERREÑO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30916",
+              "nombre": "VICTORIA",
+              "apellido": "FREIRE",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30940",
+              "nombre": "Noemí",
+              "apellido": "Geminiani",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30939",
+              "nombre": "Andrea Mariana",
+              "apellido": "González",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30915",
+              "nombre": "ALEJANDRO OMAR",
+              "apellido": "GRILLO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30896",
+              "nombre": "BERENICE",
+              "apellido": "IAÑEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30918",
+              "nombre": "ANDRÉS",
+              "apellido": "LA BLUNDA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30914",
+              "nombre": "MATÍAS",
+              "apellido": "LAMMENS",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30938",
+              "nombre": "Federico",
+              "apellido": "Mochi",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30892",
+              "nombre": "JUAN PABLO",
+              "apellido": "MODARELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30936",
+              "nombre": "Claudia",
+              "apellido": "Negri",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30716",
+              "nombre": "CLAUDIA",
+              "apellido": "NEIRA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30917",
+              "nombre": "GRACIANA",
+              "apellido": "PEÑAFORT",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30942",
+              "nombre": "Bárbara",
+              "apellido": "Rossen",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30941",
+              "nombre": "Alejandro",
+              "apellido": "Salvatierra",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30823",
+              "nombre": "LEANDRO",
+              "apellido": "SANTORO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30919",
+              "nombre": "DELFINA",
+              "apellido": "VELÁZQUEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30680",
+              "nombre": "JUAN PABLO",
+              "apellido": "ARENAZA",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30951",
+              "nombre": "Marcelo Gregorio",
+              "apellido": "Ernst",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30935",
+              "nombre": "Juan Ignacio",
+              "apellido": "Fernández",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30899",
+              "nombre": "REBECA",
+              "apellido": "FLEITAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30933",
+              "nombre": "Andrea",
+              "apellido": "Freguia",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30910",
+              "nombre": "SILVIA",
+              "apellido": "IMAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30886",
+              "nombre": "MARINA",
+              "apellido": "KIENAST",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30898",
+              "nombre": "LUCÍA",
+              "apellido": "MONTENEGRO",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30932",
+              "nombre": "Nicolás",
+              "apellido": "Pakgojz",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30931",
+              "nombre": "Solana",
+              "apellido": "Pelayo",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30921",
+              "nombre": "MARÍA DEL PILAR",
+              "apellido": "RAMÍREZ",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30923",
+              "nombre": "SANDRA MÓNICA",
+              "apellido": "REY",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30900",
+              "nombre": "LEONARDO",
+              "apellido": "SAIFERT",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30934",
+              "nombre": "Diego",
+              "apellido": "Vartabedian",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30847",
+              "nombre": "EUGENIO",
+              "apellido": "CASIELLES",
+              "bloque": "Transformación",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30946",
+              "nombre": "Laura",
+              "apellido": "Alonso",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30848",
+              "nombre": "JUAN FACUNDO",
+              "apellido": "DEL GAISO",
+              "bloque": "Vamos por más",
+              "voto": "ABSTENCIÓN"
+            },
+            {
+              "id_legislador": "30913",
+              "nombre": "PABLO ALEJANDRO",
+              "apellido": "DONATI",
+              "bloque": "Vamos por más",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30947",
+              "nombre": "Rocío",
+              "apellido": "Figueroa",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30906",
+              "nombre": "PATRICIA INÉS",
+              "apellido": "GLIZE",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30853",
+              "nombre": "MATÍAS DAMIÁN",
+              "apellido": "LÓPEZ",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30944",
+              "nombre": "Silvia",
+              "apellido": "Lospennato",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30887",
+              "nombre": "DARÍO HUGO",
+              "apellido": "NIETO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30909",
+              "nombre": "IGNACIO JOSÉ",
+              "apellido": "PARERA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30905",
+              "nombre": "SERGIO HERNÁN",
+              "apellido": "SICILIANO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30859",
+              "nombre": "GIMENA",
+              "apellido": "VILLAFRUELA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30952",
+              "nombre": "Waldo",
+              "apellido": "Wolff",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            }
+          ]
+        },
+        {
+          "id_votacion": "2501",
+          "id_sesion": "1154",
+          "id_expediente": "141799",
+          "expediente": {
+            "id_expediente": "141799",
+            "numero": "2246-O-2026",
+            "nro_orden": "2246",
+            "ano_parlamentario": "2026",
+            "tipo": "REMITE ACTUACIONES",
+            "origen": "OFICIAL",
+            "sumario": "PROPUESTA PARA LA COBERTURA DE DIEZ (10) CARGOS DE JUEZ/A DE PRIMERA INSTANCIA DEL TRABAJO DE LA CIUDAD",
+            "autor": "CONSEJO DE LA MAGISTRATURA DE LA CIUDAD AUTONOMA DE BUENOS AIRES.,",
+            "fecha_inicio": "17/7/2026 15:43:18",
+            "url_ficha": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141799",
+            "documento": {
+              "id_documento": "225566",
+              "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=225566"
+            }
+          },
+          "asunto": "Desp.Nº 620/26",
+          "resultado": {
+            "afirmativos": 50,
+            "negativos": 2,
+            "abstenciones": 1,
+            "total_emitidos": 53
+          },
+          "detalle_nominal": [
+            {
+              "id_legislador": "30912",
+              "nombre": "ALDANA BELÉN",
+              "apellido": "CRUCITTA",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30911",
+              "nombre": "FRANCISCO",
+              "apellido": "LOUPIAS",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30908",
+              "nombre": "MARÍA FERNANDA",
+              "apellido": "MOLLARD",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30814",
+              "nombre": "GUILLERMO",
+              "apellido": "SUÁREZ",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30858",
+              "nombre": "MANUELA",
+              "apellido": "THOURTE",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30922",
+              "nombre": "EDGARDO NESTOR",
+              "apellido": "ALIFRACO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30880",
+              "nombre": "EMMANUEL",
+              "apellido": "FERRARIO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30907",
+              "nombre": "SEBASTIÁN",
+              "apellido": "NAGATA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30742",
+              "nombre": "MARÍA GRACIELA",
+              "apellido": "OCAÑA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30950",
+              "nombre": "Horacio",
+              "apellido": "Rodríguez Larreta",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30948",
+              "nombre": "Guadalupe",
+              "apellido": "Tagliaferri",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30949",
+              "nombre": "Vanina",
+              "apellido": "Biasi",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30878",
+              "nombre": "AMANDA",
+              "apellido": "MARTÍN",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30841",
+              "nombre": "MATÍAS",
+              "apellido": "BARROETAVEÑA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30844",
+              "nombre": "MARÍA",
+              "apellido": "BIELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30943",
+              "nombre": "Francisco",
+              "apellido": "Caporiccio",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30561",
+              "nombre": "CLAUDIO AMÉRICO",
+              "apellido": "FERREÑO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30916",
+              "nombre": "VICTORIA",
+              "apellido": "FREIRE",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30940",
+              "nombre": "Noemí",
+              "apellido": "Geminiani",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30939",
+              "nombre": "Andrea Mariana",
+              "apellido": "González",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30915",
+              "nombre": "ALEJANDRO OMAR",
+              "apellido": "GRILLO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30896",
+              "nombre": "BERENICE",
+              "apellido": "IAÑEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30918",
+              "nombre": "ANDRÉS",
+              "apellido": "LA BLUNDA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30914",
+              "nombre": "MATÍAS",
+              "apellido": "LAMMENS",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30938",
+              "nombre": "Federico",
+              "apellido": "Mochi",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30892",
+              "nombre": "JUAN PABLO",
+              "apellido": "MODARELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30936",
+              "nombre": "Claudia",
+              "apellido": "Negri",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30716",
+              "nombre": "CLAUDIA",
+              "apellido": "NEIRA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30917",
+              "nombre": "GRACIANA",
+              "apellido": "PEÑAFORT",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30942",
+              "nombre": "Bárbara",
+              "apellido": "Rossen",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30941",
+              "nombre": "Alejandro",
+              "apellido": "Salvatierra",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30823",
+              "nombre": "LEANDRO",
+              "apellido": "SANTORO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30919",
+              "nombre": "DELFINA",
+              "apellido": "VELÁZQUEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30680",
+              "nombre": "JUAN PABLO",
+              "apellido": "ARENAZA",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30951",
+              "nombre": "Marcelo Gregorio",
+              "apellido": "Ernst",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30935",
+              "nombre": "Juan Ignacio",
+              "apellido": "Fernández",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30899",
+              "nombre": "REBECA",
+              "apellido": "FLEITAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30933",
+              "nombre": "Andrea",
+              "apellido": "Freguia",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30910",
+              "nombre": "SILVIA",
+              "apellido": "IMAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30886",
+              "nombre": "MARINA",
+              "apellido": "KIENAST",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30898",
+              "nombre": "LUCÍA",
+              "apellido": "MONTENEGRO",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30932",
+              "nombre": "Nicolás",
+              "apellido": "Pakgojz",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30931",
+              "nombre": "Solana",
+              "apellido": "Pelayo",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30921",
+              "nombre": "MARÍA DEL PILAR",
+              "apellido": "RAMÍREZ",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30923",
+              "nombre": "SANDRA MÓNICA",
+              "apellido": "REY",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30900",
+              "nombre": "LEONARDO",
+              "apellido": "SAIFERT",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30934",
+              "nombre": "Diego",
+              "apellido": "Vartabedian",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30847",
+              "nombre": "EUGENIO",
+              "apellido": "CASIELLES",
+              "bloque": "Transformación",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30946",
+              "nombre": "Laura",
+              "apellido": "Alonso",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30848",
+              "nombre": "JUAN FACUNDO",
+              "apellido": "DEL GAISO",
+              "bloque": "Vamos por más",
+              "voto": "ABSTENCIÓN"
+            },
+            {
+              "id_legislador": "30913",
+              "nombre": "PABLO ALEJANDRO",
+              "apellido": "DONATI",
+              "bloque": "Vamos por más",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30947",
+              "nombre": "Rocío",
+              "apellido": "Figueroa",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30906",
+              "nombre": "PATRICIA INÉS",
+              "apellido": "GLIZE",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30853",
+              "nombre": "MATÍAS DAMIÁN",
+              "apellido": "LÓPEZ",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30944",
+              "nombre": "Silvia",
+              "apellido": "Lospennato",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30887",
+              "nombre": "DARÍO HUGO",
+              "apellido": "NIETO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30909",
+              "nombre": "IGNACIO JOSÉ",
+              "apellido": "PARERA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30905",
+              "nombre": "SERGIO HERNÁN",
+              "apellido": "SICILIANO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30859",
+              "nombre": "GIMENA",
+              "apellido": "VILLAFRUELA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30952",
+              "nombre": "Waldo",
+              "apellido": "Wolff",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            }
+          ]
+        },
+        {
+          "id_votacion": "2502",
+          "id_sesion": "1154",
+          "id_expediente": "141800",
+          "expediente": {
+            "id_expediente": "141800",
+            "numero": "2247-O-2026",
+            "nro_orden": "2247",
+            "ano_parlamentario": "2026",
+            "tipo": "REMITE ACTUACIONES",
+            "origen": "OFICIAL",
+            "sumario": "PROPUESTA PARA LA COBERTURA DE DOS (2) CARGOS DE FISCAL DE PRIMERA INSTANCIA DEL TRABAJO DE LA CIUDAD",
+            "autor": "CONSEJO DE LA MAGISTRATURA DE LA CIUDAD AUTONOMA DE BUENOS AIRES.,",
+            "fecha_inicio": "17/7/2026 15:49:30",
+            "url_ficha": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141800",
+            "documento": {
+              "id_documento": "225567",
+              "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=225567"
+            }
+          },
+          "asunto": "Desp.Nº 621/26",
+          "resultado": {
+            "afirmativos": 50,
+            "negativos": 2,
+            "abstenciones": 1,
+            "total_emitidos": 53
+          },
+          "detalle_nominal": [
+            {
+              "id_legislador": "30912",
+              "nombre": "ALDANA BELÉN",
+              "apellido": "CRUCITTA",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30911",
+              "nombre": "FRANCISCO",
+              "apellido": "LOUPIAS",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30908",
+              "nombre": "MARÍA FERNANDA",
+              "apellido": "MOLLARD",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30814",
+              "nombre": "GUILLERMO",
+              "apellido": "SUÁREZ",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30858",
+              "nombre": "MANUELA",
+              "apellido": "THOURTE",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30922",
+              "nombre": "EDGARDO NESTOR",
+              "apellido": "ALIFRACO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30880",
+              "nombre": "EMMANUEL",
+              "apellido": "FERRARIO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30907",
+              "nombre": "SEBASTIÁN",
+              "apellido": "NAGATA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30742",
+              "nombre": "MARÍA GRACIELA",
+              "apellido": "OCAÑA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30950",
+              "nombre": "Horacio",
+              "apellido": "Rodríguez Larreta",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30948",
+              "nombre": "Guadalupe",
+              "apellido": "Tagliaferri",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30949",
+              "nombre": "Vanina",
+              "apellido": "Biasi",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30878",
+              "nombre": "AMANDA",
+              "apellido": "MARTÍN",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30841",
+              "nombre": "MATÍAS",
+              "apellido": "BARROETAVEÑA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30844",
+              "nombre": "MARÍA",
+              "apellido": "BIELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30943",
+              "nombre": "Francisco",
+              "apellido": "Caporiccio",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30561",
+              "nombre": "CLAUDIO AMÉRICO",
+              "apellido": "FERREÑO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30916",
+              "nombre": "VICTORIA",
+              "apellido": "FREIRE",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30940",
+              "nombre": "Noemí",
+              "apellido": "Geminiani",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30939",
+              "nombre": "Andrea Mariana",
+              "apellido": "González",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30915",
+              "nombre": "ALEJANDRO OMAR",
+              "apellido": "GRILLO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30896",
+              "nombre": "BERENICE",
+              "apellido": "IAÑEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30918",
+              "nombre": "ANDRÉS",
+              "apellido": "LA BLUNDA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30914",
+              "nombre": "MATÍAS",
+              "apellido": "LAMMENS",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30938",
+              "nombre": "Federico",
+              "apellido": "Mochi",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30892",
+              "nombre": "JUAN PABLO",
+              "apellido": "MODARELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30936",
+              "nombre": "Claudia",
+              "apellido": "Negri",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30716",
+              "nombre": "CLAUDIA",
+              "apellido": "NEIRA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30917",
+              "nombre": "GRACIANA",
+              "apellido": "PEÑAFORT",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30942",
+              "nombre": "Bárbara",
+              "apellido": "Rossen",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30941",
+              "nombre": "Alejandro",
+              "apellido": "Salvatierra",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30823",
+              "nombre": "LEANDRO",
+              "apellido": "SANTORO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30919",
+              "nombre": "DELFINA",
+              "apellido": "VELÁZQUEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30680",
+              "nombre": "JUAN PABLO",
+              "apellido": "ARENAZA",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30951",
+              "nombre": "Marcelo Gregorio",
+              "apellido": "Ernst",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30935",
+              "nombre": "Juan Ignacio",
+              "apellido": "Fernández",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30899",
+              "nombre": "REBECA",
+              "apellido": "FLEITAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30933",
+              "nombre": "Andrea",
+              "apellido": "Freguia",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30910",
+              "nombre": "SILVIA",
+              "apellido": "IMAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30886",
+              "nombre": "MARINA",
+              "apellido": "KIENAST",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30898",
+              "nombre": "LUCÍA",
+              "apellido": "MONTENEGRO",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30932",
+              "nombre": "Nicolás",
+              "apellido": "Pakgojz",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30931",
+              "nombre": "Solana",
+              "apellido": "Pelayo",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30921",
+              "nombre": "MARÍA DEL PILAR",
+              "apellido": "RAMÍREZ",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30923",
+              "nombre": "SANDRA MÓNICA",
+              "apellido": "REY",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30900",
+              "nombre": "LEONARDO",
+              "apellido": "SAIFERT",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30934",
+              "nombre": "Diego",
+              "apellido": "Vartabedian",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30847",
+              "nombre": "EUGENIO",
+              "apellido": "CASIELLES",
+              "bloque": "Transformación",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30946",
+              "nombre": "Laura",
+              "apellido": "Alonso",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30848",
+              "nombre": "JUAN FACUNDO",
+              "apellido": "DEL GAISO",
+              "bloque": "Vamos por más",
+              "voto": "ABSTENCIÓN"
+            },
+            {
+              "id_legislador": "30913",
+              "nombre": "PABLO ALEJANDRO",
+              "apellido": "DONATI",
+              "bloque": "Vamos por más",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30947",
+              "nombre": "Rocío",
+              "apellido": "Figueroa",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30906",
+              "nombre": "PATRICIA INÉS",
+              "apellido": "GLIZE",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30853",
+              "nombre": "MATÍAS DAMIÁN",
+              "apellido": "LÓPEZ",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30944",
+              "nombre": "Silvia",
+              "apellido": "Lospennato",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30887",
+              "nombre": "DARÍO HUGO",
+              "apellido": "NIETO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30909",
+              "nombre": "IGNACIO JOSÉ",
+              "apellido": "PARERA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30905",
+              "nombre": "SERGIO HERNÁN",
+              "apellido": "SICILIANO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30859",
+              "nombre": "GIMENA",
+              "apellido": "VILLAFRUELA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30952",
+              "nombre": "Waldo",
+              "apellido": "Wolff",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            }
+          ]
+        },
+        {
+          "id_votacion": "2503",
+          "id_sesion": "1154",
+          "id_expediente": "141802",
+          "expediente": {
+            "id_expediente": "141802",
+            "numero": "2248-O-2026",
+            "nro_orden": "2248",
+            "ano_parlamentario": "2026",
+            "tipo": "REMITE ACTUACIONES",
+            "origen": "OFICIAL",
+            "sumario": "PROPUESTA PARA LA COBERTURA DE UN (1) CARGO DE ASESOR TUTELAR DE CÁMARA ANTE LA CÁMARA DE APELACIONES DEL TRABAJO DE LA CIUDAD",
+            "autor": "CONSEJO DE LA MAGISTRATURA DE LA CIUDAD AUTONOMA DE BUENOS AIRES.,",
+            "fecha_inicio": "17/7/2026 15:57:12",
+            "url_ficha": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141802",
+            "documento": {
+              "id_documento": "225569",
+              "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=225569"
+            }
+          },
+          "asunto": "Desp.Nº 622/26",
+          "resultado": {
+            "afirmativos": 50,
+            "negativos": 2,
+            "abstenciones": 1,
+            "total_emitidos": 53
+          },
+          "detalle_nominal": [
+            {
+              "id_legislador": "30912",
+              "nombre": "ALDANA BELÉN",
+              "apellido": "CRUCITTA",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30911",
+              "nombre": "FRANCISCO",
+              "apellido": "LOUPIAS",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30908",
+              "nombre": "MARÍA FERNANDA",
+              "apellido": "MOLLARD",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30814",
+              "nombre": "GUILLERMO",
+              "apellido": "SUÁREZ",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30858",
+              "nombre": "MANUELA",
+              "apellido": "THOURTE",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30922",
+              "nombre": "EDGARDO NESTOR",
+              "apellido": "ALIFRACO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30880",
+              "nombre": "EMMANUEL",
+              "apellido": "FERRARIO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30907",
+              "nombre": "SEBASTIÁN",
+              "apellido": "NAGATA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30742",
+              "nombre": "MARÍA GRACIELA",
+              "apellido": "OCAÑA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30950",
+              "nombre": "Horacio",
+              "apellido": "Rodríguez Larreta",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30948",
+              "nombre": "Guadalupe",
+              "apellido": "Tagliaferri",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30949",
+              "nombre": "Vanina",
+              "apellido": "Biasi",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30878",
+              "nombre": "AMANDA",
+              "apellido": "MARTÍN",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30841",
+              "nombre": "MATÍAS",
+              "apellido": "BARROETAVEÑA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30844",
+              "nombre": "MARÍA",
+              "apellido": "BIELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30943",
+              "nombre": "Francisco",
+              "apellido": "Caporiccio",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30561",
+              "nombre": "CLAUDIO AMÉRICO",
+              "apellido": "FERREÑO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30916",
+              "nombre": "VICTORIA",
+              "apellido": "FREIRE",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30940",
+              "nombre": "Noemí",
+              "apellido": "Geminiani",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30939",
+              "nombre": "Andrea Mariana",
+              "apellido": "González",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30915",
+              "nombre": "ALEJANDRO OMAR",
+              "apellido": "GRILLO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30896",
+              "nombre": "BERENICE",
+              "apellido": "IAÑEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30918",
+              "nombre": "ANDRÉS",
+              "apellido": "LA BLUNDA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30914",
+              "nombre": "MATÍAS",
+              "apellido": "LAMMENS",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30938",
+              "nombre": "Federico",
+              "apellido": "Mochi",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30892",
+              "nombre": "JUAN PABLO",
+              "apellido": "MODARELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30936",
+              "nombre": "Claudia",
+              "apellido": "Negri",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30716",
+              "nombre": "CLAUDIA",
+              "apellido": "NEIRA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30917",
+              "nombre": "GRACIANA",
+              "apellido": "PEÑAFORT",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30942",
+              "nombre": "Bárbara",
+              "apellido": "Rossen",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30941",
+              "nombre": "Alejandro",
+              "apellido": "Salvatierra",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30823",
+              "nombre": "LEANDRO",
+              "apellido": "SANTORO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30919",
+              "nombre": "DELFINA",
+              "apellido": "VELÁZQUEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30680",
+              "nombre": "JUAN PABLO",
+              "apellido": "ARENAZA",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30951",
+              "nombre": "Marcelo Gregorio",
+              "apellido": "Ernst",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30935",
+              "nombre": "Juan Ignacio",
+              "apellido": "Fernández",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30899",
+              "nombre": "REBECA",
+              "apellido": "FLEITAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30933",
+              "nombre": "Andrea",
+              "apellido": "Freguia",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30910",
+              "nombre": "SILVIA",
+              "apellido": "IMAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30886",
+              "nombre": "MARINA",
+              "apellido": "KIENAST",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30898",
+              "nombre": "LUCÍA",
+              "apellido": "MONTENEGRO",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30932",
+              "nombre": "Nicolás",
+              "apellido": "Pakgojz",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30931",
+              "nombre": "Solana",
+              "apellido": "Pelayo",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30921",
+              "nombre": "MARÍA DEL PILAR",
+              "apellido": "RAMÍREZ",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30923",
+              "nombre": "SANDRA MÓNICA",
+              "apellido": "REY",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30900",
+              "nombre": "LEONARDO",
+              "apellido": "SAIFERT",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30934",
+              "nombre": "Diego",
+              "apellido": "Vartabedian",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30847",
+              "nombre": "EUGENIO",
+              "apellido": "CASIELLES",
+              "bloque": "Transformación",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30946",
+              "nombre": "Laura",
+              "apellido": "Alonso",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30848",
+              "nombre": "JUAN FACUNDO",
+              "apellido": "DEL GAISO",
+              "bloque": "Vamos por más",
+              "voto": "ABSTENCIÓN"
+            },
+            {
+              "id_legislador": "30913",
+              "nombre": "PABLO ALEJANDRO",
+              "apellido": "DONATI",
+              "bloque": "Vamos por más",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30947",
+              "nombre": "Rocío",
+              "apellido": "Figueroa",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30906",
+              "nombre": "PATRICIA INÉS",
+              "apellido": "GLIZE",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30853",
+              "nombre": "MATÍAS DAMIÁN",
+              "apellido": "LÓPEZ",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30944",
+              "nombre": "Silvia",
+              "apellido": "Lospennato",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30887",
+              "nombre": "DARÍO HUGO",
+              "apellido": "NIETO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30909",
+              "nombre": "IGNACIO JOSÉ",
+              "apellido": "PARERA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30905",
+              "nombre": "SERGIO HERNÁN",
+              "apellido": "SICILIANO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30859",
+              "nombre": "GIMENA",
+              "apellido": "VILLAFRUELA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30952",
+              "nombre": "Waldo",
+              "apellido": "Wolff",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            }
+          ]
+        },
+        {
+          "id_votacion": "2504",
+          "id_sesion": "1154",
+          "id_expediente": "141805",
+          "expediente": {
+            "id_expediente": "141805",
+            "numero": "2249-O-2026",
+            "nro_orden": "2249",
+            "ano_parlamentario": "2026",
+            "tipo": "REMITE ACTUACIONES",
+            "origen": "OFICIAL",
+            "sumario": "PROPUESTA PARA LA COBERTURA DE UN (1) CARGO DE ASESOR TUTELAR ANTE LOS JUZGADOS DE PRIMERA INSTANCIA DEL TRABAJO DE LA CIUDAD",
+            "autor": "CONSEJO DE LA MAGISTRATURA DE LA CIUDAD AUTONOMA DE BUENOS AIRES.,",
+            "fecha_inicio": "17/7/2026 16:06:48",
+            "url_ficha": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=141805",
+            "documento": {
+              "id_documento": "225572",
+              "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=225572"
+            }
+          },
+          "asunto": "Desp.Nº 623/26",
+          "resultado": {
+            "afirmativos": 50,
+            "negativos": 2,
+            "abstenciones": 1,
+            "total_emitidos": 53
+          },
+          "detalle_nominal": [
+            {
+              "id_legislador": "30912",
+              "nombre": "ALDANA BELÉN",
+              "apellido": "CRUCITTA",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30911",
+              "nombre": "FRANCISCO",
+              "apellido": "LOUPIAS",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30908",
+              "nombre": "MARÍA FERNANDA",
+              "apellido": "MOLLARD",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30814",
+              "nombre": "GUILLERMO",
+              "apellido": "SUÁREZ",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30858",
+              "nombre": "MANUELA",
+              "apellido": "THOURTE",
+              "bloque": "Ciudadanos Unidos / UCR",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30922",
+              "nombre": "EDGARDO NESTOR",
+              "apellido": "ALIFRACO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30880",
+              "nombre": "EMMANUEL",
+              "apellido": "FERRARIO",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30907",
+              "nombre": "SEBASTIÁN",
+              "apellido": "NAGATA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30742",
+              "nombre": "MARÍA GRACIELA",
+              "apellido": "OCAÑA",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30950",
+              "nombre": "Horacio",
+              "apellido": "Rodríguez Larreta",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30948",
+              "nombre": "Guadalupe",
+              "apellido": "Tagliaferri",
+              "bloque": "Confianza y Desarrollo",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30949",
+              "nombre": "Vanina",
+              "apellido": "Biasi",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30878",
+              "nombre": "AMANDA",
+              "apellido": "MARTÍN",
+              "bloque": "Frente de Izquierda de los Trabajadores / PO",
+              "voto": "NEGATIVO"
+            },
+            {
+              "id_legislador": "30841",
+              "nombre": "MATÍAS",
+              "apellido": "BARROETAVEÑA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30844",
+              "nombre": "MARÍA",
+              "apellido": "BIELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30943",
+              "nombre": "Francisco",
+              "apellido": "Caporiccio",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30561",
+              "nombre": "CLAUDIO AMÉRICO",
+              "apellido": "FERREÑO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30916",
+              "nombre": "VICTORIA",
+              "apellido": "FREIRE",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30940",
+              "nombre": "Noemí",
+              "apellido": "Geminiani",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30939",
+              "nombre": "Andrea Mariana",
+              "apellido": "González",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30915",
+              "nombre": "ALEJANDRO OMAR",
+              "apellido": "GRILLO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30896",
+              "nombre": "BERENICE",
+              "apellido": "IAÑEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30918",
+              "nombre": "ANDRÉS",
+              "apellido": "LA BLUNDA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30914",
+              "nombre": "MATÍAS",
+              "apellido": "LAMMENS",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30938",
+              "nombre": "Federico",
+              "apellido": "Mochi",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30892",
+              "nombre": "JUAN PABLO",
+              "apellido": "MODARELLI",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30936",
+              "nombre": "Claudia",
+              "apellido": "Negri",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30716",
+              "nombre": "CLAUDIA",
+              "apellido": "NEIRA",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30917",
+              "nombre": "GRACIANA",
+              "apellido": "PEÑAFORT",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30942",
+              "nombre": "Bárbara",
+              "apellido": "Rossen",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30941",
+              "nombre": "Alejandro",
+              "apellido": "Salvatierra",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30823",
+              "nombre": "LEANDRO",
+              "apellido": "SANTORO",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30919",
+              "nombre": "DELFINA",
+              "apellido": "VELÁZQUEZ",
+              "bloque": "Fuerza por Buenos Aires",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30680",
+              "nombre": "JUAN PABLO",
+              "apellido": "ARENAZA",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30951",
+              "nombre": "Marcelo Gregorio",
+              "apellido": "Ernst",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30935",
+              "nombre": "Juan Ignacio",
+              "apellido": "Fernández",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30899",
+              "nombre": "REBECA",
+              "apellido": "FLEITAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30933",
+              "nombre": "Andrea",
+              "apellido": "Freguia",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30910",
+              "nombre": "SILVIA",
+              "apellido": "IMAS",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30886",
+              "nombre": "MARINA",
+              "apellido": "KIENAST",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30898",
+              "nombre": "LUCÍA",
+              "apellido": "MONTENEGRO",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30932",
+              "nombre": "Nicolás",
+              "apellido": "Pakgojz",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30931",
+              "nombre": "Solana",
+              "apellido": "Pelayo",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30921",
+              "nombre": "MARÍA DEL PILAR",
+              "apellido": "RAMÍREZ",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30923",
+              "nombre": "SANDRA MÓNICA",
+              "apellido": "REY",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30900",
+              "nombre": "LEONARDO",
+              "apellido": "SAIFERT",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30934",
+              "nombre": "Diego",
+              "apellido": "Vartabedian",
+              "bloque": "La Libertad avanza",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30847",
+              "nombre": "EUGENIO",
+              "apellido": "CASIELLES",
+              "bloque": "Transformación",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30946",
+              "nombre": "Laura",
+              "apellido": "Alonso",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30848",
+              "nombre": "JUAN FACUNDO",
+              "apellido": "DEL GAISO",
+              "bloque": "Vamos por más",
+              "voto": "ABSTENCIÓN"
+            },
+            {
+              "id_legislador": "30913",
+              "nombre": "PABLO ALEJANDRO",
+              "apellido": "DONATI",
+              "bloque": "Vamos por más",
+              "voto": "NO VOTÓ"
+            },
+            {
+              "id_legislador": "30947",
+              "nombre": "Rocío",
+              "apellido": "Figueroa",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30906",
+              "nombre": "PATRICIA INÉS",
+              "apellido": "GLIZE",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30853",
+              "nombre": "MATÍAS DAMIÁN",
+              "apellido": "LÓPEZ",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30944",
+              "nombre": "Silvia",
+              "apellido": "Lospennato",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30887",
+              "nombre": "DARÍO HUGO",
+              "apellido": "NIETO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30909",
+              "nombre": "IGNACIO JOSÉ",
+              "apellido": "PARERA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30905",
+              "nombre": "SERGIO HERNÁN",
+              "apellido": "SICILIANO",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30859",
+              "nombre": "GIMENA",
+              "apellido": "VILLAFRUELA",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            },
+            {
+              "id_legislador": "30952",
+              "nombre": "Waldo",
+              "apellido": "Wolff",
+              "bloque": "Vamos por más",
+              "voto": "AFIRMATIVO"
+            }
+          ]
+        }
+      ],
       "sanciones_despacho": [
         {
           "id_expediente": "141794",

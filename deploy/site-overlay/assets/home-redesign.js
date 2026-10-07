@@ -1,4 +1,14 @@
 document.addEventListener('DOMContentLoaded',()=>{
+  const track=document.getElementById('home-publications-track');
+  if(track){
+    const cards=[...track.children],position=document.getElementById('home-publications-position');
+    const current=()=>cards.reduce((best,c,i)=>Math.abs(c.offsetLeft-track.offsetLeft-track.scrollLeft)<Math.abs(cards[best].offsetLeft-track.offsetLeft-track.scrollLeft)?i:best,0);
+    document.querySelectorAll('[data-home-slide]').forEach(button=>button.addEventListener('click',()=>{
+      const i=Math.max(0,Math.min(cards.length-1,current()+Number(button.dataset.homeSlide)));
+      track.scrollTo({left:cards[i].offsetLeft-track.offsetLeft,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+    }));
+    track.addEventListener('scroll',()=>{position.textContent=`${current()+1} de ${cards.length}`;},{passive:true});
+  }
   const neighborhoodForm=document.getElementById('home-neighborhood-form');
   const neighborhood=document.getElementById('home-neighborhood');
   if(neighborhoodForm&&neighborhood) neighborhoodForm.addEventListener('submit',event=>{

@@ -35,7 +35,7 @@ jobs:
 
       - name: Verificar novedades automáticas
         run: |
-          python -m unittest test_lo_nuevo.py test_catalogo_informes.py
+          python -m unittest test_lo_nuevo.py test_catalogo_informes.py test_home_editorial.py
           python generar_catalogo_informes.py deploy/site-overlay --check-source
 
 

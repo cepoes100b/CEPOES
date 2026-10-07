@@ -596,7 +596,7 @@ def restructure_home(source: str) -> str:
             '<form id="home-subscription-form"><label for="home-subscription-email">Correo electrónico</label>'
             '<div><input autocomplete="email" id="home-subscription-email" name="email" placeholder="tu@email.com" required type="email">'
             '<button class="btn btn-primary" type="submit">Suscribirme</button></div>'
-            '<label class="home-consent"><input name="consent" required type="checkbox"> Acepto recibir publicaciones de CEPOES. Puedo pedir la baja o el borrado de mis datos escribiendo a contacto@cepoes.org.</label>'
+            '<label class="home-consent"><input name="consent" required type="checkbox"> Acepto recibir publicaciones de CEPOES. Puedo darme de baja desde el enlace incluido en cada boletín. Para solicitar el borrado de mis datos, puedo escribir a contacto@cepoes.org.</label>'
             '<input aria-hidden="true" class="home-honeypot" name="company" tabindex="-1" type="text">'
             '<p aria-live="polite" class="home-subscription-status" id="home-subscription-status"></p></form></div>'
         )

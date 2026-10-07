@@ -943,6 +943,10 @@ def main() -> None:
     site = args.site.resolve()
     if not (site / "index.html").is_file():
         raise SystemExit(f"No se encontró el sitio en {site}")
+    import sys
+    sys.path.insert(0, str(ROOT))
+    from scripts.generar_newsletter_feed import generate
+    generate(site)
     prepare_canonical_routes(site)
     count = 0
     for path in site.rglob("*.html"):

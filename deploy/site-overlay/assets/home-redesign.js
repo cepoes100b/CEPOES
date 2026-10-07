@@ -19,21 +19,37 @@ document.addEventListener('DOMContentLoaded',()=>{
   const form=document.getElementById('home-subscription-form');
   const status=document.getElementById('home-subscription-status');
   if(!form||!status)return;
+  let widget, token='', config;
+  const result=new URLSearchParams(location.search).get('suscripcion');
+  if(result==='confirmed')status.textContent='Tu correo quedó confirmado. Recibirás los próximos boletines de CEPOES.';
+  if(result==='invalid')status.textContent='El enlace venció o ya fue utilizado. Podés solicitar otro desde este formulario.';
+  const ready=fetch('/assets/data/newsletter-config.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('config');return r.json();}).then(async c=>{
+    config=c;if(c.enabled!==true)return;
+    if(!c.turnstile_site_key)throw Error('site_key');
+    await new Promise((resolve,reject)=>{
+      const script=document.createElement('script');script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+      script.onload=resolve;script.onerror=reject;document.head.appendChild(script);
+    });
+    const challenge=document.createElement('div');challenge.setAttribute('aria-label','Verificación de seguridad');form.querySelector('.home-consent').after(challenge);
+    widget=window.turnstile.render(challenge,{sitekey:c.turnstile_site_key,action:'newsletter_subscribe',callback:t=>{token=t;},'expired-callback':()=>{token='';},'error-callback':()=>{token='';}});
+  }).catch(()=>{config=null;});
   form.addEventListener('submit',async event=>{
     event.preventDefault();
     if(form.elements.company.value)return;
     const button=form.querySelector('button[type="submit"]');
-    button.disabled=true;status.textContent='Guardando tu suscripción…';
+    button.disabled=true;status.textContent='Procesando tu solicitud…';
     try{
-      const response=await fetch('https://nriexnijkjamrmfivfmd.supabase.co/rest/v1/newsletter_subscriptions',{
-        method:'POST',
-        headers:{'apikey':'sb_publishable_i2WWiop8sCom0yVZZ7xC8g_NGJCiddq','Content-Type':'application/json','Prefer':'return=minimal'},
-        body:JSON.stringify({email:String(form.elements.email.value).trim().toLowerCase(),source:'home',privacy_version:'2026-08'})
+      await ready;
+      if(!config||config.enabled!==true){status.textContent='La suscripción está temporalmente en mantenimiento. Podés escribirnos a contacto@cepoes.org.';return;}
+      if(!token){status.textContent='Completá la verificación de seguridad antes de continuar.';return;}
+      const response=await fetch('https://nriexnijkjamrmfivfmd.supabase.co/functions/v1/newsletter-subscribe',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email:String(form.elements.email.value).trim().toLowerCase(),consent:form.elements.consent.checked,company:'',turnstile_token:token})
       });
-      if(response.ok){form.reset();status.textContent='Listo. Te sumamos a las novedades de CEPOES.';}
-      else if(response.status===409){status.textContent='Ese correo ya estaba suscripto.';}
-      else throw new Error(String(response.status));
-    }catch(error){status.textContent='No pudimos guardar la suscripción. Podés escribirnos a contacto@cepoes.org.';}
-    finally{button.disabled=false;}
+      if(response.ok){form.reset();status.textContent='Revisá tu correo para confirmar la suscripción, incluida la carpeta de spam. Si ya estaba confirmada, no recibirás otro mensaje.';}
+      else if(response.status===429){status.textContent='Hubo demasiados intentos. Volvé a probar en una hora.';}
+      else throw Error('subscription_failed');
+    }catch{status.textContent='No pudimos completar la solicitud. Probá nuevamente o escribinos a contacto@cepoes.org.';}
+    finally{button.disabled=false;token='';if(widget!==undefined)window.turnstile.reset(widget);}
   });
 });

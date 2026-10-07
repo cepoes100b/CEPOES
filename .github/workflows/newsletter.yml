@@ -1,0 +1,31 @@
+name: Distribuir boletín CEPOES
+on:
+  workflow_run:
+    workflows: ["Desplegar sitio en Hostinger"]
+    types: [completed]
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: cepoes-newsletter
+  cancel-in-progress: false
+jobs:
+  distribuir:
+    if: >-
+      vars.NEWSLETTER_ENABLED == 'true' &&
+      (github.event_name != 'workflow_run' ||
+       (github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_branch == 'main' &&
+        github.event.workflow_run.head_repository.full_name == github.repository))
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: main
+      - name: Detectar boletines publicados y procesar cola
+        env:
+          NEWSLETTER_DISPATCH_SECRET: ${{ secrets.NEWSLETTER_DISPATCH_SECRET }}
+        run: python scripts/dispatch_newsletter.py

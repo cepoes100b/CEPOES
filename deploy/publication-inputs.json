@@ -11,6 +11,10 @@
       "reason": "Normalización del sitio"
     },
     {
+      "path": "scripts/generar_newsletter_feed.py",
+      "reason": "Catálogo público de ediciones para distribución automática"
+    },
+    {
       "path": "deploy/preparar_legislatura_publica.py",
       "reason": "Copia pública legislativa"
     },

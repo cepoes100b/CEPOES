@@ -266,11 +266,17 @@ for token in ['id="home-budget-exec">—','id="home-debt-debtors">—','id="home
     assert token not in home, f'Fallback vacío en home: {token}'
 for redundant in ['home-pulse-section','home-territory-section','home-topics-section','home-recent-section']:
     assert redundant not in home, f'Bloque redundante reapareció en home: {redundant}'
-home_order=['home-editorial-hero','home-strategy-section','home-kpi-section','home-offer-section','home-latest-section','home-products-section','home-about-section']
+home_order=['home-publications-hero','home-strategy-section','home-kpi-section','home-offer-section','home-latest-section','home-products-section','home-about-section']
 home_positions=[home.find(token) for token in home_order]
 assert all(pos>=0 for pos in home_positions) and home_positions==sorted(home_positions), f'Jerarquía de home inválida: {home_positions}'
-for token in ['home-editorial-datum','home-strategy-grid','La Ciudad hoy','Balance de gestión 2007–2026','Una Ciudad posible','href="/balance/"','home-comparison-grid','home-neighborhood-form','home-subscription-form','home-new-link','href="/lo-nuevo/"','Leer la versión web →','/assets/home-redesign.js?v=1']:
+for token in ['home-publications-track','home-strategy-grid','La Ciudad hoy','Balance de gestión 2007–2026','Una Ciudad posible','href="/balance/"','home-comparison-grid','home-neighborhood-form','home-subscription-form','home-new-link','href="/lo-nuevo/"','Leer publicación →','/assets/home-redesign.js?v=2']:
     assert token in home, f'Bloque de portada incompleto: {token}'
+from deploy.preparar_sitio_publico import latest_home_publications
+assert home.count('class="home-publication-card"') == 3, 'La portada debe mostrar tres publicaciones'
+for publication in latest_home_publications():
+    assert f'href="{publication["url"]}"' in home, f'Publicación más reciente ausente: {publication["url"]}'
+assert home.count('id="home-subscription-form"') == 1, 'Suscripción duplicada'
+assert home.count('/assets/home-redesign.js?') == 1, 'Script de portada duplicado'
 assert home.count('class="home-comparison-card"')==4, 'La home debe mostrar exactamente cuatro datos comparados'
 assert home.count('class="home-comparison-source-link"')==4, 'Cada dato comparado debe enlazar su fuente oficial'
 for source_url in [

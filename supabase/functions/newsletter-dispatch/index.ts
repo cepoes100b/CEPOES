@@ -24,7 +24,7 @@ Deno.serve(async req=>{
           const {data:s,error}=await db.from('newsletter_subscriptions').select('email').eq('id',j.subscription_id).single();if(error)throw Error('subscriber_missing');
           const unsubscribe=`${env('SUPABASE_URL')}/functions/v1/newsletter-unsubscribe?id=${j.subscription_id}&token=${await sign(j.subscription_id)}`;
           const content=newsletterEmail(edition,unsubscribe);
-          const r=await fetch('https://api.resend.com/emails',{method:'POST',signal:AbortSignal.timeout(12000),headers:{authorization:`Bearer ${env('RESEND_API_KEY')}`,'content-type':'application/json','idempotency-key':key},body:JSON.stringify({from:env('NEWSLETTER_FROM'),to:[s.email],...content,headers:{'List-Unsubscribe':`<${unsubscribe}>`,'List-Unsubscribe-Post':'List-Unsubscribe=One-Click'}})});
+          const r=await fetch('https://api.resend.com/emails',{method:'POST',signal:AbortSignal.timeout(12000),headers:{authorization:`Bearer ${env('RESEND_API_KEY')}`,'content-type':'application/json','idempotency-key':key},body:JSON.stringify({from:env('NEWSLETTER_FROM'),reply_to:'contacto@cepoes.org',to:[s.email],...content,headers:{'List-Unsubscribe':`<${unsubscribe}>`,'List-Unsubscribe-Post':'List-Unsubscribe=One-Click'}})});
           if(!r.ok)throw Error('provider_failed');return await r.json();
         },
         finish:async(j:any,state:string,id?:string)=>{await rpc('newsletter_finish_delivery',{p_edition:j.edition,p_subscription:j.subscription_id,p_lease:j.lease_token,p_state:state,p_provider_id:id||null});},

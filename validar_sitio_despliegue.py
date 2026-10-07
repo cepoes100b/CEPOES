@@ -334,10 +334,10 @@ proposals=(root/'propuestas'/'index.html').read_text(encoding='utf-8',errors='re
 for token in ['Una Ciudad posible','Un banco de políticas públicas en construcción','instrumentos, responsables, costos, plazos, metas e indicadores']:
     assert token in proposals, f'Portada de propuestas no migrada: {token}'
 # Cada tarjeta debe coincidir con su catálogo público vigente.
-import html
+import html as html_escape
 for publication in latest_home_publications():
     for field in ('title', 'url', 'summary'):
-        token = html.escape(str(publication[field]), quote=True)
+        token = html_escape.escape(str(publication[field]), quote=True)
         assert token and token in home, f'Portada fuera de catálogo: {field} · {publication["url"]}'
 crianza=(root/'publicaciones'/'notas'/'criar-en-buenos-aires-sala-de-3'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['$1,26 M','114.770','400','469','74','La sala de 3 es obligatoria','Qué no significan estos números','/territorio/equipamientos/']:

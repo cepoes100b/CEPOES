@@ -447,21 +447,64 @@ def comparison_card(
     )
 
 
+def latest_home_publications() -> list[dict]:
+    """Select only public, approved items; rebuild on every canonical deployment."""
+    overlay = ROOT / "deploy/site-overlay"
+    analyses = load_json("deploy/site-overlay/assets/data/analisis.json")["analyses"]
+    notes = [dict(n, date=n["published_at"][:10], label="Última nota") for n in analyses
+             if (overlay / n["url"].lstrip("/") / "index.html").is_file()]
+    reports = [dict(r, date=r["period"], summary=r["description"], label="Último informe de coyuntura")
+               for r in load_json("deploy/reports-registry.json")["reports"]
+               if "informe-coyuntura-" in r["url"]]
+    bulletins = []
+    for path in (overlay / "publicaciones/boletines").glob("boletin-*/index.html"):
+        source = path.read_text(encoding="utf-8")
+        number = re.search(r"boletin-(\d+)-", path.parent.name)
+        title = re.search(r"<h1[^>]*>(.*?)</h1>", source, re.S)
+        description = re.search(r'<meta name="description" content="([^"]+)"', source)
+        cover = re.search(r'<meta property="og:image" content="https://cepoes.org([^"]+)"', source)
+        if number and title:
+            bulletins.append(dict(title=html.unescape(re.sub('<[^>]+>', '', title[1])),
+                summary=html.unescape(description[1]) if description else '',
+                url='/' + path.parent.relative_to(overlay).as_posix() + '/',
+                edition=int(number[1]), label="Último boletín", date='',
+                cover=cover[1] if cover else '', period=path.parent.name.split('-', 2)[2].replace('-', ' ').capitalize()))
+    if not notes or not reports or not bulletins:
+        raise ValueError("La portada requiere una nota, un boletín y un informe publicados")
+    return [max(notes, key=lambda n: (n['date'], n['url'])),
+            max(bulletins, key=lambda n: n['edition']),
+            max(reports, key=lambda n: (n['date'], n['url']))]
+
+
+def home_publications_hero() -> str:
+    cards = []
+    for i, item in enumerate(latest_home_publications()):
+        esc = lambda value: html.escape(str(value), quote=True)
+        title_tag = 'h1' if i == 0 else 'h2'
+        image = (f'<img src="{esc(item["cover"])}" alt="" width="320" height="420">'
+                 if item.get('cover') else '<div class="home-publication-art" aria-hidden="true">DESDE<br>LOS BARRIOS</div>')
+        period = item.get('period') or item['date']
+        cards.append(f'<article class="home-publication-card"><span class="eyebrow">{esc(item["label"])}</span>'
+            + image + f'<div><span class="home-publication-period">{esc(period)}</span>'
+            + f'<{title_tag}><a href="{esc(item["url"])}">{esc(item["title"])}</a></{title_tag}>'
+            + f'<p>{esc(item["summary"])}</p><a class="home-publication-link" href="{esc(item["url"])}">Leer publicación →</a></div></article>')
+    return ('<header class="hero home-hero home-publications-hero"><div class="wrap">'
+        '<div class="home-publications-heading"><span class="eyebrow">Lecturas para entender la Ciudad</span>'
+        '<a href="/publicaciones/">Todas las publicaciones →</a></div>'
+        '<div class="home-publications-track" id="home-publications-track" tabindex="0" aria-label="Publicaciones destacadas">'
+        + ''.join(cards) + '</div><div class="home-publications-controls">'
+        '<button type="button" data-home-slide="-1" aria-label="Publicación anterior">←</button>'
+        '<span id="home-publications-position" aria-live="polite">1 de 3</span>'
+        '<button type="button" data-home-slide="1" aria-label="Publicación siguiente">→</button></div></div></header>')
+
+
 def restructure_home(source: str) -> str:
     """Build the six-block editorial home from data and editable content."""
     data = load_json("datos.json")
     editorial = load_json("deploy/site-overlay/assets/data/home-editorial.json")
     ipc, employment, pgb, poverty = data["ipcba"], data["empleo"], data["pgb"], data["pobreza"]
 
-    hero = (
-        '<header class="hero home-hero home-editorial-hero"><div class="wrap home-editorial-grid"><div>'
-        f'<span class="eyebrow">{html.escape(editorial["eyebrow"])}</span>'
-        f'<h1>{html.escape(editorial["title"])}</h1><p>{html.escape(editorial["summary"])}</p>'
-        f'<a class="btn btn-primary" href="{html.escape(editorial["url"])}">{html.escape(editorial["cta"])} →</a>'
-        '</div><aside class="home-editorial-datum" aria-label="Dato central">'
-        f'<strong>{html.escape(editorial["datum"]["value"])}</strong><p>{html.escape(editorial["datum"]["label"])}</p>'
-        f'<small>{html.escape(editorial["datum"]["source"])}</small></aside></div></header>'
-    )
+    hero = home_publications_hero()
     source = replace_class_element(source, "header", "home-hero", hero)
 
     pillars = (
@@ -557,15 +600,17 @@ def restructure_home(source: str) -> str:
             '<input aria-hidden="true" class="home-honeypot" name="company" tabindex="-1" type="text">'
             '<p aria-live="polite" class="home-subscription-status" id="home-subscription-status"></p></form></div>'
         )
-        latest = latest.replace('</div></div></div></section>', '</div>' + subscription + '</div></div></section>', 1)
+        latest = ('<section class="section home-latest-section"><div class="wrap">'
+                  + subscription + '</div></section>')
         sections["home-latest-section"] = latest
     block = "".join(sections[name] for name in order if sections[name])
     footer_at = source.find('<dialog', source.find('</header>'))
     if footer_at < 0:
         footer_at = source.find('<footer')
     result = source[:footer_at] + block + source[footer_at:] if footer_at >= 0 else source + block
-    if '/assets/home-redesign.js?v=1' not in result:
-        result = result.replace('</body>', '<script defer src="/assets/home-redesign.js?v=1"></script></body>', 1)
+    result = re.sub(r'<script\b[^>]*src=["\']/assets/home-redesign\.js(?:\?[^"\']*)?["\'][^>]*></script>', '', result)
+    if '/assets/home-redesign.js?v=2' not in result:
+        result = result.replace('</body>', '<script defer src="/assets/home-redesign.js?v=2"></script></body>', 1)
     return result
 
 

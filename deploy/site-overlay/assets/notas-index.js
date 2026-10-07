@@ -3,13 +3,7 @@ const API='https://nriexnijkjamrmfivfmd.supabase.co/rest/v1/press_notes',KEY='sb
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
 const fmt=d=>new Date(d).toLocaleDateString('es-AR',{day:'numeric',month:'long',year:'numeric'});
-const analyses=[
-{type:'analisis',slug:'criar-en-buenos-aires-sala-de-3',topic:'Educación',title:'Criar en Buenos Aires cuesta más de $1 millón por mes',summary:'La canasta de crianza, la sala de 3 obligatoria y el desafío de garantizar vacantes públicas suficientes en las 15 comunas.',published_at:'2026-09-20T12:00:00',url:'/publicaciones/notas/criar-en-buenos-aires-sala-de-3/',source_section:'/publicaciones/notas/criar-en-buenos-aires-sala-de-3/'},
-{type:'analisis',slug:'tormenta-negra-seguridad-territorio',topic:'Seguridad y convivencia',title:'Tormenta Negra y la seguridad que queda en el barrio',summary:'100 Barrios analiza qué informa el Gobierno, qué costos y efectos territoriales faltan medir y qué políticas deben permanecer después del operativo.',published_at:'2026-09-29T12:00:00',url:'/publicaciones/notas/tormenta-negra-seguridad-territorio/',source_section:'/territorio/seguridad-barrios-populares/'},
-{type:'analisis',slug:'prevenir-es-garantizar-ayuda-a-tiempo',topic:'Salud y cuidados',title:'Prevenir el suicidio también es garantizar que la ayuda llegue a tiempo',summary:'En CABA se registraron 236 muertes por suicidio en 2025. CEPOES cruza la tendencia con la red territorial y pone el foco en acceso efectivo, tiempos de respuesta y capacidad pública.',published_at:'2026-09-10T12:00:00',url:'/publicaciones/notas/prevenir-es-garantizar-ayuda-a-tiempo/',source_section:'/observatorio/salud-mental/'},
-{type:'analisis',slug:'el-dolor-tambien-es-desigual',topic:'Salud y cuidados',title:'El dolor también es desigual',summary:'La primera ley de autoría propia sancionada de Claudia Negri garantiza el acceso universal, gratuito y equitativo a la analgesia peridural. CEPOES suma datos y abre un monitor de implementación.',published_at:'2026-08-27T12:00:00',url:'/publicaciones/notas/el-dolor-tambien-es-desigual/',source_section:'/legislatura/seguimiento/analgesia-peridural/'},
-{type:'analisis',slug:'el-boca-river-de-la-mora',topic:'Deuda de los hogares',title:'El Boca–River de la mora',summary:'La incidencia estimada de mora alcanza al 25,5% en La Boca y al 9,1% en Núñez. Un análisis territorial del endeudamiento en los 48 barrios.',published_at:'2026-08-26T12:00:00',url:'/publicaciones/notas/el-boca-river-de-la-mora/',source_section:'/territorio/endeudamiento/'}
-];
+
 
 const topicsMap={'Endeudamiento':'Deuda de los hogares','Salud y cuidados':'Salud','Deporte y salud':'Salud','Estructura productiva':'Producción y empresas','Producción y comercio':'Producción y empresas','Educación e infancias':'Educación','Vivienda y hábitat':'Vivienda y alquiler'};
 const canonical=n=>({...n,topic:topicsMap[n.topic]||n.topic||'Otros temas'});
@@ -41,9 +35,11 @@ function render(){
 async function load(){
  const results=await Promise.allSettled([
  fetch(API+'?select=slug,topic,title,summary,published_at,first_published_at,source_section&status=eq.publicada&order=published_at.desc&limit=500',{headers:{apikey:KEY},signal:AbortSignal.timeout(10000)}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()}),
+ fetch('/assets/data/analisis.json').then(r=>{if(!r.ok)throw Error(r.status);return r.json()}),
  fetch('/assets/data/prensa.json?v=2',{signal:AbortSignal.timeout(10000)}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})
  ]);
- const local=results[1].status==='fulfilled'?results[1].value.notas.filter(n=>n.estado==='aprobada').map(n=>({slug:n.slug,topic:n.tema,title:n.titulo,summary:n.bajada,published_at:n.fecha+'T12:00:00',source_section:n.seccion})):[];
+ const analyses=results[1].status==='fulfilled'?results[1].value.analyses:[];
+ const local=results[2].status==='fulfilled'?results[2].value.notas.filter(n=>n.estado==='aprobada').map(n=>({slug:n.slug,topic:n.tema,title:n.titulo,summary:n.bajada,published_at:n.fecha+'T12:00:00',source_section:n.seccion})):[];
  const remote=results[0].status==='fulfilled'&&Array.isArray(results[0].value)?results[0].value:[];
  const bySlug=new Map();for(const n of [...local,...remote]){if(n.slug&&n.title)bySlug.set(n.slug,canonical({...n,type:'prensa'}))}
  notes=[...analyses.map(canonical),...bySlug.values()].sort((a,b)=>new Date(b.first_published_at||b.published_at)-new Date(a.first_published_at||a.published_at));

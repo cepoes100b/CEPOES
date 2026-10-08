@@ -2,6 +2,17 @@
   "analyses": [
     {
       "type": "analisis",
+      "slug": "salud-mental-caba",
+      "topic": "Salud y cuidados",
+      "title": "Salud mental en la Ciudad de Buenos Aires",
+      "summary": "Situación epidemiológica, desigualdades y desafíos para el acceso a la atención. Un informe especial con datos de CABA y Argentina, red pública y prioridades de política sanitaria.",
+      "home_summary": "La salud mental también se construye en los barrios. En CABA, el 28,6% de la población adulta presenta algún grado de malestar psicológico: la proporción alcanza el 40,6% en el estrato socioeconómico bajo. El informe especial reúne datos, analiza la red pública de atención y propone fortalecer los cuidados, las redes comunitarias y el acceso oportuno a la salud.",
+      "published_at": "2026-10-08T11:47:46-03:00",
+      "url": "/publicaciones/informes/salud-mental-caba/",
+      "source_section": "/observatorio/salud-mental/"
+    },
+    {
+      "type": "analisis",
       "slug": "tierras-y-soberania",
       "topic": "Tierras y soberanía",
       "title": "Tierras y soberanía",
@@ -63,4 +74,3 @@
     }
   ]
 }
-

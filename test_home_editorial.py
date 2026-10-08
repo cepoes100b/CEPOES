@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from deploy.preparar_sitio_publico import latest_home_publications,home_publications_hero,load_json
+from deploy.preparar_sitio_publico import latest_home_publications,home_publications_hero,home_budget_feature,restructure_home,load_json
 class HomeEditorialTests(unittest.TestCase):
     def test_current_selection(self):
         items=latest_home_publications()
@@ -21,3 +21,31 @@ class HomeEditorialTests(unittest.TestCase):
         self.assertEqual(hero.count('<h1>'),1)
         self.assertIn('tabindex="0"',hero)
         self.assertNotIn('setInterval',hero)
+
+    def test_budget_feature_and_health_link(self):
+        self.assertEqual(latest_home_publications()[0]['url'],'/publicaciones/informes/salud-mental-caba/')
+        hero=home_budget_feature()
+        self.assertIn('href="/presupuesto/2027/salud/"',hero)
+        self.assertIn('Explorar el presupuesto',hero)
+    def test_disabled_feature_restores_automatic_selection(self):
+        def changed(name):
+            data=load_json(name)
+            if name.endswith('home-editorial.json'):
+                data['budget_feature']['enabled']=False
+            return data
+        with patch('deploy.preparar_sitio_publico.load_json',side_effect=changed):
+            self.assertEqual(home_budget_feature(),'')
+    def test_unregistered_feature_is_rejected(self):
+        def changed(name):
+            data=load_json(name)
+            if name.endswith('home-editorial.json'):
+                data['budget_feature']['url']='/borrador/'
+            return data
+        with patch('deploy.preparar_sitio_publico.load_json',side_effect=changed):
+            with self.assertRaises(ValueError): home_budget_feature()
+    def test_budget_below_cards_and_idempotent(self):
+        source='<header class="home-hero"></header><main></main>'
+        once=restructure_home(source)
+        self.assertLess(once.index('home-publications-track'),once.index('home-budget-feature'))
+        twice=restructure_home(once)
+        self.assertEqual(twice.count('class="home-budget-feature"'),1)

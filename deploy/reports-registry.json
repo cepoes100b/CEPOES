@@ -98,6 +98,24 @@
       "period": "2026-06",
       "cover": "/assets/publicaciones/coyuntura-productiva-caba.svg",
       "pdf": "/publicaciones/files/informe-coyuntura-01-junio-2026.pdf"
+    },
+    {
+      "url": "/presupuesto/2027/",
+      "title": "Qué Ciudad financia el presupuesto 2027",
+      "subtitle": "Análisis integral desde 100 Barrios",
+      "description": "Ingresos, impuestos, deuda, gasto, inversión y políticas sectoriales del presupuesto porteño 2027, con un especial de Salud.",
+      "kind": "Informe integral · Proyecto de presupuesto 2027",
+      "period": "2026-10-08",
+      "format": "web"
+    },
+    {
+      "url": "/presupuesto/2027/salud/",
+      "title": "La salud pierde prioridad en el presupuesto de la Ciudad",
+      "subtitle": "Especial Salud · Presupuesto 2027",
+      "description": "Hospitales, CeSAC, personal, salud mental y 30 inversiones sanitarias, desde la perspectiva de 100 Barrios.",
+      "kind": "Especial Salud · Proyecto de presupuesto 2027",
+      "period": "2026-10-08",
+      "format": "web"
     }
   ]
 }

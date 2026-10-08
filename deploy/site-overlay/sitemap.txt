@@ -141,3 +141,6 @@ https://cepoes.org/territorio/seguridad-barrios-populares/
 https://cepoes.org/publicaciones/notas/tormenta-negra-seguridad-territorio/
 https://cepoes.org/publicaciones/informe-coyuntura-02-octubre-2026/
 https://cepoes.org/publicaciones/informes/salud-mental-caba/
+https://cepoes.org/presupuesto/2027/
+https://cepoes.org/prensa/presupuesto-2027-salud/
+https://cepoes.org/presupuesto/2027/salud/

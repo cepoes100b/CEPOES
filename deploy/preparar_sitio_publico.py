@@ -212,6 +212,7 @@ def territory_subnav(rel: str) -> str:
 def budget_subnav(rel: str) -> str:
     items = [
         ("/presupuesto/", "Panorama"),
+        ("/presupuesto/2027/", "Proyecto 2027"),
         ("/presupuesto/ejecucion/", "Ejecución y estructura"),
         ("/presupuesto/territorio/", "Territorio"),
         ("/presupuesto/diagnostico/", "Diagnóstico"),
@@ -219,6 +220,24 @@ def budget_subnav(rel: str) -> str:
     ]
     links = "".join(f'<a{active_link(rel, href)} href="{href}">{label}</a>' for href, label in items)
     return f'<nav aria-label="Navegación de Presupuesto" class="subnav"><div class="wrap subnav-in">{links}</div></nav>'
+
+
+def inject_budget_2027_bridge(source: str, rel: str) -> str:
+    """Acceso estable desde panorama y ejecución, sin editar datos generados."""
+    if rel not in {"/presupuesto/index.html", "/presupuesto/ejecucion/index.html"}:
+        return source
+    bridge = (
+        '<aside id="budget-2027-bridge" class="wrap" style="padding-top:22px;padding-bottom:22px">'
+        '<div style="padding:20px;border:1px solid var(--borde);border-left:4px solid var(--marca-osc);'
+        'border-radius:8px;background:var(--papel2)">'
+        '<strong style="color:var(--tinta)">Proyecto de Presupuesto 2027: análisis integral desde los barrios</strong>'
+        '<p style="margin:8px 0">Ingresos, impuestos, deuda, gasto, inversión y políticas sectoriales, con un especial de Salud. '
+        'El análisis del proyecto conserva su base de comparación y enlaza con este seguimiento de ejecución.</p>'
+        '<a href="/presupuesto/2027/" style="color:var(--marca-osc);text-decoration:underline;font-weight:700">'
+        'Leer el informe y consultar los datos</a></div></aside>'
+    )
+    source = re.sub(r'<aside\b[^>]*id=["\']budget-2027-bridge["\'][^>]*>.*?</aside>', '', source, flags=re.S)
+    return re.sub(r'(<main\b[^>]*>)', lambda match: match[0] + bridge, source, count=1, flags=re.I)
 
 
 def editorial_subnav(active: str) -> str:
@@ -522,6 +541,23 @@ def home_publications_hero() -> str:
         '<button type="button" data-home-slide="1" aria-label="Publicación siguiente">→</button></div></div></header>')
 
 
+def home_budget_feature() -> str:
+    feature = load_json("deploy/site-overlay/assets/data/home-editorial.json").get("budget_feature", {})
+    if not feature.get("enabled"):
+        return ''
+    overlay = ROOT / "deploy/site-overlay"
+    registered = {r['url'] for r in load_json("deploy/reports-registry.json")["reports"]}
+    for url in (feature['url'], feature['secondary_url']):
+        if url not in registered or not (overlay / url.lstrip('/') / 'index.html').is_file():
+            raise ValueError("El destacado presupuestario requiere informes registrados con página pública")
+    esc = lambda value: html.escape(str(value), quote=True)
+    return ('<section class="home-budget-feature" aria-labelledby="home-budget-title"><div class="wrap">'
+        '<div class="home-budget-panel"><div><span class="eyebrow">' + esc(feature['label']) + '</span>'
+        '<h2 id="home-budget-title">' + esc(feature['title']) + '</h2><p>' + esc(feature['summary']) + '</p></div>'
+        '<div class="home-budget-actions"><a href="' + esc(feature['url']) + '">' + esc(feature['cta']) + '</a>'
+        '<a href="' + esc(feature['secondary_url']) + '">' + esc(feature['secondary_cta']) + '</a></div></div></div></section>')
+
+
 def restructure_home(source: str) -> str:
     """Build the six-block editorial home from data and editable content."""
     data = load_json("datos.json")
@@ -529,7 +565,8 @@ def restructure_home(source: str) -> str:
     ipc, employment, pgb, poverty = data["ipcba"], data["empleo"], data["pgb"], data["pobreza"]
 
     hero = home_publications_hero()
-    source = replace_class_element(source, "header", "home-hero", hero)
+    source = re.sub(r'<section class="home-budget-feature"[^>]*>.*?</section>', '', source, flags=re.S)
+    source = replace_class_element(source, "header", "home-hero", hero + home_budget_feature())
 
     pillars = (
         '<section class="section home-strategy-section" aria-labelledby="home-strategy-title"><div class="wrap">'
@@ -873,6 +910,7 @@ def normalize_html(path: Path, site: Path) -> None:
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
+    source = inject_budget_2027_bridge(source, rel)
     source = ensure_site_fonts(source)
     if rel.startswith("/publicaciones/boletines/"):
         source = compact_newsletter_hero(source)
@@ -1005,4 +1043,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 

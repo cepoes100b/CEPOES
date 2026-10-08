@@ -1,8 +1,10 @@
-# Presupuesto CABA 2027 con eje en salud y territorio
+# Presupuesto CABA 2027: análisis integral y especial de Salud
 
 ## Contrato del producto
 
-Pedido del 8 de octubre de 2026: análisis integral del proyecto, sección del sitio enlazada a ejecución y comunicación de 100 Barrios. Salud es la prioridad editorial expresa. Se construye una sección de informe web en `/presupuesto/2027/`, con una nota de prensa asociada, y se prepara un documento editable de comunicación. No se autoriza aún la fusión ni el despliegue de esta nueva sección.
+Pedido del 8 de octubre de 2026, precisado por el usuario: `/presupuesto/2027/` es el análisis integral de todo el presupuesto. El informe sanitario ya preparado se conserva en `/presupuesto/2027/salud/`, enlazado desde el capítulo Salud del principal. Ambos conectan con ejecución; la nota sanitaria permanece asociada al especial. La ampliación está autorizada, no la fusión ni el despliegue.
+
+El principal aborda ingresos, impuestos y gasto tributario; composición económica; personal; resultados fiscales, deuda y riesgos; las 20 funciones; inversión y compromisos plurianuales; comunas y descentralización; modificaciones de crédito y seguimiento de ejecución. Cada sector identifica monto, participación, comparación real de escenario, composición 2027 y preguntas operativas. Se mantienen dos escenarios y una versión legible sin JavaScript. Los efectos sobre prestaciones son preguntas a verificar, no causalidad demostrada por el crédito agregado.
 
 Público: vecinos, equipos de salud, comuneros y legisladores. Preguntas: ¿qué prioridad recibe la salud?, ¿qué poder de compra tiene lo asignado?, ¿qué obras y personal están presupuestados?, ¿cómo se siguen los compromisos en la ejecución? Lectura inicial de hallazgos, exploración por escenario, composición de Salud, obras sanitarias y atención territorial, contexto fiscal, metodología y propuestas.
 

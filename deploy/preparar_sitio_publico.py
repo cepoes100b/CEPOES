@@ -212,7 +212,7 @@ def territory_subnav(rel: str) -> str:
 def budget_subnav(rel: str) -> str:
     items = [
         ("/presupuesto/", "Panorama"),
-        ("/presupuesto/2027/", "Proyecto 2027 · Salud"),
+        ("/presupuesto/2027/", "Proyecto 2027"),
         ("/presupuesto/ejecucion/", "Ejecución y estructura"),
         ("/presupuesto/territorio/", "Territorio"),
         ("/presupuesto/diagnostico/", "Diagnóstico"),
@@ -230,8 +230,8 @@ def inject_budget_2027_bridge(source: str, rel: str) -> str:
         '<aside id="budget-2027-bridge" class="wrap" style="padding-top:22px;padding-bottom:22px">'
         '<div style="padding:20px;border:1px solid var(--borde);border-left:4px solid var(--marca-osc);'
         'border-radius:8px;background:var(--papel2)">'
-        '<strong style="color:var(--tinta)">Proyecto de Presupuesto 2027: la salud y los barrios en el centro</strong>'
-        '<p style="margin:8px 0">Prioridades sanitarias, hospitales, CeSAC, personal y obras. '
+        '<strong style="color:var(--tinta)">Proyecto de Presupuesto 2027: análisis integral desde los barrios</strong>'
+        '<p style="margin:8px 0">Ingresos, impuestos, deuda, gasto, inversión y políticas sectoriales, con un especial de Salud. '
         'El análisis del proyecto conserva su base de comparación y enlaza con este seguimiento de ejecución.</p>'
         '<a href="/presupuesto/2027/" style="color:var(--marca-osc);text-decoration:underline;font-weight:700">'
         'Leer el informe y consultar los datos</a></div></aside>'

@@ -211,7 +211,12 @@
     "capital_2027": 4325717119862,
     "fuentes_financieras": 918357557463,
     "endeudamiento_y_otros_pasivos": 755576358897,
-    "amortizacion_y_disminucion_otros_pasivos": 613916273766
+    "amortizacion_y_disminucion_otros_pasivos": 613916273766,
+    "recursos_corrientes": 24092481443901,
+    "recursos_capital": 3175598228,
+    "aplicaciones_financieras": 919674000329,
+    "incremento_inversion_financiera": 305757726563,
+    "disminucion_inversion_financiera": 162781198566
   },
   "obras_seleccionadas": [
     {
@@ -622,6 +627,300 @@
     "Los escenarios de inflación promedio son estimaciones, no inflación observada ni garantía de precios.",
     "Las obras seleccionadas son una selección trazable del PPI; no una lista exhaustiva del presupuesto operativo de cada hospital.",
     "El gasto en personal incluye cargas y componentes distintos del salario de bolsillo. Los cargos no equivalen a personas efectivamente ocupadas.",
-    "Los valores del proyecto son asignaciones previstas; su ejecución y metas físicas deben verificarse posteriormente."
+    "Los valores del proyecto son asignaciones previstas; su ejecución y metas físicas deben verificarse posteriormente.",
+    "Los gastos tributarios son conceptos seleccionados, no inventario completo ni ahorro recuperable automáticamente. No se suman regímenes potencialmente superpuestos."
+  ],
+  "ingresos_corrientes": [
+    {
+      "nombre": "Tributarios",
+      "vigente_2026_06_30": 15791387300000.0,
+      "proyecto_2027": 19094214003433,
+      "pagina_mensaje": 69
+    },
+    {
+      "nombre": "No tributarios",
+      "vigente_2026_06_30": 461777100000.0,
+      "proyecto_2027": 663825629989,
+      "pagina_mensaje": 69
+    },
+    {
+      "nombre": "Venta de bienes y servicios",
+      "vigente_2026_06_30": 277535700000.0,
+      "proyecto_2027": 365617417614,
+      "pagina_mensaje": 69
+    },
+    {
+      "nombre": "Rentas de la propiedad",
+      "vigente_2026_06_30": 599312900000.0,
+      "proyecto_2027": 951290901460,
+      "pagina_mensaje": 69
+    },
+    {
+      "nombre": "Transferencias corrientes",
+      "vigente_2026_06_30": 2744696200000.0,
+      "proyecto_2027": 3017533491405,
+      "pagina_mensaje": 69
+    }
+  ],
+  "tributos": [
+    {
+      "nombre": "Ingresos Brutos",
+      "vigente_2026_06_30": 10938684600000,
+      "proyecto_2027": 13279892300000,
+      "pagina_mensaje": 70,
+      "precision": "millones con una décima"
+    },
+    {
+      "nombre": "Inmuebles",
+      "vigente_2026_06_30": 1146137400000,
+      "proyecto_2027": 1454917600000,
+      "pagina_mensaje": 70,
+      "precision": "millones con una décima"
+    },
+    {
+      "nombre": "Vehículos",
+      "vigente_2026_06_30": 615803900000,
+      "proyecto_2027": 491794800000,
+      "pagina_mensaje": 70,
+      "precision": "millones con una décima"
+    },
+    {
+      "nombre": "Sellos",
+      "vigente_2026_06_30": 1127797700000,
+      "proyecto_2027": 1448901000000,
+      "pagina_mensaje": 70,
+      "precision": "millones con una décima"
+    },
+    {
+      "nombre": "Electricidad",
+      "vigente_2026_06_30": 101854000000,
+      "proyecto_2027": 131857400000,
+      "pagina_mensaje": 70,
+      "precision": "millones con una décima"
+    },
+    {
+      "nombre": "Contribución ferroviaria",
+      "vigente_2026_06_30": 37644000000,
+      "proyecto_2027": 48732900000,
+      "pagina_mensaje": 70,
+      "precision": "millones con una décima"
+    },
+    {
+      "nombre": "Publicidad",
+      "vigente_2026_06_30": 12462000000,
+      "proyecto_2027": 11428300000,
+      "pagina_mensaje": 70,
+      "precision": "millones con una décima"
+    },
+    {
+      "nombre": "Grandes generadores de residuos",
+      "vigente_2026_06_30": 707000000,
+      "proyecto_2027": 704700000,
+      "pagina_mensaje": 70,
+      "precision": "millones con una décima"
+    },
+    {
+      "nombre": "Coparticipación federal",
+      "vigente_2026_06_30": 1810296600000,
+      "proyecto_2027": 2225985000000,
+      "pagina_mensaje": 70,
+      "precision": "millones con una décima"
+    }
+  ],
+  "economica": [
+    {
+      "nombre": "Remuneraciones al personal",
+      "vigente_2026_06_30": 8105637600000,
+      "proyecto_2027": 9950480728332,
+      "devengado_2026_06_30": 3509818000000,
+      "fuente": "Cuadro 2.3 del Mensaje (p. 52) y Planilla 16 (p. 22 del anexo)"
+    },
+    {
+      "nombre": "Consumo y otros gastos corrientes primarios",
+      "vigente_2026_06_30": 5170366000000,
+      "proyecto_2027": 6428377453576,
+      "devengado_2026_06_30": 1602744200000,
+      "fuente": "Cuadro 2.3 del Mensaje (p. 52) y Planilla 16 (p. 22 del anexo)"
+    },
+    {
+      "nombre": "Transferencias corrientes",
+      "vigente_2026_06_30": 2289396200000,
+      "proyecto_2027": 2797877991872,
+      "devengado_2026_06_30": 911698600000,
+      "fuente": "Cuadro 2.3 del Mensaje (p. 52) y Planilla 16 (p. 22 del anexo)"
+    },
+    {
+      "nombre": "Gasto de capital",
+      "vigente_2026_06_30": 4033207400000,
+      "proyecto_2027": 4325717119862,
+      "devengado_2026_06_30": 989030300000,
+      "fuente": "Cuadro 2.3 del Mensaje (p. 52) y Planilla 16 (p. 22 del anexo)"
+    },
+    {
+      "nombre": "Intereses",
+      "vigente_2026_06_30": 278544800000,
+      "proyecto_2027": 591887305621,
+      "devengado_2026_06_30": 90814800000,
+      "fuente": "Cuadro 2.3 del Mensaje (p. 52) y Planilla 16 (p. 22 del anexo)"
+    }
+  ],
+  "gasto_tributario_seleccionado": [
+    {
+      "nombre": "ABL",
+      "millones_2027": 230230.9,
+      "fuente": "Mensaje, pp. 66–67"
+    },
+    {
+      "nombre": "Patentes",
+      "millones_2027": 93889.1,
+      "fuente": "Mensaje, pp. 66–67"
+    },
+    {
+      "nombre": "Distrito Tecnológico",
+      "millones_2027": 192515,
+      "fuente": "Mensaje, pp. 66–67"
+    },
+    {
+      "nombre": "Distrito Audiovisual y de las Artes",
+      "millones_2027": 9161,
+      "fuente": "Mensaje, pp. 66–67"
+    },
+    {
+      "nombre": "Distrito del Diseño",
+      "millones_2027": 5839,
+      "fuente": "Mensaje, pp. 66–67"
+    },
+    {
+      "nombre": "Microcentro",
+      "millones_2027": 101402,
+      "fuente": "Mensaje, pp. 66–67"
+    },
+    {
+      "nombre": "Distrito del Vino",
+      "millones_2027": 2789,
+      "fuente": "Mensaje, pp. 66–67"
+    },
+    {
+      "nombre": "Economía del conocimiento",
+      "millones_2027": 42291,
+      "fuente": "Mensaje, pp. 66–67"
+    },
+    {
+      "nombre": "Mecenazgo",
+      "millones_2027": 17634,
+      "fuente": "Mensaje, pp. 66–67"
+    }
+  ],
+  "macro": {
+    "crecimiento_pib_nacional": 4,
+    "inflacion_diciembre_diciembre": 18,
+    "tipo_cambio_diciembre_2027": 1847.6,
+    "fuente": "Presentación de Hacienda del 7/10/2026; hipótesis, no resultados observados"
+  },
+  "composicion_funciones": [
+    {
+      "nombre": "Educación",
+      "personal": 2800605694226,
+      "consumo": 759198758558,
+      "transferencias": 705717321877,
+      "otros": 0,
+      "capital": 469974376564
+    },
+    {
+      "nombre": "Promoción y acción social",
+      "personal": 232638622849,
+      "consumo": 311495204564,
+      "transferencias": 1678591566149,
+      "otros": 0,
+      "capital": 11797258165
+    },
+    {
+      "nombre": "Vivienda y Urbanismo",
+      "personal": 100789380542,
+      "consumo": 78944304971,
+      "transferencias": 5633061899,
+      "otros": 0,
+      "capital": 641323087377
+    },
+    {
+      "nombre": "Transporte",
+      "personal": 26045446928,
+      "consumo": 37729679277,
+      "transferencias": 50744434932,
+      "otros": 0,
+      "capital": 1133777549879
+    },
+    {
+      "nombre": "Seguridad interior",
+      "personal": 2136832658610,
+      "consumo": 858750082315,
+      "transferencias": 36659821951,
+      "otros": 0,
+      "capital": 423098752666
+    },
+    {
+      "nombre": "Sistema penal",
+      "personal": 38951071214,
+      "consumo": 27302446494,
+      "transferencias": 2858306770,
+      "otros": 0,
+      "capital": 69987965947
+    },
+    {
+      "nombre": "Cultura",
+      "personal": 156260865147,
+      "consumo": 142039262075,
+      "transferencias": 28994792785,
+      "otros": 271809614,
+      "capital": 22961535711
+    },
+    {
+      "nombre": "Trabajo",
+      "personal": 34734935063,
+      "consumo": 78797883821,
+      "transferencias": 72554473567,
+      "otros": 0,
+      "capital": 10568315673
+    },
+    {
+      "nombre": "Ecología",
+      "personal": 57249554399,
+      "consumo": 147653317838,
+      "transferencias": 2727039881,
+      "otros": 0,
+      "capital": 313238777124
+    },
+    {
+      "nombre": "Servicios Urbanos",
+      "personal": 34633494891,
+      "consumo": 1683553727229,
+      "transferencias": 0,
+      "otros": 0,
+      "capital": 365035475842
+    },
+    {
+      "nombre": "Agua potable y alcantarillado",
+      "personal": 15350717671,
+      "consumo": 3887293875,
+      "transferencias": 0,
+      "otros": 0,
+      "capital": 189380265899
+    },
+    {
+      "nombre": "Turismo",
+      "personal": 4118083195,
+      "consumo": 77169413014,
+      "transferencias": 0,
+      "otros": 0,
+      "capital": 41601461
+    },
+    {
+      "nombre": "Industria y Comercio",
+      "personal": 9328851181,
+      "consumo": 35862105187,
+      "transferencias": 10315800799,
+      "otros": 0,
+      "capital": 162606078
+    }
   ]
 }

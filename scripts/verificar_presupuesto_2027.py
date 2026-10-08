@@ -23,12 +23,26 @@ keys=[(x['efector'],x['obra']) for x in d['obras_seleccionadas']]
 assert len(set(keys))==30
 assert all(x['pagina_pdf'] and x['proyecto_2027']>=0 for x in d['obras_seleccionadas'])
 assert len(d['comunas_entidad'])==15
-source=(SITE/'presupuesto/2027/index.html').read_text()
+source=(SITE/'presupuesto/2027/salud/index.html').read_text()
 ids=re.findall(r'\bid="([^"]+)"',source)
 assert len(set(ids))==len(ids)
 assert all(a[1:] in ids for a in re.findall(r'href="(#[^"]+)"',source))
 assert source.count('data-real-row=')==20 and source.count('data-work-type=')==30
 assert '/presupuesto/ejecucion/' in source
+assert '/presupuesto/2027/' in source
+integral=(SITE/'presupuesto/2027/index.html').read_text()
+assert '/presupuesto/2027/salud/' in integral
+assert integral.count('data-general-real=')==39
+assert integral.count('data-sector-real=')==13
+assert sum(r['proyecto_2027'] for r in d['economica'])==d['total_2027']
+assert sum(r['proyecto_2027'] for r in d['ingresos_corrientes'])==d['fiscal']['recursos_corrientes']
+for r in d['composicion_funciones']:
+ total=sum(r[k] for k in ('personal','consumo','transferencias','otros','capital'))
+ assert total==next(x['proyecto_2027'] for x in d['funciones'] if x['nombre']==r['nombre'])
+assert d['fiscal']['aplicaciones_financieras']-d['fiscal']['fuentes_financieras']==d['fiscal']['resultado_financiero']
+ids2=re.findall(r'\bid="([^"]+)"',integral)
+assert len(set(ids2))==len(ids2)
+assert all(a[1:] in ids2 for a in re.findall(r'href="(#[^"]+)"',integral))
 spec=importlib.util.spec_from_file_location('normalizer',ROOT/'deploy/preparar_sitio_publico.py')
 normalizer=importlib.util.module_from_spec(spec);spec.loader.exec_module(normalizer)
 for url in ('/presupuesto/index.html','/presupuesto/ejecucion/index.html'):

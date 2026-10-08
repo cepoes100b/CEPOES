@@ -33,3 +33,10 @@ Procesamiento de cinco destinatarios por ejecución; reserva conservadora de 50 
 ## Rollback
 
 Desactivar primero NEWSLETTER_ENABLED en GitHub y Supabase. Preservar suscripciones, cola y estados de envío. Revertir frontend sólo si se restaura la política de INSERT anterior como contingencia breve. No borrar entregas aceptadas ni reutilizar números de edición.
+# Plantilla editorial y prueba de distribución — 8 de octubre de 2026 (UTC)
+
+El sistema ya confirmó una suscripción y entregó el N.º 5 únicamente al destinatario de prueba autorizado. La configuración `NEWSLETTER_DISPATCH_SECRET` debe tener el mismo valor en Supabase y en **Repository secrets** de GitHub. El workflow 37670720937 se ejecutó satisfactoriamente después de corregir ese faltante.
+
+El correo usa la marca tipográfica y los colores de CEPOES, número y mes, introducción, tres indicadores, hasta cuatro extractos y agenda pública. El catálogo toma texto y fuentes del HTML aprobado. La columna privada `newsletter_editions.email_content` conserva una instantánea antes del primer envío; los reintentos reutilizan ese contenido. Se mantiene la alternativa de texto simple y la baja personal. La nueva prueba de diseño se envía sólo al destinatario autorizado, con una clave de idempotencia independiente del envío automático ya realizado.
+
+Las siguientes secciones conservan el procedimiento original de activación. La baja real y la recepción en otros clientes de correo todavía requieren comprobación.

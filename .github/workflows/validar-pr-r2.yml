@@ -38,6 +38,11 @@ jobs:
           python -m unittest test_lo_nuevo.py test_catalogo_informes.py test_home_editorial.py
           python generar_catalogo_informes.py deploy/site-overlay --check-source
 
+      - name: Verificar suscripción y plantilla editorial del boletín
+        run: |
+          python -m unittest discover -s tests -p test_newsletter_editorial.py
+          node --test tests/newsletter_delivery.test.mjs tests/newsletter_logic.test.mjs
+
 
       - name: Verificar cadena segura de actualización a publicación
         run: python -m unittest test_cadena_publicacion.py test_endeudamiento_publico.py

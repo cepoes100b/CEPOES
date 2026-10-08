@@ -433,3 +433,42 @@
     --bol-font-meta: Arial, sans-serif;
   }
 }
+
+/* Boletines: portada compacta compartida. Informes conservan su composición. */
+.bol:not(.inf) .bol-hero { padding-block: 1.25rem 1rem; }
+.bol:not(.inf) .bol-hero__serie { margin-bottom: 1rem; padding-bottom: .65rem; }
+.bol:not(.inf) .bol-hero__grid {
+  grid-template-columns: minmax(0, 1fr) 10rem;
+  gap: 1.5rem;
+}
+.bol:not(.inf) .bol-hero__title {
+  max-width: 28ch;
+  font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.75rem);
+  margin-bottom: .65rem;
+}
+.bol:not(.inf) .bol-hero__dek { max-width: 65ch; font-size: 1rem; line-height: 1.5; }
+.bol:not(.inf) .bol-hero__meta { margin-top: .75rem; }
+.bol:not(.inf) .bol-acciones { margin-top: .85rem; }
+.bol:not(.inf) .bol-hero__cover { width: 100%; max-width: 10rem; margin: 0; }
+.bol-sumario-toggle { margin-top: .75rem; }
+.bol-sumario-toggle > summary {
+  cursor: pointer; padding: .5rem 0; min-height: 44px;
+  font-size: .85rem; font-weight: 600; color: var(--bol-tinta);
+}
+.bol-sumario-toggle[open] .bol-sumario {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1.5rem; margin-top: .5rem;
+}
+.bol-sumario-toggle .bol-sumario__t { grid-column: 1 / -1; }
+.bol:not(.inf) #resumen { padding-top: 1.5rem; }
+@media (max-width: 640px) {
+  .bol:not(.inf) .bol-hero { padding-block: 1rem .5rem; }
+  .bol:not(.inf) .bol-hero__grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .bol:not(.inf) .bol-hero__grid > div:last-child { display: none; }
+  .bol:not(.inf) .bol-hero__title { max-width: none; font-size: clamp(1.6rem, 6.5vw, 2.1rem); }
+  .bol:not(.inf) .bol-hero__meta { display: flex; gap: .25rem .6rem; font-size: .65rem; }
+  .bol:not(.inf) .bol-acciones { display: flex; gap: .5rem; }
+  .bol:not(.inf) .bol-acciones .bol-btn { width: auto; padding-inline: .9rem; }
+  .bol-sumario-toggle[open] .bol-sumario { grid-template-columns: minmax(0, 1fr); }
+  .bol:not(.inf) #resumen { padding-top: 1rem; }
+}

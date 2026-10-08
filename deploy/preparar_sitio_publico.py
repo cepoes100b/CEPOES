@@ -823,11 +823,34 @@ def apply_fallbacks(source: str, rel: str) -> str:
     return source
 
 
+def compact_newsletter_hero(source: str) -> str:
+    """Canonical compact HTML cover for every newsletter, including future editions."""
+    if 'class="bol-sumario-toggle"' in source:
+        return source
+    match = re.search(r'<nav class="bol-sumario"[^>]*>.*?</nav>', source, flags=re.S)
+    if not match:
+        return source
+    nav = match.group(0)
+    source = source[:match.start()] + source[match.end():]
+    details = ('<details class="bol-sumario-toggle">'
+               '<summary>En este número · Ver sumario</summary>'
+               + nav + '</details>')
+    # Put the expandable index after both cover columns, so it never dictates
+    # the height of an otherwise empty column. Closed by default, without JS.
+    hero = re.search(r'<header class="bol-hero">.*?</header>', source, flags=re.S)
+    if not hero:
+        raise ValueError("Boletín sin portada canónica")
+    end = source.rfind('</div>', hero.start(), hero.end())
+    return source[:end] + details + source[end:]
+
+
 def normalize_html(path: Path, site: Path) -> None:
     rel = "/" + path.relative_to(site).as_posix()
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
+    if rel.startswith("/publicaciones/boletines/"):
+        source = compact_newsletter_hero(source)
     # Product notes should lead to their own documented definitions. The
     # institutional footer is replaced with the canonical hub link below.
     method_sheets = {

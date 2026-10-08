@@ -46,7 +46,7 @@ jobs:
 
 
       - name: Verificar cadena segura de actualización a publicación
-        run: python -m unittest test_cadena_publicacion.py test_endeudamiento_publico.py
+        run: python -m unittest test_cadena_publicacion.py test_endeudamiento_publico.py test_ipc_publicacion.py
 
       - name: Verificar parser de panorama actual sin red
         run: |
@@ -73,3 +73,4 @@ jobs:
           marker = fetch_marker('cepoes100b/CEPOES', f'ci-{time.time_ns()}')
           print('Marcador legacy ausente (HTTP 404)' if marker is None else 'Marcador válido: ' + marker['commit_sha'])
           PYMARKER
+

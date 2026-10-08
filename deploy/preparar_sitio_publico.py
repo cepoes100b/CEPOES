@@ -212,6 +212,7 @@ def territory_subnav(rel: str) -> str:
 def budget_subnav(rel: str) -> str:
     items = [
         ("/presupuesto/", "Panorama"),
+        ("/presupuesto/2027/", "Proyecto 2027 · Salud"),
         ("/presupuesto/ejecucion/", "Ejecución y estructura"),
         ("/presupuesto/territorio/", "Territorio"),
         ("/presupuesto/diagnostico/", "Diagnóstico"),
@@ -219,6 +220,24 @@ def budget_subnav(rel: str) -> str:
     ]
     links = "".join(f'<a{active_link(rel, href)} href="{href}">{label}</a>' for href, label in items)
     return f'<nav aria-label="Navegación de Presupuesto" class="subnav"><div class="wrap subnav-in">{links}</div></nav>'
+
+
+def inject_budget_2027_bridge(source: str, rel: str) -> str:
+    """Acceso estable desde panorama y ejecución, sin editar datos generados."""
+    if rel not in {"/presupuesto/index.html", "/presupuesto/ejecucion/index.html"}:
+        return source
+    bridge = (
+        '<aside id="budget-2027-bridge" class="wrap" style="padding-top:22px;padding-bottom:22px">'
+        '<div style="padding:20px;border:1px solid var(--borde);border-left:4px solid var(--marca-osc);'
+        'border-radius:8px;background:var(--papel2)">'
+        '<strong style="color:var(--tinta)">Proyecto de Presupuesto 2027: la salud y los barrios en el centro</strong>'
+        '<p style="margin:8px 0">Prioridades sanitarias, hospitales, CeSAC, personal y obras. '
+        'El análisis del proyecto conserva su base de comparación y enlaza con este seguimiento de ejecución.</p>'
+        '<a href="/presupuesto/2027/" style="color:var(--marca-osc);text-decoration:underline;font-weight:700">'
+        'Leer el informe y consultar los datos</a></div></aside>'
+    )
+    source = re.sub(r'<aside\b[^>]*id=["\']budget-2027-bridge["\'][^>]*>.*?</aside>', '', source, flags=re.S)
+    return re.sub(r'(<main\b[^>]*>)', lambda match: match[0] + bridge, source, count=1, flags=re.I)
 
 
 def editorial_subnav(active: str) -> str:
@@ -873,6 +892,7 @@ def normalize_html(path: Path, site: Path) -> None:
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
+    source = inject_budget_2027_bridge(source, rel)
     source = ensure_site_fonts(source)
     if rel.startswith("/publicaciones/boletines/"):
         source = compact_newsletter_hero(source)
@@ -1005,4 +1025,5 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 

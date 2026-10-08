@@ -2,6 +2,15 @@
   "version": 1,
   "reports": [
     {
+      "url": "/presupuesto/2027/",
+      "title": "Presupuesto CABA 2027 con la salud y los barrios en el centro",
+      "subtitle": "Prioridades sanitarias, inversiones y seguimiento de la ejecución",
+      "description": "La salud pierde participación en el gasto. Análisis de hospitales, CeSAC, personal, salud mental e inversiones, con escenarios y datos trazables del proyecto 2027.",
+      "kind": "Informe web · Proyecto de Presupuesto 2027 · Octubre de 2026",
+      "period": "2026-10-08",
+      "format": "web"
+    },
+    {
       "url": "/publicaciones/informe-coyuntura-02-octubre-2026/",
       "title": "Producción y empleo bajo presión",
       "subtitle": "Análisis del sector real | Segundo cuatrimestre 2026",

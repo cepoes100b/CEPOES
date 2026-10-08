@@ -1,0 +1,627 @@
+{
+  "schema": "cepoes-presupuesto-proyecto-v1",
+  "fecha_corte": "2026-10-08",
+  "estado": "Proyecto presentado, en tratamiento legislativo",
+  "version": "PDLEY-2026-36 del 30/09/2026",
+  "unidad": "pesos argentinos nominales",
+  "universo": "Administración Gubernamental del GCABA",
+  "base_2026": "Cuadro 2.4 del Mensaje, vigente y devengado al 30/06/2026; valores publicados en millones con una décima",
+  "total_2027": 24094340599263,
+  "vigente_2026_06_30": 19877152000000,
+  "devengado_2026_06_30": 7104105900000,
+  "escenarios": [
+    {
+      "id": "bloque",
+      "nombre": "Escenario del bloque",
+      "inflacion_promedio": 21.54,
+      "factor": 1.2154,
+      "fuente": "Sitio Fuerza por Buenos Aires y ficha Salud de la carpeta compartida; estimación de IPCBA promedio 2027/2026"
+    },
+    {
+      "id": "alternativo",
+      "nombre": "Escenario alternativo",
+      "inflacion_promedio": 23.0,
+      "factor": 1.23,
+      "fuente": "Resumen inflación 2027, deflactores y presupuesto CABA de la carpeta compartida; trayectoria mensual estimada"
+    }
+  ],
+  "funciones": [
+    {
+      "nombre": "Legislativa",
+      "proyecto_2027": 265093707021,
+      "vigente_2026_06_30": 219293900000.0,
+      "devengado_2026_06_30": 70811900000.0
+    },
+    {
+      "nombre": "Judicial",
+      "proyecto_2027": 1802706124393,
+      "vigente_2026_06_30": 1421037200000.0,
+      "devengado_2026_06_30": 499082100000.0
+    },
+    {
+      "nombre": "Dirección ejecutiva",
+      "proyecto_2027": 796937739595,
+      "vigente_2026_06_30": 611364000000.0,
+      "devengado_2026_06_30": 287094100000.0
+    },
+    {
+      "nombre": "Administración fiscal",
+      "proyecto_2027": 284524286645,
+      "vigente_2026_06_30": 239453100000.0,
+      "devengado_2026_06_30": 108575700000.0
+    },
+    {
+      "nombre": "Control de la gestión",
+      "proyecto_2027": 234278330184,
+      "vigente_2026_06_30": 194158800000.0,
+      "devengado_2026_06_30": 83228800000.0
+    },
+    {
+      "nombre": "Seguridad interior",
+      "proyecto_2027": 3455341315542,
+      "vigente_2026_06_30": 2830768500000.0,
+      "devengado_2026_06_30": 1116490500000.0
+    },
+    {
+      "nombre": "Sistema penal",
+      "proyecto_2027": 139099790425,
+      "vigente_2026_06_30": 88747300000.0,
+      "devengado_2026_06_30": 22038900000.0
+    },
+    {
+      "nombre": "Salud",
+      "proyecto_2027": 3966268774382,
+      "vigente_2026_06_30": 3356553000000.0,
+      "devengado_2026_06_30": 1224578100000.0
+    },
+    {
+      "nombre": "Promoción y acción social",
+      "proyecto_2027": 2234522651727,
+      "vigente_2026_06_30": 1843349300000.0,
+      "devengado_2026_06_30": 702462900000.0
+    },
+    {
+      "nombre": "Educación",
+      "proyecto_2027": 4735496151225,
+      "vigente_2026_06_30": 3917113000000.0,
+      "devengado_2026_06_30": 1576030100000.0
+    },
+    {
+      "nombre": "Cultura",
+      "proyecto_2027": 350528265332,
+      "vigente_2026_06_30": 314823600000.0,
+      "devengado_2026_06_30": 142937100000.0
+    },
+    {
+      "nombre": "Trabajo",
+      "proyecto_2027": 196655608124,
+      "vigente_2026_06_30": 184547000000.0,
+      "devengado_2026_06_30": 43236000000.0
+    },
+    {
+      "nombre": "Vivienda y Urbanismo",
+      "proyecto_2027": 826689834789,
+      "vigente_2026_06_30": 686540300000.0,
+      "devengado_2026_06_30": 229294000000.0
+    },
+    {
+      "nombre": "Agua potable y alcantarillado",
+      "proyecto_2027": 208618277445,
+      "vigente_2026_06_30": 139615700000.0,
+      "devengado_2026_06_30": 45864300000.0
+    },
+    {
+      "nombre": "Servicios Urbanos",
+      "proyecto_2027": 2083222697962,
+      "vigente_2026_06_30": 1784674600000.0,
+      "devengado_2026_06_30": 503612300000.0
+    },
+    {
+      "nombre": "Transporte",
+      "proyecto_2027": 1248297111016,
+      "vigente_2026_06_30": 1186933600000.0,
+      "devengado_2026_06_30": 149624000000.0
+    },
+    {
+      "nombre": "Ecología",
+      "proyecto_2027": 520868689242,
+      "vigente_2026_06_30": 465144800000.0,
+      "devengado_2026_06_30": 150162000000.0
+    },
+    {
+      "nombre": "Turismo",
+      "proyecto_2027": 81329097670,
+      "vigente_2026_06_30": 55503100000.0,
+      "devengado_2026_06_30": 34872900000.0
+    },
+    {
+      "nombre": "Industria y Comercio",
+      "proyecto_2027": 55669363245,
+      "vigente_2026_06_30": 43037700000.0,
+      "devengado_2026_06_30": 20034300000.0
+    },
+    {
+      "nombre": "Deuda Pública - Intereses y Gastos",
+      "proyecto_2027": 608192783299,
+      "vigente_2026_06_30": 294493600000.0,
+      "devengado_2026_06_30": 94076000000.0
+    }
+  ],
+  "salud": {
+    "funcion_total": 3966268774382,
+    "ministerio_total": 3986126808100,
+    "composicion_economica": [
+      {
+        "nombre": "Remuneraciones",
+        "monto": 2198569883887
+      },
+      {
+        "nombre": "Gastos de consumo",
+        "monto": 1191662497197
+      },
+      {
+        "nombre": "Transferencias corrientes",
+        "monto": 140417828589
+      },
+      {
+        "nombre": "Gasto de capital",
+        "monto": 435618564709
+      }
+    ],
+    "ministerio_capital": 435618072398,
+    "ministerio_personal": 2133228779062,
+    "dotacion": [
+      {
+        "nombre": "Carrera profesional hospitalaria",
+        "cargos": 17082
+      },
+      {
+        "nombre": "Enfermería y técnico profesional de salud",
+        "cargos": 14426
+      },
+      {
+        "nombre": "Carrera administrativa",
+        "cargos": 6196
+      },
+      {
+        "nombre": "Residentes",
+        "cargos": 4070
+      },
+      {
+        "nombre": "Personal docente",
+        "cargos": 255
+      },
+      {
+        "nombre": "Otras categorías",
+        "cargos": 366
+      }
+    ],
+    "dotacion_total": 42395,
+    "cesac_mencionados_mensaje": 51,
+    "ppi_total_2027": 417642982741,
+    "ppi_total_2028": 152097102880,
+    "ppi_total_2029": 152097102880
+  },
+  "fiscal": {
+    "recursos": 24095657042129,
+    "resultado_primario": 593203748487,
+    "intereses": 591887305621,
+    "resultado_financiero": 1316442866,
+    "capital_2026": 4033207400000,
+    "capital_2027": 4325717119862,
+    "fuentes_financieras": 918357557463,
+    "endeudamiento_y_otros_pasivos": 755576358897,
+    "amortizacion_y_disminucion_otros_pasivos": 613916273766
+  },
+  "obras_seleccionadas": [
+    {
+      "efector": "Argerich",
+      "obra": "Guardia, kinesiología y áreas de apoyo",
+      "proyecto_2027": 3837337339,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Argerich",
+      "obra": "Puesta en valor",
+      "proyecto_2027": 6812493779,
+      "plan_2028": 6812493779,
+      "plan_2029": 6812493779,
+      "pagina_pdf": 278,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Penna",
+      "obra": "Consultorios externos",
+      "proyecto_2027": 3149937793,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Penna",
+      "obra": "Ampliación del centro quirúrgico",
+      "proyecto_2027": 8942162314,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 277,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Penna",
+      "obra": "Puesta en valor",
+      "proyecto_2027": 4192092926,
+      "plan_2028": 4192092926,
+      "plan_2029": 4192092926,
+      "pagina_pdf": 280,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Piñero",
+      "obra": "Consultorios externos e imágenes",
+      "proyecto_2027": 6602551999,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Piñero",
+      "obra": "Remodelación del centro obstétrico",
+      "proyecto_2027": 8196982121,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 277,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Piñero",
+      "obra": "Puesta en valor",
+      "proyecto_2027": 7901191135,
+      "plan_2028": 7901191135,
+      "plan_2029": 7901191135,
+      "pagina_pdf": 281,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Santojanni",
+      "obra": "Guardia y reorganización de consulta externa",
+      "proyecto_2027": 7324589024,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 277,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Santojanni",
+      "obra": "Puesta en valor",
+      "proyecto_2027": 6172462600,
+      "plan_2028": 6172462600,
+      "plan_2029": 6172462600,
+      "pagina_pdf": 282,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Borda",
+      "obra": "Ampliación de consulta externa",
+      "proyecto_2027": 1806399130,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "salud-mental",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Borda",
+      "obra": "Puesta en valor",
+      "proyecto_2027": 7130134963,
+      "plan_2028": 7130134963,
+      "plan_2029": 7130134963,
+      "pagina_pdf": 278,
+      "tipo": "salud-mental",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Moyano",
+      "obra": "Ampliación de consulta externa",
+      "proyecto_2027": 2217573911,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "salud-mental",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Moyano",
+      "obra": "Puesta en valor",
+      "proyecto_2027": 5053070965,
+      "plan_2028": 5053070965,
+      "plan_2029": 5053070965,
+      "pagina_pdf": 280,
+      "tipo": "salud-mental",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Alvear",
+      "obra": "Puesta en valor",
+      "proyecto_2027": 1773197662,
+      "plan_2028": 1773197662,
+      "plan_2029": 1773197662,
+      "pagina_pdf": 278,
+      "tipo": "salud-mental",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Tobar García",
+      "obra": "Puesta en valor",
+      "proyecto_2027": 1682111212,
+      "plan_2028": 1682111212,
+      "plan_2029": 1682111212,
+      "pagina_pdf": 283,
+      "tipo": "salud-mental",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Ameghino",
+      "obra": "Puesta en valor",
+      "proyecto_2027": 633697304,
+      "plan_2028": 633697304,
+      "plan_2029": 633697304,
+      "pagina_pdf": 283,
+      "tipo": "salud-mental",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "CeSAC",
+      "obra": "Puesta en valor de centros de salud y acción comunitaria",
+      "proyecto_2027": 9048004858,
+      "plan_2028": 9048004858,
+      "plan_2029": 9048004858,
+      "pagina_pdf": 284,
+      "tipo": "atencion-primaria",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Red hospitalaria",
+      "obra": "Equipamiento hospitalario",
+      "proyecto_2027": 13368929947,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 284,
+      "tipo": "equipamiento",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Ramos Mejía",
+      "obra": "Remodelación integral",
+      "proyecto_2027": 4748288189,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Durand",
+      "obra": "Refuncionalización de emergencias",
+      "proyecto_2027": 6336160726,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 277,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Durand",
+      "obra": "Áreas de diagnóstico y tratamiento",
+      "proyecto_2027": 9689471593,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 277,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Álvarez",
+      "obra": "Nuevo edificio de consulta externa",
+      "proyecto_2027": 11075762242,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 277,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Vélez Sarsfield",
+      "obra": "Reorganización de servicios ambulatorios y críticos",
+      "proyecto_2027": 11177702893,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Zubizarreta",
+      "obra": "Nuevo edificio de consultorio externo",
+      "proyecto_2027": 9293000491,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Pirovano",
+      "obra": "Quirófanos",
+      "proyecto_2027": 3588713300,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Pirovano",
+      "obra": "Consultorios externos",
+      "proyecto_2027": 22834450195,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Fernández",
+      "obra": "Guardia y consulta externa",
+      "proyecto_2027": 6065047286,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Tornú",
+      "obra": "Guardia, imágenes y obras varias",
+      "proyecto_2027": 7986202581,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    },
+    {
+      "efector": "Muñiz",
+      "obra": "Laboratorio central y área ambulatoria",
+      "proyecto_2027": 5269488507,
+      "plan_2028": 0,
+      "plan_2029": 0,
+      "pagina_pdf": 276,
+      "tipo": "hospital",
+      "fuente_documento": "IF-2026-43938524-GCABA-SSHA"
+    }
+  ],
+  "comunas_entidad": [
+    {
+      "comuna": 1,
+      "proyecto_2027": 33947134822,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 2,
+      "proyecto_2027": 15193040132,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 3,
+      "proyecto_2027": 11877329705,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 4,
+      "proyecto_2027": 25396450970,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 5,
+      "proyecto_2027": 10189500849,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 6,
+      "proyecto_2027": 13986534370,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 7,
+      "proyecto_2027": 20408882894,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 8,
+      "proyecto_2027": 22635971672,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 9,
+      "proyecto_2027": 23307778898,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 10,
+      "proyecto_2027": 18897566277,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 11,
+      "proyecto_2027": 19932918873,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 12,
+      "proyecto_2027": 33057973140,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 13,
+      "proyecto_2027": 34881189300,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 14,
+      "proyecto_2027": 42172791577,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    },
+    {
+      "comuna": 15,
+      "proyecto_2027": 25941536169,
+      "fuente": "Planilla 34, anexas art.8, páginas 48–50 del anexo; entidad Comuna, no inversión total localizada"
+    }
+  ],
+  "fuentes": [
+    {
+      "id": "proyecto",
+      "titulo": "Proyecto de Presupuesto 2027 y anexos",
+      "documento": "PDLEY-2026-36 / MEN-2026-42",
+      "fecha": "2026-09-30",
+      "url": "https://drive.google.com/file/d/18Ddz0JMpGgMcNNgOzWK8DUdkb3IZ0gTF/view",
+      "paginas": "PDF 3–10 articulado; 64 Cuadro 2.4; 157 AIF; 170–171 planillas 1–2; 191 dotación; 276–285 inversiones sanitarias"
+    },
+    {
+      "id": "presentacion",
+      "titulo": "Presentación oficial de Hacienda del 7 de octubre",
+      "url": "https://buenosaires.gob.ar/gcaba_historico/noticias/el-ministerio-de-hacienda-y-finanzas-de-la-ciudad-presento-el-proyecto-de"
+    },
+    {
+      "id": "bloque",
+      "titulo": "Análisis del bloque Fuerza por Buenos Aires",
+      "url": "https://www.xn--presupuestoporteo-uxb.com.ar/"
+    },
+    {
+      "id": "ley-salud-mental",
+      "titulo": "Ley 26.657, artículos 9 y 32",
+      "url": "https://www.argentina.gob.ar/normativa/nacional/175977/texto"
+    }
+  ],
+  "limites": [
+    "La comparación usa la base vigente del Mensaje; las extracciones con $20,88 billones requieren conciliación de fecha y universo.",
+    "Los escenarios de inflación promedio son estimaciones, no inflación observada ni garantía de precios.",
+    "Las obras seleccionadas son una selección trazable del PPI; no una lista exhaustiva del presupuesto operativo de cada hospital.",
+    "El gasto en personal incluye cargas y componentes distintos del salario de bolsillo. Los cargos no equivalen a personas efectivamente ocupadas.",
+    "Los valores del proyecto son asignaciones previstas; su ejecución y metas físicas deben verificarse posteriormente."
+  ]
+}

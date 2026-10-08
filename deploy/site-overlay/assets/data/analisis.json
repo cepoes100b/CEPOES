@@ -2,6 +2,16 @@
   "analyses": [
     {
       "type": "analisis",
+      "slug": "tierras-y-soberania",
+      "topic": "Tierras y soberanía",
+      "title": "Tierras y soberanía",
+      "summary": "Extranjerización de tierras rurales, concentración territorial y defensa de la Ley de Tierras. Un análisis con datos oficiales, mapa interactivo e informe completo.",
+      "published_at": "2026-09-30T12:00:00",
+      "url": "/territorio/tierras-y-soberania/",
+      "source_section": "/territorio/tierras-y-soberania/"
+    },
+    {
+      "type": "analisis",
       "slug": "criar-en-buenos-aires-sala-de-3",
       "topic": "Educación",
       "title": "Criar en Buenos Aires cuesta más de $1 millón por mes",

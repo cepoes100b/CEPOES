@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   if(!form||!status)return;
   let widget, token='', config;
   const result=new URLSearchParams(location.search).get('suscripcion');
-  if(result==='confirmed')status.textContent='Tu correo quedó confirmado. Recibirás los próximos boletines de CEPOES.';
+  if(result==='confirmed')status.textContent='Tu correo quedó confirmado. Recibirás las nuevas publicaciones y los avisos de CEPOES.';
   if(result==='invalid')status.textContent='El enlace venció o ya fue utilizado. Podés solicitar otro desde este formulario.';
   const ready=fetch('/assets/data/newsletter-config.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('config');return r.json();}).then(async c=>{
     config=c;if(c.enabled!==true)return;
@@ -53,3 +53,4 @@ document.addEventListener('DOMContentLoaded',()=>{
     finally{button.disabled=false;token='';if(widget!==undefined)window.turnstile.reset(widget);}
   });
 });
+

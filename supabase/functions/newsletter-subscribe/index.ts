@@ -1,3 +1,4 @@
+import {brandedEmail} from "../_shared/email-brand.js";
 import { createClient } from "npm:@supabase/supabase-js@2.95.0";
 import {
   clientIpFromForwardedFor,
@@ -122,11 +123,7 @@ async function sendConfirmation(email: string, rawToken: string) {
       from: env("NEWSLETTER_FROM"),
       reply_to: "contacto@cepoes.org",
       to: [email],
-      subject: "Confirmá tu suscripción a CEPOES",
-      html:
-        `<p>Recibimos una solicitud para sumar este correo a las novedades de CEPOES.</p>` +
-        `<p><a href="${functionUrl.toString()}">Confirmar suscripción</a></p>` +
-        `<p>El enlace vence en 24 horas. Si no hiciste la solicitud, podés ignorar este mensaje.</p>`,
+      ...brandedEmail({subject:"Confirmá tu suscripción a las novedades de CEPOES",label:"CONFIRMACIÓN DE SUSCRIPCIÓN",title:"Las novedades de CEPOES, en tu correo",body:"Confirmá que querés recibir boletines, informes, notas y avisos institucionales de CEPOES. Podés darte de baja en cualquier momento desde cada correo.",url:functionUrl.toString(),button:"Confirmar suscripción"}),
     }),
   });
   if (!response.ok) {
@@ -224,7 +221,7 @@ async function subscribe(req: Request, origin: string) {
     email,
     status: "pending",
     source: "home",
-    privacy_version: "2026-09",
+    privacy_version: "2026-10-novedades",
     consent_at: now.toISOString(),
     confirmation_token_hash: tokenHash,
     confirmation_expires_at: expires.toISOString(),
@@ -274,3 +271,4 @@ Deno.serve(async (req: Request) => {
     return json(503, { ok: false });
   }
 });
+

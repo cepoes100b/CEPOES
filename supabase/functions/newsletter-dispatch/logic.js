@@ -7,7 +7,7 @@ export async function deliverOne(job, adapters) {
   if (!(await adapters.isActive(job.subscription_id))) {await adapters.finish(job,'cancelled');return 'cancelled';}
   // The immutable snapshot and stable key are reused after an uncertain response.
   try {
-    const result=await adapters.send(job,`cepoes-boletin-${job.edition}-${job.subscription_id}`);
+    const result=await adapters.send(job,job.publication_key ? `cepoes-publication-${job.delivery_id}` : `cepoes-boletin-${job.edition}-${job.subscription_id}`);
     if(!result?.id) throw Error('missing_provider_id');
     await adapters.finish(job,'accepted',result.id);return 'accepted';
   } catch {
@@ -16,3 +16,14 @@ export async function deliverOne(job, adapters) {
 }
 import {validateContent} from './template.js';
 export {newsletterEmail,escapeHtml} from './template.js';
+
+
+export function validatePublication(item) {
+ const kinds=['boletin','informe','analisis','prensa','aviso'];
+ if(!kinds.includes(item.kind)||typeof item.url!=='string'||item.url.length>300||!/^\/[a-z0-9/-]+\/$/.test(item.url)||item.url.includes('//')||item.key!==item.url||item.url.split('/').filter(Boolean).length<2)throw Error('invalid_publication');
+ if(['/publicaciones/notas/','/publicaciones/informes/','/publicaciones/boletines/'].includes(item.url))throw Error('archive_not_publication');
+ if(typeof item.title!=='string'||!item.title||item.title.length>300||typeof item.summary!=='string'||item.summary.length>2000||typeof item.date!=='string'||item.date.length>80)throw Error('invalid_publication');
+ const normalized={key:item.key,url:item.url,kind:item.kind,title:item.title,summary:item.summary,date:item.date};
+ return item.kind==='boletin'?{...normalized,...validateEdition(item)}:normalized;
+}
+export {publicationEmail} from './template.js';

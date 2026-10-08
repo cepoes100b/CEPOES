@@ -9,6 +9,7 @@ files={'/presupuesto/2027/':'Presupuesto_2027_Analisis_Integral_100_Barrios.html
 for route,name in files.items():
  source=(SITE/route.strip('/')/'index.html').read_text();body=re.search(r'<main[\s\S]*?</main>',source).group()
  data=re.search(r'<script id="p27-(?:general-)?data"[\s\S]*?</script>',source).group()
+ css+=(SITE/'assets/presupuesto-2027-visuales.css').read_text() if 'p27-visual' in body and 'p27-chart-positive' not in css else ''
  for href in set(re.findall(r'href="([^"]+)"',body)):
   if href.startswith('/assets/data/presupuesto-2027'):
    path=SITE/href.lstrip('/');mime='application/json' if path.suffix=='.json' else 'text/csv'
@@ -18,6 +19,6 @@ for route,name in files.items():
   elif href.startswith('/'):body=body.replace('href="'+href+'"','href="https://cepoes.org'+href+'"')
  js='presupuesto-2027-integral.js' if route=='/presupuesto/2027/' else 'presupuesto-2027.js'
  title=re.search(r'<title>(.*?)</title>',source).group(1)
- output='<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>'+title+'</title><style>'+css+'</style></head><body><div class="review">100 Barrios · Borrador para revisión · 8 de octubre de 2026 · No publicado · Revisión visual en navegador pendiente</div>'+body+data+'<script>'+(SITE/'assets'/js).read_text()+'</script></body></html>'
+ output='<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>'+title+'</title><style>'+css+'</style></head><body><div class="review">100 Barrios · Borrador para revisión · 8 de octubre de 2026 · No publicado · Revisión visual en navegador pendiente</div>'+body+data+'<script>'+(SITE/'assets'/js).read_text()+'</script><script>'+(SITE/'assets/presupuesto-2027-graficos.js').read_text()+'</script></body></html>'
  (OUT/name).write_text(output)
  print(name,len(output),'caracteres')

@@ -43,6 +43,19 @@ assert d['fiscal']['aplicaciones_financieras']-d['fiscal']['fuentes_financieras'
 ids2=re.findall(r'\bid="([^"]+)"',integral)
 assert len(set(ids2))==len(ids2)
 assert all(a[1:] in ids2 for a in re.findall(r'href="(#[^"]+)"',integral))
+assert source.count('<figure ')==5 and integral.count('<figure ')==5
+assert integral.count('data-change-bar=')==20
+assert integral.count('data-change-value=')==20
+assert integral.count('class="p27-paired-row"')==20
+assert sum(f['proyecto_2027']/f['vigente_2026_06_30']/1.2154<1 for f in d['funciones'])==12
+for f in d['funciones']:
+ assert f['proyecto_2027']/d['total_2027']*100<=20
+ for scenario in d['escenarios']:
+  change=(f['proyecto_2027']/f['vigente_2026_06_30']/scenario['factor']-1)*100
+  assert -20<=change<=80
+for document in (source,integral):
+ refs=re.findall(r'<figure[^>]*aria-labelledby="([^"]+)"',document)
+ assert len(refs)==5 and all('id="'+ref+'"' in document for ref in refs)
 spec=importlib.util.spec_from_file_location('normalizer',ROOT/'deploy/preparar_sitio_publico.py')
 normalizer=importlib.util.module_from_spec(spec);spec.loader.exec_module(normalizer)
 for url in ('/presupuesto/index.html','/presupuesto/ejecucion/index.html'):

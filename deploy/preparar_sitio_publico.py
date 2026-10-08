@@ -598,7 +598,7 @@ def restructure_home(source: str) -> str:
             '<div><input autocomplete="email" id="home-subscription-email" name="email" placeholder="tu@email.com" required type="email">'
             '<button class="btn btn-primary" type="submit">Suscribirme</button></div>'
             '<label class="home-consent"><input name="consent" required type="checkbox"> Acepto recibir publicaciones de CEPOES. Puedo darme de baja desde el enlace incluido en cada boletín. Para solicitar el borrado de mis datos, puedo escribir a contacto@cepoes.org.</label>'
-            '<input aria-hidden="true" class="home-honeypot" name="company" tabindex="-1" type="text">'
+            '<input aria-hidden="true" class="home-honeypot" name="company" tabindex="-1" type="text" autocomplete="off" data-lpignore="true" data-1p-ignore>'
             '<p aria-live="polite" class="home-subscription-status" id="home-subscription-status"></p></form></div>'
         )
         latest = ('<section class="section home-latest-section"><div class="wrap">'
@@ -610,8 +610,8 @@ def restructure_home(source: str) -> str:
         footer_at = source.find('<footer')
     result = source[:footer_at] + block + source[footer_at:] if footer_at >= 0 else source + block
     result = re.sub(r'<script\b[^>]*src=["\']/assets/home-redesign\.js(?:\?[^"\']*)?["\'][^>]*></script>', '', result)
-    if '/assets/home-redesign.js?v=3' not in result:
-        result = result.replace('</body>', '<script defer src="/assets/home-redesign.js?v=3"></script></body>', 1)
+    if '/assets/home-redesign.js?v=4' not in result:
+        result = result.replace('</body>', '<script defer src="/assets/home-redesign.js?v=4"></script></body>', 1)
     return result
 
 

@@ -549,12 +549,15 @@ class EvidenceTests(unittest.TestCase):
             return any(re.fullmatch(pattern, path) for pattern in public_site.PUBLIC_REVALIDATION_PATHS)
         for path in ("/", "/index.html", "/observatorio/", "/observatorio/index.html",
                      "/datos/estado/", "/datos/estado/index.html",
+                     "/observatorio/precios/ipc/", "/observatorio/precios/ipc/index.html",
+                     "/observatorio/precios/ipc/datos.csv", "/assets/indicator.js",
                      "/assets/data/estructura-productiva/actual.json", "/.well-known/cepoes-release.json"):
             with self.subTest(path=path):
                 self.assertTrue(matches(path))
         for path in ("/privado/", "/privado/index.html", "/suscripcion/", "/publicaciones/index.html",
                      "/assets/mapa.js", "/assets/site.css", "/assets/data/otra.json", "/datos/estado/archivo.html",
-                     "/observatorio/salud-mental/", "/observatorio/precios/ipc/", "/observatorio/otra.html"):
+                     "/observatorio/salud-mental/", "/observatorio/precios/canasta/", "/observatorio/otra.html",
+                     "/observatorio/precios/ipc/otra.html", "/assets/indicator.js.bak"):
             with self.subTest(path=path):
                 self.assertFalse(matches(path))
 

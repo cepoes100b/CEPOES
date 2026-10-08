@@ -5,3 +5,5 @@ El publicador canónico reconstruye tres tarjetas: última nota de `assets/data/
 Cada nueva publicación debe registrar su metadata en el catálogo correspondiente. El despliegue selecciona automáticamente la nueva pieza. Las pruebas `test_home_editorial.py` comprueban selección, reemplazo y enlaces accesibles.
 
 Tres piezas visibles en escritorio; desplazamiento nativo y controles manuales en móvil, sin avance automático. La sección inferior conserva únicamente la suscripción, eliminando el boletín de agosto heredado.
+
+Durante el debate presupuestario, `featured_publication` en `home-editorial.json` permite destacar un informe registrado con página pública en la primera tarjeta. Incluye acceso al análisis integral y al especial Salud; boletín e informe de coyuntura conservan su selección automática. Al cerrar la etapa de discusión, desactivar `enabled` devuelve la primera tarjeta a la última nota, sin cambios de código. Los enlaces a carpetas y documentos de trabajo internos no se incluyen en páginas, datos descargables ni piezas de difusión.

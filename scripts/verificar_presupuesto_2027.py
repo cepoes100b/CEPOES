@@ -64,4 +64,7 @@ for url in ('/presupuesto/index.html','/presupuesto/ejecucion/index.html'):
  assert once==normalizer.inject_budget_2027_bridge(once,url)
  assert once.count('id="budget-2027-bridge"')==1
  assert '/presupuesto/2027/' in once
-print('Datos, participaciones, escenarios, dotación, inversiones, anclas y puentes: OK')
+for path in [SITE/'presupuesto/2027/index.html', SITE/'presupuesto/2027/salud/index.html',
+             SITE/'prensa/presupuesto-2027-salud/index.html', SITE/'assets/data/presupuesto-2027.json']:
+ assert 'drive.google.com' not in path.read_text(), f'Enlace a documento interno en {path}'
+print('Datos, participaciones, escenarios, dotación, inversiones, anclas, puentes y privacidad: OK')

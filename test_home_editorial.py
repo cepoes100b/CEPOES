@@ -21,3 +21,25 @@ class HomeEditorialTests(unittest.TestCase):
         self.assertEqual(hero.count('<h1>'),1)
         self.assertIn('tabindex="0"',hero)
         self.assertNotIn('setInterval',hero)
+
+    def test_budget_feature_and_health_link(self):
+        self.assertEqual(latest_home_publications()[0]['url'],'/presupuesto/2027/')
+        hero=home_publications_hero()
+        self.assertIn('href="/presupuesto/2027/salud/"',hero)
+        self.assertIn('Explorar el presupuesto',hero)
+    def test_disabled_feature_restores_automatic_selection(self):
+        def changed(name):
+            data=load_json(name)
+            if name.endswith('home-editorial.json'):
+                data['featured_publication']['enabled']=False
+            return data
+        with patch('deploy.preparar_sitio_publico.load_json',side_effect=changed):
+            self.assertEqual(latest_home_publications()[0]['label'],'Última nota')
+    def test_unregistered_feature_is_rejected(self):
+        def changed(name):
+            data=load_json(name)
+            if name.endswith('home-editorial.json'):
+                data['featured_publication']['url']='/borrador/'
+            return data
+        with patch('deploy.preparar_sitio_publico.load_json',side_effect=changed):
+            with self.assertRaises(ValueError): latest_home_publications()

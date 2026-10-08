@@ -513,7 +513,14 @@ def latest_home_publications() -> list[dict]:
                 cover=cover[1] if cover else '', period=path.parent.name.split('-', 2)[2].replace('-', ' ').capitalize()))
     if not notes or not reports or not bulletins:
         raise ValueError("La portada requiere una nota, un boletín y un informe publicados")
-    return [max(notes, key=lambda n: (n['date'], n['url'])),
+    primary = max(notes, key=lambda n: (n['date'], n['url']))
+    featured = load_json("deploy/site-overlay/assets/data/home-editorial.json").get("featured_publication", {})
+    if featured.get("enabled"):
+        registered = {r['url'] for r in load_json("deploy/reports-registry.json")["reports"]}
+        if featured.get('url') not in registered or not (overlay / featured['url'].lstrip('/') / 'index.html').is_file():
+            raise ValueError("El destacado editorial debe ser un informe registrado con página pública")
+        primary = dict(featured, date='')
+    return [primary,
             max(bulletins, key=lambda n: n['edition']),
             max(reports, key=lambda n: (n['date'], n['url']))]
 
@@ -527,10 +534,12 @@ def home_publications_hero() -> str:
                  if item.get('cover') else '')
         period = item.get('period') or item['date']
         summary = item.get('home_summary', item['summary']) if i == 0 else item['summary']
+        secondary = (f'<a class="home-publication-link" href="{esc(item["secondary_url"])}">{esc(item["secondary_cta"])}</a>'
+                     if item.get('secondary_url') else '')
         cards.append(f'<article class="home-publication-card"><span class="eyebrow">{esc(item["label"])}</span>'
             + f'<div>' + image + f'<span class="home-publication-period">{esc(period)}</span>'
             + f'<{title_tag}><a href="{esc(item["url"])}">{esc(item["title"])}</a></{title_tag}>'
-            + f'<p>{esc(summary)}</p><a class="home-publication-link" href="{esc(item["url"])}">Leer publicación →</a></div></article>')
+            + f'<p>{esc(summary)}</p><div class="home-publication-actions"><a class="home-publication-link" href="{esc(item["url"])}">{esc(item.get("cta", "Leer publicación →"))}</a>{secondary}</div></div></article>')
     return ('<header class="hero home-hero home-publications-hero"><div class="wrap">'
         '<div class="home-publications-heading"><span class="eyebrow">Publicaciones destacadas</span>'
         '<a href="/publicaciones/">Todas las publicaciones →</a></div>'

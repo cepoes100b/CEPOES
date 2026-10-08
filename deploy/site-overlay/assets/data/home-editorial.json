@@ -8,5 +8,16 @@
     "value": "$1,26 M",
     "label": "costo mensual de crianza a los 3 años · agosto de 2026",
     "source": "IDECBA · $746.610 corresponden al cuidado · estimación para hogares propietarios, sin alquiler"
+  },
+  "featured_publication": {
+    "enabled": true,
+    "label": "En debate · Presupuesto 2027",
+    "title": "Presupuesto 2027: qué Ciudad se financia",
+    "summary": "Qué se prioriza, cómo se financia y qué llega a los barrios. Un análisis de salud, educación, vivienda, transporte y el conjunto del presupuesto, con gráficos y propuestas de 100 Barrios.",
+    "url": "/presupuesto/2027/",
+    "period": "Proyecto en discusión legislativa",
+    "cta": "Explorar el presupuesto →",
+    "secondary_url": "/presupuesto/2027/salud/",
+    "secondary_cta": "Especial Salud →"
   }
 }

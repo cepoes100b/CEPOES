@@ -29,4 +29,3 @@ jobs:
         env:
           NEWSLETTER_DISPATCH_SECRET: ${{ secrets.NEWSLETTER_DISPATCH_SECRET }}
         run: python scripts/dispatch_newsletter.py
-

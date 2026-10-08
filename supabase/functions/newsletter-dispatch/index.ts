@@ -39,4 +39,3 @@ Deno.serve(async req=>{
     return Response.json({ok:true,accepted,retry,cancelled,review});
   }catch {console.error('newsletter_dispatch_failed');return Response.json({ok:false},{status:503});}
 });
-

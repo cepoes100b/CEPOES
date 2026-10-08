@@ -569,4 +569,3 @@ jobs:
         if: success() && steps.current.outputs.should_deploy == 'true'
         continue-on-error: true
         run: python notificar_indexnow.py --sitemap _site/sitemap.xml --key-file _site/indexnow-key.txt
-

@@ -53,4 +53,3 @@ document.addEventListener('DOMContentLoaded',()=>{
     finally{button.disabled=false;token='';if(widget!==undefined)window.turnstile.reset(widget);}
   });
 });
-

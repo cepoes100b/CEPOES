@@ -41,7 +41,8 @@ jobs:
       - name: Verificar suscripción y plantilla editorial del boletín
         run: |
           python -m unittest discover -s tests -p test_newsletter_editorial.py
-          node --test tests/newsletter_delivery.test.mjs tests/newsletter_logic.test.mjs
+          python -m unittest discover -s tests -p test_publications_feed.py
+          node --test tests/newsletter_delivery.test.mjs tests/newsletter_logic.test.mjs tests/publication_delivery.test.mjs
 
 
       - name: Verificar cadena segura de actualización a publicación

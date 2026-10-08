@@ -16,4 +16,3 @@ Deno.serve(async req=>{
   return new Response('<h1>Suscripción dada de baja</h1><p>Ya no recibirás publicaciones ni avisos de CEPOES.</p>',{headers});
  }catch {return new Response('No se pudo completar la baja. Intentá nuevamente.',{status:503,headers});}
 });
-

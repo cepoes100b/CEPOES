@@ -265,6 +265,9 @@
 
 
 
-/* Editorial emphasis during the budget debate. */
-.home-publication-actions{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center}
-.home-publication-card:first-child a:focus-visible{outline-color:#8ee6d8}
+/* Budget debate feature below the three automatic publication cards. */
+.home-budget-feature{padding:0 0 36px}
+.home-budget-panel{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;padding:28px;border:1px solid var(--border);border-left:6px solid #8ee6d8;border-radius:16px;background:#173744;color:#f4fbfc}
+.home-budget-panel .eyebrow,.home-budget-panel h2{color:#f4fbfc}.home-budget-panel h2{margin:10px 0;font-size:clamp(1.5rem,2.5vw,2rem);line-height:1.2}.home-budget-panel p{margin:0;max-width:70ch;color:#e1edf1;line-height:1.6}
+.home-budget-actions{display:flex;flex-direction:column;gap:16px}.home-budget-actions a{color:#f4fbfc;font-weight:800;text-underline-offset:4px}.home-budget-actions a:focus-visible{outline:3px solid #8ee6d8;outline-offset:4px}
+@media(max-width:760px){.home-budget-panel{grid-template-columns:1fr;padding:22px}.home-budget-actions{flex-direction:row;flex-wrap:wrap;gap:16px 24px}}

@@ -482,14 +482,16 @@ def home_publications_hero() -> str:
         esc = lambda value: html.escape(str(value), quote=True)
         title_tag = 'h1' if i == 0 else 'h2'
         image = (f'<img src="{esc(item["cover"])}" alt="" width="320" height="420">'
-                 if item.get('cover') else '<div class="home-publication-art" aria-hidden="true">DESDE<br>LOS BARRIOS</div>')
+                 if item.get('cover') else '')
         period = item.get('period') or item['date']
-        cards.append(f'<article class="home-publication-card"><span class="eyebrow">{esc(item["label"])}</span>'
-            + image + f'<div><span class="home-publication-period">{esc(period)}</span>'
+        card_class = 'home-publication-card' + ('' if item.get('cover') else ' home-publication-text')
+        summary = item.get('home_summary', item['summary']) if i == 0 else item['summary']
+        cards.append(f'<article class="{card_class}"><span class="eyebrow">{esc(item["label"])}</span>'
+            + f'<div>' + image + f'<span class="home-publication-period">{esc(period)}</span>'
             + f'<{title_tag}><a href="{esc(item["url"])}">{esc(item["title"])}</a></{title_tag}>'
-            + f'<p>{esc(item["summary"])}</p><a class="home-publication-link" href="{esc(item["url"])}">Leer publicación →</a></div></article>')
+            + f'<p>{esc(summary)}</p><a class="home-publication-link" href="{esc(item["url"])}">Leer publicación →</a></div></article>')
     return ('<header class="hero home-hero home-publications-hero"><div class="wrap">'
-        '<div class="home-publications-heading"><span class="eyebrow">Lecturas para entender la Ciudad</span>'
+        '<div class="home-publications-heading"><span class="eyebrow">Publicaciones destacadas</span>'
         '<a href="/publicaciones/">Todas las publicaciones →</a></div>'
         '<div class="home-publications-track" id="home-publications-track" tabindex="0" aria-label="Publicaciones destacadas">'
         + ''.join(cards) + '</div><div class="home-publications-controls">'
@@ -980,3 +982,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

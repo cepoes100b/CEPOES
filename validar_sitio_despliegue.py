@@ -269,7 +269,7 @@ for redundant in ['home-pulse-section','home-territory-section','home-topics-sec
 home_order=['home-publications-hero','home-strategy-section','home-kpi-section','home-offer-section','home-latest-section','home-products-section','home-about-section']
 home_positions=[home.find(token) for token in home_order]
 assert all(pos>=0 for pos in home_positions) and home_positions==sorted(home_positions), f'Jerarquía de home inválida: {home_positions}'
-for token in ['home-publications-track','home-strategy-grid','La Ciudad hoy','Balance de gestión 2007–2026','Una Ciudad posible','href="/balance/"','home-comparison-grid','home-neighborhood-form','home-subscription-form','home-new-link','href="/lo-nuevo/"','Leer publicación →','/assets/home-redesign.js?v=3']:
+for token in ['home-publications-track','home-strategy-grid','La Ciudad hoy','Balance de gestión 2007–2026','Una Ciudad posible','href="/balance/"','home-comparison-grid','home-neighborhood-form','home-subscription-form','home-new-link','href="/lo-nuevo/"','Leer publicación →','/assets/home-redesign.js?v=5']:
     assert token in home, f'Bloque de portada incompleto: {token}'
 from deploy.preparar_sitio_publico import latest_home_publications
 assert home.count('class="home-publication-card"') == 3, 'La portada debe mostrar tres publicaciones'

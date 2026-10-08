@@ -15,6 +15,10 @@
       "reason": "Catálogo público de ediciones para distribución automática"
     },
     {
+      "path": "scripts/generar_publications_feed.py",
+      "reason": "Catálogo editorial público para avisos automáticos de novedades"
+    },
+    {
       "path": "scripts/newsletter_editorial.py",
       "reason": "Extractos editoriales del correo desde el boletín aprobado"
     },

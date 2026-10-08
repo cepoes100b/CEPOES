@@ -615,12 +615,12 @@ def restructure_home(source: str) -> str:
         latest = latest.replace("Ver síntesis →", "Leer la versión web →")
         latest = re.sub(r'<a class="btn btn-outline"[^>]*>Leer online</a>', '', latest)
         subscription = (
-            '<div class="home-subscription"><span class="eyebrow">Recibir novedades</span><h3>El boletín, en tu correo</h3>'
+            '<div class="home-subscription"><span class="eyebrow">Recibir novedades</span><h3>Recibí las novedades de CEPOES</h3><p>Te avisamos por correo cuando publicamos un boletín, informe, nota o novedad institucional.</p>'
             '<a class="home-new-link" href="/lo-nuevo/">Ver todo lo nuevo en CEPOES →</a>'
             '<form id="home-subscription-form"><label for="home-subscription-email">Correo electrónico</label>'
             '<div><input autocomplete="email" id="home-subscription-email" name="email" placeholder="tu@email.com" required type="email">'
             '<button class="btn btn-primary" type="submit">Suscribirme</button></div>'
-            '<label class="home-consent"><input name="consent" required type="checkbox"> Acepto recibir publicaciones de CEPOES. Puedo darme de baja desde el enlace incluido en cada boletín. Para solicitar el borrado de mis datos, puedo escribir a contacto@cepoes.org.</label>'
+            '<label class="home-consent"><input name="consent" required type="checkbox"> Acepto recibir boletines, informes, notas y avisos institucionales de CEPOES. Puedo darme de baja en cualquier momento desde cada correo. Para solicitar el borrado de mis datos, puedo escribir a contacto@cepoes.org.</label>'
             '<input aria-hidden="true" class="home-honeypot" name="company" tabindex="-1" type="text">'
             '<p aria-live="polite" class="home-subscription-status" id="home-subscription-status"></p></form></div>'
         )
@@ -633,8 +633,8 @@ def restructure_home(source: str) -> str:
         footer_at = source.find('<footer')
     result = source[:footer_at] + block + source[footer_at:] if footer_at >= 0 else source + block
     result = re.sub(r'<script\b[^>]*src=["\']/assets/home-redesign\.js(?:\?[^"\']*)?["\'][^>]*></script>', '', result)
-    if '/assets/home-redesign.js?v=3' not in result:
-        result = result.replace('</body>', '<script defer src="/assets/home-redesign.js?v=3"></script></body>', 1)
+    if '/assets/home-redesign.js?v=5' not in result:
+        result = result.replace('</body>', '<script defer src="/assets/home-redesign.js?v=5"></script></body>', 1)
     return result
 
 

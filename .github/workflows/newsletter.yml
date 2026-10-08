@@ -1,4 +1,4 @@
-name: Distribuir boletín CEPOES
+name: Distribuir novedades CEPOES
 on:
   workflow_run:
     workflows: ["Desplegar sitio en Hostinger"]
@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           ref: main
-      - name: Detectar boletines publicados y procesar cola
+      - name: Detectar publicaciones nuevas y procesar cola
         env:
           NEWSLETTER_DISPATCH_SECRET: ${{ secrets.NEWSLETTER_DISPATCH_SECRET }}
         run: python scripts/dispatch_newsletter.py

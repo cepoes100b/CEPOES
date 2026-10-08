@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-10-07T16:32:27-03:00",
+  "actualizado_en": "2026-10-07T21:25:13-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -52172,7 +52172,10 @@
         },
         "informe_prelabor": null,
         "version_taquigrafica": null,
-        "asuntos_considerados": null
+        "asuntos_considerados": {
+          "id_documento": "227792",
+          "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=227792"
+        }
       },
       "urls": {
         "votaciones": "https://parlamentaria.legislatura.gob.ar/pages/sesion_votaciones.aspx?IdSesion=1154",

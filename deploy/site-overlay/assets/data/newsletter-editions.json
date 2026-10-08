@@ -5,31 +5,193 @@
       "edition": 1,
       "url": "/publicaciones/boletines/boletin-01-mayo-2026/",
       "title": "La Ciudad que ajusta donde más duele",
-      "summary": "Primer número del boletín del CEPOES: la recaudación y el gasto total crecen, pero vivienda, salud, empleo y educación registran caídas reales sostenidas."
+      "summary": "Primer número del boletín del CEPOES: la recaudación y el gasto total crecen, pero vivienda, salud, empleo y educación registran caídas reales sostenidas.",
+      "email_content": {
+        "date": "Mayo 2026",
+        "intro": "Un diagnóstico sobre vivienda, salud, empleo, finanzas públicas y educación en la Ciudad de Buenos Aires.",
+        "metrics": [],
+        "sections": [
+          {
+            "title": "Vivienda en CABA: el derecho que el mercado no garantiza",
+            "body": "El Presupuesto 2026 proyecta que los recursos para organismos de vivienda representarán menos del 1% del gasto total. Según ACIJ, esto implica una caída real del 22,9% respecto de 2025 y el nivel más bajo en al menos 14 años. El jefe de Gobierno, Jorge Macri, anunció un giro hacia “la clase media que alquila”, en detrimento de la urbanización en barrios populares. Los datos contradicen ese discurso: las partidas destinadas a créditos y programas de alquiler representan apenas el 4% del presupuesto de vivienda.",
+            "source": "Fuentes Centro RA – FCE UBA (feb. 2026) · ACIJ – Análisis Presupuesto CABA 2026 · Zonaprop (abr. 2026) · Dir. de Estadísticas GCBA · Chequeado (feb. 2026) · Infobae Real Estate (ene. 2026)."
+          },
+          {
+            "title": "Salud pública porteña: ajuste sobre ajuste",
+            "body": "Según el Observatorio Económico de CEPA, la caída presupuestaria prevista para salud en 2026 es del 2,7%, con un ajuste acumulado del 10% desde 2023. El recorte se concentra en los hospitales con mayor demanda de los sectores vulnerables. Los hospitales Argerich, Durand y Fernández verán reducidos sus recursos entre un 5% y un 7%. El Hospital Piñero, cabecera de la zona suroeste con los índices más altos de pobreza de la Ciudad, ya acumulaba en períodos anteriores recortes de hasta el 20%.",
+            "source": "Fuentes CEPA – Observatorio Económico Urbano (oct. 2025) · Página 12 (oct. 2025) · GCBA – Red hospitalaria pública · La Nación (oct. 2025)."
+          },
+          {
+            "title": "Empleo en crisis: más trabajo, menos derechos",
+            "body": "La tasa de desocupación cerró el cuarto trimestre de 2025 en 7,5%, su nivel más alto desde el inicio de la gestión Milei. En términos absolutos, 1,64 millones de personas buscaban trabajo sin encontrarlo. El empleo formal cayó 0,8 puntos porcentuales en el período. La informalidad alcanzó al 43% de los trabajadores, lo que implica que más de 9 millones de personas trabajan sin cobertura de salud, sin aportes jubilatorios y sin protección legal. Desde diciembre de 2023, la informalidad creció 1,6 puntos porcentuales.",
+            "source": "Fuentes INDEC – EPH 4.º trim. 2025 (mar. 2026) · IIEP-UBA / Maurizio y Beccaria (mar. 2026) · Infobae (mar. y abr. 2026) · APF Digital (abr. 2026)."
+          },
+          {
+            "title": "El presupuesto porteño 2026: quién gana y quién pierde",
+            "body": "El Presupuesto 2026 proyecta un crecimiento del gasto total superior al 25% y una recaudación también en alza. Sin embargo, el análisis de CEPA revela que ese crecimiento no llega a las áreas sociales: salud cae 2,7%, educación cae 3,5%, vivienda cae 22,9% y cultura cae 15%. En términos acumulados desde 2023, el ajuste es más profundo: educación acumula una baja cercana al 13%. Las partidas para obras en establecimientos escolares caen 11%, las becas estudiantiles retroceden 5% y los subsidios a cooperadoras también disminuyen.",
+            "source": "Fuentes CEPA – Observatorio Económico Urbano (oct. 2025) · Página 12 (oct. 2025) · ACIJ (feb. 2026) · Chequeado (feb. 2026)."
+          }
+        ],
+        "agenda": []
+      }
     },
     {
       "edition": 2,
       "url": "/publicaciones/boletines/boletin-02-junio-2026/",
       "title": "El ajuste ya no se proyecta: se ejecuta",
-      "summary": "Segundo número del boletín del CEPOES: recursos que se contraen por dos vías y un gasto social que sigue cediendo."
+      "summary": "Segundo número del boletín del CEPOES: recursos que se contraen por dos vías y un gasto social que sigue cediendo.",
+      "email_content": {
+        "date": "Junio 2026",
+        "intro": "Del presupuesto a los hechos: un seguimiento sobre vivienda, salud, empleo, finanzas públicas y educación en la Ciudad de Buenos Aires.",
+        "metrics": [],
+        "sections": [
+          {
+            "title": "Alquilar en la Ciudad: el doble del salario mínimo",
+            "body": "Según Zonaprop, en mayo de 2026 el alquiler de un monoambiente en CABA promedió $747.102 mensuales; un dos ambientes, $848.509; y un tres ambientes, $1.140.599. El rubro subió 1,7% en el mes y acumula 14,1% en el año, por debajo de la inflación. La suba interanual fue del 32,5%, la menor desde diciembre de 2019. La moderación nominal no debe confundirse con accesibilidad. Tras la derogación de la Ley de Alquileres, la oferta se multiplicó —es 3,2 veces superior al mínimo de febrero de 2023— y eso contuvo los precios de publicación. Pero el punto de partida es prohibitivo: el salario mínimo de junio ($367.800) cubre apenas el 49% de la unidad más chica del mercado.",
+            "source": "Fuentes Zonaprop (jun. 2026) · La Nación / Infobae Real Estate (jun. 2026) · IDECBA – GCBA, censo nov. 2025 · Chequeado (ene. 2026) · CELS · ACIJ – Presupuesto CABA 2026 · Consejo Nacional del Salario (Res. 9/2025)."
+          },
+          {
+            "title": "Salud pública: el ajuste porteño sobre el ajuste nacional",
+            "body": "El Observatorio Económico de CEPA estima para 2026 una caída del 2,7% real en el presupuesto de salud de la Ciudad, con un ajuste acumulado del 10% desde 2023. El recorte se concentra en los hospitales con mayor demanda de los sectores vulnerables. Los hospitales Argerich, Durand y Fernández ven reducidos sus recursos entre 5% y 7%; el Piñero, cabecera del suroeste y zona con los índices de pobreza más altos de la Ciudad, ya acumulaba recortes de hasta el 20%.",
+            "source": "Fuentes CEPA – Observatorio Económico Urbano y Ejecución presupuestaria nacional a mayo 2026 · Política del Sur / FESPROSA (jun. 2026) · GCBA – Red hospitalaria pública · Página 12 (oct. 2025)."
+          },
+          {
+            "title": "Más trabajo, menos derechos, peor salario",
+            "body": "La desocupación se ubicó en 7,5% en el último dato disponible, su nivel más alto desde el inicio de la gestión Milei: 1,64 millones de personas buscaban trabajo sin encontrarlo. La informalidad alcanzó al 43% de los ocupados —más de 9 millones de personas sin cobertura de salud, sin aportes jubilatorios y sin protección legal—, con un alza de 1,6 puntos desde diciembre de 2023. El empleo registrado privado sigue en retroceso: casi todo el empleo creado en el último año fue informal.",
+            "source": "Fuentes INDEC – EPH 4.º trim. 2025 · IIEP-UBA (mar. 2026) · CEPA – Mercado de trabajo y Salario Mínimo · Infobae (jun. 2026). Nota: la EPH del 1.er trim. 2026 del INDEC se difunde sobre el cierre de junio; los datos laborales se actualizarán en el próximo número."
+          },
+          {
+            "title": "La doble pinza fiscal de la Ciudad",
+            "body": "El relato del “presupuesto que crece” choca con la recaudación real. En marzo de 2026 los recursos propios de la Ciudad cayeron 5,7% interanual en términos reales. El impuesto a los Ingresos Brutos, que aporta cerca del 77% de los recursos propios, retrocedió 9,9% real y acumula una caída del 46,6% desde octubre de 2023. Detrás de esa cifra está la contracción de la actividad económica: cuando el consumo y la producción se enfrían, el corazón del fisco porteño se enfría con ellos.",
+            "source": "Fuentes OEC-CEPA – Recursos de la Ciudad de Buenos Aires, datos a marzo 2026 · CEPA – Observatorio Económico Urbano (Presupuesto CABA 2026) · Periódico VAS (abr. 2026) · ACIJ."
+          }
+        ],
+        "agenda": []
+      }
     },
     {
       "edition": 3,
       "url": "/publicaciones/boletines/boletin-03-julio-2026/",
       "title": "El semestre cierra con récord de informalidad",
-      "summary": "Tercer número del boletín del CEPOES: la inflación desacelera, pero el semestre cierra con informalidad récord y un salario mínimo en su piso histórico."
+      "summary": "Tercer número del boletín del CEPOES: la inflación desacelera, pero el semestre cierra con informalidad récord y un salario mínimo en su piso histórico.",
+      "email_content": {
+        "date": "Julio 2026",
+        "intro": "Cierre del primer semestre: un mercado laboral que se precariza y un costo de vida que no da tregua, en vivienda, salud, empleo, finanzas públicas y educación.",
+        "metrics": [],
+        "sections": [
+          {
+            "title": "Alquilar sigue costando dos salarios mínimos",
+            "body": "Según Zonaprop, en junio de 2026 el alquiler de un monoambiente en CABA promedió $755.935 mensuales; un dos ambientes, $860.106; y un tres ambientes, $1.156.992. El rubro subió 1,4% en el mes y acumuló 15,7% en el primer semestre, apenas por debajo de la inflación del período (17,1%). La suba interanual fue del 31,3%, la menor desde noviembre de 2019. La moderación nominal no equivale a accesibilidad. Aunque la mayor oferta tras la derogación de la Ley de Alquileres contuvo los precios de publicación, el punto de partida sigue siendo prohibitivo: el salario mínimo de julio ($372.400) cubre apenas la mitad de la unidad más chica del mercado.",
+            "source": "Fuentes Zonaprop (jul. 2026) · Infobae / Filo News (jul. 2026) · ACIJ – Presupuesto CABA 2026 · IDECBA – GCBA, censo situación de calle · Consejo Nacional del Salario (Res. 9/2025)."
+          },
+          {
+            "title": "Salud pública: ajuste porteño sobre ajuste nacional",
+            "body": "Según el Observatorio Económico de CEPA, el presupuesto de salud de la Ciudad prevé para 2026 una caída del 2,7% real, con un ajuste acumulado del 10% desde 2023. El recorte se concentra en los hospitales con mayor demanda de sectores vulnerables: el Argerich, el Durand y el Fernández ven reducidos sus recursos entre 5% y 7%, y el Piñero, cabecera del suroeste, ya acumulaba recortes de hasta el 20%. El ajuste porteño no ocurre en el vacío. La ejecución presupuestaria nacional a mayo de 2026 cae 31% real respecto de 2023, con la salud entre las funciones más castigadas. La Superintendencia de Servicios de Salud, el Instituto Malbrán, la ANMAT y numerosos hospitales nacionales registran caídas profundas, y varios programas críticos de prevención tienen ejecución nula.",
+            "source": "Fuentes CEPA – Observatorio Económico Urbano y Ejecución presupuestaria nacional a mayo 2026 · GCBA – Red hospitalaria pública · Página 12 (oct. 2025)."
+          },
+          {
+            "title": "Récord de informalidad: el empleo que se crea es precario",
+            "body": "La tasa de desocupación llegó al 7,8% en el primer trimestre de 2026, con 1,72 millones de personas buscando trabajo sin encontrarlo: 0,3 puntos más que en el cierre de 2025. Pero el dato más elocuente es la informalidad, que trepó al 44,2%, el nivel más alto desde el inicio de la serie. En apenas un año se destruyeron 32.211 puestos registrados mientras el sector informal absorbió más de 400.000 trabajadores. La subocupación, además, subió al 11,1%. La lectura combinada es clara: el mercado “estabiliza” la desocupación a costa de multiplicar el trabajo no registrado y de tiempo parcial. Casi cuatro de cada diez asalariados no tienen descuento jubilatorio. No es que falte trabajo en términos absolutos; es que el que aparece llega sin derechos, sin aportes y sin protección.",
+            "source": "Fuentes INDEC – EPH 1.er trim. 2026 (jun. 2026) · Chequeado (jun. 2026) · CEPA – Salario Mínimo y mercado de trabajo · Consejo Nacional del Salario (Res. 9/2025)."
+          },
+          {
+            "title": "Las prioridades del ajuste: deuda arriba, derechos abajo",
+            "body": "La ejecución presupuestaria de la Administración Pública Nacional a mayo de 2026 cae 31% real respecto de 2023. El recorte es transversal —salud, educación, ciencia, desarrollo social, infraestructura y producción—, pero no alcanza a todos por igual: los servicios de la deuda concentran el 12% del gasto ejecutado, una cifra que supera a Educación, Salud, Ciencia, Vivienda y Trabajo sumadas. La única función que crece en términos reales es la Secretaría de Inteligencia del Estado, con un aumento del 34%. El desplazamiento de prioridades se ve con nitidez en educación: hoy representa el 4,84% del gasto ejecutado, muy por debajo del piso del 6% que fijaba la Ley de Educación que el Gobierno buscó derogar con el Presupuesto 2026. El superávit que exhibe la gestión nacional se sostiene, en buena medida, sobre partidas que dejaron de ejecutarse.",
+            "source": "Fuentes CEPA – Ejecución presupuestaria nacional a mayo 2026 · Tiempo Argentino (jun. 2026) · OEC-CEPA – Recursos de la Ciudad de Buenos Aires."
+          }
+        ],
+        "agenda": []
+      }
     },
     {
       "edition": 4,
       "url": "/publicaciones/boletines/boletin-04-agosto-2026/",
       "title": "El relato y los números",
-      "summary": "Cuarto número del boletín del CEPOES: la ejecución del gasto porteño queda 10% por debajo de 2022 y el relato de la fuerte inversión social no aparece en los números."
+      "summary": "Cuarto número del boletín del CEPOES: la ejecución del gasto porteño queda 10% por debajo de 2022 y el relato de la fuerte inversión social no aparece en los números.",
+      "email_content": {
+        "date": "Agosto 2026",
+        "intro": "Qué muestra la ejecución del gasto en vivienda, salud, empleo, finanzas públicas y educación en la Ciudad de Buenos Aires.",
+        "metrics": [],
+        "sections": [
+          {
+            "title": "Alquilar cuesta dos salarios; construir vivienda, cada vez menos",
+            "body": "Según Zonaprop, en julio de 2026 el alquiler de un monoambiente en CABA promedió $761.268 mensuales; un dos ambientes, $873.668; y un tres ambientes, $1.177.672. El rubro subió 1,6% en el mes y acumula 17,5% en el año, por debajo de la inflación del período (19,2%), lo que implica una leve caída real. La suba interanual fue del 30,7%. La moderación nominal no equivale a accesibilidad. Con una oferta que se mantiene alta —3,4 veces el piso de febrero de 2023—, los precios de publicación se contuvieron, pero el punto de partida sigue siendo prohibitivo: el salario mínimo de agosto ($376.600) cubre apenas la mitad de la unidad más chica del mercado.",
+            "source": "Fuentes Zonaprop (ago. 2026) · Infobae / El Cronista / Revista Mercado (ago. 2026) · OEC-CEPA – Ejecución del gasto del GCBA, 1.er trim. 2026 · IDECBA – GCBA, censo situación de calle · Consejo Nacional del Salario (Res. 9/2025)."
+          },
+          {
+            "title": "Salud pública: el piso más bajo en cuatro años",
+            "body": "El Observatorio Económico de la Ciudad (OEC-CEPA) analizó las partidas de personal a precios constantes entre 2022 y 2026 y encontró que la inversión en trabajadores de la salud está en su nivel más bajo en cuatro años: una caída real del 12% frente a 2022. Hospitales de referencia como el Argerich, el Durand y el Fernández pierden entre 5% y 7% de sus recursos, y centros pediátricos y materno-infantiles como el Gutiérrez, el Elizalde y el Sardá registran caídas similares. El relato de la “fuerte inversión en salud” no aparece en los números.",
+            "source": "Fuentes OEC-CEPA – Ejecución del gasto del GCBA e inversión en personal, 1.er trim. 2026 · CEPA – Ejecución presupuestaria nacional a junio 2026 · Nueva Ciudad (jul. 2026) · GCBA – Red hospitalaria pública."
+          },
+          {
+            "title": "Récord de informalidad: el empleo que se crea es precario",
+            "body": "La tasa de desocupación llegó al 7,8% en el primer trimestre de 2026, con 1,72 millones de personas buscando trabajo sin encontrarlo: 0,3 puntos más que en el cierre de 2025. Pero el dato más elocuente es la informalidad, que trepó al 44,2%, el nivel más alto desde el inicio de la serie. En apenas un año se destruyeron 32.211 puestos registrados mientras el sector informal absorbió más de 400.000 trabajadores. La subocupación, además, subió al 11,1%. La lectura combinada es clara: el mercado “estabiliza” la desocupación a costa de multiplicar el trabajo no registrado y de tiempo parcial. Casi cuatro de cada diez asalariados no tienen descuento jubilatorio. No es que falte trabajo en términos absolutos; es que el que aparece llega sin derechos, sin aportes y sin protección.",
+            "source": "Fuentes INDEC – EPH 1.er trim. 2026 (jun. 2026) · Chequeado (jun. 2026) · CEPA – Salario Mínimo y mercado de trabajo · Consejo Nacional del Salario (Res. 9/2025)."
+          },
+          {
+            "title": "El gasto de la Ciudad, en los hechos",
+            "body": "El seguimiento fiscal exige mirar no solo lo que se presupuesta, sino lo que se ejecuta. El nuevo informe del OEC-CEPA sobre el primer trimestre de 2026 muestra que el gasto total devengado del Gobierno porteño, a precios constantes, quedó 10% por debajo del de 2022. Algunas partidas se recuperan frente a 2025, pero la tendencia de mediano plazo sigue siendo descendente en educación, salud, vivienda y desarrollo económico. El contraste más revelador está en qué partidas aumentan. En Espacio Público e Higiene Urbana el gasto creció 34% respecto de 2022, pero el incremento se concentra en las concesiones privadas de recolección de residuos, mientras el ente estatal que opera como testigo para regular esas tarifas cae 7%. Es un Estado que paga más a los privados y destina menos a su propia capacidad de controlarlos.",
+            "source": "Fuentes OEC-CEPA – Cómo gasta la Ciudad de Buenos Aires, 1.er trim. 2026 · CEPA – Ejecución presupuestaria nacional a junio 2026 · Nueva Ciudad (jul. 2026)."
+          }
+        ],
+        "agenda": []
+      }
     },
     {
       "edition": 5,
       "url": "/publicaciones/boletines/boletin-05-septiembre-2026/",
       "title": "La recuperación que no llega a los barrios",
-      "summary": "El PGB porteño apenas crece, impulsado por las finanzas, mientras pierden el comercio, la industria y los ingresos de los hogares."
+      "summary": "El PGB porteño apenas crece, impulsado por las finanzas, mientras pierden el comercio, la industria y los ingresos de los hogares.",
+      "email_content": {
+        "date": "Septiembre 2026",
+        "intro": "La economía porteña casi no crece y su impulso se concentra en las finanzas. Comercio, industria, consumo e ingresos muestran otra Ciudad.",
+        "metrics": [
+          {
+            "value": "+0,3%",
+            "label": "PGB interanual",
+            "source": "IDECBA · 2.º trim. 2026"
+          },
+          {
+            "value": "-9,1 pp",
+            "label": "Ingresos laborales frente a los precios",
+            "source": "23,6% vs. IPCBA 32,7%"
+          },
+          {
+            "value": "675 mil",
+            "label": "Personas en condición de pobreza",
+            "source": "21,9% de la población"
+          }
+        ],
+        "sections": [
+          {
+            "title": "Una recuperación concentrada en las finanzas",
+            "body": "La intermediación financiera explica por sí sola más de un punto porcentual de la variación del PGB. Sin ese aporte, el conjunto de la economía porteña habría retrocedido. El dinamismo se concentra en fondos comunes de inversión, agentes de bolsa e intermediación bancaria y no bancaria. El comercio y la industria, actividades con mayor presencia territorial y capacidad de generar empleo directo, permanecen en terreno negativo. La construcción sólo iguala prácticamente el nivel de un año atrás. Esta estructura explica por qué el dato agregado no se traduce automáticamente en mejores condiciones para los barrios.",
+            "source": "Fuente IDECBA, Informe de resultados 2061, Actividad económica. Estimación del PGB, 2.º trimestre de 2026. Datos preliminares."
+          },
+          {
+            "title": "Más personas trabajan, pero aumenta la presión y cae el poder adquisitivo",
+            "body": "La tasa se mantuvo sin cambios significativos, pero creció la búsqueda de más horas o de otra ocupación entre quienes ya trabajan. La presión laboral alcanzó al 14,8% de la población económicamente activa. Además, las mujeres representan el 60,7% de las personas desocupadas y el 61,9% de las subocupadas. El ingreso total familiar subió 27,1% y el ingreso per cápita 26,9%, ambos por debajo del IPCBA. Los ingresos laborales quedaron nueve puntos atrás de los precios. Entre asalariados sin descuento jubilatorio el aumento fue de apenas 5%, y entre trabajadores por cuenta propia, de 8,6%.",
+            "source": "Fuentes IDECBA, informes 2058 y 2059, mercado laboral e ingresos, 2.º trimestre de 2026."
+          },
+          {
+            "title": "La pobreza dejó de bajar y vuelve a mostrar su mapa desigual",
+            "body": "La pobreza se mantiene cerca del registro interanual, pero la trayectoria reciente empeoró: frente al cuarto trimestre de 2025 aumentó 1,6 puntos entre los hogares y 0,8 puntos entre las personas. En el primer semestre de 2026 también creció respecto del mismo período del año anterior, impulsada por la indigencia. El promedio vuelve a ocultar el territorio. La incidencia en los hogares de la zona sur es 7,6 puntos superior al promedio de la Ciudad. Los hogares con niños y niñas muestran todavía mayor exposición. La brecha media para que un hogar pobre alcance la canasta básica total es de $424.597.",
+            "source": "Fuente IDECBA, Informe de resultados 2060, Condiciones de vida, 2.º trimestre de 2026. Algunos valores poseen carácter indicativo según el coeficiente de variación informado por la fuente."
+          },
+          {
+            "title": "El consumo cotidiano sigue en retroceso",
+            "body": "Las ventas reales en supermercados confirmaron la baja iniciada en el primer trimestre. Los autoservicios mayoristas acumularon diez trimestres consecutivos de retracción y tuvieron 21,5% menos superficie de ventas que un año atrás. Los shoppings crecieron 6,5%, impulsados en parte por descuentos y promociones financieras extraordinarias de mayo. Aun así, registraron nueve locales activos menos que un año antes. El dato positivo no alcanza para describir al conjunto del comercio porteño.",
+            "source": "Fuente IDECBA, Informe de resultados 2062, Dinámica del comercio minorista, 2.º trimestre de 2026. Datos provisorios."
+          }
+        ],
+        "agenda": [
+          "Crédito productivo con tasa real negativa y metas verificables.",
+          "Transferencia tecnológica para pequeñas empresas.",
+          "Política de ingresos y formalización.",
+          "Compras públicas con desarrollo local.",
+          "Tablero territorial de actividad y empleo."
+        ]
+      }
     }
   ]
 }

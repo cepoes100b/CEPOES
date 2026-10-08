@@ -8,6 +8,7 @@ on:
       - "deploy/site-overlay/**"
       - "deploy/preparar_sitio_publico.py"
       - "scripts/generar_newsletter_feed.py"
+      - "scripts/newsletter_editorial.py"
       - "deploy/preparar_legislatura_publica.py"
       - "deploy/parche_observatorio_salud.py"
       - "deploy/preparar_puente_legislatura.py"

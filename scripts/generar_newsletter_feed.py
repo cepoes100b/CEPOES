@@ -2,6 +2,10 @@
 """Catalog published bulletin pages; drafts and PDFs alone never trigger email."""
 import argparse,json,re,html
 from pathlib import Path
+try:
+    from scripts.newsletter_editorial import editorial
+except ModuleNotFoundError:
+    from newsletter_editorial import editorial
 
 def editions(site):
     result=[]
@@ -13,7 +17,10 @@ def editions(site):
         title=re.search(r'<h1[^>]*>(.*?)</h1>',source,re.S)
         description=re.search(r'<meta name="description" content="([^"]+)"',source)
         if not title or not description:raise ValueError('Boletín sin título o descripción: '+path.parent.name)
-        result.append(dict(edition=int(match[1]),url='/'+path.parent.relative_to(site).as_posix()+'/',title=html.unescape(re.sub('<[^>]+>','',title[1])).strip(),summary=html.unescape(description[1])))
+        content=editorial(source)
+        date=re.search(r'<p[^>]*class="bol-hero__meta"[^>]*>\s*<span>(.*?)</span>',source,re.S)
+        content['date']=html.unescape(re.sub('<[^>]+>','',date[1])).strip() if date else ''
+        result.append(dict(edition=int(match[1]),url='/'+path.parent.relative_to(site).as_posix()+'/',title=html.unescape(re.sub('<[^>]+>','',title[1])).strip(),summary=html.unescape(description[1]),email_content=content))
     numbers=[x['edition'] for x in result]
     if len(numbers)!=len(set(numbers)):raise ValueError('Dos boletines con el mismo número')
     return sorted(result,key=lambda x:x['edition'])

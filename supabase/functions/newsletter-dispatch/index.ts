@@ -13,7 +13,13 @@ Deno.serve(async req=>{
     if(!response.ok)throw Error('published_feed_unavailable');
     const feed=await response.json();if(feed.version!==1||!Array.isArray(feed.editions)||feed.editions.length>200)throw Error('invalid_feed');
     const editions=feed.editions.map(validateEdition).sort((a:any,b:any)=>a.edition-b.edition);
-    for(const edition of editions)await rpc('newsletter_enqueue_edition',{p_edition:edition.edition,p_url:edition.url,p_title:edition.title,p_summary:edition.summary});
+    for(const edition of editions){
+      await rpc('newsletter_enqueue_edition',{p_edition:edition.edition,p_url:edition.url,p_title:edition.title,p_summary:edition.summary});
+      if(edition.email_content){
+        const r=await db.from('newsletter_editions').update({email_content:edition.email_content}).eq('edition',edition.edition).is('email_content',null);
+        if(r.error)throw Error('snapshot_failed');
+      }
+    }
     const jobs=await rpc('newsletter_claim_deliveries',{p_limit:5});
     let accepted=0,retry=0,cancelled=0;
     for(const job of jobs){

@@ -18,6 +18,29 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 THEME_COLOR = "#16232F"
 ARCHITECTURE_CSS = "/assets/arquitectura.css"
+SITE_FONTS_URL = (
+    "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800"
+    "&family=Inter:wght@400;500;600;700&display=swap"
+)
+
+
+def ensure_site_fonts(source: str) -> str:
+    """Load the font families used by the shared shell, also on new reports."""
+    links = re.findall(r'<link\b[^>]*>', source, flags=re.I)
+    if not any(re.search(r'href=["\']/assets/site\.css(?:\?[^"\']*)?["\']', tag, re.I) for tag in links):
+        return source
+    font_links = [html.unescape(tag) for tag in links
+                  if 'fonts.googleapis.com/css' in tag and re.search(r'rel=["\']stylesheet["\']', tag, re.I)]
+    if all(any(re.search(r'family=' + family + r'(?:[:&"\'])', tag) for tag in font_links)
+           for family in ('Inter', 'Poppins')):
+        return source
+    additions = []
+    for host in ('https://fonts.googleapis.com', 'https://fonts.gstatic.com'):
+        if not any(re.search(r'href=["\']' + re.escape(host) + r'/?["\']', tag) for tag in links):
+            cross = ' crossorigin' if host.endswith('gstatic.com') else ''
+            additions.append(f'<link rel="preconnect" href="{host}"{cross}>')
+    additions.append(f'<link rel="stylesheet" href="{html.escape(SITE_FONTS_URL, quote=True)}">')
+    return re.sub(r'</head\s*>', lambda match: ''.join(additions) + match[0], source, count=1, flags=re.I)
 
 
 @lru_cache(maxsize=512)
@@ -850,6 +873,7 @@ def normalize_html(path: Path, site: Path) -> None:
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
+    source = ensure_site_fonts(source)
     if rel.startswith("/publicaciones/boletines/"):
         source = compact_newsletter_hero(source)
     # Product notes should lead to their own documented definitions. The

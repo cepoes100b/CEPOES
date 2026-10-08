@@ -484,9 +484,8 @@ def home_publications_hero() -> str:
         image = (f'<img src="{esc(item["cover"])}" alt="" width="320" height="420">'
                  if item.get('cover') else '')
         period = item.get('period') or item['date']
-        card_class = 'home-publication-card' + ('' if item.get('cover') else ' home-publication-text')
         summary = item.get('home_summary', item['summary']) if i == 0 else item['summary']
-        cards.append(f'<article class="{card_class}"><span class="eyebrow">{esc(item["label"])}</span>'
+        cards.append(f'<article class="home-publication-card"><span class="eyebrow">{esc(item["label"])}</span>'
             + f'<div>' + image + f'<span class="home-publication-period">{esc(period)}</span>'
             + f'<{title_tag}><a href="{esc(item["url"])}">{esc(item["title"])}</a></{title_tag}>'
             + f'<p>{esc(summary)}</p><a class="home-publication-link" href="{esc(item["url"])}">Leer publicación →</a></div></article>')

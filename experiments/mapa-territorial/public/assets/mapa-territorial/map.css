@@ -349,3 +349,40 @@
 @media(prefers-reduced-motion:reduce){
   .mt-shell[data-mode="analyze"] .mt-analysis-controls{transition:none}
 }
+
+/* Noninteractive roof IDs: positioned in 3D using the same public matrix as the selection pin. */
+.mt-shell[data-mode="analyze"] .mt-roof-label-layer{
+  position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden
+}
+.mt-shell[data-mode="analyze"] .mt-roof-label{
+  position:absolute;left:0;top:0;display:block;
+  padding:5px 8px;border:1px solid rgba(175,232,229,.4);
+  border-radius:999px;background:rgba(8,30,39,.80);
+  color:#ebfaf9;font:700 11px/1 Poppins,system-ui,sans-serif;
+  box-shadow:0 3px 13px #0009;white-space:nowrap;
+  will-change:transform
+}
+.mt-shell[data-mode="analyze"] .mt-roof-label[hidden]{display:none}
+.mt-shell[data-mode="analyze"] .mt-analysis-selection{
+  background:#f2a77a;color:#28160d;border:1px solid #f8caa9;
+  padding:8px 12px;border-radius:10px;box-shadow:0 8px 25px #0008;
+}
+.mt-shell[data-mode="analyze"] .mt-analysis-selection span{color:#522918}
+.mt-shell[data-mode="analyze"] .mt-analysis-selection:before,
+.mt-shell[data-mode="analyze"] .mt-analysis-selection:after{
+  background:#f2a77a;box-shadow:0 0 0 1px #dc8454
+}
+@keyframes mt-analysis-stat-arrive{
+  from{opacity:.58;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.mt-shell[data-mode="analyze"] .mt-dossier .mt-metric-main strong{
+  animation:mt-analysis-stat-arrive .38s cubic-bezier(.2,.7,.2,1) both
+}
+@media(max-width:760px){
+  .mt-shell[data-mode="analyze"] .mt-roof-label{font-size:10px;padding:4px 6px}
+  .mt-shell[data-mode="analyze"] .mt-analysis-selection{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  .mt-shell[data-mode="analyze"] .mt-dossier .mt-metric-main strong{animation:none}
+}

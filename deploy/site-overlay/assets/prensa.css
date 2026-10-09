@@ -44,3 +44,8 @@
 .press-inline-head{display:block}
 .press-filters{grid-template-columns:1fr 1fr}.press-search{grid-column:1/-1}
 }
+
+.press-historical-notice{max-width:780px;margin:1.5rem 0;padding:1rem 1.25rem;border:1px solid #9ee2d4;border-left:4px solid #9ee2d4;border-radius:6px;background:#16232f}
+.press-hero .press-historical-notice p{font-size:1rem;line-height:1.6;margin:0}
+.press-hero .press-historical-notice p+p{margin-top:.75rem}
+.press-historical-notice a{text-decoration:underline;text-underline-offset:3px}

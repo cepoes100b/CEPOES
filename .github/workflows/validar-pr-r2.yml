@@ -33,6 +33,9 @@ jobs:
           R2_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: python validar_pr_r2.py
 
+      - name: Verificar unidades de migraciones y aviso histórico de prensa
+        run: node --test tests/public_corrections.test.mjs
+
       - name: Verificar novedades automáticas
         run: |
           python -m unittest test_lo_nuevo.py test_catalogo_informes.py test_home_editorial.py

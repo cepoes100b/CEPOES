@@ -53,7 +53,7 @@ jobs:
           node --test tests/editorial_approval.test.mjs
 
       - name: Verificar cadena segura de actualización a publicación
-        run: python -m unittest test_cadena_publicacion.py test_endeudamiento_publico.py
+        run: python -m unittest test_cadena_publicacion.py test_endeudamiento_publico.py test_ipc_publicacion.py
 
       - name: Verificar parser de panorama actual sin red
         run: |

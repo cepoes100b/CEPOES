@@ -97,7 +97,7 @@
       },
       {
         "year": 2022,
-        "value": 1.1
+        "value": 1.09
       },
       {
         "year": 2023,
@@ -106,11 +106,38 @@
       {
         "year": 2024,
         "value": 0.99
+      },
+      {
+        "year": 2025,
+        "value": 0.9
       }
     ],
     "births_2024": 21366,
     "birth_rate_2024_per_1000": 6.9,
-    "mean_maternal_age_2024": 32.5
+    "mean_maternal_age_2024": 32.5,
+    "births_2025": 20444,
+    "mean_maternal_age_2025": 32.8,
+    "review": {
+      "reviewed_on": "2026-10-09",
+      "data_year": 2025,
+      "source_modified_on": "2026-09-22",
+      "evidence_origin": "Revisión de fuentes provista en el encargo; descarga independiente bloqueada por proxy HTTP 403 en este entorno.",
+      "independent_validation": "pending",
+      "births_universe": "Nacimientos inscriptos a término; conservar este universo al comparar 2024 y 2025.",
+      "transformations": "TGF redondeada a dos decimales; edad media materna a un decimal; nacimientos como entero. TGF 2022 revisada de 1,10 a 1,09. Los demás puntos históricos se conservan.",
+      "cells": {
+        "idecba_pb3_14": {
+          "AT2": 2025,
+          "AT11": 0.8994381593,
+          "AT13": 32.80585134
+        },
+        "idecba_nps": {
+          "A37": 2025,
+          "B37": 20444
+        }
+      },
+      "date_note": "2025/12 en la URL es una ruta del recurso, no el período de observación. generated_at conserva la generación del pipeline; reviewed_on identifica esta revisión manual."
+    }
   },
   "events": [
     {
@@ -142,6 +169,16 @@
       "id": "unicef_monitor",
       "name": "UNICEF · Monitor de natalidad",
       "url": "https://www.unicef.org/argentina/comunicados-prensa/monitor-natalidad"
+    },
+    {
+      "id": "idecba_pb3_14",
+      "name": "IDECBA · Fecundidad y edad media materna",
+      "url": "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2025/12/PB3_14.xlsx"
+    },
+    {
+      "id": "idecba_nps",
+      "name": "IDECBA · Nacimientos inscriptos a término",
+      "url": "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2025/12/NPS.xlsx"
     }
   ]
 }

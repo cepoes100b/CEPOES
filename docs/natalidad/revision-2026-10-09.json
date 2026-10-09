@@ -1,0 +1,58 @@
+{
+  "review_date": "2026-10-09",
+  "base_sha": "73d0cf3f10c972a6f404060fb574754a4789b8ad",
+  "evidence_origin": "Valores y celdas provistos por revisión de fuentes del encargo, con autorización expresa para preparar este candidato. No se afirma descarga independiente.",
+  "source_access": "Ambas planillas devolvieron Tunnel connection failed: 403 Forbidden. Sin reintentos ni rutas alternativas.",
+  "release_status": "blocked",
+  "blockers": [
+    "Revalidar independientemente celdas, universos y fecha de modificación de las planillas oficiales.",
+    "Completar QA con site.css y la salida canónica completa; el overlay aislado no reproduce producción."
+  ],
+  "checks": {
+    "verificar_natalidad": "passed; 3 puntos nacionales y 16 CABA",
+    "json_copies": "byte-identical",
+    "historical_preservation": "Argentina, eventos, fuentes originales y fechas de pipeline idénticos a la base; sólo cambia TGF 2022 y se agrega 2025 en la serie CABA",
+    "negative_checks": "Rechaza TGF 2022 sin revisar, ausencia de 2025 y modificación de tasa bruta 2024",
+    "diff_check": "passed"
+  },
+  "visual_qa": {
+    "scope": "Chromium real sobre archivos del overlay candidato, mediante interceptación local de Playwright; toda solicitud externa abortada. Sin acceso a producción.",
+    "results": [
+      {
+        "width": 390,
+        "errors": [],
+        "missing": [
+          "/assets/site.css"
+        ],
+        "circles": 16,
+        "overflow": false
+      },
+      {
+        "width": 1440,
+        "errors": [],
+        "missing": [
+          "/assets/site.css"
+        ],
+        "circles": 16,
+        "overflow": false
+      }
+    ],
+    "assessment": "Capturas inspeccionadas: valores, comparaciones y gráfico visibles. Aprobación visual integral pendiente por ausencia de site.css. common.js sí está presente; la navegación final requiere salida canónica.",
+    "screenshots": [
+      "candidate-390.png",
+      "candidate-1440.png"
+    ]
+  },
+  "candidate_sha256": {
+    "natalidad.json": "e973fbbf14147949415d8d31e7560ee47b94c32d38bfe06b380796d275c9b140",
+    "deploy/site-overlay/assets/data/natalidad.json": "e973fbbf14147949415d8d31e7560ee47b94c32d38bfe06b380796d275c9b140",
+    "deploy/site-overlay/observatorio/natalidad/index.html": "3a6f775c6a0f6ad46359c52c9b1218ca483fb8e2ec04ef5e6876c7506e71cd9d",
+    "verificar_natalidad.py": "1687c8fc93e925571aa74907b3d047821fdc191faa775abc7b3f10b051f04ff5"
+  },
+  "limitations": [
+    "Sin inferir otros puntos de la serie ni nueva tasa bruta 2025.",
+    "Sin hash de las planillas ni celda exacta de TGF 2022: no fueron provistos.",
+    "No se ejecutó el actualizador DEIS para evitar nuevas consultas; se preservó su contenido.",
+    "Sin fusiones, despliegues, correos ni cambios fuera de natalidad."
+  ]
+}

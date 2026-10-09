@@ -15,6 +15,8 @@ Deno.serve(async req=>{
     const publications=feed.publications.map(validatePublication);
     if(new Set(publications.map((p:any)=>p.key)).size!==publications.length)throw Error('duplicate_publication');
     await rpc('newsletter_enqueue_publications',{p_publications:publications});
+    // Catalog discovery never authorizes diffusion; only a privileged editorial order does.
+    await rpc('newsletter_finalize_editorial',{});
     const jobs=await rpc('newsletter_claim_deliveries',{p_limit:5});
     let accepted=0,retry=0,cancelled=0;
     for(const job of jobs){
@@ -34,8 +36,10 @@ Deno.serve(async req=>{
       });
       if(result==='accepted')accepted++;else if(result==='retry')retry++;else cancelled++;
     }
+    await rpc('newsletter_finalize_editorial',{});
     const {count:review,error:reviewError}=await db.from('newsletter_deliveries').select('*',{count:'exact',head:true}).eq('state','review');
     if(reviewError)throw Error('review_check_failed');
     return Response.json({ok:true,accepted,retry,cancelled,review});
   }catch {console.error('newsletter_dispatch_failed');return Response.json({ok:false},{status:503});}
 });
+

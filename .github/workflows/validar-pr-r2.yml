@@ -45,6 +45,13 @@ jobs:
           node --test tests/newsletter_delivery.test.mjs tests/newsletter_logic.test.mjs tests/publication_delivery.test.mjs
 
 
+      - name: Verificar aprobación editorial en PostgreSQL aislado
+        env:
+          PGLITE_MODULE: /tmp/cepoes-editorial-qa/node_modules/@electric-sql/pglite/dist/index.js
+        run: |
+          npm install --prefix /tmp/cepoes-editorial-qa --no-save --ignore-scripts @electric-sql/pglite@0.5.8
+          node --test tests/editorial_approval.test.mjs
+
       - name: Verificar cadena segura de actualización a publicación
         run: python -m unittest test_cadena_publicacion.py test_endeudamiento_publico.py
 

@@ -38,11 +38,12 @@ class AnalysisController {
     $('mt-analysis-availability').textContent=!engine?'El mapa no está disponible. La tabla y el ranking conservan la comparación completa.':supported?'La vista plana facilita comparar superficies sin oclusiones.':'';
     $('mt-place-kind').textContent='Análisis territorial';$('mt-place-name').textContent=t?.properties.name||'Toda la Ciudad';
     $('mt-place-description').textContent=ind.name;$('mt-map-title').textContent=`${ind.name} · ${ind.period}`;
+    $('mt-analysis-selection-status').hidden=!supported||!t;$('mt-analysis-selection-status').textContent=t?`Seleccionada: ${t.properties.name}`:'';
     const current=supported?(state.territory?row?.value:city):null;
     const rank=row?.rank?`${row.rank}º de ${sorted.filter(r=>r.rank!==null).length}${row.tied?' · posición compartida':''}`:'';
     const comparison=current!==null&&current!==undefined&&city!==null&&state.territory?`Diferencia con Ciudad: ${current-city>=0?'+':''}${fmt(current-city,ind.digits??1)} ${ind.multiplier===100?'puntos porcentuales':ind.unit_short||ind.unit}.`:'';
     $('mt-metrics').innerHTML=`<div class="mt-metric-main"><strong>${current==null?'s/d':esc(fmt(current,ind.digits??1))}</strong><span>${esc(ind.unit)}</span></div><p class="mt-analysis-position">${esc(supported?rank:'Sin dato barrial')}</p><p class="mt-small">${esc(comparison)}</p><div class="mt-comparison"><div class="mt-comparison-head"><span>Ciudad · cociente de sumas</span><strong>${esc(valueText(ind,city))}</strong></div></div>`;
-    $('mt-comparison-note').textContent=supported?(row?.missing_reason||ind.interpretation||ind.method):'Este indicador tiene cobertura comunal. Cambiá a comunas para comparar sus valores.';
+    $('mt-comparison-note').innerHTML=supported?(row?.missing_reason?esc(row.missing_reason):'<a href="#mt-analysis-method">Consultar universo, cálculo y fuentes ↓</a>'):'Este indicador tiene cobertura comunal. Cambiá a comunas para comparar sus valores.';
     $('mt-service-card').hidden=true;
     $('mt-analysis-rank-title').textContent=`De mayor a menor · ${ind.unit}`;
     const renderKey=`${ind.id}:${ind.period}`;
@@ -66,5 +67,5 @@ class AnalysisController {
       engine.map.once('idle',()=>{if(this.modeActive&&token===this.renderToken){const layer=engine.map.getLayer('analysis-volume');this.qa.analysis.rendered=true;this.qa.analysis.renderProof={pitch:engine.map.getPitch(),layerType:layer?.type,visible:engine.map.getLayoutProperty('analysis-volume','visibility'),renderedIds:[...new Set(engine.map.queryRenderedFeatures({layers:this.adapter.hitLayers()}).map(f=>String(f.properties.id)))],featureStates:engine.map.queryRenderedFeatures({layers:this.adapter.hitLayers()}).map(f=>({id:f.id,propertyId:f.properties.id,state:engine.map.getFeatureState({source:f.source,id:f.id})})),heights:ind.rows.map(r=>({id:r.id,ratio:engine.map.getFeatureState({source:'comuna',id:r.id}).ratio??null}))};}});
     }else this.onMapState({view:'flat',animation:'idle',orbit:false,reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches});
   }
-  deactivate(){this.modeActive=false;this.adapter?.deactivate();if(this.qa.analysis)this.qa.analysis.status='inactive';}
+  deactivate(){this.modeActive=false;this.adapter?.deactivate();$('mt-analysis-selection-status').hidden=true;if(this.qa.analysis)this.qa.analysis.status='inactive';}
 }

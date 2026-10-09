@@ -74,3 +74,13 @@ Los asserts comprueban contexto WebGL2 vivo, píxeles turquesa, IDs de las geome
 Los hashes de capturas y resultados están en `evidence/analysis-qa-summary.json`; las imágenes originales se recuperaron de logs con comprobación SHA-256. La demo local conserva la salida pública completa sin cambiar sus HTML, estilos, scripts o datos. Requiere servidor localhost y WebGL2 para representar el mapa.
 
 Pendientes P2 para una siguiente iteración: mejorar la visibilidad del contorno naranja sobre extrusiones y compactar texto metodológico repetido en móvil, manteniendo visibles universo, período y límites. La vista plana y el ranking ya resuelven la comparación exacta. Safari, dispositivos físicos y lector de pantalla siguen sin certificar; no se habilita publicación por este resultado.
+
+## Refinamiento de los dos P2
+
+La selección 3D incorpora un único rótulo con pin naranja anclado al techo real de la comuna, además del contorno y una identificación fija sobre el mapa. El color estadístico y la altura permanecen intactos. La proyección usa `MercatorCoordinate.fromLngLat` y `CustomRenderMethodInput.defaultProjectionData.mainMatrix`, APIs públicas de MapLibre 6.13.0. No usa `map.transform`, elevaciones de Marker inexistentes en esta versión, shaders adicionales ni un bucle de repintado propio.
+
+El anclaje sigue la altura interpolada. Una consulta de profundidad con `queryRenderedFeatures` lo oculta si otra comuna cubre ese techo; la identificación fija conserva el contexto de selección. Se oculta fuera del mapa, al pasar a plano/barrios o al salir del modo analítico. La limpieza es idempotente en cambio de estilo y destrucción del mapa. El pin no captura puntero ni repite información al lector de pantalla.
+
+En móvil se mantienen visibles el período, el universo breve y la cobertura comunal; la explicación larga se consulta en «Universo y fuentes», un details nativo operable por teclado. La ficha enlaza al método íntegro en vez de repetirlo. Las fuentes, fórmula, denominadores, licencia y advertencias completas siguen disponibles junto a la tabla.
+
+Referencias de API: [CustomRenderMethodInput](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/CustomRenderMethodInput/), [MercatorCoordinate](https://maplibre.org/maplibre-gl-js/docs/API/classes/MercatorCoordinate/) y [CustomLayerInterface](https://maplibre.org/maplibre-gl-js/docs/API/interfaces/CustomLayerInterface/). Este refinamiento requiere su propia corrida de navegador y nuevas capturas antes de reemplazar la demo entregada.

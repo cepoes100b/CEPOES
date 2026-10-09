@@ -1,4 +1,6 @@
 import {COLORS,MISSING_COLOR,MAX_HEIGHT,normalized,scaleForIndicator} from './model.mjs';
+import {number as fmt} from '../model.mjs';
+import {SelectionCallout} from './selection.mjs';
 const SUFFIXES=['fill','line','selected-halo','selected'];
 const value=['coalesce',['feature-state','ratio'],0];
 const color=['case',['boolean',['feature-state','available'],false],['interpolate',['linear'],value,...COLORS.flatMap((c,i)=>[i/4,c])],MISSING_COLOR];
@@ -6,6 +8,7 @@ const color=['case',['boolean',['feature-state','available'],false],['interpolat
 export class AnalyticalLayer {
   constructor(engine,{onState=()=>{}}={}){
     this.engine=engine;this.map=engine.map;this.onState=onState;this.active=false;this.initialized=false;this.view='flat';this.values=new Map();this.frame=0;this.orbitFrame=0;this.generation=0;this.currentKey='';
+    this.callout=new SelectionCallout(engine,()=>({visible:this.active&&this.view==='3d'&&this.level==='comuna'&&!!this.selected,center:this.selectedFeature?.properties.center,name:this.selectedFeature?.properties.name,id:this.selected,height:(this.values.get(this.selected)??0)*MAX_HEIGHT,value:this.selectedValue}));
     this.motion=matchMedia('(prefers-reduced-motion: reduce)');
     this.onMotion=()=>{if(this.motion.matches&&this.active){this.stopOrbit();this.finish();this.map.stop();this.map.easeTo({pitch:this.view==='3d'?48:0,bearing:this.view==='3d'?-22:0,duration:0});}this.report();};
     this.motion.addEventListener('change',this.onMotion);
@@ -18,6 +21,7 @@ export class AnalyticalLayer {
   mount(){
     if(!this.map.getSource('comuna'))return;
     if(!this.map.getLayer('analysis-volume'))this.map.addLayer({id:'analysis-volume',source:'comuna',type:'fill-extrusion',layout:{visibility:'none'},paint:{'fill-extrusion-color':color,'fill-extrusion-height':['*',value,MAX_HEIGHT],'fill-extrusion-base':0,'fill-extrusion-opacity':.96,'fill-extrusion-vertical-gradient':true,'fill-extrusion-height-transition':{duration:0},'fill-extrusion-color-transition':{duration:0}}});
+    if(!this.map.getLayer(this.callout.id))this.map.addLayer(this.callout);
     // Style swaps discard feature-state; restore the current visible values immediately.
     for(const [id,ratio] of this.values)this.apply(id,ratio);
     if(this.active)this.refresh();
@@ -27,6 +31,9 @@ export class AnalyticalLayer {
   set(ind,{view='flat',level='comuna',selected=''}={}){
     const opening=!this.initialized;const previousView=this.view;
     this.active=true;this.indicator=ind;this.level=level;this.selected=selected;this.view=level==='comuna'?view:'flat';
+    this.selectedFeature=this.engine.territories?.find(f=>f.properties.id===selected);
+    const selectedRow=ind.rows.find(r=>r.id===selected);this.selectedValue=selectedRow?.value==null?'s/d':`${fmt(selectedRow.value,ind.digits??1)} ${ind.unit_short||ind.unit||''}`;
+    this.callout.hide();
     if(!this.map.getSource('comuna'))return;
     this.mount();
     if(opening){this.initialized=true;this.oldPixelRatio=this.map.getPixelRatio();this.map.setPixelRatio(Math.min(devicePixelRatio||1,1.5));}
@@ -89,6 +96,7 @@ export class AnalyticalLayer {
   stopOrbit(){cancelAnimationFrame(this.orbitFrame);this.orbitFrame=0;this.report();}
   deactivate(){
     if(!this.active)return;this.active=false;this.initialized=false;this.stopOrbit();this.finish();
+    this.callout.hide();
     if(this.map.getLayer('analysis-volume'))this.map.setLayoutProperty('analysis-volume','visibility','none');
     for(const id of ['clusters','points'])if(this.map.getLayer(id))this.map.setLayoutProperty(id,'visibility','visible');
     this.map.stop();this.map.easeTo({pitch:0,bearing:0,duration:this.motion.matches?0:350});
@@ -97,6 +105,7 @@ export class AnalyticalLayer {
   }
   destroy(){
     this.active=false;this.stopOrbit();cancelAnimationFrame(this.frame);this.frame=0;this.generation++;
+    this.callout.onRemove();
     this.motion.removeEventListener('change',this.onMotion);document.removeEventListener('visibilitychange',this.onVisibility);
     for(const type of ['pointerdown','wheel','keydown','touchstart'])this.map.getContainer().removeEventListener(type,this.onInteract,true);
   }

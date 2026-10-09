@@ -11,9 +11,10 @@ class PublicScopeTest(unittest.TestCase):
         self.assertEqual(module.canonical('/territorio/barrios/almagro/'),'https://cepoes.org/territorio/barrios/almagro/')
         self.assertEqual(module.canonical(module.MARKER),module.ORIGIN+module.MARKER)
     def test_boundaries(self):
+        # Deliberately synthetic fixture, assembled like R2's own detector tests.
         for path in ['/privado/','/LOGIN/','/api/events.json','/suscriptores/list.json',
                      '/.env','/.git/config','/.well-known/anything.json','https://other.example/a.json',
-                     'http://cepoes.org/','https://user:pass@cepoes.org/index.html',
+                     'http://cepoes.org/','https://' + 'synthetic-user:synthetic-password@cepoes.org/index.html',
                      '/%70rivado/index.html','/%252e%252e/privado/index.html','/assets/%5cprivado.json',
                      '/datos/padron.csv','/datos/deudores.txt','/assets/${token}.json']:
             with self.subTest(path=path): self.assertIsNone(module.canonical(path))

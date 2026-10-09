@@ -97,3 +97,6 @@ No se alteró el sandbox, no se creó un túnel ni se publicó el prototipo para
 - [ ] Obtener autorización final de integración/fusión/publicación.
 
 Único próximo paso: habilitar un entorno con navegador real que alcance la copia local y completar esta matriz. Producción, datos existentes, suscriptores y el pipeline canónico permanecen sin cambios.
+
+## Control remoto del primer commit de implementación
+R2 del commit `cbc1083` detectó una URL ficticia con usuario/clave en el test del capturador. Se corrigió el fixture siguiendo el patrón del propio detector, sin debilitarlo ni agregar excepciones. No era una credencial real. El escaneo local inicial sólo veía el commit documental, porque R2 compara contra HEAD; se repitió sobre un commit local con el diff completo después de esta corrección. La CI remota del siguiente commit debe quedar aprobada antes de cerrar la entrega offline.

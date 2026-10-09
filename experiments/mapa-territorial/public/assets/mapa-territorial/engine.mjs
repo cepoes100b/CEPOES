@@ -1,8 +1,10 @@
 import {collection,featureID,boundsFor,hasPoint,scaleFor} from './model.mjs';
 const CABA=[[-58.552,-34.721],[-58.323,-34.519]];
 const isDark=()=>document.documentElement.dataset.theme==='dark';
+const isAnalytical=()=>document.getElementById('mt-explorer')?.dataset.mode==='analyze';
+const background=()=>isAnalytical()?'#081b25':isDark()?'#0b1b27':'#e6eff3';
 export const palette=()=>isDark()?['#244455','#346980','#4693ac','#72bdd0','#a3e4ed']:['#e0eef3','#b4d4e1','#7fb1c7','#42849f','#145675'];
-const localStyle=()=>({version:8,sources:{},layers:[{id:'background',type:'background',paint:{'background-color':isDark()?'#0b1b27':'#e6eff3'}}]});
+const localStyle=()=>({version:8,sources:{},layers:[{id:'background',type:'background',paint:{'background-color':background()}}]});
 export class TerritorialMap {
   static async create(options){
     const gl=await import('./vendor/maplibre-gl.mjs');
@@ -26,7 +28,7 @@ export class TerritorialMap {
     this.map.on('mousemove',e=>{const ids=(this.analysis?.active?this.analysis.hitLayers():['points','clusters',`${this.level}-fill`]).filter(id=>this.map.getLayer(id));const hit=ids.length&&this.map.queryRenderedFeatures(e.point,{layers:ids}).length;canvas.style.cursor=hit?'pointer':'';});
     this.map.on('error',e=>{if(this.base==='streets'&&!this.restoring){this.restoring=true;this.baseToken++;this.base='local';clearTimeout(this.baseTimer);this.map.setStyle(localStyle());this.onBaseStatus('No se pudo cargar la base de calles. Conservamos la cartografía local.',false);this.restoring=false;}else if(!this.ready&&e.error?.message?.includes('WebGL'))onFailure(e.error);});
     this.startupTimer=setTimeout(()=>{if(!this.ready)onFailure(new Error('El motor cartográfico no respondió a tiempo.'));},15000);
-    this.themeObserver=new MutationObserver(()=>{if(this.base==='local'&&this.map.isStyleLoaded()){this.map.setPaintProperty('background','background-color',isDark()?'#0b1b27':'#e6eff3');this.refresh();}else if(this.base==='streets'){this.setStreets(true);}});
+    this.themeObserver=new MutationObserver(()=>{if(this.base==='local'&&this.map.isStyleLoaded()){this.map.setPaintProperty('background','background-color',background());this.refresh();}else if(this.base==='streets'){this.setStreets(true);}});
     this.themeObserver.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
   }
   addLayers(){
@@ -46,6 +48,7 @@ export class TerritorialMap {
   update({level,territory,records,stats}){this.actionToken++;this.level=level;this.selected=territory;this.records=records;this.stats=stats;this.refresh();}
   refresh(){
     if(this.destroyed||!this.map.getSource('services'))return;
+    if(this.base==='local'&&this.map.getLayer('background'))this.map.setPaintProperty('background','background-color',background());
     if(this.analysis?.active){this.analysis.refresh();return;}
     const colors=palette();const vals=this.territories.filter(f=>f.properties.level===this.level).map(f=>this.stats?.rows.get(featureID(f))?.rate);const scale=scaleFor(vals);
     for(const level of ['barrio','comuna']){
@@ -97,7 +100,18 @@ export class TerritorialMap {
     this.onTerritory(String(hit.properties.id));
   }
   duration(){return matchMedia('(prefers-reduced-motion: reduce)').matches?0:350;}
-  fit(feature){this.actionToken++;this.analysis?.stopOrbit();const three=this.analysis?.active&&this.analysis.view==='3d';this.map.fitBounds(feature?boundsFor(feature):CABA,{padding:three?70:35,maxZoom:three?(this.map.getContainer().clientWidth<500?10.7:11.2):14,pitch:three?48:0,bearing:three?-22:0,duration:this.duration()});}
+  fit(feature){
+    this.actionToken++;this.analysis?.stopOrbit();
+    const three=this.analysis?.active&&this.analysis.view==='3d';
+    const el=this.map.getContainer(),w=el.clientWidth,h=el.clientHeight;
+    const padding=three?(w<=760?
+      {top:115,right:30,bottom:Math.round(h*.43),left:30}:
+      {top:88,right:Math.max(40,Math.round(w*.035)),bottom:84,left:Math.min(435,Math.max(365,Math.round(w*.29)))}):35;
+    this.map.fitBounds(feature?boundsFor(feature):CABA,{
+      padding,maxZoom:three?(w<500?10.65:11.25):14,
+      pitch:three?50:0,bearing:three?-24:0,duration:this.duration()
+    });
+  }
   focusRecord(feature){this.actionToken++;if(hasPoint(feature))this.map.easeTo({center:feature.geometry.coordinates,zoom:15,duration:this.duration()});}
   async setStreets(enabled){
     const token=++this.baseToken;clearTimeout(this.baseTimer);

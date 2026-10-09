@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { execFileSync } from 'node:child_process';
 
 const root = new URL('../', import.meta.url);
 const read = path => readFileSync(new URL(path, root), 'utf8');
@@ -64,4 +65,36 @@ test('unavailable historical note stays unavailable without manufacturing a fall
   const html = await render(target, false);
   assert.match(html, /Nota no disponible/);
   assert.ok(!html.includes(notice));
+});
+
+
+test('canonical generated HTML retains the corrected migration asset version', () => {
+  const result = execFileSync('python', ['-c', `
+import json, re, tempfile
+from pathlib import Path
+from deploy.preparar_sitio_publico import normalize_html
+original = Path('deploy/site-overlay/territorio/migraciones/index.html').read_text()
+rows = []
+with tempfile.TemporaryDirectory() as directory:
+    site = Path(directory)
+    page = site / 'territorio/migraciones/index.html'
+    page.parent.mkdir(parents=True)
+    for incoming in ['', '?v=235', '?v=258', '?v=20261009']:
+        page.write_text(re.sub(r'/assets/migraciones\\.js(?:\\?v=\\d+)?', '/assets/migraciones.js' + incoming, original))
+        normalize_html(page, site)
+        first = page.read_text()
+        normalize_html(page, site)
+        rows.append([first, page.read_text()])
+print(json.dumps(rows))
+`], { cwd: root, encoding: 'utf8' });
+  const overlayVersion = read('deploy/site-overlay/territorio/migraciones/index.html').match(/src="(\/assets\/migraciones\.js\?v=\d+)"/)[1];
+  assert.equal(overlayVersion, '/assets/migraciones.js?v=20261009');
+  for (const passes of JSON.parse(result)) {
+    for (const html of passes) {
+      const scripts = [...html.matchAll(/src="([^"]+)"/g)].map(m => m[1]);
+      assert.deepEqual(scripts.filter(src => src.startsWith('/assets/migraciones.js')), [overlayVersion]);
+      assert.ok(scripts.includes('/assets/related.js?v=258'));
+      assert.ok(scripts.includes('/assets/common-r1.js?v=259'));
+    }
+  }
 });

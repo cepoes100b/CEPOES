@@ -194,7 +194,7 @@ function mapFailed(error){
 async function initEngine(){
   if(engineAttempted)return;engineAttempted=true;
   try{
-    engine=await TerritorialMap.create({container:'mt-map',territories,onTerritory:id=>selectTerritory(id),onRecord:showRecord,onReady:()=>{$('mt-map-loading')?.remove();$('mt-streets').disabled=false;$('mt-fit').disabled=false;qa.map='ready';measure('map-ready',qa.started);render();if(selected())engine?.fit(selected());},onFailure:mapFailed,onBaseStatus:(message,enabled)=>{$('mt-base-status').textContent=message;$('mt-streets').checked=enabled;}});
+    engine=await TerritorialMap.create({container:'mt-map',territories,onTerritory:id=>selectTerritory(id),onRecord:showRecord,onReady:()=>{$('mt-map-loading')?.remove();$('mt-streets').disabled=false;$('mt-fit').disabled=false;qa.map='ready';measure('map-ready',qa.started);render();if(selected()||state.mode==='analyze')engine?.fit(selected());},onFailure:mapFailed,onBaseStatus:(message,enabled)=>{$('mt-base-status').textContent=message;$('mt-streets').checked=enabled;}});
     render();
   }catch(e){mapFailed(e);}
 }

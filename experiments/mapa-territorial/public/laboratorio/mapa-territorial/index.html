@@ -24,7 +24,7 @@
   <span class="mt-lab">Laboratorio · vista local</span>
 </header>
 <div id="mt-mode-controls" class="mt-mode-controls" role="group" aria-label="Modalidad territorial"><button type="button" data-mode="explore" aria-pressed="true">Explorar servicios</button><button type="button" data-mode="analyze" aria-pressed="false">Analizar indicadores</button></div>
-<div class="mt-toolbar">
+<details class="mt-advanced-controls"><summary>Buscar o cambiar territorio <span aria-hidden="true">⌕</span></summary><div class="mt-toolbar">
   <form id="mt-search-form" class="mt-search" role="search" aria-label="Buscar territorio">
     <label for="mt-search">Buscar barrio o comuna</label>
     <div class="mt-input-row"><input id="mt-search" type="search" placeholder="Ej.: Parque Patricios o Comuna 4" autocomplete="off" aria-controls="mt-search-results"><button type="submit" aria-label="Buscar barrio o comuna">Buscar</button></div>
@@ -34,11 +34,13 @@
     <label>Ver límites de<select id="mt-level"><option value="barrio">Barrios</option><option value="comuna">Comunas</option></select></label>
     <label>Seleccionar territorio<select id="mt-territory"><option value="">Toda la Ciudad</option></select></label>
   </div>
-</div>
+</div></details>
 <div id="mt-error" class="mt-alert" role="alert" hidden><p id="mt-error-text"></p><button id="mt-retry" type="button">Volver a intentar</button></div>
 <div class="mt-workspace">
   <aside id="mt-analysis-controls" class="mt-analysis-controls" aria-label="Indicador analítico" hidden>
-    <p class="mt-eyebrow">Lectura comparada</p><h2>La desigualdad, en perspectiva.</h2>
+    <div class="mt-experience-brand"><span class="mt-brand-wordmark">CEPOES<span aria-hidden="true">/</span></span><span class="mt-brand-kicker">OBSERVATORIO TERRITORIAL</span></div>
+    <button id="mt-sheet-toggle" class="mt-sheet-toggle" type="button" aria-expanded="false" aria-controls="mt-dossier"><span class="mt-sheet-handle" aria-hidden="true"></span><span class="mt-sheet-label">Ampliar panel</span></button>
+    <p class="mt-eyebrow">La ciudad en datos</p><h2>Una ciudad. Muchas realidades.</h2>
     <label for="mt-analysis-indicator">Indicador</label><select id="mt-analysis-indicator"><option>Cargando indicadores…</option></select>
     <p id="mt-analysis-period" class="mt-analysis-period"></p>
     <p id="mt-analysis-coverage" class="mt-small"></p><button id="mt-analysis-comunas" type="button" hidden>Ver las 15 comunas</button>

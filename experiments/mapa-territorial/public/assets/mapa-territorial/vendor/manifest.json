@@ -1,0 +1,23 @@
+{
+  "name": "maplibre-gl",
+  "version": "6.13.0",
+  "license": "BSD-3-Clause",
+  "files": {
+    "maplibre-gl.mjs": {
+      "bytes": 1079357,
+      "sha256": "389731e8581cc59d484e867b051db73ae034a76f0691d2890a2a1a7d2495bdf3"
+    },
+    "maplibre-gl-shared.mjs": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "maplibre-gl-worker.mjs": {
+      "bytes": 508314,
+      "sha256": "53a2dd60f76c7b9201a3cc007b755d98ce4b52403843fef5c90c41780fe62e91"
+    },
+    "maplibre-gl.css": {
+      "bytes": 83290,
+      "sha256": "20fc3054e6c769ae9502ec5c7ea46dae05b544fdc4fca2108553fb8c07265bf3"
+    }
+  }
+}

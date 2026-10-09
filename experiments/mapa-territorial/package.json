@@ -1,0 +1,17 @@
+{
+  "name": "cepoes-mapa-territorial-experimental",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Prototipo aislado de Mapa Territorial CEPOES 2.0; sin despliegue automático",
+  "scripts": {
+    "vendor": "node scripts/vendor.mjs",
+    "test": "node --test ../../tests/mapa-territorial/*.test.mjs"
+  },
+  "dependencies": {
+    "maplibre-gl": "6.13.0"
+  },
+  "devDependencies": {
+    "jsdom": "30.1.2"
+  }
+}

@@ -1,31 +1,27 @@
-# Novedades de CEPOES
+# Novedades de CEPOES: aprobación editorial
 
-La suscripción comprende boletines, informes, notas, publicaciones de prensa y avisos institucionales publicados expresamente. La confirmación por correo y la baja se conservan. El alta guarda `privacy_version=2026-10-novedades`.
+La suscripción comprende boletines, informes, notas y avisos institucionales. Se conservan confirmación por correo, baja, identidad CEPOES y límite compartido de 50 primeras entregas por día.
 
-## Identidad
+## Regla obligatoria
 
-Marca CEPOES: tinta `#16232F`, celeste `#00A7E1`, enlaces y botones `#0079A8`, fondo `#F2F6FA`. Encabezado compartido entre confirmaciones, boletines y avisos de nuevas publicaciones. No se introduce la combinación petróleo/amarillo anterior. Tablas y estilos en línea, texto alternativo completo y enlace de baja.
+Publicar, fusionar, desplegar o corregir contenido NO autoriza correo. El catálogo privado puede descubrir URLs automáticamente, pero no crea trabajos. Al finalizar una pieza, consultar a Agustín si quiere difundirla, salvo que exista una orden expresa para esa pieza. No enviar una consulta por email automáticamente.
 
-## Regla
+Estados privados: draft (borrador), review (revisión), published (publicado sin difusión), ready (listo para difundir por orden expresa) y diffused (difundido). Las correcciones preservan ready/diffused y el snapshot aprobado. No se ofrece un panel nuevo ni un botón público: Agustín puede dar la orden en esta conversación.
 
-Tras un despliegue exitoso se genera `newsletter-publications.json` desde Lo nuevo y los boletines canónicos. Se incluyen contenidos editoriales con URL propia. Los índices, borradores, redirecciones y `noindex` quedan fuera. Los avisos deben tener `<meta name="cepoes:publication" content="notice">`; las actualizaciones rutinarias de datos no generan correo.
+## Operación de aprobación
 
-El workflow existente detecta publicaciones tras el despliegue y revisa la cola cada hora. La URL canónica es su identidad permanente: corregir texto, cifras o fecha no genera un segundo aviso. Cada novedad se encola para quienes estén activos y confirmados en ese momento; no hay archivo retroactivo para altas posteriores. El contenido se congela al encolarse; cada entrega tiene un UUID y clave estable de reintento. Se preservan los trabajos anteriores y el límite compartido de 50 primeras entregas por día.
+1. Identificar la URL canónica exacta y comprobar que la pieza está publicada, revisada y completa. Leer el feed público actual y validar la pieza con validatePublication. Actualizar el catálogo privado mediante newsletter_enqueue_publications; este nombre histórico ahora SOLO registra catálogo y jamás envía.
+2. Mostrar título, URL y alcance; pedir aprobación independiente si Agustín no dijo explícitamente que esa pieza está lista para difundir. Una orden genérica de publicación no alcanza.
+3. Solo ante esa orden, invocar la RPC privada newsletter_approve_publication con p_key, p_expected_payload (snapshot completo revisado), p_approved_by y p_authorization_reference (referencia textual verificable de la orden). Solo service_role tiene acceso; nunca usar credenciales administrativas en navegador o frontend.
+4. La RPC comprueba estado published, contenido sin cambios desde la revisión y ausencia de distribución anterior. Registra la aprobación y crea una entrega por suscriptor activo y confirmado. No aprobar piezas de prueba en producción.
+5. El worker horario procesa únicamente cola aprobada; al terminar marca diffused. Una aprobación repetida devuelve cero: no crea duplicados ni envíos retroactivos a nuevas altas. Un reenvío de algo difundido requiere una tarea y orden separadas; no está habilitado por esta implementación.
 
-## Activación
+## Historial y seguridad
 
-1. Revisar el catálogo y completar los marcadores de archivo si hubo publicaciones entre revisión y activación. La migración registra 145 rutas públicas conocidas el 8 de octubre como archivo, sin crear trabajos.
-2. Aplicar `20261008153824_publication_notifications.sql`. Suscripciones y trabajos actuales se conservan. Tabla nueva con RLS, sin acceso público; RPC exclusiva de `service_role`.
-3. Publicar sitio, formulario y feed. El dispatcher anterior puede seguir usando el feed de boletines v1 hasta el cambio de servicio.
-4. Desplegar `newsletter-subscribe`, `newsletter-dispatch` y `newsletter-unsubscribe`, con `_shared/email-brand.js` y dependencias. Comprobar el feed antes de distribuir.
-5. Verificar una ejecución sin novedades: cero nuevos trabajos. La primera publicación futura permitirá comprobar recepción real. Las pruebas de este cambio no envían correos ni crean altas reales.
+La migración conserva entregas aceptadas y marca sus piezas diffused. Cualquier trabajo pendiente anterior queda en review y no se reanuda solo. El mecanismo legacy de boletines tampoco puede encolar sin aprobación. La función de claim exige ready en la tabla privada, incluso si aparece una fila de cola fuera del circuito.
+
+El 8/10 se verificaron tres avisos diferentes del presupuesto (general, salud y nota de prensa), seis aceptaciones por pieza y un intento por entrega. No se detectaron reenvíos de la misma URL en la cola. Este historial no prueba recepción real de cada proveedor.
 
 ## Pruebas
 
-`node --test tests/newsletter_delivery.test.mjs tests/newsletter_logic.test.mjs tests/publication_delivery.test.mjs`.
-
-`python -m unittest discover -s tests -p test_publications_feed.py`.
-
-`supabase/tests/publication_notifications.sql` prueba archivo, destinatarios confirmados, no duplicación, snapshot, baja, leases y permisos en una transacción que se revierte. La ejecución local usa PostgreSQL embebido (PGlite), sin cambios productivos.
-
-Vista previa supervisada del HTML a 1363 px y 390 px: comprueba composición, no recepción real en Gmail/Outlook. El fallo de clic Android/Windows permanece separado en el PR #185.
+Pruebas SQL aisladas: descubrimiento y edición sin envíos, consentimiento explícito, snapshot desactualizado rechazado, destinatarios confirmados, aprobación repetida sin duplicados, snapshot congelado, cierre diffused, permisos privados, bloqueo legacy y claim sin aprobación. Runner tests/editorial_approval.test.mjs con PGlite 0.5.8, también en CI. No se modifica HTML/CSS ni el diseño de la web en este cambio.

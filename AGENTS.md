@@ -70,6 +70,9 @@ Toda intervención debe sostener tres objetivos simultáneos:
 
 ## Calidad editorial
 
+- Publicar o corregir una página no autoriza difundirla por correo. Al cerrar una pieza, consultar si Agustín quiere marcarla «lista para difundir», salvo que ya haya dado una orden expresa para esa pieza. Nunca interpretar «publicá», «fusioná», un despliegue o una actualización como autorización de correo.
+- La difusión requiere una aprobación independiente y registrada con URL canónica, contenido revisado, aprobador y referencia de la orden. Usar el control privado descrito en `docs/novedades-distribucion.md`. Las piezas difundidas no se reenvían por correcciones. No volver al encolado automático por descubrimiento de URLs.
+
 - Todo informe publicado, incluso si acompaña a un monitor territorial, debe quedar registrado en `deploy/reports-registry.json` y aparecer siempre en Publicaciones → Informes. Generar el archivo y los cinco últimos de Publicaciones con `generar_catalogo_informes.py`; no mantener tarjetas manuales paralelas. Ver `docs/publicaciones-catalogo.md`.
 - Cada edición pública del boletín debe aparecer automáticamente en Lo nuevo como «Boletín». Preservar su fecha comprobada y verificar la integración con `test_lo_nuevo.py` antes de publicar.
 - Usar lenguaje público claro, sin jerga técnica innecesaria.

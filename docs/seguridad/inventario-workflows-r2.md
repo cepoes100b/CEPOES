@@ -31,7 +31,7 @@
 | migraciones.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de migraciones. |
 | monitor-tierras.yml | workflow_dispatch, schedule | contents:read | sin escritura detectada | operativo | Consulta documental de RNTR y DNU; sólo lectura, revisión editorial y sin publicación automática. |
 | natalidad.yml | workflow_dispatch, schedule, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de natalidad y demografía. |
-| newsletter.yml | workflow_dispatch, schedule, workflow_run | contents:read | secretos | operativo | Distribución de boletines publicados; activación explícita, cola privada y permisos de sólo lectura. |
+| newsletter.yml | workflow_dispatch, schedule | contents:read | secretos | operativo | Distribución de boletines publicados; activación explícita, cola privada y permisos de sólo lectura. |
 | personas-mayores-fuentes.yml | workflow_dispatch, schedule, push, pull_request | contents:read | sin escritura detectada | operativo | Diagnóstico de frescura de fuentes de Personas Mayores; sólo lectura, sin producción ni publicación. |
 | personas-mayores.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de Personas Mayores. |
 | prensa-borradores.yml | workflow_dispatch, schedule, push | contents:read, id-token:write | sin escritura detectada | operativo | Generación programada de borradores de prensa. |

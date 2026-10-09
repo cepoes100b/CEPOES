@@ -70,3 +70,12 @@ El runner descubre también `analysis.spec.mjs` cuando se incorpore en una rama
 posterior. La modalidad debe compartir el motor, señalar readiness tras idle
 real y documentar indicador/unidad/período/escala. No se declara cubierta por los
 tests 2D actuales.
+
+## Referencia interna D3
+
+`baseline.spec.mjs` carga el mapa temático original de CEPOES dentro del mismo
+candidato completo. Fija D3 7.9.0 (ISC) y sus dos fuentes públicas al snapshot del
+checkout; mide render de 48 polígonos, cambio de indicador, transferencia y heap.
+Los tiempos excluyen la variabilidad de descargar datos/CDN externos. Los
+indicadores y funcionalidades difieren del nuevo explorador: es una referencia
+interna reproducible, no una comparación equivalente ni una promesa de mejora.

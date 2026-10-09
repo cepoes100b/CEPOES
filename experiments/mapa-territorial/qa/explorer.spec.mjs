@@ -50,7 +50,7 @@ for(const width of [320,390,430,1440])for(const theme of ['light','dark']){
    await page.locator('[data-layer="salud"]').click();await expect(page.locator('#mt-status')).toContainText('86 registros');
    await page.goBack();await expect(page.locator('#mt-status')).toContainText('2.135 puntos verificados');await page.goForward();await expect(page.locator('#mt-status')).toContainText('86 registros');
    // Fallback must preserve data and restore checkbox after provider failure.
-   await page.locator('#mt-streets').check();await expect(page.locator('#mt-base-status')).toContainText('no está disponible');await expect(page.locator('#mt-streets')).not.toBeChecked();
+   await page.locator('#mt-streets').click();await expect(page.locator('#mt-base-status')).toContainText('no está disponible');await expect(page.locator('#mt-streets')).not.toBeChecked();
    await page.locator('#mt-accessible summary').click();await expect(page.locator('#mt-territory-table tr')).toHaveCount(15);
    const a11y=await new AxeBuilder({page}).include('.mt-shell').withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();
    report.a11y=a11y.violations.map(v=>({id:v.id,impact:v.impact,description:v.description,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))}));

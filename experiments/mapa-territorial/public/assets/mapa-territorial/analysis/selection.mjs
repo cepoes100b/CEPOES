@@ -33,3 +33,52 @@ export class SelectionCallout {
   }
   onRemove(){this.element?.remove();this.element=null;this.map=null;}
 }
+
+/** Lightweight, aria-hidden commune IDs positioned on the actual extruded roofs.
+ * Positions reuse the public MapLibre projection matrix, with no private API,
+ * extra render loop, new geometry or change to the analysis data.
+ */
+export class ComunaRoofLabels {
+  constructor(engine,state){
+    this.id='analysis-roof-labels';this.type='custom';this.renderingMode='3d';
+    this.engine=engine;this.state=state;this.root=null;this.elements=new Map();
+  }
+  onAdd(map){
+    this.onRemove();this.map=map;
+    this.root=document.createElement('div');
+    this.root.className='mt-roof-label-layer';this.root.setAttribute('aria-hidden','true');
+    for(const feature of this.engine.territories.filter(t=>t.properties.level==='comuna')){
+      const id=feature.properties.id;
+      const el=document.createElement('span');el.className='mt-roof-label';
+      el.textContent='C'+String(id).split(':')[1];el.hidden=true;
+      this.root.append(el);this.elements.set(id,{el,center:feature.properties.center});
+    }
+    map.getContainer().append(this.root);
+  }
+  hide(){for(const {el} of this.elements.values())el.hidden=true;}
+  render(_gl,args){
+    const state=this.state(),container=this.map?.getContainer();
+    if(!container||!this.root||!state.visible||this.engine.destroyed){
+      this.hide();return;
+    }
+    const matrix=args.defaultProjectionData?.mainMatrix;
+    if(!matrix){this.hide();return;}
+    const width=container.clientWidth,height=container.clientHeight;
+    for(const [id,{el,center}] of this.elements){
+      const ratio=state.values.get(id);
+      if(!Array.isArray(center)||id===state.selected||ratio==null||ratio<=0){
+        el.hidden=true;continue;
+      }
+      const coords=this.engine.gl.MercatorCoordinate.fromLngLat(center,ratio*state.maxHeight);
+      const pt=roofPosition(matrix,coords,width,height);
+      if(!pt||pt.x<12||pt.x>width-12||pt.y<10||pt.y>height-12){
+        el.hidden=true;continue;
+      }
+      el.style.transform=`translate3d(${pt.x}px,${pt.y}px,0) translate(-50%,-100%)`;
+      el.hidden=false;
+    }
+  }
+  onRemove(){
+    this.root?.remove();this.root=null;this.map=null;this.elements.clear();
+  }
+}

@@ -28,5 +28,6 @@ test('map adapter: local-only style, clusters, safe filters, fallback and teardo
   let resolveZoom;m.map.hits=[{layer:{id:'clusters'},properties:{cluster_id:1},geometry:{coordinates:[-58.4,-34.6]}}];
   m.map.getSource('services').getClusterExpansionZoom=()=>new Promise(r=>{resolveZoom=r;});
   const pending=m.pick({point:{x:10,y:10}});m.fit(features[0]);resolveZoom(15);await pending;assert.equal(m.map.ease,undefined,'stale cluster cannot override newer fit');
+  m.analysis={active:false,pick(){},destroy(){}};const pendingAnalysis=m.pick({point:{x:10,y:10}});m.analysis.active=true;resolveZoom(15);await pendingAnalysis;assert.equal(m.map.ease,undefined,'stale cluster cannot override analytical camera');
   m.destroy();assert.equal(m.map.removed,true);
 });

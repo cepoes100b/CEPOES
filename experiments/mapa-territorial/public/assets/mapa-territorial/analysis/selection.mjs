@@ -26,8 +26,10 @@ export class SelectionCallout {
     if(!p){this.hide();return;}
     const front=this.map.queryRenderedFeatures([p.x,p.y],{layers:['analysis-volume']})[0];
     if(String(front?.properties.id)!==state.id){this.hide();return;} // Never label a roof hidden by another commune.
-    this.name.textContent=state.name;this.description.textContent=`Seleccionada · ${state.value}`;
-    this.element.style.left=`${p.x}px`;this.element.style.top=`${p.y}px`;this.element.dataset.territory=state.id;this.element.dataset.elevation=String(state.height);this.element.hidden=false;
+    const description=`Seleccionada · ${state.value}`;
+    if(this.name.textContent!==state.name)this.name.textContent=state.name;
+    if(this.description.textContent!==description)this.description.textContent=description;
+    this.element.style.transform=`translate3d(${p.x}px,${p.y}px,0) translate(-50%,calc(-100% - 22px))`;this.element.dataset.territory=state.id;this.element.dataset.elevation=String(state.height);this.element.hidden=false;
   }
   onRemove(){this.element?.remove();this.element=null;this.map=null;}
 }

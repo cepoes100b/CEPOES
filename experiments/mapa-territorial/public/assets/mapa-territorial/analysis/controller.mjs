@@ -35,7 +35,7 @@ class AnalysisController {
     $('mt-analysis-comunas').hidden=supported;
     $('mt-analysis-coverage').textContent=supported?'15 comunas · misma escala para todos los territorios':'Sin datos para barrios en este indicador. La selección barrial se conserva; no se le asigna el valor de su comuna.';
     document.querySelectorAll('[data-view]').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.view===(supported?state.view:'flat')));b.disabled=b.dataset.view==='3d'&&(!supported||!engine);});
-    $('mt-analysis-availability').textContent=!engine?'El mapa no está disponible. La tabla y el ranking conservan la comparación completa.':supported?'La vista plana facilita comparar superficies sin oclusiones.':'';
+    $('mt-analysis-availability').hidden=!!engine;$('mt-analysis-availability').textContent=!engine?'El mapa no está disponible. La tabla y el ranking conservan la comparación completa.':'';
     $('mt-place-kind').textContent='Análisis territorial';$('mt-place-name').textContent=t?.properties.name||'Toda la Ciudad';
     $('mt-place-description').textContent=ind.name;$('mt-map-title').textContent=`${ind.name} · ${ind.period}`;
     $('mt-analysis-selection-status').hidden=!supported||!t;$('mt-analysis-selection-status').textContent=t?`Seleccionada: ${t.properties.name}`:'';

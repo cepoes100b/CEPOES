@@ -1,0 +1,403 @@
+{
+  "tested_commit": "17008e744f3d77b34ff8a326edb7b66b3357facd",
+  "run_url": "https://github.com/cepoes100b/CEPOES/actions/runs/37886330833",
+  "browser_suite": {
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0
+  },
+  "local_tests": {
+    "javascript": 22,
+    "python": 15
+  },
+  "real_render": "Chromium WebGL2 ANGLE/SwiftShader software rendering",
+  "analytical_matrix": [
+    {
+      "width": 320,
+      "theme": "light",
+      "passed": true,
+      "selected_value": "41,6",
+      "turquoise_samples": 768,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 320,
+      "theme": "dark",
+      "passed": true,
+      "selected_value": "41,6",
+      "turquoise_samples": 774,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "passed": true,
+      "selected_value": "41,6",
+      "turquoise_samples": 1178,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 29400000
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "passed": true,
+      "selected_value": "41,6",
+      "turquoise_samples": 1184,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 430,
+      "theme": "light",
+      "passed": true,
+      "selected_value": "41,6",
+      "turquoise_samples": 1522,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 430,
+      "theme": "dark",
+      "passed": true,
+      "selected_value": "41,6",
+      "turquoise_samples": 1523,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "passed": true,
+      "selected_value": "41,6",
+      "turquoise_samples": 4012,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 44700000
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "passed": true,
+      "selected_value": "41,6",
+      "turquoise_samples": 4024,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 42100000
+    }
+  ],
+  "performance": {
+    "performance-analysis": {
+      "context": "Chromium ANGLE/SwiftShader at390px, software-rendered CI; camera frame cadence, not physical GPU benchmark",
+      "frames": 121,
+      "meanFrameMs": 16.59173553719018,
+      "p95FrameMs": 16.799999999999727
+    },
+    "performance-mobile": {
+      "context": "390px Chromium ANGLE/SwiftShader, CI runner, reduced motion; frame cadence is not hardware GPU FPS",
+      "frames": 116,
+      "meanFrameMs": 17.282758620689858,
+      "p95FrameMs": 16.799999999999955
+    }
+  },
+  "screenshots": [
+    {
+      "file": "2d-1440-dark-overview.jpg",
+      "bytes": 110944,
+      "sha256": "a16a07a1494f2f46922323e1d3e4e556a61981d3197c1d8dcc92e4c25d70cecb"
+    },
+    {
+      "file": "2d-1440-dark.jpg",
+      "bytes": 103869,
+      "sha256": "20f2855c12a94371cf9564ee1372944d6b31d25cb5fad2205cc9a181b98a0e17"
+    },
+    {
+      "file": "2d-1440-light-overview.jpg",
+      "bytes": 108970,
+      "sha256": "a79586bdd6652574f6893fa1c503ef62a719dae41b5733c926a9887239e5fb8c"
+    },
+    {
+      "file": "2d-1440-light.jpg",
+      "bytes": 101368,
+      "sha256": "20b5035c3452290e5cf0a50ffaa773f1e4c3ddb0fbf3fc5f01c833e578621062"
+    },
+    {
+      "file": "2d-320-dark.jpg",
+      "bytes": 62990,
+      "sha256": "1410eff110e2e52235563a994c4ff34d96e44b9363e4188c0934c91630c8a232"
+    },
+    {
+      "file": "2d-320-light.jpg",
+      "bytes": 61823,
+      "sha256": "f78970cf8fd7e4cc98218ae97c596bcbf8cf2afad83b43c0dba5dd63a15c9260"
+    },
+    {
+      "file": "2d-390-dark.jpg",
+      "bytes": 69356,
+      "sha256": "3b24daf3ffffe2fb57f100a581df4d33aca6b1cae315c18a69502a26dbea5cd9"
+    },
+    {
+      "file": "2d-390-light.jpg",
+      "bytes": 67776,
+      "sha256": "31417c314e947eabbf371eeff530b1560374793fe613c670c728854610ae3657"
+    },
+    {
+      "file": "2d-430-dark.jpg",
+      "bytes": 72465,
+      "sha256": "d7611ef9f956cdd34a82f5258535ab5eb5831ac225a67c87e03eeae13c877cd9"
+    },
+    {
+      "file": "2d-430-light.jpg",
+      "bytes": 70743,
+      "sha256": "ac529bac504ada05f3a1abe9a652408179ae0134a8fc864bf65d185e86e981ae"
+    },
+    {
+      "file": "2d-touch-selected.jpg",
+      "bytes": 65465,
+      "sha256": "4b643c2419879c99b9e8c211360a53467bb1c9af57fbc6e55b6fd973cda8e82d"
+    },
+    {
+      "file": "analysis-1440-dark-3d.jpg",
+      "bytes": 113349,
+      "sha256": "d8d4aaaca4c9fa0bfa9b564e44dfae1f08d1c5be03dd16cc0553c21d10cee44d"
+    },
+    {
+      "file": "analysis-1440-dark-flat.jpg",
+      "bytes": 50331,
+      "sha256": "980a5bac660098d1d39081d2355e9a6fa34ece113b5d0e67f5e7a51fd8c81cc1"
+    },
+    {
+      "file": "analysis-1440-light-3d.jpg",
+      "bytes": 108803,
+      "sha256": "dbf7ee7f4395ce9353c5601143209881b18d0f43f3766703c1b74a26ae26be7e"
+    },
+    {
+      "file": "analysis-1440-light-flat.jpg",
+      "bytes": 50392,
+      "sha256": "27830e849dc222492e2cd4b9d3b1472515f3561b86b1a61542e91e55c39ac754"
+    },
+    {
+      "file": "analysis-320-dark-3d.jpg",
+      "bytes": 98190,
+      "sha256": "d9a1b0ba05683936d4ba7465f49b5181df2b64e7f5b3e47c8c42ca7d605790ee"
+    },
+    {
+      "file": "analysis-320-dark-flat.jpg",
+      "bytes": 31105,
+      "sha256": "a161162e2b92325db90aa6fb5fe72e767f4474bf9bfa1171b26a93b7107b19b0"
+    },
+    {
+      "file": "analysis-320-light-3d.jpg",
+      "bytes": 95194,
+      "sha256": "047a7abfc1c69d404b59ee8d6eb9d2490325f063057b15b16a94dbd8166fe3d4"
+    },
+    {
+      "file": "analysis-320-light-flat.jpg",
+      "bytes": 30507,
+      "sha256": "42fcf319766c82003c4cb5e836471c0e97ff0b25a3279a04e462f5fb8dc7f77d"
+    },
+    {
+      "file": "analysis-390-dark-3d.jpg",
+      "bytes": 103008,
+      "sha256": "d048981e3eb0ac547039243398f159f1f6d1a9e910aa139ea771a5dddaeec3d5"
+    },
+    {
+      "file": "analysis-390-dark-flat.jpg",
+      "bytes": 33515,
+      "sha256": "fbf83ca84c25f71567f3e88dab11ed30a91a36f22614a4f7a3c4fb4ac025e3f8"
+    },
+    {
+      "file": "analysis-390-light-3d.jpg",
+      "bytes": 99794,
+      "sha256": "ce4e19736ed45b3683851cf812ed2f9a269c01e3d33e2f7e682ca4007652a597"
+    },
+    {
+      "file": "analysis-390-light-flat.jpg",
+      "bytes": 32782,
+      "sha256": "ce92fabf537acc372fd4af8b19598072e982c869dea469b061b40b842eb47346"
+    },
+    {
+      "file": "analysis-430-dark-3d.jpg",
+      "bytes": 104504,
+      "sha256": "a29ccdba727306f450c0b5984cd0172abe1107e7ec5270624131abb7264e3b89"
+    },
+    {
+      "file": "analysis-430-dark-flat.jpg",
+      "bytes": 33823,
+      "sha256": "00b66267dd3fb3bc48a333b7a98f37ed4b4acb0c8bcc329eeff9b02eb06cb99a"
+    },
+    {
+      "file": "analysis-430-light-3d.jpg",
+      "bytes": 101025,
+      "sha256": "5afe886bf475120c7d776fbfb561b2eb84df75e8ec8b30f27f97d57277c58c50"
+    },
+    {
+      "file": "analysis-430-light-flat.jpg",
+      "bytes": 33132,
+      "sha256": "3dbe4cd7c1c353868bdc4f5fe0c57ba4e0f9a588ea1dd02d91117dd614fe5a1d"
+    },
+    {
+      "file": "analysis-no-webgl.jpg",
+      "bytes": 101839,
+      "sha256": "0f5ca8ff0859a109f8b8c029c794c13487b0dfe3b4cb5d95905d1f105d06562a"
+    },
+    {
+      "file": "reference-d3.jpg",
+      "bytes": 24262,
+      "sha256": "3fe6aec0b897b9d6c6db2d363d6d2d8b6463f0f27431b9478e4d5543e120a65a"
+    }
+  ],
+  "limitations": [
+    "Software-rendered CI is not physical GPU or phone performance.",
+    "No Safari, physical iPhone/Android or screen-reader certification.",
+    "Missing-WebGL fallback is a controlled fault test, not graphical rendering.",
+    "No deployment or external preview."
+  ],
+  "visual_review": {
+    "status": "inspected",
+    "three_dimensional": 8,
+    "flat_analytical": 8,
+    "explorer_2d": 8,
+    "p1_findings": 0,
+    "p2_followups": [
+      "El contorno de selección en 3D es fino y queda parcialmente oculto en la base; la vista plana ofrece una selección más clara.",
+      "Compactar en móvil el texto metodológico repetido mediante detalles desplegables, manteniendo período y universo visibles."
+    ],
+    "development_correction": "La inspección visual detectó IDs GeoJSON perdidos al teselar; promoteId conserva los IDs y el test ahora exige feature-state en geometrías renderizadas y píxeles de la rampa analítica."
+  }
+}

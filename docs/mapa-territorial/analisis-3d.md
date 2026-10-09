@@ -50,7 +50,7 @@ Pruebas puras y de adaptador cubren validación de datos, suma ponderada, cero/f
 
 La revisión de navegador usa el mismo harness canónico del PR #194, en el propio SHA de este candidato, más `qa/analysis.spec.mjs`. Cubre 320/390/430/1440 px, ambos temas, WebGL2 real, píxeles del canvas, vista plana/3D, selección/URL, retorno a 2D, ausencia de GPU, error HTTP y reintento, movimiento reducido y accesibilidad. Las capturas y métricas se preservan de forma acotada en logs de Actions, sin crear un despliegue externo ni almacenamiento de artifacts facturable.
 
-ANGLE/SwiftShader produce un render WebGL real por software: sus métricas no equivalen a rendimiento de una GPU física ni a validación en Safari/iPhone. La demostración navegable requiere servir la copia local completa; no se publicó una preview externa. El resultado final de Actions y la revisión visual se registrarán antes de considerar al candidato listo para revisión.
+ANGLE/SwiftShader produce un render WebGL real por software: sus métricas no equivalen a rendimiento de una GPU física ni a validación en Safari/iPhone. La demostración navegable requiere servir la copia local completa; no se publicó una preview externa. La revisión final del candidato quedó documentada en el apartado siguiente. El PR permanece en borrador para evaluación del usuario.
 
 ## Licencias
 
@@ -58,3 +58,19 @@ ANGLE/SwiftShader produce un render WebGL real por software: sus métricas no eq
 - Cartografía BA Data: atribución y licencia preservadas en el manifiesto existente.
 - Datos censales INDEC: CC BY-SA 4.0; se atribuye la fuente y se indica el cálculo CEPOES. Esa licencia no se atribuye al diseño editorial del PDF del Anuario.
 - Sin teselas, fuentes ni JavaScript de terceros nuevos. Las calles opcionales del explorador conservan sus atribuciones preexistentes.
+
+## Resultado de QA real · 9 de octubre de 2026
+
+[Actions 37886330833](https://github.com/cepoes100b/CEPOES/actions/runs/37886330833), commit `17008e744f3d77b34ff8a326edb7b66b3357facd`: **22/22 escenarios aprobados**, cero fallos, saltados o reintentos. R2 también aprobado. Se inspeccionaron las ocho capturas analíticas 3D, las ocho planas y las ocho variantes del explorador; no se encontraron fallas visuales P1. La segunda revisión independiente coincidió.
+
+Los asserts comprueban contexto WebGL2 vivo, píxeles turquesa, IDs de las geometrías realmente renderizadas, `feature-state` con valores disponibles, capa de extrusión visible y cámara inclinada. La primera inspección de desarrollo encontró un defecto que un test de DOM no detectaba: las geometrías perdían sus IDs de texto al teselarse. Se corrigió con `promoteId: 'id'` y se reforzó la prueba; no se aceptó aquella captura gris como evidencia del 3D.
+
+- Axe-core: cero violaciones en las ocho variantes analíticas; no sustituye una prueba con lector de pantalla.
+- Movimiento analítico a 390 px en CI: 121 muestras de requestAnimationFrame, media 16,59 ms y p95 16,8 ms durante cambios de cámara. Es cadencia del navegador por software, no FPS certificados de mapa en hardware móvil.
+- Heap JS observado al final del flujo analítico: 29,4–44,7 MB. No es memoria GPU ni total del proceso.
+- Carga inicial estimada del explorador: 895.565 bytes gzip frente a 893.068 de la base, +2.497 bytes (+0,28%). Son tamaños estáticos que excluyen la envoltura/fuentes compartidas; no tiempos de red. Módulos y datos analíticos diferidos: 26.692 bytes sin comprimir / 10.049 gzip. La URL analítica no descarga registros de equipamiento.
+- Los flujos cubren selección y Atrás/Adelante, misma cifra en ranking/ficha/tabla, cambio plano/3D, giro voluntario y pausa por teclado, cambio dinámico de movimiento reducido, s/d barrial, reintento HTTP y fallback sin GPU. El harness del explorador añade gesto táctil de dos dedos y recuperación de foco.
+
+Los hashes de capturas y resultados están en `evidence/analysis-qa-summary.json`; las imágenes originales se recuperaron de logs con comprobación SHA-256. La demo local conserva la salida pública completa sin cambiar sus HTML, estilos, scripts o datos. Requiere servidor localhost y WebGL2 para representar el mapa.
+
+Pendientes P2 para una siguiente iteración: mejorar la visibilidad del contorno naranja sobre extrusiones y compactar texto metodológico repetido en móvil, manteniendo visibles universo, período y límites. La vista plana y el ranking ya resuelven la comparación exacta. Safari, dispositivos físicos y lector de pantalla siguen sin certificar; no se habilita publicación por este resultado.

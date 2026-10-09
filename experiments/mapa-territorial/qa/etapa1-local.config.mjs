@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'.',testMatch:'immersive.spec.mjs',workers:1,retries:0,timeout:90000,expect:{timeout:15000},reporter:[['list'],['json',{outputFile:process.env.QA_OUTPUT+'/test-results.json'}]],use:{baseURL:'http://127.0.0.1:4173',headless:true,launchOptions:{executablePath:'/usr/bin/chromium',args:['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader']}}});

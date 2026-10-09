@@ -9,7 +9,7 @@ const base=new URL('../../experiments/mapa-territorial/public/',import.meta.url)
 const waitUntil=async predicate=>{const start=Date.now();while(!predicate()){if(Date.now()-start>5000)throw new Error('DOM condition timed out');await new Promise(r=>setTimeout(r,15));}};
 test('DOM: lazy layers, selection, sources, missing data, safe URL, back, error and fallback',async()=>{
   const html=await readFile(new URL('laboratorio/mapa-territorial/index.html',base),'utf8');
-  const dom=new JSDOM(html,{url:'https://preview.invalid/laboratorio/mapa-territorial/'});
+  const dom=new JSDOM(html,{url:'https://preview.invalid/laboratorio/mapa-territorial/?modo=explorar'});
   const win=dom.window;
   Object.assign(globalThis,{window:win,document:win.document,location:win.location,history:win.history,MutationObserver:win.MutationObserver,matchMedia:()=>({matches:false,addEventListener(){},removeEventListener(){}}),requestAnimationFrame:fn=>setTimeout(fn,0)});
   win.HTMLElement.prototype.scrollIntoView=function(){};

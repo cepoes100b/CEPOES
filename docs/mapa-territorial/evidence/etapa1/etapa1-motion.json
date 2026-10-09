@@ -1,0 +1,6 @@
+{
+  "context": "Chromium WebGL2 ANGLE/SwiftShader; software rendering, not hardware mobile certification",
+  "samples": 90,
+  "meanMs": 27.842222222222226,
+  "p95Ms": 50
+}

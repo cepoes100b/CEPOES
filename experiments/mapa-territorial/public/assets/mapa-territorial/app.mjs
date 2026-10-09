@@ -1,3 +1,4 @@
+import {setImmersiveLayout} from './immersive.mjs';
 import {LAYERS,normalize,escapeHTML as esc,number as fmt,featureID,collection,hasPoint,filterRecords,aggregate,scaleFor,levelTerritories,searchTerritories,readState,stateQuery,safeSourceURL,assertTerritories} from './model.mjs';
 import {TerritorialMap,palette} from './engine.mjs';
 const $=id=>document.getElementById(id);
@@ -27,7 +28,7 @@ async function json(relative){
   return response.json();
 }
 function modeChrome(){
-  const analytical=state.mode==='analyze';$('mt-explorer').dataset.mode=state.mode;
+  const analytical=state.mode==='analyze';$('mt-explorer').dataset.mode=state.mode;setImmersiveLayout(analytical);
   document.querySelectorAll('#mt-mode-controls [data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===state.mode)));
   for(const id of ['mt-analysis-controls','mt-analysis-ranking','mt-analysis-data'])$(id).hidden=!analytical;
   for(const id of ['mt-records','mt-accessible','mt-method'])$(id).hidden=analytical;
@@ -196,12 +197,12 @@ async function initialize(){
     manifest=await json('manifest.json');
     ({features:territories}=assertTerritories(await json('territories.geojson')));
     if(!Array.isArray(manifest.sources)||!Array.isArray(manifest.layers)||['salud','educacion','verdes'].some(id=>!manifest.layers.some(l=>l.id===id)))throw new Error('Manifiesto de fuentes incompleto.');
-    Object.assign(state,readState(location.search,territories));populateTerritories();renderSources();
+    Object.assign(state,readState(location.search,territories));if(!location.search)Object.assign(state,{mode:'analyze',view:'3d',level:'comuna',territory:'comuna:8'});populateTerritories();renderSources();
     if(state.mode==='analyze')await setMode('analyze',{push:false});else await loadLayer(state.layer,{push:false});initEngine();
   }catch(error){qa.status='initial-error';showError(`No se pudo iniciar el explorador: ${error.message}. Volvé a intentar.`);$('mt-map-loading').textContent='Cartografía no disponible. No se muestran territorios parciales.';status('No se pudo comprobar la cobertura 48 barrios / 15 comunas.');}
   finally{initializing=false;}
 }
-$('mt-mode-controls').addEventListener('click',e=>{const button=e.target.closest('[data-mode]');if(!button||!manifest||button.dataset.mode===state.mode)return;if(button.dataset.mode==='analyze'){if(!state.territory)state.level='comuna';state.view='3d';}setMode(button.dataset.mode);});
+$('mt-mode-controls').addEventListener('click',e=>{const button=e.target.closest('[data-mode]');if(!button||!manifest||button.dataset.mode===state.mode)return;if(button.dataset.mode==='analyze'){if(!state.territory){state.level='comuna';state.territory='comuna:8';}state.view='3d';}setMode(button.dataset.mode);});
 $('mt-search').addEventListener('input',renderSearch);
 $('mt-search').addEventListener('keydown',e=>{if(e.key==='Escape'){$('mt-search-results').hidden=true;}if(e.key==='ArrowDown'){e.preventDefault();$('mt-search-results').querySelector('button')?.focus();}});
 $('mt-search-form').addEventListener('submit',e=>{e.preventDefault();const matches=searchTerritories(territories,$('mt-search').value);if(matches.length===1){selectTerritory(featureID(matches[0]));$('mt-search-results').hidden=true;}else renderSearch();});

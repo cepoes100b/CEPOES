@@ -5,7 +5,7 @@ import {mkdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 const OUTPUT=process.env.QA_OUTPUT||path.resolve('qa-output'),BASE='http://127.0.0.1:4173',ROUTE='/laboratorio/mapa-territorial/';
 const ANALYZE=ROUTE+'?modo=analizar&vista=3d&escala=comuna&indicador=sin-cobertura-salud';
-const capture=async(page,selector,name)=>{await page.evaluate(()=>scrollTo(0,0));await page.mouse.move(0,0);await page.waitForTimeout(100);const clip=await page.locator(selector).boundingBox();await page.screenshot({path:path.join(OUTPUT,name+'.jpg'),clip,type:'jpeg',quality:60,animations:'disabled'});};
+const capture=async(page,selector,name)=>{await page.evaluate(()=>scrollTo(0,0));await page.mouse.move(0,0);await page.waitForTimeout(100);const clip=await page.locator(selector).boundingBox();await page.screenshot({path:path.join(OUTPUT,name+'.jpg'),clip,fullPage:true,type:'jpeg',quality:60,animations:'disabled'});};
 const save=(name,report)=>writeFile(path.join(OUTPUT,name+'.json'),JSON.stringify(report,null,2));
 const ready=page=>page.waitForFunction(()=>window.__CEPOES_MAP_QA?.map==='ready'&&window.__CEPOES_MAP_QA?.analysis?.status==='ready'&&window.__CEPOES_MAP_QA?.analysis?.animation==='idle'&&window.__CEPOES_MAP_QA?.analysis?.rendered===true,null,{timeout:30000});
 async function proof(page){

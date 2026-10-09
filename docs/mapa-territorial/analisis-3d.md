@@ -59,7 +59,7 @@ ANGLE/SwiftShader produce un render WebGL real por software: sus métricas no eq
 - Datos censales INDEC: CC BY-SA 4.0; se atribuye la fuente y se indica el cálculo CEPOES. Esa licencia no se atribuye al diseño editorial del PDF del Anuario.
 - Sin teselas, fuentes ni JavaScript de terceros nuevos. Las calles opcionales del explorador conservan sus atribuciones preexistentes.
 
-## Resultado de QA real · 9 de octubre de 2026
+## Resultado de QA real de la primera integración · 9 de octubre de 2026
 
 [Actions 37886330833](https://github.com/cepoes100b/CEPOES/actions/runs/37886330833), commit `17008e744f3d77b34ff8a326edb7b66b3357facd`: **22/22 escenarios aprobados**, cero fallos, saltados o reintentos. R2 también aprobado. Se inspeccionaron las ocho capturas analíticas 3D, las ocho planas y las ocho variantes del explorador; no se encontraron fallas visuales P1. La segunda revisión independiente coincidió.
 
@@ -73,7 +73,7 @@ Los asserts comprueban contexto WebGL2 vivo, píxeles turquesa, IDs de las geome
 
 Los hashes de capturas y resultados están en `evidence/analysis-qa-summary.json`; las imágenes originales se recuperaron de logs con comprobación SHA-256. La demo local conserva la salida pública completa sin cambiar sus HTML, estilos, scripts o datos. Requiere servidor localhost y WebGL2 para representar el mapa.
 
-Pendientes P2 para una siguiente iteración: mejorar la visibilidad del contorno naranja sobre extrusiones y compactar texto metodológico repetido en móvil, manteniendo visibles universo, período y límites. La vista plana y el ranking ya resuelven la comparación exacta. Safari, dispositivos físicos y lector de pantalla siguen sin certificar; no se habilita publicación por este resultado.
+P2 detectados en aquella revisión (resueltos en el refinamiento siguiente): mejorar la visibilidad del contorno naranja sobre extrusiones y compactar texto metodológico repetido en móvil, manteniendo visibles universo, período y límites. La vista plana y el ranking ya resuelven la comparación exacta. Safari, dispositivos físicos y lector de pantalla siguen sin certificar; no se habilita publicación por este resultado.
 
 ## Refinamiento de los dos P2
 
@@ -83,4 +83,14 @@ El anclaje sigue la altura interpolada. Una consulta de profundidad con `queryRe
 
 En móvil se mantienen visibles el período, el universo breve y la cobertura comunal; la explicación larga se consulta en «Universo y fuentes», un details nativo operable por teclado. La ficha enlaza al método íntegro en vez de repetirlo. Las fuentes, fórmula, denominadores, licencia y advertencias completas siguen disponibles junto a la tabla.
 
-Referencias de API: [CustomRenderMethodInput](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/CustomRenderMethodInput/), [MercatorCoordinate](https://maplibre.org/maplibre-gl-js/docs/API/classes/MercatorCoordinate/) y [CustomLayerInterface](https://maplibre.org/maplibre-gl-js/docs/API/interfaces/CustomLayerInterface/). Este refinamiento requiere su propia corrida de navegador y nuevas capturas antes de reemplazar la demo entregada.
+Referencias de API: [CustomRenderMethodInput](https://maplibre.org/maplibre-gl-js/docs/API/type-aliases/CustomRenderMethodInput/), [MercatorCoordinate](https://maplibre.org/maplibre-gl-js/docs/API/classes/MercatorCoordinate/) y [CustomLayerInterface](https://maplibre.org/maplibre-gl-js/docs/API/interfaces/CustomLayerInterface/). La verificación independiente de este refinamiento se registra a continuación.
+
+### Cierre de los dos P2
+
+[Actions 37888431231](https://github.com/cepoes100b/CEPOES/actions/runs/37888431231), runtime `45170473c22a09a33976e90288457c369c95419f`: **22/22 escenarios reales y R2 aprobados**; 24 pruebas JS/adaptador y 15 de datos también aprobadas. Se inspeccionaron nuevamente ocho vistas 3D y ocho planas. Las ocho capturas del explorador 2D son byte-idénticas a la entrega anterior. La revisión independiente confirmó selección inequívoca y ninguna distorsión nueva.
+
+El test comprueba que exista un único rótulo, visible sobre Comuna 8 y a su altura exacta; que desaparezca en plano; y que «Universo y fuentes» se pueda abrir con teclado. El panel de controles ocupa 458 px a 320 px y 405 px a 390/430 px, sin ocultar período ni universo. El giro voluntario se verificó con cambio real de píxeles: con proyección y consulta de profundidad activas, 121 muestras RAF, media 16,60 ms y p95 16,7 ms en ANGLE/SwiftShader. No se recrean nodos de texto cada frame y la posición se actualiza con transform.
+
+Peso inicial estático actualizado: 895.882 bytes gzip (+2.814 frente a la base, +0,32%); módulos/datos analíticos diferidos: 30.326 bytes / 11.495 gzip. Heap JS al final del flujo: 33,1–39,6 MB. Estas observaciones siguen siendo específicas de CI y no incluyen memoria GPU.
+
+Los dos P2 quedan cerrados. Los riesgos residuales son la oclusión inherente a la perspectiva, la influencia del área sobre el volumen percibido y la variación entre dispositivos. El pin se oculta si el techo queda tapado; el distintivo fijo, la vista plana, las cifras y el ranking mantienen la lectura. Safari, GPU física y lector de pantalla continúan sin certificar. La demo y las capturas actualizadas reemplazan las mismas identidades de archivo, conservando la versión anterior en su historial. No se habilita fusión ni publicación.

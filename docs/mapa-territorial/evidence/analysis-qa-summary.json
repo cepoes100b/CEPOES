@@ -1,13 +1,13 @@
 {
-  "tested_commit": "17008e744f3d77b34ff8a326edb7b66b3357facd",
-  "run_url": "https://github.com/cepoes100b/CEPOES/actions/runs/37886330833",
+  "tested_commit": "45170473c22a09a33976e90288457c369c95419f",
+  "run_url": "https://github.com/cepoes100b/CEPOES/actions/runs/37888431231",
   "browser_suite": {
     "passed": 22,
     "failed": 0,
     "skipped": 0
   },
   "local_tests": {
-    "javascript": 22,
+    "javascript": 24,
     "python": 15
   },
   "real_render": "Chromium WebGL2 ANGLE/SwiftShader software rendering",
@@ -17,7 +17,8 @@
       "theme": "light",
       "passed": true,
       "selected_value": "41,6",
-      "turquoise_samples": 768,
+      "controls_height_px": 458.125,
+      "turquoise_samples": 770,
       "rendered_ids": [
         "comuna:8",
         "comuna:4",
@@ -43,7 +44,8 @@
       "theme": "dark",
       "passed": true,
       "selected_value": "41,6",
-      "turquoise_samples": 774,
+      "controls_height_px": 458.125,
+      "turquoise_samples": 772,
       "rendered_ids": [
         "comuna:8",
         "comuna:4",
@@ -69,7 +71,8 @@
       "theme": "light",
       "passed": true,
       "selected_value": "41,6",
-      "turquoise_samples": 1178,
+      "controls_height_px": 405.484375,
+      "turquoise_samples": 1182,
       "rendered_ids": [
         "comuna:8",
         "comuna:4",
@@ -88,14 +91,15 @@
         "comuna:12"
       ],
       "a11y_violations": 0,
-      "js_heap_bytes": 29400000
+      "js_heap_bytes": 37300000
     },
     {
       "width": 390,
       "theme": "dark",
       "passed": true,
       "selected_value": "41,6",
-      "turquoise_samples": 1184,
+      "controls_height_px": 405.484375,
+      "turquoise_samples": 1182,
       "rendered_ids": [
         "comuna:8",
         "comuna:4",
@@ -121,32 +125,7 @@
       "theme": "light",
       "passed": true,
       "selected_value": "41,6",
-      "turquoise_samples": 1522,
-      "rendered_ids": [
-        "comuna:8",
-        "comuna:4",
-        "comuna:7",
-        "comuna:1",
-        "comuna:9",
-        "comuna:5",
-        "comuna:3",
-        "comuna:6",
-        "comuna:10",
-        "comuna:2",
-        "comuna:11",
-        "comuna:15",
-        "comuna:14",
-        "comuna:13",
-        "comuna:12"
-      ],
-      "a11y_violations": 0,
-      "js_heap_bytes": 37300000
-    },
-    {
-      "width": 430,
-      "theme": "dark",
-      "passed": true,
-      "selected_value": "41,6",
+      "controls_height_px": 405.484375,
       "turquoise_samples": 1523,
       "rendered_ids": [
         "comuna:8",
@@ -169,10 +148,38 @@
       "js_heap_bytes": 37300000
     },
     {
+      "width": 430,
+      "theme": "dark",
+      "passed": true,
+      "selected_value": "41,6",
+      "controls_height_px": 405.484375,
+      "turquoise_samples": 1524,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
       "width": 1440,
       "theme": "light",
       "passed": true,
       "selected_value": "41,6",
+      "controls_height_px": 1137.90625,
       "turquoise_samples": 4012,
       "rendered_ids": [
         "comuna:8",
@@ -192,13 +199,14 @@
         "comuna:12"
       ],
       "a11y_violations": 0,
-      "js_heap_bytes": 44700000
+      "js_heap_bytes": 39600000
     },
     {
       "width": 1440,
       "theme": "dark",
       "passed": true,
       "selected_value": "41,6",
+      "controls_height_px": 1137.90625,
       "turquoise_samples": 4024,
       "rendered_ids": [
         "comuna:8",
@@ -218,20 +226,25 @@
         "comuna:12"
       ],
       "a11y_violations": 0,
-      "js_heap_bytes": 42100000
+      "js_heap_bytes": 33100000
     }
   ],
   "performance": {
     "performance-analysis": {
-      "context": "Chromium ANGLE/SwiftShader at390px, software-rendered CI; camera frame cadence, not physical GPU benchmark",
-      "frames": 121,
-      "meanFrameMs": 16.59173553719018,
-      "p95FrameMs": 16.799999999999727
+      "context": "Chromium ANGLE/SwiftShader at390px, selected roof label active; camera and opt-in orbit frame cadence, not physical GPU benchmark",
+      "frames": 122,
+      "meanFrameMs": 16.504918032787074,
+      "p95FrameMs": 16.799999999999727,
+      "orbit": {
+        "frames": 121,
+        "meanFrameMs": 16.60413223140515,
+        "p95FrameMs": 16.700000000000728
+      }
     },
     "performance-mobile": {
       "context": "390px Chromium ANGLE/SwiftShader, CI runner, reduced motion; frame cadence is not hardware GPU FPS",
-      "frames": 116,
-      "meanFrameMs": 17.282758620689858,
+      "frames": 120,
+      "meanFrameMs": 16.715833333333237,
       "p95FrameMs": 16.799999999999955
     }
   },
@@ -288,93 +301,93 @@
     },
     {
       "file": "2d-touch-selected.jpg",
-      "bytes": 65465,
-      "sha256": "4b643c2419879c99b9e8c211360a53467bb1c9af57fbc6e55b6fd973cda8e82d"
+      "bytes": 65449,
+      "sha256": "d35f802ac0b397fd078a1383a097f35ea44d399f1c0a558e8ee77f8ddc4e68de"
     },
     {
       "file": "analysis-1440-dark-3d.jpg",
-      "bytes": 113349,
-      "sha256": "d8d4aaaca4c9fa0bfa9b564e44dfae1f08d1c5be03dd16cc0553c21d10cee44d"
+      "bytes": 98655,
+      "sha256": "9b0b441afb56553c084b817f853eea1a5cef7fb46a62e7c0b3862ed96d31577c"
     },
     {
       "file": "analysis-1440-dark-flat.jpg",
-      "bytes": 50331,
-      "sha256": "980a5bac660098d1d39081d2355e9a6fa34ece113b5d0e67f5e7a51fd8c81cc1"
+      "bytes": 51506,
+      "sha256": "69ceab88d432d261c1e61cdddf7c55bda4fe5cd1205efeca28bf9f407a3ae4d3"
     },
     {
       "file": "analysis-1440-light-3d.jpg",
-      "bytes": 108803,
-      "sha256": "dbf7ee7f4395ce9353c5601143209881b18d0f43f3766703c1b74a26ae26be7e"
+      "bytes": 94221,
+      "sha256": "f7bb11f85345c6a8a3be5bed4d8829698502f2bb97b7bc6c2d5af82ea6686a2f"
     },
     {
       "file": "analysis-1440-light-flat.jpg",
-      "bytes": 50392,
-      "sha256": "27830e849dc222492e2cd4b9d3b1472515f3561b86b1a61542e91e55c39ac754"
+      "bytes": 51567,
+      "sha256": "159951111ff4007572393d35fa9041597259b9524dc62c82b7c9e6c548a295e2"
     },
     {
       "file": "analysis-320-dark-3d.jpg",
-      "bytes": 98190,
-      "sha256": "d9a1b0ba05683936d4ba7465f49b5181df2b64e7f5b3e47c8c42ca7d605790ee"
+      "bytes": 84719,
+      "sha256": "36c61d3857cb91cf9ff0dbff90ca42f21658defb5fb71385f9c56356919ef0fa"
     },
     {
       "file": "analysis-320-dark-flat.jpg",
-      "bytes": 31105,
-      "sha256": "a161162e2b92325db90aa6fb5fe72e767f4474bf9bfa1171b26a93b7107b19b0"
+      "bytes": 32588,
+      "sha256": "a9e1b672b86d34a4c186e610cdaf4150e9cb18b905c075582ef260831d583a79"
     },
     {
       "file": "analysis-320-light-3d.jpg",
-      "bytes": 95194,
-      "sha256": "047a7abfc1c69d404b59ee8d6eb9d2490325f063057b15b16a94dbd8166fe3d4"
+      "bytes": 82154,
+      "sha256": "4a2cbc192d26c1ebe422759fc9821b92558d4430cf11479445d84f7cb3172d85"
     },
     {
       "file": "analysis-320-light-flat.jpg",
-      "bytes": 30507,
-      "sha256": "42fcf319766c82003c4cb5e836471c0e97ff0b25a3279a04e462f5fb8dc7f77d"
+      "bytes": 31994,
+      "sha256": "5fc9efac47b15802d5bd77678abded930d07934de409dae3c14a2a4300cffe59"
     },
     {
       "file": "analysis-390-dark-3d.jpg",
-      "bytes": 103008,
-      "sha256": "d048981e3eb0ac547039243398f159f1f6d1a9e910aa139ea771a5dddaeec3d5"
+      "bytes": 88723,
+      "sha256": "bfe480c7a15043a745027a77b7bece8d24c49b2a8de67c730e405480a307af6b"
     },
     {
       "file": "analysis-390-dark-flat.jpg",
-      "bytes": 33515,
-      "sha256": "fbf83ca84c25f71567f3e88dab11ed30a91a36f22614a4f7a3c4fb4ac025e3f8"
+      "bytes": 33594,
+      "sha256": "65ecad83fdba547b8ec1d2c27988e02c224c614b8d9c98116c42579af4ac53c1"
     },
     {
       "file": "analysis-390-light-3d.jpg",
-      "bytes": 99794,
-      "sha256": "ce4e19736ed45b3683851cf812ed2f9a269c01e3d33e2f7e682ca4007652a597"
+      "bytes": 85276,
+      "sha256": "9905293035ada78dc669ab0a21713f69ec6d5adda2c49f00bca030663690240c"
     },
     {
       "file": "analysis-390-light-flat.jpg",
-      "bytes": 32782,
-      "sha256": "ce92fabf537acc372fd4af8b19598072e982c869dea469b061b40b842eb47346"
+      "bytes": 33066,
+      "sha256": "bd1272380f3817eaac6d8c0d87626a50b8955a7e43d72817424763b224f2697e"
     },
     {
       "file": "analysis-430-dark-3d.jpg",
-      "bytes": 104504,
-      "sha256": "a29ccdba727306f450c0b5984cd0172abe1107e7ec5270624131abb7264e3b89"
+      "bytes": 89374,
+      "sha256": "bd2bdd4f603bc00e691a14f44bb863a61d174ee65124cd42239536cd30b7d6bb"
     },
     {
       "file": "analysis-430-dark-flat.jpg",
-      "bytes": 33823,
-      "sha256": "00b66267dd3fb3bc48a333b7a98f37ed4b4acb0c8bcc329eeff9b02eb06cb99a"
+      "bytes": 34196,
+      "sha256": "03d0746e10a27b78bcecf6e999d2533d250d2fb9d6db8e2913a4559a6d7321ea"
     },
     {
       "file": "analysis-430-light-3d.jpg",
-      "bytes": 101025,
-      "sha256": "5afe886bf475120c7d776fbfb561b2eb84df75e8ec8b30f27f97d57277c58c50"
+      "bytes": 85704,
+      "sha256": "312d3c5d898057b890e0edc89a057be26ba13a5b1006918afaf234fd58508fb6"
     },
     {
       "file": "analysis-430-light-flat.jpg",
-      "bytes": 33132,
-      "sha256": "3dbe4cd7c1c353868bdc4f5fe0c57ba4e0f9a588ea1dd02d91117dd614fe5a1d"
+      "bytes": 33425,
+      "sha256": "b97f29b0449be99a7b1a1f8922c22ae0c61d6308b9919bf04434a701bdc214ba"
     },
     {
       "file": "analysis-no-webgl.jpg",
-      "bytes": 101839,
-      "sha256": "0f5ca8ff0859a109f8b8c029c794c13487b0dfe3b4cb5d95905d1f105d06562a"
+      "bytes": 88575,
+      "sha256": "9683d936dd54767ac6bef31f252f8f2efeec385f1e4bb145254d2d5f1ac66ee8"
     },
     {
       "file": "reference-d3.jpg",
@@ -391,13 +404,16 @@
   "visual_review": {
     "status": "inspected",
     "three_dimensional": 8,
-    "flat_analytical": 8,
-    "explorer_2d": 8,
+    "explorer_2d": "Desktop delivery image is byte-identical to the inspected previous version.",
     "p1_findings": 0,
-    "p2_followups": [
-      "El contorno de selección en 3D es fino y queda parcialmente oculto en la base; la vista plana ofrece una selección más clara.",
-      "Compactar en móvil el texto metodológico repetido mediante detalles desplegables, manteniendo período y universo visibles."
+    "p2_closed": [
+      "Rótulo único con pin anclado al techo real, misma altura interpolada, sin sustituir el color; occlusión controlada y distintivo fijo de selección.",
+      "Texto extenso en details nativo y enlace a método completo; período/universo breve visibles; fila móvil de controles."
     ],
-    "development_correction": "La inspección visual detectó IDs GeoJSON perdidos al teselar; promoteId conserva los IDs y el test ahora exige feature-state en geometrías renderizadas y píxeles de la rampa analítica."
+    "residuals": [
+      "La oclusión y la dependencia perceptiva del volumen respecto del área son inherentes a la perspectiva3D; tabla, ranking y vista plana permanecen disponibles.",
+      "No hay certificación de GPU física, Safari ni lector de pantalla."
+    ],
+    "flat_analytical": 8
   }
 }

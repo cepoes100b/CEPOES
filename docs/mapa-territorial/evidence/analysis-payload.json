@@ -2,8 +2,8 @@
   "kind": "static_payload_estimate",
   "scope": "Resources owned by experimental map; shared site shell/fonts excluded. Compression assumes gzip, not measured server transfer.",
   "initial_health": {
-    "bytes": 3013861,
-    "gzip_bytes": 895565
+    "bytes": 3015818,
+    "gzip_bytes": 895882
   },
   "deferred_education": {
     "bytes": 1299286,
@@ -23,18 +23,23 @@
   "files": [
     {
       "path": "analysis/controller.mjs",
-      "bytes": 10859,
-      "gzip_bytes": 3946
+      "bytes": 11096,
+      "gzip_bytes": 4002
     },
     {
       "path": "analysis/layer.mjs",
-      "bytes": 7216,
-      "gzip_bytes": 2331
+      "bytes": 8052,
+      "gzip_bytes": 2586
     },
     {
       "path": "analysis/model.mjs",
       "bytes": 4662,
       "gzip_bytes": 2041
+    },
+    {
+      "path": "analysis/selection.mjs",
+      "bytes": 2561,
+      "gzip_bytes": 1135
     },
     {
       "path": "app.mjs",
@@ -88,8 +93,8 @@
     },
     {
       "path": "map.css",
-      "bytes": 21203,
-      "gzip_bytes": 4743
+      "bytes": 23160,
+      "gzip_bytes": 5060
     },
     {
       "path": "model.mjs",

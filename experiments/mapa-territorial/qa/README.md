@@ -79,3 +79,12 @@ checkout; mide render de 48 polígonos, cambio de indicador, transferencia y hea
 Los tiempos excluyen la variabilidad de descargar datos/CDN externos. Los
 indicadores y funcionalidades difieren del nuevo explorador: es una referencia
 interna reproducible, no una comparación equivalente ni una promesa de mejora.
+
+## Interacciones y degradación controlada
+
+`interaction.spec.mjs` despacha un gesto táctil real de dos dedos por CDP sobre
+Chromium/MapLibre, verifica que cambien los píxeles y usa taps para seleccionar y
+cerrar fichas. También verifica restauración de foco, búsqueda sin resultados y
+recuperación del listado. Una prueba separada inyecta ausencia de WebGL para
+comprobar que sigan operativos el selector y la tabla de los 48 barrios; esta
+última es una prueba de fallo simulado, no evidencia de render.

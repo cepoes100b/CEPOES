@@ -245,17 +245,21 @@ def inject_octubre_rosa_bridge(source: str, rel: str, today: str | None = None) 
     """Acceso al especial sin reemplazar publicaciones destacadas."""
     if rel not in {"/index.html", "/observatorio/index.html"}:
         return source
+    if '/assets/octubre-rosa-banner.css' not in source:
+        source = source.replace('</head>', '<link rel="stylesheet" href="/assets/octubre-rosa-banner.css"></head>', 1)
     bridge = (
-        '<aside id="octubre-rosa-bridge" class="wrap" style="padding-top:24px;padding-bottom:24px">'
-        '<div style="padding:24px;border:1px solid var(--borde);border-left:5px solid #a51e5a;'
-        'border-radius:8px;background:var(--papel2)">'
-        '<span style="font-size:14px;font-weight:700;color:var(--tinta)">OCTUBRE ROSA · 2026</span>'
-        '<h2 style="font-size:26px;line-height:1.3;margin:10px 0;color:var(--tinta)">'
-        'Prevención del cáncer de mama, desde los barrios</h2>'
-        '<p style="margin:10px 0;color:var(--tinta)">Campañas por barrio, fechas y horarios, '
-        'señales de alarma y datos para cuidar tu salud.</p>'
-        '<a href="/salud/octubre-rosa/" style="color:var(--marca-osc);font-weight:700;'
-        'text-decoration:underline">Consultar el especial y la agenda</a></div></aside>'
+        '<aside id="octubre-rosa-bridge" class="wrap or-home-banner">'
+        '<div class="or-home-panel"><div class="or-home-copy">'
+        '<span class="or-home-kicker">OCTUBRE ROSA · 2026</span>'
+        '<h2>Prevención del cáncer de mama, desde los barrios</h2>'
+        '<p>Campañas por barrio, fechas y horarios, señales de alarma y datos para cuidar tu salud.</p>'
+        '<a href="/salud/octubre-rosa/">Consultar el especial y la agenda <span aria-hidden="true">→</span></a>'
+        '</div><svg class="or-home-ribbon" aria-hidden="true" focusable="false" viewBox="0 0 100 140">'
+        '<path fill="#ed78a7" d="M50 10C25 10 22 31 30 51L50 84L70 51C78 31 75 10 50 10Z"/>'
+        '<path fill="#ffe6ef" d="M50 23C36 23 33 33 39 46L50 65L61 46C67 33 64 23 50 23Z"/>'
+        '<path fill="#d32e75" d="M31 45L82 118L61 113L56 133L22 73Z"/>'
+        '<path fill="#f08bb4" d="M69 45L18 118L39 113L44 133L78 73Z"/>'
+        '</svg></div></aside>'
     )
     source = re.sub(r'<aside\b[^>]*id=["\']octubre-rosa-bridge["\'][^>]*>.*?</aside>', '', source, flags=re.S)
     if rel == "/index.html":

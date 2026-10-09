@@ -3,11 +3,8 @@
   "base_sha": "73d0cf3f10c972a6f404060fb574754a4789b8ad",
   "evidence_origin": "Valores y celdas provistos por revisión de fuentes del encargo, con autorización expresa para preparar este candidato. No se afirma descarga independiente.",
   "source_access": "Ambas planillas devolvieron Tunnel connection failed: 403 Forbidden. Sin reintentos ni rutas alternativas.",
-  "release_status": "blocked",
-  "blockers": [
-    "Revalidar independientemente celdas, universos y fecha de modificación de las planillas oficiales.",
-    "Completar QA con site.css y la salida canónica completa; el overlay aislado no reproduce producción."
-  ],
+  "release_status": "ready_for_coordinated_review_not_merged",
+  "blockers": [],
   "checks": {
     "verificar_natalidad": "passed; 3 puntos nacionales y 16 CABA",
     "json_copies": "byte-identical",
@@ -16,37 +13,63 @@
     "diff_check": "passed"
   },
   "visual_qa": {
-    "scope": "Chromium real sobre archivos del overlay candidato, mediante interceptación local de Playwright; toda solicitud externa abortada. Sin acceso a producción.",
+    "scope": "Chromium real: página normalizada con preparador de main 03d243e, assets versionados y site.css original proporcionado por usuario, sólo local.",
+    "css_bytes": 134337,
+    "css_sha256": "14ad805eb2a76f7480bf3d117f903ad581d51b58009babb88a113df71b327133",
     "results": [
       {
         "width": 390,
+        "theme": "light",
         "errors": [],
-        "missing": [
-          "/assets/site.css"
-        ],
+        "missing": [],
         "circles": 16,
-        "overflow": false
+        "overflow": false,
+        "min_secondary_text_contrast": 5.65
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "errors": [],
+        "missing": [],
+        "circles": 16,
+        "overflow": false,
+        "min_secondary_text_contrast": 9.3
       },
       {
         "width": 1440,
+        "theme": "light",
         "errors": [],
-        "missing": [
-          "/assets/site.css"
-        ],
+        "missing": [],
         "circles": 16,
-        "overflow": false
+        "overflow": false,
+        "min_secondary_text_contrast": 5.65
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "errors": [],
+        "missing": [],
+        "circles": 16,
+        "overflow": false,
+        "min_secondary_text_contrast": 9.3
       }
     ],
-    "assessment": "Capturas inspeccionadas: valores, comparaciones y gráfico visibles. Aprobación visual integral pendiente por ausencia de site.css. common.js sí está presente; la navegación final requiere salida canónica.",
+    "assessment": "Aprobado en 390/1440 claro/oscuro; capturas inspeccionadas, tarjetas, comparaciones, años, seis fuentes, 16 puntos y control de tema correctos. Override --hx-muted:#bacbd9 exclusivamente en html[data-theme=dark] .natalidad-page. Tema claro conserva todos los colores medidos; datos y estilos compartidos sin cambios.",
+    "limits": [
+      "Google Fonts se abortó localmente: tipografía de respaldo legible aceptada.",
+      "No se probó el sitio completo ni producción."
+    ],
     "screenshots": [
-      "candidate-390.png",
-      "candidate-1440.png"
+      "full-390-light.png",
+      "full-390-dark.png",
+      "full-1440-light.png",
+      "full-1440-dark.png"
     ]
   },
   "candidate_sha256": {
     "natalidad.json": "e973fbbf14147949415d8d31e7560ee47b94c32d38bfe06b380796d275c9b140",
     "deploy/site-overlay/assets/data/natalidad.json": "e973fbbf14147949415d8d31e7560ee47b94c32d38bfe06b380796d275c9b140",
-    "deploy/site-overlay/observatorio/natalidad/index.html": "3a6f775c6a0f6ad46359c52c9b1218ca483fb8e2ec04ef5e6876c7506e71cd9d",
+    "deploy/site-overlay/observatorio/natalidad/index.html": "fdee2b486eba8dd665021334536bef5d179e746ddb1d1b856df466f7563aa77d",
     "verificar_natalidad.py": "1687c8fc93e925571aa74907b3d047821fdc191faa775abc7b3f10b051f04ff5"
   },
   "limitations": [
@@ -54,5 +77,6 @@
     "Sin hash de las planillas ni celda exacta de TGF 2022: no fueron provistos.",
     "No se ejecutó el actualizador DEIS para evitar nuevas consultas; se preservó su contenido.",
     "Sin fusiones, despliegues, correos ni cambios fuera de natalidad."
-  ]
+  ],
+  "data_validation": "Aceptada la revisión externa provista que leyó XLSX. Transcripción, universos declarados, redondeos y preservación comprobados. Descarga independiente del executor pendiente como límite de reproducción, no bloqueo de datos."
 }

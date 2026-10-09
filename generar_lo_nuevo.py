@@ -14,9 +14,9 @@ from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
 SECTIONS = {'publicaciones', 'prensa', 'balance', 'territorio', 'observatorio',
-            'presupuesto', 'legislatura', 'propuestas', 'cepoes', 'datos'}
+            'presupuesto', 'legislatura', 'propuestas', 'cepoes', 'datos', 'salud'}
 LABELS = {'boletin': 'Boletín', 'informe': 'Informe', 'analisis': 'Análisis', 'prensa': 'Prensa',
-          'balance': 'Balance', 'herramienta': 'Herramienta', 'datos': 'Datos'}
+          'balance': 'Balance', 'herramienta': 'Herramienta', 'datos': 'Datos', 'especial': 'Especial'}
 MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
 CANONICAL_ROUTES = {
     '/observatorio/presupuesto/': '/presupuesto/ejecucion/',
@@ -119,6 +119,8 @@ def snapshot(root, path):
 
 
 def kind(url, publication_type=''):
+    if publication_type == 'special':
+        return 'especial'
     if publication_type == 'report':
         return 'informe'
     if url.startswith('/publicaciones/boletines/') and url != '/publicaciones/boletines/':

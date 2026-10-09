@@ -97,7 +97,7 @@ export class TerritorialMap {
     this.onTerritory(String(hit.properties.id));
   }
   duration(){return matchMedia('(prefers-reduced-motion: reduce)').matches?0:350;}
-  fit(feature){this.actionToken++;this.analysis?.stopOrbit();const three=this.analysis?.active&&this.analysis.view==='3d';this.map.fitBounds(feature?boundsFor(feature):CABA,{padding:three?70:35,maxZoom:three?(this.map.getContainer().clientWidth<500?10.7:11.2):14,pitch:three?48:0,bearing:three?-22:0,duration:this.duration()});}
+  fit(feature){this.actionToken++;this.analysis?.stopOrbit();if(this.analysis?.active){this.analysis.frameCity(feature);return;}const three=this.analysis?.active&&this.analysis.view==='3d';this.map.fitBounds(feature?boundsFor(feature):CABA,{padding:three?70:35,maxZoom:three?(this.map.getContainer().clientWidth<500?10.7:11.2):14,pitch:three?48:0,bearing:three?-22:0,duration:this.duration()});}
   focusRecord(feature){this.actionToken++;if(hasPoint(feature))this.map.easeTo({center:feature.geometry.coordinates,zoom:15,duration:this.duration()});}
   async setStreets(enabled){
     const token=++this.baseToken;clearTimeout(this.baseTimer);

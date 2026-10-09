@@ -1,0 +1,209 @@
+{
+  "width": 320,
+  "theme": "light",
+  "webgl": {
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "lost": false
+  },
+  "entry": {
+    "center": {
+      "lng": -58.405458445250716,
+      "lat": -34.711732497015774
+    },
+    "zoom": 9.953819421827319,
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "pitch": 48,
+    "layerType": "fill-extrusion",
+    "visible": "visible",
+    "renderedIds": [
+      "comuna:8",
+      "comuna:4",
+      "comuna:7",
+      "comuna:1",
+      "comuna:9",
+      "comuna:5",
+      "comuna:3",
+      "comuna:6",
+      "comuna:10",
+      "comuna:2",
+      "comuna:11",
+      "comuna:15",
+      "comuna:14",
+      "comuna:13",
+      "comuna:12"
+    ],
+    "heights": [
+      {
+        "id": "comuna:1",
+        "ratio": 0.2792838041456826
+      },
+      {
+        "id": "comuna:2",
+        "ratio": 0.07682010348112497
+      },
+      {
+        "id": "comuna:3",
+        "ratio": 0.20109849796163007
+      },
+      {
+        "id": "comuna:4",
+        "ratio": 0.28539713862851507
+      },
+      {
+        "id": "comuna:5",
+        "ratio": 0.12438620101949088
+      },
+      {
+        "id": "comuna:6",
+        "ratio": 0.07988045439226027
+      },
+      {
+        "id": "comuna:7",
+        "ratio": 0.1750147705639073
+      },
+      {
+        "id": "comuna:8",
+        "ratio": 0.41565467315388843
+      },
+      {
+        "id": "comuna:9",
+        "ratio": 0.22262786764180384
+      },
+      {
+        "id": "comuna:10",
+        "ratio": 0.14667589705403267
+      },
+      {
+        "id": "comuna:11",
+        "ratio": 0.1047126123672024
+      },
+      {
+        "id": "comuna:12",
+        "ratio": 0.0863088662667188
+      },
+      {
+        "id": "comuna:13",
+        "ratio": 0.06089658064270194
+      },
+      {
+        "id": "comuna:14",
+        "ratio": 0.07421173539546698
+      },
+      {
+        "id": "comuna:15",
+        "ratio": 0.13646070724400175
+      }
+    ],
+    "feature_state_ids_consistent": true
+  },
+  "a11y": [],
+  "selected": {
+    "center": {
+      "lng": -58.40240209825873,
+      "lat": -34.684621214383775
+    },
+    "zoom": 9.953961933081752,
+    "padding": {
+      "top": 0,
+      "bottom": 0,
+      "left": 0,
+      "right": 0
+    },
+    "pitch": 48,
+    "layerType": "fill-extrusion",
+    "visible": "visible",
+    "renderedIds": [
+      "comuna:8",
+      "comuna:4",
+      "comuna:7",
+      "comuna:1",
+      "comuna:9",
+      "comuna:5",
+      "comuna:3",
+      "comuna:6",
+      "comuna:10",
+      "comuna:2",
+      "comuna:11",
+      "comuna:15",
+      "comuna:14",
+      "comuna:13",
+      "comuna:12"
+    ],
+    "heights": [
+      {
+        "id": "comuna:1",
+        "ratio": 0.2792838041456826
+      },
+      {
+        "id": "comuna:2",
+        "ratio": 0.07682010348112497
+      },
+      {
+        "id": "comuna:3",
+        "ratio": 0.20109849796163007
+      },
+      {
+        "id": "comuna:4",
+        "ratio": 0.28539713862851507
+      },
+      {
+        "id": "comuna:5",
+        "ratio": 0.12438620101949088
+      },
+      {
+        "id": "comuna:6",
+        "ratio": 0.07988045439226027
+      },
+      {
+        "id": "comuna:7",
+        "ratio": 0.1750147705639073
+      },
+      {
+        "id": "comuna:8",
+        "ratio": 0.41565467315388843
+      },
+      {
+        "id": "comuna:9",
+        "ratio": 0.22262786764180384
+      },
+      {
+        "id": "comuna:10",
+        "ratio": 0.14667589705403267
+      },
+      {
+        "id": "comuna:11",
+        "ratio": 0.1047126123672024
+      },
+      {
+        "id": "comuna:12",
+        "ratio": 0.0863088662667188
+      },
+      {
+        "id": "comuna:13",
+        "ratio": 0.06089658064270194
+      },
+      {
+        "id": "comuna:14",
+        "ratio": 0.07421173539546698
+      },
+      {
+        "id": "comuna:15",
+        "ratio": 0.13646070724400175
+      }
+    ],
+    "feature_state_ids_consistent": true
+  },
+  "passed": true,
+  "errors": [],
+  "failed": [],
+  "screenshot": {
+    "name": "etapa1-320-light.png",
+    "sha256": "86307c12ad0731a392e82398414d5a590ff48fe5237b0aa41e8f700d12c332fe"
+  }
+}

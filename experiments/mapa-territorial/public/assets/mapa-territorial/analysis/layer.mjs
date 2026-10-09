@@ -1,5 +1,6 @@
 import {COLORS,MISSING_COLOR,MAX_HEIGHT,normalized,scaleForIndicator} from './model.mjs';
 import {number as fmt} from '../model.mjs';
+import {RoofLabels} from './labels.mjs';
 import {SelectionCallout} from './selection.mjs';
 const SUFFIXES=['fill','line','selected-halo','selected'];
 const value=['coalesce',['feature-state','ratio'],0];
@@ -8,6 +9,7 @@ const color=['case',['boolean',['feature-state','available'],false],['interpolat
 export class AnalyticalLayer {
   constructor(engine,{onState=()=>{}}={}){
     this.engine=engine;this.map=engine.map;this.onState=onState;this.active=false;this.initialized=false;this.view='flat';this.values=new Map();this.frame=0;this.orbitFrame=0;this.generation=0;this.currentKey='';
+    this.roofLabels=new RoofLabels(this);
     this.callout=new SelectionCallout(engine,()=>({visible:this.active&&this.view==='3d'&&this.level==='comuna'&&!!this.selected,center:this.selectedFeature?.properties.center,name:this.selectedFeature?.properties.name,id:this.selected,height:(this.values.get(this.selected)??0)*MAX_HEIGHT,value:this.selectedValue}));
     this.motion=matchMedia('(prefers-reduced-motion: reduce)');
     this.onMotion=()=>{if(this.motion.matches&&this.active){this.stopOrbit();this.finish();this.map.stop();this.map.easeTo({pitch:this.view==='3d'?48:0,bearing:this.view==='3d'?-22:0,duration:0});}this.report();};
@@ -21,6 +23,7 @@ export class AnalyticalLayer {
   mount(){
     if(!this.map.getSource('comuna'))return;
     if(!this.map.getLayer('analysis-volume'))this.map.addLayer({id:'analysis-volume',source:'comuna',type:'fill-extrusion',layout:{visibility:'none'},paint:{'fill-extrusion-color':color,'fill-extrusion-height':['*',value,MAX_HEIGHT],'fill-extrusion-base':0,'fill-extrusion-opacity':.96,'fill-extrusion-vertical-gradient':true,'fill-extrusion-height-transition':{duration:0},'fill-extrusion-color-transition':{duration:0}}});
+    if(!this.map.getLayer(this.roofLabels.id))this.map.addLayer(this.roofLabels);
     if(!this.map.getLayer(this.callout.id))this.map.addLayer(this.callout);
     // Style swaps discard feature-state; restore the current visible values immediately.
     for(const [id,ratio] of this.values)this.apply(id,ratio);
@@ -33,15 +36,27 @@ export class AnalyticalLayer {
     this.active=true;this.indicator=ind;this.level=level;this.selected=selected;this.view=level==='comuna'?view:'flat';
     this.selectedFeature=this.engine.territories?.find(f=>f.properties.id===selected);
     const selectedRow=ind.rows.find(r=>r.id===selected);this.selectedValue=selectedRow?.value==null?'s/d':`${fmt(selectedRow.value,ind.digits??1)} ${ind.unit_short||ind.unit||''}`;
-    this.callout.hide();
+    this.callout.hide();this.roofLabels.hide();
     if(!this.map.getSource('comuna'))return;
     this.mount();
-    if(opening){this.initialized=true;this.oldPixelRatio=this.map.getPixelRatio();this.map.setPixelRatio(Math.min(devicePixelRatio||1,1.5));}
+    if(opening){this.initialized=true;this.oldBounds=this.map.getMaxBounds?.();this.map.setMaxBounds?.(null);this.oldPixelRatio=this.map.getPixelRatio();this.map.setPixelRatio(Math.min(devicePixelRatio||1,1.5));}
     const scale=scaleForIndicator(ind);const key=`${ind.id}:${ind.period}`;
     if(key!==this.currentKey){this.stopOrbit();this.currentKey=key;this.target=new Map(ind.rows.map(r=>[r.id,normalized(r.value,scale)]));this.animate();}
     this.refresh();
-    if(opening||previousView!==this.view){this.stopOrbit();this.map.stop();this.map.easeTo({pitch:this.view==='3d'?48:0,bearing:this.view==='3d'?-22:0,duration:this.motion.matches?0:450});}
+    if(opening||previousView!==this.view){this.stopOrbit();this.map.stop();this.frameCity();}
     this.report();
+  }
+  frameCity(feature=this.selectedFeature){
+    const width=this.map.getContainer().clientWidth;
+    if(!width||!this.map.fitBounds){this.map.easeTo({pitch:this.view==='3d'?48:0,bearing:this.view==='3d'?-22:0,duration:this.motion.matches?0:450});return;}
+    const mobile=width<=760,height=this.map.getContainer().clientHeight;
+    const padding=mobile?{top:185,bottom:370,left:45,right:45}:{top:100,bottom:180,left:400,right:110};
+    // Fit the entire city in the available stage. A selected commune gently shifts
+    // the framing, without magnifying its statistical height or losing the context.
+    const center=feature?.properties.center,dx=center?(center[0]+58.4375)*.22:0,dy=center?(center[1]+34.62)*.22:0;
+    const bounds=[[-58.552+dx,-34.721+dy],[-58.323+dx,-34.519+dy]];
+    const camera=this.map.cameraForBounds(bounds,{padding,bearing:this.view==='3d'?-22:0});
+    if(camera)this.map.easeTo({...camera,center:[-58.4375+dx,-34.62+dy],padding:{top:0,bottom:0,left:0,right:0},offset:mobile?[0,-90]:[170,65],zoom:camera.zoom+(mobile?.9:.6),pitch:this.view==='3d'?48:0,bearing:this.view==='3d'?-22:0,duration:this.motion.matches?0:650});
   }
   animate(){
     cancelAnimationFrame(this.frame);this.frame=0;const token=++this.generation;
@@ -73,7 +88,9 @@ export class AnalyticalLayer {
     this.map.setPaintProperty(`${this.level}-fill`,'fill-opacity',1);
     this.map.setLayoutProperty('analysis-volume','visibility',supported&&this.view==='3d'?'visible':'none');
     for(const id of ['clusters','points'])this.map.setLayoutProperty(id,'visibility','none');
-    this.map.setLight({anchor:'viewport',position:[1.5,200,45],color:'#ffffff',intensity:.32});
+    this.map.setLight({anchor:'viewport',position:[1.5,120,55],color:'#e2fffa',intensity:.65});
+    this.map.setPaintProperty('background','background-color',document.documentElement?.dataset.theme==='light'?'#d1e6e1':'#08262e');
+    this.map.setPaintProperty('analysis-volume','fill-extrusion-color',['case',['==',['get','id'],this.selected],'#f59a58',color]);
     this.engine.scheduleLabels();
   }
   hitLayers(){return this.level==='comuna'&&this.view==='3d'?['analysis-volume','comuna-fill']:[`${this.level}-fill`];}
@@ -93,19 +110,21 @@ export class AnalyticalLayer {
     };
     this.orbitFrame=requestAnimationFrame(step);this.report();
   }
-  stopOrbit(){cancelAnimationFrame(this.orbitFrame);this.orbitFrame=0;this.report();}
+  stopOrbit(){const running=this.orbitFrame;cancelAnimationFrame(this.orbitFrame);this.orbitFrame=0;if(running)this.map.triggerRepaint?.();this.report();}
   deactivate(){
     if(!this.active)return;this.active=false;this.initialized=false;this.stopOrbit();this.finish();
-    this.callout.hide();
+    this.callout.hide();this.roofLabels.hide();
     if(this.map.getLayer('analysis-volume'))this.map.setLayoutProperty('analysis-volume','visibility','none');
     for(const id of ['clusters','points'])if(this.map.getLayer(id))this.map.setLayoutProperty(id,'visibility','visible');
     this.map.stop();this.map.easeTo({pitch:0,bearing:0,duration:this.motion.matches?0:350});
     if(this.oldPixelRatio)this.map.setPixelRatio(this.oldPixelRatio);
+    if(this.oldBounds)this.map.setMaxBounds(this.oldBounds);
+    this.map.setPaintProperty('background','background-color',document.documentElement?.dataset.theme==='dark'?'#0b1b27':'#e6eff3');
     this.engine.refresh();
   }
   destroy(){
     this.active=false;this.stopOrbit();cancelAnimationFrame(this.frame);this.frame=0;this.generation++;
-    this.callout.onRemove();
+    this.callout.onRemove();this.roofLabels.onRemove();
     this.motion.removeEventListener('change',this.onMotion);document.removeEventListener('visibilitychange',this.onVisibility);
     for(const type of ['pointerdown','wheel','keydown','touchstart'])this.map.getContainer().removeEventListener(type,this.onInteract,true);
   }

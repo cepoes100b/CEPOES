@@ -1,0 +1,110 @@
+{
+  "kind": "static_payload_estimate",
+  "scope": "Resources owned by experimental map; shared site shell/fonts excluded. Compression assumes gzip, not measured server transfer.",
+  "initial_health": {
+    "bytes": 3002752,
+    "gzip_bytes": 893068
+  },
+  "deferred_education": {
+    "bytes": 1299286,
+    "gzip_bytes": 139135
+  },
+  "deferred_green": {
+    "bytes": 1118603,
+    "gzip_bytes": 142224
+  },
+  "runtime": {
+    "map_ready_ms": null,
+    "zoom_fps": null,
+    "filter_latency_ms": null,
+    "browser_memory_bytes": null,
+    "status": "not_measured_browser_blocked"
+  },
+  "files": [
+    {
+      "path": "app.mjs",
+      "bytes": 21092,
+      "gzip_bytes": 7024
+    },
+    {
+      "path": "data/audit.json",
+      "bytes": 10227,
+      "gzip_bytes": 2571
+    },
+    {
+      "path": "data/indicators.json",
+      "bytes": 36437,
+      "gzip_bytes": 3132
+    },
+    {
+      "path": "data/layers/educacion.geojson",
+      "bytes": 1299286,
+      "gzip_bytes": 139135
+    },
+    {
+      "path": "data/layers/salud.geojson",
+      "bytes": 34305,
+      "gzip_bytes": 4940
+    },
+    {
+      "path": "data/layers/verdes.geojson",
+      "bytes": 1118603,
+      "gzip_bytes": 142224
+    },
+    {
+      "path": "data/manifest.json",
+      "bytes": 10544,
+      "gzip_bytes": 3263
+    },
+    {
+      "path": "data/territories.geojson",
+      "bytes": 1233181,
+      "gzip_bytes": 428234
+    },
+    {
+      "path": "engine.mjs",
+      "bytes": 11455,
+      "gzip_bytes": 4067
+    },
+    {
+      "path": "map.css",
+      "bytes": 15594,
+      "gzip_bytes": 3859
+    },
+    {
+      "path": "model.mjs",
+      "bytes": 5620,
+      "gzip_bytes": 2156
+    },
+    {
+      "path": "vendor/LICENSE-MapLibre.txt",
+      "bytes": 5984,
+      "gzip_bytes": 1530
+    },
+    {
+      "path": "vendor/manifest.json",
+      "bytes": 658,
+      "gzip_bytes": 346
+    },
+    {
+      "path": "vendor/maplibre-gl-shared.mjs",
+      "bytes": 0,
+      "gzip_bytes": 20
+    },
+    {
+      "path": "vendor/maplibre-gl-worker.mjs",
+      "bytes": 508314,
+      "gzip_bytes": 143724
+    },
+    {
+      "path": "vendor/maplibre-gl.css",
+      "bytes": 83290,
+      "gzip_bytes": 10485
+    },
+    {
+      "path": "vendor/maplibre-gl.mjs",
+      "bytes": 1079357,
+      "gzip_bytes": 285316
+    }
+  ]
+}

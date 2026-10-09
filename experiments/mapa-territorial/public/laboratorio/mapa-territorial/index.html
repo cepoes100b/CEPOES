@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#16232F">
+<title>Mapa territorial · Laboratorio CEPOES</title>
+<meta name="description" content="Prototipo local del Mapa Territorial CEPOES: barrios, comunas y registros de salud, educación y espacios verdes con fuentes verificables.">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/arquitectura.css">
+<link rel="stylesheet" href="/assets/mapa-territorial/vendor/maplibre-gl.css">
+<link rel="stylesheet" href="/assets/mapa-territorial/map.css">
+<script defer src="/assets/common.js?v=257"></script>
+<script type="module" src="/assets/mapa-territorial/app.mjs"></script>
+</head>
+<body class="mt-page">
+<a class="mt-skip" href="#mt-explorer">Saltar al explorador territorial</a>
+<nav class="site-nav"></nav>
+<main id="mt-explorer" class="mt-shell">
+<header class="mt-heading">
+  <div><p class="mt-eyebrow">CEPOES · Territorio</p><h1>La Ciudad, barrio a barrio.</h1><p>Ubicá servicios y explorá cómo se distribuyen en Buenos Aires.</p></div>
+  <span class="mt-lab">Laboratorio · vista local</span>
+</header>
+<div class="mt-toolbar">
+  <form id="mt-search-form" class="mt-search" role="search" aria-label="Buscar territorio">
+    <label for="mt-search">Buscar barrio o comuna</label>
+    <div class="mt-input-row"><input id="mt-search" type="search" placeholder="Ej.: Parque Patricios o Comuna 4" autocomplete="off" aria-controls="mt-search-results"><button type="submit" aria-label="Buscar barrio o comuna">Buscar</button></div>
+    <ul id="mt-search-results" class="mt-search-results" aria-label="Resultados de territorios" hidden></ul>
+  </form>
+  <div class="mt-territory-controls">
+    <label>Ver límites de<select id="mt-level"><option value="barrio">Barrios</option><option value="comuna">Comunas</option></select></label>
+    <label>Seleccionar territorio<select id="mt-territory"><option value="">Toda la Ciudad</option></select></label>
+  </div>
+</div>
+<div id="mt-error" class="mt-alert" role="alert" hidden><p id="mt-error-text"></p><button id="mt-retry" type="button">Volver a intentar</button></div>
+<div class="mt-workspace">
+  <aside class="mt-layers" aria-labelledby="mt-layers-title">
+    <h2 id="mt-layers-title">Qué querés explorar</h2>
+    <div id="mt-layer-controls" class="mt-layer-options" role="group" aria-label="Capa de equipamientos">
+      <button type="button" data-layer="salud" aria-pressed="true"><span class="mt-layer-icon" aria-hidden="true">+</span><span>Salud<small>Hospitales y CeSAC</small></span></button>
+      <button type="button" data-layer="educacion" aria-pressed="false"><span class="mt-layer-icon" aria-hidden="true">A</span><span>Educación<small>Establecimientos activos</small></span></button>
+      <button type="button" data-layer="verdes" aria-pressed="false"><span class="mt-layer-icon" aria-hidden="true">○</span><span>Espacios verdes<small>Inventario oficial</small></span></button>
+    </div>
+    <label class="mt-category-label">Tipo de registro<select id="mt-category"><option value="">Todos los tipos</option></select></label>
+    <div class="mt-layer-source"><p class="mt-eyebrow">Fuente y alcance</p><p id="mt-source-short">Cargando información de las fuentes…</p><a href="#mt-method">Leer método y limitaciones ↓</a></div>
+  </aside>
+  <section class="mt-map-section" aria-label="Mapa y leyenda">
+    <div class="mt-map-top"><span id="mt-map-title">Ciudad de Buenos Aires</span><button type="button" id="mt-reset">Restablecer</button></div>
+    <div id="mt-map" class="mt-map" role="region" aria-label="Mapa interactivo de Buenos Aires" aria-describedby="mt-map-help">
+      <div id="mt-map-loading" class="mt-map-loading" role="status">Preparando cartografía local…</div>
+    </div>
+    <div class="mt-map-options"><label><input type="checkbox" id="mt-streets" disabled> Mostrar calles (OpenFreeMap)</label><button type="button" id="mt-fit" disabled>Encuadrar selección</button></div>
+    <p id="mt-base-status" class="mt-small" role="status">Base territorial local · sin teselas externas</p>
+    <div id="mt-legend" class="mt-legend" aria-label="Leyenda del mapa"><strong>Densidad de registros por km²</strong><p>Esperando la capa seleccionada.</p></div>
+    <p id="mt-map-help" class="mt-small">Usá + y − para acercar o alejar; las flechas desplazan el mapa. En pantalla táctil, movelo con dos dedos. Todos los territorios también se pueden elegir en el selector o la tabla.</p>
+    <p id="mt-status" class="mt-status" role="status" aria-live="polite">Cargando territorios y fuentes…</p>
+  </section>
+  <aside class="mt-dossier" aria-labelledby="mt-place-name">
+    <p id="mt-place-kind" class="mt-eyebrow">Lectura territorial</p><h2 id="mt-place-name">Toda la Ciudad</h2>
+    <p id="mt-place-description">Elegí un barrio o una comuna para consultar su inventario y compararlo.</p>
+    <div id="mt-metrics" class="mt-metrics"><p>Los indicadores se mostrarán al cargar la fuente.</p></div>
+    <p id="mt-comparison-note" class="mt-small">Los registros describen un inventario. La cantidad de servicios no mide su capacidad o calidad.</p>
+    <div id="mt-service-card" class="mt-service-card" hidden></div>
+    <div class="mt-dossier-actions"><a id="mt-related" href="/territorio/equipamientos/">Explorar catálogo territorial →</a><a href="#mt-records">Ver registros de esta selección ↓</a><button id="mt-share" type="button">Mostrar enlace de esta vista</button><input id="mt-share-url" type="text" readonly aria-label="Enlace de la vista seleccionada" hidden></div>
+  </aside>
+</div>
+<section id="mt-records" class="mt-records" aria-labelledby="mt-records-title">
+  <div class="mt-section-title"><div><p class="mt-eyebrow">Del mapa al registro</p><h2 id="mt-records-title">Servicios e infraestructura</h2></div><span id="mt-record-count" role="status" aria-live="polite"></span></div>
+  <label class="mt-record-search">Filtrar registros por nombre o dirección<input id="mt-record-search" type="search" placeholder="Escribí un nombre o una dirección" autocomplete="off"></label>
+  <p id="mt-record-warning" class="mt-small"></p>
+  <div id="mt-record-list" class="mt-record-list"><p>Cargando registros…</p></div>
+  <button id="mt-more" class="mt-more" type="button" hidden>Mostrar 20 registros más</button>
+</section>
+<details class="mt-accessible" id="mt-accessible"><summary>Explorar todos los territorios en una tabla accesible</summary><p>Esta tabla y los selectores permiten acceder a la misma información territorial sin usar el mapa.</p><div class="mt-table-scroll" tabindex="0" aria-label="Tabla territorial, desplazable horizontalmente"><table><caption id="mt-table-caption">Inventario de territorios</caption><thead><tr><th scope="col">Territorio</th><th scope="col">Registros</th><th scope="col">Por km²</th><th scope="col">Sin punto en mapa</th></tr></thead><tbody id="mt-territory-table"></tbody></table></div></details>
+<section id="mt-method" class="mt-method" aria-labelledby="mt-method-title"><p class="mt-eyebrow">Cómo leer este mapa</p><h2 id="mt-method-title">Datos visibles. Límites explícitos.</h2>
+<div class="mt-method-grid"><div><h3>Un inventario, una comparación</h3><p>La densidad se calcula dividiendo los registros asignados al territorio por su superficie administrativa en km². Ciudad y comuna se calculan sumando registros y superficies; no se promedian tasas barriales.</p><p>Es un indicador derivado por CEPOES. Describe distribución territorial, sin medir capacidad de atención, vacantes, accesibilidad ni calidad.</p></div><div><h3>Ubicaciones y datos faltantes</h3><p>Los puntos de salud y educación proceden de coordenadas oficiales, reproyectadas cuando corresponde. Los espacios verdes usan un punto interior representativo de su polígono: no representa su acceso.</p><p>Un registro sin coordenadas sigue presente en el listado. Cero significa que la fuente no registra elementos en ese territorio; “sin dato” identifica información no disponible.</p></div><div><h3>Fechas y alcance</h3><p>La fecha del catálogo, la modificación del archivo y el período observado son cosas distintas. Cada capa informa las fechas comprobadas y sus limitaciones. La cartografía representa los 48 barrios y las 15 comunas de CABA.</p><p>Vista experimental en revisión; no sustituye el catálogo oficial ni confirma que cada servicio esté funcionando hoy.</p></div></div>
+<div id="mt-sources" class="mt-sources"></div><p class="mt-small">Cartografía y datos: Gobierno de la Ciudad de Buenos Aires, BA Data. Procesamiento y visualización: CEPOES. Motor MapLibre GL JS, licencia BSD-3-Clause. Si activás calles: OpenFreeMap, OpenMapTiles y colaboradores de OpenStreetMap.</p></section>
+<noscript><div class="mt-alert">Este explorador necesita JavaScript para cargar los registros. Podés consultar el <a href="/territorio/equipamientos/">catálogo territorial existente</a> y las <a href="https://data.buenosaires.gob.ar/dataset/barrios">fuentes oficiales de BA Data</a>.</div></noscript>
+</main>
+<footer class="footer"></footer>
+</body></html>

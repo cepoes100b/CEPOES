@@ -1,7 +1,7 @@
 # Mapa Territorial CEPOES 2.0 · Hito 0
 Fecha de auditoría: 2026-10-09. Encargo: [issue #192](https://github.com/cepoes100b/CEPOES/issues/192).
 Base auditada: `ddefe51f5ca5c5f9a0e058a6cafa065d407dfc2a`.
-Rama: `feat/mapa-territorial-2-dot`. Estado: diseño / prototipo en curso; no candidata publicada.
+Rama: `feat/mapa-territorial-2-dot`. Estado: Hito 0 completado; implementación y validación offline en curso. PR draft #193; sin candidata publicada.
 
 ## 1. Inventario y decisiones de reutilización
 | Recurso | Evidencia encontrada | Decisión |
@@ -19,7 +19,7 @@ Rama: `feat/mapa-territorial-2-dot`. Estado: diseño / prototipo en curso; no ca
 No hay `.agents/skills` en este checkout. Se leyeron `AGENTS.md`, `deploy/README.md` y workflow canónico.
 
 ## 2. Arquitectura
-Aplicación JavaScript modular sin framework global. Motor previsto: MapLibre GL JS local, versión exacta y licencia verificadas antes de incorporarla. WebGL para pan/zoom; GeoJSON territorial local; fuentes desacopladas de vista y de estado URL.
+Aplicación JavaScript modular sin framework global. Motor incorporado: MapLibre GL JS 6.13.0 local, licencia BSD-3-Clause verificada; package-lock y hashes de assets versionados. WebGL para pan/zoom; GeoJSON territorial local; fuentes desacopladas de vista y de estado URL.
 - Base inicial: cartografía administrativa local y simbología CEPOES. Funciona sin proveedor de teselas.
 - Calles opcionales: OpenFreeMap, activadas por control explícito; atribución visible. Error o lentitud conserva base territorial y fichas.
 - Alternativa sin WebGL: selección, búsqueda y tabla HTML siguen operativas; mensaje explica indisponibilidad del mapa.
@@ -92,9 +92,9 @@ Todo el experimento queda bajo `experiments/mapa-territorial/`, fuera de `deploy
 - GitHub oficial CEPOES: lectura completa issue/comentarios, HEAD main y creación de rama exitosas.
 - Checkout aislado, Python 3.12.14, Node 24.19.0 disponibles. Se puede editar y ejecutar tests offline.
 - `sites-preview`: no instalado en perfil portable; no se fabricará puente o daemon.
-- `cua_repl`: conexión cloud disponible; smoke del navegador local en verificación. No asumir equivalencia hasta render real.
-- Dependencia npm: lectura de metadatos bloqueada por interpretación de límite de destino. Aclaración solicitada, instalación detenida; no se elude.
-- Build completo: repo es overlay, necesita base pública real (incluidos site.css e index.html). Su materialización y el render completo aún pendientes; una captura de producción no verifica el candidato.
+- `cua_repl`: conexión cloud disponible, pero el smoke a terminal.local y loopback falló con 502/conexión rechazada. Chromium local instalado falla con socket() Operation not permitted; la escalación falla en bwrap antes de ejecutarlo. No hay render válido del candidato.
+- Dependencia npm: autorización explícita adicional recibida para registro oficial/documentación y recursos públicos CEPOES. Instalación exacta realizada con caché local, scripts de instalación deshabilitados; no se eludió la denegación inicial.
+- Build completo: materializado desde captura pública trazable y overlay auditado; normalizadores/validadores canónicos aprobados. El render sigue pendiente: la validez estructural no comprueba apariencia o WebGL.
 - Capturas 320/390/430/1440 y ambos temas, WebGL, teclado, filtros y métricas: aún no ejecutadas. Se actualizará con evidencia, sin declarar listo anticipadamente.
 
 ## 7. Matriz de aceptación y siguiente trabajo
@@ -105,4 +105,8 @@ Todo el experimento queda bajo `experiments/mapa-territorial/`, fuera de `deploy
 5. Transferencia inicial, latencia de mapa/filtros, FPS y memoria con navegador/red/CPU/contexto documentados. No extrapolar laboratorio a móviles reales.
 6. PR draft con capturas/evidencias y límites. Detenerse antes de fusión/publicación y solicitar visto bueno.
 
-Decisiones pendientes: ninguna de diseño menor. Bloqueo operativo puntual de destino para registro oficial y base pública; continuar lo independiente mientras se aclara.
+Decisiones pendientes: ninguna de diseño menor. Acceso a registro oficial y base pública ya autorizado. Bloqueo operativo restante: no hay ruta funcional de render del candidato en este entorno. Continuar pruebas offline y detener aprobación final hasta revisar el navegador real.
+
+
+## Actualización de auditoría
+La reconstrucción verificó 86 puntos de salud y 2.672 de 2.732 registros educativos; 60 se conservan sin punto y con motivo. Verdes contiene 41 discrepancias territoriales: se muestran 2.135 puntos de 2.176 registros, sin tasa/ranking. Dos micro-solapes heredados de la cartografía oficial suman 18,816 m²; se documentan sin alterar límites. Métodos y tolerancias completos en `experiments/mapa-territorial/data-pipeline/README.md`.

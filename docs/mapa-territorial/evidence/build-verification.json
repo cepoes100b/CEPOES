@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "finished_at": "2026-10-09T02:37:48.090229+00:00",
+  "source_checkout_sha": "f7e0f1a462ce7666675240ad1aa25b3fc66affd9",
+  "baseline_sha": "f7e0f1a462ce7666675240ad1aa25b3fc66affd9",
+  "public_release_sha": "2307ecf17742bc25db91a10d5b362f849e295da9",
+  "html_pages": 169,
+  "barrios": 48,
+  "files": 396,
+  "bytes": 84253397,
+  "added": [
+    "assets/mapa-territorial/app.mjs",
+    "assets/mapa-territorial/data/audit.json",
+    "assets/mapa-territorial/data/indicators.json",
+    "assets/mapa-territorial/data/layers/educacion.geojson",
+    "assets/mapa-territorial/data/layers/salud.geojson",
+    "assets/mapa-territorial/data/layers/verdes.geojson",
+    "assets/mapa-territorial/data/manifest.json",
+    "assets/mapa-territorial/data/territories.geojson",
+    "assets/mapa-territorial/engine.mjs",
+    "assets/mapa-territorial/map.css",
+    "assets/mapa-territorial/model.mjs",
+    "assets/mapa-territorial/vendor/LICENSE-MapLibre.txt",
+    "assets/mapa-territorial/vendor/manifest.json",
+    "assets/mapa-territorial/vendor/maplibre-gl-shared.mjs",
+    "assets/mapa-territorial/vendor/maplibre-gl-worker.mjs",
+    "assets/mapa-territorial/vendor/maplibre-gl.css",
+    "assets/mapa-territorial/vendor/maplibre-gl.mjs",
+    "laboratorio/mapa-territorial/index.html"
+  ],
+  "changed_baseline_files": [],
+  "steps_passed": 6,
+  "protected_indexes": [
+    {
+      "path": "sitemap.xml",
+      "sha256": "9b0c0a5742dc4aadbf4366f83d591fa6d08a9d8c935cca1b7d2bd30caaa939a5",
+      "matches_baseline": true,
+      "prototype_present": false
+    },
+    {
+      "path": "sitemap.txt",
+      "sha256": "7b1c61c395538e061d44a5b49a155532f01e9f6fedbf671be93e9568d9de3f59",
+      "matches_baseline": true,
+      "prototype_present": false
+    },
+    {
+      "path": "assets/data/search-index.json",
+      "sha256": "3a0dd8c653ccca4a915c507e0aeb9b9d00ba4dd98340502352fffd898266e5ca",
+      "matches_baseline": true,
+      "prototype_present": false
+    },
+    {
+      "path": "assets/data/lo-nuevo.json",
+      "sha256": "62440d9c2a9f0f57c09f48ef80f614c1b96e16a47a7460de41c6c6fe98984c79",
+      "matches_baseline": true,
+      "prototype_present": false
+    },
+    {
+      "path": "assets/data/newsletter-publications.json",
+      "sha256": "efb7fed363ccb10445a359ea2ee085fd691cd6fef91c3e220b9e7ca1b01435a1",
+      "matches_baseline": true,
+      "prototype_present": false
+    },
+    {
+      "path": "assets/data/newsletter-editions.json",
+      "sha256": "5416912a47f2404c2be6342947c11a067089a033f1854d6cae071164f45f4c10",
+      "matches_baseline": true,
+      "prototype_present": false
+    },
+    {
+      "path": "assets/data/newsletter-config.json",
+      "sha256": "8cfcbb6ce13b326a31a2bb2c8d7d8fbbde16a865eb7adf81550323f92784c8eb",
+      "matches_baseline": true,
+      "prototype_present": false
+    }
+  ],
+  "unresolved_public_references": [],
+  "full_normalizer_rerun": false,
+  "feeds_regenerated": false,
+  "local_only": true,
+  "publication_performed": false,
+  "status": "isolated prototype integrated; complete public validators passed",
+  "candidate_directory": "candidate",
+  "baseline_directory": "canonical-baseline",
+  "script_checksums": {
+    "build_public_local.py": "8770d9faf5ced12a5c48d346b2891d02bf5212479df6b3cbb8f69986983f68b6",
+    "test_build_public_local.py": "5c4299bdf5681d35be09afbc7d0c06a4e1deed0a2b1895cd655b1b3ada48c14e",
+    "README.md": "db51bbb6c7ad3ae7f991a066a1c9767b4f386864fbbb874cefda01acd323d25a",
+    "evidence/base-checksums.json": "92ff6191caf04b7698c33a795ba376f831dc75effe57ecab5a900eb6639aaa63",
+    "evidence/canonical-baseline-checksums.json": "72af1fe22fbde414792cc42e4b16e2c21277e29b30ec5306bb6d8cfe6ffcba5c",
+    "evidence/integrated-candidate-checksums.json": "6d29ef69886d188d0e5f5599aa94a1e669bd5899a56fa57ae6019c8f72f22ee5",
+    "evidence/prototype-input-checksums.json": "44f06a549d16fb9c76177fba4d33a9369d66176d2839fc989d724bd34810bc3b"
+  },
+  "reproducibility_check": {
+    "helper_sha256": "8770d9faf5ced12a5c48d346b2891d02bf5212479df6b3cbb8f69986983f68b6",
+    "completed_at": "2026-10-09T02:41:51.694121+00:00",
+    "baseline_byte_identical": true,
+    "canonical_build_steps_passed": 19,
+    "integration_steps_passed": 6,
+    "candidate_differences_from_first_integration": [
+      "assets/mapa-territorial/app.mjs",
+      "assets/mapa-territorial/data/audit.json",
+      "assets/mapa-territorial/data/manifest.json"
+    ],
+    "reason": "Prototype source changed after initial integration; original candidate was left untouched for browser review",
+    "original_candidate": "candidate",
+    "reproduction_candidate": "repro-check/candidate"
+  }
+}

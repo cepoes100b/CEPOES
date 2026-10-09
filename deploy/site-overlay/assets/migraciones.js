@@ -63,11 +63,11 @@ document.addEventListener('DOMContentLoaded', async()=>{try{
   series.forEach(([name,vals,color])=>{svg.append('path').datum(vals).attr('fill','none').attr('stroke',color).attr('stroke-width',4).attr('d',line);svg.selectAll('.p-'+name.replace(/\W/g,'')).data(vals).enter().append('circle').attr('cx',(d,i)=>x(H.years[i])).attr('cy',d=>y(d)).attr('r',4.5).attr('fill',color);});
   document.getElementById('mig-history-legend').innerHTML=series.map(([n,v,c])=>`<span><i style="background:${c}"></i><b>${n}</b><small>${pct(v[v.length-1])} en 2022</small></span>`).join('');
 
-  function compareBars(id,obj,labels){const el=document.getElementById(id), mx=Math.max(...Object.values(obj));el.innerHTML=Object.entries(obj).map(([k,v])=>`<div class="migration-compare-row"><div><span>${labels[k]||k}</span><strong>${pct(v)}</strong></div><div class="migration-compare-track"><i style="width:${v/mx*100}%"></i></div></div>`).join('')}
+  function compareBars(id,obj,labels,format=pct){const el=document.getElementById(id), mx=Math.max(...Object.values(obj));el.innerHTML=Object.entries(obj).map(([k,v])=>`<div class="migration-compare-row"><div><span>${labels[k]||k}</span><strong>${format(v)}</strong></div><div class="migration-compare-track"><i style="width:${v/mx*100}%"></i></div></div>`).join('')}
   const act=D.socioeconomic.activity, sch=D.socioeconomic.schooling, pov=D.socioeconomic.poverty_multidimensional;
   set('mig-activity-year',`Actividad · ${act.year}`);set('mig-schooling-year',`Educación · ${sch.year}`);set('mig-poverty-year',`Pobreza multidimensional · ${pov.year}`);
   compareBars('mig-activity-bars',act.values,{total:'Total CABA',caba:'Nacidos en CABA',resto_pais:'Resto del país',exterior:'Nacidos en el exterior'});
-  compareBars('mig-schooling-bars',sch.values,{total:'Total CABA',caba:'Nacidos en CABA',resto_pais:'Resto del país',exterior:'Nacidos en el exterior'});
+  compareBars('mig-schooling-bars',sch.values,{total:'Total CABA',caba:'Nacidos en CABA',resto_pais:'Resto del país',exterior:'Nacidos en el exterior'},v=>n1.format(v)+' años');
   compareBars('mig-poverty-bars',pov.values,{total:'Total CABA',caba:'Nacidos en CABA',prov_ba:'Provincia de Buenos Aires',otra_provincia:'Otra provincia',pais_limitrofe:'País limítrofe',otro_pais:'Otro país'});
   const updated=D.updated_at?new Date(D.updated_at):null; set('mig-refresh-status',`Actualización automática activa · último conjunto validado: ${updated&&!Number.isNaN(updated)?updated.toLocaleString('es-AR',{dateStyle:'medium',timeStyle:'short'}):D.generated||'s/d'}.`);
 }catch(e){console.warn('Migraciones:',e);const s=document.getElementById('migration-map-status');if(s)s.textContent='No se pudieron cargar los datos de migraciones. Probá nuevamente más tarde.'}});

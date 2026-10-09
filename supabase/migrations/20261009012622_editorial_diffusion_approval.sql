@@ -13,8 +13,8 @@ alter table public.newsletter_editorial_publications enable row level security;
 revoke all on public.newsletter_editorial_publications from public,anon,authenticated;
 grant all on public.newsletter_editorial_publications to service_role;
 insert into public.newsletter_editorial_publications(publication_key,state,catalog_payload,diffused_at)
-select p.publication_key,case when exists(select 1 from public.newsletter_deliveries d where d.publication_key=p.publication_key and d.state='accepted') then 'diffused' else 'published' end,p.payload,
- (select max(d.accepted_at) from public.newsletter_deliveries d where d.publication_key=p.publication_key)
+select p.publication_key,case when exists(select 1 from public.newsletter_deliveries d left join public.newsletter_editions e on e.edition=d.edition where (d.publication_key=p.publication_key or e.url=p.publication_key) and d.state='accepted') then 'diffused' else 'published' end,p.payload,
+ (select max(d.accepted_at) from public.newsletter_deliveries d left join public.newsletter_editions e on e.edition=d.edition where d.publication_key=p.publication_key or e.url=p.publication_key)
 from public.newsletter_publications p;
 -- Preserve prior history and uncertain deliveries; do not automatically resume them.
 update public.newsletter_deliveries set state='review',lease_token=null,lease_until=null where state in ('pending','sending');

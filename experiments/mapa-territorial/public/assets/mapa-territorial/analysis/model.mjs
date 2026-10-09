@@ -1,7 +1,7 @@
 // Analytical scales operate on rates, never on polygon area or decorative pedestals.
 export const MAX_HEIGHT=3200;
 export const MISSING_COLOR='#929da5';
-export const COLORS=['#e0f1ef','#99d1cb','#4ba9a6','#197e85','#0e526b'];
+export const COLORS=['#153b46','#166275','#1d8493','#42b6b6','#99ded7'];
 const finite=value=>typeof value==='number'&&Number.isFinite(value);
 const text=value=>typeof value==='string'&&value.trim().length>0;
 export function validateAnalysis(data){

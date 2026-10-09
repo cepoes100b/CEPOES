@@ -1,9 +1,9 @@
 {
-  "updated_at": "2026-08-27",
+  "updated_at": "2026-10-09",
   "title": "Acceso a la analgesia obstétrica en CABA",
   "expediente": "832/2026",
   "author": "Claudia Negri",
-  "status": "sancionada",
+  "status": "promulgada_publicada",
   "vote": {
     "affirmative": 57,
     "negative": 0,
@@ -11,11 +11,12 @@
     "note": "Resultado informado para la sanción del 27/08/2026. CEPOES actualizará la ficha cuando el registro oficial de votación quede disponible en la fuente parlamentaria."
   },
   "law_requirements": {
-    "availability": "24 horas / 365 días",
-    "entry_into_force": "30 días desde la promulgación",
-    "regulation": "90 días desde la promulgación",
-    "implementation": "Progresiva, con cronograma, metas y prioridades definidos por la reglamentación",
-    "public_budget": "Las partidas deben preverse en las leyes anuales de presupuesto"
+    "availability": "Recursos materiales y humanos en establecimientos públicos y de gestión mixta, conforme las condiciones y alcances de la reglamentación (art. 2)",
+    "entry_into_force": "30 días desde la publicación en el Boletín Oficial (art. 6)",
+    "regulation": "90 días desde la publicación en el Boletín Oficial (art. 7)",
+    "implementation": "Progresiva, con cronograma, metas y prioridades a establecer por reglamentación (art. 3)",
+    "public_budget": "Costos del subsector público a cargo del presupuesto de la Ciudad; partidas previstas en las leyes anuales de presupuesto (art. 4)",
+    "social_security_and_private_insurers": "Invitación a obras sociales, asociaciones de obras sociales y entidades de medicina prepaga a adherir (art. 8)"
   },
   "context": {
     "public_maternities": 12,
@@ -45,14 +46,14 @@
     {
       "id": "promulgacion",
       "label": "Promulgación y publicación oficial",
-      "status": "pendiente",
-      "value": "Pendiente de verificación oficial"
+      "status": "cumplido",
+      "value": "Ley 6.976: promulgación automática 22/09/2026; publicación 05/10/2026"
     },
     {
       "id": "reglamentacion",
       "label": "Reglamentación dentro del plazo legal",
       "status": "pendiente",
-      "value": "El plazo comienza con la promulgación"
+      "value": "Pendiente de verificación; plazo de 90 días desde la publicación (art. 7)"
     },
     {
       "id": "cronograma",
@@ -73,8 +74,8 @@
       "value": "A relevar hospital por hospital"
     },
     {
-      "id": "cobertura247",
-      "label": "Peridural disponible 24/7",
+      "id": "disponibilidad_efectiva",
+      "label": "Disponibilidad efectiva de analgesia",
       "status": "relevar",
       "value": "A relevar hospital por hospital"
     },
@@ -107,9 +108,14 @@
   ],
   "sources": [
     {
-      "name": "Proyecto de ley — Legislatura CABA",
+      "name": "Ley 6.976 — Boletín Oficial de la Ciudad de Buenos Aires",
+      "url": "https://boletinoficial.buenosaires.gob.ar/normativaba/norma/880789",
+      "supports": "Texto publicado y certificación de promulgación automática; recursos (art. 2), implementación (art. 3), financiamiento público (art. 4), vigencia (art. 6), reglamentación (art. 7) y adhesión (art. 8)"
+    },
+    {
+      "name": "Proyecto original — antecedente legislativo",
       "url": "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=222537",
-      "supports": "derecho, disponibilidad 24/365, implementación progresiva, presupuesto, vigencia y reglamentación"
+      "supports": "Antecedente separado: las formulaciones 24 × 365 y cobertura privada obligatoria sin adicionales no figuran en la Ley 6.976 publicada"
     },
     {
       "name": "Comisión de Salud — Legislatura CABA, 16/07/2026",
@@ -132,9 +138,17 @@
       "supports": "universo georreferenciado de maternidades públicas"
     }
   ],
-  "last_checked_at": "2026-09-28",
+  "last_checked_at": "2026-10-09",
   "last_check": {
-    "result": "sin_novedad_oficial_localizada",
-    "note": "En la revisión del 28/09/2026 no se localizó en las fuentes oficiales relevadas una fecha de promulgación o reglamentación posterior a la sanción del 27/08/2026. Se conserva el estado jurídico publicado hasta contar con una fuente oficial que lo modifique."
+    "result": "promulgacion_y_publicacion_verificadas",
+    "note": "Verificada la Ley 6.976 publicada el 05/10/2026 y promulgada automáticamente el 22/09/2026. Reglamentación pendiente de verificación. Esta actualización no acredita implementación efectiva."
+  },
+  "law": {
+    "number": "6.976",
+    "sanctioned_at": "2026-08-27",
+    "promulgated_at": "2026-09-22",
+    "promulgation_type": "automática",
+    "published_at": "2026-10-05",
+    "source": "https://boletinoficial.buenosaires.gob.ar/normativaba/norma/880789"
   }
 }

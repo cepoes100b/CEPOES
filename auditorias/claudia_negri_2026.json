@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-10-09T00:50:56.349694+00:00",
+  "generado_en": "2026-10-09T19:11:50.191470+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,9 +10,9 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-03-01",
-    "fecha_mas_reciente_obtenida": "2026-10-08",
-    "ids_del_anio_en_ventana": 3237,
-    "ids_revisados_acumulados": 3237,
+    "fecha_mas_reciente_obtenida": "2026-10-09",
+    "ids_del_anio_en_ventana": 3258,
+    "ids_revisados_acumulados": 3258,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -31,16 +31,16 @@
   },
   "por_estado_actual": {
     "en_comision": 127,
-    "archivado": 84,
-    "sancionado": 17,
+    "archivado": 85,
+    "sancionado": 16,
     "despacho": 4,
     "con_dictamen": 3,
     "ingresado": 2
   },
   "por_etapa_ciclo": {
     "en_comision": 129,
-    "archivado": 84,
-    "sancionado": 17,
+    "archivado": 85,
+    "sancionado": 16,
     "con_dictamen": 7
   },
   "control_832_2026": {
@@ -1071,7 +1071,6 @@
       "fuentes_sancion": [],
       "fuentes_captura": [
         "agenda",
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,
@@ -4264,9 +4263,9 @@
         "OBRAS Y SERVICIOS PÚBLICOS"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-04",
+        "fecha": "2026-10-09",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -4354,9 +4353,9 @@
         "OBRAS Y SERVICIOS PÚBLICOS"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-04",
+        "fecha": "2026-10-09",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -4698,9 +4697,9 @@
         "OBRAS Y SERVICIOS PÚBLICOS"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-04",
+        "fecha": "2026-10-09",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -5193,9 +5192,9 @@
         "VIVIENDA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-04",
+        "fecha": "2026-10-09",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -5986,9 +5985,9 @@
         "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-04",
+        "fecha": "2026-10-09",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -7663,9 +7662,9 @@
         "EDUCACIÓN, CIENCIA Y TECNOLOGÍA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-07-29",
+        "fecha": "2026-10-09",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -7922,21 +7921,19 @@
       ],
       "cantidad_autores": 7,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "sancionado",
-      "etapa_ciclo": "sancionado",
-      "ubicacion": "MEP",
+      "estado_actual": "archivado",
+      "etapa_ciclo": "archivado",
+      "ubicacion": "ARCHIVO",
       "giros": [
         "AMBIENTE"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-02",
-        "oficina": "MEP",
-        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES (ESPERANDO RECEPCION)"
+        "fecha": "2026-10-09",
+        "oficina": "ARCHIVO",
+        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
-        "estado_actual",
-        "etapa_ciclo",
         "ficha_oficial.hitos.tuvo_sancion",
         "ficha_oficial.sanciones"
       ],
@@ -7977,9 +7974,9 @@
         "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-07-29",
+        "fecha": "2026-10-09",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
@@ -10095,9 +10092,9 @@
         "PERSONAS MAYORES"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-04",
+        "fecha": "2026-10-09",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [

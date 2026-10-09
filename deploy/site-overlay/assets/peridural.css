@@ -42,3 +42,10 @@
 .monitor-note{padding:18px 20px;border-radius:14px;background:#f8f5ef;color:#63502b;line-height:1.55}.monitor-warning{margin:18px 0;padding:12px 15px;border:1px solid #eccd89;border-radius:12px;background:#fff9e9}
 @media(max-width:850px){.peri-hero-grid,.peri-data-block,.peri-monitor-cta,.monitor-two{grid-template-columns:1fr}.peri-vote{max-width:340px}.peri-facts,.monitor-grid{grid-template-columns:repeat(2,1fr)}.peri-monitor-cta .btn{justify-self:start}}
 @media(max-width:560px){.peri-hero{padding-top:42px}.peri-facts,.monitor-grid{grid-template-columns:1fr}.peri-article{padding-top:30px}.peri-data-block{padding:20px}.monitor-table{font-size:.88rem}.monitor-table th,.monitor-table td{padding:12px 8px}.monitor-table th{width:auto}}
+/* Tema oscuro limitado al monitor y la nota de analgesia. */
+[data-theme="dark"] :is(.peri-hero,.peri-article,.monitor-hero,.monitor-wrap){--peri-ink:var(--tinta);--peri-muted:var(--tinta2);--peri-line:var(--borde);--peri-soft:var(--papel2);--peri-accent:var(--marca);--peri-accent-soft:var(--papel2)}
+[data-theme="dark"] :is(.peri-hero,.monitor-hero){background:var(--papel2)}
+[data-theme="dark"] :is(.peri-vote,.peri-fact){background:var(--panel)}
+[data-theme="dark"] :is(.peri-deck,.peri-vote p,.peri-lead,.peri-article section>p,.peri-fact span,.peri-big-number span,.monitor-deck,.monitor-kpi span){color:var(--tinta2)}
+[data-theme="dark"] .peri-monitor-cta{background:var(--panel)}
+[data-theme="dark"] .peri-monitor-cta .btn{background:var(--tinta);color:var(--papel)}

@@ -2,7 +2,7 @@
 
 ## Alcance
 
-Ruta propuesta: `/salud/octubre-rosa/`. Especial de servicio e información sanitaria, con agenda y análisis de acceso. No se presenta como informe completo con PDF. Accesos desde home (después del bloque editorial, conserva las tres tarjetas), Observatorio, buscador y sitemaps. Lo nuevo incorpora la sección Salud y el tipo Especial.
+Ruta propuesta: `/salud/octubre-rosa/`. Especial de servicio e información sanitaria, con agenda y análisis de acceso. No se presenta como informe completo con PDF. Accesos desde home durante octubre de 2026 (después del bloque editorial, conserva las tres tarjetas; se oculta desde el 1/11 con fecha de Buenos Aires, también sin un nuevo despliegue), Observatorio, buscador y sitemaps. Lo nuevo incorpora la sección Salud y el tipo Especial.
 
 ## Contenido y fuentes consultadas el 09/10/2026
 
@@ -28,11 +28,11 @@ La clasificación de jornadas usa fecha de Buenos Aires en el navegador. No impl
 ## Validación previa
 
 - `node --check deploy/site-overlay/assets/octubre-rosa.js`: correcto.
-- `python -m unittest test_octubre_rosa test_lo_nuevo test_home_editorial -q`: 16 pruebas aprobadas.
+- `python -m unittest test_octubre_rosa test_lo_nuevo test_home_editorial -q`: 17 pruebas aprobadas.
 - `python -m py_compile deploy/preparar_sitio_publico.py generar_lo_nuevo.py`: correcto.
 - Revisión supervisada con sites-preview y cua_repl: escritorio 1363 px, claro/oscuro; vista móvil en iframe 390 y 320 px, claro/oscuro. Sin desbordamiento horizontal. No equivale a prueba Safari/iPhone.
 - Filtro sin turno: Penna y Durand; finalizadas: jornada Durand del 2/10; Villa Devoto: un resultado y requisitos de inscripción visibles. Acceso desde home navega al especial. Gráficos revisados visualmente.
 - Contraste de textos de contenido en claro: mínimo 5,38:1. Contraste en oscuro: mínimo 7,06:1.
 - Buscador generado con la nueva entrada. Integración Lo nuevo y preservación de tres tarjetas cubiertas por pruebas.
 
-Estado: propuesta; no fusionada ni desplegada. Difusión por correo requiere orden independiente conforme AGENTS.md; esta pieza no queda aprobada para difusión por prepararla o publicarla.
+Fusión y publicación autorizadas por Agustín el 09/10/2026; acceso adicional a home durante octubre. Difusión por correo requiere orden independiente conforme AGENTS.md; esta pieza no queda aprobada para difusión por prepararla o publicarla.

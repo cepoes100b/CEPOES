@@ -12,6 +12,7 @@ import shutil
 import unicodedata
 from datetime import datetime, timedelta
 from functools import lru_cache
+from zoneinfo import ZoneInfo
 from pathlib import Path
 
 
@@ -240,7 +241,7 @@ def inject_budget_2027_bridge(source: str, rel: str) -> str:
     return re.sub(r'(<main\b[^>]*>)', lambda match: match[0] + bridge, source, count=1, flags=re.I)
 
 
-def inject_octubre_rosa_bridge(source: str, rel: str) -> str:
+def inject_octubre_rosa_bridge(source: str, rel: str, today: str | None = None) -> str:
     """Acceso al especial sin reemplazar publicaciones destacadas."""
     if rel not in {"/index.html", "/observatorio/index.html"}:
         return source
@@ -258,6 +259,11 @@ def inject_octubre_rosa_bridge(source: str, rel: str) -> str:
     )
     source = re.sub(r'<aside\b[^>]*id=["\']octubre-rosa-bridge["\'][^>]*>.*?</aside>', '', source, flags=re.S)
     if rel == "/index.html":
+        today = today or datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).date().isoformat()
+        if not today.startswith("2026-10-"):
+            bridge = bridge.replace('id="octubre-rosa-bridge"', 'id="octubre-rosa-bridge" hidden', 1)
+        if '/assets/octubre-rosa-home.js' not in source:
+            source = source.replace('</head>', '<script defer src="/assets/octubre-rosa-home.js"></script></head>', 1)
         # The existing editorial hero keeps all three cards and controls.
         source, count = re.subn(r'(<header\b[^>]*class=["\'][^"\']*home-publications-hero[^"\']*["\'][^>]*>.*?</header>)',
                                lambda match: match[0] + bridge, source, count=1, flags=re.S)

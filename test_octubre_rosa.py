@@ -17,12 +17,17 @@ class OctubreRosaTest(unittest.TestCase):
   self.assertFalse(next(c for c in d['campaigns'] if c['id']=='zubizarreta')['walkin'])
  def test_bridge_preserves_editorial_and_is_idempotent(self):
   original='<body><header class="hero home-publications-hero">'+''.join('<article>Tarjeta '+str(i)+'</article>' for i in range(3))+'</header><main>Presupuesto</main><footer class="footer"></footer></body>'
-  once=inject_octubre_rosa_bridge(original,'/index.html')
-  self.assertEqual(once,inject_octubre_rosa_bridge(once,'/index.html'))
+  once=inject_octubre_rosa_bridge(original,'/index.html',today='2026-10-09')
+  self.assertEqual(once,inject_octubre_rosa_bridge(once,'/index.html',today='2026-10-09'))
   self.assertEqual(once.count('<article>'),3)
   self.assertIn('Presupuesto',once)
   self.assertEqual(once.count('id="octubre-rosa-bridge"'),1)
   self.assertEqual(original,inject_octubre_rosa_bridge(original,'/presupuesto/2027/index.html'))
+ def test_home_campaign_is_seasonal(self):
+  source='<html><head></head><body><header class="home-publications-hero">Tres notas</header><footer class="footer"></footer></body></html>'
+  for date in ['2026-09-30','2026-11-01','2027-10-09']:
+   self.assertIn('id="octubre-rosa-bridge" hidden',inject_octubre_rosa_bridge(source,'/index.html',today=date))
+  self.assertNotIn('id="octubre-rosa-bridge" hidden',inject_octubre_rosa_bridge(source,'/index.html',today='2026-10-31'))
  def test_special_enters_news_once_with_declared_date(self):
   with tempfile.TemporaryDirectory() as t:
    site=Path(t)/'site';old=Path(t)/'old';(site/'lo-nuevo').mkdir(parents=True);(site/'salud/octubre-rosa').mkdir(parents=True)

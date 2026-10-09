@@ -240,6 +240,34 @@ def inject_budget_2027_bridge(source: str, rel: str) -> str:
     return re.sub(r'(<main\b[^>]*>)', lambda match: match[0] + bridge, source, count=1, flags=re.I)
 
 
+def inject_octubre_rosa_bridge(source: str, rel: str) -> str:
+    """Acceso al especial sin reemplazar publicaciones destacadas."""
+    if rel not in {"/index.html", "/observatorio/index.html"}:
+        return source
+    bridge = (
+        '<aside id="octubre-rosa-bridge" class="wrap" style="padding-top:24px;padding-bottom:24px">'
+        '<div style="padding:24px;border:1px solid var(--borde);border-left:5px solid #a51e5a;'
+        'border-radius:8px;background:var(--papel2)">'
+        '<span style="font-size:14px;font-weight:700;color:var(--tinta)">OCTUBRE ROSA · 2026</span>'
+        '<h2 style="font-size:26px;line-height:1.3;margin:10px 0;color:var(--tinta)">'
+        'Prevención del cáncer de mama, desde los barrios</h2>'
+        '<p style="margin:10px 0;color:var(--tinta)">Campañas por barrio, fechas y horarios, '
+        'señales de alarma y datos para cuidar tu salud.</p>'
+        '<a href="/salud/octubre-rosa/" style="color:var(--marca-osc);font-weight:700;'
+        'text-decoration:underline">Consultar el especial y la agenda</a></div></aside>'
+    )
+    source = re.sub(r'<aside\b[^>]*id=["\']octubre-rosa-bridge["\'][^>]*>.*?</aside>', '', source, flags=re.S)
+    if rel == "/index.html":
+        # The existing editorial hero keeps all three cards and controls.
+        source, count = re.subn(r'(<header\b[^>]*class=["\'][^"\']*home-publications-hero[^"\']*["\'][^>]*>.*?</header>)',
+                               lambda match: match[0] + bridge, source, count=1, flags=re.S)
+        if count:
+            return source
+    if '</main>' in source:
+        return source.replace('</main>', bridge + '</main>', 1)
+    return source.replace('<footer class="footer">', bridge + '<footer class="footer">', 1)
+
+
 def editorial_subnav(active: str) -> str:
     items = [
         ("publicaciones", "/publicaciones/", "Publicaciones"),
@@ -911,6 +939,7 @@ def normalize_html(path: Path, site: Path) -> None:
         return
     source = path.read_text(encoding="utf-8")
     source = inject_budget_2027_bridge(source, rel)
+    source = inject_octubre_rosa_bridge(source, rel)
     source = ensure_site_fonts(source)
     if rel.startswith("/publicaciones/boletines/"):
         source = compact_newsletter_hero(source)
@@ -1043,5 +1072,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 

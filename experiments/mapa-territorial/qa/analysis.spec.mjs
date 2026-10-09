@@ -5,14 +5,15 @@ import {mkdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
 const OUTPUT=process.env.QA_OUTPUT||path.resolve('qa-output'),BASE='http://127.0.0.1:4173',ROUTE='/laboratorio/mapa-territorial/';
 const ANALYZE=ROUTE+'?modo=analizar&vista=3d&escala=comuna&indicador=sin-cobertura-salud';
+const capture=async(page,selector,name)=>{await page.evaluate(()=>scrollTo(0,0));await page.mouse.move(0,0);await page.waitForTimeout(100);const clip=await page.locator(selector).boundingBox();await page.screenshot({path:path.join(OUTPUT,name+'.jpg'),clip,type:'jpeg',quality:60,animations:'disabled'});};
 const save=(name,report)=>writeFile(path.join(OUTPUT,name+'.json'),JSON.stringify(report,null,2));
 const ready=page=>page.waitForFunction(()=>window.__CEPOES_MAP_QA?.map==='ready'&&window.__CEPOES_MAP_QA?.analysis?.status==='ready'&&window.__CEPOES_MAP_QA?.analysis?.animation==='idle'&&window.__CEPOES_MAP_QA?.analysis?.rendered===true,null,{timeout:30000});
 async function proof(page){
  const webgl=await page.locator('#mt-map canvas').evaluate(canvas=>{const gl=canvas.getContext('webgl2');if(!gl)throw new Error('WebGL2 unavailable');const ext=gl.getExtension('WEBGL_debug_renderer_info');return {version:gl.getParameter(gl.VERSION),renderer:ext?gl.getParameter(ext.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER),lost:gl.isContextLost(),width:canvas.width,height:canvas.height};});
- const png=PNG.sync.read(await page.locator('#mt-map canvas').screenshot()),colors=new Set();for(let y=15;y<png.height-15;y+=5)for(let x=15;x<png.width-15;x+=5){const i=(y*png.width+x)*4;colors.add(`${png.data[i]},${png.data[i+1]},${png.data[i+2]}`);}
- expect(webgl.lost).toBe(false);expect(colors.size).toBeGreaterThan(20);
- const analysis=await page.evaluate(()=>window.__CEPOES_MAP_QA.analysis);expect(analysis.renderProof.layerType).toBe('fill-extrusion');expect(analysis.renderProof.visible).toBe('visible');expect(analysis.renderProof.pitch).toBeGreaterThan(40);expect(analysis.renderProof.renderedIds.length).toBeGreaterThan(5);expect(analysis.renderProof.heights.every(r=>r.ratio>0&&r.ratio<1)).toBe(true);
- return {...webgl,sampledColors:colors.size,analysis,note:'Actual Chromium WebGL2 via ANGLE/SwiftShader; software rendering, not physical GPU performance.'};
+ const png=PNG.sync.read(await page.locator('#mt-map canvas').screenshot()),colors=new Set();let colored=0;for(let y=15;y<png.height-15;y+=5)for(let x=15;x<png.width-15;x+=5){const i=(y*png.width+x)*4;colors.add(`${png.data[i]},${png.data[i+1]},${png.data[i+2]}`);if(png.data[i+1]-png.data[i]>18&&png.data[i+2]-png.data[i]>10)colored++;}
+ expect(webgl.lost).toBe(false);expect(colors.size).toBeGreaterThan(20);expect(colored,'Analytical features must render the turquoise ramp, not all missing-data gray').toBeGreaterThan(25);
+ const analysis=await page.evaluate(()=>window.__CEPOES_MAP_QA.analysis);expect(analysis.renderProof.layerType).toBe('fill-extrusion');expect(analysis.renderProof.visible).toBe('visible');expect(analysis.renderProof.pitch).toBeGreaterThan(40);expect(analysis.renderProof.renderedIds.length).toBeGreaterThan(5);expect(analysis.renderProof.featureStates.every(f=>f.id===f.propertyId&&f.state.available===true&&f.state.ratio>0)).toBe(true);expect(analysis.renderProof.heights.every(r=>r.ratio>0&&r.ratio<1)).toBe(true);
+ return {...webgl,sampledColors:colors.size,turquoiseSamples:colored,analysis,note:'Actual Chromium WebGL2 via ANGLE/SwiftShader; software rendering, not physical GPU performance.'};
 }
 test.beforeAll(async()=>mkdir(OUTPUT,{recursive:true}));
 for(const width of [320,390,430,1440])for(const theme of ['light','dark']){
@@ -32,9 +33,9 @@ for(const width of [320,390,430,1440])for(const theme of ['light','dark']){
    const value=await page.locator('#mt-metrics .mt-metric-main strong').textContent();report.selectedValue=value;
    await expect(page.locator('#mt-analysis-table tr').filter({has:page.locator('[data-territory="comuna:8"]')})).toContainText(value);
    const three=await page.locator('#mt-map canvas').screenshot();
-   await page.locator('.mt-workspace').screenshot({path:path.join(OUTPUT,name+'-3d.jpg'),type:'jpeg',quality:60,animations:'disabled'});
+   await capture(page,'.mt-workspace',name+'-3d');
    await page.locator('[data-view="flat"]').click();await page.emulateMedia({reducedMotion:'reduce'});await ready(page);expect(await page.evaluate(()=>window.__CEPOES_MAP_QA.analysis.renderProof.pitch)).toBe(0);await page.emulateMedia({reducedMotion:'no-preference'});await expect(page.locator('#mt-metrics .mt-metric-main strong')).toHaveText(value);const flat=await page.locator('#mt-map canvas').screenshot();expect(three.equals(flat),'3D and flat must genuinely render different pixels').toBe(false);
-   await page.locator('.mt-map-section').screenshot({path:path.join(OUTPUT,name+'-flat.jpg'),type:'jpeg',quality:60,animations:'disabled'});
+   await capture(page,'.mt-map-section',name+'-flat');
    await page.locator('[data-view="3d"]').click();await ready(page);await page.locator('#mt-analysis-orbit').click();await expect(page.locator('#mt-analysis-orbit')).toHaveAttribute('aria-pressed','true');await page.locator('#mt-map canvas').focus();await page.keyboard.press('ArrowRight');await expect(page.locator('#mt-analysis-orbit')).toHaveAttribute('aria-pressed','false');
    await page.emulateMedia({reducedMotion:'reduce'});await expect(page.locator('#mt-analysis-orbit')).toBeDisabled();await expect(page.locator('#mt-analysis-animation')).toContainText('Movimiento reducido');
    await page.locator('#mt-level').selectOption('barrio');await expect(page.locator('#mt-analysis-coverage')).toContainText('Sin datos para barrios');await expect(page.locator('#mt-metrics .mt-metric-main strong')).toHaveText('s/d');await expect(page.locator('[data-view="3d"]')).toBeDisabled();

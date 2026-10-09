@@ -17,7 +17,7 @@ test('map adapter: local-only style, clusters, safe filters, fallback and teardo
   const features=[{properties:{id:'barrio:test',level:'barrio',name:'Test',area_km2:2},geometry:{type:'Polygon',coordinates:[[[-58.4,-34.6],[-58.5,-34.6],[-58.4,-34.7],[-58.4,-34.6]]]}}];
   let status;const m=new TerritorialMap(fakeGL,{container:'map',territories:features,onTerritory(){},onRecord(){},onReady(){},onFailure(){},onBaseStatus:(s,b)=>{status={s,b};}});
   assert.deepEqual(m.map.options.style.sources,{});assert.equal(m.map.options.cooperativeGestures,true);assert.equal(m.map.options.renderWorldCopies,false);
-  m.addLayers();assert.equal(m.map.getSource('services').cluster,true);
+  m.addLayers();assert.equal(m.map.getSource('services').cluster,true);assert.equal(m.map.getSource('comuna').promoteId,'id','string territorial IDs must survive vector tiling for feature-state');
   const point={properties:{id:'p1'},geometry:{type:'Point',coordinates:[-58.4,-34.6]}};
   const bad={properties:{id:'p2',position_territory_warning:true},geometry:point.geometry};
   m.update({level:'barrio',territory:'barrio:test',records:[point,bad],stats:{rows:new Map([['barrio:test',{rate:3}]])}});

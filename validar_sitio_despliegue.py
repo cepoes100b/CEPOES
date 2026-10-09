@@ -4,6 +4,7 @@ import hashlib, json, re, sys
 from datetime import date
 from pathlib import Path
 import xml.etree.ElementTree as ET
+from generar_lo_nuevo import LABELS as NOVEDAD_TYPES
 
 root=Path(sys.argv[1] if len(sys.argv)>1 else '_site').resolve()
 assert root.is_dir(), root
@@ -307,7 +308,7 @@ for entry in new_entries:
     assert (root/route.strip('/')/'index.html').is_file(), f'Novedad sin página pública: {route}'
     assert f'href="{route}"' in new_page, f'Novedad no representada: {route}'
     assert re.fullmatch(r'\d{4}-\d{2}-\d{2}',entry['date']), f'Fecha de novedad inválida: {route}'
-    assert entry['type'] in {'boletin','informe','analisis','prensa','balance','herramienta','datos'}, f'Tipo de novedad inválido: {route}'
+    assert entry['type'] in NOVEDAD_TYPES, f'Tipo de novedad inválido: {route}'
 assert 'Se actualiza automáticamente con cada publicación del sitio' in new_page, 'Lo nuevo debe explicar su actualización automática'
 balance=(root/'balance'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Balance de gestión 2007–2026','Decisiones públicas','Impacto territorial','Capacidad estatal','Vivienda y alquiler','Salud pública','Presupuesto y modelo de gestión']:

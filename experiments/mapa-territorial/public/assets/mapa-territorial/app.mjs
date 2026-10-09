@@ -28,6 +28,14 @@ async function json(relative){
 }
 function modeChrome(){
   const analytical=state.mode==='analyze';$('mt-explorer').dataset.mode=state.mode;
+  // One information dock in Analyze, original columns preserved in Explore.
+  const workspace=document.querySelector('.mt-workspace'),panel=$('mt-analysis-controls'),dossier=document.querySelector('.mt-dossier');
+  if(analytical&&dossier.parentElement!==panel)panel.appendChild(dossier);
+  if(!analytical&&dossier.parentElement!==workspace)workspace.appendChild(dossier);
+  document.querySelector('.mt-advanced-controls').open=!analytical;
+  $('mt-explorer').classList.remove('mt-sheet-expanded');
+  $('mt-sheet-toggle').setAttribute('aria-expanded','false');
+  document.querySelector('.mt-sheet-label').textContent='Ampliar panel';
   document.querySelectorAll('#mt-mode-controls [data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===state.mode)));
   for(const id of ['mt-analysis-controls','mt-analysis-ranking','mt-analysis-data'])$(id).hidden=!analytical;
   for(const id of ['mt-records','mt-accessible','mt-method'])$(id).hidden=analytical;
@@ -201,7 +209,13 @@ async function initialize(){
   }catch(error){qa.status='initial-error';showError(`No se pudo iniciar el explorador: ${error.message}. Volvé a intentar.`);$('mt-map-loading').textContent='Cartografía no disponible. No se muestran territorios parciales.';status('No se pudo comprobar la cobertura 48 barrios / 15 comunas.');}
   finally{initializing=false;}
 }
-$('mt-mode-controls').addEventListener('click',e=>{const button=e.target.closest('[data-mode]');if(!button||!manifest||button.dataset.mode===state.mode)return;if(button.dataset.mode==='analyze'){if(!state.territory)state.level='comuna';state.view='3d';}setMode(button.dataset.mode);});
+$('mt-mode-controls').addEventListener('click',e=>{const button=e.target.closest('[data-mode]');if(!button||!manifest||button.dataset.mode===state.mode)return;if(button.dataset.mode==='analyze'){if(!state.territory)state.level='comuna';state.view='3d';}setMode(button.dataset.mode,{fit:button.dataset.mode==='analyze'});});
+$('mt-sheet-toggle').addEventListener('click',()=>{
+  const expanded=$('mt-explorer').classList.toggle('mt-sheet-expanded');
+  $('mt-sheet-toggle').setAttribute('aria-expanded',String(expanded));
+  document.querySelector('.mt-sheet-label').textContent=expanded?'Mostrar más mapa':'Ampliar panel';
+  engine?.map.resize();
+});
 $('mt-search').addEventListener('input',renderSearch);
 $('mt-search').addEventListener('keydown',e=>{if(e.key==='Escape'){$('mt-search-results').hidden=true;}if(e.key==='ArrowDown'){e.preventDefault();$('mt-search-results').querySelector('button')?.focus();}});
 $('mt-search-form').addEventListener('submit',e=>{e.preventDefault();const matches=searchTerritories(territories,$('mt-search').value);if(matches.length===1){selectTerritory(featureID(matches[0]));$('mt-search-results').hidden=true;}else renderSearch();});

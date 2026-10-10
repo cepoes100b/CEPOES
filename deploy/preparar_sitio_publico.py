@@ -251,7 +251,7 @@ def inject_octubre_rosa_bridge(source: str, rel: str, today: str | None = None) 
         '<aside id="octubre-rosa-bridge" class="wrap or-home-banner">'
         '<div class="or-home-panel"><div class="or-home-copy">'
         '<span class="or-home-kicker">OCTUBRE ROSA · 2026</span>'
-        '<h2>Prevención del cáncer de mama, desde los barrios</h2>'
+        '<h2>Mes de prevención del cáncer de mama, desde los barrios</h2>'
         '<p>Campañas por barrio, fechas y horarios, señales de alarma y datos para cuidar tu salud.</p>'
         '<a href="/salud/octubre-rosa/">Consultar el especial y la agenda <span aria-hidden="true">→</span></a>'
         '</div><svg class="or-home-ribbon" aria-hidden="true" focusable="false" viewBox="0 0 100 140">'

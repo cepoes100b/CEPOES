@@ -203,7 +203,7 @@ def create_runtime_fixture(site: Path) -> None:
     pages = {
         "territorio/mapa-tematico/index.html": '<script src="/assets/thematic-map.js?v=258"></script>',
         "territorio/brechas/index.html": '<script src="/assets/brechas.js?v=258"></script>',
-        "territorio/migraciones/index.html": '<script src="/assets/migraciones.js?v=258"></script>',
+        "territorio/migraciones/index.html": '<script src="/assets/migraciones.js?v=20261009"></script>',
         "publicaciones/index.html": "Último boletín",
     }
     for relative, content in pages.items():

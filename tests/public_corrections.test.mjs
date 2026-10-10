@@ -98,3 +98,19 @@ print(json.dumps(rows))
     }
   }
 });
+
+test('deployment R1 accepts the real normalized migration page', () => {
+  execFileSync('python', ['-c', `
+import subprocess, tempfile
+from pathlib import Path
+from validar_pr_r2 import create_runtime_fixture
+from deploy.preparar_sitio_publico import normalize_html
+with tempfile.TemporaryDirectory() as directory:
+    site = Path(directory)
+    create_runtime_fixture(site)
+    page = site / 'territorio/migraciones/index.html'
+    page.write_text(Path('deploy/site-overlay/territorio/migraciones/index.html').read_text())
+    normalize_html(page, site)
+    subprocess.run(['python', 'validar_r1_runtime.py', str(site)], check=True)
+`], { cwd: root, encoding: 'utf8' });
+});

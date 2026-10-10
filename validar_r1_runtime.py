@@ -34,7 +34,7 @@ def main() -> None:
         checks = {
             "territorio/mapa-tematico/index.html": "/assets/thematic-map.js?v=258",
             "territorio/brechas/index.html": "/assets/brechas.js?v=258",
-            "territorio/migraciones/index.html": "/assets/migraciones.js?v=258",
+            "territorio/migraciones/index.html": "/assets/migraciones.js?v=20261009",
             "publicaciones/index.html": "Último boletín",
             "datos/estado/index.html": "Estado de los datos",
         }

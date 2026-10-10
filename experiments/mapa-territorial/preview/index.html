@@ -1,23 +1,34 @@
 <!doctype html>
-<html lang="es" data-theme="light">
+<html lang="es" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#16232F">
-<title>Mapa territorial · Laboratorio CEPOES</title>
+<meta name="theme-color" content="#081a23">
+<title>Vista previa PR #202 — Mapa territorial inmersivo CEPOES</title>
 <meta name="description" content="Prototipo local del Mapa Territorial CEPOES: barrios, comunas y registros de salud, educación y espacios verdes con fuentes verificables.">
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/arquitectura.css">
-<link rel="stylesheet" href="/assets/mapa-territorial/vendor/maplibre-gl.css">
-<link rel="stylesheet" href="/assets/mapa-territorial/map.css">
-<script defer src="/assets/common.js?v=257"></script>
-<script type="module" src="/assets/mapa-territorial/app.mjs"></script>
+
+
+
+<link rel="stylesheet" href="../public/assets/mapa-territorial/vendor/maplibre-gl.css">
+<link rel="stylesheet" href="../public/assets/mapa-territorial/map.css">
+
+<script type="module" src="../public/assets/mapa-territorial/app.mjs"></script>
+<style>
+/* Sólo para preview del PR: reset mínimo del site wrapper, sin dependencias externas. */
+*{box-sizing:border-box}
+html{min-width:320px;background:#081a23}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;color:#edf8f9;background:#081a23}
+button,input,select{font-family:inherit}
+.mt-page{margin:0;min-height:100svh;--papel:#f7f9fa}
+.mt-shell{min-height:100svh}
+.mt-preview-caption{position:fixed;bottom:8px;left:12px;z-index:40;background:rgba(8,24,32,.82);color:#b8ced1;padding:3px 9px;border:1px solid #87ccd044;border-radius:99px;font-size:10px;letter-spacing:.04em;pointer-events:none}
+@media(max-width:760px){.mt-preview-caption{display:none}}
+</style>
 </head>
 <body class="mt-page">
 <a class="mt-skip" href="#mt-explorer">Saltar al explorador territorial</a>
-<nav class="site-nav"></nav>
+
 <main id="mt-explorer" class="mt-shell">
 <header class="mt-heading">
   <div><p class="mt-eyebrow">CEPOES · Territorio</p><h1>La Ciudad, barrio a barrio.</h1><p>Ubicá servicios y explorá cómo se distribuyen en Buenos Aires.</p></div>
@@ -94,5 +105,6 @@
 <div id="mt-sources" class="mt-sources"></div><p class="mt-small">Cartografía y datos: Gobierno de la Ciudad de Buenos Aires, BA Data. Procesamiento y visualización: CEPOES. Motor MapLibre GL JS, licencia BSD-3-Clause. Si activás calles: OpenFreeMap, OpenMapTiles y colaboradores de OpenStreetMap.</p></section>
 <noscript><div class="mt-alert">Este explorador necesita JavaScript para cargar los registros. Podés consultar el <a href="/territorio/equipamientos/">catálogo territorial existente</a> y las <a href="https://data.buenosaires.gob.ar/dataset/barrios">fuentes oficiales de BA Data</a>.</div></noscript>
 </main>
-<footer class="footer"></footer>
+
+<span class="mt-preview-caption">CEPOES · PR #202 · VISTA EXPERIMENTAL — NO PUBLICADO</span>
 </body></html>

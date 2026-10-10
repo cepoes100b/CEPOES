@@ -775,6 +775,76 @@ class SubstantiveChangeTests(unittest.TestCase):
             self.assertTrue(panorama_change.detect(current, previous, current_geo, previous_geo))
 
 
+class PublishedLegislatureStateTests(unittest.TestCase):
+    """Estado informa el mismo artefacto legislativo que se publica."""
+
+    def generate_state(self, site):
+        return subprocess.run(
+            [sys.executable, str(ROOT / "generar_estado_datos.py"), str(site)],
+            cwd=ROOT, capture_output=True, text=True,
+        )
+
+    def test_prepared_coverage_and_provenance_are_preserved(self):
+        source_path = ROOT / "legislatura_publica.json"
+        sessions_path = ROOT / "sesiones_publicas.json"
+        originals = {path: path.read_bytes() for path in (source_path, sessions_path)}
+        source = json.loads(originals[source_path])
+        with tempfile.TemporaryDirectory(prefix="cepoes-state-") as directory:
+            site = Path(directory)
+            prepared = subprocess.run(
+                [sys.executable, str(ROOT / "deploy/preparar_legislatura_publica.py"), str(site)],
+                cwd=ROOT, capture_output=True, text=True,
+            )
+            self.assertEqual(prepared.returncode, 0, prepared.stdout + prepared.stderr)
+            public_path = site / "legislatura_publica.json"
+            public = json.loads(public_path.read_text())
+            self.assertEqual(len(public["expedientes"]), source["universo_consolidado"]["total"])
+            self.assertNotEqual(len(public["expedientes"]), len(source["expedientes"]))
+            self.assertEqual(public["expedientes_agenda"], source["expedientes"])
+            for key in source.keys() - {"expedientes", "resumen"}:
+                self.assertEqual(public[key], source[key], key)
+            self.assertEqual(json.loads((site / "sesiones_publicas.json").read_text()),
+                             json.loads(originals[sessions_path]))
+
+            before = public_path.read_bytes()
+            result = self.generate_state(site)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            page = (site / "datos/estado/index.html").read_text()
+            import generar_estado_datos as state
+            coverage = f'{len(public["expedientes"])} expedientes · {len(public["reuniones"])} reuniones'
+            card = re.search(r'<article[^>]*>(?:(?!</article>).)*<h3><a href="/legislatura/">.*?</article>', page).group()
+            self.assertIn(coverage, card)
+            self.assertIn(state.date(public["generado"]), card)
+            self.assertIn("Legislatura de la Ciudad de Buenos Aires", card)
+            self.assertIn('/cepoes/metodologia/legislatura/', card)
+            self.assertEqual(public_path.read_bytes(), before)
+
+            # La fecha también debe proceder de la copia preparada, no del repo.
+            public["generado"] = "2001-02-03T00:00:00+00:00"
+            public_path.write_text(json.dumps(public))
+            result = self.generate_state(site)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("3 de febrero de 2001", (site / "datos/estado/index.html").read_text())
+        for path, original in originals.items():
+            self.assertEqual(path.read_bytes(), original)
+
+    def test_missing_or_invalid_prepared_json_cannot_fall_back_to_agenda(self):
+        with tempfile.TemporaryDirectory(prefix="cepoes-state-") as directory:
+            site = Path(directory)
+            for contents in (None, "{invalid"):
+                with self.subTest(contents=contents):
+                    if contents is not None:
+                        (site / "legislatura_publica.json").write_text(contents)
+                    result = self.generate_state(site)
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertFalse((site / "datos/estado/index.html").exists())
+
+    def test_deploy_prepares_legislature_before_state(self):
+        workflow = (ROOT / ".github/workflows/desplegar-hostinger.yml").read_text()
+        self.assertLess(workflow.index("python deploy/preparar_legislatura_publica.py _site"),
+                        workflow.index("python generar_estado_datos.py _site"))
+
+
 class WorkflowContractTests(unittest.TestCase):
     def test_fixed_registry_and_trigger_list(self):
         source = (ROOT / ".github/workflows/desplegar-hostinger.yml").read_text()

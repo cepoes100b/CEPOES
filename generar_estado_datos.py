@@ -39,7 +39,9 @@ def main() -> None:
     equipment = load("equipamientos/resumen-territorial.json")
     territory = load("territorio.json")
     budget = load("presupuesto.json")
-    legislature = load("legislatura_publica.json")
+    # El monitor publica el universo consolidado preparado en el sitio;
+    # la copia del repositorio conserva sólo los expedientes de agenda.
+    legislature = json.loads((args.site / "legislatura_publica.json").read_text(encoding="utf-8"))
     mental = load("deploy/site-overlay/assets/data/salud-mental.json")
     migration = load("deploy/site-overlay/assets/data/migraciones.json")
 

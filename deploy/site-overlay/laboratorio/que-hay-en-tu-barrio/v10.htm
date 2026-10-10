@@ -307,6 +307,39 @@ const sortedBarrios=DATA.barrios.features.map(f=>f.properties.n).sort((a,b)=>a.l
  const barrioComuna=new Map(DATA.barrios.features.map(f=>[f.properties.n,f.properties.c]));
  const barrioFeature=new Map(DATA.barrios.features.map(f=>[f.properties.n,f]));
  const comunaFeature=new Map(COMUNAS.features.map(f=>[f.properties.c,f]));
+
+ // Perímetro exterior CABA obtenido de unir las 15 comunas en una geometría
+ // válida y simplificar a ~10 m para el efecto visual; la selección sigue
+ // utilizando las geometrías de barrios y comunas existentes, sin cambios.
+ const CABA_BORDER_ENCODED="|gycJnkyrEreLc~HlMoqFq`Eo{KudFmdBaPqRcCmFmDsEq@kCsCgByDa@sDp@cFfCqHvJcLlCw@~ArSz\\fWpJy@f@kMeE}MaGcJyQ_AaA}@CgBr@uAdHiAjCc@`Eb@v@fBv@nMPxE~CxCtDi@dCkBdCcG~B{BXo@qBqCgDgG}C\\wFgEqBm@v@vB`B}CvE{BmAu@{A{FgByEAuI~@f@g@oEzBiBjBSGRm@gBnDi@GBo@q@|Di@?Go@B~Cs@@HrEUP{AQGgEM|BaEz@oEe@_DH^g@i@h@iG`BgC`CoAvCsCG@^lCEeA~ByOvHkBtB}CjHeBvBkBm@tA|@g@tB|@~AqAtBeIoB{DE_GhCQ[p@e@m@TGRJTsBf@Jh@s@Gi@v@lAGz@hAz@zBCx@fAv@xB~Ec@g@eD^mGiOnAcAkBp@nH`Qc`@bH_ZlCWUQ`@qIbBWUA\\}PfGo@GD\\_DjAwB[a@h@XpAw@vDc@B^PCl@sBnAyVtVMt@_AUgB`CmAcAe@Dk[cNQ`@t[jMMPbAb@NQz@`@cCbAeCHiH{Bo@^l@jBoAt@sDuBwBImC|@kItFQdAf@fAfBx@~OpPs@`@uN_OqDp@{CtDcBbDEdA{@z@eAE{HdPq^bQaGiIz[kOk@iBqCsCud@wAsEeB_JFaBb@u@lHeACHqH}@cA_iAgEc@PdhAdEvAlA?dFk@TBpAeG?_O`G{wAiE_A@_JdEJ`@xIcExAQxvArEk]`QWf@`]cQfOeHrB]nFREbAb@j@wL|F?zAb`@xAEh@_JdE{f@aBk\\zO?vAd`@tA?j@{IdEyf@cBkOjHMxAl`@tAEn@yHrDam@sBi@jJj\\hADl@iFxDs^kAe@hJlW|@UtFqWw@[pDz@p@vEl@KlATkAlk@~GQrAqGfBqLpSt@p@d@EtEeIr@DxDcHd@\\qD~GlBh@nCsFl@AsCjG`KdDiFzS{GKU`Dy@CNcDsMe@rBmI_Ak@k@TgDe@uHSm@\\r@UpHV`Df@uAhFyD]oLoEHmAnCDmj@wA}R~AvRwA`Pl@yGjAoKrGqEvFyJnGwC`D{IjFkFpEcAbKoAnCFhEo@jCqZvRwB~CqD`SYhFZtFpCzBjBZrGFxM~BfBi@hI]~EuAlF\\fCtAJjCuA@|@r@[n@x@Jv@q@d@DeAjApDrAoATQh@QW}El@eB[uCuB}AQ_GZwBq@yCGwBb@N|BfBh@p@FpDeCl@LtBlCe@fEeB|BJhAsB`EFaCUEf@ADs@y@YIl@aA{BoC[aCpAv@kGmB}HoIaAwId@mBg@yF\\aBx@sBvEStDqApBOnBx@~A`Cv@~Ik@`HDhDh@A}Ap@UlDzAcCdCaBcAoFA_Ch@kJdHoFb@sJpHAfCzExDK\\b@FL]jB\\K^tFbAL_@pB^M^ZFN_@`AZ]U~@a@z@}CfBZx@m@TPVUUQlAaA`@HG]nAaA`@FE[zBeASQd@_@x@D?VrHJRNmBvAWOkA`Bo@@VRkA~@UQWRRPyB|@F^kBt@RPw@x@zEbBFUz@PbA{@ZPAc@vBaASOhA{@j@@SYt@k@~CdCnIsGrIvGaAR@^bAE@`@Qp@k@LGxA}ANKd@fAGHd@c@Zi@rCa@q@@v@e@h@gDD_Cl@pQpDvEk@|EeFbDcK|@m@vB^bEwEpf@{Xj@KdAdArDwB\\^sDvBp@x@{`@zTgFnEsD`HkE`Q~ArHr@xB|B~C|JjEvDlErE~BrMCvCh@|@|AiBjD{M`DoA`A_DrLt@xDdFnAtEtBpKtJpB|@pHIpAXbCrBvUrJjEdCfAxCcA`FTbAlO|GrI~IdEb@|EWhFRp@f@`I`AjYLtI~@|FjDzAjC`DvCzQhDhDpD|HlA`FQ|FeAfD`@|CGlAm@v@eBnFaApCA|DuAx@aB|FeBjEY`L`AbE`AbDA|ImAdFoCfMeBlLl@pMxCbDj@d@Qf@b@`K~AjJhCtLlFxItFdI~HttE~{F";
+ function decodeCabaBorder(encoded){
+   let i=0,acc=[0,0];const points=[];
+   while(i<encoded.length){
+     const pair=[];
+     for(let axis=0;axis<2;axis++){
+       let value=0,shift=0,part;
+       do{if(i>=encoded.length)throw Error('Perímetro incompleto');
+         part=encoded.charCodeAt(i++)-63;value|=(part&31)<<shift;shift+=5;
+       }while(part>=32);
+       acc[axis]+=(value&1)?~(value>>1):(value>>1);
+       pair.push(acc[axis]/1e5);
+     }
+     points.push(pair);
+   }
+   return points;
+ }
+ function cabaDisplayGeometry(){
+   const border=decodeCabaBorder(CABA_BORDER_ENCODED);
+   const area=ring=>ring.reduce((s,p,i)=>{const q=ring[(i+1)%ring.length];return s+p[0]*q[1]-q[0]*p[1]},0);
+   // El hueco es horario y el rectángulo exterior antihorario.
+   if(area(border)>0)border.reverse();
+   const outer=[[-61,-37],[-55,-37],[-55,-31],[-61,-31],[-61,-37]];
+   return {
+     perimeter:{type:'Feature',properties:{},geometry:{type:'Polygon',coordinates:[border]}},
+     outside:{type:'Feature',properties:{},geometry:{type:'Polygon',coordinates:[outer,border]}}
+   };
+ }
+
  const territoryName=()=>level==='comuna'&&comuna?'Comuna '+comuna:level==='barrio'&&barrio?barrio:null;
  const belongs=p=>level==='comuna'?(!comuna||p.c===comuna):(!barrio||p.b===barrio);
  function syncLevelButtons(){document.querySelectorAll('#level-controls [data-level]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.level===level))); $('search').placeholder=level==='comuna'?'Buscá una comuna (1 a 15)...':'Buscá tu barrio...';$('search').setAttribute('aria-label',level==='comuna'?'Buscar comuna':'Buscar barrio');$('level-help').textContent=level==='comuna'?'Tocá el mapa para seleccionar una comuna y ver sus equipamientos.':'Tocá el mapa para seleccionar un barrio y ver sus equipamientos.';}
@@ -624,6 +657,24 @@ function initMap(){if(typeof maplibregl==='undefined'){toast('El mapa con calles
  mapReady=true;mapEl.classList.add('ready');
  decorateUrbanBasemap(map);
  registerPoiIcons(map);
+
+ // Se atenúa sólo el espacio exterior. Adentro se mantienen las calles,
+ // los rótulos, las categorías de POI y el estilo urbano existentes.
+ const cabaGeometry=cabaDisplayGeometry();
+ map.addSource('caba-muted-exterior',{type:'geojson',data:cabaGeometry.outside});
+ map.addSource('caba-administrative-edge',{type:'geojson',data:cabaGeometry.perimeter});
+ map.addLayer({id:'caba-muted-amba',type:'fill',source:'caba-muted-exterior',
+   paint:{'fill-color':'#b5c8ce','fill-opacity':['interpolate',['linear'],['zoom'],9,.76,12,.69,15,.57,17,.5]}});
+ map.addLayer({id:'caba-edge-glow',type:'line',source:'caba-administrative-edge',
+   paint:{'line-color':'#064957','line-opacity':.36,
+    'line-width':['interpolate',['linear'],['zoom'],9,6,13,9,17,13],'line-blur':3}});
+ map.addLayer({id:'caba-edge',type:'line',source:'caba-administrative-edge',
+   paint:{'line-color':'#087c85','line-opacity':.97,
+    'line-width':['interpolate',['linear'],['zoom'],9,2.4,13,3.3,17,4.4]}});
+ map.addLayer({id:'caba-edge-light',type:'line',source:'caba-administrative-edge',
+   paint:{'line-color':'#9ee5df','line-opacity':.66,
+    'line-width':['interpolate',['linear'],['zoom'],9,.7,13,1,17,1.25]}});
+
  map.addSource('barrios',{type:'geojson',data:DATA.barrios});map.addLayer({id:'barrios-fill',type:'fill',source:'barrios',paint:{'fill-color':'#4ab7b8','fill-opacity':0.045}});map.addLayer({id:'selected-barrio',type:'fill',source:'barrios',paint:{'fill-color':'#44b1af','fill-opacity':0.18},filter:['==',['get','n'],'__none__']});map.addLayer({id:'barrios-outline',type:'line',source:'barrios',paint:{'line-color':'#4d9ca3','line-opacity':0.62,'line-width':1.15}});map.addLayer({id:'selected-outline',type:'line',source:'barrios',paint:{'line-color':'#f2aa79','line-width':2.8,'line-opacity':0.98},filter:['==',['get','n'],'__none__']});
   map.addSource('comunas',{type:'geojson',data:COMUNAS});
   map.addLayer({id:'selected-comuna',type:'fill',source:'comunas',filter:['==',['get','c'],-1],paint:{'fill-color':'#59c9c1','fill-opacity':.17}});

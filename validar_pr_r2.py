@@ -211,6 +211,7 @@ def create_runtime_fixture(site: Path) -> None:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(content, encoding="utf-8")
 
+    run("python", "deploy/preparar_legislatura_publica.py", str(site))
     run("python", "generar_indice_busqueda_global.py", str(site))
     run("python", "generar_estado_datos.py", str(site))
 

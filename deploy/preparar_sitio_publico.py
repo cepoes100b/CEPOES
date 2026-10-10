@@ -4,9 +4,12 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import html
+import io
 import json
+import math
 import re
 import shutil
 import unicodedata
@@ -298,6 +301,8 @@ def topic_chips() -> str:
 PUBLIC_REVALIDATION_PATHS = (
     r"^/(index[.]html)?$",
     r"^/observatorio/(index[.]html)?$",
+    r"^/observatorio/precios/ipc/(index[.]html|datos[.]csv)?$",
+    r"^/assets/indicator[.]js$",
     r"^/datos/estado/(index[.]html)?$",
     r"^/assets/data/estructura-productiva/actual[.]json$",
     r"^/[.]well-known/cepoes-release[.]json$",
@@ -922,6 +927,83 @@ def apply_fallbacks(source: str, rel: str) -> str:
     return source
 
 
+def patch_ipc_indicator(source: str) -> str:
+    """Corregir sólo la comparación IPC del runtime heredado, sin tocar otras fichas."""
+    block = re.search(r"if\(id==='ipc'\)\{.*?\n  \}", source, flags=re.S)
+    if not block:
+        raise ValueError("No se encontró el contrato IPC del runtime de indicadores")
+    old = "delta(I.var_m[n],I.var_m[n-1])"
+    new = "delta(I.var_ia[n],I.var_ia[n-1])"
+    text = block.group(0)
+    if text.count(old) == 1 and new not in text:
+        text = text.replace(old, new, 1)
+    elif text.count(new) != 1 or old in text:
+        raise ValueError("La comparación IPC cambió: revisar antes de publicar")
+    return source[:block.start()] + text + source[block.end():]
+
+
+def prepare_ipc_publication(site: Path, data: dict) -> None:
+    """Una misma serie validada para HTML inicial, metadatos, CSV y lectura JS."""
+    page = site / "observatorio/precios/ipc/index.html"
+    if not page.is_file():
+        return  # Los fixtures parciales pueden no incluir esta ficha.
+    ipc = data["ipcba"]
+    periods, monthly, annual = (ipc[k] for k in ("meses", "var_m", "var_ia"))
+    if not periods or len(periods) != len(monthly) or len(periods) != len(annual):
+        raise ValueError("Serie IPC vacía o de longitudes diferentes")
+    if any(type(v) not in (int, float) or not math.isfinite(v) for v in monthly + annual):
+        raise ValueError("Serie IPC con valores no numéricos o no finitos")
+    if any(not re.fullmatch(r"(?:Ene|Feb|Mar|Abr|May|Jun|Jul|Ago|Sep|Oct|Nov|Dic)-\d{2}", p) for p in periods):
+        raise ValueError("Período IPC no reconocido")
+    source = page.read_text(encoding="utf-8")
+    runtime = site / "assets/indicator.js"
+    script = patch_ipc_indicator(runtime.read_text(encoding="utf-8"))
+    pct = lambda v: ("+" if v > 0 else "") + fmt_number(v) + "%"
+    reading = f"La inflación interanual se ubica en {fmt_number(annual[-1])}%."
+    if len(annual) > 1:
+        change = annual[-1] - annual[-2]
+        verb = "aumentó" if change >= 0 else "disminuyó"
+        reading += f" Respecto del período anterior, {verb} {fmt_number(abs(change))} p.p."
+    texts = {
+        "data-date": fmt_date(data["generado"]),
+        "indicator-primary-label": "Variación interanual",
+        "indicator-primary-value": pct(annual[-1]),
+        "indicator-primary-period": fmt_period(periods[-1]),
+        "indicator-secondary-label": "Variación mensual",
+        "indicator-secondary-value": pct(monthly[-1]),
+        "indicator-secondary-note": fmt_period(periods[-1]),
+        "indicator-meta-first": fmt_period(periods[0]),
+        "indicator-meta-period": fmt_period(periods[-1]),
+        "indicator-reading": reading,
+    }
+    for element_id, text in texts.items():
+        if len(re.findall(rf'\bid=["\']{re.escape(element_id)}["\']', source)) != 1:
+            raise ValueError(f"Contrato HTML IPC ausente o duplicado: {element_id}")
+        source = replace_id_text(source, element_id, text)
+    if len(re.findall(r'\bid=["\']indicator-table["\']', source)) != 1:
+        raise ValueError("Contrato de tabla IPC ausente o duplicado")
+    rows = list(zip(periods, monthly, annual))
+    table = ('<thead><tr><th>Período</th><th>Mensual</th><th>Interanual</th></tr></thead><tbody>'
+             + ''.join(f'<tr><td>{fmt_period(p)}</td><td class="num">{pct(m)}</td>'
+                       f'<td class="num">{pct(a)}</td></tr>' for p, m, a in reversed(rows)) + '</tbody>')
+    source = replace_id_html(source, "indicator-table", table)
+    def update_dataset(match):
+        metadata = json.loads(match.group(2))
+        if metadata.get("@type") == "Dataset":
+            metadata["temporalCoverage"] = f"{fmt_period(periods[0])}/{fmt_period(periods[-1])}"
+        return match.group(1) + json.dumps(metadata, ensure_ascii=False) + match.group(3)
+    source = re.sub(r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)',
+                    update_dataset, source, flags=re.S)
+    stream = io.StringIO(newline="")
+    writer = csv.writer(stream, delimiter=";", lineterminator="\r\n")
+    writer.writerow(("periodo", "variacion_mensual_pct", "variacion_interanual_pct"))
+    writer.writerows(rows)
+    # Todo se valida/calcula antes de modificar el build; producción no se toca aquí.
+    runtime.write_text(script, encoding="utf-8")
+    page.write_text(source, encoding="utf-8")
+    (page.parent / "datos.csv").write_bytes(("\ufeff" + stream.getvalue()).encode("utf-8"))
+
+
 def compact_newsletter_hero(source: str) -> str:
     """Canonical compact HTML cover for every newsletter, including future editions."""
     if 'class="bol-sumario-toggle"' in source:
@@ -971,6 +1053,10 @@ def normalize_html(path: Path, site: Path) -> None:
             f'href="/cepoes/metodologia/{method_sheets[rel]}/"',
         )
     source = re.sub(r'/assets/common(?:-r1)?\.js(?:\?v=\d+)?', '/assets/common-r1.js?v=259', source)
+    if '/assets/indicator.js' in source:
+        revision = hashlib.sha256((site / "assets/indicator.js").read_bytes()).hexdigest()[:12]
+        source = re.sub(r'/assets/indicator\.js(?:\?v=[A-Za-z0-9]+)?',
+                        '/assets/indicator.js?v=' + revision, source)
     source = re.sub(r'/assets/thematic-map\.js(?:\?v=\d+)?', '/assets/thematic-map.js?v=258', source)
     source = re.sub(r'/assets/brechas\.js(?:\?v=\d+)?', '/assets/brechas.js?v=258', source)
     source = re.sub(r'/assets/migraciones\.js(?:\?v=\d+)?', '/assets/migraciones.js?v=20261009', source)
@@ -1073,6 +1159,7 @@ def main() -> None:
     from scripts.generar_newsletter_feed import generate
     generate(site)
     prepare_canonical_routes(site)
+    prepare_ipc_publication(site, load_json("datos.json"))
     count = 0
     for path in site.rglob("*.html"):
         normalize_html(path, site)

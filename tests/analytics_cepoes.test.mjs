@@ -5,11 +5,11 @@ import test from 'node:test';
 const source = readFileSync(new URL('../deploy/site-overlay/assets/analytics-cepoes.js', import.meta.url), 'utf8');
 function fixture(href = 'https://cepoes.org/territorio/?email=personal%40example.org#token') {
   const scripts = [], listeners = {};
-  const window = {};
+  const window = {addEventListener:()=>{}};
   const location = new URL(href);
   const document = {referrer:'https://example.org/?token=secret',
     createElement:()=>({}), head:{appendChild:s=>scripts.push(s)},
-    addEventListener:(n,cb)=>{listeners[n]=cb;}};
+    addEventListener:(n,cb)=>{(listeners[n] ||= []).push(cb);}};
   vm.runInNewContext(source,{window,location,document,URL,Set,Date,Number});
   return {api:window.CEPOES_ANALYTICS,window,scripts,listeners};
 }
@@ -36,7 +36,7 @@ test('single page view, URL redaction, no arbitrary event payloads, idempotent s
 });
 test('PDF clicks and withdrawal',()=>{
   const f=fixture(); f.api.start({measurementId:'G-TEST123',analyticsConsent:true});
-  f.listeners.click({target:{closest:()=>({href:'https://cepoes.org/informe.pdf?token=secret'})}});
+  for (const cb of f.listeners.click) cb({target:{closest:selector=>selector==='a[href]' ? {href:'https://cepoes.org/informe.pdf?token=secret'} : null}});
   assert.equal(f.window.dataLayer.at(-1)[1],'report_download');
   assert.equal(f.window.dataLayer.at(-1)[2].target_path,'/informe.pdf');
   f.api.stop();

@@ -1,69 +1,73 @@
-# Medición de audiencia CEPOES — preparación 10/10/2026
+# Medición de audiencia CEPOES — 10/10/2026
 
-Estado: adaptador candidato y pruebas preparados; sin ID real, sin inyección en
-HTML, sin medición activa y sin despliegue. La cuenta Google institucional fue
-autenticada, pero Analytics muestra «Se ha producido un error interno». Los logs
-del navegador registran status 0 / Unknown Error para countries/gold y dataaccess.
-El fallo persiste tras recargar y abrir una pestaña nueva. Esto identifica el
-componente que falla, no permite atribuir una causa a Google, la red o el navegador.
+## Configuración
 
-## Activación pendiente
+Cuenta GA4 411518950; propiedad 558338723 «CEPOES · cepoes.org.»; flujo web
+16103971528 «CEPOES», https://cepoes.org; ID público G-Z6E4BNZXMG proporcionado
+por el usuario y confirmado en la interfaz de Google Analytics.
 
-1. Crear cuenta CEPOES y propiedad «CEPOES · cepoes.org» en GA4, zona Buenos Aires,
-   moneda ARS, finalidad de contenidos y tráfico. Mantener desactivadas las opciones
-   adicionales de compartir datos y publicidad. La aceptación de los términos de
-   servicio requiere confirmación puntual del titular en la interfaz.
-2. Crear flujo web https://cepoes.org y obtener ID G-…. El ID es público, no una
-   contraseña. Desactivar medición optimizada antes de activar este adaptador:
-   evita doble page_view y captura automática de formularios/búsquedas/URLs.
-3. Incorporar elección de consentimiento y aviso de privacidad con revisión visual
-   en sites-preview/cua_repl, usando la salida pública completa, antes de publicar.
-   Invocar start solo con consentimiento específico de analítica; la suscripción
-   editorial no constituye ese consentimiento. stop bloquea recogida posterior;
-   recargar tras retirada. Documentar eliminación de cookies en la integración.
-4. Integrar el módulo en el normalizador público; excluir zona privada, páginas de
-   confirmación/baja y cualquier URL sensible. Validar cobertura de rutas y CSP.
-5. Vincular eventos semánticos de mapas, fichas y lectura al adaptador. Confirmación
-   de suscripción debe medir el resultado real, no clic ni envío de formulario.
-6. Verificar recepción real en GA4, filtros de tráfico interno, diferencias entre
-   producción y vista previa, móvil/escritorio y retirada del consentimiento.
+El error inicial de countries/gold/dataaccess impidió crear la propiedad desde
+el navegador integrado. El usuario la creó; la sesión autenticada ahora permite
+abrir el panel y los detalles del flujo. Medición mejorada desactivada en la
+interfaz para evitar duplicados y captura automática de formularios/búsquedas.
 
-## Adaptador preparado
+## Integración
 
-assets/analytics-cepoes.js no realiza ninguna petición al cargarse. start requiere
-ID válido, origen de producción, ruta pública y analyticsConsent=true. Configura
-una única vista por carga, sin Signals ni personalización publicitaria. Descarta
-query, fragmento, referrer completo y payload arbitrario. Registra clics a PDF
-como report_download: un clic no acredita descarga completada ni lectura del PDF.
-Los parámetros admitidos son ruta pública y porcentaje 25/50/75/100.
+El normalizador público incorpora meta de configuración, CSS y JS de consentimiento
+una sola vez. Excluye rutas privadas, de autenticación y suscripción/confirmación/baja.
+El adaptador solo carga gtag.js en el origen de producción y tras consentimiento
+específico. Las vistas previas permiten probar la elección sin enviar a Google.
 
-Este módulo no sustituye la configuración de privacidad de GA4 ni la validación
-de sus eventos automáticos. La revisión de URLs incluye todas las rutas antes
-de activación. Falta instrumentar adquisición por campañas con códigos permitidos
-sin reenviar query completa.
+Aviso con aceptar/no aceptar de igual prominencia, detalles y botón permanente
+«Privacidad y medición» al pie. Elección guardada durante 180 días. Retirar detiene
+medición, elimina cookies _ga accesibles y recarga para aplicar la elección. Si
+localStorage no está disponible, la elección se limita a esa página.
 
-## Reporte privado propuesto
+Signals y personalización publicitaria desactivados. No se envían correos, consultas,
+coordenadas, tokens ni query/fragmento de URL. Referencia de origen limitada al
+host. Campañas permiten únicamente utm_source/medium/campaign como códigos de
+letras, números, guiones o guiones bajos, hasta 80 caracteres. No usar datos de
+personas en esos códigos.
 
-Comparar últimos 28 días con los anteriores: visitantes estimados, sesiones,
-páginas, interacción, fuentes de tráfico, dispositivos, clics a PDF, mapas,
-fichas y suscripciones confirmadas. Separar tráfico de revisión y bots en la
-medida que la fuente permita. Tiempo en primer plano es proxy de interacción,
-no lectura demostrada. Informar muestras bajas y fecha de inicio de medición.
-Cerrar cada informe con tres decisiones editoriales sustentadas en los datos.
+## Qué mide
 
-Automatización pendiente, no programada: requiere acceso durable de lectura a
-los datos de GA4. El acceso de navegador no acredita acceso para tareas futuras.
-Los datos históricos de Hostinger deben inspeccionarse con acceso a hPanel/logs;
-no se reconstruye tiempo de lectura retrospectivo a partir de solicitudes.
+- page_view: una vista por carga, ruta de la página; título analítico usa la ruta.
+- Tiempo de interacción: recogida automática estándar GA4 tras cargar la etiqueta.
+  Página en primer plano es aproximación de interacción, no lectura demostrada.
+- reading_progress: llegada a 25/50/75/100% de desplazamiento una vez por carga.
+- report_download: clic a un PDF público, no descarga completada ni lectura del PDF.
+- neighborhood_view: clic a ficha /territorio/barrios/; visitas directas en page_view.
+- filter_change: cambio de selector público sin transmitir valor del control.
+- map_interaction: clic en controles Leaflet de zoom/capas; sin coordenadas.
+- outbound_click: host destino HTTPS externo; no URL completa.
 
-## Pruebas y fuentes
+newsletter_confirmed está reservado en el adaptador; todavía no tiene un emisor
+verificado. No se declara medición de altas confirmadas, búsquedas o uso completo
+de cada mapa. La instrumentación de estos resultados exige otra integración.
 
-`node --test tests/analytics_cepoes.test.mjs` verifica consentimiento, rutas privadas,
-vistas previas, sanitización, idempotencia, clic a PDF y retirada.
+## Referencia para decisiones
 
+Usar GA4 en privado: Informes → adquisición (origen/medio), interacción/páginas
+(ranking), eventos (PDF/filtros/mapas), dispositivos y tiempo real para diagnóstico.
+Comparar últimos 28 días con los anteriores. Separar visitas nuevas y recurrentes,
+volumen e interacción; revisar muestras bajas antes de cambiar prioridades.
+Los visitantes son estimaciones basadas en identificadores de navegador y
+consentimiento. Rechazo de medición y bloqueadores reducen cobertura.
+
+No existe historial anterior a activación verificable en GA4. Hostinger puede
+aportar registros previos cuando se disponga de acceso, sin reconstruir tiempos
+de lectura. Reporte automático mensual pendiente de un acceso durable y verificado
+de lectura a GA4; no se ha programado ni prometido funcionamiento desatendido.
+
+## Validación
+
+Node: consentimiento, orígenes/rutas, sanitización, duplicados, PDF y retirada.
+Python: inyección idempotente y exclusión privada/autenticación. La revisión
+visual exige salida pública completa, sites-preview y cua_repl, escritorio y
+viewport móvil de 390 px. Antes de cierre verificar despliegue y recepción real
+GA4; registrar resultados en el PR #214.
+
+Fuentes:
 - https://developers.google.com/analytics/devguides/collection/ga4/reference/config
 - https://developers.google.com/analytics/devguides/collection/ga4/events
 - https://developers.google.com/analytics/devguides/collection/ga4/views
-
-No hay cambios visuales ni publicación en esta preparación. La revisión supervisada
-de consentimiento y páginas queda como requisito explícito de activación.

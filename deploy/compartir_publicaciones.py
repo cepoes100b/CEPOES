@@ -122,8 +122,12 @@ def inject(source, rel, site, reports):
     report = reports.get(route, {})
     h1 = re.search(r'<h1\b[^>]*>(.*?)</h1>', source, re.S | re.I)
     t = re.search(r'<title\b[^>]*>(.*?)</title>', source, re.S | re.I)
-    title = report.get('title') or clean(h1[1] if h1 else t[1] if t else 'CEPOES')
-    title = re.sub(r'\s*[|·—-]\s*CEPOES.*$', '', title).strip()
+    # The home h1 belongs to the featured article, not to the institution.
+    if route == '/':
+        title = clean(t[1]) if t else 'CEPOES'
+    else:
+        title = report.get('title') or clean(h1[1] if h1 else t[1] if t else 'CEPOES')
+        title = re.sub(r'\s*[|·—-]\s*CEPOES.*$', '', title).strip()
     description = report.get('description') or meta(source, 'description')
     label = report.get('kind') or ('Boletín' if '/boletin-' in route else 'Territorio' if route.startswith('/territorio/') else 'Presupuesto' if route.startswith('/presupuesto/') else 'Observatorio' if route.startswith('/observatorio/') else 'CEPOES / 100 Barrios')
     cover = site / report.get('cover', '').lstrip('/')

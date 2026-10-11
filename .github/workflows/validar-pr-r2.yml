@@ -35,7 +35,7 @@ jobs:
             sudo apt-get update -qq
             sudo apt-get install -y -qq fonts-dejavu-core
           fi
-          python -m unittest test_compartir_publicaciones.py tests/test_analytics_injection.py
+          python -m unittest test_compartir_publicaciones.py test_salud_mental_presentacion.py tests/test_analytics_injection.py
           node --test tests/compartir_publicaciones.test.mjs tests/analytics_cepoes.test.mjs
 
       - name: Ejecutar controles universales

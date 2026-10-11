@@ -1,5 +1,7 @@
 """Regresión del recurso publicado; no modifica ni descarga datos."""
 import re
+import hashlib
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -28,7 +30,38 @@ class MentalHealthPresentationTests(unittest.TestCase):
                             normalize_html(page, site)
                             refs = re.findall(r'/assets/salud-mental\.css[^"\'<>\s]*', page.read_text())
                             self.assertEqual(refs, [expected])
-            self.assertIn(repr(expected), (ROOT / 'validar_sitio_despliegue.py').read_text())
+
+    def test_real_build_uses_content_hash_and_deployment_accepts_it(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            site = Path(tmp)
+            asset = site / 'assets/salud-mental.css'
+            asset.parent.mkdir(parents=True)
+            shutil.copy2(OVERLAY / 'assets/salud-mental.css', asset)
+            page = site / 'observatorio/salud-mental/index.html'
+            page.parent.mkdir(parents=True)
+            page.write_text((OVERLAY / 'observatorio/salud-mental/index.html').read_text())
+            normalize_html(page, site)
+            revision = hashlib.sha256(asset.read_bytes()).hexdigest()[:12]
+            first = page.read_text()
+            self.assertIn('/assets/salud-mental.css?v=' + revision, first)
+            normalize_html(page, site)
+            self.assertEqual(first, page.read_text())
+            # Execute the actual deployment assertions, including their failure
+            # on stale URLs and on reintroduction of the inline-span bug.
+            validator = (ROOT / 'validar_sitio_despliegue.py').read_text()
+            start = validator.index('sm_css_revision=')
+            end = validator.index("assert '/assets/data/salud-mental.json'", start)
+            shutil.copy2(OVERLAY / 'assets/salud-mental.js', asset.with_suffix('.js'))
+            checks = validator[start:end]
+            context = {'root': site, 'salud_mental': first, 'hashlib': hashlib, 're': re}
+            exec(checks, context)
+            for stale in ['2', '3', '000000000000']:
+                with self.subTest(stale=stale), self.assertRaises(AssertionError):
+                    exec(checks, {**context, 'salud_mental': first.replace(revision, stale)})
+            asset.write_text(asset.read_text().replace('.sm-jur-fill{display:block;', '.sm-jur-fill{', 1))
+            changed = hashlib.sha256(asset.read_bytes()).hexdigest()[:12]
+            with self.assertRaisesRegex(AssertionError, 'sin caja de relleno'):
+                exec(checks, {**context, 'salud_mental': first.replace(revision, changed)})
 
     def test_fill_has_a_block_box(self):
         css = (OVERLAY / 'assets/salud-mental.css').read_text()

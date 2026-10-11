@@ -11,6 +11,10 @@
       "reason": "Normalización del sitio"
     },
     {
+      "path": "deploy/compartir_publicaciones.py",
+      "reason": "Controles de compartir, metadatos y placas públicas de difusión"
+    },
+    {
       "path": "scripts/generar_newsletter_feed.py",
       "reason": "Catálogo público de ediciones para distribución automática"
     },

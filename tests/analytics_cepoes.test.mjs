@@ -44,3 +44,11 @@ test('PDF clicks and withdrawal',()=>{
   assert.equal(f.api.event('map_interaction',{}),false);
   assert.equal(f.api.start({measurementId:'G-TEST123',analyticsConsent:true}),false);
 });
+test('sharing measurement uses consent and a finite parameter allowlist',()=>{
+  const f=fixture(); assert.equal(f.api.event('share',{platform:'x',method:'open_composer'}),false);
+  f.api.start({measurementId:'G-TEST123',analyticsConsent:true});
+  f.api.event('share',{platform:'x',method:'open_composer',email:'private@example.org',url:'secret'});
+  let call=f.window.dataLayer.at(-1);assert.equal(call[2].share_platform,'x');assert.equal(call[2].share_method,'open_composer');assert.doesNotMatch(JSON.stringify(call),/private|secret/);
+  f.api.event('share',{platform:'private@example.org',method:'secret'});
+  call=f.window.dataLayer.at(-1);assert.equal(call[2].share_platform,undefined);assert.equal(call[2].share_method,undefined);
+});

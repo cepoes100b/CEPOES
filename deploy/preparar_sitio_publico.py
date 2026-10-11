@@ -943,6 +943,17 @@ def compact_newsletter_hero(source: str) -> str:
     return source[:end] + details + source[end:]
 
 
+def inject_analytics(source: str, rel: str) -> str:
+    """Consent-gated loader on public content; keep private/auth flows uninstrumented."""
+    if re.search(r'/(?:privado|private|admin|login|auth|newsletter|suscripcion|subscribe|unsubscribe|confirmar|baja)(?:/|$)', rel, re.I):
+        return source
+    if 'name="cepoes-analytics"' not in source:
+        source = source.replace('</head>', '<meta name="cepoes-analytics" content="G-Z6E4BNZXMG">'
+            '<link rel="stylesheet" href="/assets/analytics-cepoes.css?v=1">'
+            '<script defer src="/assets/analytics-cepoes.js?v=1"></script></head>', 1)
+    return source
+
+
 def normalize_html(path: Path, site: Path) -> None:
     rel = "/" + path.relative_to(site).as_posix()
     if rel.startswith("/privado/"):
@@ -951,6 +962,7 @@ def normalize_html(path: Path, site: Path) -> None:
     source = inject_budget_2027_bridge(source, rel)
     source = inject_octubre_rosa_bridge(source, rel)
     source = ensure_site_fonts(source)
+    source = inject_analytics(source, rel)
     if rel.startswith("/publicaciones/boletines/"):
         source = compact_newsletter_hero(source)
     # Product notes should lead to their own documented definitions. The

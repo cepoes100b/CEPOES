@@ -1,0 +1,11 @@
+#cepoes-analytics-choice{position:fixed;z-index:10000;bottom:16px;left:16px;width:min(520px,calc(100% - 32px));max-height:calc(100vh - 32px);overflow:auto;box-sizing:border-box;padding:20px;border:1px solid #527087;border-radius:16px;background:#102735;color:#fff;box-shadow:0 10px 40px #0005;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:1.5}
+#cepoes-analytics-choice[hidden]{display:none}
+#cepoes-analytics-choice strong{display:block;font-size:18px;color:#fff}
+#cepoes-analytics-choice p{margin:10px 0;color:#e2eaf0}
+#cepoes-analytics-choice summary{cursor:pointer;color:#fff;text-decoration:underline;text-underline-offset:3px}
+#cepoes-analytics-choice a{color:#a8e9ee;text-decoration:underline}
+.cepoes-analytics-actions{display:flex;gap:10px;margin-top:16px}
+.cepoes-analytics-actions button{flex:1;min-height:44px;padding:10px 12px;border:1px solid #b7d4e3;border-radius:8px;background:#fff;color:#102735;font:inherit;font-weight:700;cursor:pointer}
+.cepoes-analytics-actions button:focus-visible,#cepoes-analytics-choice summary:focus-visible,.cepoes-analytics-manage:focus-visible{outline:3px solid #f7c94a;outline-offset:3px}
+.cepoes-analytics-manage{display:block;margin:14px auto;padding:9px 14px;min-height:44px;border:1px solid currentColor;border-radius:8px;background:transparent;color:inherit;font:inherit;font-size:13px;cursor:pointer}
+@media(max-width:480px){#cepoes-analytics-choice{bottom:8px;left:8px;width:calc(100% - 16px);padding:16px}.cepoes-analytics-actions{gap:8px}}

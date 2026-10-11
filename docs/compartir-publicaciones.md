@@ -22,7 +22,7 @@ Los enlaces agregan UTM de campaña `compartir`. Los eventos `share` pasan por `
 
 - Build local de la salida pública completa: 170 HTML, 164 páginas elegibles.
 - Pruebas Python de exclusiones, idempotencia, escape, medidas PNG, títulos largos y excepción de firma.
-- Pruebas JavaScript de copia, conservación de filtros públicos, descarte de parámetros personales, enlaces de plataforma, cancelación nativa, diálogo y medición con consentimiento.
+- 12 pruebas JavaScript aprobadas, incluyendo portapapeles bloqueado y selección manual dentro del diálogo, carga de imagen, compatibilidad y cancelación del envío nativo. Pruebas de copia, conservación de filtros públicos, descarte de parámetros personales, enlaces de plataforma, cancelación nativa, diálogo y medición con consentimiento.
 - Regresiones de analítica, catálogos, Lo nuevo y boletines; contrato R2 y contraste estático.
 - Revisión de las placas PNG mediante inspección visual local.
 - **Revisión visual de los controles en navegador pendiente:** `sites-preview` falló con `bwrap: Can't mount proc on /newroot/proc: Operation not permitted`. El intento de acceso alternativo desde `cua_repl` fue rechazado por la política del navegador. No se considera validado el diseño móvil/escritorio ni el envío real a aplicaciones de redes.

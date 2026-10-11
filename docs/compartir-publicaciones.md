@@ -27,4 +27,12 @@ Los enlaces agregan UTM de campaña `compartir`. Los eventos `share` pasan por `
 - Revisión de las placas PNG mediante inspección visual local.
 - **Revisión visual de los controles en navegador pendiente:** `sites-preview` falló con `bwrap: Can't mount proc on /newroot/proc: Operation not permitted`. El intento de acceso alternativo desde `cua_repl` fue rechazado por la política del navegador. No se considera validado el diseño móvil/escritorio ni el envío real a aplicaciones de redes.
 
-El PR queda en borrador hasta completar esa revisión. No se publica ni se difunde por correo desde esta sesión.
+## Revisión alternativa — 2026-10-11
+
+Se realizó una revisión visual estática de la fila de controles y del diálogo de Instagram mediante WeasyPrint 70 y Poppler, usando los HTML y CSS reales de la salida preparada. Ocho vistas: 1440 × 900 y 390 × 844, claro/oscuro, fila de iconos y panel de Instagram. Se ajustó la fila para conservar todos los iconos juntos y se ocultó el rótulo en móvil. Los estilos usan los tokens institucionales; se declaró explícitamente el color del trazo.
+
+Esta revisión es una alternativa local de composición y legibilidad, no una prueba de navegador o de dispositivo real. El renderizador usa fuentes de respaldo locales, requiere aplicar explícitamente las reglas móviles y resolver currentColor de SVG según el token de tema; no ejecuta JavaScript. Se conservaron las pruebas funcionales independientes. La interacción con aplicaciones de redes y la revisión en navegador siguen pendientes.
+
+El fallo remoto de R2 fue exclusivamente una falta de conectividad al consultar el marcador público. Se reintentó el job fallido y terminó correctamente, incluidas las pruebas nuevas, el contrato de publicación y la consulta del marcador.
+
+El PR permanece en borrador hasta completar la prueba en navegador o acordar con Agustín el alcance alternativo de revisión. No se publica ni se difunde por correo desde esta sesión.

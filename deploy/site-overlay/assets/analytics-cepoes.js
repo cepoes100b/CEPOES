@@ -151,7 +151,7 @@
         if (previous === 'granted') location.reload();
       }
       previous = choice;
-      manage.focus();
+      manage.focus({preventScroll: true});
     });
     if (previous === 'granted') window.CEPOES_ANALYTICS.start({measurementId: id, analyticsConsent: true});
   }

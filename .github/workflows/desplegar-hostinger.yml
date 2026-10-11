@@ -7,6 +7,7 @@ on:
     paths:
       - "deploy/site-overlay/**"
       - "deploy/preparar_sitio_publico.py"
+      - "deploy/compartir_publicaciones.py"
       - "scripts/generar_newsletter_feed.py"
       - "scripts/generar_publications_feed.py"
       - "scripts/newsletter_editorial.py"
@@ -182,7 +183,7 @@ jobs:
         if: steps.current.outputs.should_deploy == 'true'
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq lftp
+          sudo apt-get install -y -qq lftp fonts-dejavu-core
 
       - name: Diagnosticar acceso SFTP
         if: steps.current.outputs.should_deploy == 'true'
@@ -306,6 +307,19 @@ jobs:
           else:
               raise SystemExit("No se encontró ni el texto anterior ni el nuevo; se aborta para evitar un despliegue sin el cambio solicitado.")
           PY
+
+      - name: Preparar Python para las placas de difusión
+        if: steps.current.outputs.should_deploy == 'true'
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.12"
+
+      - name: Preparar generación de placas de difusión
+        if: steps.current.outputs.should_deploy == 'true'
+        run: |
+          python -m pip install "Pillow>=12.0,<13"
+          python -m unittest test_compartir_publicaciones.py
+          node --check deploy/site-overlay/assets/compartir.js
 
       - name: Normalizar navegación y fallbacks públicos
         if: steps.current.outputs.should_deploy == 'true'

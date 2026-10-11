@@ -4,7 +4,7 @@
   if (window.CEPOES_ANALYTICS) return;
   const allowed = new Set(['https://cepoes.org', 'https://www.cepoes.org']);
   const events = new Set(['report_download', 'map_interaction', 'neighborhood_view',
-    'newsletter_confirmed', 'reading_progress', 'filter_change', 'outbound_click']);
+    'newsletter_confirmed', 'reading_progress', 'filter_change', 'outbound_click', 'share']);
   const blocked = /\/(?:privado|private|admin|login|auth|newsletter|suscripcion|subscribe|unsubscribe|confirmar|baja)(?:\/|$)/i;
   let started = false;
   let withdrawn = false;
@@ -29,6 +29,10 @@
       if (target) safe.target_path = target;
     }
     if (params && /^[a-z0-9.-]{1,100}$/i.test(params.target_domain || '')) safe.target_domain = params.target_domain;
+    if (name === 'share' && params) {
+      if (['whatsapp', 'x', 'facebook', 'copy', 'native', 'instagram', 'instagram_download'].includes(params.platform)) safe.share_platform = params.platform;
+      if (['copy_link', 'open_composer', 'download_image', 'native_share', 'copy_caption', 'native_image'].includes(params.method)) safe.share_method = params.method;
+    }
     window.gtag('event', name, safe);
     return true;
   }

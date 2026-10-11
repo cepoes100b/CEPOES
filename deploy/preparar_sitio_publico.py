@@ -1089,6 +1089,9 @@ def main() -> None:
     for path in site.rglob("*.html"):
         normalize_html(path, site)
         count += 1
+    from deploy.compartir_publicaciones import prepare as prepare_sharing
+    shared = prepare_sharing(site, ROOT / "deploy/reports-registry.json")
+    print(f"Piezas para compartir: {shared} páginas")
     print(f"Capa pública normalizada: {count} páginas HTML")
 
 

@@ -28,6 +28,16 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Verificar difusión y medición con consentimiento
+        run: |
+          python -m pip install "Pillow>=12.0,<13"
+          if ! test -f /usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq fonts-dejavu-core
+          fi
+          python -m unittest test_compartir_publicaciones.py tests/test_analytics_injection.py
+          node --test tests/compartir_publicaciones.test.mjs tests/analytics_cepoes.test.mjs
+
       - name: Ejecutar controles universales
         env:
           R2_BASE_SHA: ${{ github.event.pull_request.base.sha }}

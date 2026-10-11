@@ -986,6 +986,7 @@ def normalize_html(path: Path, site: Path) -> None:
     source = re.sub(r'/assets/thematic-map\.js(?:\?v=\d+)?', '/assets/thematic-map.js?v=258', source)
     source = re.sub(r'/assets/brechas\.js(?:\?v=\d+)?', '/assets/brechas.js?v=258', source)
     source = re.sub(r'/assets/migraciones\.js(?:\?v=\d+)?', '/assets/migraciones.js?v=20261009', source)
+    source = re.sub(r'/assets/salud-mental\.css(?:\?v=\d+)?', '/assets/salud-mental.css?v=3', source)
     source = re.sub(r'/assets/related\.js(?:\?v=\d+)?', '/assets/related.js?v=258', source)
     source = re.sub(r'/assets/informes-web\.css(?:\?v=\d+)?', '/assets/informes-web.css?v=3', source)
     source = source.replace('href="/observatorio/presupuesto/"', 'href="/presupuesto/ejecucion/"')

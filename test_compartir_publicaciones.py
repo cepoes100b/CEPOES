@@ -2,10 +2,60 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
+from urllib.parse import parse_qs, urlparse
+import hashlib
+import html
+import re
 from PIL import Image, ImageDraw, ImageFont
-from deploy.compartir_publicaciones import canonical, inject, card, lines, BOLD
+from deploy.compartir_publicaciones import canonical, inject, card, lines, BOLD, meta
 
 class SharingTests(unittest.TestCase):
+    def test_home_cards_are_idempotent_when_featured_heading_changes(self):
+        source = '<html><head><title>CEPOES | Centro de Estudios</title></head><body><h1>Informe destacado</h1></body></html>'
+        with tempfile.TemporaryDirectory() as tmp:
+            site = Path(tmp)
+            first = inject(source, '/index.html', site, {})
+            images = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in site.rglob('*.png')}
+            self.assertEqual(len(images), 3)
+            self.assertEqual(first, inject(first, '/index.html', site, {}))
+            second = inject(first.replace('<h1>Informe destacado</h1>', '<h1>Otro artículo</h1>'), '/index.html', site, {})
+            self.assertEqual(meta(first, 'og:image'), meta(second, 'og:image'))
+            self.assertEqual(images, {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in site.rglob('*.png')})
+
+    def test_home_uses_institutional_identity_not_featured_h1(self):
+        title = 'CEPOES | Centro de Estudios & Observatorio'
+        source = '<html><head><title>CEPOES | Centro de Estudios &amp; Observatorio</title></head><body><h1>Salud mental en la Ciudad de Buenos Aires</h1></body></html>'
+        with tempfile.TemporaryDirectory() as tmp, patch('deploy.compartir_publicaciones.card') as draw:
+            first = inject(source, '/index.html', Path(tmp), {})
+            self.assertEqual(first, inject(first, '/index.html', Path(tmp), {}))
+            for key in ['og:title', 'twitter:title', 'og:image:alt', 'twitter:image:alt']:
+                self.assertEqual(meta(first, key), title)
+            self.assertIn('data-share-title="' + html.escape(title, quote=True) + '"', first)
+            self.assertEqual(meta(first, 'og:url'), 'https://cepoes.org/')
+            for platform in ['whatsapp', 'x']:
+                href = re.search(r'data-share-platform="' + platform + r'" href="([^"]+)"', first)[1]
+                query = parse_qs(urlparse(html.unescape(href)).query)
+                self.assertEqual(query['text'][0].split('\n')[0], title)
+            for call in draw.call_args_list:
+                self.assertEqual(call.args[1], title)
+            self.assertIn('<h1>Salud mental en la Ciudad de Buenos Aires</h1>', first)
+
+    def test_article_and_registered_report_keep_their_titles(self):
+        source = '<html><head><title>Sección | CEPOES</title></head><body><h1>Título de artículo</h1></body></html>'
+        route = '/publicaciones/informes/salud-mental/'
+        report = {'title': 'Salud mental en la Ciudad de Buenos Aires', 'description': 'Descripción registrada', 'kind': 'Informe especial'}
+        with tempfile.TemporaryDirectory() as tmp, patch('deploy.compartir_publicaciones.card') as draw:
+            article = inject(source, '/publicaciones/notas/ejemplo/index.html', Path(tmp), {})
+            self.assertEqual(meta(article, 'og:title'), 'Título de artículo')
+            first = inject(source, route + 'index.html', Path(tmp), {route: report})
+            self.assertEqual(first, inject(first, route + 'index.html', Path(tmp), {route: report}))
+            self.assertEqual(meta(first, 'og:title'), report['title'])
+            self.assertEqual(meta(first, 'twitter:title'), report['title'])
+            self.assertEqual(meta(first, 'og:description'), report['description'])
+            self.assertEqual(meta(first, 'og:url'), 'https://cepoes.org' + route)
+            for call in draw.call_args_list[3:]:
+                self.assertEqual(call.args[1], report['title'])
+
     def test_private_and_aliases_are_excluded(self):
         for route in ['/privado/index.html', '/prensa/admin/index.html', '/newsletter/index.html', '/legislativa/index.html', '/publicaciones/lectura.html']:
             self.assertIsNone(canonical('<html></html>', route))

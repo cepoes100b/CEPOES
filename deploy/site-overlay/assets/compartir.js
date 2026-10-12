@@ -3,6 +3,7 @@
   'use strict';
   document.querySelectorAll('.cepoes-share').forEach(function (root) {
     const dialog = root.querySelector('dialog');
+    const media = root.querySelector('.share-media-dialog');
     const title = root.dataset.shareTitle;
     const original = new URL(root.dataset.shareUrl);
     function url(platform) {
@@ -20,7 +21,7 @@
       return result.href;
     }
     function status(message) {
-      const host = dialog.open ? dialog : root;
+      const host = media && media.open ? media : dialog.open ? dialog : root;
       host.querySelector('.share-status').textContent = message;
     }
     function track(platform, method) {
@@ -37,7 +38,7 @@
           field = document.createElement('textarea'); field.className = 'share-manual';
           field.setAttribute('aria-label', 'Texto para copiar');
         }
-        (dialog.open ? dialog : root).appendChild(field);
+        (media && media.open ? media : dialog.open ? dialog : root).appendChild(field);
         field.value = text; field.focus({preventScroll: true}); field.select(); return false;
       }
     }
@@ -45,14 +46,74 @@
       if (await copy(url('copy'))) track('copy', 'copy_link');
     });
     root.querySelectorAll('a[data-share-platform]').forEach(function (link) {
-      link.addEventListener('click', function () {
+      link.addEventListener('click', function (event) {
         const platform = link.dataset.sharePlatform;
         if (platform === 'whatsapp') link.href = 'https://wa.me/?text=' + encodeURIComponent(title + '\n' + url(platform));
         if (platform === 'x') link.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(title) + '&url=' + encodeURIComponent(url(platform));
         if (platform === 'facebook') link.href = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url(platform));
+        if (media && ['whatsapp', 'x'].includes(platform) && typeof media.showModal === 'function') {
+          event.preventDefault();
+          openMedia(platform, link.href);
+          return;
+        }
         track(platform, platform === 'instagram_download' ? 'download_image' : 'open_composer');
       });
     });
+    let mediaPlatform = 'whatsapp';
+    let mediaFile = null;
+    let mediaLoad = null;
+    function mediaData(file) {
+      return {files: [file], title: title, text: title + '\n' + url(mediaPlatform)};
+    }
+    function openMedia(platform, link) {
+      mediaPlatform = platform;
+      media.querySelector('[data-media-title]').textContent = 'Compartir en ' + (platform === 'x' ? 'X' : 'WhatsApp');
+      media.querySelector('[data-media-help]').textContent = 'Elegí ' + (platform === 'x' ? 'X' : 'WhatsApp') + ' en el menú de tu dispositivo. Si la aplicación omite el texto, copialo aquí y pegalo junto a la imagen.';
+      media.querySelector('[data-media-link]').href = link;
+      media.querySelector('.share-status').textContent = '';
+      const manual = root.querySelector('.share-manual');
+      if (manual) manual.value = title + '\n' + url(platform);
+      media.showModal();
+      const button = media.querySelector('[data-media-file]');
+      button.hidden = true;
+      if (!navigator.share || !navigator.canShare) return;
+      // Fetch on opening; the next click calls share synchronously, retaining activation.
+      if (!mediaLoad) mediaLoad = (async function () {
+        try {
+          const response = await fetch(root.dataset.shareImage + '-enlace.png');
+          if (!response.ok) throw new Error('image unavailable');
+          const blob = await response.blob();
+          if (blob.type !== 'image/png') throw new Error('invalid image type');
+          return new File([blob], 'cepoes-publicacion.png', {type: 'image/png'});
+        } catch (_) { return null; }
+      }());
+      mediaLoad.then(function (file) {
+        mediaFile = file;
+        try { button.hidden = !file || !navigator.canShare(mediaData(file)); }
+        catch (_) { button.hidden = true; }
+        if (!file) { mediaLoad = null; if (media.open) status('No se pudo cargar la placa. Podés guardar la imagen o continuar con el enlace.'); }
+      });
+    }
+    if (media) {
+      media.querySelector('[data-media-close]').addEventListener('click', function () { media.close(); });
+      media.addEventListener('click', function (event) {
+        if (event.target !== media) return;
+        const box = media.getBoundingClientRect();
+        if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) media.close();
+      });
+      media.querySelector('[data-media-file]').addEventListener('click', async function () {
+        if (!mediaFile) return;
+        const platform = mediaPlatform;
+        try { await navigator.share(mediaData(mediaFile)); track(platform, 'native_image'); }
+        catch (error) { if (error.name !== 'AbortError') status('Guardá la imagen, copiá el texto y adjuntalos desde la aplicación.'); }
+      });
+      media.querySelector('[data-media-caption]').addEventListener('click', async function () {
+        const platform = mediaPlatform;
+        if (await copy(title + '\n' + url(platform))) track(platform, 'copy_caption');
+      });
+      media.querySelector('[data-media-download]').addEventListener('click', function () { track(mediaPlatform, 'download_image'); });
+      media.querySelector('[data-media-link]').addEventListener('click', function () { track(mediaPlatform, 'open_composer'); });
+    }
     const native = root.querySelector('[data-share-native]');
     if (navigator.share) {
       native.hidden = false;
@@ -91,3 +152,4 @@
     });
   });
 }());
+

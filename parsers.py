@@ -374,7 +374,8 @@ def comex(path):
 def _bloques_por_rama(path):
     """Lee las planillas de la Encuesta Industrial.
 
-    Layout: col A el año (sólo en enero), col B el mes, y a partir de ahí DOS
+    Layout: col A contiene anclas de año (también fuera de enero), col B el
+    mes. La secuencia mensual debe concordar con todas las anclas. Hay DOS
     bloques de columnas con las mismas ramas repetidas —"Valores corrientes" y
     "Valores constantes"—, cada uno encabezado por su propio "Total".
     IDECBA ya publica la serie deflactada, así que no hay que deflactar nada:
@@ -414,21 +415,34 @@ def _bloques_por_rama(path):
                 ramas[str(et).strip()] = c
         bloques[nombre or f"bloque{k}"] = {"col_total": c0, "cols": ramas}
 
-    periodos, anio = [], None
-    filas = []
+    filas, meses, anclas = [], [], []
     for r in range(fila_ramas + 1, ws.max_row + 1):
-        a = anio_de(ws.cell(r, 1).value)
-        if a:
-            anio = a
-        mes = MESES.get(norm(ws.cell(r, 2).value))
-        if not (mes and anio):
-            continue
         if all(num(ws.cell(r, b["col_total"]).value) is None for b in bloques.values()):
             continue
-        periodos.append(f"{anio}-{mes:02d}")
+        mes = MESES.get(norm(ws.cell(r, 2).value))
+        if mes is None:
+            raise ValueError(f"{path}: mes inválido en fila {r}")
+        if meses and mes != meses[-1] % 12 + 1:
+            raise ValueError(f"{path}: secuencia mensual discontinua en fila {r}")
+        a = anio_de(ws.cell(r, 1).value)
+        if ws.cell(r, 1).value is not None and a is None:
+            raise ValueError(f"{path}: año inválido en fila {r}")
+        if a is not None:
+            # Cada ancla determina el mismo mes inicial, aunque esté en junio
+            # o después de las primeras filas de la serie.
+            anclas.append((r, a * 12 + mes - 1 - len(filas)))
         filas.append(r)
-    if len(periodos) < 24:
-        raise ValueError(f"{path}: {len(periodos)} meses, esperaba 24+")
+        meses.append(mes)
+    if len(filas) < 24:
+        raise ValueError(f"{path}: {len(filas)} meses, esperaba 24+")
+    if not anclas:
+        raise ValueError(f"{path}: secuencia mensual sin anclas de año")
+    inicio = anclas[0][1]
+    for r, candidato in anclas:
+        if candidato != inicio:
+            raise ValueError(f"{path}: ancla de año contradictoria en fila {r}")
+    periodos = [f"{(inicio + i) // 12:04d}-{(inicio + i) % 12 + 1:02d}"
+                for i in range(len(filas))]
 
     salida = {}
     for nombre, b in bloques.items():

@@ -59,6 +59,25 @@ def previo():
         return None
 
 
+def validar_periodos_mensuales(periodos):
+    """Impide publicar duplicados, retrocesos o huecos en las series EIM."""
+    ordinales = []
+    for periodo in periodos:
+        try:
+            fecha = datetime.date.fromisoformat(f"{periodo}-01")
+        except (ValueError, TypeError):
+            raise ValueError(f"período mensual inválido: {periodo!r}") from None
+        if fecha.strftime("%Y-%m") != periodo:
+            raise ValueError(f"período mensual inválido: {periodo!r}")
+        ordinales.append(fecha.year * 12 + fecha.month - 1)
+    if len(set(ordinales)) != len(ordinales):
+        raise ValueError("períodos mensuales duplicados")
+    if any(b <= a for a, b in zip(ordinales, ordinales[1:])):
+        raise ValueError("períodos mensuales fuera de orden")
+    if any(b != a + 1 for a, b in zip(ordinales, ordinales[1:])):
+        raise ValueError("períodos mensuales discontinuos")
+
+
 def main():
     if not os.path.exists(SALIDA):
         print("✘ no existe datos.json")
@@ -88,6 +107,13 @@ def main():
         for c, v in b.items():
             if isinstance(v, list) and len(v) != len(serie):
                 errores.append(f"{k}.{c} mide {len(v)} y {k}.{campo} mide {len(serie)}")
+
+    # También controla bloques heredados cuando el generador conserva el previo.
+    for clave in ("industria", "masa_salarial"):
+        try:
+            validar_periodos_mensuales((d.get(clave) or {}).get("periodos") or [])
+        except ValueError as e:
+            errores.append(f"{clave}: {e}")
 
     # 3. las 15 comunas
     cl = d.get("comunas_locales") or {}

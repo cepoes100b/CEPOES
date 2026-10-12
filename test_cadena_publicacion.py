@@ -1177,12 +1177,12 @@ class IndustryFallbackTest(unittest.TestCase):
         serie = public_site.industria_observaciones(self.data)
         period, latest = serie[-1]
         change = (latest / serie[-13][1] - 1) * 100
-        signed = ('+' if change > 0 else '−' if change < 0 else '') + public_site.fmt_number(abs(change)) + '%'
-        self.assertIn('id="indicator-primary-value">' + public_site.fmt_number(latest) + '<', result)
+        signed = ('+' if change > 0 else '−' if change < 0 else '') + public_site.industria_numero(abs(change)) + '%'
+        self.assertIn('id="indicator-primary-value">' + public_site.industria_numero(latest) + '<', result)
         self.assertIn('id="indicator-primary-period">' + public_site.fmt_period(period) + '<', result)
         self.assertIn('id="indicator-secondary-value">' + signed + '<', result)
         rows = re.findall(r'<tr><td>(.*?)</td><td class="num">(.*?)</td></tr>', result)
-        expected = [(public_site.fmt_period(p), public_site.fmt_number(v))
+        expected = [(public_site.fmt_period(p), public_site.industria_numero(v))
                     for p, v in reversed(public_site.industria_observaciones(self.data))]
         self.assertEqual(rows, expected)
         for keep in ('<thead><tr><th>Período</th><th>Índice ingresos fabriles</th></tr></thead>',
@@ -1192,6 +1192,39 @@ class IndustryFallbackTest(unittest.TestCase):
                      '<script>window.conservar = true;</script>'):
             self.assertIn(keep, result)
         self.assertEqual(self.render(result), result)
+
+    def test_decimal_rounding_matches_observed_runtime_cases(self):
+        # Corte auditado; futuras actualizaciones no cambian el indicador de esta regresión.
+        for field in ('periodos', 'total_const'):
+            self.data['industria'][field] = self.data['industria'][field][:297]
+        before = copy.deepcopy(self.data)
+        csv_before = public_site.industria_csv(self.data)
+        result = self.render()
+        for period, value, expected in (
+            ('2021-02', 159.95, '160,0'),
+            ('2019-07', 160.85, '160,9'),
+            ('2016-07', 173.45, '173,5'),
+        ):
+            with self.subTest(period=period):
+                self.assertEqual(dict(public_site.industria_observaciones(self.data))[period], value)
+                self.assertEqual(public_site.industria_numero(value), expected)
+                self.assertIn('<td>' + public_site.fmt_period(period) + '</td><td class="num">'
+                              + expected + '</td>', result)
+        self.assertEqual(self.data, before)
+        self.assertEqual(public_site.industria_csv(self.data), csv_before)
+        self.assertIn('id="indicator-primary-value">155,1<', result)
+        self.assertIn('id="indicator-secondary-value">+7,6%<', result)
+        self.assertIn('se ubica en 155,1.', result)
+
+    def test_all_displayed_values_match_standard_intl_decimal_rounding(self):
+        values = [v for v in self.data['industria']['total_const'] if v is not None] + [0, 1.25, -1.25, 1000.05]
+        script = """const fs=require('fs');
+const values=JSON.parse(fs.readFileSync(0,'utf8'));
+const f=new Intl.NumberFormat('es-AR',{minimumFractionDigits:1,maximumFractionDigits:1});
+process.stdout.write(JSON.stringify(values.map(x=>f.format(x))));"""
+        result = subprocess.run(['node', '-e', script], input=json.dumps(values),
+                                text=True, capture_output=True, check=True)
+        self.assertEqual([public_site.industria_numero(v) for v in values], json.loads(result.stdout))
 
     def test_metadata_and_static_csv_match_all_canonical_pairs(self):
         import csv

@@ -25,6 +25,8 @@ import urllib.request
 
 EXPECTED_CACHE = {"no-cache", "max-age=0", "must-revalidate"}
 TARGETS = ("/", "/index.html", "/observatorio/", "/observatorio/index.html",
+           "/observatorio/produccion/industria/", "/observatorio/produccion/industria/index.html",
+           "/observatorio/produccion/industria/datos.csv",
            "/datos/estado/", "/datos/estado/index.html",
            "/assets/data/estructura-productiva/actual.json", "/.well-known/cepoes-release.json")
 CONTROLS = ("/assets/fixture.css", "/assets/data/otra.json", "/publicaciones/fixture/",
@@ -93,6 +95,8 @@ def main() -> None:
         fixtures = {
             "index.html": "fixture-home",
             "observatorio/index.html": "fixture-observatory",
+            "observatorio/produccion/industria/index.html": "fixture-industry",
+            "observatorio/produccion/industria/datos.csv": "fixture-industry-csv",
             "observatorio/fixture/index.html": "fixture-other-observatory-html",
             "datos/estado/index.html": "fixture-state",
             "assets/data/estructura-productiva/actual.json": '{"fixture":"current"}',

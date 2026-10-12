@@ -289,6 +289,12 @@ for source_url in [
     assert f'href="{source_url}"' in home, f'Fuente oficial ausente en home: {source_url}'
 assert 'Datos generados el ' in home and 'enlaza la fuente oficial' in home, 'La home debe informar fecha y trazabilidad de los indicadores'
 source_data=json.loads((Path(__file__).resolve().parent/'datos.json').read_text(encoding='utf-8'))
+from deploy.preparar_sitio_publico import industria_fallback, industria_csv
+industry_page = root / "observatorio/produccion/industria/index.html"
+industry_html = industry_page.read_text(encoding="utf-8")
+assert industria_fallback(industry_html, source_data) == industry_html, "Fallback de Industria desactualizado"
+assert industry_page.with_name("datos.csv").read_bytes() == industria_csv(source_data), "CSV estático de Industria desactualizado"
+
 latest_unemployment=f'{source_data["empleo"]["desocupacion"][-1]:.1f}'.replace('.',',')+'%'
 assert latest_unemployment in home, f'La home no refleja la última desocupación disponible: {latest_unemployment}'
 assert home.count('home-strategy-card')==3, 'La home debe mostrar exactamente tres recorridos estratégicos'

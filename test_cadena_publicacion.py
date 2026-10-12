@@ -417,12 +417,21 @@ class EvidenceTests(unittest.TestCase):
         observatory = self.site / "observatorio/index.html"
         observatory.parent.mkdir()
         observatory.write_bytes(self.observatory)
+        self.industry = {}
+        for relative, url_path in evidence.INDUSTRY_FILES.items():
+            path = self.site / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            content = ("current " + relative).encode()
+            path.write_bytes(content)
+            self.industry[url_path] = content
 
     def read(self, path, nonce, **kwargs):
         if path == "/" + evidence.MARKER_PATH:
             return json.dumps(self.marker).encode()
         if path in ("/observatorio/", "/observatorio/index.html"):
             return self.observatory
+        if path in self.industry:
+            return self.industry[path]
         relative = next(key for key, value in evidence.PUBLIC_FILES.items() if value == path)
         return self.contents[relative]
 
@@ -458,7 +467,7 @@ class EvidenceTests(unittest.TestCase):
         with patch.object(evidence, "read_public", side_effect=self.read) as read:
             evidence.verify_online(self.marker, "test", candidate_site=self.site)
         paths = ["/" + evidence.MARKER_PATH, *evidence.PUBLIC_FILES.values(),
-                 "/observatorio/", "/observatorio/index.html"]
+                 "/observatorio/", "/observatorio/index.html", *evidence.INDUSTRY_FILES.values()]
         self.assertEqual([(c.args[0], c.args[1]) for c in read.call_args_list],
                          [(p, None) for p in paths] + [(p, "test") for p in paths])
         # La verificación nueva no invalida los marcadores/restauraciones previos.
@@ -466,6 +475,18 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(set(self.marker["files"]), set(evidence.PUBLIC_FILES))
         self.assertNotIn("observatorio/index.html", self.marker["files"])
         self.assertEqual(evidence.validate_marker(self.marker, REPOSITORY), self.marker)
+
+    def test_stale_industry_html_or_csv_fails_with_and_without_nonce(self):
+        for stale_path in evidence.INDUSTRY_FILES.values():
+            for with_nonce in (False, True):
+                def response(path, nonce, **kwargs):
+                    if path == stale_path and (nonce is not None) == with_nonce:
+                        return b"outdated industry"
+                    return self.read(path, nonce, **kwargs)
+                with self.subTest(path=stale_path, nonce=with_nonce):
+                    with patch.object(evidence, "read_public", side_effect=response):
+                        with self.assertRaisesRegex(ValueError, "bytes.*industria"):
+                            evidence.verify_online(self.marker, "test", candidate_site=self.site)
 
     def test_stale_observatory_alias_fails_even_when_nonce_is_current(self):
         for stale_path in ("/observatorio/", "/observatorio/index.html"):
@@ -1102,6 +1123,158 @@ class WorkflowContractTests(unittest.TestCase):
         self.assertIn("python -m unittest test_cadena_publicacion.py", ci)
         import validar_rutas_publicacion
         validar_rutas_publicacion.validate_input_manifest((ROOT / ".github/workflows/desplegar-hostinger.yml").read_text())
+
+
+class IndustryCanonicalSeriesTest(unittest.TestCase):
+    def setUp(self):
+        self.data = json.loads((ROOT / "datos.json").read_text(encoding="utf-8"))
+
+    def test_all_canonical_pairs_preserved(self):
+        before = copy.deepcopy(self.data)
+        serie = public_site.industria_observaciones(self.data)
+        bloque = self.data["industria"]
+        self.assertEqual(serie, list(zip(bloque["periodos"], bloque["total_const"])))
+        self.assertEqual(self.data, before)
+        self.assertEqual(dict(serie)["2015-01"], 170.31)
+        self.assertEqual(dict(serie)["2016-01"], 169.62)
+        self.assertGreaterEqual(len(serie), 297)
+
+    def test_rejects_broken_series_before_rendering(self):
+        for mode in ("duplicate", "gap", "length", "invalid_month", "nan", "string", "boolean"):
+            data = copy.deepcopy(self.data)
+            b = data["industria"]
+            if mode == "duplicate": b["periodos"][171] = b["periodos"][170]
+            elif mode == "gap": b["periodos"][171] = "2016-02"
+            elif mode == "length": b["total_const"].pop()
+            elif mode == "invalid_month": b["periodos"][171] = "2016-13"
+            elif mode == "nan": b["total_const"][171] = float("nan")
+            elif mode == "string": b["total_const"][171] = "169.62"
+            elif mode == "boolean": b["total_const"][171] = True
+            with self.subTest(mode=mode), self.assertRaises(ValueError):
+                public_site.industria_observaciones(data)
+
+    def test_missing_value_is_preserved(self):
+        self.data["industria"]["total_const"][171] = None
+        self.assertIsNone(public_site.industria_observaciones(self.data)[171][1])
+
+
+class IndustryFallbackTest(unittest.TestCase):
+    # Fixture derivada del DOM hidratado, no copia del HTML inicial.
+    SOURCE = (ROOT / "tests/fixtures/industria-dom.html").read_text(encoding="utf-8")
+
+    def setUp(self):
+        self.data = json.loads((ROOT / "datos.json").read_text(encoding="utf-8"))
+
+    def render(self, source=None):
+        with patch.object(public_site, "load_json", return_value=self.data) as load:
+            result = public_site.apply_fallbacks(source or self.SOURCE,
+                                               "/observatorio/produccion/industria/index.html")
+            load.assert_called_once_with("datos.json")
+            return result
+
+    def test_full_table_current_indicators_and_unrelated_markup(self):
+        result = self.render()
+        serie = public_site.industria_observaciones(self.data)
+        period, latest = serie[-1]
+        change = (latest / serie[-13][1] - 1) * 100
+        signed = ('+' if change > 0 else '−' if change < 0 else '') + public_site.fmt_number(abs(change)) + '%'
+        self.assertIn('id="indicator-primary-value">' + public_site.fmt_number(latest) + '<', result)
+        self.assertIn('id="indicator-primary-period">' + public_site.fmt_period(period) + '<', result)
+        self.assertIn('id="indicator-secondary-value">' + signed + '<', result)
+        rows = re.findall(r'<tr><td>(.*?)</td><td class="num">(.*?)</td></tr>', result)
+        expected = [(public_site.fmt_period(p), public_site.fmt_number(v))
+                    for p, v in reversed(public_site.industria_observaciones(self.data))]
+        self.assertEqual(rows, expected)
+        for keep in ('<thead><tr><th>Período</th><th>Índice ingresos fabriles</th></tr></thead>',
+                     'class="indicator-current" style="--c:var(--lA)"',
+                     'data-related-tags="precios,produccion,datos"',
+                     '<section id="ajeno">Conservar</section>',
+                     '<script>window.conservar = true;</script>'):
+            self.assertIn(keep, result)
+        self.assertEqual(self.render(result), result)
+
+    def test_metadata_and_static_csv_match_all_canonical_pairs(self):
+        import csv
+        import hashlib
+        import io
+        result = self.render()
+        self.assertIn('id="indicator-meta-first">Octubre 2001<', result)
+        last = public_site.fmt_period(self.data['industria']['periodos'][-1])
+        self.assertIn('id="indicator-meta-period">' + last + '<', result)
+        self.assertIn(public_site.fmt_date(self.data['generado']) + ' · Repositorio CEPOES', result)
+        datasets = [json.loads(x) for x in re.findall(
+            r'<script type="application/ld\+json">(.*?)</script>', result, re.S)]
+        original = [json.loads(x) for x in re.findall(
+            r'<script type="application/ld\+json">(.*?)</script>', self.SOURCE, re.S)]
+        self.assertEqual(datasets[0], original[0])
+        original[1]['temporalCoverage'] = 'Octubre 2001/' + last
+        self.assertEqual(datasets[1], original[1])
+        raw = public_site.industria_csv(self.data)
+        rows = list(csv.reader(io.StringIO(raw.decode('utf-8-sig')), delimiter=';'))
+        self.assertEqual(rows[0], ['periodo', 'indice_ingresos_fabriles_constantes'])
+        self.assertEqual([(p, float(v)) for p, v in rows[1:]],
+                         public_site.industria_observaciones(self.data))
+        # Evidencia auditada del 12/10; las futuras actualizaciones pueden crecer.
+        if self.data['generado'] == '2026-10-12' and last == 'Junio 2026':
+            self.assertEqual(len(raw), 5930)
+            self.assertEqual(hashlib.sha256(raw).hexdigest(),
+                             'f2efea34e1759700c9063b5d423f966cffb641c3fae841e13b05327d625cc512')
+        self.assertFalse(raw.endswith(b'\r\n'))
+
+    def test_normalizer_writes_csv_and_leaves_shadow_untouched(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            site = Path(tmp)
+            page = site / 'observatorio/produccion/industria/index.html'
+            page.parent.mkdir(parents=True)
+            page.write_text(self.SOURCE, encoding='utf-8')
+            shadow = site / 'assets/data/datos.json'
+            shadow.parent.mkdir(parents=True)
+            shadow.write_text('{"heredado":true}')
+            public_site.normalize_html(page, site)
+            self.assertEqual(page.with_name('datos.csv').read_bytes(), public_site.industria_csv(self.data))
+            self.assertIn('id="indicator-primary-period">' + public_site.fmt_period(
+                self.data['industria']['periodos'][-1]) + '<', page.read_text())
+            self.assertEqual(shadow.read_text(), '{"heredado":true}')
+            before = page.read_bytes()
+            public_site.normalize_html(page, site)
+            self.assertEqual(page.read_bytes().split(b"<body", 1)[1], before.split(b"<body", 1)[1])
+
+    def test_next_release_refreshes_an_already_generated_page(self):
+        first = self.render()
+        b = self.data['industria']
+        ordinal = int(b['periodos'][-1][:4]) * 12 + int(b['periodos'][-1][5:])
+        next_period = f"{ordinal // 12:04d}-{ordinal % 12 + 1:02d}"
+        b['periodos'].append(next_period)
+        b['total_const'].append(b['total_const'][-12] * 1.1)
+        result = self.render(first)
+        self.assertIn('id="indicator-primary-period">' + public_site.fmt_period(next_period) + '<', result)
+        self.assertIn('id="indicator-secondary-value">+10,0%<', result)
+        self.assertEqual(result.count('<td class="num">'), len(b['periodos']))
+        self.assertEqual(self.render(result), result)
+
+    def test_missing_duplicate_or_broken_destinations_fail(self):
+        for source in (
+            self.SOURCE.replace('id="indicator-reading"', 'id="ausente"'),
+            self.SOURCE.replace('</body>', '<p id="indicator-reading">duplicado</p></body>'),
+            self.SOURCE.replace('</strong>', ''),
+            self.SOURCE.replace('<tbody>', '<div>').replace('</tbody>', '</div>'),
+            self.SOURCE.replace('</tbody>', '</tbody><tbody></tbody>'),
+        ):
+            with self.subTest(source=source), self.assertRaises(ValueError):
+                self.render(source)
+
+    def test_zero_negative_and_missing_comparators(self):
+        b = self.data['industria']
+        prior = b['total_const'][-13]
+        b['total_const'][-1] = prior
+        self.assertIn('id="indicator-secondary-value">0,0%<', self.render())
+        b['total_const'][-1] = prior * .9
+        self.assertIn('id="indicator-secondary-value">−10,0%<', self.render())
+        self.assertIn('disminuyó 10,0%.', self.render())
+        for value in (None, 0):
+            b['total_const'][-13] = value
+            with self.assertRaises(ValueError):
+                self.render()
 
 
 if __name__ == "__main__":

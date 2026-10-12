@@ -24,6 +24,10 @@ PUBLIC_FILES = {
 # de los marcadores que ya están en producción o en respaldos durables.
 OBSERVATORY_FILE = "observatorio/index.html"
 OBSERVATORY_PATHS = ("/observatorio/", "/observatorio/index.html")
+INDUSTRY_FILES = {
+    "observatorio/produccion/industria/index.html": "/observatorio/produccion/industria/",
+    "observatorio/produccion/industria/datos.csv": "/observatorio/produccion/industria/datos.csv",
+}
 SHA = re.compile(r"[0-9a-f]{40}")
 HASH = re.compile(r"[0-9a-f]{64}")
 
@@ -58,7 +62,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def read_public(path: str, nonce: str | None, *, limit: int = 8 * 1024 * 1024) -> bytes:
-    if path not in {"/" + MARKER_PATH, *PUBLIC_FILES.values(), *OBSERVATORY_PATHS}:
+    if path not in {"/" + MARKER_PATH, *PUBLIC_FILES.values(), *OBSERVATORY_PATHS, *INDUSTRY_FILES.values()}:
         raise ValueError("Ruta fuera de la whitelist pública")
     if nonce is not None and not re.fullmatch(r"[A-Za-z0-9-]+", nonce):
         raise ValueError("Identificador de comprobación inválido")
@@ -113,6 +117,11 @@ def verify_online(marker: dict, nonce: str, *, candidate_site: Path | None = Non
             raise ValueError(f"Falta ruta pública regular: {OBSERVATORY_FILE}")
         expected = fingerprint(path.read_bytes())
         routes.extend((OBSERVATORY_FILE, url_path, expected) for url_path in OBSERVATORY_PATHS)
+        for relative, url_path in INDUSTRY_FILES.items():
+            path = candidate_site / relative
+            if path.is_symlink() or not path.is_file():
+                raise ValueError(f"Falta ruta pública regular: {relative}")
+            routes.append((relative, url_path, fingerprint(path.read_bytes())))
     # Primero la visita ordinaria: consultar antes con nonce podría refrescar una
     # caché compartida y ocultar que los visitantes recibían una versión anterior.
     ordinary_marker = validate_marker(json.loads(read_public("/" + MARKER_PATH, None,

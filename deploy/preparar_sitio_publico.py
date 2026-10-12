@@ -4,9 +4,12 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import html
+import io
 import json
+import math
 import re
 import shutil
 import unicodedata
@@ -298,6 +301,8 @@ def topic_chips() -> str:
 PUBLIC_REVALIDATION_PATHS = (
     r"^/(index[.]html)?$",
     r"^/observatorio/(index[.]html)?$",
+    r"^/observatorio/produccion/industria/(index[.]html)?$",
+    r"^/observatorio/produccion/industria/datos[.]csv$",
     r"^/datos/estado/(index[.]html)?$",
     r"^/assets/data/estructura-productiva/actual[.]json$",
     r"^/[.]well-known/cepoes-release[.]json$",
@@ -733,7 +738,130 @@ def restructure_proposals(source: str) -> str:
     return source
 
 
+def industria_observaciones(data: dict) -> list[tuple[str, float | None]]:
+    """Valida la serie canónica antes de generar el HTML y su descarga."""
+    bloque = data.get("industria") or {}
+    periodos, valores = bloque.get("periodos"), bloque.get("total_const")
+    if not isinstance(periodos, list) or not isinstance(valores, list):
+        raise ValueError("Industria: faltan períodos o valores canónicos")
+    if len(periodos) != len(valores) or len(periodos) < 13:
+        raise ValueError("Industria: longitudes incompatibles o serie insuficiente")
+    anterior = None
+    for periodo, valor in zip(periodos, valores):
+        if not isinstance(periodo, str) or not re.fullmatch(r"\d{4}-(0[1-9]|1[0-2])", periodo):
+            raise ValueError(f"Industria: período inválido {periodo!r}")
+        ordinal = int(periodo[:4]) * 12 + int(periodo[5:])
+        if anterior is not None and ordinal != anterior + 1:
+            raise ValueError("Industria: períodos duplicados, desordenados o discontinuos")
+        anterior = ordinal
+        if valor is not None and (isinstance(valor, bool) or not isinstance(valor, (int, float))
+                                  or not math.isfinite(valor)):
+            raise ValueError(f"Industria: valor inválido en {periodo}")
+    return list(zip(periodos, valores))
+
+
+def _industria_elemento(source: str, element_id: str) -> tuple[re.Match, tuple[int, int]]:
+    matches = list(re.finditer(
+        rf'<(?P<tag>[a-zA-Z0-9]+)\b[^>]*\sid=["\']{re.escape(element_id)}["\'][^>]*>',
+        source, flags=re.S))
+    if len(matches) != 1:
+        raise ValueError(f"Industria: se esperaba un único #{element_id}")
+    opening = matches[0]
+    span = element_span(source, opening)
+    if span is None:
+        raise ValueError(f"Industria: elemento sin cierre #{element_id}")
+    return opening, span
+
+
+def _industria_texto(source: str, element_id: str, value: str) -> str:
+    opening, span = _industria_elemento(source, element_id)
+    close = re.search(rf'</{re.escape(opening.group("tag"))}\s*>$', source[:span[1]], re.I)
+    return source[:opening.end()] + html.escape(value) + source[close.start():]
+
+
+def industria_fallback(source: str, data: dict) -> str:
+    """Actualiza sólo los destinos de datos del HTML inicial de Industria."""
+    serie = industria_observaciones(data)
+    periodo, ultimo = serie[-1]
+    anterior = serie[-13][1]
+    if ultimo is None or anterior in (None, 0):
+        raise ValueError("Industria: faltan valores para el indicador interanual")
+    cambio = (ultimo / anterior - 1) * 100
+    valor = fmt_number(ultimo)
+    porcentaje = ("+" if cambio > 0 else "−" if cambio < 0 else "") + fmt_number(abs(cambio)) + "%"
+    lectura = f"El índice de ingresos fabriles a precios constantes se ubica en {valor}. "
+    if cambio:
+        verbo = "aumentó" if cambio > 0 else "disminuyó"
+        lectura += f"Frente al mismo mes del año anterior, {verbo} {fmt_number(abs(cambio))}%."
+    else:
+        lectura += "No registró variación frente al mismo mes del año anterior."
+    for element_id, text in (
+        ("indicator-primary-value", valor),
+        ("indicator-primary-period", fmt_period(periodo)),
+        ("indicator-secondary-value", porcentaje),
+        ("indicator-reading", lectura),
+        ("indicator-meta-first", fmt_period(serie[0][0])),
+        ("indicator-meta-period", fmt_period(periodo)),
+        ("data-date", fmt_date(data["generado"]) + " · Repositorio CEPOES"),
+    ):
+        source = _industria_texto(source, element_id, text)
+    opening, span = _industria_elemento(source, "indicator-table")
+    if opening.group("tag").lower() != "table":
+        raise ValueError("Industria: #indicator-table debe ser una tabla")
+    table = source[span[0]:span[1]]
+    rows = "".join(
+        '<tr><td>' + html.escape(fmt_period(p)) + '</td><td class="num">'
+        + (fmt_number(v) if v is not None else "—") + '</td></tr>' for p, v in reversed(serie))
+    table, count = re.subn(r'(<tbody\b[^>]*>).*?(</tbody\s*>)',
+                          lambda m: m[1] + rows + m[2], table, flags=re.S | re.I)
+    if count != 1:
+        raise ValueError("Industria: se esperaba un único tbody")
+    source = source[:span[0]] + table + source[span[1]:]
+    opening, _ = _industria_elemento(source, "indicator-download")
+    if opening.group("tag").lower() != "a":
+        raise ValueError("Industria: la descarga debe ser un enlace")
+    link, count = re.subn(r'\bhref=["\'][^"\']*["\']', 'href="datos.csv"', opening[0])
+    if count != 1:
+        raise ValueError("Industria: la descarga debe tener un único href")
+    source = source[:opening.start()] + link + source[opening.end():]
+
+    datasets = 0
+    def refresh_dataset(match):
+        nonlocal datasets
+        metadata = json.loads(match[2])
+        if not isinstance(metadata, dict) or metadata.get("@type") != "Dataset":
+            return match[0]
+        datasets += 1
+        metadata["temporalCoverage"] = fmt_period(serie[0][0]) + "/" + fmt_period(periodo)
+        # El nombre, la fuente, la metodología y la distribución se conservan.
+        if metadata.get("distribution", {}).get("contentUrl") != (
+                "https://cepoes.org/observatorio/produccion/industria/datos.csv"):
+            raise ValueError("Industria: distribución CSV inesperada en Dataset")
+        return match[1] + json.dumps(metadata, ensure_ascii=True) + match[3]
+    source = re.sub(r'(<script\b[^>]*\btype=["\']application/ld\+json["\'][^>]*>)(.*?)(</script\s*>)',
+                    refresh_dataset, source, flags=re.S | re.I)
+    if datasets != 1:
+        raise ValueError("Industria: se esperaba un único Dataset JSON-LD")
+    return source
+
+
+def industria_csv(data: dict) -> bytes:
+    """Mismo contrato del CSV público: BOM, campos citados, punto y coma y CRLF."""
+    stream = io.StringIO(newline="")
+    writer = csv.writer(stream, delimiter=";", quoting=csv.QUOTE_ALL, lineterminator="\r\n")
+    writer.writerow(("periodo", "indice_ingresos_fabriles_constantes"))
+    for periodo, valor in industria_observaciones(data):
+        if valor is None:
+            numero = ""
+        else:
+            numero = str(int(valor)) if float(valor).is_integer() else str(valor)
+        writer.writerow((periodo, numero))
+    return stream.getvalue().removesuffix("\r\n").encode("utf-8-sig")
+
+
 def apply_fallbacks(source: str, rel: str) -> str:
+    if rel == "/observatorio/produccion/industria/index.html":
+        return industria_fallback(source, load_json("datos.json"))
     budget = load_json("presupuesto.json")
     diagnostic = load_json("diagnostico_presupuestario.json")
     debt_manifest = load_json("datos/endeudamiento/manifest.json")
@@ -1071,6 +1199,8 @@ def normalize_html(path: Path, site: Path) -> None:
         else:
             source = source.replace('</main>', entry + '</main>', 1)
     source = version_local_stylesheets(source, site)
+    if rel == "/observatorio/produccion/industria/index.html":
+        path.with_name("datos.csv").write_bytes(industria_csv(load_json("datos.json")))
     path.write_text(source, encoding="utf-8")
 
 

@@ -88,6 +88,16 @@ class SharingTests(unittest.TestCase):
             self.assertIn('Compartir en WhatsApp', first)
             self.assertIn('utm_source%3Dwhatsapp', first)
 
+    def test_image_panel_includes_download_copy_and_link_without_js(self):
+        with tempfile.TemporaryDirectory() as tmp, patch('deploy.compartir_publicaciones.card'):
+            source = '<html><head><title>Informe</title></head><body><h1>Informe</h1></body></html>'
+            result = inject(source, '/publicaciones/index.html', Path(tmp), {})
+            for selector in ['data-media-file', 'data-media-caption', 'data-media-download', 'data-media-link', 'data-media-close']:
+                self.assertIn(selector, result)
+            self.assertIn('share-media-dialog', result)
+            self.assertIn('-enlace.png" download data-media-download', result)
+            self.assertEqual(result, inject(result, '/publicaciones/index.html', Path(tmp), {}))
+
     def test_long_title_does_not_truncate(self):
         draw = ImageDraw.Draw(Image.new('RGB', (1,1)))
         title = 'Una palabraextremadamentelargaperocompletayconservada sobre los barrios'
@@ -102,3 +112,4 @@ class SharingTests(unittest.TestCase):
             for call in draw.call_args_list: self.assertFalse(call.args[7])
 
 if __name__ == '__main__': unittest.main()
+

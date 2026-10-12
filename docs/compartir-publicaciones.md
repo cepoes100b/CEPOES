@@ -36,3 +36,14 @@ Esta revisión es una alternativa local de composición y legibilidad, no una pr
 El fallo remoto de R2 fue exclusivamente una falta de conectividad al consultar el marcador público. Se reintentó el job fallido y terminó correctamente, incluidas las pruebas nuevas, el contrato de publicación y la consulta del marcador.
 
 El PR permanece en borrador hasta completar la prueba en navegador o acordar con Agustín el alcance alternativo de revisión. No se publica ni se difunde por correo desde esta sesión.
+
+
+## Corrección de compartir con imagen en X y WhatsApp — 2026-10-12
+
+Agustín informó que todos sus envíos de enlaces aparecieron sin imagen. La comprobación HTTP y de etiquetas anterior verificó disponibilidad del sitio, pero no la vista previa efectiva en las aplicaciones. No se atribuye una causa a caché, configuración personal o bloqueo del crawler sin evidencia.
+
+Con JavaScript y soporte de dialog, los iconos X y WhatsApp abren un panel discreto con la placa horizontal: compartir archivo PNG junto con título y URL mediante el menú nativo del dispositivo, descargar imagen, copiar texto/enlace o continuar sólo con el enlace. La persona elige la aplicación de destino; una web no selecciona o confirma la publicación en ella. Se verifica canShare con el conjunto real de datos y se precarga el archivo al abrir el panel para conservar la activación en el segundo clic. Si la aplicación omite el texto, el panel permite copiarlo. En escritorio sin envío de archivos se conservan descarga y copia. Con JavaScript desactivado o sin dialog, los enlaces directos siguen funcionando. Instagram mantiene su panel actual.
+
+La imagen usa la placa existente de 1200 × 630 y los colores institucionales; se conservan filtros públicos, privacidad y consentimiento de analítica. Abrir el panel no registra un envío; descarga, copia y compositor se miden por separado. Cancelar no registra éxito. No se garantiza la aparición de una tarjeta automática al enviar sólo el enlace. La prueba de imagen recibida en WhatsApp/X sigue pendiente.
+
+Pruebas: 9 Python y 13 JavaScript de compartir aprobadas localmente, incluidos archivo+texto, fallback sin share, fallo de carga, cancelación y campo manual dentro del panel correcto.

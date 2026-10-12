@@ -14,6 +14,7 @@ import re
 import shutil
 import unicodedata
 from datetime import datetime, timedelta
+from decimal import Decimal, ROUND_HALF_UP
 from functools import lru_cache
 from zoneinfo import ZoneInfo
 from pathlib import Path
@@ -779,6 +780,16 @@ def _industria_texto(source: str, element_id: str, value: str) -> str:
     return source[:opening.end()] + html.escape(value) + source[close.start():]
 
 
+def industria_numero(value: float) -> str:
+    """Un decimal con el redondeo decimal visible de Intl.NumberFormat.
+
+    Convertir desde str evita que la representación binaria de 159.95 lo
+    redondee a 159.9. Se aplica sólo a presentación; CSV y fuente se preservan.
+    """
+    rounded = Decimal(str(value)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
+    return fmt_number(rounded)
+
+
 def industria_fallback(source: str, data: dict) -> str:
     """Actualiza sólo los destinos de datos del HTML inicial de Industria."""
     serie = industria_observaciones(data)
@@ -787,12 +798,12 @@ def industria_fallback(source: str, data: dict) -> str:
     if ultimo is None or anterior in (None, 0):
         raise ValueError("Industria: faltan valores para el indicador interanual")
     cambio = (ultimo / anterior - 1) * 100
-    valor = fmt_number(ultimo)
-    porcentaje = ("+" if cambio > 0 else "−" if cambio < 0 else "") + fmt_number(abs(cambio)) + "%"
+    valor = industria_numero(ultimo)
+    porcentaje = ("+" if cambio > 0 else "−" if cambio < 0 else "") + industria_numero(abs(cambio)) + "%"
     lectura = f"El índice de ingresos fabriles a precios constantes se ubica en {valor}. "
     if cambio:
         verbo = "aumentó" if cambio > 0 else "disminuyó"
-        lectura += f"Frente al mismo mes del año anterior, {verbo} {fmt_number(abs(cambio))}%."
+        lectura += f"Frente al mismo mes del año anterior, {verbo} {industria_numero(abs(cambio))}%."
     else:
         lectura += "No registró variación frente al mismo mes del año anterior."
     for element_id, text in (
@@ -811,7 +822,7 @@ def industria_fallback(source: str, data: dict) -> str:
     table = source[span[0]:span[1]]
     rows = "".join(
         '<tr><td>' + html.escape(fmt_period(p)) + '</td><td class="num">'
-        + (fmt_number(v) if v is not None else "—") + '</td></tr>' for p, v in reversed(serie))
+        + (industria_numero(v) if v is not None else "—") + '</td></tr>' for p, v in reversed(serie))
     table, count = re.subn(r'(<tbody\b[^>]*>).*?(</tbody\s*>)',
                           lambda m: m[1] + rows + m[2], table, flags=re.S | re.I)
     if count != 1:

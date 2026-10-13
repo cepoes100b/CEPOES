@@ -7,7 +7,7 @@ import hashlib
 import html
 import re
 from PIL import Image, ImageDraw, ImageFont
-from deploy.compartir_publicaciones import canonical, inject, card, lines, BOLD, meta
+from deploy.compartir_publicaciones import canonical, inject, card, lines, BOLD, meta, place_controls
 
 class SharingTests(unittest.TestCase):
     def test_home_cards_are_idempotent_when_featured_heading_changes(self):
@@ -98,6 +98,20 @@ class SharingTests(unittest.TestCase):
             self.assertIn('-enlace.png" download data-media-download', result)
             self.assertEqual(result, inject(result, '/publicaciones/index.html', Path(tmp), {}))
 
+    def test_controls_follow_content_title_and_ignore_script_and_navigation(self):
+        source = '<html><head><script>const fake="<h1>Falso</h1>";</script></head><body><nav><h1>Marca</h1></nav><main><h1>Informe</h1><p>Texto</p></main><footer>Pie</footer></body></html>'
+        block = '<section class="cepoes-share">Controles</section>'
+        result = place_controls(source, block, '/informe/')
+        self.assertIn('<h1>Informe</h1><section class="cepoes-share" data-share-placement="title">', result)
+        self.assertLess(result.index('Controles'), result.index('<p>Texto'))
+
+    def test_home_and_dynamic_articles_keep_controls_outside_cards_and_loader(self):
+        block = '<section class="cepoes-share">Controles</section>'
+        home = '<html><body><nav>Menú</nav><header><article><h1>Nota</h1></article></header></body></html>'
+        self.assertIn('</nav>' + block + '<header>', place_controls(home, block, '/'))
+        article = '<html><body><nav>Menú</nav><main id="article"></main></body></html>'
+        self.assertIn('</nav>' + block + '<main', place_controls(article, block, '/prensa/nota/'))
+
     def test_long_title_does_not_truncate(self):
         draw = ImageDraw.Draw(Image.new('RGB', (1,1)))
         title = 'Una palabraextremadamentelargaperocompletayconservada sobre los barrios'
@@ -112,4 +126,5 @@ class SharingTests(unittest.TestCase):
             for call in draw.call_args_list: self.assertFalse(call.args[7])
 
 if __name__ == '__main__': unittest.main()
+
 

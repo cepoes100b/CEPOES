@@ -4,6 +4,7 @@ import hashlib
 import html
 import json
 import re
+from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlparse, urlencode
 from PIL import Image, ImageDraw, ImageFont, ImageOps
@@ -115,6 +116,57 @@ def card(destination, title, description, label, size, cover=None, branded=True,
     image.save(destination, optimize=True)
 
 
+class SharePlacement(HTMLParser):
+    """Locate real content tags, ignoring navigation, scripts and templates."""
+    def __init__(self, source):
+        super().__init__(convert_charrefs=False)
+        self.source = source
+        self.offsets = [0]
+        for match in re.finditer('\n', source): self.offsets.append(match.end())
+        self.body = False
+        self.body_start = None
+        self.ignored = 0
+        self.heading = False
+        self.heading_end = None
+        self.content_start = None
+        self.feed(source)
+
+    def source_offset(self):
+        line, column = self.getpos()
+        return self.offsets[line - 1] + column
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'body':
+            self.body = True
+            self.body_start = self.source_offset() + len(self.get_starttag_text())
+        if tag in ('nav', 'script', 'style', 'template'):
+            self.ignored += 1
+        if not self.body or self.ignored: return
+        if tag in ('main', 'header', 'section') and self.content_start is None:
+            self.content_start = self.source_offset()
+        if tag == 'h1' and self.heading_end is None: self.heading = True
+
+    def handle_endtag(self, tag):
+        if self.body and not self.ignored and tag == 'h1' and self.heading:
+            self.heading_end = self.source.find('>', self.source_offset()) + 1
+            self.heading = False
+        if tag in ('nav', 'script', 'style', 'template'):
+            self.ignored = max(0, self.ignored - 1)
+        if tag == 'body': self.body = False
+
+
+def place_controls(source, block, route):
+    locator = SharePlacement(source)
+    # The home h1 is a featured article: keep page controls outside that card.
+    if route != '/' and locator.heading_end is not None:
+        point = locator.heading_end
+        block = block.replace('class="cepoes-share"', 'class="cepoes-share" data-share-placement="title"', 1)
+    else:
+        point = locator.content_start if locator.content_start is not None else locator.body_start
+    if point is None: return source
+    return source[:point] + block + source[point:]
+
+
 def inject(source, rel, site, reports):
     route = canonical(source, rel)
     if route is None or '</head>' not in source or '</body>' not in source:
@@ -169,8 +221,7 @@ def inject(source, rel, site, reports):
     media = f'''<dialog class="share-dialog share-media-dialog" aria-label="Compartir con imagen"><button class="share-close" type="button" data-media-close aria-label="Cerrar">×</button><h2 data-media-title>Compartir con imagen</h2><p data-media-help>Compartí la placa con el texto y el enlace, o guardala para adjuntarla.</p><div class="share-preview share-media-preview"><img src="{base}-enlace.png" alt="{escape(title)}" loading="lazy" width="1200" height="630"></div><div class="share-actions"><button type="button" data-media-file hidden>Compartir imagen y enlace…</button><a href="{base}-enlace.png" download data-media-download>Guardar imagen</a><button type="button" data-media-caption>Copiar texto y enlace</button><a href="{escape(wa)}" target="_blank" rel="noopener noreferrer" data-media-link>Continuar sólo con enlace</a></div><p class="share-status" role="status" aria-live="polite"></p></dialog>'''
     block = f'''<section class="cepoes-share" aria-label="Compartir este contenido" data-share-url="{escape(url)}" data-share-title="{escape(title)}" data-share-image="{base}"><div class="wrap"><div class="share-heading"><span>Compartir</span><p>Compartí información para conocer y transformar nuestros barrios.</p></div><div class="share-actions"><button type="button" data-share-native title="Compartir desde tu dispositivo" hidden>{icon("native", "Compartir desde tu dispositivo")}</button><a data-share-platform="whatsapp" href="{escape(wa)}" target="_blank" rel="noopener noreferrer" title="Compartir en WhatsApp">{icon("whatsapp", "Compartir en WhatsApp")}</a><a data-share-platform="x" href="{escape(x)}" target="_blank" rel="noopener noreferrer" title="Compartir en X">{icon("x", "Compartir en X")}</a><a data-share-platform="facebook" href="{escape(fb)}" target="_blank" rel="noopener noreferrer" title="Compartir en Facebook">{icon("facebook", "Compartir en Facebook")}</a><button type="button" data-share-copy title="Copiar enlace">{icon("copy", "Copiar enlace")}</button><button type="button" data-share-instagram title="Preparar para Instagram">{icon("instagram", "Preparar para Instagram")}</button></div><p class="share-status" role="status" aria-live="polite"></p><dialog class="share-dialog" aria-label="Preparar para Instagram"><button class="share-close" type="button" data-share-close aria-label="Cerrar">×</button><h2>Listo para Instagram</h2><p>Elegí una placa, guardala y subila a Instagram. En historias, agregá el enlace con el sticker «Enlace».</p><div class="share-preview"><img src="{base}-publicacion.png" alt="{escape(title)}" loading="lazy" width="1080" height="1350"></div><div class="share-actions"><a href="{base}-publicacion.png" download data-share-platform="instagram_download">Guardar publicación</a><a href="{base}-historia.png" download data-share-platform="instagram_download">Guardar historia</a><button type="button" data-share-file hidden>Compartir imagen…</button><button type="button" data-share-caption>Copiar texto y enlace</button></div><p class="share-status" role="status" aria-live="polite"></p></dialog>{media}</div></section>'''
     source = re.sub(r'<section class="cepoes-share".*?</section>', '', source, flags=re.S)
-    # After reading, before global search/footer. Does not displace map controls.
-    return source.replace('<footer class="footer">', block + '<footer class="footer">', 1) if '<footer class="footer">' in source else source.replace('</body>', block + '</body>', 1)
+    return place_controls(source, block, route)
 
 
 def prepare(site, registry):
@@ -189,4 +240,5 @@ def prepare(site, registry):
         match = re.fullmatch(r'([a-f0-9]{12}-[a-f0-9]{12})-(enlace|publicacion|historia)\.png', image.name)
         if match and match[1] not in referenced: image.unlink()
     return count
+
 

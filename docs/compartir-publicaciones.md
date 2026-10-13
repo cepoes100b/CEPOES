@@ -2,7 +2,7 @@
 
 ## Resultado
 
-La salida pública incorpora una fila discreta de iconos al final de cada página canónica: WhatsApp, X, Facebook, copiar enlace, Instagram y compartir desde el dispositivo cuando está disponible. Los controles usan los tokens y la tipografía del sitio, foco visible, nombres accesibles y objetivos táctiles de 44 px. El diálogo de Instagram permite guardar dos placas y copiar el título con el enlace. La publicación en redes la decide y realiza el lector.
+La salida pública incorpora una fila discreta de iconos al comienzo de cada página canónica: WhatsApp, X, Facebook, copiar enlace, Instagram y compartir desde el dispositivo cuando está disponible. Los controles usan los tokens y la tipografía del sitio, foco visible, nombres accesibles y objetivos táctiles de 44 px. El diálogo de Instagram permite guardar dos placas y copiar el título con el enlace. La publicación en redes la decide y realiza el lector.
 
 ## Fuente y generación
 
@@ -47,3 +47,10 @@ Con JavaScript y soporte de dialog, los iconos X y WhatsApp abren un panel discr
 La imagen usa la placa existente de 1200 × 630 y los colores institucionales; se conservan filtros públicos, privacidad y consentimiento de analítica. Abrir el panel no registra un envío; descarga, copia y compositor se miden por separado. Cancelar no registra éxito. No se garantiza la aparición de una tarjeta automática al enviar sólo el enlace. La prueba de imagen recibida en WhatsApp/X sigue pendiente.
 
 Pruebas: 9 Python y 13 JavaScript de compartir aprobadas localmente, incluidos archivo+texto, fallback sin share, fallo de carga, cancelación y campo manual dentro del panel correcto.
+
+
+## Ubicación al comienzo del contenido — 2026-10-12
+
+Por pedido de Agustín, la fila se ubica justo después del primer título h1 del contenido, antes de la síntesis y el cuerpo. Se ignoran navegación, scripts, estilos y templates al buscar la ubicación. La portada conserva los controles fuera de la tarjeta destacada; las páginas que cargan el título dinámicamente los ubican antes de su contenedor, para que el loader no los borre. Sin título/contenedor se usa el comienzo del body. Se elimina la ubicación anterior al pie y se conserva una sola fila por página.
+
+La fila hereda la estética y los controles existentes; dentro del bloque del título se evita un segundo margen del contenedor wrap. Se reduce el espacio vertical y se elimina la línea que separaba el pie. Imágenes, enlaces, medición y paneles conservados. Pruebas: 11 Python aprobadas, incluyendo ubicación tras título real, exclusión de nav/script, idempotencia y casos de portada/loader. Salida completa: 164 páginas actualizadas, sin duplicados. sites-preview sigue bloqueado por bwrap/proc; revisión estática alternativa de móvil/escritorio, claro/oscuro. Interacción real en navegador pendiente.

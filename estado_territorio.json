@@ -6,7 +6,7 @@
       "resource_name": "Padrón de Establecimientos Educativos (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-educacion/establecimientos-educativos/padron-establecimientos.csv",
       "source_last_modified": "2026-10-02T12:51:40.110308",
-      "downloaded_at": 1791755665,
+      "downloaded_at": 1791851757,
       "bytes": 1084106
     },
     "cesac": {
@@ -15,7 +15,7 @@
       "resource_name": "Centros de Salud y Acción Comunitaria (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-salud/centros-salud-accion-comunitaria-cesac/centros_salud_nivel_1_cesac.csv",
       "source_last_modified": "2020-09-04T00:00:00",
-      "downloaded_at": 1791755666,
+      "downloaded_at": 1791851759,
       "bytes": 21274
     },
     "hospitales": {
@@ -24,7 +24,7 @@
       "resource_name": "Hospitales (XLSX)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-salud/hospitales/hospitales.xlsx",
       "source_last_modified": "2025-01-29T00:00:00",
-      "downloaded_at": 1791755667,
+      "downloaded_at": 1791851770,
       "bytes": 10816
     },
     "espacios_verdes": {
@@ -33,7 +33,7 @@
       "resource_name": "Espacios Verdes Públicos (XLSX)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/secretaria-de-desarrollo-urbano/espacios-verdes/espacio_verde_publico.xlsx",
       "source_last_modified": "2022-07-12T00:00:00",
-      "downloaded_at": 1791755678,
+      "downloaded_at": 1791851783,
       "bytes": 3911326
     },
     "centros_medicos_barriales": {
@@ -42,7 +42,7 @@
       "resource_name": "Centros médicos barriales (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-salud/centros-medicos-barriales/centros_medicos_barriales.csv",
       "source_last_modified": "2026-10-02T12:52:40.199066",
-      "downloaded_at": 1791755679,
+      "downloaded_at": 1791851785,
       "bytes": 3888
     },
     "salud_privada": {
@@ -51,7 +51,7 @@
       "resource_name": "Centros de Salud Privados (XLSX)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-salud/centros-salud-privados/centros_de_salud_privado.xlsx",
       "source_last_modified": "2024-08-23T00:00:00",
-      "downloaded_at": 1791755680,
+      "downloaded_at": 1791851787,
       "bytes": 21529
     },
     "estaciones_saludables": {
@@ -60,7 +60,7 @@
       "resource_name": "Estaciones Saludables (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/vicejefatura-de-gobierno/estaciones-saludables/estaciones_saludables.csv",
       "source_last_modified": "2026-10-02T12:53:59.481535",
-      "downloaded_at": 1791755681,
+      "downloaded_at": 1791851789,
       "bytes": 8446
     },
     "bibliotecas": {
@@ -69,7 +69,7 @@
       "resource_name": "Bibliotecas (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-cultura/bibliotecas/bibliotecas.csv",
       "source_last_modified": "2025-03-20T00:00:00",
-      "downloaded_at": 1791755683,
+      "downloaded_at": 1791851791,
       "bytes": 21846
     },
     "espacios_culturales": {
@@ -78,7 +78,7 @@
       "resource_name": "Espacios culturales (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-cultura/espacios-culturales/espacios-culturales.csv",
       "source_last_modified": "2026-06-18T14:55:55.877031",
-      "downloaded_at": 1791755684,
+      "downloaded_at": 1791851793,
       "bytes": 724491
     },
     "instituciones_colectividades": {
@@ -87,7 +87,7 @@
       "resource_name": "Instituciones de Colectividades",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/vicejefatura-de-gobierno/instituciones-colectividades/instituciones-de-colectividades.csv",
       "source_last_modified": "2019-04-22T17:37:28.113383",
-      "downloaded_at": 1791755686,
+      "downloaded_at": 1791851794,
       "bytes": 194698
     },
     "polideportivos": {
@@ -294,7 +294,7 @@
       "resource_name": "Hogares Permanentes (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/hogares-permanentes/hogares_permanentes_para_personas_mayores.csv",
       "source_last_modified": "2021-04-29T00:00:00",
-      "downloaded_at": 1791756077,
+      "downloaded_at": 1791852425,
       "bytes": 1067
     },
     "geriatricos": {
@@ -303,7 +303,7 @@
       "resource_name": "Geriátricos",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-justicia-y-seguridad/geriatricos/geriatricos.csv",
       "source_last_modified": "2026-10-02T12:52:29.267732",
-      "downloaded_at": 1791414728,
+      "downloaded_at": 1791852435,
       "bytes": 83700
     },
     "cim": {
@@ -312,7 +312,7 @@
       "resource_name": "Centros Integrales de la Mujer (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/centros-integrales-mujer/centros_integrales_de_la_mujer.csv",
       "source_last_modified": "2026-10-02T12:51:14.193594",
-      "downloaded_at": 1791414729,
+      "downloaded_at": 1791852436,
       "bytes": 5211
     },
     "cdi": {
@@ -321,7 +321,7 @@
       "resource_name": "Centros de Desarrollo Infantil (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/centros-desarrollo-infantil/centros_de_desarrollo_infantil.csv",
       "source_last_modified": "2026-10-02T12:51:06.531633",
-      "downloaded_at": 1791668813,
+      "downloaded_at": 1791852437,
       "bytes": 5417
     },
     "jardines_comunitarios": {
@@ -330,7 +330,7 @@
       "resource_name": "Jardines Comunitarios",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/jardines-comunitarios/jardin_comunitario.csv",
       "source_last_modified": "2021-04-09T00:00:00",
-      "downloaded_at": 1791668815,
+      "downloaded_at": 1791852438,
       "bytes": 5366
     },
     "juegotecas": {
@@ -339,7 +339,7 @@
       "resource_name": "Juegotecas Barriales",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/juegotecas-barriales/juegotecas-barriales.csv",
       "source_last_modified": "2026-06-22T15:42:39.796738",
-      "downloaded_at": 1791668816,
+      "downloaded_at": 1791852442,
       "bytes": 31883
     },
     "veterinaria": {
@@ -348,7 +348,7 @@
       "resource_name": "Centros de Atención Veterinaria (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/agencia-de-proteccion-ambiental/centros-atencion-veterinaria/centros-de-atencion-veterinaria.csv",
       "source_last_modified": "2026-07-28T15:38:55.165789",
-      "downloaded_at": 1791668817,
+      "downloaded_at": 1791852446,
       "bytes": 3668
     },
     "monumentos": {
@@ -357,7 +357,7 @@
       "resource_name": "Monumentos",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-espacio-publico-e-higiene-urbana/monumentos/monumentos.csv",
       "source_last_modified": "2026-06-24T14:09:26.550451",
-      "downloaded_at": 1791668818,
+      "downloaded_at": 1791852447,
       "bytes": 476457
     },
     "murales": {
@@ -366,7 +366,7 @@
       "resource_name": "Murales (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-cultura/murales/murales.csv",
       "source_last_modified": "2026-03-13T12:55:46.458159",
-      "downloaded_at": 1791668820,
+      "downloaded_at": 1791852448,
       "bytes": 94930
     },
     "lugares_culto": {
@@ -375,7 +375,7 @@
       "resource_name": "Lugares de Culto",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/secretaria-general-y-relaciones-internacionales/lugares-culto/lugares-de-culto.csv",
       "source_last_modified": "2019-04-23T17:03:18.609843",
-      "downloaded_at": 1791668821,
+      "downloaded_at": 1791852449,
       "bytes": 109188
     },
     "registro_civil": {
@@ -384,7 +384,7 @@
       "resource_name": "Sedes Registro Civil",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-gobierno/registro-civil/sedes-registro-civil.csv",
       "source_last_modified": "2026-06-22T16:48:51.090266",
-      "downloaded_at": 1791668825,
+      "downloaded_at": 1791852450,
       "bytes": 3854
     },
     "cdr": {
@@ -393,7 +393,7 @@
       "resource_name": "Centros de Documentación Rápida",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-gobierno/registro-civil/centros-de-documentacion-rapida.csv",
       "source_last_modified": "2026-06-22T16:48:51.090266",
-      "downloaded_at": 1791668826,
+      "downloaded_at": 1791852451,
       "bytes": 1086
     },
     "registro_hospitales": {
@@ -402,7 +402,7 @@
       "resource_name": "Sedes Registro Civil en Hospitales",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-gobierno/registro-civil/sedes-registro-civil-en-hospitales.csv",
       "source_last_modified": "2026-06-22T16:48:51.090266",
-      "downloaded_at": 1791668827,
+      "downloaded_at": 1791852452,
       "bytes": 1966
     },
     "mpf": {
@@ -411,7 +411,7 @@
       "resource_name": "Dependencias y sedes del Ministerio Público Fiscal (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-justicia-y-seguridad/dependencias-sedes-ministerio-publico-fiscal/oficinas_mpf.csv",
       "source_last_modified": "2026-10-02T12:52:16.209303",
-      "downloaded_at": 1791502263,
+      "downloaded_at": 1791852453,
       "bytes": 3502
     },
     "wifi": {
@@ -420,7 +420,7 @@
       "resource_name": "Sitios de WiFi",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/jefatura-de-gabinete-de-ministros/puntos-wi-fi-publicos/sitios-de-wifi.csv",
       "source_last_modified": "2019-04-23T16:54:04.784193",
-      "downloaded_at": 1791502264,
+      "downloaded_at": 1791852458,
       "bytes": 178227
     },
     "estaciones_servicio": {
@@ -474,7 +474,7 @@
       "resource_name": "Cajones para Estacionamiento de Motos",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/cajones-para-estacionamiento-de-motos/cajones-para-estacionamiento-de-motos.csv",
       "source_last_modified": "2019-09-13T17:46:15.421585",
-      "downloaded_at": 1791756465,
+      "downloaded_at": 1791852586,
       "bytes": 3782
     },
     "carga_descarga": {
@@ -483,7 +483,7 @@
       "resource_name": "Cajones para Carga y Descarga",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/transporte-y-obras-publicas/cajones-para-carga-descarga/cajones-para-carga-y-descarga.csv",
       "source_last_modified": "2019-09-16T13:29:36.089527",
-      "downloaded_at": 1791756466,
+      "downloaded_at": 1791852596,
       "bytes": 199625
     },
     "vados": {
@@ -492,7 +492,7 @@
       "resource_name": "Vados (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-espacio-publico-e-higiene-urbana/vados/vados.csv",
       "source_last_modified": "2019-09-17T14:58:41.671543",
-      "downloaded_at": 1791756475,
+      "downloaded_at": 1791852605,
       "bytes": 8755817
     },
     "licencias_conducir": {
@@ -501,7 +501,7 @@
       "resource_name": "Licencias de conducir",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/transporte-y-obras-publicas/licencias-conducir/licencias-de-conducir.csv",
       "source_last_modified": "2019-04-22T14:28:29.976042",
-      "downloaded_at": 1791756477,
+      "downloaded_at": 1791852606,
       "bytes": 4810
     },
     "puestos_flores": {
@@ -510,7 +510,7 @@
       "resource_name": "Permisos de uso del espacio público - Puestos de Flores (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/jefatura-de-gabinete-de-ministros/puestos-de-flores/puestos-flores.csv",
       "source_last_modified": "2023-03-17T00:00:00",
-      "downloaded_at": 1791756478,
+      "downloaded_at": 1791852607,
       "bytes": 61423
     },
     "puestos_diarios": {
@@ -519,7 +519,7 @@
       "resource_name": "Puestos de Diario",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/atencion-ciudadana/puestos-de-diarios/permisos_diarios.csv",
       "source_last_modified": "2021-06-14T00:00:00",
-      "downloaded_at": 1791756481,
+      "downloaded_at": 1791852608,
       "bytes": 19748
     },
     "nido": {
@@ -528,7 +528,7 @@
       "resource_name": "Núcleo de Inclusión y Desarrollo de Oportunidades",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/portales-inclusivos/nidos.csv",
       "source_last_modified": "2023-04-26T00:00:00",
-      "downloaded_at": 1791756484,
+      "downloaded_at": 1791852609,
       "bytes": 1144
     },
     "embajadas": {
@@ -537,7 +537,7 @@
       "resource_name": "Embajadas (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/jefatura-de-gabinete-de-ministros/embajadas/embajadas.csv",
       "source_last_modified": "2026-10-02T12:50:43.712175",
-      "downloaded_at": 1791756500,
+      "downloaded_at": 1791852610,
       "bytes": 19604
     },
     "consulados": {
@@ -546,7 +546,7 @@
       "resource_name": "Consulados (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/jefatura-de-gabinete-de-ministros/consulados/consulados.csv",
       "source_last_modified": "2026-10-02T12:50:40.045798",
-      "downloaded_at": 1791756500,
+      "downloaded_at": 1791852616,
       "bytes": 15820
     },
     "edificios_publicos": {
@@ -555,7 +555,7 @@
       "resource_name": "Edificios Publicos del GCBA",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-economia-y-finanzas/edificios-publicos/edificios-publicos-del-gcba.csv",
       "source_last_modified": "2026-06-23T16:33:04.737289",
-      "downloaded_at": 1791756501,
+      "downloaded_at": 1791852620,
       "bytes": 85435
     },
     "rampas_accesibilidad": {
@@ -564,9 +564,9 @@
       "resource_name": "Rampas de accesibilidad - Relevamiento 2016",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-espacio-publico-e-higiene-urbana/rampas-accesibilidad/rampas-de-accesibilidad-relevamiento-2016.csv",
       "source_last_modified": "2019-04-23T17:00:42.759685",
-      "downloaded_at": 1791756503,
+      "downloaded_at": 1791852622,
       "bytes": 380617
     }
   },
-  "updated_at": 1791756503
+  "updated_at": 1791852622
 }

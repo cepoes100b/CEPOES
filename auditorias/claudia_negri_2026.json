@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-10-14T18:24:07.622308+00:00",
+  "generado_en": "2026-10-14T23:39:28.361104+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -11,8 +11,8 @@
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-03-01",
     "fecha_mas_reciente_obtenida": "2026-10-14",
-    "ids_del_anio_en_ventana": 3293,
-    "ids_revisados_acumulados": 3293,
+    "ids_del_anio_en_ventana": 3294,
+    "ids_revisados_acumulados": 3294,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -5368,16 +5368,16 @@
       "tipo_oficial": "LEY",
       "estado_actual": "con_dictamen",
       "etapa_ciclo": "con_dictamen",
-      "ubicacion": "NIÑEZ, ADOLESCENCIA Y JUVENTUD",
+      "ubicacion": "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA",
       "giros": [
         "TURISMO Y DEPORTES",
         "NIÑEZ, ADOLESCENCIA Y JUVENTUD",
         "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-06-19",
-        "oficina": "NIÑEZ, ADOLESCENCIA Y JUVENTUD",
-        "descripcion": "EN COMISION CON DICTAMEN GENERADO"
+        "fecha": "2026-10-14",
+        "oficina": "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA",
+        "descripcion": "EN COMISION CON DICTAMEN GENERADO (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

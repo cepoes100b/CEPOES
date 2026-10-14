@@ -23,10 +23,10 @@ class HomeEditorialTests(unittest.TestCase):
         self.assertNotIn('setInterval',hero)
 
     def test_budget_feature_and_health_link(self):
-        self.assertEqual(latest_home_publications()[0]['url'],'/publicaciones/informes/salud-mental-caba/')
+        self.assertEqual(latest_home_publications()[0]['url'],'/presupuesto/2027/')
         hero=home_budget_feature()
-        self.assertIn('href="/presupuesto/2027/salud/"',hero)
-        self.assertIn('Explorar el presupuesto',hero)
+        self.assertIn('href="/publicaciones/informes/salud-mental-caba/"',hero)
+        self.assertIn('Leer el informe de salud mental',hero)
     def test_disabled_feature_restores_automatic_selection(self):
         def changed(name):
             data=load_json(name)
@@ -42,7 +42,7 @@ class HomeEditorialTests(unittest.TestCase):
                 data['budget_feature']['url']='/borrador/'
             return data
         with patch('deploy.preparar_sitio_publico.load_json',side_effect=changed):
-            with self.assertRaises(ValueError): home_budget_feature()
+            with self.assertRaises(ValueError): latest_home_publications()
     def test_budget_below_cards_and_idempotent(self):
         source='<header class="home-hero"></header><main></main>'
         once=restructure_home(source)

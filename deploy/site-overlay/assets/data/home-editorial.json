@@ -18,6 +18,17 @@
     "period": "Proyecto en discusión legislativa",
     "cta": "Explorar el presupuesto →",
     "secondary_url": "/presupuesto/2027/salud/",
-    "secondary_cta": "Especial Salud →"
+    "secondary_cta": "Especial Salud →",
+    "placement": "carousel"
+  },
+  "below_feature": {
+    "enabled": true,
+    "label": "Salud y cuidados · Informe especial",
+    "title": "Salud mental en la Ciudad de Buenos Aires",
+    "summary": "La salud mental también se construye en los barrios. Datos sobre malestar psicológico, desigualdades y acceso a la atención, con prioridades para fortalecer la red pública y los cuidados comunitarios.",
+    "url": "/publicaciones/informes/salud-mental-caba/",
+    "cta": "Leer el informe de salud mental →",
+    "secondary_url": "/observatorio/salud-mental/",
+    "secondary_cta": "Explorar el observatorio →"
   }
 }

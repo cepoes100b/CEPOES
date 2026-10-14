@@ -21,3 +21,5 @@ sites-preview probado sobre salida completa: fallo de bwrap al montar /proc. Ser
 Vista privada de revisión: https://cepoes-presupuesto-productivo-revision.crivelli725370.chatgpt.site/ . Comprobada en navegador integrado: especial y nota en escritorio/iframe 390px, temas claro y oscuro, anclas, barras y tabla desplazable. Sin desbordamiento de página: 375px clientWidth y scrollWidth. Corregida variación real industrial de 23% a +5,2%, conforme a los valores exactos del snapshot (la presentación redondea a 5,1%).
 
 Búsqueda global: dos entradas y consultas canónicas incorporadas en search-registry. Índice generado de 160 URLs; verificador actualizado sin cambios de implementación.
+
+Control remoto inicial detectó desplazamiento automático de Salud Mental en el carrusel. Corregido mediante home_eligible=false en la nota nueva y filtro editorial en el selector canónico; las tres piezas actuales se conservan. Verificación existente de home y catálogos debe aprobar sobre el HEAD final.

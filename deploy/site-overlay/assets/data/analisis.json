@@ -8,7 +8,8 @@
       "summary": "El umbral propuesto para 2027 y un ejemplo que distingue facturación por precios, alícuotas y base imponible.",
       "published_at": "2026-10-14T10:31:13-03:00",
       "url": "/publicaciones/notas/comercios-ingresos-brutos-2027/",
-      "source_section": "/presupuesto/2027/desarrollo-productivo/"
+      "source_section": "/presupuesto/2027/desarrollo-productivo/",
+      "home_eligible": false
     },
     {
       "type": "analisis",

@@ -557,7 +557,14 @@ def latest_home_publications() -> list[dict]:
                 cover=cover[1] if cover else '', period=path.parent.name.split('-', 2)[2].replace('-', ' ').capitalize()))
     if not notes or not reports or not bulletins:
         raise ValueError("La portada requiere una nota, un boletín y un informe publicados")
-    return [max(notes, key=lambda n: (n['date'], n['url'])),
+    feature = load_json("deploy/site-overlay/assets/data/home-editorial.json").get("budget_feature", {})
+    primary = max(notes, key=lambda n: (n['date'], n['url']))
+    if feature.get('enabled') and feature.get('placement') == 'carousel':
+        registered = {r['url'] for r in load_json('deploy/reports-registry.json')['reports']}
+        if feature['url'] not in registered or not (overlay / feature['url'].lstrip('/') / 'index.html').is_file():
+            raise ValueError('La portada requiere un informe registrado con página pública')
+        primary = dict(feature, date='', label=feature['label'])
+    return [primary,
             max(bulletins, key=lambda n: n['edition']),
             max(reports, key=lambda n: (n['date'], n['url']))]
 
@@ -586,13 +593,16 @@ def home_publications_hero() -> str:
 
 
 def home_budget_feature() -> str:
-    feature = load_json("deploy/site-overlay/assets/data/home-editorial.json").get("budget_feature", {})
+    editorial = load_json("deploy/site-overlay/assets/data/home-editorial.json")
+    feature = editorial.get("budget_feature", {})
+    if feature.get("enabled") and feature.get("placement") == "carousel":
+        feature = editorial.get("below_feature", {})
     if not feature.get("enabled"):
         return ''
     overlay = ROOT / "deploy/site-overlay"
     registered = {r['url'] for r in load_json("deploy/reports-registry.json")["reports"]}
     for url in (feature['url'], feature['secondary_url']):
-        if url not in registered or not (overlay / url.lstrip('/') / 'index.html').is_file():
+        if (url == feature['url'] and url not in registered) or not (overlay / url.lstrip('/') / 'index.html').is_file():
             raise ValueError("El destacado presupuestario requiere informes registrados con página pública")
     esc = lambda value: html.escape(str(value), quote=True)
     return ('<section class="home-budget-feature" aria-labelledby="home-budget-title"><div class="wrap">'

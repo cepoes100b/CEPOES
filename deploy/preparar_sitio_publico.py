@@ -538,7 +538,7 @@ def latest_home_publications() -> list[dict]:
     overlay = ROOT / "deploy/site-overlay"
     analyses = load_json("deploy/site-overlay/assets/data/analisis.json")["analyses"]
     notes = [dict(n, date=n["published_at"][:10], label="Última nota") for n in analyses
-             if (overlay / n["url"].lstrip("/") / "index.html").is_file()]
+             if n.get("home_eligible", True) and (overlay / n["url"].lstrip("/") / "index.html").is_file()]
     reports = [dict(r, date=r["period"], summary=r["description"], label="Último informe de coyuntura")
                for r in load_json("deploy/reports-registry.json")["reports"]
                if "informe-coyuntura-" in r["url"]]

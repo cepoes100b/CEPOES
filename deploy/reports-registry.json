@@ -116,6 +116,15 @@
       "kind": "Especial Salud · Proyecto de presupuesto 2027",
       "period": "2026-10-08",
       "format": "web"
+    },
+    {
+      "url": "/presupuesto/2027/desarrollo-productivo/",
+      "title": "Desarrollo productivo, empleo y comercios de barrio",
+      "subtitle": "Especial productivo · Presupuesto 2027",
+      "description": "Recursos para producción y trabajo, distritos económicos e Ingresos Brutos, con gráficos y propuestas desde los barrios.",
+      "kind": "Especial productivo · Proyecto de presupuesto 2027",
+      "period": "2026-10-14",
+      "format": "web"
     }
   ]
 }

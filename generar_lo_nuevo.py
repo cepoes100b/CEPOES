@@ -15,7 +15,7 @@ from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
 SECTIONS = {'publicaciones', 'prensa', 'balance', 'territorio', 'observatorio',
-            'presupuesto', 'legislatura', 'propuestas', 'cepoes', 'datos', 'salud'}
+            'presupuesto', 'legislatura', 'propuestas', 'cepoes', 'datos', 'salud', 'educacion'}
 LABELS = {'boletin': 'Boletín', 'informe': 'Informe', 'analisis': 'Análisis', 'prensa': 'Prensa',
           'balance': 'Balance', 'herramienta': 'Herramienta', 'datos': 'Datos', 'especial': 'Especial'}
 MONTHS = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']

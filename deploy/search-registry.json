@@ -543,7 +543,7 @@
       "url": "/educacion/universidad-publica/",
       "group": "Publicaciones",
       "type": "Especial",
-      "summary": "Posición de CEPOES y seguimiento del presupuesto universitario, salarios, hospitales, becas y Ley 27.795.",
+      "summary": "Presupuesto universitario, salarios, hospitales, becas y cumplimiento de la Ley 27.795.",
       "tags": [
         "universidad",
         "UBA",
@@ -555,6 +555,23 @@
         "27795"
       ],
       "priority": 30
+    },
+    {
+      "query": "educacion enseñanza universidad escuela inicial vacantes aprendizajes",
+      "title": "Educación",
+      "url": "/educacion/",
+      "group": "Educación",
+      "type": "Sección",
+      "summary": "Universidad pública, financiamiento, evaluación educativa, nivel inicial y acceso a la educación.",
+      "tags": [
+        "educación",
+        "universidad",
+        "escuela",
+        "vacantes",
+        "nivel inicial",
+        "evaluación"
+      ],
+      "priority": 35
     }
   ]
 }

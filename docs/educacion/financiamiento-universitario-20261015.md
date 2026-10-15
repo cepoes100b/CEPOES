@@ -43,3 +43,9 @@ Revisar la propuesta en su vista privada y completar la revisión visual con acc
 Se oscurece el enlace propio de la sección en modo claro a #006d98 para asegurar contraste sobre el celeste. Pares propios verificados: 5,23:1 sobre celeste, 5,31:1 sobre fondo alterno y 5,77:1 sobre blanco; en oscuro, mínimo 9,07:1 para los pares comprobados. Se verificaron nuevamente estructura y anclas. Los checks remotos del primer commit terminaron success para controles obligatorios y contrastes; el commit final debe volver a verificarse.
 
 Vista privada actualizada con la corrección: fuente `92485b486ee056f9443313710a31dff46361ca47`, mismo proyecto y URL. La revisión en navegador sigue pendiente por el rechazo de autenticación, sin intentos de elusión.
+
+## Revisión editorial del 15/10/2026
+
+Por pedido expreso de Agustín, se eliminan las fórmulas «nuestra posición», «la lectura de CEPOES es», «la exigencia de CEPOES» y las introducciones equivalentes. Se conservan argumentos, propuestas, cifras y atribuciones a fuentes. El criterio permanente se incorpora a AGENTS.md: en el sitio institucional se redacta la posición directamente; la atribución institucional explícita se reserva para publicaciones externas cuando corresponda.
+
+Vista privada actualizada: fuente `e3ac39643cccec29da3a5ef625c39300d1d459a4`, versión `appgprj_6ad0472e8a7c8191b0c4010be8c42e9e~appgver_fde91e2e4d1481919a7217aad2f69f1d`, despliegue succeeded. Comprobación textual de fórmulas ausentes aprobada. sites-preview sigue fallando por bwrap/proc; el acceso al navegador privado sigue pendiente de autorización de autenticación.

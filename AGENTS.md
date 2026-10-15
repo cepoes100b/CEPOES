@@ -76,6 +76,7 @@ Toda intervención debe sostener tres objetivos simultáneos:
 - Todo informe publicado, incluso si acompaña a un monitor territorial, debe quedar registrado en `deploy/reports-registry.json` y aparecer siempre en Publicaciones → Informes. Generar el archivo y los cinco últimos de Publicaciones con `generar_catalogo_informes.py`; no mantener tarjetas manuales paralelas. Ver `docs/publicaciones-catalogo.md`.
 - Cada edición pública del boletín debe aparecer automáticamente en Lo nuevo como «Boletín». Preservar su fecha comprobada y verificar la integración con `test_lo_nuevo.py` antes de publicar.
 - Usar lenguaje público claro, sin jerga técnica innecesaria.
+- En contenidos publicados en el sitio de CEPOES, expresar directamente los argumentos y propuestas. Evitar fórmulas autorreferenciales como «nuestra posición», «la lectura de CEPOES es», «la exigencia de CEPOES» o «para CEPOES/100 Barrios». La autoría institucional se sobreentiende por el lugar de publicación. Conservar las atribuciones necesarias para identificar fuentes, métodos y posiciones de terceros. En publicaciones externas, explicitar la atribución institucional cuando corresponda.
 - No confundir hallazgos descriptivos con conclusiones causales.
 - Respaldar críticas de gestión con evidencia verificable.
 - Cuando el producto lo permita, conectar el diagnóstico con una posición, acción o propuesta de CEPOES.
@@ -118,3 +119,4 @@ El cierre debe informar:
 - enlace al pull request;
 - impacto esperado sobre producción;
 - único próximo paso recomendado.
+

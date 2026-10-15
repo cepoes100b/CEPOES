@@ -1,6 +1,6 @@
 {
   "schema": "cepoes-search-registry-v1",
-  "updated_at": "2026-10-14",
+  "updated_at": "2026-10-15",
   "entries": [
     {
       "query": "cepoes",
@@ -536,6 +536,25 @@
         "impuestos"
       ],
       "query": "comercio puede pagar más"
+    },
+    {
+      "query": "financiamiento universitario",
+      "title": "Universidad pública: financiar el futuro",
+      "url": "/educacion/universidad-publica/",
+      "group": "Publicaciones",
+      "type": "Especial",
+      "summary": "Posición de CEPOES y seguimiento del presupuesto universitario, salarios, hospitales, becas y Ley 27.795.",
+      "tags": [
+        "universidad",
+        "UBA",
+        "educacion",
+        "financiamiento universitario",
+        "salarios docentes",
+        "hospitales universitarios",
+        "CIN",
+        "27795"
+      ],
+      "priority": 30
     }
   ]
 }

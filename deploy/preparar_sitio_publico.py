@@ -1032,7 +1032,7 @@ def apply_fallbacks(source: str, rel: str) -> str:
         source = replace_id_text(source, "press-total", f'{len(notes)} {"nota" if len(notes) == 1 else "notas"}')
 
     if rel == "/presupuesto/index.html":
-        source = replace_id_text(source, "data-date", "26 de agosto de 2026")
+        source = replace_id_text(source, "data-date", fmt_date(budget["generado"]))
         status = f"Último dato oficial: {fmt_period(budget['periodo'])}"
         source = re.sub(r'(<div class="budget-status" id="budget-hub-status"><span class="status-dot"></span><span>).*?(</span>)', rf'\1{status}\2', source, count=1, flags=re.S)
         cells = [
@@ -1101,6 +1101,32 @@ def inject_analytics(source: str, rel: str) -> str:
             '<link rel="stylesheet" href="/assets/analytics-cepoes.css?v=1">'
             '<script defer src="/assets/analytics-cepoes.js?v=1"></script></head>', 1)
     return source
+
+
+def normalize_data_timestamp(source: str, rel: str) -> str:
+    """Describe the processing timestamp without turning it into an editorial date.
+
+    Data scripts update only #data-date, using the generated timestamp of their
+    dataset. Several pages can legitimately share it. Publication dates and
+    observation periods remain owned by their original metadata/indicators.
+    """
+    if not rel.startswith(("/observatorio/", "/territorio/", "/presupuesto/")):
+        return source
+    # Restrict the replacement to the label immediately preceding this exact
+    # timestamp. Narrative mentions and dates of sources must remain unchanged.
+    source = re.sub(
+        r'Última\s+actualizaci(?:ó|&oacute;)n\s*:\s*(?=<[a-zA-Z0-9]+\b[^>]*\bid=["\']data-date["\'])',
+        'Base procesada: ', source, count=1, flags=re.I,
+    )
+    pattern = r'(<[a-zA-Z0-9]+\b)(?=[^>]*\bid=["\']data-date["\'])([^>]*>)'
+    def annotate(match: re.Match[str]) -> str:
+        attrs = match.group(2)
+        if 'data-date-role=' in attrs:
+            return match.group(0)
+        return (match.group(1) + ' data-date-role="processing"'
+                ' title="Fecha de procesamiento de la base. Cada indicador conserva su período de referencia."'
+                + attrs)
+    return re.sub(pattern, annotate, source, count=1, flags=re.I)
 
 
 def normalize_html(path: Path, site: Path) -> None:
@@ -1204,6 +1230,7 @@ def normalize_html(path: Path, site: Path) -> None:
             flags=re.I,
         )
     source = apply_fallbacks(source, rel)
+    source = normalize_data_timestamp(source, rel)
     if rel == "/index.html":
         source = restructure_home(source)
     elif rel == "/propuestas/index.html":
@@ -1249,6 +1276,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 

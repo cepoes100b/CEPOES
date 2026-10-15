@@ -13,6 +13,10 @@ ORIGIN = 'https://cepoes.org'
 BLOCKED = re.compile(r'/(?:privado|private|admin|login|auth|newsletter|suscripcion|subscribe|unsubscribe|confirmar|baja|legislativa)(?:/|$)', re.I)
 FONT = Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
 BOLD = FONT.with_name('DejaVuSans-Bold.ttf')
+SELF_REFERENCE = re.compile(
+    r'\b(?:nuestra\s+posici[oó]n|(?:posici[oó]n|lectura|exigencia)\s+de\s+CEPOES)\b',
+    re.I,
+)
 
 
 def clean(value):
@@ -181,19 +185,25 @@ def inject(source, rel, site, reports):
         title = report.get('title') or clean(h1[1] if h1 else t[1] if t else 'CEPOES')
         title = re.sub(r'\s*[|·—-]\s*CEPOES.*$', '', title).strip()
     description = report.get('description') or meta(source, 'description')
+    for field, value in [('título', title), ('descripción', description)]:
+        if SELF_REFERENCE.search(clean(value)):
+            raise ValueError(f'{route}: corregir {field} para compartir; expresar el contenido directamente, sin autorreferencias institucionales')
     label = report.get('kind') or ('Boletín' if '/boletin-' in route else 'Territorio' if route.startswith('/territorio/') else 'Presupuesto' if route.startswith('/presupuesto/') else 'Observatorio' if route.startswith('/observatorio/') else 'CEPOES / 100 Barrios')
     cover = site / report.get('cover', '').lstrip('/')
     if cover.suffix.lower() not in ('.png', '.jpg', '.jpeg') or not cover.is_file(): cover = None
     branded = route != '/territorio/seguridad-barrios-populares/'
     digest = hashlib.sha256(json.dumps([1, title, description, label, branded, cover.read_bytes().hex() if cover else ''], ensure_ascii=False).encode()).hexdigest()[:12]
     base = '/assets/compartir/' + hashlib.sha256(route.encode()).hexdigest()[:12] + '-' + digest
+    # Stable per editorial version, shared by every button. A corrected preview
+    # gets a new URL rather than reusing the social network's cached old link.
+    url = ORIGIN + route + '?' + urlencode({'share_rev': digest})
     for name, size in [('enlace', (1200, 630)), ('publicacion', (1080, 1350)), ('historia', (1080, 1920))]:
         dest = site / (base + '-' + name + '.png').lstrip('/')
         if not dest.is_file(): card(dest, title, description, label, size, cover, branded, 'octubre-rosa' in route)
     def escape(value): return html.escape(value, quote=True)
     # Replace rather than append: previews remain deterministic across builds.
     source = re.sub(r'<meta\b(?=[^>]*(?:property|name)=["\'](?:og:[\w:]+|twitter:[\w:]+)["\'])[^>]*>', '', source, flags=re.I)
-    metadata = {'og:title': title, 'og:description': description, 'og:url': ORIGIN + route, 'og:type': 'article' if report or '/boletin-' in route else 'website', 'og:site_name': 'CEPOES', 'og:locale': 'es_AR', 'og:image': ORIGIN + base + '-enlace.png', 'og:image:width': '1200', 'og:image:height': '630', 'og:image:alt': title, 'twitter:card': 'summary_large_image', 'twitter:title': title, 'twitter:description': description, 'twitter:image': ORIGIN + base + '-enlace.png', 'twitter:image:alt': title}
+    metadata = {'og:title': title, 'og:description': description, 'og:url': url, 'og:type': 'article' if report or '/boletin-' in route else 'website', 'og:site_name': 'CEPOES', 'og:locale': 'es_AR', 'og:image': ORIGIN + base + '-enlace.png', 'og:image:width': '1200', 'og:image:height': '630', 'og:image:alt': title, 'twitter:card': 'summary_large_image', 'twitter:title': title, 'twitter:description': description, 'twitter:image': ORIGIN + base + '-enlace.png', 'twitter:image:alt': title}
     tags = ''.join(f'<meta {"name" if k.startswith("twitter:") else "property"}="{k}" content="{escape(v)}">' for k,v in metadata.items())
     source = re.sub(r'<link\b[^>]*href=[\"\']/assets/compartir\.css(?:\?[^\"\']*)?[\"\'][^>]*>', '', source, flags=re.I)
     source = re.sub(r'<script\b[^>]*src=[\"\']/assets/compartir\.js(?:\?[^\"\']*)?[\"\'][^>]*></script>', '', source, flags=re.I)
@@ -202,9 +212,8 @@ def inject(source, rel, site, reports):
         return hashlib.sha256(asset.read_bytes()).hexdigest()[:12] if asset.is_file() else '1'
     tags += f'<link rel="stylesheet" href="/assets/compartir.css?v={revision("compartir.css")}"><script defer src="/assets/compartir.js?v={revision("compartir.js")}"></script>'
     source = source.replace('</head>', tags + '</head>', 1)
-    url = ORIGIN + route
     def share_url(platform):
-        return url + '?' + urlencode({'utm_source': platform, 'utm_medium': 'social', 'utm_campaign': 'compartir'})
+        return url + '&' + urlencode({'utm_source': platform, 'utm_medium': 'social', 'utm_campaign': 'compartir'})
     wa = 'https://wa.me/?' + urlencode({'text': title + '\n' + share_url('whatsapp')})
     x = 'https://twitter.com/intent/tweet?' + urlencode({'text': title, 'url': share_url('x')})
     fb = 'https://www.facebook.com/sharer/sharer.php?' + urlencode({'u': share_url('facebook')})
@@ -240,5 +249,6 @@ def prepare(site, registry):
         match = re.fullmatch(r'([a-f0-9]{12}-[a-f0-9]{12})-(enlace|publicacion|historia)\.png', image.name)
         if match and match[1] not in referenced: image.unlink()
     return count
+
 
 

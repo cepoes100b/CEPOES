@@ -10,6 +10,41 @@ from PIL import Image, ImageDraw, ImageFont
 from deploy.compartir_publicaciones import canonical, inject, card, lines, BOLD, meta, place_controls
 
 class SharingTests(unittest.TestCase):
+    def test_editorial_correction_refreshes_every_static_share_link(self):
+        route = '/educacion/universidad-publica/'
+        source = '<html><head><link rel="canonical" href="https://cepoes.org' + route + '"><meta name="description" content="Financiamiento universitario y salarios."><meta property="og:description" content="Posición de CEPOES sobre la universidad."></head><body><h1>Universidad pública</h1></body></html>'
+        with tempfile.TemporaryDirectory() as tmp, patch('deploy.compartir_publicaciones.card'):
+            site = Path(tmp)
+            first = inject(source, route + 'index.html', site, {})
+            preview_url = meta(first, 'og:url')
+            revision = parse_qs(urlparse(preview_url).query)['share_rev'][0]
+            self.assertEqual(meta(first, 'og:description'), 'Financiamiento universitario y salarios.')
+            self.assertNotIn('Posición de CEPOES', first)
+            self.assertIn('rel="canonical" href="https://cepoes.org' + route + '"', first)
+            self.assertIn('data-share-url="' + preview_url + '"', first)
+            for platform in ['whatsapp', 'x', 'facebook']:
+                href = html.unescape(re.search(r'data-share-platform="' + platform + r'" href="([^"]+)"', first)[1])
+                query = parse_qs(urlparse(href).query)
+                shared = query['text'][0].split('\n')[-1] if platform == 'whatsapp' else query['url' if platform == 'x' else 'u'][0]
+                self.assertEqual(parse_qs(urlparse(shared).query)['share_rev'], [revision])
+            self.assertEqual(preview_url, meta(inject(first, route + 'index.html', site, {}), 'og:url'))
+            corrected = inject(first.replace('Financiamiento universitario y salarios.', 'Recursos, becas y salarios.'), route + 'index.html', site, {})
+            self.assertNotEqual(preview_url, meta(corrected, 'og:url'))
+            self.assertNotEqual(meta(first, 'og:image'), meta(corrected, 'og:image'))
+
+    def test_self_referential_share_copy_is_rejected_before_generation(self):
+        with tempfile.TemporaryDirectory() as tmp, patch('deploy.compartir_publicaciones.card') as draw:
+            for phrase in ['Posición de CEPOES sobre educación', 'La lectura de CEPOES es clara', 'La exigencia de CEPOES', 'Nuestra posición sobre educación']:
+                source = '<html><head><meta name="description" content="' + phrase + '"></head><body><h1>Educación</h1></body></html>'
+                with self.subTest(phrase=phrase), self.assertRaisesRegex(ValueError, 'sin autorreferencias'):
+                    inject(source, '/educacion/index.html', Path(tmp), {})
+            source = '<html><head></head><body><h1>Educación</h1></body></html>'
+            with self.assertRaisesRegex(ValueError, 'sin autorreferencias'):
+                inject(source, '/educacion/index.html', Path(tmp), {'/educacion/': {'description': 'Posición de CEPOES sobre educación'}})
+            self.assertFalse(draw.called)
+            allowed = source.replace('</head>', '<meta name="description" content="La posición del CIN y las estimaciones de CEPA."></head>')
+            self.assertEqual(meta(inject(allowed, '/educacion/index.html', Path(tmp), {}), 'og:description'), 'La posición del CIN y las estimaciones de CEPA.')
+
     def test_home_cards_are_idempotent_when_featured_heading_changes(self):
         source = '<html><head><title>CEPOES | Centro de Estudios</title></head><body><h1>Informe destacado</h1></body></html>'
         with tempfile.TemporaryDirectory() as tmp:
@@ -31,7 +66,8 @@ class SharingTests(unittest.TestCase):
             for key in ['og:title', 'twitter:title', 'og:image:alt', 'twitter:image:alt']:
                 self.assertEqual(meta(first, key), title)
             self.assertIn('data-share-title="' + html.escape(title, quote=True) + '"', first)
-            self.assertEqual(meta(first, 'og:url'), 'https://cepoes.org/')
+            self.assertEqual(urlparse(meta(first, 'og:url')).path, '/')
+            self.assertRegex(parse_qs(urlparse(meta(first, 'og:url')).query)['share_rev'][0], r'^[a-f0-9]{12}$')
             for platform in ['whatsapp', 'x']:
                 href = re.search(r'data-share-platform="' + platform + r'" href="([^"]+)"', first)[1]
                 query = parse_qs(urlparse(html.unescape(href)).query)
@@ -52,7 +88,8 @@ class SharingTests(unittest.TestCase):
             self.assertEqual(meta(first, 'og:title'), report['title'])
             self.assertEqual(meta(first, 'twitter:title'), report['title'])
             self.assertEqual(meta(first, 'og:description'), report['description'])
-            self.assertEqual(meta(first, 'og:url'), 'https://cepoes.org' + route)
+            self.assertEqual(urlparse(meta(first, 'og:url')).path, route)
+            self.assertRegex(parse_qs(urlparse(meta(first, 'og:url')).query)['share_rev'][0], r'^[a-f0-9]{12}$')
             for call in draw.call_args_list[3:]:
                 self.assertEqual(call.args[1], report['title'])
 
@@ -126,5 +163,6 @@ class SharingTests(unittest.TestCase):
             for call in draw.call_args_list: self.assertFalse(call.args[7])
 
 if __name__ == '__main__': unittest.main()
+
 
 

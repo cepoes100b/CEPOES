@@ -54,3 +54,14 @@ Pruebas: 9 Python y 13 JavaScript de compartir aprobadas localmente, incluidos a
 Por pedido de Agustín, la fila se ubica justo después del primer título h1 del contenido, antes de la síntesis y el cuerpo. Se ignoran navegación, scripts, estilos y templates al buscar la ubicación. La portada conserva los controles fuera de la tarjeta destacada; las páginas que cargan el título dinámicamente los ubican antes de su contenedor, para que el loader no los borre. Sin título/contenedor se usa el comienzo del body. Se elimina la ubicación anterior al pie y se conserva una sola fila por página.
 
 La fila hereda la estética y los controles existentes; dentro del bloque del título se evita un segundo margen del contenedor wrap. Se reduce el espacio vertical y se elimina la línea que separaba el pie. Imágenes, enlaces, medición y paneles conservados. Pruebas: 11 Python aprobadas, incluyendo ubicación tras título real, exclusión de nav/script, idempotencia y casos de portada/loader. Salida completa: 164 páginas actualizadas, sin duplicados. sites-preview sigue bloqueado por bwrap/proc; revisión estática alternativa de móvil/escritorio, claro/oscuro. Interacción real en navegador pendiente.
+
+# Correcciones editoriales y vistas previas (15/10/2026)
+
+Los títulos y descripciones usados en Open Graph, Twitter, placas y botones expresan directamente el contenido. El generador rechaza «nuestra posición» y «posición/lectura/exigencia de CEPOES» antes de crear las piezas. Las atribuciones a fuentes de terceros se conservan.
+
+Cada versión editorial genera un `share_rev` determinista a partir del mismo resumen, título, rótulo y portada que definen las imágenes. Se incluye en `og:url`, `data-share-url` y todos los enlaces estáticos. El JavaScript existente conserva esa revisión en las opciones nativas, copiar enlace, WhatsApp, X, Facebook y las leyendas de Instagram. Los parámetros arbitrarios de la página visitada no pueden sustituirla. La etiqueta `link rel=canonical` mantiene la URL limpia.
+
+Una corrección de título o descripción produce un enlace de vista previa distinto. La revisión se conserva entre despliegues sin cambios editoriales. Esto permite solicitar la versión actual al volver a compartir desde el sitio; no modifica mensajes ya enviados ni obliga a las redes a borrar su caché anterior.
+
+La captura recibida mostraba la descripción anterior del especial universitario, mientras que el HTML público ya entregaba el resumen corregido en `description`, `og:description` y `twitter:description`. Se verifican los metadatos y las rutas que efectivamente generan los botones, sin publicar mensajes en redes.
+

@@ -169,6 +169,8 @@ for p in html:
     assert nav_block and 'href="/lo-nuevo/"' in nav_block.group(0), f'Falta Lo nuevo en navegación: {rel}'
     assert footer_block and 'href="/balance/"' in footer_block.group(0), f'Falta Balance en footer: {rel}'
     assert footer_block and 'href="/lo-nuevo/"' in footer_block.group(0), f'Falta Lo nuevo en footer: {rel}'
+    assert nav_block and 'href="/educacion/"' in nav_block.group(0), f'Falta Educación en navegación: {rel}'
+    assert footer_block and 'href="/educacion/"' in footer_block.group(0), f'Falta Educación en footer: {rel}'
     assert 'href="/observatorio/presupuesto/"' not in s, f'Enlace presupuestario antiguo: {rel}'
     assert 'href="/territorio/presupuesto/"' not in s, f'Enlace territorial antiguo: {rel}'
 
@@ -178,7 +180,7 @@ for route in ['/balance/','/balance/vivienda-y-alquiler/','/balance/salud-public
 assert "group:'Balance'" in common_search and 'x.priority||0' in common_search, 'Buscador sin grupo o prioridad de Balance'
 assert 'const merged=new Map()' in common_search, 'Buscador sin deduplicación por URL'
 architecture_css=(root/'assets'/'arquitectura.css').read_text(encoding='utf-8',errors='replace')
-for token in ['max-width:1450px','max-width:1360px','min-width:761px','.site-nav .nav-links.open{display:flex}']:
+for token in ['max-width:1600px','max-width:1480px','min-width:1481px','min-width:761px','.site-nav .nav-links.open{display:flex}']:
     assert token in architecture_css, f'Navegación adaptable incompleta: {token}'
 assert '@media(min-width:761px){.budget-page .wrap{max-width:var(--max)}}' in architecture_css, 'Ejecución presupuestaria sin ancho editorial en escritorio'
 

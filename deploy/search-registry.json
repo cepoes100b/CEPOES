@@ -555,6 +555,23 @@
         "27795"
       ],
       "priority": 30
+    },
+    {
+      "query": "educacion enseñanza universidad escuela inicial vacantes aprendizajes",
+      "title": "Educación",
+      "url": "/educacion/",
+      "group": "Educación",
+      "type": "Sección",
+      "summary": "Universidad pública, financiamiento, evaluación educativa, nivel inicial y acceso a la educación.",
+      "tags": [
+        "educación",
+        "universidad",
+        "escuela",
+        "vacantes",
+        "nivel inicial",
+        "evaluación"
+      ],
+      "priority": 35
     }
   ]
 }

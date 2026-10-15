@@ -92,9 +92,9 @@
 .site-nav .brand .logo{line-height:1.15}
 .site-nav .brand-sub{line-height:1.05}
 .site-nav .nav-links .nav-new{color:#087b69;font-weight:850}.site-nav .nav-links .nav-new:before{content:"";display:inline-block;width:7px;height:7px;margin-right:7px;border-radius:50%;background:#16a085;box-shadow:0 0 0 4px rgba(22,160,133,.13)}.site-nav .nav-links .nav-new.active{color:var(--texto)}.home-new-link{display:inline-flex;margin:0 0 20px;color:var(--marca);font-weight:850;text-decoration:none}.home-new-link:hover{text-decoration:underline}
-@media(max-width:1450px){.site-nav .brand{flex-direction:column;align-items:flex-start;gap:1px}.site-nav .brand-sep{display:none}.site-nav .brand-sub{display:flex}.site-nav .brand-sub small{display:none}.site-nav .brand-sub strong{font:800 .62rem Poppins,sans-serif;letter-spacing:.1em;color:var(--marca)}}
-@media(max-width:1600px) and (min-width:1361px){.site-nav .nav-in{gap:14px}.site-nav .nav-links{gap:14px;font-size:.8rem}.site-nav .nav-cta{padding:8px 12px}}
-@media(max-width:1360px) and (min-width:761px){.site-nav .nav-links{display:none;position:absolute;left:0;right:0;top:72px;box-sizing:border-box;padding:18px 24px;border-bottom:1px solid var(--borde);background:var(--panel);flex-direction:column;align-items:stretch}.site-nav .nav-links.open{display:flex}.site-nav .nav-links a:not(.nav-cta){display:block}.site-nav .menu-btn{display:inline-flex}}
+@media(max-width:1600px){.site-nav .brand{flex-direction:column;align-items:flex-start;gap:1px}.site-nav .brand-sep{display:none}.site-nav .brand-sub{display:flex}.site-nav .brand-sub small{display:none}.site-nav .brand-sub strong{font:800 .62rem Poppins,sans-serif;letter-spacing:.1em;color:var(--marca)}}
+@media(max-width:1600px) and (min-width:1481px){.site-nav .nav-in{gap:14px}.site-nav .nav-links{gap:14px;font-size:.8rem}.site-nav .nav-cta{padding:8px 12px}}
+@media(max-width:1480px) and (min-width:761px){.site-nav .nav-links{display:none;position:absolute;left:0;right:0;top:72px;box-sizing:border-box;padding:18px 24px;border-bottom:1px solid var(--borde);background:var(--panel);flex-direction:column;align-items:stretch}.site-nav .nav-links.open{display:flex}.site-nav .nav-links a:not(.nav-cta){display:block}.site-nav .menu-btn{display:inline-flex}}
 @media(max-width:760px){.site-nav .brand-sub strong{font-size:.58rem;letter-spacing:.08em}}
 /* Ejecución presupuestaria: restituye la columna editorial en escritorio.
    site.css limita correctamente los componentes internos, pero su selector
@@ -271,3 +271,4 @@
 .home-budget-panel .eyebrow,.home-budget-panel h2{color:#f4fbfc}.home-budget-panel h2{margin:10px 0;font-size:clamp(1.5rem,2.5vw,2rem);line-height:1.2}.home-budget-panel p{margin:0;max-width:70ch;color:#e1edf1;line-height:1.6}
 .home-budget-actions{display:flex;flex-direction:column;gap:16px}.home-budget-actions a{color:#f4fbfc;font-weight:800;text-underline-offset:4px}.home-budget-actions a:focus-visible{outline:3px solid #8ee6d8;outline-offset:4px}
 @media(max-width:760px){.home-budget-panel{grid-template-columns:1fr;padding:22px}.home-budget-actions{flex-direction:row;flex-wrap:wrap;gap:16px 24px}}
+

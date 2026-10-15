@@ -72,7 +72,7 @@ def version_local_stylesheets(source: str, site: Path) -> str:
 TOPICS = [
     ("vivienda-y-habitat", "Vivienda y hábitat"),
     ("salud-y-cuidados", "Salud y cuidados"),
-    ("educacion-e-infancias", "Educación e infancias"),
+    ("educacion-e-infancias", "Educación"),
     ("trabajo-e-ingresos", "Trabajo e ingresos"),
     ("precios-y-consumo", "Precios y consumo"),
     ("produccion-y-comercio", "Producción y comercio"),
@@ -92,7 +92,7 @@ def active_for(path: Path, site: Path) -> str:
         rel = rel[: -len("index.html")]
     if rel.startswith("/lo-nuevo/"):
         return "new"
-    for section in ("observatorio", "balance", "presupuesto", "territorio", "legislatura", "publicaciones", "propuestas", "prensa", "cepoes"):
+    for section in ("observatorio", "balance", "presupuesto", "territorio", "educacion", "legislatura", "publicaciones", "propuestas", "prensa", "cepoes"):
         if rel.startswith(f"/{section}/"):
             return section
     return ""
@@ -104,6 +104,7 @@ def nav(active: str) -> str:
         ("balance", "/balance/", "Balance"),
         ("presupuesto", "/presupuesto/", "Presupuesto"),
         ("territorio", "/territorio/", "Territorio"),
+        ("educacion", "/educacion/", "Educación"),
         ("legislatura", "/legislatura/", "Legislatura"),
         ("publicaciones", "/publicaciones/", "Publicaciones"),
         ("propuestas", "/propuestas/", "Propuestas"),
@@ -158,7 +159,7 @@ FOOTER = (
     '<a class="logo" href="/">CEP<b>OES</b></a><p>Datos, investigación y propuestas para CABA, desde los barrios.</p>'
     '<strong class="footer-100">SOMOS 100 BARRIOS</strong></div><div class="footer-links"><h5>Explorar</h5><ul>'
     '<li><a href="/observatorio/">Observatorio</a></li><li><a href="/balance/">Balance</a></li>'
-    '<li><a href="/presupuesto/">Presupuesto</a></li>'
+    '<li><a href="/presupuesto/">Presupuesto</a></li><li><a href="/educacion/">Educación</a></li>'
     '<li><a href="/territorio/">Territorio</a></li><li><a href="/territorio/equipamientos/">Qué hay en tu barrio</a></li>'
     '<li><a href="/legislatura/">Legislatura</a></li><li><a href="/publicaciones/">Publicaciones</a></li>'
     '<li><a href="/propuestas/">Propuestas</a></li><li><a href="/prensa/">Prensa</a></li>'
@@ -1276,6 +1277,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 

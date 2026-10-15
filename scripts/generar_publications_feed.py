@@ -10,7 +10,7 @@ KINDS = {'boletin', 'informe', 'analisis', 'prensa'}
 
 def publications(site):
     registry = json.loads((site/'assets/data/lo-nuevo.json').read_text(encoding='utf-8'))
-    if registry.get('version') != 1: raise ValueError('Invalid public registry')
+    if registry.get('version') not in (1, 2): raise ValueError('Invalid public registry')
     bulletins = {e['url']:e for e in editions(site)}
     result = {}
     for entry in registry['entries']:
@@ -43,3 +43,4 @@ def generate(site):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('site',type=Path)
     print('Publicaciones para novedades:',len(generate(p.parse_args().site)['publications']))
+

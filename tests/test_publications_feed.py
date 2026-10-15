@@ -4,6 +4,19 @@ from unittest.mock import patch
 from scripts.generar_publications_feed import generate
 
 class PublicationsFeedTest(unittest.TestCase):
+ def test_registry_v2_accepts_unknown_and_month_only_dates(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   site=Path(tmp);(site/'assets/data').mkdir(parents=True)
+   entries=[]
+   for name,date in [('sin-fecha',None),('edicion','2026-09')]:
+    url=f'/publicaciones/informes/{name}/';page=site/url.lstrip('/')/'index.html';page.parent.mkdir(parents=True,exist_ok=True);page.write_text('<main><h1>Informe</h1></main>')
+    entries.append(dict(url=url,type='informe',title='Informe',description='Resumen',date=date,event='Fecha por verificar' if date is None else 'Edición'))
+   (site/'assets/data/lo-nuevo.json').write_text(json.dumps(dict(version=2,entries=entries)))
+   with patch('scripts.generar_publications_feed.editions',return_value=[]):result=generate(site)
+   self.assertEqual(len(result['publications']),2)
+   self.assertIsNone(next(p['date'] for p in result['publications'] if 'sin-fecha' in p['url']))
+   self.assertEqual(next(p['date'] for p in result['publications'] if 'edicion' in p['url']),'2026-09')
+
  def test_editorial_new_pages_only_and_stable_identity(self):
   with tempfile.TemporaryDirectory() as tmp:
    site=Path(tmp);(site/'assets/data').mkdir(parents=True)
@@ -21,3 +34,4 @@ class PublicationsFeedTest(unittest.TestCase):
    self.assertEqual([p['key'] for p in first['publications']],[p['key'] for p in second['publications']])
 
 if __name__=='__main__':unittest.main()
+

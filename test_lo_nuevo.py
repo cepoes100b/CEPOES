@@ -9,6 +9,15 @@ TEMPLATE = '''<aside class="new-summary">Viejo</aside><label>Tema<select id="new
 
 
 class NovedadesTest(unittest.TestCase):
+    def test_education_special_is_registered_in_latest_content(self):
+        self.write(self.site, 'educacion/universidad-publica/index.html',
+                   self.page('Universidad pública', '<meta name="cepoes:publication" content="special">'))
+        entries = generate(self.site, self.old, '2026-10-15')
+        self.assertEqual(len(entries), 1)
+        self.assertEqual(entries[0]['url'], '/educacion/universidad-publica/')
+        self.assertEqual(entries[0]['type'], 'especial')
+        self.assertEqual(entries[0]['event'], 'Nuevo')
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)

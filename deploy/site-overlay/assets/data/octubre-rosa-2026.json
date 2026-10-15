@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-09",
+  "updated_at": "2026-10-14",
   "timezone": "America/Argentina/Buenos_Aires",
   "campaigns": [
     {
@@ -119,6 +119,23 @@
       "walkin": false,
       "offer": "Jornada Octubre Rosa con charlas comunitarias y muestra fotográfica de pacientes.",
       "requirements": "Pabellón Herrera Vegas, segundo piso. Jornada finalizada.",
+      "source": "https://buenosaires.gob.ar/gcaba_historico/noticias/octubre-rosa-los-hospitales-de-la-ciudad-suman-jornadas-especiales-y"
+    },
+    {
+      "id": "fernandez",
+      "place": "Hospital Fernández",
+      "barrio": "Palermo",
+      "comuna": 14,
+      "address": "Av. Cerviño 3356",
+      "start": "2026-10-28",
+      "end": "2026-10-28",
+      "date": "28 de octubre",
+      "hours": "10:00",
+      "mode": "Jornada informativa y solicitud de turnos",
+      "free": true,
+      "walkin": false,
+      "offer": "Charla «Mitos y verdades sobre el cáncer de mama» y presentación del libro El hilo azul, de Irene Casini.",
+      "requirements": "Jornada: hall de planta baja, sector C. El anuncio también invita a mujeres de 40 años o más, con más de un año desde su última mamografía, a acercarse al Servicio de Patología Mamaria para solicitar turno. El horario de las 10:00 corresponde a la jornada; la mamografía se realiza con el turno que asigne el servicio.",
       "source": "https://buenosaires.gob.ar/gcaba_historico/noticias/octubre-rosa-los-hospitales-de-la-ciudad-suman-jornadas-especiales-y"
     }
   ]

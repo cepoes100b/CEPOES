@@ -7,12 +7,17 @@ class OctubreRosaTest(unittest.TestCase):
  def test_agenda_source_and_static_fallback(self):
   d=json.loads((ROOT/'deploy/site-overlay/assets/data/octubre-rosa-2026.json').read_text())
   h=(ROOT/'deploy/site-overlay/salud/octubre-rosa/index.html').read_text()
-  self.assertEqual(len(d['campaigns']),7)
+  self.assertEqual(len(d['campaigns']),8)
   for c in d['campaigns']:
    self.assertLessEqual(c['start'],c['end']);self.assertIn(c['source'],h)
    self.assertIn('data-barrio="'+c['barrio']+'"',h)
    self.assertIn('data-start="'+c['start']+'"',h)
    self.assertIn(c['address'],h)
+  f=next(c for c in d['campaigns'] if c['id']=='fernandez')
+  self.assertFalse(f['walkin']);self.assertTrue(f['free'])
+  self.assertEqual(f['start'],'2026-10-28');self.assertEqual(f['hours'],'10:00')
+  self.assertIn('<option>Palermo</option>',h)
+  self.assertIn('Hospital Santojanni',h)
   self.assertFalse(next(c for c in d['campaigns'] if c['id']=='rojas')['free'])
   self.assertFalse(next(c for c in d['campaigns'] if c['id']=='zubizarreta')['walkin'])
  def test_bridge_preserves_editorial_and_is_idempotent(self):
@@ -37,3 +42,4 @@ class OctubreRosaTest(unittest.TestCase):
    entries=generate(site,old,today='2026-10-09')
    self.assertEqual(len(entries),1);self.assertEqual(entries[0]['type'],'especial');self.assertEqual(entries[0]['date'],'2026-10-09')
 if __name__=='__main__':unittest.main()
+

@@ -3,7 +3,7 @@ import vm from 'node:vm';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 const source = readFileSync(new URL('../deploy/site-overlay/assets/compartir.js', import.meta.url), 'utf8');
-function fixture({nativeError, clipboardError, imageAvailable=false, canShareFile=false, mediaEnabled=false, nativeAvailable=true} = {}) {
+function fixture({nativeError, clipboardError, imageAvailable=false, canShareFile=false, mediaEnabled=false, nativeAvailable=true,shareUrl="https://cepoes.org/territorio/equipamientos/"} = {}) {
   function element() { return {listeners:{}, hidden:true, addEventListener(n,fn){const before=this.listeners[n];this.listeners[n]=before ? async event=>{await before(event);await fn(event);} : fn;}, querySelector(){return status;}}; }
   const status={textContent:''}, dialog=element(); dialog.open=false; dialog.children=[]; dialog.appendChild=e=>dialog.children.push(e);
   dialog.showModal=()=>{dialog.open=true;}; dialog.close=()=>{dialog.open=false;};
@@ -15,11 +15,11 @@ function fixture({nativeError, clipboardError, imageAvailable=false, canShareFil
   for(const name of ['copy','native','instagram','close','caption','file']) selectors[`[data-share-${name}]`]=element();
   const anchors=['whatsapp','x','facebook'].map(platform=>({...element(),dataset:{sharePlatform:platform}}));
   const manual=[];
-  const root={appendChild:e=>manual.push(e),dataset:{shareTitle:'Informe de salud',shareUrl:'https://cepoes.org/territorio/equipamientos/',shareImage:'/assets/compartir/test'},querySelector:s=>selectors[s],querySelectorAll:()=>anchors};
+  const root={appendChild:e=>manual.push(e),dataset:{shareTitle:'Informe de salud',shareUrl,shareImage:'/assets/compartir/test'},querySelector:s=>selectors[s],querySelectorAll:()=>anchors};
   const copied=[],tracked=[],shares=[];
   const navigator={clipboard:{writeText:async text=>{if(clipboardError)throw clipboardError;copied.push(text);}}, share:async data=>{if(nativeError)throw nativeError;shares.push(data);},canShare:()=>canShareFile};
   if(!nativeAvailable){delete navigator.share;delete navigator.canShare;}
-  vm.runInNewContext(source,{document:{querySelectorAll:()=>[root],createElement:()=>({setAttribute(){},focus(){this.focused=true;},select(){this.selected=true;}})}, window:{CEPOES_ANALYTICS:{event:(...args)=>tracked.push(args)}},navigator,URL,location:{href:'https://cepoes.org/territorio/equipamientos/?comuna=7&categoria=salud&email=secreto%40test.com&q=personal&token=privado'},File:class File{constructor(parts,name,options){this.name=name;this.type=options.type;this.parts=parts;}},fetch:async()=>({ok:imageAvailable,blob:async()=>({type:'image/png'})})});
+  vm.runInNewContext(source,{document:{querySelectorAll:()=>[root],createElement:()=>({setAttribute(){},focus(){this.focused=true;},select(){this.selected=true;}})}, window:{CEPOES_ANALYTICS:{event:(...args)=>tracked.push(args)}},navigator,URL,location:{href:'https://cepoes.org/territorio/equipamientos/?comuna=7&categoria=salud&email=secreto%40test.com&q=personal&token=privado&share_rev=una-revision-ajena'},File:class File{constructor(parts,name,options){this.name=name;this.type=options.type;this.parts=parts;}},fetch:async()=>({ok:imageAvailable,blob:async()=>({type:'image/png'})})});
   return {selectors,anchors,copied,tracked,shares,dialog,manual,media,mediaNodes};
 }
 test('copy preserves public filters and excludes searches and personal parameters',async()=>{
@@ -78,6 +78,25 @@ test('unsupported file sharing retains download route and cancellation is not tr
 
 const clickEvent=()=>({prevented:false,preventDefault(){this.prevented=true;}});
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
+test('all sharing methods retain the server editorial revision, excluding a supplied page revision',async()=>{
+  const revision='2e829b9fc794';
+  const f=fixture({shareUrl:'https://cepoes.org/territorio/equipamientos/?share_rev='+revision,mediaEnabled:true,imageAvailable:true,canShareFile:true});
+  await f.selectors['[data-share-copy]'].listeners.click();
+  await f.selectors['[data-share-native]'].listeners.click();
+  await f.selectors['[data-share-caption]'].listeners.click();
+  for(const anchor of f.anchors) {
+    anchor.listeners.click(clickEvent());
+    const q=new URL(anchor.href).searchParams;
+    const shared=anchor.dataset.sharePlatform==='whatsapp' ? q.get('text').split('\n').at(-1) : q.get(anchor.dataset.sharePlatform==='x' ? 'url' : 'u');
+    assert.equal(new URL(shared).searchParams.get('share_rev'),revision);
+  }
+  await flush();
+  await f.mediaNodes['[data-media-caption]'].listeners.click();
+  await f.mediaNodes['[data-media-file]'].listeners.click();
+  for(const value of f.copied) assert.equal(new URL(value.split('\n').at(-1)).searchParams.get('share_rev'),revision);
+  assert.equal(new URL(f.shares[0].url).searchParams.get('share_rev'),revision);
+  assert.equal(new URL(f.shares[1].text.split('\n').at(-1)).searchParams.get('share_rev'),revision);
+});
 test('WhatsApp opens image panel and shares actual file plus public link',async()=>{
   const f=fixture({mediaEnabled:true,imageAvailable:true,canShareFile:true});const event=clickEvent();
   f.anchors[0].listeners.click(event);await flush();
@@ -117,3 +136,4 @@ test('manual caption fallback is shown inside the active media panel',async()=>{
   assert.equal(f.media.children.length,1);assert.equal(f.dialog.children.length,0);
   assert.match(f.media.children[0].value,/utm_source=whatsapp/);assert.equal(f.tracked.length,0);
 });
+

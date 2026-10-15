@@ -37,3 +37,9 @@ Base comprobada por GitHub oficial, conexión CEPOES: main `fed055c5862a0ab68cb1
 ## Próximo paso
 
 Revisar la propuesta en su vista privada y completar la revisión visual con acceso autorizado del navegador antes de integrar y publicar en cepoes.org. La difusión por correo es una decisión independiente.
+
+## Corrección y controles finales
+
+Se oscurece el enlace propio de la sección en modo claro a #006d98 para asegurar contraste sobre el celeste. Pares propios verificados: 5,23:1 sobre celeste, 5,31:1 sobre fondo alterno y 5,77:1 sobre blanco; en oscuro, mínimo 9,07:1 para los pares comprobados. Se verificaron nuevamente estructura y anclas. Los checks remotos del primer commit terminaron success para controles obligatorios y contrastes; el commit final debe volver a verificarse.
+
+Vista privada actualizada con la corrección: fuente `92485b486ee056f9443313710a31dff46361ca47`, mismo proyecto y URL. La revisión en navegador sigue pendiente por el rechazo de autenticación, sin intentos de elusión.

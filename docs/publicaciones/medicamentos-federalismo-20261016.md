@@ -35,3 +35,18 @@ Vista privada: https://cepoes-medicamentos-revision.crivelli725370.chatgpt.site/
 El usuario eligió Google en el formulario seguro; la transición a accounts.google.com terminó en 502 Bad Gateway con conexión rechazada. La selección fue autorizada y realizada, pero no se completó el acceso. Sin revisión visual ni pruebas interactivas reales. No se vuelve a solicitar contraseña ni se cambia de método.
 
 Antes de publicar en cepoes.org: reconstruir con una base estable y completar revisión visual de escritorio/móvil, claro/oscuro y los tres escenarios. La vista privada se entrega como propuesta para revisión, no como diseño validado.
+
+## Versión 2 — revisión solicitada
+
+Nueva rama desde main vigente d5987f51c4ce27ce7c7b0262dd8d8486fcbbe406, preservando los archivos de la propuesta previa. Comparación seleccionada de ingredientes de ambos anexos; nuevas incorporaciones distinguidas de coincidencias y ausencias. No se atribuye discontinuidad de entrega a una ausencia del listado. Se incorpora Resolución 1445/2026 (plan vascular, artículo 4), anuncio COFESA 30/03/2026 (provisión respiratoria anunciada, sin acreditar entregas actuales), y auditoría 87/2024 Proyecto 141/24 (17 centros, ejercicio 2023). La auditoría de 2023 queda como antecedente desplegable; las muestras no son una serie comparable. Escenarios repetitivos retirados. Compras, financiamiento y distribución diferenciados. Propuestas con responsabilidad nacional y porteña.
+
+Verificación: IDs únicos, enlaces internos y sintaxis JS correctos; git diff --check correcto; prueba de catálogo newsletter aprobada. sites-preview reintentado sobre el proyecto con manifest: falla bwrap al montar /proc. Sin validación visual; no se afirma revisión móvil. Presupuesto real, entregas y mapa de vulnerabilidad permanecen pendientes de datos verificados. No fusionar ni publicar en cepoes.org; sin difusión por correo.
+
+## Corrección de tabla — captura del usuario 16/10
+
+Causa verificada: site.css define .comparison como display:grid; la tabla del especial heredaba ese display y colocaba caption, thead y tbody en columnas. Se renombra a .mf-comparison, se explicita display nativo de tabla/grupos/filas/celdas y se asignan anchos para ingrediente, años y explicación. Se evita overflow-wrap:anywhere para no fragmentar palabras; en móvil se conserva ancho mínimo y desplazamiento horizontal con ayuda visible y foco. CSS versionado para refrescar caché. Se actualiza la copia privada con idéntico HTML y CSS. 27 pruebas catálogo/novedades/fechas, diff --check y comprobación de ausencia de la clase conflictiva aprobadas. sites-preview falla nuevamente por montaje /proc; navegador de copia privada exige login. No se declara QA visual completada. Sin push a GitHub ni cambios en producción.
+
+
+## Autorización de publicación
+
+El 16/10/2026 Agustín aprobó la apertura simplificada y autorizó publicar en cepoes.org («ahí me gustó más, podemos publicarlo»). Se publica la versión de la copia privada con tabla aislada y nueva bajada; sin autorización de difusión por correo. R2 local y 27 pruebas editoriales aprobadas. La revisión del usuario valida la presentación; la revisión visual automatizada sigue limitada por /proc y login. La construcción completa estable será verificada por el publicador canónico antes de escritura SFTP.

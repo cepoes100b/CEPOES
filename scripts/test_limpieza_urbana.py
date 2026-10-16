@@ -39,8 +39,9 @@ class TestDownload(unittest.TestCase):
    headers={'Content-Type':'text/csv','Content-Length':'10000'}
   with tempfile.TemporaryDirectory() as tmp:
    directory=Path(tmp);target=directory/'suaci-2026.csv';target.write_bytes(b'ultimo archivo valido')
-   with patch.object(download.urllib.request,'urlopen',return_value=Response(b'nro_solicitud,prestacion\n1,prueba\n')):
-    with self.assertRaisesRegex(ValueError,'incompleta'):download.download(2026,directory)
+   with patch.object(download.urllib.request,'urlopen',side_effect=lambda *a,**k:Response(b'nro_solicitud,prestacion\n1,prueba\n')):
+    with patch.object(download.time,'sleep'):
+     with self.assertRaisesRegex(ValueError,'incompleta'):download.download(2026,directory)
    self.assertEqual(target.read_bytes(),b'ultimo archivo valido')
  def test_html_and_partial_are_rejected(self):
   import io
@@ -70,5 +71,8 @@ class TestContinuity(unittest.TestCase):
    with path.open('w') as f:
     w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
    d=m.generate([path],ROOT/'badata/barrios.geojson');self.assertEqual({r[6] for r in d['counts']},{'Problemas reportados'});self.assertEqual({r[4] for r in d['counts']},{'Solicitud','Queja'})
+
+# Incluir regresiones de transporte en el control SUACI canónico.
+from test_descargar_suaci import DownloadTests
 
 if __name__=='__main__':unittest.main()

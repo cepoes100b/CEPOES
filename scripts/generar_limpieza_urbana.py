@@ -7,7 +7,7 @@ CATALOG='https://data.buenosaires.gob.ar/dataset/sistema-unico-atencion-ciudadan
 CONFIG=Path(__file__).resolve().parents[1]/'config/limpieza-prestaciones.json'
 def norm(s):return ''.join(c for c in unicodedata.normalize('NFD',s.strip().lower()) if unicodedata.category(c)!='Mn')
 def geometry(path):
- names={'agronomia':'Agronomía','boca':'La Boca','paternal':'La Paternal','nunez':'Núñez','villa gral. mitre':'Villa General Mitre'}
+ names={'agronomia':'Agronomía','boca':'La Boca','paternal':'La Paternal','nunez':'Núñez','villa gral. mitre':'Villa General Mitre','constitucion':'Constitución','san cristobal':'San Cristóbal','san nicolas':'San Nicolás','velez sarsfield':'Vélez Sarsfield','villa ortuzar':'Villa Ortúzar','villa pueyrredon':'Villa Pueyrredón','villa del parque':'Villa del Parque'}
  features=[]
  for f in json.loads(path.read_text())['features']:
   props=f['properties'];g=f['geometry'];rings=g['coordinates'] if g['type']=='Polygon' else [r for p in g['coordinates'] for r in p];reduced=[]

@@ -6,7 +6,6 @@ Deno.serve(async req=>{
   try {
     if(req.method!=='POST'||req.headers.get('authorization')!==`Bearer ${env('NEWSLETTER_DISPATCH_SECRET')}`)return Response.json({ok:false},{status:401});
     if(Deno.env.get('NEWSLETTER_ENABLED')!=='true')return Response.json({ok:false,reason:'disabled'},{status:503});
-    env('RESEND_API_KEY');env('NEWSLETTER_FROM');env('NEWSLETTER_UNSUBSCRIBE_SECRET');
     const db=createClient(env('SUPABASE_URL'),env('SUPABASE_SERVICE_ROLE_KEY'),{auth:{persistSession:false}});
     const rpc=async(name:string,args:unknown)=>{const r=await db.rpc(name,args);if(r.error)throw Error('database_failed');return r.data;};
     const response=await fetch('https://cepoes.org/assets/data/newsletter-publications.json',{signal:AbortSignal.timeout(15000)});
@@ -15,7 +14,10 @@ Deno.serve(async req=>{
     const publications=feed.publications.map(validatePublication);
     if(new Set(publications.map((p:any)=>p.key)).size!==publications.length)throw Error('duplicate_publication');
     await rpc('newsletter_enqueue_publications',{p_publications:publications});
+    // Versioned maintenance: resuming delivery requires a separately authorized code change.
+    return Response.json({ok:true,mode:'catalog-only',cataloged:publications.length,accepted:0,retry:0,cancelled:0});
     // Catalog discovery never authorizes diffusion; only a privileged editorial order does.
+    env('RESEND_API_KEY');env('NEWSLETTER_FROM');env('NEWSLETTER_UNSUBSCRIBE_SECRET');
     await rpc('newsletter_finalize_editorial',{});
     const jobs=await rpc('newsletter_claim_deliveries',{p_limit:5});
     let accepted=0,retry=0,cancelled=0;

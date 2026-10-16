@@ -11,6 +11,8 @@ def main():
         with urllib.request.urlopen(request,timeout=300) as response:result=json.load(response)
     except Exception:
         raise SystemExit('No se completó la distribución; revisar el registro privado del servicio')
-    print(json.dumps({k:result.get(k) for k in ('ok','accepted','retry','cancelled','review')}))
+    print(json.dumps({k:result.get(k) for k in ('ok','mode','cataloged','accepted','retry','cancelled','review')}))
+    if result.get('mode') == 'catalog-only':
+        print('Mantenimiento: catálogo actualizado; despacho de correo inhibido por código.')
     if not result.get('ok') or result.get('retry',0) or result.get('review',0):raise SystemExit(1)
 if __name__=='__main__':main()

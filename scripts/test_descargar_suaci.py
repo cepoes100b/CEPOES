@@ -1,4 +1,4 @@
-"""Regresiones aisladas: ninguna prueba accede a la red ni a datos reales."""
+"""Regresiones aisladas: sin red externa ni datos reales; transporte HTTP sólo en loopback."""
 import hashlib
 import http.client
 import io
@@ -7,9 +7,11 @@ import ssl
 import subprocess
 import sys
 import tempfile
+import threading
 import unittest
 import urllib.error
 from pathlib import Path
+from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from unittest.mock import patch
 import descargar_suaci as m
 import actualizar_limpieza_urbana as pipeline
@@ -29,6 +31,53 @@ class DownloadTests(unittest.TestCase):
   self.meta.write_text(json.dumps(self.old));self.before=self.snapshot()
   self.sleep=patch.object(m.time,'sleep').start();self.addCleanup(patch.stopall)
  def snapshot(self):return {p.name:(p.read_bytes(),p.stat().st_mtime_ns) for p in self.root.iterdir()}
+ def test_empty_cache_exhaustion_leaves_no_files(self):
+  self.target.unlink();self.meta.unlink()
+  with patch.object(m.urllib.request,'urlopen',side_effect=lambda *a,**k:Response(BODY[:100],**{'Content-Length':str(len(BODY))})) as request:
+   with self.assertRaises(m.IncompleteDownload):m.download(2026,self.root)
+  self.assertEqual(request.call_count,3);self.assertEqual(list(self.root.iterdir()),[])
+  self.assertEqual([c.args[0] for c in self.sleep.call_args_list],[2,4])
+ def test_empty_cache_truncated_then_success(self):
+  self.target.unlink();self.meta.unlink()
+  responses=[Response(BODY[:100],**{'Content-Length':str(len(BODY))}),Response(ETag='"new"')]
+  with patch.object(m.urllib.request,'urlopen',side_effect=responses) as request:
+   result=m.download(2026,self.root)
+  self.assertEqual(request.call_count,2);self.assertEqual(self.target.read_bytes(),BODY)
+  self.assertEqual(result['bytes'],len(BODY));self.assertEqual(result['sha256'],hashlib.sha256(BODY).hexdigest())
+  self.assertEqual(json.loads(self.meta.read_text()),result)
+  self.assertEqual(set(self.snapshot()),{'suaci-2026.csv','suaci-2026.json'})
+  self.assertTrue(all(r.closed for r in responses))
+ def test_real_urllib_loopback_recovers_from_silent_eof(self):
+  self.target.unlink();self.meta.unlink()
+  class Handler(BaseHTTPRequestHandler):
+   attempts=0
+   def log_message(self,*args):pass
+   def do_GET(self):
+    type(self).attempts+=1
+    self.send_response(200);self.send_header('Content-Type','text/csv')
+    self.send_header('Content-Length',str(len(BODY)));self.end_headers()
+    self.wfile.write(BODY[:100] if self.attempts==1 else BODY)
+  # Puerto efímero, sin proxies, redirecciones ni acceso a fuentes externas.
+  server=ThreadingHTTPServer(('127.0.0.1',0),Handler)
+  thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+  opener=m.urllib.request.build_opener(m.urllib.request.ProxyHandler({}))
+  errors=[];download_once=m.download_once
+  def observed_attempt(*args):
+   try:return download_once(*args)
+   except Exception as error:
+    errors.append(type(error));self.assertEqual(list(self.root.iterdir()),[]);raise
+  try:
+   with patch.object(m,'BASE',f'http://127.0.0.1:{server.server_port}/'),patch.object(m.urllib.request,'urlopen',side_effect=opener.open),patch.object(m,'download_once',side_effect=observed_attempt):
+    result=m.download(2026,self.root)
+  finally:
+   server.shutdown();server.server_close();thread.join(timeout=5)
+  self.assertFalse(thread.is_alive());self.assertEqual(Handler.attempts,2)
+  # read(tamaño) devuelve EOF sin IncompleteRead; lo detecta nuestro contador.
+  self.assertEqual(errors,[m.IncompleteDownload]);self.sleep.assert_called_once_with(2)
+  self.assertEqual(self.target.read_bytes(),BODY);self.assertEqual(result['bytes'],len(BODY))
+  self.assertEqual(result['sha256'],hashlib.sha256(BODY).hexdigest())
+  self.assertEqual(json.loads(self.meta.read_text()),result)
+  self.assertEqual(set(self.snapshot()),{'suaci-2026.csv','suaci-2026.json'})
  def test_truncated_then_success(self):
   responses=[Response(BODY[:100],**{'Content-Length':str(len(BODY))}),Response(ETag='"new"')]
   with patch.object(m.urllib.request,'urlopen',side_effect=responses) as request:

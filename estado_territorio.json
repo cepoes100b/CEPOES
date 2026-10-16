@@ -177,7 +177,7 @@
       "resource_name": "Cuarteles y Destacamentos de Bomberos (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-justicia-y-seguridad/cuarteles-destacamentos-bomberos/cuarteles_destacamentos_bomberos.csv",
       "source_last_modified": "2026-10-02T12:52:13.702898",
-      "downloaded_at": 1791668420,
+      "downloaded_at": 1792185127,
       "bytes": 6004
     },
     "subte_bocas": {
@@ -186,7 +186,7 @@
       "resource_name": "Bocas de Subte",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/sbase/bocas-subte/bocas-de-subte.csv",
       "source_last_modified": "2019-09-13T17:06:07.711481",
-      "downloaded_at": 1791668421,
+      "downloaded_at": 1792185128,
       "bytes": 85642
     },
     "ecobici": {
@@ -195,7 +195,7 @@
       "resource_name": "Estaciones de bicicletas públicas (nuevo sistema)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/transporte-y-obras-publicas/estaciones-bicicletas-publicas/nuevas-estaciones-bicicletas-publicas.csv",
       "source_last_modified": "2019-11-28T16:11:26.364119",
-      "downloaded_at": 1791245198,
+      "downloaded_at": 1792185129,
       "bytes": 31059
     },
     "ferrocarril": {
@@ -204,7 +204,7 @@
       "resource_name": "Estaciones de Ferrocarril (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/transporte-y-obras-publicas/estaciones-ferrocarril/estaciones_ferroviarias.csv",
       "source_last_modified": "2019-09-16T14:43:47.238268",
-      "downloaded_at": 1792099552,
+      "downloaded_at": 1792185130,
       "bytes": 35537
     },
     "taxis": {
@@ -213,7 +213,7 @@
       "resource_name": "Paradas de Taxis (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/transporte-y-obras-publicas/paradas-taxis/paradas_taxis.csv",
       "source_last_modified": "2024-08-26T00:00:00",
-      "downloaded_at": 1792099553,
+      "downloaded_at": 1792185131,
       "bytes": 30324
     },
     "bicicleteros": {
@@ -222,7 +222,7 @@
       "resource_name": "Bicicleteros",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/transporte-y-obras-publicas/bicicleteros-via-publica/bicicleteros.csv",
       "source_last_modified": "2019-04-23T17:01:34.391310",
-      "downloaded_at": 1792099554,
+      "downloaded_at": 1792185132,
       "bytes": 134530
     },
     "puntos_verdes": {
@@ -231,7 +231,7 @@
       "resource_name": "Puntos Verdes (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/agencia-de-proteccion-ambiental/puntos-verdes/puntos_verdes.csv",
       "source_last_modified": "2026-10-02T12:49:42.029371",
-      "downloaded_at": 1792099555,
+      "downloaded_at": 1792185133,
       "bytes": 8522
     },
     "fiab": {
@@ -240,7 +240,7 @@
       "resource_name": "Ferias Itinerantes de Abastecimiento Barrial",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-espacio-publico-e-higiene-urbana/ferias-mercados/ferias-itinerantes-de-abastecimiento-barrial.csv",
       "source_last_modified": "2026-06-23T16:34:13.621552",
-      "downloaded_at": 1792099556,
+      "downloaded_at": 1792185134,
       "bytes": 44899
     },
     "mercados": {
@@ -249,7 +249,7 @@
       "resource_name": "Mercados",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-espacio-publico-e-higiene-urbana/ferias-mercados/mercados.csv",
       "source_last_modified": "2026-06-23T16:34:13.621552",
-      "downloaded_at": 1792099557,
+      "downloaded_at": 1792185135,
       "bytes": 621
     },
     "sedes_comunales": {
@@ -258,7 +258,7 @@
       "resource_name": "Sedes Comunales",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-educacion/sedes-comunales/sedes_comunales.csv",
       "source_last_modified": "2026-07-29T17:11:06.698361",
-      "downloaded_at": 1792099558,
+      "downloaded_at": 1792185136,
       "bytes": 6400
     },
     "centros_integracion_laboral": {
@@ -456,7 +456,7 @@
       "resource_name": "Estacionamientos de Motos - Público",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/transporte-y-obras-publicas/estacionamientos-motos/estacionamientos-de-motos-publico.csv",
       "source_last_modified": "2026-06-22T13:06:45.494890",
-      "downloaded_at": 1791756464,
+      "downloaded_at": 1792185662,
       "bytes": 8936
     },
     "motos_privado": {
@@ -465,7 +465,7 @@
       "resource_name": "Estacionamientos de Motos - Privado",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/transporte-y-obras-publicas/estacionamientos-motos/estacionamientos-de-motos-privado.csv",
       "source_last_modified": "2026-06-22T13:06:45.494890",
-      "downloaded_at": 1791756465,
+      "downloaded_at": 1792185663,
       "bytes": 2655
     },
     "cajones_motos": {
@@ -474,7 +474,7 @@
       "resource_name": "Cajones para Estacionamiento de Motos",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/cajones-para-estacionamiento-de-motos/cajones-para-estacionamiento-de-motos.csv",
       "source_last_modified": "2019-09-13T17:46:15.421585",
-      "downloaded_at": 1791852586,
+      "downloaded_at": 1792185666,
       "bytes": 3782
     },
     "carga_descarga": {
@@ -483,7 +483,7 @@
       "resource_name": "Cajones para Carga y Descarga",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/transporte-y-obras-publicas/cajones-para-carga-descarga/cajones-para-carga-y-descarga.csv",
       "source_last_modified": "2019-09-16T13:29:36.089527",
-      "downloaded_at": 1791932135,
+      "downloaded_at": 1792185667,
       "bytes": 199625
     },
     "vados": {
@@ -492,7 +492,7 @@
       "resource_name": "Vados (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-espacio-publico-e-higiene-urbana/vados/vados.csv",
       "source_last_modified": "2019-09-17T14:58:41.671543",
-      "downloaded_at": 1791932142,
+      "downloaded_at": 1792185674,
       "bytes": 8755817
     },
     "licencias_conducir": {
@@ -501,7 +501,7 @@
       "resource_name": "Licencias de conducir",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/transporte-y-obras-publicas/licencias-conducir/licencias-de-conducir.csv",
       "source_last_modified": "2019-04-22T14:28:29.976042",
-      "downloaded_at": 1792014933,
+      "downloaded_at": 1792185675,
       "bytes": 4810
     },
     "puestos_flores": {
@@ -510,7 +510,7 @@
       "resource_name": "Permisos de uso del espacio público - Puestos de Flores (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/jefatura-de-gabinete-de-ministros/puestos-de-flores/puestos-flores.csv",
       "source_last_modified": "2023-03-17T00:00:00",
-      "downloaded_at": 1792014934,
+      "downloaded_at": 1792185676,
       "bytes": 61423
     },
     "puestos_diarios": {
@@ -519,7 +519,7 @@
       "resource_name": "Puestos de Diario",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/atencion-ciudadana/puestos-de-diarios/permisos_diarios.csv",
       "source_last_modified": "2021-06-14T00:00:00",
-      "downloaded_at": 1792014935,
+      "downloaded_at": 1792185677,
       "bytes": 19748
     },
     "nido": {
@@ -528,7 +528,7 @@
       "resource_name": "Núcleo de Inclusión y Desarrollo de Oportunidades",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/portales-inclusivos/nidos.csv",
       "source_last_modified": "2023-04-26T00:00:00",
-      "downloaded_at": 1792100211,
+      "downloaded_at": 1792185678,
       "bytes": 1144
     },
     "embajadas": {
@@ -537,7 +537,7 @@
       "resource_name": "Embajadas (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/jefatura-de-gabinete-de-ministros/embajadas/embajadas.csv",
       "source_last_modified": "2026-10-02T12:50:43.712175",
-      "downloaded_at": 1792100212,
+      "downloaded_at": 1792185679,
       "bytes": 19604
     },
     "consulados": {
@@ -568,5 +568,5 @@
       "bytes": 380617
     }
   },
-  "updated_at": 1792100218
+  "updated_at": 1792185756
 }

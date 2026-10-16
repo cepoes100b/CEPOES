@@ -572,6 +572,23 @@
         "evaluación"
       ],
       "priority": 35
+    },
+    {
+      "query": "remediar medicamentos federalismo",
+      "title": "Medicamentos y federalismo",
+      "url": "/publicaciones/informes/medicamentos-federalismo/",
+      "group": "Publicaciones",
+      "type": "Informe",
+      "summary": "Remediar, financiamiento, compras públicas y acceso a tratamientos.",
+      "tags": [
+        "salud",
+        "remediar",
+        "medicamentos",
+        "financiamiento",
+        "cesac",
+        "federalismo"
+      ],
+      "priority": 30
     }
   ]
 }

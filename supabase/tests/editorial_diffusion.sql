@@ -37,4 +37,28 @@ begin
  insert into public.newsletter_deliveries(publication_key,subscription_id) values('/qa/not-approved/','00000000-0000-0000-0000-000000000001');
  if exists(select 1 from public.newsletter_claim_deliveries(5)) then raise exception 'unapproved_claim'; end if;
 end;$$;
+-- Catalog-only maintenance preserves all approval fields and existing deliveries.
+do $$
+declare item jsonb; before_approval jsonb; before_snapshot jsonb; before_deliveries jsonb; target text;
+begin
+ foreach target in array array['/qa/maintenance-ready/','/qa/maintenance-diffused/'] loop
+  item=jsonb_build_object('key',target,'url',target,'kind','informe','title','Local QA','summary','Approved fixture','date','2026-10-15');
+  perform public.newsletter_enqueue_publications(jsonb_build_array(item));
+  perform public.newsletter_approve_publication(target,item,'Local editor','Isolated QA fixture authorization');
+  if target='/qa/maintenance-diffused/' then
+   update public.newsletter_deliveries set state='accepted',accepted_at=now() where publication_key=target;
+   perform public.newsletter_finalize_editorial();
+  end if;
+  select to_jsonb(e)-'catalog_payload' into before_approval from public.newsletter_editorial_publications e where publication_key=target;
+  select to_jsonb(p) into before_snapshot from public.newsletter_publications p where publication_key=target;
+  select jsonb_agg(to_jsonb(d) order by delivery_id) into before_deliveries from public.newsletter_deliveries d;
+  item=jsonb_set(jsonb_set(item,'{date}','null'::jsonb),'{summary}','"Updated catalog only"'::jsonb);
+  perform public.newsletter_enqueue_publications(jsonb_build_array(item));
+  perform public.newsletter_enqueue_publications(jsonb_build_array(item));
+  if (select catalog_payload from public.newsletter_editorial_publications where publication_key=target) is distinct from item then raise exception 'catalog_not_updated'; end if;
+  if (select to_jsonb(e)-'catalog_payload' from public.newsletter_editorial_publications e where publication_key=target) is distinct from before_approval then raise exception 'approval_changed'; end if;
+  if (select to_jsonb(p) from public.newsletter_publications p where publication_key=target) is distinct from before_snapshot then raise exception 'snapshot_changed'; end if;
+  if (select jsonb_agg(to_jsonb(d) order by delivery_id) from public.newsletter_deliveries d) is distinct from before_deliveries then raise exception 'deliveries_changed'; end if;
+ end loop;
+end;$$;
 rollback;

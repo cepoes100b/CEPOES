@@ -66,3 +66,8 @@ La versión 3 de los agregados conserva `cantidad` en la posición 5 y añade `n
 Se identificaron tres interrupciones: Mejora de barrido y Reubicación de contenedor (último registro 14/05/2026), y Vereda sucia por mascotas (12/05/2026). No se encontró explicación oficial. Los meses afectados se marcan en gráfico y tabla; una consulta afectada sin registros muestra cobertura no disponible. Ocho motivos cambian de tipo administrativo predominante entre los archivos 2025 y 2026; se documentan en el detalle público y se advierten las comparaciones filtradas por tipo original.
 
 La comprobación semanal rechaza prestaciones desconocidas, nuevas interrupciones sin revisar y retrocesos históricos. Los controles JavaScript verifican que mapa, serie y filtros compartan el mismo universo y que una interrupción no se presente como cero problemas. La portada añade tres claves de lectura y una agenda verificable sobre recorridos, resolución y recursos. Dictamen de datos: apto con reservas explícitas de cobertura, sin inferencias de mejora en los tramos interrumpidos.
+
+
+## Reorientación editorial — 16/10/2026
+
+Por instrucción de Agustín, la sección se presenta como «Basura y limpieza: los reclamos de los barrios». Prioriza problemas reportados, responsabilidades del GCBA y propuestas para gobernar: planificación territorial, solución verificable y control de prestadoras. Los servicios solicitados se mantienen como contexto y no se infieren fallas o barrios más sucios a partir de contactos. Ver docs/criterio-editorial.md para la regla general del sitio. Las claves generadas automáticamente mantienen este enfoque en futuras actualizaciones.

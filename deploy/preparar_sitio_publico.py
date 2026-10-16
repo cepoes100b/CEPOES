@@ -1250,8 +1250,8 @@ def normalize_html(path: Path, site: Path) -> None:
             source = source.replace('</main>', entry + '</main>', 1)
     if rel == "/territorio/index.html":
         entry = ('<section class="section alt" id="limpieza-urbana-acceso"><div class="wrap">'
-                 '<span class="eyebrow">Servicios urbanos</span><h2>Limpieza urbana y reclamos</h2>'
-                 '<p>Explorá las solicitudes y quejas de higiene urbana por barrio, comuna, tema y período.</p>'
+                 '<span class="eyebrow">Problemas de la Ciudad</span><h2>Basura y limpieza: los reclamos de los barrios</h2>'
+                 '<p>Reclamos vecinales, responsabilidades del Gobierno porteño y propuestas para mejorar la limpieza en todos los barrios.</p>'
                  '<a class="btn btn-outline" href="/territorio/limpieza-urbana/">Explorar limpieza urbana →</a></div></section>')
         source = re.sub(r'<section\b[^>]*id=["\']limpieza-urbana-acceso["\'][^>]*>.*?</section>', '', source, flags=re.S)
         hero = re.search(r'<header\b[^>]*class=["\'][^"\']*page-hero[^"\']*["\'][^>]*>.*?</header>', source, flags=re.S)

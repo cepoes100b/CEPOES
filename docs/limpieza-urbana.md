@@ -53,3 +53,7 @@ Nunca interpretar `x`/`y` como longitud/latitud: están en coordenadas locales. 
 Se intentó primero `sites-preview` con salida estática completa y navegador integrado. El proceso falla antes de estar saludable: `bwrap: Can't mount proc on /newroot/proc: Operation not permitted`. El servidor HTTP alternativo no es accesible desde el navegador integrado (`ERR_CONNECTION_REFUSED`). No se instaló Chromium. Se prepara una vista autónoma de revisión como alternativa, sin modificar producción.
 
 La automatización todavía NO está activada. Este candidato no debe presentarse como un producto oficial ya conectado ni como diseño validado.
+
+## Control adicional de correspondencia territorial
+
+Se detectaron 8 registros con barrio/comuna incompatibles. La agregación conserva el barrio de origen y usa su comuna oficial según la geometría del repositorio. El conteo de ajustes queda en `comunaConflictsResolvedFromBarrio`; la explicación también se muestra en metodología. Esto evita que mapa y tabla presenten distintos totales del mismo barrio. No altera la cantidad total de registros.

@@ -32,10 +32,18 @@ def generate(source,geometry,output):
   assert match, props['nombre']
   features.append({'name':match,'comuna':str(props['comuna']),'rings':reduced})
  assert len(features)==48 and len({f['comuna'] for f in features})==15
+ canonical={f['name']:f['comuna'] for f in features}
+ conflicts=sum(v for (b,c,m,t),v in counts.items() if b and c!=canonical[b])
+ normalized=collections.Counter()
+ for (b,c,m,t),v in counts.items(): normalized[(b,canonical.get(b,c),m,t)]+=v
+ counts=normalized
+ normalized_streets=collections.Counter()
+ for (b,c,q),v in streets.items(): normalized_streets[(b,canonical.get(b,c),q)]+=v
+ streets=normalized_streets
  top=[]
  for b in ds['barrios']:
   top.extend([list(k)+[v] for k,v in sorted(((k,v) for k,v in streets.items() if k[0]==b and k[2]),key=lambda x:(-x[1],x[0]))[:20]])
- result={'schema':1,'source':SOURCE,'primarySource':'https://data.buenosaires.gob.ar/dataset/sistema-unico-atencion-ciudadana','sourceSha256':hashlib.sha256(raw).hexdigest(),'periodStart':min(dates),'periodEnd':max(dates),'retrieved':'2026-10-16','total':len(rows),'articleTotal':276473,'difference':233,'missingBarrio':missing,'types':ds['prestaciones'],'counts':[list(k)+[v] for k,v in sorted(counts.items())],'topStreets':top,'features':features}
+ result={'schema':1,'source':SOURCE,'primarySource':'https://data.buenosaires.gob.ar/dataset/sistema-unico-atencion-ciudadana','sourceSha256':hashlib.sha256(raw).hexdigest(),'periodStart':min(dates),'periodEnd':max(dates),'retrieved':'2026-10-16','total':len(rows),'articleTotal':276473,'difference':233,'missingBarrio':missing,'comunaConflictsResolvedFromBarrio':conflicts,'types':ds['prestaciones'],'counts':[list(k)+[v] for k,v in sorted(counts.items())],'topStreets':top,'features':features}
  assert sum(x[-1] for x in result['counts'])==result['total']
  output.parent.mkdir(parents=True,exist_ok=True);output.write_text(json.dumps(result,ensure_ascii=False,separators=(',',':'))+'\n')
  print(json.dumps({k:result[k] for k in ['total','difference','missingBarrio','periodStart','periodEnd','sourceSha256']},ensure_ascii=False))

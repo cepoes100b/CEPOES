@@ -1251,12 +1251,18 @@ def normalize_html(path: Path, site: Path) -> None:
     if rel == "/territorio/index.html":
         entry = ('<section class="section alt" id="limpieza-urbana-acceso"><div class="wrap">'
                  '<span class="eyebrow">Servicios urbanos</span><h2>Limpieza urbana y reclamos</h2>'
-                 '<p>Explorá los contactos sobre contenedores por barrio y comuna, su evolución mensual y los tipos de solicitudes registrados.</p>'
+                 '<p>Explorá las solicitudes y quejas de higiene urbana por barrio, comuna, tema y período.</p>'
                  '<a class="btn btn-outline" href="/territorio/limpieza-urbana/">Explorar limpieza urbana →</a></div></section>')
         source = re.sub(r'<section\b[^>]*id=["\']limpieza-urbana-acceso["\'][^>]*>.*?</section>', '', source, flags=re.S)
         hero = re.search(r'<header\b[^>]*class=["\'][^"\']*page-hero[^"\']*["\'][^>]*>.*?</header>', source, flags=re.S)
         if hero:
             source = source[:hero.end()] + entry + source[hero.end():]
+    if rel == "/territorio/limpieza-urbana/index.html":
+        module_script = site / "assets/limpieza-urbana.js"
+        if module_script.is_file():
+            revision = hashlib.sha256(module_script.read_bytes()).hexdigest()[:12]
+            source = re.sub(r'(/assets/limpieza-urbana\.js)(?:\?[^"\']*)?',
+                            lambda match: match[1] + "?v=" + revision, source)
     source = version_local_stylesheets(source, site)
     if rel == "/observatorio/produccion/industria/index.html":
         path.with_name("datos.csv").write_bytes(industria_csv(load_json("datos.json")))

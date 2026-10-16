@@ -3,6 +3,9 @@
 import argparse,calendar,collections,csv,datetime,hashlib,json,os,re,tempfile,unicodedata
 from zoneinfo import ZoneInfo
 from pathlib import Path
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+from calidad_limpieza_urbana import quality
 CATALOG='https://data.buenosaires.gob.ar/dataset/sistema-unico-atencion-ciudadana'
 CONFIG=Path(__file__).resolve().parents[1]/'config/limpieza-prestaciones.json'
 def norm(s):return ''.join(c for c in unicodedata.normalize('NFD',s.strip().lower()) if unicodedata.category(c)!='Mn')
@@ -21,9 +24,9 @@ def geometry(path):
  return features
 
 def generate(files,geo_path):
- mapping=json.loads(CONFIG.read_text())['groups'];types={norm(k):v for k,v in mapping.items()};features=geometry(geo_path);lookup={norm(f['name']):f for f in features}
- for alias,canonical in {'boca':'la boca','paternal':'la paternal','villa gral. mitre':'villa general mitre'}.items():lookup[alias]=lookup[canonical]
- raw_types=collections.Counter();counts=collections.Counter();streets=collections.Counter();seen={};selected_dates=[];all_dates=[];unknown=collections.Counter();missing=conflicts=duplicates=without_street=0;sources=[]
+ config=json.loads(CONFIG.read_text());mapping=config['groups'];natures={norm(k):v for k,v in config['natures'].items()};canonical={norm(k):v for k,v in config['canonicalPrestations'].items()};types={norm(k):v for k,v in mapping.items()};features=geometry(geo_path);lookup={norm(f['name']):f for f in features}
+ for alias,canonical_name in {'boca':'la boca','paternal':'la paternal','villa gral. mitre':'villa general mitre'}.items():lookup[alias]=lookup[canonical_name]
+ monthly=collections.Counter();last_dates={};raw_types=collections.Counter();counts=collections.Counter();streets=collections.Counter();seen={};selected_dates=[];all_dates=[];unknown=collections.Counter();missing=conflicts=duplicates=without_street=0;sources=[]
  for path in files:
   with path.open('rb') as raw_file:digest=hashlib.file_digest(raw_file,'sha256').hexdigest()
   meta=path.with_suffix('.json')
@@ -48,7 +51,9 @@ def generate(files,geo_path):
     b=feature['name'] if feature else '';c=feature['comuna'] if feature else str(row['comuna']).strip()
     if c and c not in map(str,range(1,16)):raise ValueError('Comuna desconocida')
     conflicts+=bool(feature and str(row['comuna']).strip()!=c);missing+=not bool(b)
-    selected_dates.append(date);counts[(b,c,date.strftime('%Y-%m'),types[t],row['tipo'].strip() or 'Sin tipo informado')]+=1
+    kind=row['tipo'].strip() or 'Sin tipo informado';month=date.strftime('%Y-%m');name=canonical[t]
+    monthly[(month,name,kind)]+=1;last_dates[name]=max(last_dates.get(name,''),date.isoformat())
+    selected_dates.append(date);counts[(b,c,month,types[t],kind,natures[t])]+=1
  if unknown:raise ValueError('Prestaciones nuevas por revisar: '+str(dict(unknown)))
  if not selected_dates:raise ValueError('Sin registros de higiene')
  first=min(all_dates);last=max(all_dates);today=datetime.datetime.now(ZoneInfo('America/Argentina/Buenos_Aires')).date()
@@ -56,9 +61,10 @@ def generate(files,geo_path):
  all_months=[];cursor=first.replace(day=1)
  while cursor<=last:
   all_months.append(cursor.strftime('%Y-%m'));cursor=(cursor.replace(day=28)+datetime.timedelta(days=4)).replace(day=1)
- return {'schema':2,'sourceKind':'official','source':CATALOG,'primarySource':CATALOG,'sources':sources,'periodStart':first.isoformat(),'periodEnd':last.isoformat(),'months':all_months,'lastMonthPartial':last.day<calendar.monthrange(last.year,last.month)[1],'total':len(seen),'missingBarrio':missing,'comunaConflictsResolvedFromBarrio':conflicts,'duplicatesRemoved':duplicates,'sourceTypes':dict(sorted(raw_types.items())),'types':sorted(set(mapping.values())),'contactKinds':sorted({k[4] for k in counts}),'counts':[list(k)+[v] for k,v in sorted(counts.items())],'features':features}
+ return {'schema':3,'classificationVersion':config['version'],'columns':['barrio','comuna','mes','tema','tipo_original','cantidad','naturaleza'],'sourceKind':'official','source':CATALOG,'primarySource':CATALOG,'sources':sources,'periodStart':first.isoformat(),'periodEnd':last.isoformat(),'months':all_months,'lastMonthPartial':last.day<calendar.monthrange(last.year,last.month)[1],'total':len(seen),'missingBarrio':missing,'comunaConflictsResolvedFromBarrio':conflicts,'duplicatesRemoved':duplicates,'sourceTypes':dict(sorted(raw_types.items())),'types':sorted(set(mapping.values())),'contactKinds':sorted({k[4] for k in counts}),'natures':sorted(set(natures.values())),'natureDefinition':config['natureDefinition'],'classification':[{ 'prestacion':k,'topic':mapping[k],'nature':config['natures'][k],'canonical':config['canonicalPrestations'][k]} for k in sorted(mapping)],'quality':quality(monthly,last_dates,all_months,last.day<calendar.monthrange(last.year,last.month)[1],config),'prestacionMonthly':[[*k,v] for k,v in sorted(monthly.items())],'counts':[[*k[:5],v,k[5]] for k,v in sorted(counts.items())],'features':features}
 
 def validate(d,previous=None):
+ if any(not g['reviewed'] for g in d['quality']['discontinuities']):raise ValueError('Nueva discontinuidad de fuente: revisar antes de publicar')
  if d['total']!=sum(r[5] for r in d['counts']):raise ValueError('Suma inconsistente')
  if len(d['features'])!=48 or len({f['comuna'] for f in d['features']})!=15:raise ValueError('Cobertura incompleta')
  if len({r[0] for r in d['counts'] if r[0]})!=48:raise ValueError('Faltan barrios con registros')

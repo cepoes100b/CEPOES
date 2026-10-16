@@ -1258,11 +1258,12 @@ def normalize_html(path: Path, site: Path) -> None:
         if hero:
             source = source[:hero.end()] + entry + source[hero.end():]
     if rel == "/territorio/limpieza-urbana/index.html":
-        module_script = site / "assets/limpieza-urbana.js"
-        if module_script.is_file():
-            revision = hashlib.sha256(module_script.read_bytes()).hexdigest()[:12]
-            source = re.sub(r'(/assets/limpieza-urbana\.js)(?:\?[^"\']*)?',
-                            lambda match: match[1] + "?v=" + revision, source)
+        for script_name in ("limpieza-urbana-model.js", "limpieza-urbana.js"):
+            module_script = site / "assets" / script_name
+            if module_script.is_file():
+                revision = hashlib.sha256(module_script.read_bytes()).hexdigest()[:12]
+                source = re.sub(r'(/assets/' + re.escape(script_name) + r")(?:\?[^\"']*)?",
+                                lambda match: match[1] + "?v=" + revision, source)
     source = version_local_stylesheets(source, site)
     if rel == "/observatorio/produccion/industria/index.html":
         path.with_name("datos.csv").write_bytes(industria_csv(load_json("datos.json")))

@@ -11,6 +11,7 @@ def main():
  if not a.local:run('descargar_suaci.py','--directory',a.directory)
  output=ROOT/'deploy/site-overlay/assets/data/limpieza-urbana.json';status=ROOT/'deploy/site-overlay/assets/data/limpieza-urbana-estado.json';page=ROOT/'deploy/site-overlay/territorio/limpieza-urbana/index.html'
  run('test_limpieza_urbana.py');run('generar_limpieza_urbana.py','--directory',a.directory,'--geometry',ROOT/'badata/barrios.geojson','--output',output)
+ subprocess.run(['node',str(ROOT/'scripts/test_limpieza_urbana_model.cjs')],cwd=ROOT,check=True)
  d=json.loads(output.read_text());state={'checkedAt':now.date().isoformat(),'periodEnd':d['periodEnd'],'source':d['source'],'status':'ok'}
  # Sólo después de descargar, normalizar y validar todo se actualiza la comprobación.
  from render_limpieza_urbana import render

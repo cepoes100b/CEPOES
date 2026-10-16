@@ -57,3 +57,12 @@ Se intentó primero `sites-preview` con todos los recursos. Falla al iniciar: `b
 Revisión del candidato oficial: render real en escritorio y en iframe de 390 px comprobado con cua_repl; mapa de 48 barrios, filtros de quejas, tema, comuna y período comprobados contra los agregados. Casos: 159.612 quejas del archivo completo; 1.893 quejas de barrido/limpieza en comuna 7 (Flores 1.067 y Parque Chacabuco 826); 12.015 contactos en octubre parcial. Ancho móvil observado: 373 px de contenido dentro del iframe de 390, con scrollWidth de 373, sin desbordamiento de página. No es una prueba táctil en teléfono real. Los controles remotos de contraste y R2 del commit 969b8ff pasaron.
 
 Pendiente de cierre: repetir la revisión de los ajustes finales y validar la integración completa en el árbol público canónico antes de publicar. La vista se reproduce con `python experiments/limpieza-urbana/build_preview.py --site /ruta/salida-publica`. Mantener en borrador hasta completar ese cierre y aprobar su publicación.
+
+
+## Revisión de comparabilidad — 16/10/2026
+
+La versión 3 de los agregados conserva `cantidad` en la posición 5 y añade `naturaleza` en la posición 6. El filtro principal utiliza el motivo estable, definido prestación por prestación en `config/limpieza-prestaciones.json`: 290.795 problemas reportados, 567.441 servicios solicitados y 225 otros contactos. La etiqueta original permanece en opciones avanzadas. Estas categorías describen contactos y no prueban fallas, personas únicas ni resolución efectiva.
+
+Se identificaron tres interrupciones: Mejora de barrido y Reubicación de contenedor (último registro 14/05/2026), y Vereda sucia por mascotas (12/05/2026). No se encontró explicación oficial. Los meses afectados se marcan en gráfico y tabla; una consulta afectada sin registros muestra cobertura no disponible. Ocho motivos cambian de tipo administrativo predominante entre los archivos 2025 y 2026; se documentan en el detalle público y se advierten las comparaciones filtradas por tipo original.
+
+La comprobación semanal rechaza prestaciones desconocidas, nuevas interrupciones sin revisar y retrocesos históricos. Los controles JavaScript verifican que mapa, serie y filtros compartan el mismo universo y que una interrupción no se presente como cero problemas. La portada añade tres claves de lectura y una agenda verificable sobre recorridos, resolución y recursos. Dictamen de datos: apto con reservas explícitas de cobertura, sin inferencias de mejora en los tramos interrumpidos.

@@ -52,4 +52,23 @@ class TestDownload(unittest.TestCase):
   with tempfile.TemporaryDirectory() as tmp:
    with patch.object(download.urllib.request,'urlopen',return_value=Response(b'fragmento')):
     with self.assertRaisesRegex(ValueError,'no CSV completa'):download.download(2026,Path(tmp))
+class TestContinuity(unittest.TestCase):
+ def test_new_gap_requires_review_and_partial_month_is_not_enough(self):
+  import collections
+  from calidad_limpieza_urbana import quality
+  name='Motivo';months=['2026-01','2026-02','2026-03','2026-04','2026-05']
+  config={'canonicalPrestations':{name:name},'groups':{name:'Tema'},'natures':{name:'Problemas reportados'}}
+  monthly=collections.Counter({(month,name,'Solicitud'):60 for month in months[:3]})
+  self.assertEqual(quality(monthly,{name:'2026-03-20'},months,True,config)['discontinuities'],[])
+  q=quality(monthly,{name:'2026-03-20'},months,False,config)
+  self.assertEqual(len(q['discontinuities']),1);self.assertFalse(q['discontinuities'][0]['reviewed'])
+  with self.assertRaisesRegex(ValueError,'Nueva discontinuidad'):m.validate({'quality':q})
+ def test_stable_nature_across_official_kind_change(self):
+  with tempfile.TemporaryDirectory() as tmp:
+   path=Path(tmp)/'suaci-2026.csv';rows=[]
+   for i,kind in enumerate(['Solicitud','Queja']):rows.append({'nro_solicitud':str(i),'prestacion':'Recolección de residuos fuera del contenedor','fecha_ingreso':f'{2025+i}-01-15','categoria':'HIGIENE','tipo':kind,'barrio':'FLORES','comuna':'7','calle':'PRUEBA','altura':'1','estado_general':'Cerrado'})
+   with path.open('w') as f:
+    w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
+   d=m.generate([path],ROOT/'badata/barrios.geojson');self.assertEqual({r[6] for r in d['counts']},{'Problemas reportados'});self.assertEqual({r[4] for r in d['counts']},{'Solicitud','Queja'})
+
 if __name__=='__main__':unittest.main()

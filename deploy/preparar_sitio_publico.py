@@ -190,6 +190,7 @@ def territory_subnav(rel: str) -> str:
         ("/territorio/brechas/", "Brechas"),
     ]
     thematic = [
+        ("/territorio/limpieza-urbana/", "Limpieza urbana"),
         ("/territorio/tierras-y-soberania/", "Tierras y soberanía"),
         ("/territorio/endeudamiento/", "Endeudamiento"),
         ("/territorio/migraciones/", "Migraciones"),
@@ -1247,6 +1248,15 @@ def normalize_html(path: Path, site: Path) -> None:
             source = source[:hero.end()] + entry + source[hero.end():]
         else:
             source = source.replace('</main>', entry + '</main>', 1)
+    if rel == "/territorio/index.html":
+        entry = ('<section class="section alt" id="limpieza-urbana-acceso"><div class="wrap">'
+                 '<span class="eyebrow">Servicios urbanos</span><h2>Limpieza urbana y reclamos</h2>'
+                 '<p>Explorá los contactos sobre contenedores por barrio y comuna, su evolución mensual y los tipos de solicitudes registrados.</p>'
+                 '<a class="btn btn-outline" href="/territorio/limpieza-urbana/">Explorar limpieza urbana →</a></div></section>')
+        source = re.sub(r'<section\b[^>]*id=["\']limpieza-urbana-acceso["\'][^>]*>.*?</section>', '', source, flags=re.S)
+        hero = re.search(r'<header\b[^>]*class=["\'][^"\']*page-hero[^"\']*["\'][^>]*>.*?</header>', source, flags=re.S)
+        if hero:
+            source = source[:hero.end()] + entry + source[hero.end():]
     source = version_local_stylesheets(source, site)
     if rel == "/observatorio/produccion/industria/index.html":
         path.with_name("datos.csv").write_bytes(industria_csv(load_json("datos.json")))
@@ -1277,6 +1287,7 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
 
 
 

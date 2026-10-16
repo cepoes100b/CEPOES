@@ -13,6 +13,9 @@ on:
       - "generar_accesibilidad_peatonal.py"
       - "verificar_accesibilidad_peatonal.py"
       - ".github/workflows/territorio.yml"
+      - "scripts/*limpieza_urbana.py"
+      - "scripts/descargar_suaci.py"
+      - "config/limpieza-prestaciones.json"
   schedule:
     # 15:10 de Buenos Aires, diez minutos después de la segunda corrida diaria
     # del observatorio. Las fuentes deportivas cambian lentamente; OSM se reutiliza
@@ -131,6 +134,29 @@ jobs:
       - name: Verificar accesibilidad deportiva peatonal
         run: python verificar_accesibilidad_peatonal.py
 
+      - name: Decidir comprobación semanal de limpieza
+        id: suaci-check
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT_NAME" != "schedule" ] || [ "$(date -u +%u)" = "1" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Recuperar CSV oficiales SUACI y sus huellas
+        if: steps.suaci-check.outputs.run == 'true'
+        uses: actions/cache@v4
+        with:
+          path: _cache/suaci
+          key: suaci-v1-${{ hashFiles('deploy/site-overlay/assets/data/limpieza-urbana.json') }}
+          restore-keys: suaci-v1-
+
+      - name: Comprobar y validar limpieza urbana
+        if: steps.suaci-check.outputs.run == 'true'
+        run: python scripts/actualizar_limpieza_urbana.py
+
       - name: Commitear si cambió
         run: |
           git config user.name  "cepoes-bot"
@@ -142,6 +168,7 @@ jobs:
             # las fuentes con el diff del PR; solo materializamos datasets del módulo.
             git add deploy/site-overlay/assets/data/deporte-salud.json deploy/site-overlay/assets/data/deporte-accesibilidad.json deploy/site-overlay/assets/data/deporte-accesibilidad-peatonal.json
           fi
+          git add deploy/site-overlay/assets/data/limpieza-urbana.json deploy/site-overlay/assets/data/limpieza-urbana-estado.json deploy/site-overlay/territorio/limpieza-urbana/index.html
           if git diff --cached --quiet; then
             echo "Sin cambios"
             exit 0
@@ -158,3 +185,4 @@ jobs:
           done
           echo "No pude empujar después de 3 intentos"
           exit 1
+

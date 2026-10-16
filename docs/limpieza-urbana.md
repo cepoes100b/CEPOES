@@ -1,59 +1,57 @@
-# Limpieza urbana y reclamos — candidato y actualización oficial
+# Monitor de limpieza urbana — PR #236
 
-## Estado verificable
+## Producto y decisión editorial
 
-Primera versión en revisión, sin publicación. Ruta prevista: `/territorio/limpieza-urbana/`.
+Sección territorial permanente, con el mapa como entrada. El encargo se amplió el 16/10/2026 a limpieza del espacio público; el monitor utiliza toda la categoría **HIGIENE** del SUACI. La nota de LA NACION fue el disparador inicial; su archivo y su diseño ya no son la fuente ni el modelo del producto.
 
-Explorador por barrio/comuna, mapa SVG con límites oficiales, evolución mensual, distribución de prestaciones, tablas accesibles y ranking de cuadras. Geometrías derivadas de `badata/barrios.geojson`, conservando las 48 correspondencias y 15 comunas. La muestra geográfica de origen tiene 276.240 registros, 233 menos que el total de la nota; 16 carecen de barrio. Los totales visibles usan los registros realmente disponibles.
+Datos oficiales procesados: **858.461 contactos únicos, 01/01/2025–15/10/2026**, 48 barrios y 15 comunas. Octubre de 2026 es un mes parcial. Hay 1.444 contactos sin barrio; en 207 se usa la comuna oficial del barrio ante una comuna de origen diferente o faltante. No se detectaron duplicados de contacto en esta versión.
 
-El generador de referencia verifica esquema, fechas y sumas antes de escribir. Reproducir:
+El volumen incluye quejas y solicitudes de servicios programados: 159.612 quejas, 413.781 solicitudes, 279.552 servicios, 4.347 denuncias y 1.169 reportes. Mostrar todo como fallas de limpieza sería engañoso. Los cinco tipos se conservan como filtros independientes de los ocho temas.
+
+Los temas son residuos y recolección; retiro de escombros, muebles y poda; contenedores y cestos; barrido y limpieza; control de plagas; reciclado y separación; prestación del servicio; servicios por eventos. `config/limpieza-prestaciones.json` contiene la clasificación explícita de las 40 denominaciones originales observadas. Una prestación nueva detiene el refresco hasta su revisión.
+
+Mapa, total, serie mensual y tabla usan el mismo universo filtrado. La escala del mapa depende del tema y tipo de contacto; se conserva al seleccionar territorios. Las cantidades absolutas muestran demanda registrada; la lectura debe complementarse con población, circulación, actividad comercial, acceso a canales e inspecciones para evaluar diferencias de limpieza. El texto público propone seguimiento de frecuencia efectiva, resultados por concesionaria y solución del problema, sin confundir cierre administrativo con solución efectiva.
+
+## Fuentes
+
+Catálogo oficial: https://data.buenosaires.gob.ar/dataset/sistema-unico-atencion-ciudadana
+
+- Recurso 2025: `ec9da864-d2e0-480d-8fd3-06807c083ff4`.
+- Recurso 2026: `3350c0ae-58ff-4252-b496-7cb07bdb88b1`.
+- Archivos canónicos: `https://cdn.buenosaires.gob.ar/datosabiertos/datasets/atencion-ciudadana/sistema-unico-atencion-ciudadana/sistema-unico-de-atencion-ciudadana-AAAA.csv`.
+- Límites oficiales: `badata/barrios.geojson` del repositorio; geometrías simplificadas para esta escala de consulta.
+- Se conservan SHA-256 y tamaño de cada CSV en el JSON público. Los identificadores de solicitud, género y direcciones individuales no se publican.
+
+El esquema real de 2025 tiene `long`/`lat`; 2026 usa `x`/`y` locales. La agregación territorial utiliza barrio/comuna y no interpreta esas coordenadas como WGS84. Los dos archivos completos suman 486.340.835 bytes. La primera descarga local de 2025 quedó truncada; se completó y verificó su tamaño total antes de procesarla. El descargador versionado rechaza respuestas HTML, HTTP 206, tamaños incompletos y cabeceras inesperadas; la normalización exige filas completas y un salto de línea final.
+
+## Actualización preparada
+
+Se integra al workflow canónico `territorio.yml`, sin workflow alternativo. Comprobación programada los lunes, dentro de su ejecución diaria de las 15:10 de Buenos Aires; las ejecuciones manuales y los cambios de código también pueden ejecutar la comprobación. Caché anual con ETag y huella para reducir descargas. El catálogo declara una frecuencia semestral, pero el recurso 2026 descargado ya contiene datos hasta el 15/10; la fecha efectiva sale de los registros.
+
+1. `scripts/descargar_suaci.py`: descarga atómica, validación de respuesta/tamaño y manifiestos locales; HTTP 304 reutiliza el crudo existente.
+2. `scripts/generar_limpieza_urbana.py`: clasificación explícita, contactos únicos, correspondencia barrio/comuna, agregación, control de meses/cobertura y no regresión de series.
+3. `scripts/render_limpieza_urbana.py`: títulos, KPIs, corte y metodología desde el agregado; distingue última versión de datos y comprobación de fuente.
+4. `scripts/actualizar_limpieza_urbana.py`: coordina descarga, pruebas, generación y metadatos; sólo tras superar los controles registra una comprobación satisfactoria.
+5. El workflow conserva el registro de productor y la cadena de publicación existentes. Los nuevos accesos se generan por el normalizador territorial, sin tarjetas paralelas manuales.
+
+Una falla conserva el producto anterior; no publica un archivo vacío ni una selección parcial. Una reducción histórica o una nueva prestación exige revisión. La actualización de datos no habilita correo a suscriptores: difusión únicamente por orden editorial independiente.
+
+La configuración queda en la rama del PR. **No está activa en producción mientras el PR permanezca sin fusionar.** No se ejecutó ningún workflow de escritura.
+
+## Validación reproducible
 
 ```
-python scripts/generar_limpieza_urbana.py --source /ruta/reclamos-compact.json --geometry badata/barrios.geojson --output deploy/site-overlay/assets/data/limpieza-urbana.json
+python scripts/test_limpieza_urbana.py
+python scripts/actualizar_limpieza_urbana.py --local --directory /ruta/con/csv-completos
 node --check deploy/site-overlay/assets/limpieza-urbana.js
 ```
 
-Archivo de referencia: https://especialess3.lanacion.com.ar/interactivos/26/08/mapa-basura-caba/reclamos-compact.json
+Las pruebas cubren unicidad, duplicados incompatibles, prestaciones desconocidas, correspondencia territorial, cobertura, sumas, regresión y preservación de la descarga anterior ante una respuesta incompleta o parcial. La generación con los CSV completos pasó los controles; la segunda ejecución sin cambios conservó los agregados.
 
-SHA-256: `787c999cbb38a13eacf05ba959bf88c26e6c17cc26789af680c87ee02c0e9b6b`.
+## Revisión visual
 
-## Cambio solicitado: sección que se autoactualiza
+Se intentó primero `sites-preview` con todos los recursos. Falla al iniciar: `bwrap: Can't mount proc on /newroot/proc: Operation not permitted`. El navegador integrado tampoco accede al HTTP local (`ERR_CONNECTION_REFUSED`). Se usó una vista autónoma del candidato, fuera de producción, mediante RawGitHack y cua_repl. La inspección de la versión inicial detectó una falta de contraste en el título y una discrepancia entre barrio/comuna; se corrigieron.
 
-Usar el SUACI oficial para las futuras versiones; el corte periodístico sólo es un insumo de contraste. Catálogo: https://data.buenosaires.gob.ar/dataset/sistema-unico-atencion-ciudadana
+`experiments/limpieza-urbana/index.html` contiene la vista autónoma actual. `?viewport=390` presenta el mismo contenido dentro de un iframe de 390 px para verificar el quiebre móvil real. Los enlaces de navegación conducen al sitio público; el módulo y sus datos están incluidos en el propio archivo para la revisión. Es una vista de revisión, no un release para reemplazar el árbol productivo.
 
-Recursos oficiales identificados:
-
-- CSV 2025: `ec9da864-d2e0-480d-8fd3-06807c083ff4`.
-- CSV 2026: `3350c0ae-58ff-4252-b496-7cb07bdb88b1`.
-- El catálogo declara actualización semestral, aunque el historial registra reemplazos intermedios. Propuesta: comprobar semanalmente, publicar sólo cambios válidos.
-- El 16/10/2026 el catálogo y la API CKAN devolvieron HTML de rechazo desde el contenedor. El CDN oficial sí respondió 206 a una solicitud parcial del CSV 2026.
-- URL comprobada: https://cdn.buenosaires.gob.ar/datosabiertos/datasets/atencion-ciudadana/sistema-unico-atencion-ciudadana/sistema-unico-de-atencion-ciudadana-2026.csv
-
-La cabecera REAL del CSV 2026 difiere de las descripciones del catálogo:
-
-```
-nro_solicitud,periodo,categoria,prestacion,tipo,fecha_ingreso,hora_ingreso,comuna,barrio,calle,altura,esquina_proxima,canal,x,y,genero,estado_general
-```
-
-Nunca interpretar `x`/`y` como longitud/latitud: están en coordenadas locales. Para comparar barrios se prioriza la asignación oficial barrio/comuna; cualquier geocodificación posterior requiere transformación y controles explícitos. No replicar automáticamente las correcciones manuales de cuadras hechas por el medio.
-
-## Integración pendiente antes de publicar
-
-1. Separar descargador, normalizador y verificador oficial. Descargar recursos anuales de forma atómica, comprobar respuesta CSV completa (rechazar HTML/206) y registrar SHA-256 y último corte real.
-2. Verificar unicidad de `nro_solicitud`, catálogo de prestaciones y fecha; informar faltantes y exclusiones. Definir prestaciones incluidas mediante lista versionada, incluyendo lavado, sin equiparar silenciosamente universos con el derivado periodístico.
-3. Conservar series históricas; agregar meses completos nuevos. Identificar por separado el último mes parcial cuando corresponda. No desplazar la ventana de comparación por el reloj si la fuente no se actualizó.
-4. Regenerar agregados y metadatos dinámicos del HTML: total, promedio, períodos, procedencia y cobertura. La fecha de comprobación debe diferenciarse del corte estadístico y la actualización real.
-5. Validar integridad de 48 barrios/15 comunas, sumas entre vistas, coherencia territorial y no regresión de meses. Si falla descarga/esquema/control, conservar el último producto válido y registrar el error; nunca publicar una salida parcial.
-6. Integrar al workflow canónico `territorio.yml` y al manifiesto/cadena de publicación existentes. Revisar sus condiciones de ejecución y registro de productores. No crear un workflow instalador ni un despliegue alternativo. No activar programación hasta probar la cadena completa.
-7. Los cambios rutinarios de datos no disparan avisos por correo. Difusión sólo mediante autorización editorial independiente.
-8. Revisar candidato completo en escritorio/móvil, claro/oscuro, teclado y estados de error. Quitar `noindex` y la marca de candidato sólo al aprobar la versión pública. Incorporar accesos desde Territorio, buscador y metodología mediante normalizador canónico.
-
-## Limitación de vista previa en esta ejecución
-
-Se intentó primero `sites-preview` con salida estática completa y navegador integrado. El proceso falla antes de estar saludable: `bwrap: Can't mount proc on /newroot/proc: Operation not permitted`. El servidor HTTP alternativo no es accesible desde el navegador integrado (`ERR_CONNECTION_REFUSED`). No se instaló Chromium. Se prepara una vista autónoma de revisión como alternativa, sin modificar producción.
-
-La automatización todavía NO está activada. Este candidato no debe presentarse como un producto oficial ya conectado ni como diseño validado.
-
-## Control adicional de correspondencia territorial
-
-Se detectaron 8 registros con barrio/comuna incompatibles. La agregación conserva el barrio de origen y usa su comuna oficial según la geometría del repositorio. El conteo de ajustes queda en `comunaConflictsResolvedFromBarrio`; la explicación también se muestra en metodología. Esto evita que mapa y tabla presenten distintos totales del mismo barrio. No altera la cantidad total de registros.
+Pendiente de cierre: revisión visual del candidato oficial actualizado, controles remotos y validación de la integración completa en el árbol público canónico. Mantener en borrador hasta completar ese cierre y aprobar su publicación.

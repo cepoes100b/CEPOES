@@ -1,7 +1,7 @@
 # CEPOES — Inventario R2-A2 de GitHub Actions
 
 **Corte:** 6 de octubre de 2026
-**Cobertura:** 35 workflows activos en `.github/workflows/`\
+**Cobertura:** 36 workflows activos en `.github/workflows/`\
 **Archivo no ejecutable:** 26 workflows históricos bajo `docs/seguridad/workflows-retirados/`\
 **Alcance:** superficie activa posterior a la desactivación reversible propuesta en R2-A2.
 
@@ -9,7 +9,7 @@
 
 | Clasificación | Cantidad |
 | --- | ---: |
-| operativo | 35 |
+| operativo | 36 |
 | migrar | 0 |
 
 ## Inventario
@@ -28,6 +28,7 @@
 | explorar-red-peatonal.yml | workflow_dispatch, push | contents:read | sin escritura detectada | operativo | Generación controlada de artefactos de red peatonal. |
 | inicializar-paquete-respaldo-privado.yml | workflow_dispatch | contents:read, packages:write | sin escritura detectada | operativo | Inicialización manual y temporal de un paquete vacío para verificar privacidad antes de almacenar respaldos. |
 | legislatura.yml | workflow_dispatch, schedule | contents:write | git push, git commit | operativo | Pipeline regular de datos legislativos. |
+| mapa-territorial-qa.yml | workflow_dispatch, pull_request | contents:read | sin escritura detectada | operativo | QA local de prototipo territorial con Chromium/WebGL; solo lectura, sin secretos, publicación ni almacenamiento de artefactos. |
 | migraciones.yml | workflow_dispatch, schedule, push, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de migraciones. |
 | monitor-tierras.yml | workflow_dispatch, schedule | contents:read | sin escritura detectada | operativo | Consulta documental de RNTR y DNU; sólo lectura, revisión editorial y sin publicación automática. |
 | natalidad.yml | workflow_dispatch, schedule, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de natalidad y demografía. |
@@ -55,3 +56,4 @@
 ## Regla de transición
 
 No quedan workflows activos clasificados como `migrar`. Los dieciséis productores de deploy/producer-workflows.json publican únicamente mediante el encadenamiento validado workflow_run del publicador canónico; los validadores manuales sólo producen desde workflow_dispatch en main. El alcance de las salidas está documentado en docs/seguridad/productores-publicacion.md. Los 26 workflows históricos quedan fuera de `.github/workflows/`, preservados con checksum; ninguno puede restaurarse al área ejecutable sin revisión y autorización explícitas.
+

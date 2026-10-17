@@ -1,0 +1,175 @@
+{
+  "checked_at": "2026-10-09",
+  "source_url": "https://www.indec.gob.ar/ftp/cuadros/poblacion/c2022_caba_salud_c1_1.xlsx",
+  "source_sha256": "3b2c0cc40de697431ba15ccb02c96539a70be2925cce02b34c3ac4fc1131e5a9",
+  "rows": 15,
+  "partition_and_city_totals": "passed",
+  "pdf_crosscheck": "passed",
+  "pdf_url": "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2024/07/anuario_estadistico_2023.pdf",
+  "pdf_sha256": "581f9c3991f0e0c77b5c5ed252850bbc428b559a41af559d3a1b8a2dc153e4e2",
+  "pdf_page": 86,
+  "printed_page": 84,
+  "table": "6.C.3",
+  "raw_counts": [
+    {
+      "id": "ciudad",
+      "official_code": "02",
+      "counts": [
+        3095454,
+        2523833,
+        66703,
+        504918
+      ]
+    },
+    {
+      "id": "comuna:1",
+      "official_code": "02007",
+      "counts": [
+        221001,
+        153360,
+        5919,
+        61722
+      ]
+    },
+    {
+      "id": "comuna:2",
+      "official_code": "02014",
+      "counts": [
+        160609,
+        146427,
+        1844,
+        12338
+      ]
+    },
+    {
+      "id": "comuna:3",
+      "official_code": "02021",
+      "counts": [
+        193537,
+        149826,
+        4791,
+        38920
+      ]
+    },
+    {
+      "id": "comuna:4",
+      "official_code": "02028",
+      "counts": [
+        227024,
+        154337,
+        7895,
+        64792
+      ]
+    },
+    {
+      "id": "comuna:5",
+      "official_code": "02035",
+      "counts": [
+        192449,
+        164919,
+        3592,
+        23938
+      ]
+    },
+    {
+      "id": "comuna:6",
+      "official_code": "02042",
+      "counts": [
+        201764,
+        182597,
+        3050,
+        16117
+      ]
+    },
+    {
+      "id": "comuna:7",
+      "official_code": "02049",
+      "counts": [
+        213262,
+        170770,
+        5168,
+        37324
+      ]
+    },
+    {
+      "id": "comuna:8",
+      "official_code": "02056",
+      "counts": [
+        203888,
+        109934,
+        9207,
+        84747
+      ]
+    },
+    {
+      "id": "comuna:9",
+      "official_code": "02063",
+      "counts": [
+        167908,
+        125671,
+        4856,
+        37381
+      ]
+    },
+    {
+      "id": "comuna:10",
+      "official_code": "02070",
+      "counts": [
+        171896,
+        142743,
+        3940,
+        25213
+      ]
+    },
+    {
+      "id": "comuna:11",
+      "official_code": "02077",
+      "counts": [
+        201905,
+        177217,
+        3546,
+        21142
+      ]
+    },
+    {
+      "id": "comuna:12",
+      "official_code": "02084",
+      "counts": [
+        235364,
+        211770,
+        3280,
+        20314
+      ]
+    },
+    {
+      "id": "comuna:13",
+      "official_code": "02091",
+      "counts": [
+        262330,
+        243510,
+        2845,
+        15975
+      ]
+    },
+    {
+      "id": "comuna:14",
+      "official_code": "02098",
+      "counts": [
+        247252,
+        226025,
+        2878,
+        18349
+      ]
+    },
+    {
+      "id": "comuna:15",
+      "official_code": "02105",
+      "counts": [
+        195265,
+        164727,
+        3892,
+        26646
+      ]
+    }
+  ]
+}

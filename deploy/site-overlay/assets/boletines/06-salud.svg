@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="544.2519685039371" height="90" preserveAspectRatio="xMinYMin meet" viewBox="0 0 544 90" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="544.2519685039371" height="90"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-90)" style="clip-path: url(#clip)">
+		<g transform="">
+			<text x="0" y="79" style="font-family: CEPOES-Bold; font-size: 9.2px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,158) scale(1,-1)">Salud dentro del gasto total</text>
+			<text x="0" y="62" style="font-family: CEPOES; font-size: 8.3px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,124) scale(1,-1)">Vigente al 30/06/2026</text>
+			<rect x="174.0" y="58" width="277.20878740157485" height="11" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,55%,61%); fill-rule: evenodd;"/>
+			<text x="514.7625153789371" y="62" style="font-family: CEPOES-Bold; font-size: 8.4px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,124) scale(1,-1)">16,89%</text>
+			<text x="0" y="37" style="font-family: CEPOES; font-size: 8.3px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,74) scale(1,-1)">Proyecto 2027</text>
+			<rect x="174.0" y="33" width="270.15137007874023" height="11" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,55%,61%); fill-rule: evenodd;"/>
+			<text x="514.7625153789371" y="37" style="font-family: CEPOES-Bold; font-size: 8.4px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,74) scale(1,-1)">16,46%</text>
+			<path d="M 174,19 L 174,71 Z" style="stroke: rgb(36%,42%,45%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="172.053466796875" y="9" style="font-family: CEPOES; font-size: 7px;fill: rgb(36%,42%,45%); stroke:none;" transform="translate(0,18) scale(1,-1)">0</text>
+			<text x="498.35890209768706" y="9" style="font-family: CEPOES; font-size: 7px;fill: rgb(36%,42%,45%); stroke:none;" transform="translate(0,18) scale(1,-1)">20</text>
+			<text x="0" y="0" style="font-family: CEPOES; font-size: 7.4px;fill: rgb(36%,42%,45%); stroke:none;" transform="translate(0,0) scale(1,-1)">% del gasto total</text>
+		</g>
+	</g>
+</svg>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="544.2519685039371" height="165" preserveAspectRatio="xMinYMin meet" viewBox="0 0 544 165" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="544.2519685039371" height="165"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-165)" style="clip-path: url(#clip)">
+		<g transform="">
+			<text x="0" y="154" style="font-family: CEPOES-Bold; font-size: 9.2px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,308) scale(1,-1)">Variación real de asignaciones seleccionadas</text>
+			<text x="0" y="137" style="font-family: CEPOES; font-size: 8.3px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,274) scale(1,-1)">Transporte</text>
+			<rect x="205.95554215794266" y="133" width="170.04566922909555" height="11" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(81%,29%,33%); fill-rule: evenodd;"/>
+			<text x="516.636929441437" y="137" style="font-family: CEPOES-Bold; font-size: 8.4px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,274) scale(1,-1)">-13,5%</text>
+			<text x="0" y="112" style="font-family: CEPOES; font-size: 8.3px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,224) scale(1,-1)">Trabajo</text>
+			<rect x="220.40821395029553" y="108" width="155.59299743674268" height="11" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(81%,29%,33%); fill-rule: evenodd;"/>
+			<text x="516.636929441437" y="112" style="font-family: CEPOES-Bold; font-size: 8.4px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,224) scale(1,-1)">-12,3%</text>
+			<text x="0" y="87" style="font-family: CEPOES; font-size: 8.3px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,174) scale(1,-1)">Salud</text>
+			<rect x="340.9424552942422" y="83" width="35.05875609279599" height="11" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(81%,29%,33%); fill-rule: evenodd;"/>
+			<text x="521.3086091289371" y="87" style="font-family: CEPOES-Bold; font-size: 8.4px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,174) scale(1,-1)">-2,8%</text>
+			<text x="0" y="62" style="font-family: CEPOES; font-size: 8.3px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,124) scale(1,-1)">Educación</text>
+			<rect x="369.2753317368649" y="58" width="6.725879650173283" height="11" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(81%,29%,33%); fill-rule: evenodd;"/>
+			<text x="521.3086091289371" y="62" style="font-family: CEPOES-Bold; font-size: 8.4px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,124) scale(1,-1)">-0,5%</text>
+			<text x="0" y="37" style="font-family: CEPOES; font-size: 8.3px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,74) scale(1,-1)">Industria y Comercio</text>
+			<rect x="376.0012113870382" y="33" width="81.12944280438757" height="11" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,55%,61%); fill-rule: evenodd;"/>
+			<text x="519.200406003937" y="37" style="font-family: CEPOES-Bold; font-size: 8.4px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,74) scale(1,-1)">+6,4%</text>
+			<path d="M 376.001211,19 L 376.001211,146 Z" style="stroke: rgb(36%,42%,45%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="168.94140625" y="9" style="font-family: CEPOES; font-size: 7px;fill: rgb(36%,42%,45%); stroke:none;" transform="translate(0,18) scale(1,-1)">-16</text>
+			<text x="498.35890209768706" y="9" style="font-family: CEPOES; font-size: 7px;fill: rgb(36%,42%,45%); stroke:none;" transform="translate(0,18) scale(1,-1)">10</text>
+			<text x="0" y="0" style="font-family: CEPOES; font-size: 7.4px;fill: rgb(36%,42%,45%); stroke:none;" transform="translate(0,0) scale(1,-1)">% frente al vigente · inflación 21,54%</text>
+		</g>
+	</g>
+</svg>

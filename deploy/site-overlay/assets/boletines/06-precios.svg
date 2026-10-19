@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="544.2519685039371" height="115" preserveAspectRatio="xMinYMin meet" viewBox="0 0 544 115" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="544.2519685039371" height="115"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-115)" style="clip-path: url(#clip)">
+		<g transform="">
+			<text x="0" y="104" style="font-family: CEPOES-Bold; font-size: 9.2px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,208) scale(1,-1)">Pobreza en hogares · segundo trimestre de 2026</text>
+			<text x="0" y="87" style="font-family: CEPOES; font-size: 8.3px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,174) scale(1,-1)">CABA</text>
+			<rect x="174.0" y="83" width="162.25025871766036" height="11" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,55%,61%); fill-rule: evenodd;"/>
+			<text x="519.434195066437" y="87" style="font-family: CEPOES-Bold; font-size: 8.4px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,174) scale(1,-1)">17,3%</text>
+			<text x="0" y="62" style="font-family: CEPOES; font-size: 8.3px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,124) scale(1,-1)">Zona sur</text>
+			<rect x="174.0" y="58" width="233.52782902137233" height="11" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,55%,61%); fill-rule: evenodd;"/>
+			<text x="519.434195066437" y="62" style="font-family: CEPOES-Bold; font-size: 8.4px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,124) scale(1,-1)">24,9%</text>
+			<text x="0" y="37" style="font-family: CEPOES; font-size: 8.3px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,74) scale(1,-1)">Con menores de 14 años</text>
+			<rect x="174.0" y="33" width="264.47730033745785" height="11" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(8%,55%,61%); fill-rule: evenodd;"/>
+			<text x="519.434195066437" y="37" style="font-family: CEPOES-Bold; font-size: 8.4px;fill: rgb(4%,28%,35%); stroke:none;" transform="translate(0,74) scale(1,-1)">28,2%</text>
+			<path d="M 174,19 L 174,96 Z" style="stroke: rgb(36%,42%,45%); stroke-linecap: butt; stroke-width: 0.5;"/>
+			<text x="172.053466796875" y="9" style="font-family: CEPOES; font-size: 7px;fill: rgb(36%,42%,45%); stroke:none;" transform="translate(0,18) scale(1,-1)">0</text>
+			<text x="498.35890209768706" y="9" style="font-family: CEPOES; font-size: 7px;fill: rgb(36%,42%,45%); stroke:none;" transform="translate(0,18) scale(1,-1)">35</text>
+			<text x="0" y="0" style="font-family: CEPOES; font-size: 7.4px;fill: rgb(36%,42%,45%); stroke:none;" transform="translate(0,0) scale(1,-1)">% de hogares de cada grupo</text>
+		</g>
+	</g>
+</svg>

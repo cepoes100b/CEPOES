@@ -5,7 +5,7 @@ class HomeEditorialTests(unittest.TestCase):
     def test_current_selection(self):
         items=latest_home_publications()
         self.assertEqual(len(items),3)
-        self.assertIn('boletin-05',items[1]['url'])
+        self.assertIn('boletin-06-octubre-2026',items[1]['url'])
         self.assertIn('informe-coyuntura-02',items[2]['url'])
     def test_new_report_replaces_previous(self):
         def changed(name):

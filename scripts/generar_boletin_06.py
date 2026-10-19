@@ -149,6 +149,7 @@ def build_html(chartpaths):
     head=re.sub(r'(<meta property="og:title" content=")[^"]*',lambda m:m[1]+TITLE+' — Boletín CEPOES',head)
     # La fecha editorial corresponde al corte real; publicación se registra al desplegar.
     head=head.replace('</head>','<meta name="cepoes:content-date" content="2026-10-19"><meta name="cepoes:publication" content="newsletter"></head>')
+    head=head.replace('</head>','<style>.bol .bol-kpi__val{line-height:1.15;margin-bottom:12px}.bol .bol-sec{scroll-margin-top:150px}</style>'+'</head>')
     hero=template[template.index('<article class="bol">'):template.index('  <nav class="bol-riel"')]
     hero=hero[:hero.index('    <details')]
     hero=hero.replace('>05</span>','>06</span>').replace('La recuperación que no llega a los barrios',TITLE).replace('La economía porteña casi no crece y su impulso se concentra en las finanzas. Comercio, industria, consumo e ingresos muestran otra Ciudad.',DEK).replace('Septiembre 2026','Octubre 2026').replace('boletin-05-septiembre-2026',SLUG).replace('boletin-05.svg','boletin-06.png').replace('Tapa del N.º 5 del Boletín CEPOES, septiembre de 2026','Tapa del N.º 6 del Boletín CEPOES, octubre de 2026')

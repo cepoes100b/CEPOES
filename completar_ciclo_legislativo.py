@@ -94,6 +94,9 @@ def fallback_dictamenes(ficha: dict) -> list[dict]:
         fecha = event.get("fecha")
         movement = choose_movement(movements, fecha, "dictamen")
         comision = clean((movement or {}).get("oficina")) or None
+        # La evidencia del hito se conserva aunque falten campos del detalle.
+        if not clean(fecha) or not comision:
+            continue
         key = (fecha, comision)
         if key in seen:
             continue
@@ -118,6 +121,9 @@ def fallback_dictamenes(ficha: dict) -> list[dict]:
             continue
         fecha = movement.get("fecha")
         comision = clean(movement.get("oficina")) or None
+        # La evidencia del hito se conserva aunque falten campos del detalle.
+        if not clean(fecha) or not comision:
+            continue
         key = (fecha, comision)
         current = grouped.get(key)
         if current is None or "firmado" in movement_text(movement):

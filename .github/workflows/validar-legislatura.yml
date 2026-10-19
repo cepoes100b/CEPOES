@@ -10,6 +10,7 @@ on:
       - "actualizar_universo.py"
       - "enriquecer_expedientes.py"
       - "completar_ciclo_legislativo.py"
+      - "test_completar_ciclo_legislativo.py"
       - "actualizar_sesiones.py"
       - "normalizar_sesiones.py"
       - "integrar_recinto.py"
@@ -41,6 +42,8 @@ jobs:
           python-version: "3.12"
       - name: Instalar dependencias
         run: pip install -r requirements.txt
+      - name: Probar detalles e hitos del ciclo legislativo
+        run: python -m unittest -v test_completar_ciclo_legislativo
       - name: Actualizar estructura institucional oficial
         run: python actualizar_estructura_legislativa.py
       - name: Actualizar agenda y expedientes oficiales

@@ -5,7 +5,10 @@ class HomeEditorialTests(unittest.TestCase):
     def test_current_selection(self):
         items=latest_home_publications()
         self.assertEqual(len(items),3)
-        self.assertIn('boletin-06-octubre-2026',items[1]['url'])
+        from pathlib import Path
+        from scripts.generar_newsletter_feed import editions
+        published = editions(Path(__file__).parent / 'deploy/site-overlay')
+        self.assertEqual(items[1]['url'], published[-1]['url'])
         self.assertIn('informe-coyuntura-02',items[2]['url'])
     def test_new_report_replaces_previous(self):
         def changed(name):

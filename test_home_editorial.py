@@ -49,3 +49,26 @@ class HomeEditorialTests(unittest.TestCase):
         self.assertLess(once.index('home-publications-track'),once.index('home-budget-feature'))
         twice=restructure_home(once)
         self.assertEqual(twice.count('class="home-budget-feature"'),1)
+
+class BulletinCatalogTests(unittest.TestCase):
+    def test_next_edition_updates_both_pages_and_is_idempotent(self):
+        import tempfile, shutil
+        from pathlib import Path
+        from scripts.generar_catalogo_boletines import generate, validate
+        source=Path(__file__).parent/'deploy/site-overlay'
+        with tempfile.TemporaryDirectory() as directory:
+            site=Path(directory)
+            shutil.copytree(source/'publicaciones',site/'publicaciones')
+            latest=site/'publicaciones/boletines/boletin-06-octubre-2026/index.html'
+            future=latest.parent.parent/'boletin-07-noviembre-2026/index.html'
+            future.parent.mkdir()
+            future.write_text(latest.read_text().replace('boletin-06-octubre-2026','boletin-07-noviembre-2026').replace('Octubre 2026','Noviembre 2026'))
+            items=generate(site)
+            self.assertEqual(items[0]['edition'],7)
+            snapshots={str(p):p.read_bytes() for p in (site/'publicaciones/index.html',site/'publicaciones/boletines/index.html')}
+            generate(site)
+            self.assertEqual(snapshots,{p:Path(p).read_bytes() for p in snapshots})
+            validate(site)
+            broken=site/'publicaciones/index.html'
+            broken.write_text(broken.read_text().replace('boletin-07-noviembre-2026','boletin-06-octubre-2026'))
+            with self.assertRaises(ValueError):validate(site)

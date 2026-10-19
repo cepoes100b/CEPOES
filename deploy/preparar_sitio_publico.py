@@ -544,19 +544,8 @@ def latest_home_publications() -> list[dict]:
     reports = [dict(r, date=r["period"], summary=r["description"], label="Último informe de coyuntura")
                for r in load_json("deploy/reports-registry.json")["reports"]
                if "informe-coyuntura-" in r["url"]]
-    bulletins = []
-    for path in (overlay / "publicaciones/boletines").glob("boletin-*/index.html"):
-        source = path.read_text(encoding="utf-8")
-        number = re.search(r"boletin-(\d+)-", path.parent.name)
-        title = re.search(r"<h1[^>]*>(.*?)</h1>", source, re.S)
-        description = re.search(r'<meta name="description" content="([^"]+)"', source)
-        cover = re.search(r'<meta property="og:image" content="https://cepoes.org([^"]+)"', source)
-        if number and title:
-            bulletins.append(dict(title=html.unescape(re.sub('<[^>]+>', '', title[1])),
-                summary=html.unescape(description[1]) if description else '',
-                url='/' + path.parent.relative_to(overlay).as_posix() + '/',
-                edition=int(number[1]), label="Último boletín", date='',
-                cover=cover[1] if cover else '', period=path.parent.name.split('-', 2)[2].replace('-', ' ').capitalize()))
+    from scripts.generar_catalogo_boletines import catalog as bulletin_catalog
+    bulletins = [dict(item, label="Último boletín", date='') for item in bulletin_catalog(overlay)]
     if not notes or not reports or not bulletins:
         raise ValueError("La portada requiere una nota, un boletín y un informe publicados")
     feature = load_json("deploy/site-overlay/assets/data/home-editorial.json").get("budget_feature", {})
@@ -1281,6 +1270,8 @@ def main() -> None:
     sys.path.insert(0, str(ROOT))
     from scripts.generar_newsletter_feed import generate
     generate(site)
+    from scripts.generar_catalogo_boletines import generate as generate_bulletin_catalog
+    generate_bulletin_catalog(site)
     prepare_canonical_routes(site)
     count = 0
     for path in site.rglob("*.html"):

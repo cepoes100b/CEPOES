@@ -26,6 +26,8 @@ create index press_notes_status_published_idx on public.press_notes(status,publi
 create unique index press_notes_source_hash_uniq on public.press_notes(source_hash) where source_hash is not null;
 grant select on public.press_notes to anon, authenticated;
 grant insert,update,delete on public.press_notes to authenticated;
+-- Ingesta backend: permisos explícitos para instalaciones nuevas, sin depender de defaults.
+grant select,insert on public.press_notes to service_role;
 create policy "press_public_select_published" on public.press_notes for select to anon using(status='publicada');
 create policy "press_members_select" on public.press_notes for select to authenticated using(private.is_active_member());
 create policy "press_writers_insert" on public.press_notes for insert to authenticated with check(private.can_write_intelligence() and created_by=(select auth.uid()) and updated_by=(select auth.uid()) and status<>'publicada');

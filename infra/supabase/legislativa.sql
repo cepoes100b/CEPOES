@@ -256,6 +256,8 @@ revoke all on public.internal_comments from anon;
 
 grant select on public.profiles to authenticated;
 grant select,insert,update,delete on public.expediente_analyses to authenticated;
+-- Ingesta backend: permisos explícitos para instalaciones nuevas, sin depender de defaults.
+grant select,insert,update on public.expediente_analyses to service_role;
 grant select,insert,update,delete on public.session_briefs to authenticated;
 grant select,insert,update,delete on public.session_brief_items to authenticated;
 grant select,insert,update,delete on public.project_bank to authenticated;

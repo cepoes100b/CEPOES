@@ -6,6 +6,12 @@ on:
       - "deploy/site-overlay/legislativa/**"
       - "deploy/site-overlay/assets/legislativa*"
       - "infra/supabase/legislativa.sql"
+      - "infra/supabase/008_prensa_editorial.sql"
+      - "supabase/functions/legislative-analysis-ingest-v2/**"
+      - "supabase/functions/press-draft-ingest/**"
+      - "tests/test_supabase_ingest_grants.py"
+      - "supabase/tests/ingest_grants.sql"
+      - "docs/supabase-ingest-grants.md"
       - "docs/AREA-LEGISLATIVA.md"
       - "verificar_area_legislativa.py"
       - ".github/workflows/validar-area-legislativa.yml"
@@ -37,3 +43,5 @@ jobs:
         run: node --check deploy/site-overlay/assets/legislativa.js
       - name: Validar seguridad y estructura
         run: python verificar_area_legislativa.py
+      - name: Validar permisos explícitos de ingesta
+        run: python -m unittest discover -s tests -p test_supabase_ingest_grants.py -v

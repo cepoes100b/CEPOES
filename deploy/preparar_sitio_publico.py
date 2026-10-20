@@ -78,6 +78,7 @@ TOPICS = [
     ("produccion-y-comercio", "Producción y comercio"),
     ("presupuesto-y-estado", "Presupuesto y Estado"),
     ("ambiente-y-movilidad", "Ambiente y movilidad"),
+    ("seguridad-y-derechos", "Seguridad y derechos"),
 ]
 
 
@@ -92,7 +93,7 @@ def active_for(path: Path, site: Path) -> str:
         rel = rel[: -len("index.html")]
     if rel.startswith("/lo-nuevo/"):
         return "new"
-    for section in ("observatorio", "balance", "presupuesto", "territorio", "educacion", "legislatura", "publicaciones", "propuestas", "prensa", "cepoes"):
+    for section in ("observatorio", "balance", "presupuesto", "territorio", "educacion", "salud", "legislatura", "publicaciones", "propuestas", "prensa", "cepoes"):
         if rel.startswith(f"/{section}/"):
             return section
     return ""
@@ -105,6 +106,7 @@ def nav(active: str) -> str:
         ("presupuesto", "/presupuesto/", "Presupuesto"),
         ("territorio", "/territorio/", "Territorio"),
         ("educacion", "/educacion/", "Educación"),
+        ("salud", "/salud/", "Salud"),
         ("legislatura", "/legislatura/", "Legislatura"),
         ("publicaciones", "/publicaciones/", "Publicaciones"),
         ("propuestas", "/propuestas/", "Propuestas"),
@@ -159,7 +161,7 @@ FOOTER = (
     '<a class="logo" href="/">CEP<b>OES</b></a><p>Datos, investigación y propuestas para CABA, desde los barrios.</p>'
     '<strong class="footer-100">SOMOS 100 BARRIOS</strong></div><div class="footer-links"><h5>Explorar</h5><ul>'
     '<li><a href="/observatorio/">Observatorio</a></li><li><a href="/balance/">Balance</a></li>'
-    '<li><a href="/presupuesto/">Presupuesto</a></li><li><a href="/educacion/">Educación</a></li>'
+    '<li><a href="/presupuesto/">Presupuesto</a></li><li><a href="/educacion/">Educación</a></li><li><a href="/salud/">Salud</a></li>'
     '<li><a href="/territorio/">Territorio</a></li><li><a href="/territorio/equipamientos/">Qué hay en tu barrio</a></li>'
     '<li><a href="/legislatura/">Legislatura</a></li><li><a href="/publicaciones/">Publicaciones</a></li>'
     '<li><a href="/propuestas/">Propuestas</a></li><li><a href="/prensa/">Prensa</a></li>'
@@ -205,13 +207,9 @@ def territory_subnav(rel: str) -> str:
         return "".join(f'<a{active_link(rel, href)} href="{href}">{label}</a>' for href, label in items)
     return (
         '<nav aria-label="Navegación territorial" class="subnav territory-subnav"><div class="wrap territory-nav">'
-        '<div class="territory-desktop">'
-        f'<div class="territory-primary">{links(explore)}</div>'
-        '<details class="territory-topics"><summary>Temas territoriales <span aria-hidden="true">⌄</span></summary>'
-        f'<div class="territory-topics-menu">{links(thematic)}</div></details></div>'
-        '<details class="territory-mobile"><summary><span>Explorar Territorio</span><span aria-hidden="true">⌄</span></summary>'
-        '<div class="territory-mobile-menu"><strong>Explorar</strong>'
-        f'<div>{links(explore)}</div><strong>Temas territoriales</strong><div>{links(thematic)}</div></div></details>'
+        f'<div class="territory-visible-links">{links(explore)}'
+        '<a href="/territorio/#temas-territoriales">Todos los temas</a></div>'
+        f'<div class="territory-visible-topics" aria-label="Temas territoriales">{links(thematic)}</div>'
         '</div></nav>'
     )
 
@@ -1120,6 +1118,40 @@ def normalize_data_timestamp(source: str, rel: str) -> str:
     return re.sub(pattern, annotate, source, count=1, flags=re.I)
 
 
+def mark_latest_axis(source: str, site: Path) -> str:
+    """Una novedad por eje, según la publicación más reciente de sus contenidos."""
+    from html.parser import HTMLParser
+    from urllib.parse import urlsplit
+    class PublicationDate(HTMLParser):
+        value = ""
+        def handle_starttag(self, tag, attrs):
+            attrs = dict(attrs)
+            if tag == "meta" and attrs.get("property") == "article:published_time":
+                self.value = attrs.get("content", "")[:10]
+    source = re.sub(r'<span class="axis-new">Nuevo</span>', '', source)
+    reports = json.loads((ROOT / "deploy/reports-registry.json").read_text())
+    dates = {r["url"]: r["period"] for r in reports["reports"]}
+    cards = list(re.finditer(r'<article\b[^>]*class="[^\"]*\bia-topic-card\b[^\"]*"[^>]*>.*?</article>', source, re.S))
+    candidates = []
+    for card in cards:
+        for route in re.findall(r'href="([^\"]+)"', card[0]):
+            if not route.startswith('/') or urlsplit(route).query:
+                continue
+            published = dates.get(route, "")
+            page = site / route.strip("/") / "index.html"
+            if page.is_file():
+                meta = PublicationDate(); meta.feed(page.read_text())
+                if meta.value:
+                    published = meta.value
+            if re.fullmatch(r"\d{4}-\d{2}(?:-\d{2})?", published):
+                candidates.append((published, -card.start()))
+    if candidates:
+        latest = -max(candidates)[1]
+        at = source.index('>', latest) + 1
+        source = source[:at] + '<span class="axis-new">Nuevo</span>' + source[at:]
+    return source
+
+
 def normalize_html(path: Path, site: Path) -> None:
     rel = "/" + path.relative_to(site).as_posix()
     if rel.startswith("/privado/"):
@@ -1253,6 +1285,10 @@ def normalize_html(path: Path, site: Path) -> None:
                 revision = hashlib.sha256(module_script.read_bytes()).hexdigest()[:12]
                 source = re.sub(r'(/assets/' + re.escape(script_name) + r")(?:\?[^\"']*)?",
                                 lambda match: match[1] + "?v=" + revision, source)
+    from deploy.ejes_publicos import prepare as prepare_axes
+    source = prepare_axes(source, rel)
+    if rel in {"/salud/index.html", "/educacion/index.html"}:
+        source = mark_latest_axis(source, site)
     source = version_local_stylesheets(source, site)
     if rel == "/observatorio/produccion/industria/index.html":
         path.with_name("datos.csv").write_bytes(industria_csv(load_json("datos.json")))
@@ -1277,6 +1313,9 @@ def main() -> None:
     for path in site.rglob("*.html"):
         normalize_html(path, site)
         count += 1
+    from deploy.ejes_publicos import audit as audit_axes, update_sitemaps
+    update_sitemaps(site)
+    print(f"Catálogo de ejes verificado: {audit_axes(site)}")
     from deploy.compartir_publicaciones import prepare as prepare_sharing
     shared = prepare_sharing(site, ROOT / "deploy/reports-registry.json")
     print(f"Piezas para compartir: {shared} páginas")

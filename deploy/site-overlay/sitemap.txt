@@ -147,3 +147,5 @@ https://cepoes.org/presupuesto/2027/salud/
 https://cepoes.org/salud/octubre-rosa/
 https://cepoes.org/educacion/universidad-publica/
 https://cepoes.org/educacion/
+https://cepoes.org/salud/cuidados-paliativos/
+https://cepoes.org/salud/

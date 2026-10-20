@@ -1,0 +1,866 @@
+{
+  "version": 1,
+  "themes": [
+    {
+      "id": "vivienda-y-habitat",
+      "title": "Vivienda y hábitat",
+      "summary": "Vivienda, alquileres, situación de calle y condiciones de vida.",
+      "portal": "/temas/#vivienda-y-habitat"
+    },
+    {
+      "id": "salud-y-cuidados",
+      "title": "Salud y cuidados",
+      "summary": "Atención, prevención, medicamentos, salud mental y cuidados.",
+      "portal": "/salud/"
+    },
+    {
+      "id": "educacion-e-infancias",
+      "title": "Educación",
+      "summary": "Universidad pública, aprendizajes, nivel inicial y acceso a la educación.",
+      "portal": "/educacion/"
+    },
+    {
+      "id": "trabajo-e-ingresos",
+      "title": "Trabajo e ingresos",
+      "summary": "Empleo, salarios, trabajo de plataformas y desigualdades.",
+      "portal": "/temas/#trabajo-e-ingresos"
+    },
+    {
+      "id": "precios-y-consumo",
+      "title": "Precios y consumo",
+      "summary": "Inflación, canastas, ingresos y endeudamiento de los hogares.",
+      "portal": "/temas/#precios-y-consumo"
+    },
+    {
+      "id": "produccion-y-comercio",
+      "title": "Producción y comercio",
+      "summary": "Industria, comercios, empresas y desarrollo productivo.",
+      "portal": "/temas/#produccion-y-comercio"
+    },
+    {
+      "id": "presupuesto-y-estado",
+      "title": "Presupuesto y Estado",
+      "summary": "Recursos, ejecución, prioridades de gasto y descentralización.",
+      "portal": "/temas/#presupuesto-y-estado"
+    },
+    {
+      "id": "ambiente-y-movilidad",
+      "title": "Ambiente y movilidad",
+      "summary": "Limpieza, espacio público, accesibilidad y movilidad.",
+      "portal": "/temas/#ambiente-y-movilidad"
+    },
+    {
+      "id": "seguridad-y-derechos",
+      "title": "Seguridad y derechos",
+      "summary": "Políticas de seguridad, barrios populares y control público.",
+      "portal": "/temas/#seguridad-y-derechos"
+    }
+  ],
+  "groups": [
+    {
+      "id": "salud-mental",
+      "title": "Salud mental",
+      "summary": "Datos, red de atención, informe completo y prevención del suicidio.",
+      "themes": [
+        "salud-y-cuidados"
+      ],
+      "axes": [
+        "salud",
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/observatorio/salud-mental/",
+          "label": "Monitor y red de atención",
+          "title": "Salud mental: mirar la tendencia sin perder de vista el territorio"
+        },
+        {
+          "url": "/publicaciones/informes/salud-mental-caba/",
+          "label": "Informe de salud mental",
+          "title": "Salud mental en la Ciudad de Buenos Aires"
+        },
+        {
+          "url": "/publicaciones/notas/prevenir-es-garantizar-ayuda-a-tiempo/",
+          "label": "Prevención y ayuda a tiempo",
+          "title": "Prevenir el suicidio también es garantizar que la ayuda llegue a tiempo"
+        }
+      ]
+    },
+    {
+      "id": "deporte-salud",
+      "title": "Deporte y vida saludable",
+      "summary": "Clubes, acceso caminable y oportunidades para la actividad física en los barrios.",
+      "themes": [
+        "salud-y-cuidados",
+        "ambiente-y-movilidad"
+      ],
+      "axes": [
+        "salud",
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/territorio/deporte-salud/",
+          "label": "Mapa y análisis de acceso al deporte",
+          "title": "Deporte y vida saludable en CABA"
+        },
+        {
+          "url": "/prensa/brecha-acceso-deporte/",
+          "label": "Nota · Casi 767 mil porteños viven a más de 800 metros caminables de un club",
+          "title": "Casi 767 mil porteños viven a más de 800 metros caminables de un club"
+        }
+      ]
+    },
+    {
+      "id": "paliativos",
+      "title": "Cuidados paliativos",
+      "summary": "Derechos, oferta documentada y datos pendientes para controlar el acceso.",
+      "themes": [
+        "salud-y-cuidados"
+      ],
+      "axes": [
+        "salud"
+      ],
+      "links": [
+        {
+          "url": "/salud/cuidados-paliativos/",
+          "label": "Informe completo",
+          "title": "Cuidados paliativos en la Ciudad de Buenos Aires"
+        }
+      ]
+    },
+    {
+      "id": "financiamiento-salud",
+      "title": "Financiamiento de la salud",
+      "summary": "Recursos, hospitales y CeSAC: prioridades presupuestarias y balance de gestión.",
+      "themes": [
+        "salud-y-cuidados",
+        "presupuesto-y-estado"
+      ],
+      "axes": [
+        "salud"
+      ],
+      "links": [
+        {
+          "url": "/presupuesto/2027/salud/",
+          "label": "Presupuesto 2027 · Salud",
+          "title": "La salud pierde prioridad en el presupuesto de la Ciudad"
+        },
+        {
+          "url": "/prensa/presupuesto-2027-salud/",
+          "label": "Análisis para el debate público",
+          "title": "La salud pública debe recuperar prioridad en el presupuesto porteño"
+        },
+        {
+          "url": "/balance/salud-publica/",
+          "label": "Balance de salud pública",
+          "title": "Salud pública"
+        }
+      ]
+    },
+    {
+      "id": "medicamentos",
+      "title": "Medicamentos y tratamientos",
+      "summary": "Remediar, compras públicas y responsabilidades para sostener el acceso.",
+      "themes": [
+        "salud-y-cuidados",
+        "presupuesto-y-estado"
+      ],
+      "axes": [
+        "salud"
+      ],
+      "links": [
+        {
+          "url": "/publicaciones/informes/medicamentos-federalismo/",
+          "label": "Medicamentos y federalismo",
+          "title": "Medicamentos y federalismo: quién paga el retiro de Nación"
+        }
+      ]
+    },
+    {
+      "id": "cancer-mama",
+      "title": "Prevención del cáncer de mama",
+      "summary": "Información y agenda de campañas de Octubre Rosa.",
+      "themes": [
+        "salud-y-cuidados"
+      ],
+      "axes": [
+        "salud"
+      ],
+      "links": [
+        {
+          "url": "/salud/octubre-rosa/",
+          "label": "Octubre Rosa",
+          "title": "Octubre Rosa"
+        }
+      ]
+    },
+    {
+      "id": "salud-reproductiva",
+      "title": "Salud reproductiva y obstétrica",
+      "summary": "Acceso a derechos, seguimiento del PAEV y desigualdades en el alivio del dolor.",
+      "themes": [
+        "salud-y-cuidados"
+      ],
+      "axes": [
+        "salud"
+      ],
+      "links": [
+        {
+          "url": "/observatorio/salud-reproductiva/",
+          "label": "Monitor de salud reproductiva",
+          "title": "PAEV: acompañar exige poder auditar la neutralidad"
+        },
+        {
+          "url": "/legislatura/seguimiento/analgesia-peridural/",
+          "label": "Analgesia obstétrica · Seguimiento legislativo",
+          "title": "Analgesia obstétrica en CABA"
+        },
+        {
+          "url": "/publicaciones/notas/el-dolor-tambien-es-desigual/",
+          "label": "El dolor también es desigual",
+          "title": "El dolor también es desigual"
+        }
+      ]
+    },
+    {
+      "id": "mayores",
+      "title": "Personas mayores y cuidados",
+      "summary": "Envejecimiento, ingresos, vivienda y necesidades de cuidado.",
+      "themes": [
+        "salud-y-cuidados",
+        "vivienda-y-habitat"
+      ],
+      "axes": [
+        "salud",
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/observatorio/personas-mayores/",
+          "label": "Monitor de personas mayores",
+          "title": "Una Ciudad envejecida no es, por eso, una Ciudad cuidada"
+        },
+        {
+          "url": "/publicaciones/informes/personas-mayores-caba/",
+          "label": "Informe de condiciones de vida",
+          "title": "Personas mayores en Buenos Aires"
+        },
+        {
+          "url": "/prensa/personas-mayores-desigualdad-cuidados/",
+          "label": "Nota · La proporción de personas mayores varía casi 13 puntos entre comunas porteñas",
+          "title": "La proporción de personas mayores varía casi 13 puntos entre comunas porteñas"
+        }
+      ]
+    },
+    {
+      "id": "natalidad",
+      "title": "Natalidad y cambio demográfico",
+      "summary": "Nacimientos, fecundidad y transformaciones de la población.",
+      "themes": [
+        "salud-y-cuidados"
+      ],
+      "axes": [
+        "salud"
+      ],
+      "links": [
+        {
+          "url": "/observatorio/natalidad/",
+          "label": "Natalidad en perspectiva",
+          "title": "Natalidad: la caída empezó mucho antes de la IVE"
+        }
+      ]
+    },
+    {
+      "id": "equipamientos",
+      "title": "Servicios y establecimientos",
+      "summary": "Oferta de salud, educación y otros servicios para explorar en el mapa.",
+      "themes": [
+        "salud-y-cuidados",
+        "educacion-e-infancias",
+        "ambiente-y-movilidad"
+      ],
+      "axes": [
+        "salud",
+        "educacion"
+      ],
+      "links": [
+        {
+          "url": "/territorio/equipamientos/",
+          "label": "Mapa de establecimientos y servicios",
+          "title": "Oferta territorial de la Ciudad"
+        }
+      ]
+    },
+    {
+      "id": "encuentro-salud",
+      "title": "Encuentro Metropolitano de Salud Pública",
+      "summary": "Programa y materiales del encuentro sobre salud pública.",
+      "themes": [
+        "salud-y-cuidados"
+      ],
+      "axes": [
+        "salud"
+      ],
+      "links": [
+        {
+          "url": "/encuentro-metropolitano-salud-publica/",
+          "label": "Información y programa del encuentro",
+          "title": "Encuentro Metropolitano de Salud Pública"
+        }
+      ]
+    },
+    {
+      "id": "universidad",
+      "title": "Universidad pública",
+      "summary": "Financiamiento, salarios, becas y condiciones para estudiar, enseñar e investigar.",
+      "themes": [
+        "educacion-e-infancias",
+        "presupuesto-y-estado"
+      ],
+      "axes": [
+        "educacion"
+      ],
+      "links": [
+        {
+          "url": "/educacion/universidad-publica/",
+          "label": "Universidad pública: financiar el futuro",
+          "title": "Universidad pública:financiar el futuro"
+        }
+      ]
+    },
+    {
+      "id": "evaluaciones",
+      "title": "Evaluación y aprendizajes",
+      "summary": "Resultados y alcances de PISA, FEPBA y TESBA en la educación porteña.",
+      "themes": [
+        "educacion-e-infancias"
+      ],
+      "axes": [
+        "educacion"
+      ],
+      "links": [
+        {
+          "url": "/publicaciones/informes/educacion-pisa-fepba-2025/",
+          "label": "Informe sobre evaluaciones educativas",
+          "title": "Dos evaluaciones, dos respuestas opuestas"
+        },
+        {
+          "url": "/prensa/educacion-pisa-fepba-resultados/",
+          "label": "Nota · PISA registra una caída de 17 puntos en Lectura mientras las pruebas porteñas informan mejoras",
+          "title": "PISA registra una caída de 17 puntos en Lectura mientras las pruebas porteñas informan mejoras"
+        }
+      ]
+    },
+    {
+      "id": "crianza",
+      "title": "Nivel inicial, crianza y vacantes",
+      "summary": "El acceso a la sala de 3 y las condiciones económicas de la crianza.",
+      "themes": [
+        "educacion-e-infancias",
+        "precios-y-consumo"
+      ],
+      "axes": [
+        "educacion"
+      ],
+      "links": [
+        {
+          "url": "/publicaciones/notas/criar-en-buenos-aires-sala-de-3/",
+          "label": "Crianza y derecho a la educación inicial",
+          "title": "Criar en Buenos Aires cuesta más de $1 millón por mes"
+        },
+        {
+          "url": "/prensa/crianza-sala-de-3-vacantes/",
+          "label": "Nota · La sala de 3 obligatoria enfrenta un costo de crianza de hasta $1,26 millones por mes",
+          "title": "La sala de 3 obligatoria enfrenta un costo de crianza de hasta $1,26 millones por mes"
+        }
+      ]
+    },
+    {
+      "id": "limpieza",
+      "title": "Basura y limpieza",
+      "summary": "Reclamos de los barrios, responsabilidades públicas y propuestas de mejora.",
+      "themes": [
+        "ambiente-y-movilidad"
+      ],
+      "axes": [
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/territorio/limpieza-urbana/",
+          "label": "Reclamos y mapa de limpieza urbana",
+          "title": "Basura y limpieza: los reclamos de los barrios."
+        }
+      ]
+    },
+    {
+      "id": "seguridad",
+      "title": "Seguridad y derechos",
+      "summary": "Barrios populares, operativos y control público de las políticas de seguridad.",
+      "themes": [
+        "seguridad-y-derechos"
+      ],
+      "axes": [
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/territorio/seguridad-barrios-populares/",
+          "label": "Monitor de seguridad y derechos",
+          "title": "Seguridad y derechos en los barrios populares"
+        },
+        {
+          "url": "/publicaciones/notas/tormenta-negra-seguridad-territorio/",
+          "label": "Tormenta Negra y la seguridad en el barrio",
+          "title": "Tormenta Negra y la seguridad que queda en el barrio"
+        }
+      ]
+    },
+    {
+      "id": "tierras",
+      "title": "Tierras y soberanía",
+      "summary": "Extranjerización, concentración territorial y defensa de la Ley de Tierras.",
+      "themes": [
+        "produccion-y-comercio",
+        "vivienda-y-habitat"
+      ],
+      "axes": [
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/territorio/tierras-y-soberania/",
+          "label": "Mapa e informe de tierras",
+          "title": "Tierras y soberanía"
+        }
+      ]
+    },
+    {
+      "id": "deudas",
+      "title": "Endeudamiento de los hogares",
+      "summary": "Deudas, mora y diferencias territoriales en las condiciones de vida.",
+      "themes": [
+        "precios-y-consumo",
+        "vivienda-y-habitat"
+      ],
+      "axes": [
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/territorio/endeudamiento/",
+          "label": "Mapa del endeudamiento",
+          "title": "Endeudamiento por barrio"
+        },
+        {
+          "url": "/publicaciones/informes/endeudarse-para-llegar-a-fin-de-mes/",
+          "label": "Informe sobre deuda de los hogares",
+          "title": "Endeudarse para llegar a fin de mes"
+        },
+        {
+          "url": "/publicaciones/notas/el-boca-river-de-la-mora/",
+          "label": "El Boca–River de la mora",
+          "title": "El Boca–River de la mora"
+        },
+        {
+          "url": "/prensa/mora-brecha-barrios/",
+          "label": "Nota · La incidencia de la mora en Villa Soldati casi triplica la de Coghlan",
+          "title": "La incidencia de la mora en Villa Soldati casi triplica la de Coghlan"
+        }
+      ]
+    },
+    {
+      "id": "migraciones",
+      "title": "Migraciones y población",
+      "summary": "Distribución territorial, trabajo y condiciones de vida de la población migrante.",
+      "themes": [
+        "trabajo-e-ingresos",
+        "vivienda-y-habitat"
+      ],
+      "axes": [
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/territorio/migraciones/",
+          "label": "Migraciones en CABA",
+          "title": "Migraciones en CABA"
+        },
+        {
+          "url": "/prensa/migraciones-geografia-comunal/",
+          "label": "Nota · La población migrante internacional alcanza su mayor peso en la Comuna 1",
+          "title": "La población migrante internacional alcanza su mayor peso en la Comuna 1"
+        }
+      ]
+    },
+    {
+      "id": "estructura-productiva",
+      "title": "Producción y comercios de barrio",
+      "summary": "Empresas, actividad comercial y recursos para el desarrollo productivo.",
+      "themes": [
+        "produccion-y-comercio",
+        "trabajo-e-ingresos"
+      ],
+      "axes": [
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/territorio/estructura-productiva/",
+          "label": "Estructura productiva territorial",
+          "title": "Estructura productiva de CABA"
+        },
+        {
+          "url": "/presupuesto/2027/desarrollo-productivo/",
+          "label": "Desarrollo productivo · Presupuesto 2027",
+          "title": "Desarrollo productivo, empleo y comercios de barrio"
+        },
+        {
+          "url": "/publicaciones/notas/comercios-ingresos-brutos-2027/",
+          "label": "Comercios e Ingresos Brutos",
+          "title": "Cómo un comercio puede pagar más Ingresos Brutos sin vender más"
+        },
+        {
+          "url": "/prensa/empresas-y-ocupacion-comercial/",
+          "label": "Nota · CABA perdió más de 8.000 empresas privadas registradas desde 2015",
+          "title": "CABA perdió más de 8.000 empresas privadas registradas desde 2015"
+        }
+      ]
+    },
+    {
+      "id": "presupuesto-territorial",
+      "title": "Presupuesto y comunas",
+      "summary": "Distribución del gasto y capacidad de decisión de las Comunas.",
+      "themes": [
+        "presupuesto-y-estado"
+      ],
+      "axes": [
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/presupuesto/territorio/",
+          "label": "Presupuesto y territorio",
+          "title": "Presupuesto y territorio"
+        },
+        {
+          "url": "/presupuesto/descentralizacion/",
+          "label": "Cuánto administran las Comunas",
+          "title": "Descentralización: cuánto administran las Comunas"
+        }
+      ]
+    },
+    {
+      "id": "vivienda",
+      "title": "Vivienda y situación de calle",
+      "summary": "Acceso a la vivienda, alquileres y respuestas ante la emergencia habitacional.",
+      "themes": [
+        "vivienda-y-habitat"
+      ],
+      "axes": [
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/balance/vivienda-y-alquiler/",
+          "label": "Balance de vivienda y alquiler",
+          "title": "Vivienda y alquiler"
+        },
+        {
+          "url": "/publicaciones/informes/situacion-de-calle-caba/",
+          "label": "Informe sobre situación de calle",
+          "title": "Más personas sin techo en Buenos Aires"
+        },
+        {
+          "url": "/prensa/situacion-calle-respuesta-habitacional/",
+          "label": "Nota · La cantidad oficial de personas en situación de calle creció 27,8% en un año",
+          "title": "La cantidad oficial de personas en situación de calle creció 27,8% en un año"
+        }
+      ]
+    },
+    {
+      "id": "brechas",
+      "title": "Brechas territoriales",
+      "summary": "Comparaciones de las condiciones de vida y de acceso a servicios entre comunas.",
+      "themes": [
+        "vivienda-y-habitat",
+        "trabajo-e-ingresos",
+        "ambiente-y-movilidad"
+      ],
+      "axes": [
+        "territorio"
+      ],
+      "links": [
+        {
+          "url": "/territorio/brechas/",
+          "label": "Explorar brechas territoriales",
+          "title": "Brechas territoriales"
+        }
+      ]
+    },
+    {
+      "id": "condiciones-vida",
+      "title": "Pobreza y condiciones de vida",
+      "summary": "Ingresos y condiciones de vida de los hogares de la Ciudad.",
+      "themes": [
+        "vivienda-y-habitat",
+        "trabajo-e-ingresos",
+        "precios-y-consumo"
+      ],
+      "axes": [],
+      "links": [
+        {
+          "url": "/observatorio/condiciones-de-vida/",
+          "label": "Condiciones de vida",
+          "title": "Condiciones de vida"
+        },
+        {
+          "url": "/observatorio/condiciones-de-vida/pobreza/",
+          "label": "Pobreza por ingresos",
+          "title": "Pobreza por ingresos en CABA"
+        }
+      ]
+    },
+    {
+      "id": "empleo",
+      "title": "Trabajo y empleo",
+      "summary": "Empleo, desocupación y evolución del mercado de trabajo.",
+      "themes": [
+        "trabajo-e-ingresos"
+      ],
+      "axes": [],
+      "links": [
+        {
+          "url": "/observatorio/trabajo/",
+          "label": "Indicadores de trabajo",
+          "title": "Trabajo"
+        },
+        {
+          "url": "/observatorio/trabajo/empleo/",
+          "label": "Tasa de empleo",
+          "title": "Tasa de empleo en CABA"
+        },
+        {
+          "url": "/observatorio/trabajo/desocupacion/",
+          "label": "Tasa de desocupación",
+          "title": "Tasa de desocupación en CABA"
+        }
+      ]
+    },
+    {
+      "id": "plataformas",
+      "title": "Trabajo de plataformas",
+      "summary": "Registro, condiciones de trabajo y juventudes.",
+      "themes": [
+        "trabajo-e-ingresos",
+        "ambiente-y-movilidad"
+      ],
+      "axes": [],
+      "links": [
+        {
+          "url": "/publicaciones/informes/plataformas-juventudes-caba/",
+          "label": "Informe sobre plataformas y juventudes",
+          "title": "Seis años de registro y ningún número"
+        },
+        {
+          "url": "/prensa/plataformas-rutramur-sin-datos/",
+          "label": "Nota · Seis años después, la Ciudad todavía no publica cuántos repartidores están registrados",
+          "title": "Seis años después, la Ciudad todavía no publica cuántos repartidores están registrados"
+        }
+      ]
+    },
+    {
+      "id": "precios",
+      "title": "Precios y costo de vida",
+      "summary": "Inflación y canastas para seguir el poder de compra de los hogares.",
+      "themes": [
+        "precios-y-consumo"
+      ],
+      "axes": [],
+      "links": [
+        {
+          "url": "/observatorio/precios/",
+          "label": "Precios e ingresos",
+          "title": "Precios e ingresos"
+        },
+        {
+          "url": "/observatorio/precios/ipc/",
+          "label": "Índice de Precios al Consumidor",
+          "title": "Índice de Precios al Consumidor de CABA"
+        },
+        {
+          "url": "/observatorio/precios/canasta-consumo/",
+          "label": "Canasta de consumo",
+          "title": "Canasta total de consumo de CABA"
+        }
+      ]
+    },
+    {
+      "id": "actividad",
+      "title": "Actividad productiva",
+      "summary": "Industria, exportaciones, producto e indicadores de locales comerciales.",
+      "themes": [
+        "produccion-y-comercio"
+      ],
+      "axes": [],
+      "links": [
+        {
+          "url": "/observatorio/produccion/",
+          "label": "Indicadores de producción",
+          "title": "Producción"
+        },
+        {
+          "url": "/observatorio/produccion/industria/",
+          "label": "Ingresos fabriles",
+          "title": "Ingresos fabriles a precios constantes"
+        },
+        {
+          "url": "/observatorio/produccion/exportaciones/",
+          "label": "Exportaciones",
+          "title": "Exportaciones de origen CABA"
+        },
+        {
+          "url": "/observatorio/produccion/locales-vacantes/",
+          "label": "Locales comerciales vacantes",
+          "title": "Vacancia de locales comerciales"
+        },
+        {
+          "url": "/observatorio/produccion/pgb/",
+          "label": "Producto Geográfico Bruto",
+          "title": "Producto Geográfico Bruto de CABA"
+        }
+      ]
+    },
+    {
+      "id": "presupuesto",
+      "title": "Presupuesto y gestión pública",
+      "summary": "Proyecto 2027, ejecución, diagnóstico y balance de las prioridades del Estado.",
+      "themes": [
+        "presupuesto-y-estado"
+      ],
+      "axes": [],
+      "links": [
+        {
+          "url": "/presupuesto/2027/",
+          "label": "Análisis integral del presupuesto 2027",
+          "title": "Qué Ciudad financia el presupuesto 2027"
+        },
+        {
+          "url": "/presupuesto/ejecucion/",
+          "label": "Explorador presupuestario",
+          "title": "Explorador presupuestario"
+        },
+        {
+          "url": "/presupuesto/diagnostico/",
+          "label": "Diagnóstico presupuestario",
+          "title": "Diagnóstico presupuestario"
+        },
+        {
+          "url": "/observatorio/estado/",
+          "label": "Estado porteño",
+          "title": "Estado porteño"
+        },
+        {
+          "url": "/observatorio/estado/ejecucion-presupuestaria/",
+          "label": "Ejecución presupuestaria",
+          "title": "Ejecución del presupuesto de CABA"
+        },
+        {
+          "url": "/balance/presupuesto-y-modelo-de-gestion/",
+          "label": "Balance de presupuesto y gestión",
+          "title": "Presupuesto y modelo de gestión"
+        }
+      ]
+    },
+    {
+      "id": "coyuntura",
+      "title": "Informes de coyuntura",
+      "summary": "Producción, empleo y condiciones económicas con datos nacionales y porteños.",
+      "themes": [
+        "produccion-y-comercio",
+        "trabajo-e-ingresos"
+      ],
+      "axes": [],
+      "links": [
+        {
+          "url": "/publicaciones/informe-coyuntura-01-junio-2026/",
+          "label": "Informe de coyuntura 1",
+          "title": "Producción y empleo: una recuperación desigual"
+        },
+        {
+          "url": "/publicaciones/informe-coyuntura-02-octubre-2026/",
+          "label": "Informe de coyuntura 2",
+          "title": "Producción y empleo bajo presión"
+        }
+      ]
+    },
+    {
+      "id": "boletines",
+      "title": "Boletines mensuales",
+      "summary": "La evolución de la Ciudad a través de sus indicadores y del debate presupuestario.",
+      "themes": [
+        "presupuesto-y-estado"
+      ],
+      "axes": [],
+      "links": [
+        {
+          "url": "/publicaciones/boletines/boletin-01-mayo-2026/",
+          "label": "La Ciudad que ajusta donde más duele",
+          "title": "La Ciudad que ajusta donde más duele"
+        },
+        {
+          "url": "/publicaciones/boletines/boletin-02-junio-2026/",
+          "label": "El ajuste ya no se proyecta: se ejecuta",
+          "title": "El ajuste ya no se proyecta: se ejecuta"
+        },
+        {
+          "url": "/publicaciones/boletines/boletin-03-julio-2026/",
+          "label": "El semestre cierra con récord de informalidad",
+          "title": "El semestre cierra con récord de informalidad"
+        },
+        {
+          "url": "/publicaciones/boletines/boletin-04-agosto-2026/",
+          "label": "El relato y los números",
+          "title": "El relato y los números"
+        },
+        {
+          "url": "/publicaciones/boletines/boletin-05-septiembre-2026/",
+          "label": "La recuperación que no llega a los barrios",
+          "title": "La recuperación que no llega a los barrios"
+        },
+        {
+          "url": "/publicaciones/boletines/boletin-06-octubre-2026/",
+          "label": "El presupuesto frente a la Ciudad real",
+          "title": "El presupuesto frente a la Ciudad real"
+        }
+      ]
+    }
+  ],
+  "tools": [
+    {
+      "url": "/territorio/#comunas",
+      "label": "Las 15 comunas"
+    },
+    {
+      "url": "/territorio/barrios/",
+      "label": "Los 48 barrios"
+    },
+    {
+      "url": "/territorio/equipamientos/",
+      "label": "Qué hay en tu barrio"
+    },
+    {
+      "url": "/territorio/mapa-tematico/",
+      "label": "Mapa temático"
+    },
+    {
+      "url": "/territorio/comparar/",
+      "label": "Comparar comunas"
+    },
+    {
+      "url": "/territorio/brechas/",
+      "label": "Brechas territoriales"
+    }
+  ]
+}

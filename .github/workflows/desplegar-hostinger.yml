@@ -7,6 +7,9 @@ on:
     paths:
       - "deploy/site-overlay/**"
       - "deploy/preparar_sitio_publico.py"
+      - "deploy/axes-registry.json"
+      - "deploy/ejes_publicos.py"
+      - "test_ejes_publicos.py"
       - "deploy/compartir_publicaciones.py"
       - "scripts/generar_newsletter_feed.py"
       - "scripts/generar_publications_feed.py"
@@ -323,7 +326,9 @@ jobs:
 
       - name: Normalizar navegación y fallbacks públicos
         if: steps.current.outputs.should_deploy == 'true'
-        run: python deploy/preparar_sitio_publico.py _site
+        run: |
+          python -m unittest test_ejes_publicos.py
+          python deploy/preparar_sitio_publico.py _site
 
       - name: Integrar módulos públicos en el build canónico
         if: steps.current.outputs.should_deploy == 'true'

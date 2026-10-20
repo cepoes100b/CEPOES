@@ -26,7 +26,7 @@ def patch(source: str) -> str:
 </style>'''
 
     block = '''<section class="section alt observatory-health-hub" id="observatorio-salud-cuidados"><div class="wrap">
-<div class="section-head"><div><span class="eyebrow">Eje transversal</span><h2>Salud y cuidados</h2><p>Indicadores y análisis sobre acceso a la salud, salud mental, salud reproductiva, cambios demográficos y cuidados en la Ciudad.</p></div><a class="more" href="/temas/#salud-y-cuidados">Explorar el tema →</a></div>
+<div class="section-head"><div><span class="eyebrow">Eje transversal</span><h2>Salud y cuidados</h2><p>Indicadores y análisis sobre acceso a la salud, salud mental, salud reproductiva, cambios demográficos y cuidados en la Ciudad.</p></div><a class="more" href="/salud/">Explorar el eje Salud →</a></div>
 <div class="obs-health-grid">
 <a class="obs-health-card" href="/publicaciones/informes/medicamentos-federalismo/"><span>Medicamentos y financiamiento</span><strong>Quién paga el retiro de Nación</strong><p>Remediar, compras públicas y responsabilidades nacionales y porteñas para sostener el acceso a los tratamientos.</p><em>Leer especial →</em></a>
 <a class="obs-health-card" href="/observatorio/salud-mental/"><span>Salud mental</span><strong>Atención, demanda y red territorial</strong><p>Serie SNIC 2016–2025, comparación federal, advertencias de comparabilidad y red de atención en CABA.</p><em>Explorar →</em></a>

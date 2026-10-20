@@ -1,6 +1,6 @@
 {
   "schema": "cepoes-search-registry-v1",
-  "updated_at": "2026-10-15",
+  "updated_at": "2026-10-20",
   "entries": [
     {
       "query": "cepoes",
@@ -589,6 +589,36 @@
         "federalismo"
       ],
       "priority": 30
+    },
+    {
+      "query": "salud",
+      "title": "Salud",
+      "url": "/salud/",
+      "group": "Datos",
+      "type": "Salud y cuidados",
+      "summary": "Acceso a la atención, financiamiento sanitario, medicamentos y cuidados en la Ciudad.",
+      "tags": [
+        "salud",
+        "cuidados",
+        "hospitales"
+      ],
+      "priority": 30
+    },
+    {
+      "query": "cuidados paliativos",
+      "title": "Cuidados paliativos en la Ciudad de Buenos Aires",
+      "url": "/salud/cuidados-paliativos/",
+      "group": "Publicaciones",
+      "type": "Informe",
+      "summary": "Derecho a los cuidados paliativos, oferta documentada, datos pendientes y propuestas de control público.",
+      "tags": [
+        "salud",
+        "paliativos",
+        "cuidados",
+        "NECPAL",
+        "opioides"
+      ],
+      "priority": 20
     }
   ]
 }

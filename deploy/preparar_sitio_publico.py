@@ -92,7 +92,7 @@ def active_for(path: Path, site: Path) -> str:
         rel = rel[: -len("index.html")]
     if rel.startswith("/lo-nuevo/"):
         return "new"
-    for section in ("observatorio", "balance", "presupuesto", "territorio", "educacion", "legislatura", "publicaciones", "propuestas", "prensa", "cepoes"):
+    for section in ("observatorio", "balance", "presupuesto", "territorio", "educacion", "salud", "legislatura", "publicaciones", "propuestas", "prensa", "cepoes"):
         if rel.startswith(f"/{section}/"):
             return section
     return ""
@@ -105,6 +105,7 @@ def nav(active: str) -> str:
         ("presupuesto", "/presupuesto/", "Presupuesto"),
         ("territorio", "/territorio/", "Territorio"),
         ("educacion", "/educacion/", "Educación"),
+        ("salud", "/salud/", "Salud"),
         ("legislatura", "/legislatura/", "Legislatura"),
         ("publicaciones", "/publicaciones/", "Publicaciones"),
         ("propuestas", "/propuestas/", "Propuestas"),
@@ -159,7 +160,7 @@ FOOTER = (
     '<a class="logo" href="/">CEP<b>OES</b></a><p>Datos, investigación y propuestas para CABA, desde los barrios.</p>'
     '<strong class="footer-100">SOMOS 100 BARRIOS</strong></div><div class="footer-links"><h5>Explorar</h5><ul>'
     '<li><a href="/observatorio/">Observatorio</a></li><li><a href="/balance/">Balance</a></li>'
-    '<li><a href="/presupuesto/">Presupuesto</a></li><li><a href="/educacion/">Educación</a></li>'
+    '<li><a href="/presupuesto/">Presupuesto</a></li><li><a href="/educacion/">Educación</a></li><li><a href="/salud/">Salud</a></li>'
     '<li><a href="/territorio/">Territorio</a></li><li><a href="/territorio/equipamientos/">Qué hay en tu barrio</a></li>'
     '<li><a href="/legislatura/">Legislatura</a></li><li><a href="/publicaciones/">Publicaciones</a></li>'
     '<li><a href="/propuestas/">Propuestas</a></li><li><a href="/prensa/">Prensa</a></li>'

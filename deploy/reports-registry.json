@@ -134,7 +134,15 @@
       "kind": "Especial Salud · Octubre de 2026",
       "period": "2026-10-16",
       "format": "web"
+    },
+    {
+      "url": "/salud/cuidados-paliativos/",
+      "title": "Cuidados paliativos en la Ciudad de Buenos Aires",
+      "subtitle": "Derechos, oferta documentada y datos pendientes",
+      "description": "La red porteña, la necesidad de atención, los recursos y ocho indicadores para controlar el acceso efectivo a los cuidados paliativos.",
+      "kind": "Especial Salud · Octubre de 2026",
+      "period": "2026-10-20",
+      "format": "web"
     }
   ]
 }
-

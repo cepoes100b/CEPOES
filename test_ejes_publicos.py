@@ -56,6 +56,23 @@ class EjesTest(unittest.TestCase):
             self.assertLess(result.index('class="axis-new"'), result.index('href="/one/"'))
             self.assertEqual(result, mark_latest_axis(result, root))
 
+    def test_historical_budget_aliases_resolve_but_new_orphans_fail(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            for group in registry()['groups']:
+                for item in group['links']:
+                    page = root / item['url'].strip('/') / 'index.html'
+                    page.parent.mkdir(parents=True, exist_ok=True)
+                    page.write_text('<h1>Contenido clasificado</h1>')
+            for route in ['observatorio/presupuesto', 'territorio/presupuesto']:
+                page = root / route / 'index.html'; page.parent.mkdir(parents=True)
+                page.write_text('<h1>Copia histórica con redirección en Apache</h1>')
+            audit(root)
+            page = root / 'salud/sin-clasificar/index.html'; page.parent.mkdir(parents=True)
+            page.write_text('<h1>Contenido nuevo sin eje</h1>')
+            with self.assertRaisesRegex(AssertionError, 'Contenidos temáticos sin eje'):
+                audit(root)
+
     def test_missing_destination_blocks_audit(self):
         with tempfile.TemporaryDirectory() as d:
             with self.assertRaisesRegex(AssertionError, 'Destino de eje ausente'):

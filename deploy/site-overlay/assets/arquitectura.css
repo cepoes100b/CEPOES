@@ -272,3 +272,5 @@
 .home-budget-actions{display:flex;flex-direction:column;gap:16px}.home-budget-actions a{color:#f4fbfc;font-weight:800;text-underline-offset:4px}.home-budget-actions a:focus-visible{outline:3px solid #8ee6d8;outline-offset:4px}
 @media(max-width:760px){.home-budget-panel{grid-template-columns:1fr;padding:22px}.home-budget-actions{flex-direction:row;flex-wrap:wrap;gap:16px 24px}}
 
+
+.axis-new{align-self:flex-start;padding:3px 10px;border-radius:999px;background:#006963;color:#fff;font-size:.72rem;font-weight:750;letter-spacing:.04em}.ia-topic-card:has(.axis-new){position:relative}.ia-topic-card .axis-new{position:absolute;right:20px;top:20px}.ia-topic-card:has(.axis-new)>.eyebrow{padding-right:70px}

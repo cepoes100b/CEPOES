@@ -1121,11 +1121,48 @@ def normalize_data_timestamp(source: str, rel: str) -> str:
     return re.sub(pattern, annotate, source, count=1, flags=re.I)
 
 
+def mark_latest_axis(source: str, site: Path) -> str:
+    """Una etiqueta de novedad por fecha de publicación, sin jerarquizar tarjetas."""
+    source = re.sub(r'<span class="axis-new">Nuevo</span>', '', source)
+    registry = json.loads((ROOT / "deploy/reports-registry.json").read_text())
+    dates = {r["url"]: r["period"] for r in registry["reports"]}
+    cards = list(re.finditer(r'<article class="ia-topic-card">.*?</article>', source, re.S))
+    candidates = []
+    for card in cards:
+        link = re.search(r'href="([^"]+)"', card[0])
+        if not link:
+            continue
+        route = link[1]
+        published = dates.get(route, "")
+        page = site / route.strip("/") / "index.html"
+        if page.is_file():
+            from html.parser import HTMLParser
+            class PublicationDate(HTMLParser):
+                value = ""
+                def handle_starttag(self, tag, attrs):
+                    attrs = dict(attrs)
+                    if tag == "meta" and attrs.get("property") == "article:published_time":
+                        self.value = attrs.get("content", "")[:10]
+            meta = PublicationDate()
+            meta.feed(page.read_text())
+            if meta.value:
+                published = meta.value
+        if re.fullmatch(r"\d{4}-\d{2}(?:-\d{2})?", published):
+            candidates.append((published, card.start()))
+    if candidates:
+        latest = max(candidates)[1]
+        at = latest + len('<article class="ia-topic-card">')
+        source = source[:at] + '<span class="axis-new">Nuevo</span>' + source[at:]
+    return source
+
+
 def normalize_html(path: Path, site: Path) -> None:
     rel = "/" + path.relative_to(site).as_posix()
     if rel.startswith("/privado/"):
         return
     source = path.read_text(encoding="utf-8")
+    if rel in {"/salud/index.html", "/educacion/index.html"}:
+        source = mark_latest_axis(source, site)
     source = inject_budget_2027_bridge(source, rel)
     source = inject_octubre_rosa_bridge(source, rel)
     source = ensure_site_fonts(source)

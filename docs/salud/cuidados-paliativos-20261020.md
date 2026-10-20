@@ -26,3 +26,9 @@ Pedido de Agustín del 20/10/2026: sección dentro de Salud, acceso desde el men
 https://cepoes-salud-cuidados-paliativos.crivelli725370.chatgpt.site
 
 Proyecto `appgprj_6ad7e1693c088191be5751fea396f738`; versión `appgprj_6ad7e1693c088191be5751fea396f738~appgver_17fb4a6465c88191bdbae73070a21cd1`; despliegue privado succeeded. Fuente `966da7635c1451e8aa7c0e00f9503c61ffd44b23`. El despliegue privado no equivale a publicación en cepoes.org ni a revisión visual aprobada.
+
+## Ajuste de portada solicitado
+
+Todos los temas del eje Salud pasan a una única grilla de nueve tarjetas con el mismo diseño. Se retira el bloque destacado de cuidados paliativos. El normalizador canónico asigna una única etiqueta «Nuevo» a la tarjeta con la fecha de publicación más reciente, usando el catálogo y los metadatos de publicación de las páginas. Las actualizaciones no cambian por sí mismas la novedad. Prueba de etiqueta única, idempotencia y traslado a otra tarjeta ante una nueva publicación aprobada.
+
+La misma regla se aplica a Educación por pedido expreso: cinco tarjetas equivalentes, sin bloque destacado universitario. Clase compartida `axis-new` y función `mark_latest_axis`. La fecha de publicación se lee independientemente del orden de los atributos HTML.

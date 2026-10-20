@@ -6,6 +6,11 @@ from deploy.ejes_publicos import registry, axis_grid, prepare, context_links, au
 from deploy.preparar_sitio_publico import mark_latest_axis, territory_subnav
 
 class EjesTest(unittest.TestCase):
+    def test_shared_taxonomy_matches_all_nine_axes(self):
+        taxonomy = json.loads(Path('deploy/site-overlay/assets/data/taxonomia.json').read_text())
+        self.assertEqual({x['slug'] for x in taxonomy['temas']}, {x['id'] for x in registry()['themes']})
+        self.assertEqual(len(taxonomy['temas']), 9)
+
     def test_all_reports_have_an_axis(self):
         routes = {x['url'] for g in registry()['groups'] for x in g['links']}
         reports = json.loads(Path('deploy/reports-registry.json').read_text())['reports']

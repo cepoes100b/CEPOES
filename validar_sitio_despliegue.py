@@ -424,7 +424,7 @@ for path,label in [('/territorio/migraciones/','Migraciones'),('/territorio/estr
     assert f'href="{path}"' in territorio, f'Territorio no enlaza {label}'
 for token in ['Explorar','Temas territoriales','/presupuesto/territorio/']:
     assert token in territorio, f'Navegación territorial sin {token}'
-for token in ['class="territory-desktop"','class="territory-mobile"','Explorar Territorio','class="territory-mobile-menu"']:
+for token in ['class="territory-visible-links"','class="territory-visible-topics"','Explorar Territorio','id="territorio-catalogo"','id="temas-territoriales"']:
     assert token in territorio, f'Navegación territorial responsive incompleta: {token}'
 
 publicaciones=(root/'publicaciones'/'index.html').read_text(encoding='utf-8',errors='replace')
@@ -465,9 +465,15 @@ assert all(token not in deporte for token in ('Siguiente etapa', 'El siguiente s
 migraciones=(root/'territorio'/'migraciones'/'index.html').read_text(encoding='utf-8',errors='replace')
 assert 'Línea de trabajo prioritaria' not in migraciones and 'Movilidad internacional' in migraciones, 'Rótulo institucional de Migraciones incorrecto'
 temas=(root/'temas'/'index.html').read_text(encoding='utf-8',errors='replace')
-assert temas.count('class="ia-topic-card"')==8, 'Taxonomía pública incompleta'
+from deploy.ejes_publicos import registry as axes_registry, audit as audit_axes
+axis_ids={t['id'] for t in axes_registry()['themes']}
+assert temas.count('class="ia-topic-card"')==len(axis_ids), 'Portada de ejes incompleta'
+for axis_id in axis_ids:
+    assert f'id="{axis_id}"' in temas, f'Eje sin catálogo: {axis_id}'
+assert '<details class="territory-topics"' not in territorio, 'Los accesos territoriales siguen ocultos en un desplegable'
+audit_axes(root)
 taxonomy=json.loads((root/'assets/data/taxonomia.json').read_text(encoding='utf-8'))
-assert len(taxonomy.get('temas') or [])==8 and len({x['slug'] for x in taxonomy['temas']})==8
+assert {x['slug'] for x in taxonomy.get('temas',[])}==axis_ids, 'Taxonomía y catálogos de ejes desalineados'
 
 productiva=(root/'territorio'/'estructura-productiva'/'index.html').read_text(encoding='utf-8',errors='replace')
 for token in ['Perfil comercial de las 15 comunas','Comparar comunas','Matriz comuna × rubro','Ocupación comercial 2025 → 2026','Archivo histórico · RUS 2017','/assets/estructura-productiva-bootstrap.js']:

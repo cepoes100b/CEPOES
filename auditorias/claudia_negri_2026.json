@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-10-16T23:14:25.196819+00:00",
+  "generado_en": "2026-10-20T00:10:24.749447+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,9 +10,9 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-03-01",
-    "fecha_mas_reciente_obtenida": "2026-10-16",
-    "ids_del_anio_en_ventana": 3314,
-    "ids_revisados_acumulados": 3314,
+    "fecha_mas_reciente_obtenida": "2026-10-19",
+    "ids_del_anio_en_ventana": 3321,
+    "ids_revisados_acumulados": 3321,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,18 +30,18 @@
     "LEY": 64
   },
   "por_estado_actual": {
-    "en_comision": 127,
+    "en_comision": 126,
     "archivado": 87,
     "sancionado": 14,
-    "despacho": 4,
+    "despacho": 6,
     "con_dictamen": 3,
-    "ingresado": 3
+    "ingresado": 2
   },
   "por_etapa_ciclo": {
-    "en_comision": 130,
+    "en_comision": 128,
     "archivado": 87,
     "sancionado": 14,
-    "con_dictamen": 7
+    "con_dictamen": 9
   },
   "control_832_2026": {
     "encontrados": 1,
@@ -131,16 +131,16 @@
       ],
       "cantidad_autores": 14,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "TURISMO Y DEPORTES",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "TURISMO Y DEPORTES"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-10-16",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-10-19",
+        "oficina": "TURISMO Y DEPORTES",
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -432,21 +432,20 @@
       ],
       "cantidad_autores": 18,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "en_comision",
-      "etapa_ciclo": "en_comision",
-      "ubicacion": "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN",
+      "estado_actual": "despacho",
+      "etapa_ciclo": "con_dictamen",
+      "ubicacion": "DGDP",
       "giros": [
         "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-23",
-        "oficina": "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN",
-        "descripcion": "EN COMISION"
+        "fecha": "2026-10-19",
+        "oficina": "DGDP",
+        "descripcion": "DESPACHO NUMERADO. ESPERANDO INICIO DE PLAZO DE OBSERVACIONES"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "agenda",
         "radar_ingresos",
         "seguimiento_institucional"
       ],
@@ -8416,21 +8415,20 @@
       ],
       "cantidad_autores": 10,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "en_comision",
-      "etapa_ciclo": "en_comision",
-      "ubicacion": "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN",
+      "estado_actual": "despacho",
+      "etapa_ciclo": "con_dictamen",
+      "ubicacion": "DGDP",
       "giros": [
         "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-03-09",
-        "oficina": "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN",
-        "descripcion": "EN COMISION"
+        "fecha": "2026-10-19",
+        "oficina": "DGDP",
+        "descripcion": "DESPACHO NUMERADO. ESPERANDO INICIO DE PLAZO DE OBSERVACIONES"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "agenda",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,

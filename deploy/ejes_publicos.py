@@ -121,10 +121,15 @@ def audit(site):
     reports = json.loads((ROOT / 'deploy/reports-registry.json').read_text())['reports']
     for report in reports:
         assert report['url'] in routes, f'Informe sin eje: {report["url"]}. Agregarlo a deploy/axes-registry.json.'
+    aliases = {"/observatorio/presupuesto/": "/presupuesto/ejecucion/",
+               "/territorio/presupuesto/": "/presupuesto/territorio/"}
     thematic = set()
     for pattern in ('salud/*/index.html', 'educacion/*/index.html', 'publicaciones/notas/*/index.html', 'publicaciones/informes/*/index.html', 'observatorio/*/index.html', 'territorio/*/index.html'):
         for page in site.glob(pattern):
             route = '/' + page.parent.relative_to(site).as_posix() + '/'
+            if route in aliases:
+                assert aliases[route] in routes, f'Redirección sin eje de destino: {route}'
+                continue
             if route in {'/observatorio/agenda/', '/territorio/barrios/', '/territorio/comparar/', '/territorio/mapa-tematico/'} or re.fullmatch(r'/territorio/comuna-\d+/', route):
                 continue
             if re.search(r'http-equiv=["\']refresh', page.read_text(), re.I):
@@ -136,6 +141,9 @@ def audit(site):
 
 def update_sitemaps(site):
     """Agrega rutas clasificadas faltantes conservando las fechas existentes."""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    modified = datetime.now(ZoneInfo('America/Argentina/Buenos_Aires')).date().isoformat()
     routes = sorted({x['url'] for g in registry()['groups'] for x in g['links']})
     path = site / 'sitemap.txt'
     if path.exists():
@@ -147,6 +155,6 @@ def update_sitemaps(site):
     if path.exists():
         source = path.read_text()
         existing = set(re.findall(r'<loc>([^<]+)</loc>', source))
-        additions = ''.join('  <url><loc>https://cepoes.org' + escape(r) + '</loc></url>\n' for r in routes if 'https://cepoes.org' + r not in existing)
+        additions = ''.join('  <url><loc>https://cepoes.org' + escape(r) + '</loc><lastmod>' + modified + '</lastmod></url>\n' for r in routes if 'https://cepoes.org' + r not in existing)
         source = source.replace('</urlset>', additions + '</urlset>')
         path.write_text(source)

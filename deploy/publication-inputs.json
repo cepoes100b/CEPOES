@@ -11,6 +11,18 @@
       "reason": "Normalización del sitio"
     },
     {
+      "path": "deploy/axes-registry.json",
+      "reason": "Clasificación editorial y catálogo transversal de ejes"
+    },
+    {
+      "path": "deploy/ejes_publicos.py",
+      "reason": "Catálogos visibles de ejes y navegación contextual"
+    },
+    {
+      "path": "test_ejes_publicos.py",
+      "reason": "Cobertura e integridad de la navegación por ejes"
+    },
+    {
       "path": "deploy/compartir_publicaciones.py",
       "reason": "Controles de compartir, metadatos y placas públicas de difusión"
     },

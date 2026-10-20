@@ -180,7 +180,7 @@ for route in ['/balance/','/balance/vivienda-y-alquiler/','/balance/salud-public
 assert "group:'Balance'" in common_search and 'x.priority||0' in common_search, 'Buscador sin grupo o prioridad de Balance'
 assert 'const merged=new Map()' in common_search, 'Buscador sin deduplicación por URL'
 architecture_css=(root/'assets'/'arquitectura.css').read_text(encoding='utf-8',errors='replace')
-for token in ['max-width:1600px','max-width:1480px','min-width:1481px','min-width:761px','.site-nav .nav-links.open{display:flex}']:
+for token in ['max-width:1600px','@media(max-width:1600px) and (min-width:761px)','min-width:1481px','min-width:761px','.site-nav .nav-links.open{display:flex}']:
     assert token in architecture_css, f'Navegación adaptable incompleta: {token}'
 assert '@media(min-width:761px){.budget-page .wrap{max-width:var(--max)}}' in architecture_css, 'Ejecución presupuestaria sin ancho editorial en escritorio'
 

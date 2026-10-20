@@ -2,7 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from deploy.ejes_publicos import registry, axis_grid, prepare, context_links, audit
+from deploy.ejes_publicos import registry, axis_grid, prepare, context_links, audit, update_sitemaps
 from deploy.preparar_sitio_publico import mark_latest_axis, territory_subnav
 
 class EjesTest(unittest.TestCase):
@@ -72,6 +72,21 @@ class EjesTest(unittest.TestCase):
             page.write_text('<h1>Contenido nuevo sin eje</h1>')
             with self.assertRaisesRegex(AssertionError, 'Contenidos temáticos sin eje'):
                 audit(root)
+
+    def test_sitemap_new_routes_have_modification_date_and_old_dates_stay(self):
+        import xml.etree.ElementTree as ET
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            root.joinpath('sitemap.xml').write_text('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://cepoes.org/salud/cuidados-paliativos/</loc><lastmod>2001-02-03</lastmod></url></urlset>')
+            root.joinpath('sitemap.txt').write_text('https://cepoes.org/salud/cuidados-paliativos/\n')
+            update_sitemaps(root)
+            first = root.joinpath('sitemap.xml').read_text()
+            update_sitemaps(root)
+            self.assertEqual(first, root.joinpath('sitemap.xml').read_text())
+            self.assertIn('<lastmod>2001-02-03</lastmod>', first)
+            ns = '{http://www.sitemaps.org/schemas/sitemap/0.9}'
+            for entry in ET.fromstring(first):
+                self.assertRegex(entry.find(ns+'lastmod').text, r'^\d{4}-\d{2}-\d{2}$')
 
     def test_missing_destination_blocks_audit(self):
         with tempfile.TemporaryDirectory() as d:

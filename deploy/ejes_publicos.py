@@ -141,6 +141,9 @@ def audit(site):
 
 def update_sitemaps(site):
     """Agrega rutas clasificadas faltantes conservando las fechas existentes."""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    modified = datetime.now(ZoneInfo('America/Argentina/Buenos_Aires')).date().isoformat()
     routes = sorted({x['url'] for g in registry()['groups'] for x in g['links']})
     path = site / 'sitemap.txt'
     if path.exists():
@@ -152,6 +155,6 @@ def update_sitemaps(site):
     if path.exists():
         source = path.read_text()
         existing = set(re.findall(r'<loc>([^<]+)</loc>', source))
-        additions = ''.join('  <url><loc>https://cepoes.org' + escape(r) + '</loc></url>\n' for r in routes if 'https://cepoes.org' + r not in existing)
+        additions = ''.join('  <url><loc>https://cepoes.org' + escape(r) + '</loc><lastmod>' + modified + '</lastmod></url>\n' for r in routes if 'https://cepoes.org' + r not in existing)
         source = source.replace('</urlset>', additions + '</urlset>')
         path.write_text(source)

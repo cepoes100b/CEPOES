@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-10-19T20:58:15-03:00",
+  "actualizado_en": "2026-10-20T15:09:35-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -10,7 +10,7 @@
   },
   "periodo_consultado": {
     "desde": "01/01/2026",
-    "hasta": "19/10/2026"
+    "hasta": "20/10/2026"
   },
   "resumen": {
     "sesiones": 9,
@@ -34,8 +34,8 @@
   "sesiones": [
     {
       "id_sesion": "1146",
-      "nro_orden_lp": "10674",
-      "ano_parlamentario": "2025",
+      "nro_orden_lp": "1",
+      "ano_parlamentario": "2026",
       "fecha": "2026-03-02",
       "tipo": {
         "id": "3",
@@ -584,7 +584,7 @@
     },
     {
       "id_sesion": "1147",
-      "nro_orden_lp": "10675",
+      "nro_orden_lp": "2",
       "ano_parlamentario": "2026",
       "fecha": "2026-04-09",
       "tipo": {
@@ -5559,7 +5559,7 @@
     },
     {
       "id_sesion": "1148",
-      "nro_orden_lp": "10676",
+      "nro_orden_lp": "3",
       "ano_parlamentario": "2026",
       "fecha": "2026-05-14",
       "tipo": {
@@ -13986,7 +13986,7 @@
     },
     {
       "id_sesion": "1150",
-      "nro_orden_lp": "10678",
+      "nro_orden_lp": "4",
       "ano_parlamentario": "2026",
       "fecha": "2026-06-18",
       "tipo": {
@@ -25797,7 +25797,7 @@
     },
     {
       "id_sesion": "1149",
-      "nro_orden_lp": "10677",
+      "nro_orden_lp": "5",
       "ano_parlamentario": "2026",
       "fecha": "2026-07-01",
       "tipo": {
@@ -26331,7 +26331,7 @@
     },
     {
       "id_sesion": "1151",
-      "nro_orden_lp": "10679",
+      "nro_orden_lp": "6",
       "ano_parlamentario": "2026",
       "fecha": "2026-08-27",
       "tipo": {
@@ -38709,7 +38709,7 @@
     },
     {
       "id_sesion": "1152",
-      "nro_orden_lp": "10680",
+      "nro_orden_lp": "7",
       "ano_parlamentario": "2026",
       "fecha": "2026-09-03",
       "tipo": {
@@ -39276,7 +39276,7 @@
     },
     {
       "id_sesion": "1153",
-      "nro_orden_lp": "10681",
+      "nro_orden_lp": "8",
       "ano_parlamentario": "2026",
       "fecha": "2026-09-03",
       "tipo": {
@@ -52149,7 +52149,7 @@
     },
     {
       "id_sesion": "1154",
-      "nro_orden_lp": "10682",
+      "nro_orden_lp": "9",
       "ano_parlamentario": "2026",
       "fecha": "2026-10-06",
       "tipo": {

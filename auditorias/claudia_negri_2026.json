@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-10-20T23:35:45.647834+00:00",
+  "generado_en": "2026-10-21T18:29:05.224680+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,22 +10,22 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-03-01",
-    "fecha_mas_reciente_obtenida": "2026-10-20",
-    "ids_del_anio_en_ventana": 3338,
-    "ids_revisados_acumulados": 3338,
+    "fecha_mas_reciente_obtenida": "2026-10-21",
+    "ids_del_anio_en_ventana": 3347,
+    "ids_revisados_acumulados": 3347,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
-    "expedientes_seguimiento_institucional": 238,
-    "expedientes_auditados": 238,
+    "expedientes_seguimiento_institucional": 239,
+    "expedientes_auditados": 239,
     "autoría_principal": 44,
-    "coautoría": 194,
-    "fichas_oficiales_completas": 238,
+    "coautoría": 195,
+    "fichas_oficiales_completas": 239,
     "con_evidencia_sancion": 91,
     "problemas": 0
   },
   "por_tipo": {
-    "DECLARACION": 98,
+    "DECLARACION": 99,
     "RESOLUCION": 76,
     "LEY": 64
   },
@@ -35,10 +35,10 @@
     "sancionado": 14,
     "despacho": 6,
     "con_dictamen": 3,
-    "ingresado": 2
+    "ingresado": 3
   },
   "por_etapa_ciclo": {
-    "en_comision": 128,
+    "en_comision": 129,
     "archivado": 87,
     "sancionado": 14,
     "con_dictamen": 9
@@ -104,6 +104,42 @@
   },
   "problemas": [],
   "expedientes": [
+    {
+      "id_expediente": "142906",
+      "numero": "3286-D-2026",
+      "fecha_ingreso": "2026-10-21T13:32:32",
+      "sumario": "PREOCUPACIÓN POR LA FALTA DE REGLAMENTACIÓN DE LA LEY 6.249, \"PLAN INTEGRAL DE CONSUMOS PROBLEMÁTICOS DE SUSTANCIAS PSICOACTIVAS\".-",
+      "rol_claudia": "coautora",
+      "rol_recalculado": "coautora",
+      "autoría_confirmada": true,
+      "rol_consistente": true,
+      "autores": [
+        "IAÑEZ, BERENICE",
+        "NEGRI, CLAUDIA"
+      ],
+      "cantidad_autores": 2,
+      "tipo_oficial": "DECLARACION",
+      "estado_actual": "ingresado",
+      "etapa_ciclo": "en_comision",
+      "ubicacion": "SP",
+      "giros": [
+        "(GIRO AUN NO ASIGNADO)"
+      ],
+      "ultimo_movimiento": {
+        "fecha": "2026-10-21",
+        "oficina": "SP",
+        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+      },
+      "evidencia_sancion": false,
+      "fuentes_sancion": [],
+      "fuentes_captura": [
+        "radar_ingresos",
+        "seguimiento_institucional"
+      ],
+      "ficha_oficial_completa": true,
+      "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142906",
+      "es_832_2026": false
+    },
     {
       "id_expediente": "142858",
       "numero": "3239-D-2026",
@@ -2209,9 +2245,9 @@
         "EDUCACIÓN, CIENCIA Y TECNOLOGÍA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-09-21",
+        "fecha": "2026-10-21",
         "oficina": "ARCHIVO",
-        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
+        "descripcion": "EXPEDIENTE EN ARCHIVO CON DATOS BANK INGRESADOS"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [

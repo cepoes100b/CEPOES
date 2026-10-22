@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-10-21T23:50:33.869506+00:00",
+  "generado_en": "2026-10-22T18:24:11.390648+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,23 +10,23 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-03-01",
-    "fecha_mas_reciente_obtenida": "2026-10-21",
-    "ids_del_anio_en_ventana": 3359,
-    "ids_revisados_acumulados": 3359,
+    "fecha_mas_reciente_obtenida": "2026-10-22",
+    "ids_del_anio_en_ventana": 3365,
+    "ids_revisados_acumulados": 3365,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
-    "expedientes_seguimiento_institucional": 240,
-    "expedientes_auditados": 240,
-    "autoría_principal": 44,
+    "expedientes_seguimiento_institucional": 242,
+    "expedientes_auditados": 242,
+    "autoría_principal": 46,
     "coautoría": 196,
-    "fichas_oficiales_completas": 240,
+    "fichas_oficiales_completas": 242,
     "con_evidencia_sancion": 91,
     "problemas": 0
   },
   "por_tipo": {
-    "DECLARACION": 99,
-    "RESOLUCION": 77,
+    "DECLARACION": 100,
+    "RESOLUCION": 78,
     "LEY": 64
   },
   "por_estado_actual": {
@@ -34,11 +34,11 @@
     "archivado": 87,
     "sancionado": 14,
     "despacho": 6,
-    "ingresado": 4,
+    "ingresado": 6,
     "con_dictamen": 3
   },
   "por_etapa_ciclo": {
-    "en_comision": 130,
+    "en_comision": 132,
     "archivado": 87,
     "sancionado": 14,
     "con_dictamen": 9
@@ -105,6 +105,75 @@
   "problemas": [],
   "expedientes": [
     {
+      "id_expediente": "142927",
+      "numero": "3305-D-2026",
+      "fecha_ingreso": "2026-10-22T14:21:10",
+      "sumario": null,
+      "rol_claudia": "autora",
+      "rol_recalculado": "autora",
+      "autoría_confirmada": true,
+      "rol_consistente": true,
+      "autores": [
+        "NEGRI, CLAUDIA"
+      ],
+      "cantidad_autores": 1,
+      "tipo_oficial": "DECLARACION",
+      "estado_actual": "ingresado",
+      "etapa_ciclo": "en_comision",
+      "ubicacion": "MEP",
+      "giros": [
+        "(GIRO AUN NO ASIGNADO)"
+      ],
+      "ultimo_movimiento": {
+        "fecha": "2026-10-22",
+        "oficina": "MEP",
+        "descripcion": "EXPEDIENTE NUMERADO. ESPERANDO CONFECCION DE SUMARIO"
+      },
+      "evidencia_sancion": false,
+      "fuentes_sancion": [],
+      "fuentes_captura": [
+        "seguimiento_institucional"
+      ],
+      "ficha_oficial_completa": true,
+      "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142927",
+      "es_832_2026": false
+    },
+    {
+      "id_expediente": "142926",
+      "numero": "3304-D-2026",
+      "fecha_ingreso": "2026-10-22T14:17:05",
+      "sumario": "BENEPLÁCITO POR EL 40.º ANIVERSARIO DE CREACIÓN DEL INSTITUTO JORGE NEWBERY (A-858), Y SE DISPONE LA COLOCACIÓN DE UNA PLACA CONMEMORATIVA",
+      "rol_claudia": "autora",
+      "rol_recalculado": "autora",
+      "autoría_confirmada": true,
+      "rol_consistente": true,
+      "autores": [
+        "NEGRI, CLAUDIA"
+      ],
+      "cantidad_autores": 1,
+      "tipo_oficial": "RESOLUCION",
+      "estado_actual": "ingresado",
+      "etapa_ciclo": "en_comision",
+      "ubicacion": "DGDP",
+      "giros": [
+        "(GIRO AUN NO ASIGNADO)"
+      ],
+      "ultimo_movimiento": {
+        "fecha": "2026-10-22",
+        "oficina": "DGDP",
+        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+      },
+      "evidencia_sancion": false,
+      "fuentes_sancion": [],
+      "fuentes_captura": [
+        "radar_ingresos",
+        "seguimiento_institucional"
+      ],
+      "ficha_oficial_completa": true,
+      "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=142926",
+      "es_832_2026": false
+    },
+    {
       "id_expediente": "142911",
       "numero": "3293-D-2026",
       "fecha_ingreso": "2026-10-21T15:30:14",
@@ -122,14 +191,14 @@
       "tipo_oficial": "RESOLUCION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "SP",
+      "ubicacion": "MEP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-10-21",
-        "oficina": "SP",
-        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-10-22",
+        "oficina": "MEP",
+        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -158,14 +227,14 @@
       "tipo_oficial": "DECLARACION",
       "estado_actual": "ingresado",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "SP",
+      "ubicacion": "MEP",
       "giros": [
         "(GIRO AUN NO ASIGNADO)"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-10-21",
-        "oficina": "SP",
-        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-10-22",
+        "oficina": "MEP",
+        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

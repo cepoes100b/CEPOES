@@ -6,7 +6,7 @@
       "resource_name": "Padrón de Establecimientos Educativos (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-educacion/establecimientos-educativos/padron-establecimientos.csv",
       "source_last_modified": "2026-10-02T12:51:40.110308",
-      "downloaded_at": 1792704708,
+      "downloaded_at": 1792790517,
       "bytes": 1084106
     },
     "cesac": {
@@ -15,7 +15,7 @@
       "resource_name": "Centros de Salud y Acción Comunitaria (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-salud/centros-salud-accion-comunitaria-cesac/centros_salud_nivel_1_cesac.csv",
       "source_last_modified": "2020-09-04T00:00:00",
-      "downloaded_at": 1792618661,
+      "downloaded_at": 1792790518,
       "bytes": 21274
     },
     "hospitales": {
@@ -24,7 +24,7 @@
       "resource_name": "Hospitales (XLSX)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-salud/hospitales/hospitales.xlsx",
       "source_last_modified": "2025-01-29T00:00:00",
-      "downloaded_at": 1792704739,
+      "downloaded_at": 1792790518,
       "bytes": 10816
     },
     "espacios_verdes": {
@@ -258,7 +258,7 @@
       "resource_name": "Sedes Comunales",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-educacion/sedes-comunales/sedes_comunales.csv",
       "source_last_modified": "2026-07-29T17:11:06.698361",
-      "downloaded_at": 1792448795,
+      "downloaded_at": 1792791150,
       "bytes": 6400
     },
     "centros_integracion_laboral": {
@@ -267,7 +267,7 @@
       "resource_name": "Centros de Integración Laboral (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-justicia-y-seguridad/centros-integracion-laboral/centros_integracion_laboral.csv",
       "source_last_modified": "2019-04-23T16:43:22.693502",
-      "downloaded_at": 1792448796,
+      "downloaded_at": 1792791150,
       "bytes": 2206
     },
     "centros_jubilados": {
@@ -276,7 +276,7 @@
       "resource_name": "Centros de Jubilados (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/centros-jubilados/centros_de_jubilados.csv",
       "source_last_modified": "2026-10-02T12:51:18.818916",
-      "downloaded_at": 1792356419,
+      "downloaded_at": 1792791155,
       "bytes": 156777
     },
     "centros_dia": {
@@ -285,7 +285,7 @@
       "resource_name": "Centros de Día (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/centros-dia/centros_de_dia_para_personas_mayores.csv",
       "source_last_modified": "2026-10-02T12:51:10.442320",
-      "downloaded_at": 1792356420,
+      "downloaded_at": 1792791156,
       "bytes": 6542
     },
     "hogares_permanentes": {
@@ -294,7 +294,7 @@
       "resource_name": "Hogares Permanentes (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/hogares-permanentes/hogares_permanentes_para_personas_mayores.csv",
       "source_last_modified": "2021-04-29T00:00:00",
-      "downloaded_at": 1792356421,
+      "downloaded_at": 1792791157,
       "bytes": 1067
     },
     "geriatricos": {
@@ -303,7 +303,7 @@
       "resource_name": "Geriátricos",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-justicia-y-seguridad/geriatricos/geriatricos.csv",
       "source_last_modified": "2026-10-02T12:52:29.267732",
-      "downloaded_at": 1792356422,
+      "downloaded_at": 1792791157,
       "bytes": 83700
     },
     "cim": {
@@ -312,7 +312,7 @@
       "resource_name": "Centros Integrales de la Mujer (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/centros-integrales-mujer/centros_integrales_de_la_mujer.csv",
       "source_last_modified": "2026-10-02T12:51:14.193594",
-      "downloaded_at": 1792532784,
+      "downloaded_at": 1792791158,
       "bytes": 5211
     },
     "cdi": {
@@ -321,7 +321,7 @@
       "resource_name": "Centros de Desarrollo Infantil (CSV)",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/centros-desarrollo-infantil/centros_de_desarrollo_infantil.csv",
       "source_last_modified": "2026-10-02T12:51:06.531633",
-      "downloaded_at": 1792532787,
+      "downloaded_at": 1792791159,
       "bytes": 5417
     },
     "jardines_comunitarios": {
@@ -330,7 +330,7 @@
       "resource_name": "Jardines Comunitarios",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/jardines-comunitarios/jardin_comunitario.csv",
       "source_last_modified": "2021-04-09T00:00:00",
-      "downloaded_at": 1792532789,
+      "downloaded_at": 1792791160,
       "bytes": 5366
     },
     "juegotecas": {
@@ -339,7 +339,7 @@
       "resource_name": "Juegotecas Barriales",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-desarrollo-humano-y-habitat/juegotecas-barriales/juegotecas-barriales.csv",
       "source_last_modified": "2026-06-22T15:42:39.796738",
-      "downloaded_at": 1792532790,
+      "downloaded_at": 1792791161,
       "bytes": 31883
     },
     "veterinaria": {
@@ -555,7 +555,7 @@
       "resource_name": "Edificios Publicos del GCBA",
       "resource_url": "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/ministerio-de-economia-y-finanzas/edificios-publicos/edificios-publicos-del-gcba.csv",
       "source_last_modified": "2026-06-23T16:33:04.737289",
-      "downloaded_at": 1792705709,
+      "downloaded_at": 1792791736,
       "bytes": 85435
     },
     "rampas_accesibilidad": {
@@ -568,5 +568,5 @@
       "bytes": 380617
     }
   },
-  "updated_at": 1792705723
+  "updated_at": 1792791759
 }

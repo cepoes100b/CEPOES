@@ -23,6 +23,7 @@
   <div><p class="mt-eyebrow">CEPOES · Territorio</p><h1>La Ciudad, barrio a barrio.</h1><p>Ubicá servicios y explorá cómo se distribuyen en Buenos Aires.</p></div>
   <span class="mt-lab">Laboratorio · vista local</span>
 </header>
+<div id="mt-mode-controls" class="mt-mode-controls" role="group" aria-label="Modalidad territorial"><button type="button" data-mode="explore" aria-pressed="true">Explorar servicios</button><button type="button" data-mode="analyze" aria-pressed="false">Analizar indicadores</button></div>
 <div class="mt-toolbar">
   <form id="mt-search-form" class="mt-search" role="search" aria-label="Buscar territorio">
     <label for="mt-search">Buscar barrio o comuna</label>
@@ -36,6 +37,16 @@
 </div>
 <div id="mt-error" class="mt-alert" role="alert" hidden><p id="mt-error-text"></p><button id="mt-retry" type="button">Volver a intentar</button></div>
 <div class="mt-workspace">
+  <aside id="mt-analysis-controls" class="mt-analysis-controls" aria-label="Indicador analítico" hidden>
+    <p class="mt-eyebrow">Lectura comparada</p><h2>La desigualdad, en perspectiva.</h2>
+    <label for="mt-analysis-indicator">Indicador</label><select id="mt-analysis-indicator"><option>Cargando indicadores…</option></select>
+    <p id="mt-analysis-period" class="mt-analysis-period"></p>
+    <p id="mt-analysis-coverage" class="mt-small"></p><button id="mt-analysis-comunas" type="button" hidden>Ver las 15 comunas</button>
+    <div class="mt-analysis-action-row"><div id="mt-analysis-views" class="mt-analysis-views" role="group" aria-label="Representación del indicador"><button type="button" data-view="flat" aria-pressed="true">Plana</button><button type="button" data-view="3d" aria-pressed="false">3D</button></div><button id="mt-analysis-orbit" type="button" aria-pressed="false" disabled>Iniciar giro</button></div>
+    <p id="mt-analysis-availability" class="mt-small"></p><p id="mt-analysis-animation" class="mt-small" role="status"></p>
+    <details id="mt-analysis-context" class="mt-analysis-context"><summary>Universo y fuentes</summary><p id="mt-analysis-universe" class="mt-small"></p><p id="mt-analysis-scope" class="mt-small"></p><a href="#mt-analysis-method">Metodología y fuentes oficiales ↓</a></details>
+    <a href="#mt-analysis-data">Ver los valores en la tabla ↓</a>
+  </aside>
   <aside class="mt-layers" aria-labelledby="mt-layers-title">
     <h2 id="mt-layers-title">Qué querés explorar</h2>
     <div id="mt-layer-controls" class="mt-layer-options" role="group" aria-label="Capa de equipamientos">
@@ -47,7 +58,7 @@
     <div class="mt-layer-source"><p class="mt-eyebrow">Fuente y alcance</p><p id="mt-source-short">Cargando información de las fuentes…</p><a href="#mt-method">Leer método y limitaciones ↓</a></div>
   </aside>
   <section class="mt-map-section" aria-label="Mapa y leyenda">
-    <div class="mt-map-top"><span id="mt-map-title">Ciudad de Buenos Aires</span><button type="button" id="mt-reset">Restablecer</button></div>
+    <div class="mt-map-top"><div><span id="mt-map-title">Ciudad de Buenos Aires</span><span id="mt-analysis-selection-status" class="mt-analysis-selection-status" hidden></span></div><button type="button" id="mt-reset">Restablecer</button></div>
     <div id="mt-map" class="mt-map" role="region" aria-label="Mapa interactivo de Buenos Aires" aria-describedby="mt-map-help">
       <div id="mt-map-loading" class="mt-map-loading" role="status">Preparando cartografía local…</div>
     </div>
@@ -63,9 +74,11 @@
     <div id="mt-metrics" class="mt-metrics"><p>Los indicadores se mostrarán al cargar la fuente.</p></div>
     <p id="mt-comparison-note" class="mt-small">Los registros describen un inventario. La cantidad de servicios no mide su capacidad o calidad.</p>
     <div id="mt-service-card" class="mt-service-card" hidden></div>
+    <section id="mt-analysis-ranking" class="mt-analysis-ranking" hidden><h3 id="mt-analysis-rank-title">Comparación comunal</h3><ol id="mt-analysis-rank" class="mt-analysis-rank"></ol></section>
     <div class="mt-dossier-actions"><a id="mt-related" href="/territorio/equipamientos/">Explorar catálogo territorial →</a><a href="#mt-records">Ver registros de esta selección ↓</a><button id="mt-share" type="button">Mostrar enlace de esta vista</button><input id="mt-share-url" type="text" readonly aria-label="Enlace de la vista seleccionada" hidden></div>
   </aside>
 </div>
+<section id="mt-analysis-data" class="mt-accessible mt-analysis-data" aria-labelledby="mt-analysis-data-title" hidden><p class="mt-eyebrow">Cifras comparables</p><h2 id="mt-analysis-data-title">La evidencia detrás del mapa</h2><p>La tabla conserva el numerador, el denominador y el estado de cada comuna. “s/d” significa sin dato; los ceros válidos se muestran como cero.</p><div class="mt-table-scroll" tabindex="0" aria-label="Tabla de indicadores comunales, desplazable horizontalmente"><table><caption id="mt-analysis-table-caption"></caption><thead><tr><th scope="col">Comuna</th><th scope="col">Valor</th><th id="mt-analysis-num-title" scope="col">Numerador</th><th id="mt-analysis-den-title" scope="col">Denominador</th><th scope="col">Posición</th><th scope="col">Calidad</th></tr></thead><tbody id="mt-analysis-table"></tbody></table></div><div id="mt-analysis-method" class="mt-analysis-method"></div></section>
 <section id="mt-records" class="mt-records" aria-labelledby="mt-records-title">
   <div class="mt-section-title"><div><p class="mt-eyebrow">Del mapa al registro</p><h2 id="mt-records-title">Servicios e infraestructura</h2></div><span id="mt-record-count" role="status" aria-live="polite"></span></div>
   <label class="mt-record-search">Filtrar registros por nombre o dirección<input id="mt-record-search" type="search" placeholder="Escribí un nombre o una dirección" autocomplete="off"></label>

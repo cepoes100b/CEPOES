@@ -105,3 +105,33 @@ Guardar para reproducibilidad: `generar_mapa_territorial.py`, `descargar_fuentes
 11 pruebas offline aprobadas: cobertura/IDs, geometrías válidas, disolución comunal consistente, conteos y faltantes, contrato, coordenadas dentro del territorio en salud/educación, puntos verdes dentro del polígono, conciliación del indicador, fuentes/licencias/cortes, hashes, regeneración idéntica byte por byte y conservación de la última salida válida ante fallo de fuente.
 
 Próximo paso: integrar el paquete en la interfaz draft respetando `positions_verified` y `comparable`, y verificar escritorio/móvil sin publicar ni desplegar.
+
+## Indicador analítico de salud censal
+
+El mismo generador atómico incorpora ahora `analysis/indicators.json`, su entrada
+en `manifest.analysis`, el hash del producto y el del insumo original. La fuente
+es `snapshots/c2022_caba_salud_c1_1.xlsx`, cuadro 1.1 oficial de INDEC, conservado
+sin modificar (11.922 bytes). `build_health_indicator.py` comprueba SHA-256,
+hoja, universo, período, categoría, 15 comunas, partición y total de Ciudad. No
+requiere openpyxl ni ejecuta fórmulas del workbook. Los porcentajes se derivan en
+la generación; no viven en código de interfaz.
+
+Regeneración aislada, sin actualizar otros archivos:
+
+```sh
+python experiments/mapa-territorial/data-pipeline/build_health_indicator.py \
+  --source experiments/mapa-territorial/data-pipeline/snapshots/c2022_caba_salud_c1_1.xlsx \
+  --output /tmp/indicador-salud.json
+```
+
+La corroboración opcional del Anuario requiere Poppler (`pdftotext`), el PDF
+oficial con hash revisado y `--verify-pdf /ruta/anuario_estadistico_2023.pdf`.
+La evidencia versionada está en
+`docs/mapa-territorial/evidence/health-census-verification.json`: coincidencia de
+los 64 conteos entre XLSX primario y cuadro 6.C.3 del Anuario (15 comunas + Ciudad,
+cuatro categorías). Los PDFs de corroboración no se incluyen en el frontend.
+
+La URL estable, licencia CC BY-SA 4.0, atribución, universo y ubicación de celdas
+viajan con el dataset. Si INDEC revisa bytes o estructura, la generación aborta
+antes del reemplazo del paquete anterior. Un cambio de período/fuente requiere
+revisión explícita; no se sustituye un censo por una encuesta anual.

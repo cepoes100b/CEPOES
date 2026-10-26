@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-10-23T23:39:24.270949+00:00",
+  "generado_en": "2026-10-26T19:47:29.728572+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -10,9 +10,9 @@
     "completo": true,
     "limite_solicitado": 10000,
     "fecha_mas_antigua_obtenida": "2024-03-01",
-    "fecha_mas_reciente_obtenida": "2026-10-23",
-    "ids_del_anio_en_ventana": 3398,
-    "ids_revisados_acumulados": 3398,
+    "fecha_mas_reciente_obtenida": "2026-10-26",
+    "ids_del_anio_en_ventana": 3414,
+    "ids_revisados_acumulados": 3414,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,12 +30,12 @@
     "LEY": 64
   },
   "por_estado_actual": {
-    "en_comision": 128,
+    "en_comision": 130,
     "archivado": 87,
     "sancionado": 14,
     "despacho": 6,
-    "ingresado": 4,
-    "con_dictamen": 3
+    "con_dictamen": 3,
+    "ingresado": 2
   },
   "por_etapa_ciclo": {
     "en_comision": 132,
@@ -118,16 +118,16 @@
       ],
       "cantidad_autores": 1,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-10-23",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-10-26",
+        "oficina": "DERECHOS HUMANOS, GARANTÍAS Y ANTIDISCRIMINACIÓN",
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -153,16 +153,16 @@
       ],
       "cantidad_autores": 1,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "EDUCACIÓN, CIENCIA Y TECNOLOGÍA",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "EDUCACIÓN, CIENCIA Y TECNOLOGÍA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-10-23",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-10-26",
+        "oficina": "EDUCACIÓN, CIENCIA Y TECNOLOGÍA",
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -815,7 +815,6 @@
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,
@@ -875,7 +874,6 @@
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,

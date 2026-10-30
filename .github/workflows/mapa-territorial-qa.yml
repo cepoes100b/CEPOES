@@ -1,0 +1,56 @@
+name: Mapa territorial QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "experiments/mapa-territorial/**"
+      - "tests/mapa-territorial/**"
+      - ".github/workflows/mapa-territorial-qa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mapa-territorial-qa-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  navegador:
+    name: Chromium WebGL y experiencia territorial
+    if: github.repository == 'cepoes100b/CEPOES' && (github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: "true"
+      QA_SITE: /tmp/cepoes-mapa-qa/candidate
+      QA_OUTPUT: /tmp/cepoes-mapa-qa-evidence
+    steps:
+      - name: Obtener candidato sin credenciales persistentes
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Preparar Node
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "24"
+      - name: Dependencias QA fijadas
+        run: npm ci --ignore-scripts --no-audit --no-fund --prefix experiments/mapa-territorial/qa
+      - name: Chromium oficial de Playwright
+        working-directory: experiments/mapa-territorial/qa
+        run: npx playwright install --with-deps chromium
+      - name: Construir copia publica completa y experimento local
+        run: |
+          set -euo pipefail
+          SHA=$(git rev-parse HEAD)
+          OUT="/tmp/cepoes-mapa-qa"
+          python experiments/mapa-territorial/scripts/build_public_local.py --repo "$PWD" --output "$OUT" --expected-sha "$SHA" --mode all
+          python experiments/mapa-territorial/scripts/build_public_local.py --repo "$PWD" --output "$OUT" --expected-sha "$SHA" --mode integrate --prototype-dir experiments/mapa-territorial/public
+      - name: Revisar render real, accesibilidad y flujos
+        working-directory: experiments/mapa-territorial/qa
+        run: npx playwright test --config playwright.config.mjs
+      - name: Conservar evidencia acotada en logs sin almacenamiento facturable
+        if: always()
+        run: python experiments/mapa-territorial/qa/evidence_log.py emit --directory "$QA_OUTPUT"

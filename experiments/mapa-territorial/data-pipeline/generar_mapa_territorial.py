@@ -20,6 +20,7 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 from osgeo import gdal, ogr, osr
+import build_health_indicator as health_indicator
 
 gdal.UseExceptions()
 osr.UseExceptions()
@@ -427,6 +428,15 @@ def generate(args, out):
                                      "derived_point_on_surface": "Punto interior derivado del polígono oficial; no representa un acceso",
                                      "missing": "Coordenada no verificable: registro conservado sin punto"},
                 "audit_url": "audit.json", "warnings": audit["warnings"], "input_sha256": input_hashes}
+    # The census indicator is generated from a hash-pinned official workbook.
+    # It is part of the same atomic candidate, never a hardcoded frontend fallback.
+    health_source = HERE / "snapshots/c2022_caba_salud_c1_1.xlsx"
+    analysis = health_indicator.payload(health_indicator.extract(health_indicator.read_cells(health_source)))
+    write_json(out / "analysis/indicators.json", analysis)
+    manifest["analysis"] = {"url": "analysis/indicators.json", "ids": [i["id"] for i in analysis["indicators"]],
+                            "source_ids": [s["id"] for s in analysis["sources"]], "level": "comuna",
+                            "update_policy": analysis["update_policy"], "derived_data_license": analysis["derived_data_license"]}
+    manifest["input_sha256"]["experiments/mapa-territorial/data-pipeline/snapshots/c2022_caba_salud_c1_1.xlsx"] = sha(health_source)
     manifest["files"] = [{"path": str(p.relative_to(out)), "bytes": p.stat().st_size, "sha256": sha(p)}
                          for p in sorted(out.rglob("*")) if p.is_file() and p.name != "manifest.json"]
     write_json(out / "manifest.json", manifest)

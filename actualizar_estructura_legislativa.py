@@ -105,7 +105,9 @@ def parse_member_table(soup: BeautifulSoup) -> list[dict]:
         positions: dict[str, int] = {}
         for i, tr in enumerate(trs):
             cells = row_cells(tr)
-            normalized = [norm(x) for x in cells]
+            # La fuente usa tanto «Diputado» como «Diputado/a»; limitar el
+            # alias al encabezado, sin cambiar la normalización de los datos.
+            normalized = ["diputado" if norm(x) == "diputado a" else norm(x) for x in cells]
             if "diputado" in normalized and "bloque" in normalized and "cargo" in normalized:
                 positions = {
                     "nombre": normalized.index("diputado"),
@@ -129,7 +131,7 @@ def parse_member_table(soup: BeautifulSoup) -> list[dict]:
             block = cells[positions["bloque"]]
             role = cells[positions["cargo"]]
             since = cells[positions["desde"]] if "desde" in positions and len(cells) > positions["desde"] else ""
-            if not name or not block or norm(name) in {"diputado", "nombre"}:
+            if not name or not block or norm(name) in {"diputado", "diputado a", "nombre"}:
                 continue
             rows.append({
                 "nombre": name,

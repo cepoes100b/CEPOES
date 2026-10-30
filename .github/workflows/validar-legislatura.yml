@@ -5,6 +5,7 @@ on:
   pull_request:
     paths:
       - "actualizar_estructura_legislativa.py"
+      - "test_actualizar_estructura_legislativa.py"
       - "verificar_estructura_legislativa.py"
       - "actualizar_legislatura.py"
       - "actualizar_universo.py"
@@ -44,6 +45,8 @@ jobs:
         run: pip install -r requirements.txt
       - name: Probar detalles e hitos del ciclo legislativo
         run: python -m unittest -v test_completar_ciclo_legislativo
+      - name: Probar encabezados y validaciones de estructura institucional
+        run: python -m unittest -v test_actualizar_estructura_legislativa
       - name: Actualizar estructura institucional oficial
         run: python actualizar_estructura_legislativa.py
       - name: Actualizar agenda y expedientes oficiales

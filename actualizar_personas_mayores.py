@@ -2,7 +2,7 @@
 """Actualiza Personas mayores y conserva el último conjunto validado si una fuente falla."""
 from __future__ import annotations
 import argparse,csv,json,os,re,unicodedata
-from concurrent.futures import ThreadPoolExecutor,as_completed
+from html import escape
 from copy import deepcopy
 from datetime import datetime,timezone
 from pathlib import Path
@@ -11,6 +11,7 @@ import requests
 from bs4 import BeautifulSoup
 
 ROOT=Path(__file__).resolve().parent
+VERIFIED=ROOT/"data/personas-mayores/defensoria-verificados.json"
 DATA=ROOT/"deploy/site-overlay/assets/data/personas-mayores.json"
 PAGE=ROOT/"deploy/site-overlay/observatorio/personas-mayores/index.html"
 AGES="https://www.estadisticaciudad.gob.ar/si/demog/principal-indicador?indicador=b11"
@@ -122,37 +123,15 @@ def parse_library(source):
 
 def latest_basket(session,minimum_period=""):
     reports=parse_library(get(session,DEFENSORIA_LIBRARY).text)
-    urls={KNOWN_BASKET}
-    index=BeautifulSoup(get(session,DEFENSORIA_SITEMAP).text,"xml")
-    maps=[loc.get_text(strip=True) for loc in index.find_all("loc") if re.search(r"/noticias-sitemap\d*\.xml$",loc.get_text(strip=True))]
-    dated=[]
-    for sitemap in maps:
-        soup=BeautifulSoup(get(session,sitemap).text,"xml")
-        for item in soup.find_all("url"):
-            loc=item.find("loc");modified=item.find("lastmod")
-            if not loc:continue
-            url=loc.get_text(strip=True);slug=norm(url)
-            if ("canasta" in slug or "indice-de-ipm" in slug or "medicamentos-y" in slug) and "adultos-as-mayores" in slug:
-                dated.append((modified.get_text(strip=True) if modified else "",url))
-    urls.update(url for _,url in sorted(dated,reverse=True)[:8])
-    candidates=[]
-    def download(url):
-        return url,get(session,url).text
-    with ThreadPoolExecutor(max_workers=4) as pool:
-        futures=[pool.submit(download,url) for url in urls]
-        for future in as_completed(futures):
-            try:
-                url,source=future.result();parsed=parse_basket(source,url);candidates.append((parsed["periodo"],parsed))
-            except Exception:pass
-    if not candidates:raise BasketSourceError("sin publicación de canasta interpretable")
-    latest=max(candidates,key=lambda item:item[0])[1]
-    pending=[f"{kind} {report['periodo']} ({report['url']})"
-             for kind,report in reports.items() if report["periodo"]>latest["periodo"]]
-    if pending:
-        raise BasketSourceError("hay informes oficiales más recientes que los datos extraíbles de noticias: "+
-            "; ".join(pending)+". Falta validar extracción y continuidad de hogares; se conserva el último conjunto validado.")
+    latest=json.loads(VERIFIED.read_text(encoding="utf-8"))
     if latest["periodo"]<minimum_period:
         raise BasketSourceError(f"la fuente retrocedería de {minimum_period} a {latest['periodo']}")
+    for kind,key in (("canasta","url"),("medicamentos","meds_url")):
+        report=reports[kind]
+        if report["periodo"]>latest["periodo"]:
+            raise BasketSourceError(f"hay informes oficiales más recientes: {kind} {report['periodo']} ({report['url']}). Falta cotejar hogares y valores; se conserva el último conjunto validado.")
+        if report["periodo"]!=latest["periodo"] or report["url"]!=latest[key]:
+            raise BasketSourceError(f"biblioteca y registro verificado no coinciden: {kind}")
     return latest
 
 def point_from_row(row):
@@ -218,6 +197,17 @@ def validate(d):
     assert 500_000<=i["canasta_propietarios"]["valor"]<i["canasta_inquilinos"]["valor"]<=15_000_000
     assert all(-10<=i[k]["variacion_mensual"]<=50 for k in ("canasta_propietarios","canasta_inquilinos"))
     assert -10<=i["medicamentos"]["valor"]<=50
+    if next(iter(costs)) >= "2026-09":
+        for key,code in (("canasta_propietarios","H1"),("canasta_inquilinos","H3")):
+            assert i[key].get("tipo_hogar")==code,f"tipo de hogar incorrecto: {key}"
+        verified=json.loads(VERIFIED.read_text(encoding="utf-8"))
+        if costs=={verified["periodo"]}:
+            for key,value,var,url in (("canasta_propietarios","owner","owner_var","url"),
+                                      ("canasta_inquilinos","renter","renter_var","url"),
+                                      ("medicamentos","meds",None,"meds_url")):
+                assert i[key]["valor"]==verified[value],f"valor distinto del informe verificado: {key}"
+                assert i[key]["url"]==verified[url],f"fuente distinta del informe verificado: {key}"
+                if var:assert i[key]["variacion_mensual"]==verified[var],f"variación distinta del informe: {key}"
     s=d["series"]["estructura_etaria"];assert len(s["anios"])==len(s["poblacion_65_mas"])==len(s["poblacion_80_mas"])
     territory=d.get("territorio") or {};assert territory.get("nivel")=="comuna" and len(territory.get("comunas") or {})==15
     assert len(territory.get("equipamientos") or [])>=100
@@ -226,10 +216,16 @@ def validate(d):
 def validated_basket_candidate(previous,basket):
     """Una única validación del bloque de precios para productor y diagnóstico."""
     candidate=deepcopy(previous)
-    common={"periodo":basket["periodo"],"url":basket["url"]}
-    candidate["indicadores"]["canasta_propietarios"].update(common,valor=basket["owner"],variacion_mensual=basket["owner_var"])
-    candidate["indicadores"]["canasta_inquilinos"].update(common,valor=basket["renter"],variacion_mensual=basket["renter_var"])
-    candidate["indicadores"]["medicamentos"].update(common,valor=basket["meds"])
+    if basket.get("owner_type")!="H1" or basket.get("renter_type")!="H3":
+        raise BasketSourceError("hogares no verificados: se requieren H1 y H3, nunca H2 para inquilinos")
+    common={"periodo":basket["periodo"],"url":basket["url"],
+            "publicado":basket["publicado"],"verificado":basket["verificado"],"metodo":basket["metodo"]}
+    candidate["indicadores"]["canasta_propietarios"].update(common,valor=basket["owner"],variacion_mensual=basket["owner_var"],tipo_hogar="H1",definicion_hogar=basket["hogares"]["H1"])
+    candidate["indicadores"]["canasta_inquilinos"].update(common,valor=basket["renter"],variacion_mensual=basket["renter_var"],tipo_hogar="H3",definicion_hogar=basket["hogares"]["H3"])
+    candidate["indicadores"]["medicamentos"].update(common,valor=basket["meds"],
+        variacion_interanual=basket["meds_yoy"],metodologia=basket["ipm_metodologia"])
+    candidate["indicadores"]["medicamentos"]["url"]=basket["meds_url"]
+    candidate["antecedentes_precios"]=deepcopy(basket["antecedentes"])
     try:validate(candidate)
     except AssertionError as exc:
         raise BasketSourceError(f"precios no válidos: {str(exc) or 'rangos o esquema fuera del contrato'}") from exc
@@ -250,6 +246,7 @@ def build(previous,session):
         candidate=validated_basket_candidate(previous,latest_basket(session,minimum_period))
         for key in ("canasta_propietarios","canasta_inquilinos","medicamentos"):
             out["indicadores"][key]=candidate["indicadores"][key]
+        out["antecedentes_precios"]=candidate["antecedentes_precios"]
     except Exception as exc:
         # Se conserva el bloque completo de precios; otras fuentes pueden avanzar.
         # Su frescura se controla en un workflow separado que nunca publica.
@@ -257,7 +254,7 @@ def build(previous,session):
     try:out["territorio"]=territory_snapshot()
     except Exception as exc:warnings.append(f"Territorio: {exc}")
     validate(out)
-    if any(out.get(k)!=previous.get(k) for k in ("indicadores","series","territorio")):
+    if any(out.get(k)!=previous.get(k) for k in ("indicadores","series","territorio","antecedentes_precios")):
         now=datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00","Z");out["actualizado"]=now
         if not warnings:out["automatizacion"]["ultima_revision_exitosa"]=now
     return out,warnings
@@ -274,11 +271,17 @@ def replace_id(source,element_id,value):
 def page_values(d):
     i=d["indicadores"];p=i["canasta_inquilinos"]["periodo"]
     values={"pm-65":fmt_number(i["poblacion_65_mas"]["valor"])+"%","pm-80":fmt_number(i["poblacion_80_mas"]["valor"])+"%","pm-aging":fmt_number(i["indice_envejecimiento"]["valor"]),"pm-owner":fmt_money(i["canasta_propietarios"]["valor"]),"pm-renter":fmt_money(i["canasta_inquilinos"]["valor"]),"pm-renter-detail":fmt_money(i["canasta_inquilinos"]["valor"]),"pm-medicine":"+"+fmt_number(i["medicamentos"]["valor"])+"%","pm-dem-period":i["poblacion_65_mas"]["periodo"],"pm-cost-period-meta":fmt_period(p),"pm-cost-period-card":fmt_period(p).capitalize()+".","pm-owner-var":"+"+fmt_number(i["canasta_propietarios"]["variacion_mensual"])+"%","pm-renter-var":"+"+fmt_number(i["canasta_inquilinos"]["variacion_mensual"])+"%","pm-renter-var-card":"+"+fmt_number(i["canasta_inquilinos"]["variacion_mensual"])+"%","pm-medicine-period":fmt_period(p)}
+    values["pm-basket-source-period"]=fmt_period(p)
+    values["pm-medicine-source-period"]=fmt_period(p)
     return values
 
 def render_page(d):
     source=PAGE.read_text(encoding="utf-8");original=source
     for element_id,value in page_values(d).items():source=replace_id(source,element_id,value)
+    for element_id,key in (("pm-basket-source","canasta_propietarios"),("pm-medicine-source","medicamentos")):
+        pattern=rf'(<a\b[^>]*\bid="{element_id}"[^>]*\bhref=")[^"]*(")'
+        source,count=re.subn(pattern,lambda m:m.group(1)+escape(d["indicadores"][key]["url"],quote=True)+m.group(2),source)
+        if count!=1:raise ValueError(f"enlace HTML ausente: {element_id}")
     if source!=original:PAGE.write_text(source,encoding="utf-8");return True
     return False
 

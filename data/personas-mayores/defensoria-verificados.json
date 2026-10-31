@@ -1,0 +1,60 @@
+{
+  "periodo": "2026-09",
+  "publicado": "2026-10-30",
+  "verificado": "2026-10-31",
+  "metodo": "Transcripción cotejada visualmente con los informes oficiales: canasta páginas 3 (hogares) y 5 (valores); IPM página 3. Se conservan H1 y H3 de mayo y septiembre; no se interpolan meses.",
+  "url": "https://www.calameo.com/defensoriacaba/read/002682399842e7f1307cb",
+  "meds_url": "https://www.calameo.com/defensoriacaba/read/00268239903be3193126c",
+  "owner": 1742128,
+  "owner_var": 1.6,
+  "owner_type": "H1",
+  "renter": 2552915,
+  "renter_var": 1.1,
+  "renter_type": "H3",
+  "hogares": {
+    "H1": "Pareja jubilada de hasta 74 años con vivienda propia",
+    "H2": "Pareja jubilada de hasta 74 años con vivienda propia y prepaga",
+    "H3": "Pareja jubilada de hasta 74 años que alquila"
+  },
+  "meds": 1.4,
+  "meds_yoy": 27.7,
+  "ipm_metodologia": {
+    "base": "2025-07",
+    "tipos": 9,
+    "productos": 99,
+    "principios_activos": 34,
+    "laboratorios": 38
+  },
+  "antecedentes": [
+    {
+      "periodo": "2026-05",
+      "verificado": "2026-10-31",
+      "url": "https://www.calameo.com/defensoriacaba/read/002682399e3afe83afe1c",
+      "paginas": [
+        3,
+        5
+      ],
+      "H1": {
+        "valor": 1622654,
+        "variacion_mensual": 2.9
+      },
+      "H2": {
+        "valor": 2835928,
+        "variacion_mensual": 3.2
+      },
+      "H3": {
+        "valor": 2393079,
+        "variacion_mensual": 2.5
+      },
+      "correccion": {
+        "indicador": "canasta_inquilinos",
+        "original": {
+          "valor": 2835928,
+          "variacion_mensual": 3.2,
+          "url": "https://defensoria.org.ar/noticias/aumentos-en-el-ipm-y-la-canasta-de-consumo-para-adultos-as-mayores-durante-mayo/"
+        },
+        "nota": "La noticia de mayo y la versión anterior de CEPOES atribuyeron a inquilinos el valor de H2 (vivienda propia con prepaga). El informe identifica a los inquilinos como H3: $2.393.079 y +2,5% mensual."
+      }
+    }
+  ]
+}

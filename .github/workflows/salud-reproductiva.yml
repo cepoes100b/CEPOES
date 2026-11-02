@@ -5,6 +5,7 @@ on:
     paths:
       - 'actualizar_salud_reproductiva.py'
       - 'verificar_salud_reproductiva.py'
+      - 'test_salud_reproductiva.py'
       - 'deploy/site-overlay/assets/data/salud-reproductiva.json'
       - 'deploy/site-overlay/assets/salud-reproductiva.js'
       - 'deploy/site-overlay/observatorio/salud-reproductiva/**'
@@ -23,7 +24,16 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v6
         with: {python-version: '3.12'}
-      - run: python actualizar_salud_reproductiva.py
+      - run: python -m unittest -v test_salud_reproductiva.py
+      - run: python actualizar_salud_reproductiva.py --report salud-reproductiva-monitor-report.json
+      - name: Conservar diagnóstico por fuente
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: salud-reproductiva-monitor-report
+          path: salud-reproductiva-monitor-report.json
+          if-no-files-found: warn
+          retention-days: 30
       - run: python verificar_salud_reproductiva.py
       - name: Guardar estado validado
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'

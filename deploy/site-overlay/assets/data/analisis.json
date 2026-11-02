@@ -2,6 +2,17 @@
   "analyses": [
     {
       "type": "analisis",
+      "slug": "reforma-ley-salud-mental-2026",
+      "topic": "Salud y cuidados",
+      "title": "Salud mental: una reforma de la ley no reemplaza la inversión pública",
+      "summary": "La media sanción del Senado cambia internaciones, controles y modalidades de atención. Qué implica para los derechos, el financiamiento y la red pública de CABA.",
+      "published_at": "2026-11-01T12:00:00-03:00",
+      "url": "/publicaciones/notas/reforma-ley-salud-mental-2026/",
+      "source_section": "/observatorio/salud-mental/",
+      "home_eligible": false
+    },
+    {
+      "type": "analisis",
       "slug": "comercios-ingresos-brutos-2027",
       "topic": "Producción y comercio",
       "title": "Cómo un comercio puede pagar más Ingresos Brutos sin vender más",

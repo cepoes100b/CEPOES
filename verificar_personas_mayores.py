@@ -20,6 +20,10 @@ def validate_page(d, source):
         assert len(elements) == 1, f"marcador ausente o duplicado: {element_id}"
         actual = elements[0].get_text(" ", strip=True)
         assert actual == expected, f"{element_id}: {actual!r} != {expected!r}"
+    for marker,key in (("pm-basket-source","canasta_propietarios"),("pm-medicine-source","medicamentos")):
+        links=soup.find_all(id=marker)
+        assert len(links)==1 and links[0].get("href")==d["indicadores"][key]["url"],f"fuente incorrecta: {marker}"
+    assert soup.find(id="pm-price-correction"),"corrección histórica ausente"
     territory = d["territorio"]
     assert len(territory["comunas"]) == 15 and len(territory["equipamientos"]) >= 100
     assert {x["tipo"] for x in territory["equipamientos"]} == {

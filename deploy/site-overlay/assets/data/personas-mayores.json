@@ -1,7 +1,7 @@
 {
   "schema": "cepoes-personas-mayores-v1",
   "status": "VALIDADO",
-  "actualizado": "2026-06-25T00:00:00Z",
+  "actualizado": "2026-10-31T22:11:10Z",
   "indicadores": {
     "poblacion_65_mas": {
       "valor": 17.7,
@@ -28,29 +28,50 @@
       "url": "https://www.estadisticaciudad.gob.ar/si/demog/principal-indicador?indicador=b14"
     },
     "canasta_propietarios": {
-      "valor": 1622654,
+      "valor": 1742128,
       "unidad": "pesos corrientes",
-      "periodo": "2026-05",
-      "variacion_mensual": 2.9,
+      "periodo": "2026-09",
+      "variacion_mensual": 1.6,
       "hogar": "pareja de personas mayores con vivienda propia",
       "fuente": "Defensoría del Pueblo de la Ciudad de Buenos Aires",
-      "url": "https://defensoria.org.ar/noticias/aumentos-en-el-ipm-y-la-canasta-de-consumo-para-adultos-as-mayores-durante-mayo/"
+      "url": "https://www.calameo.com/defensoriacaba/read/002682399842e7f1307cb",
+      "publicado": "2026-10-30",
+      "verificado": "2026-10-31",
+      "metodo": "Transcripción cotejada visualmente con los informes oficiales: canasta páginas 3 (hogares) y 5 (valores); IPM página 3. Se conservan H1 y H3 de mayo y septiembre; no se interpolan meses.",
+      "tipo_hogar": "H1",
+      "definicion_hogar": "Pareja jubilada de hasta 74 años con vivienda propia"
     },
     "canasta_inquilinos": {
-      "valor": 2835928,
+      "valor": 2552915,
       "unidad": "pesos corrientes",
-      "periodo": "2026-05",
-      "variacion_mensual": 3.2,
+      "periodo": "2026-09",
+      "variacion_mensual": 1.1,
       "hogar": "pareja jubilada que alquila",
       "fuente": "Defensoría del Pueblo de la Ciudad de Buenos Aires",
-      "url": "https://defensoria.org.ar/noticias/aumentos-en-el-ipm-y-la-canasta-de-consumo-para-adultos-as-mayores-durante-mayo/"
+      "url": "https://www.calameo.com/defensoriacaba/read/002682399842e7f1307cb",
+      "publicado": "2026-10-30",
+      "verificado": "2026-10-31",
+      "metodo": "Transcripción cotejada visualmente con los informes oficiales: canasta páginas 3 (hogares) y 5 (valores); IPM página 3. Se conservan H1 y H3 de mayo y septiembre; no se interpolan meses.",
+      "tipo_hogar": "H3",
+      "definicion_hogar": "Pareja jubilada de hasta 74 años que alquila"
     },
     "medicamentos": {
-      "valor": 2.3,
+      "valor": 1.4,
       "unidad": "% de variación mensual",
-      "periodo": "2026-05",
+      "periodo": "2026-09",
       "fuente": "Defensoría del Pueblo de la Ciudad de Buenos Aires",
-      "url": "https://defensoria.org.ar/noticias/aumentos-en-el-ipm-y-la-canasta-de-consumo-para-adultos-as-mayores-durante-mayo/"
+      "url": "https://www.calameo.com/defensoriacaba/read/00268239903be3193126c",
+      "publicado": "2026-10-30",
+      "verificado": "2026-10-31",
+      "metodo": "Transcripción cotejada visualmente con los informes oficiales: canasta páginas 3 (hogares) y 5 (valores); IPM página 3. Se conservan H1 y H3 de mayo y septiembre; no se interpolan meses.",
+      "variacion_interanual": 27.7,
+      "metodologia": {
+        "base": "2025-07",
+        "tipos": 9,
+        "productos": 99,
+        "principios_activos": 34,
+        "laboratorios": 38
+      }
     }
   },
   "series": {
@@ -7768,5 +7789,37 @@
       }
     ],
     "nota": "Los valores por barrio no se estiman: el dato demográfico oficial usado aquí llega a comuna. La tasa de centros de día usa una población de 65+ estimada a partir del porcentaje censal publicado."
-  }
+  },
+  "antecedentes_precios": [
+    {
+      "periodo": "2026-05",
+      "verificado": "2026-10-31",
+      "url": "https://www.calameo.com/defensoriacaba/read/002682399e3afe83afe1c",
+      "paginas": [
+        3,
+        5
+      ],
+      "H1": {
+        "valor": 1622654,
+        "variacion_mensual": 2.9
+      },
+      "H2": {
+        "valor": 2835928,
+        "variacion_mensual": 3.2
+      },
+      "H3": {
+        "valor": 2393079,
+        "variacion_mensual": 2.5
+      },
+      "correccion": {
+        "indicador": "canasta_inquilinos",
+        "original": {
+          "valor": 2835928,
+          "variacion_mensual": 3.2,
+          "url": "https://defensoria.org.ar/noticias/aumentos-en-el-ipm-y-la-canasta-de-consumo-para-adultos-as-mayores-durante-mayo/"
+        },
+        "nota": "La noticia de mayo y la versión anterior de CEPOES atribuyeron a inquilinos el valor de H2 (vivienda propia con prepaga). El informe identifica a los inquilinos como H3: $2.393.079 y +2,5% mensual."
+      }
+    }
+  ]
 }

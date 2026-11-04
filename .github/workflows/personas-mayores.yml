@@ -5,10 +5,10 @@ on:
   workflow_dispatch:
   push:
     branches-ignore: [main]
-    paths: ["actualizar_personas_mayores.py","verificar_personas_mayores.py","test_personas_mayores.py","fixtures/defensoria_*",".github/workflows/personas-mayores.yml","deploy/site-overlay/observatorio/personas-mayores/**","deploy/site-overlay/assets/personas-mayores.*","deploy/site-overlay/assets/data/personas-mayores.json"]
+    paths: ["actualizar_personas_mayores.py","verificar_personas_mayores.py","test_personas_mayores.py","fixtures/defensoria_*","data/personas-mayores/**",".github/workflows/personas-mayores.yml","deploy/site-overlay/observatorio/personas-mayores/**","deploy/site-overlay/assets/personas-mayores.*","deploy/site-overlay/assets/data/personas-mayores.json"]
   pull_request:
     branches: [main]
-    paths: ["actualizar_personas_mayores.py","verificar_personas_mayores.py","test_personas_mayores.py","fixtures/defensoria_*",".github/workflows/personas-mayores.yml","deploy/site-overlay/observatorio/personas-mayores/**","deploy/site-overlay/assets/personas-mayores.*","deploy/site-overlay/assets/data/personas-mayores.json"]
+    paths: ["actualizar_personas_mayores.py","verificar_personas_mayores.py","test_personas_mayores.py","fixtures/defensoria_*","data/personas-mayores/**",".github/workflows/personas-mayores.yml","deploy/site-overlay/observatorio/personas-mayores/**","deploy/site-overlay/assets/personas-mayores.*","deploy/site-overlay/assets/data/personas-mayores.json"]
 permissions:
   contents: write
 concurrency: {group: "personas-mayores-${{ github.ref }}", cancel-in-progress: false}

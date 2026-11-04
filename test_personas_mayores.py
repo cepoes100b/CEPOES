@@ -16,6 +16,7 @@ from verificar_personas_mayores import validate_page
 
 ROOT = Path(__file__).resolve().parent
 CATALOGUE = (ROOT / "fixtures/defensoria_catalogo_mayores.html").read_text()
+VERIFIED = json.loads(pm.VERIFIED.read_text())
 NEWS = (ROOT / "fixtures/defensoria_noticia_mayo_2026.html").read_text()
 
 
@@ -25,6 +26,10 @@ def catalogue(month="Mayo", year=2026):
             '<p>Publicado en Septiembre 2026</p></a>'
             f'<a href="https://www.calameo.com/defensoriacaba/read/ipm">'
             f'<h2>Índice de Precios de Medicamentos (IPM) – {month} {year}</h2></a>')
+
+
+def verified_catalogue():
+    return catalogue("Septiembre").replace("read/canasta", "read/002682399842e7f1307cb").replace("read/ipm", "read/00268239903be3193126c")
 
 
 def source_get(library=CATALOGUE, news=NEWS):
@@ -81,24 +86,29 @@ class SourceFreshnessTests(unittest.TestCase):
                          ("2026-05", 1622654, 2835928, 2.3))
 
     def test_new_catalogue_blocks_old_interpretable_news(self):
-        with patch.object(pm, "get", side_effect=source_get()):
+        with patch.object(pm, "get", side_effect=source_get(catalogue("Octubre"))):
             with self.assertRaisesRegex(pm.BasketSourceError, "más recientes") as caught:
                 pm.latest_basket(object(), "2026-05")
-        self.assertIn("canasta 2026-08", str(caught.exception))
-        self.assertIn("medicamentos 2026-08", str(caught.exception))
+        self.assertIn("canasta 2026-10", str(caught.exception))
 
-    def test_current_catalogue_with_matching_news_is_accepted(self):
-        with patch.object(pm, "get", side_effect=source_get(catalogue())):
-            self.assertEqual(pm.latest_basket(object(), "2026-05")["periodo"], "2026-05")
+    def test_current_catalogue_matches_verified_reports(self):
+        with patch.object(pm, "get", side_effect=source_get(verified_catalogue())):
+            self.assertEqual(pm.latest_basket(object(), "2026-05")["periodo"], "2026-09")
 
     def test_recession_to_an_older_reference_period_fails(self):
         with patch.object(pm, "get", side_effect=source_get(catalogue())):
             with self.assertRaisesRegex(pm.BasketSourceError, "retrocedería"):
-                pm.latest_basket(object(), "2026-06")
+                pm.latest_basket(object(), "2026-10")
 
-    def test_unparseable_news_fails(self):
-        with patch.object(pm, "get", side_effect=source_get(catalogue(), "<p>Nuevo formato</p>")):
-            with self.assertRaisesRegex(pm.BasketSourceError, "sin publicación"):
+    def test_news_cannot_override_pdf_verified_figures(self):
+        with patch.object(pm, "get", side_effect=source_get(verified_catalogue(), NEWS)) as fetch:
+            result = pm.latest_basket(object())
+        self.assertEqual(result["renter"],2552915)
+        self.assertEqual(fetch.call_count,1)
+
+    def test_different_report_for_same_month_fails(self):
+        with patch.object(pm, "get", side_effect=source_get(catalogue("Septiembre"))):
+            with self.assertRaisesRegex(pm.BasketSourceError,"no coinciden"):
                 pm.latest_basket(object())
 
     def test_catalogue_network_failure_is_not_ignored(self):
@@ -152,25 +162,25 @@ class AtomicityAndPageTests(unittest.TestCase):
             self.assertNotIn("sin cambios validados", output.getvalue())
 
     def test_diagnostic_success_is_read_only_and_reports_extracted_period(self):
-        with patch.object(pm,"get",side_effect=source_get(catalogue())):
+        with patch.object(pm,"get",side_effect=source_get(verified_catalogue())):
             result=pm.source_diagnostic(self.data,object())
         self.assertEqual(result["estado"],"interpretable")
-        self.assertEqual(result["periodo_extraible"],"2026-05")
+        self.assertEqual(result["periodo_extraible"],"2026-09")
 
     def test_diagnostic_rejects_malformed_price_block(self):
         with patch.object(pm,"latest_basket",return_value={"periodo":"2026-06","url":pm.KNOWN_BASKET}):
             result=pm.source_diagnostic(self.data,object())
         self.assertEqual(result["estado"],"bloqueada")
-        self.assertEqual(result["periodo_conservado"],"2026-05")
+        self.assertEqual(result["periodo_conservado"],self.data["indicadores"]["canasta_inquilinos"]["periodo"])
 
     def test_diagnostic_rejects_parsed_values_outside_validated_ranges(self):
-        basket=pm.parse_basket(NEWS,pm.KNOWN_BASKET)
+        basket=deepcopy(VERIFIED)
         basket["meds"]=99.0
         with patch.object(pm,"latest_basket",return_value=basket):
             result=pm.source_diagnostic(self.data,object())
         self.assertEqual(result["estado"],"bloqueada")
         self.assertIn("precios no válidos",result["detalle"])
-        self.assertEqual(result["periodo_conservado"],"2026-05")
+        self.assertEqual(result["periodo_conservado"],self.data["indicadores"]["canasta_inquilinos"]["periodo"])
 
     def test_malformed_price_update_cannot_partially_replace_last_valid_block(self):
         incomplete={"periodo":"2026-05","url":pm.KNOWN_BASKET,"owner":1700000,"owner_var":2.0}
@@ -256,6 +266,42 @@ class AtomicityAndPageTests(unittest.TestCase):
             with patch.object(pm, "PAGE", path):
                 self.assertFalse(pm.render_page(self.data))
                 self.assertEqual(path.read_text(), self.html)
+
+
+class VerifiedPricesTests(unittest.TestCase):
+    def setUp(self):
+        self.data=json.loads(pm.DATA.read_text())
+
+    def test_may_correction_preserves_original_and_assigns_h3(self):
+        may=VERIFIED["antecedentes"][0]
+        self.assertEqual(may["H3"],{"valor":2393079,"variacion_mensual":2.5})
+        self.assertEqual(may["correccion"]["original"]["valor"],may["H2"]["valor"])
+        self.assertEqual(may["correccion"]["original"]["variacion_mensual"],3.2)
+        self.assertEqual(self.data["antecedentes_precios"],VERIFIED["antecedentes"])
+
+    def test_h2_must_not_be_used_as_renter_even_with_plausible_price(self):
+        wrong=deepcopy(VERIFIED);wrong.update(renter_type="H2",renter=3077375,renter_var=1.9)
+        with self.assertRaisesRegex(pm.BasketSourceError,"H1 y H3"):
+            pm.validated_basket_candidate(self.data,wrong)
+
+    def test_h2_value_with_h3_label_is_rejected(self):
+        wrong=deepcopy(VERIFIED);wrong.update(renter=3077375,renter_var=1.9)
+        with self.assertRaisesRegex(pm.BasketSourceError,"informe verificado"):
+            pm.validated_basket_candidate(self.data,wrong)
+
+    def test_missing_household_and_invalid_numbers_are_rejected(self):
+        for change in ({"renter_type":None},{"owner":0},{"renter":float("nan")},{"meds":float("inf")},{"meds":99}):
+            wrong=deepcopy(VERIFIED);wrong.update(change)
+            with self.subTest(change=change),self.assertRaises(pm.BasketSourceError):
+                pm.validated_basket_candidate(self.data,wrong)
+
+    def test_separate_sources_and_verified_reference_period(self):
+        result=pm.validated_basket_candidate(self.data,VERIFIED)
+        i=result["indicadores"]
+        self.assertEqual((i["canasta_propietarios"]["valor"],i["canasta_inquilinos"]["valor"],i["medicamentos"]["valor"]),(1742128,2552915,1.4))
+        self.assertEqual(i["medicamentos"]["url"],VERIFIED["meds_url"])
+        self.assertEqual({i[k]["periodo"] for k in ("canasta_propietarios","canasta_inquilinos","medicamentos")},{"2026-09"})
+        self.assertEqual(i["medicamentos"]["variacion_interanual"],27.7)
 
 
 class WorkflowContractTests(unittest.TestCase):

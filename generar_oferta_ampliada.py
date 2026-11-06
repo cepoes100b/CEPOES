@@ -170,6 +170,8 @@ def normalized_item(row, cfg, official, barrio_comuna, i):
     c, b = infer_scope(row, cfg, official, barrio_comuna)
     name = pick(row, cfg.get("name"))
     address = pick(row, cfg.get("address"))
+    if not address and cfg.get("address_parts"):
+        address = " ".join(filter(None, (pick(row, [field]) for field in cfg["address_parts"])))
     typ = pick(row, cfg.get("type"))
     if isinstance(cfg.get("type"), str):
         typ = cfg["type"]

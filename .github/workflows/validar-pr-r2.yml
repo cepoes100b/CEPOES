@@ -34,9 +34,6 @@ jobs:
           node-version: "24.19.0"
           package-manager-cache: false
 
-      - name: Verificar directorio de licencias de conducir
-        run: python -m unittest -v test_licencias_conducir
-
       - name: Verificar difusión y medición con consentimiento
         run: |
           python -m pip install "Pillow>=12.0,<13"
@@ -86,6 +83,9 @@ jobs:
         run: |
           pip install "requests>=2.31" "openpyxl>=3.1" pypdf
           python -m unittest test_estructura_actual.py tests/test_parsers_industria.py
+
+      - name: Verificar directorio de licencias de conducir
+        run: python -m unittest -v test_licencias_conducir
 
       - name: Verificar transporte TLS y conservación de Salud Mental
         run: python -m unittest test_salud_mental_tls.py

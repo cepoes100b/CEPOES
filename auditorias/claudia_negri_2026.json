@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-11-05T21:04:00.044530+00:00",
+  "generado_en": "2026-11-06T20:19:34.657445+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,10 +9,10 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2024-03-05",
-    "fecha_mas_reciente_obtenida": "2026-11-05",
-    "ids_del_anio_en_ventana": 3544,
-    "ids_revisados_acumulados": 3544,
+    "fecha_mas_antigua_obtenida": "2024-03-06",
+    "fecha_mas_reciente_obtenida": "2026-11-06",
+    "ids_del_anio_en_ventana": 3567,
+    "ids_revisados_acumulados": 3567,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,9 +30,9 @@
     "LEY": 67
   },
   "por_estado_actual": {
-    "en_comision": 126,
+    "en_comision": 129,
     "archivado": 94,
-    "ingresado": 11,
+    "ingresado": 8,
     "sancionado": 8,
     "despacho": 7,
     "con_dictamen": 3
@@ -127,16 +127,16 @@
       ],
       "cantidad_autores": 10,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "DGDP",
+      "ubicacion": "SALUD",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "SALUD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-11-05",
-        "oficina": "DGDP",
-        "descripcion": "ESPERANDO ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+        "fecha": "2026-11-06",
+        "oficina": "SALUD",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -164,16 +164,18 @@
       ],
       "cantidad_autores": 3,
       "tipo_oficial": "LEY",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "SALUD",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "SALUD",
+        "POLÍTICAS DE PROMOCIÓN E INTEGRACIÓN SOCIAL",
+        "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-11-05",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-11-06",
+        "oficina": "SALUD",
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -229,16 +231,16 @@
       ],
       "cantidad_autores": 31,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "MUJERES, GÉNEROS Y DIVERSIDADES",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "MUJERES, GÉNEROS Y DIVERSIDADES"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-11-05",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-11-06",
+        "oficina": "MUJERES, GÉNEROS Y DIVERSIDADES",
+        "descripcion": "EN COMISION"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

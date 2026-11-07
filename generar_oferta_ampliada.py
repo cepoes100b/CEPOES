@@ -47,7 +47,7 @@ CORE_LAYERS = [
 # de DATASETS_TERRITORIO. Los alias se resuelven sin distinguir mayúsculas ni tildes.
 LAYERS = [
     {"id":"centros-medicos-barriales","source":"centros_medicos_barriales","label":"Centros Médicos Barriales","category":"salud","type":"Centro Médico Barrial","name":["nombre"],"address":["direccion"],"phone":["telefono"],"web":["web"],"detail":["esp"],"detail2":["area_progr"],"geometry":["geometry"],"description":"Centros médicos barriales del sistema de salud de la Ciudad."},
-    {"id":"salud-privada","source":"salud_privada","label":"Centros de salud privados","category":"salud","type":"Centro privado","name":["nombre","fna","nam"],"address":["direccion","dir","dom_norma"],"phone":["telefono","tel"],"web":["web"],"detail":["tipo","tip","gna"],"geometry":["geometry"],"description":"Hospitales, sanatorios y clínicas privadas registrados en la Ciudad.","catalog":False},
+    {"id":"salud-privada","source":"salud_privada","label":"Centros de salud privados","category":"salud","type":"Centro privado","name":["nombre","fna","nam"],"address":["direccion","dir","dom_norma"],"address_parts":[["calle"],["altura"]],"phone":["telefonos","telefono","tel"],"web":["web"],"detail":["tipo","tip","gna"],"geometry":["geometry"],"lat":["lat"],"lon":["long","lon"],"description":"Hospitales, sanatorios y clínicas privadas registrados en la Ciudad.","catalog":False},
     {"id":"estaciones-saludables","source":"estaciones_saludables","label":"Estaciones Saludables","category":"salud","type":["tipo","estructura"],"name":["nombre"],"address":["direccion","ubicacion"],"schedule":["horario","horarios","dias_horarios"],"detail":["servicio","servicios"],"geometry":["geometry"],"description":"Puntos de prevención y promoción de hábitos saludables."},
 
     {"id":"bibliotecas","source":"bibliotecas","label":"Bibliotecas","category":"cultura","type":["tip","tipo","gna"],"name":["fna","nombre","nam"],"address":["dir","direccion"],"phone":["tel","telefono"],"email":["ema","email"],"web":["web"],"detail":["sag","dependencia"],"geometry":["geometry"],"description":"Bibliotecas de la Red del Gobierno de la Ciudad."},
@@ -170,6 +170,13 @@ def normalized_item(row, cfg, official, barrio_comuna, i):
     c, b = infer_scope(row, cfg, official, barrio_comuna)
     name = pick(row, cfg.get("name"))
     address = pick(row, cfg.get("address"))
+    # Conservar la clave histórica aunque se complete una dirección ausente.
+    id_address = address
+    if not address and cfg.get("address_parts"):
+        address = " ".join(
+            value for fields in cfg["address_parts"]
+            if (value := pick(row, fields))
+        )
     typ = pick(row, cfg.get("type"))
     if isinstance(cfg.get("type"), str):
         typ = cfg["type"]
@@ -195,7 +202,7 @@ def normalized_item(row, cfg, official, barrio_comuna, i):
         if v:
             extras[field] = v
     return {
-        "id": make_id(cfg["id"], row, name, address, i),
+        "id": make_id(cfg["id"], row, name, id_address, i),
         "nombre": name,
         "sin_denominacion": unnamed,
         "comuna": c,
@@ -371,3 +378,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

@@ -5,10 +5,12 @@ import csv
 import io
 import json
 import re
+import time
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urljoin, urlsplit
 
 import requests
 
@@ -82,11 +84,63 @@ def rows(raw: bytes):
     yield from reader
 
 
+def valid_csv_url(url: str) -> bool:
+    parsed = urlsplit(url)
+    prefix = "/datosabiertos/datasets/agencia-gubernamental-de-control/habilitaciones-aprobadas/"
+    return (parsed.scheme == "https" and parsed.netloc == "cdn.buenosaires.gob.ar"
+            and parsed.path.startswith(prefix) and parsed.path.endswith(".csv")
+            and not parsed.query and not parsed.fragment)
+
+
+def get_source(url: str):
+    """Reintentos acotados sólo para fallas transitorias de transporte."""
+    for attempt in range(3):
+        try:
+            r = requests.get(url, timeout=TIMEOUT, headers={"User-Agent": "CEPOES-data/1.0"}, allow_redirects=False)
+            r.raise_for_status()
+            if 300 <= r.status_code < 400:
+                target = urljoin(url, r.headers.get("location", ""))
+                if attempt == 2 or not r.headers.get("location") or not valid_csv_url(target):
+                    raise ValueError("Redirección inesperada o excesiva en la fuente oficial")
+                url = target
+                continue
+            return r
+        except (requests.Timeout, requests.ConnectionError):
+            if attempt == 2:
+                raise
+        except requests.HTTPError as exc:
+            if exc.response.status_code not in {429, 500, 502, 503, 504} or attempt == 2:
+                raise
+        time.sleep(2 ** (attempt + 1))
+
+
+def resource_url(rid: str) -> str:
+    """Resolver el mismo recurso en el catálogo oficial, sin fijar un CSV temporal."""
+    metadata = get_source(f"https://data.buenosaires.gob.ar/api/3/action/resource_show?id={rid}").json()
+    resource = metadata.get("result", {})
+    if metadata.get("success") is not True or resource.get("id") != rid or resource.get("format", "").upper() != "CSV":
+        raise ValueError("El catálogo no identifica el recurso CSV esperado")
+    url = resource.get("url", "")
+    if not valid_csv_url(url):
+        raise ValueError("El catálogo devolvió una ubicación no admitida para habilitaciones")
+    return url
+
+
 def download(year: int) -> bytes:
     rid = RESOURCES[year]
-    url = f"https://data.buenosaires.gob.ar/dataset/habilitaciones-aprobadas/resource/{rid}/download"
-    r = requests.get(url, timeout=TIMEOUT, headers={"User-Agent": "CEPOES-data/1.0"})
-    r.raise_for_status()
+    try:
+        url = resource_url(rid)
+        r = get_source(url)
+    except (requests.HTTPError, requests.Timeout, requests.ConnectionError, requests.exceptions.JSONDecodeError):
+        # Compatibilidad con el endpoint canónico si el catálogo/CDN no responde.
+        url = f"https://data.buenosaires.gob.ar/dataset/habilitaciones-aprobadas/resource/{rid}/download"
+        r = get_source(url)
+    content_type = r.headers.get("content-type", "").split(";", 1)[0].strip().lower()
+    if not r.content or content_type not in {"text/csv", "application/csv", "text/plain", "application/octet-stream"}:
+        raise ValueError(f"Habilitaciones {year}: respuesta vacía o no CSV")
+    if r.content.lstrip()[:100].lower().startswith((b"<!doctype html", b"<html")):
+        raise ValueError(f"Habilitaciones {year}: HTML en lugar de CSV")
+    print(f"Fuente {year}: {url}")
     print(f"{year}: {len(r.content)/1024/1024:.1f} MB · {r.headers.get('content-type')}")
     return r.content
 

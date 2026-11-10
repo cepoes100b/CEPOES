@@ -53,9 +53,25 @@ class DownloadTests(unittest.TestCase):
 
     @patch.object(g.requests, 'get', return_value=response(404))
     def test_non_transient_error_not_retried(self, get):
-        with self.assertRaises(requests.HTTPError):
+        with self.assertRaises(ValueError):
             g.get_source(CDN)
         self.assertEqual(get.call_count, 1)
+
+    @patch.object(g.requests, 'get')
+    def test_denials_stop_without_fallback_and_preserve_output(self, get):
+        for denied in (response(401), response(403), response(content=b'<html><title>Request Rejected</title></html>', mime='text/html')):
+            with self.subTest(status=denied.status_code, content=denied.content):
+                get.reset_mock()
+                get.return_value = denied
+                with tempfile.TemporaryDirectory() as tmp:
+                    out = Path(tmp) / 'dinamica.json'
+                    out.write_text('last valid', encoding='utf-8')
+                    with patch.object(g, 'OUT', out):
+                        with self.assertRaisesRegex(ValueError, 'denegó'):
+                            g.main()
+                    self.assertEqual(out.read_text(encoding='utf-8'), 'last valid')
+                self.assertEqual(get.call_count, 1)
+                self.assertIn('resource_show?id=', get.call_args.args[0])
 
     @patch.object(g, 'get_source')
     def test_unavailable_catalog_falls_back_to_canonical_resource(self, get):

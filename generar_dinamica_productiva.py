@@ -97,6 +97,17 @@ def get_source(url: str):
     for attempt in range(3):
         try:
             r = requests.get(url, timeout=TIMEOUT, headers={"User-Agent": "CEPOES-data/1.0"}, allow_redirects=False)
+            # Una denegación nunca habilita un intento por otra ruta.
+            prefix = r.content[:8192].lstrip().lower()
+            html = "html" in r.headers.get("content-type", "").lower() or prefix.startswith((b"<!doctype html", b"<html"))
+            denial = html and any(marker in prefix for marker in (
+                b"request rejected", b"access denied", b"access forbidden",
+                b"captcha", b"cf-chl-", b"challenge-platform",
+            ))
+            if r.status_code in {401, 403} or denial:
+                raise ValueError("La fuente denegó el acceso; se conserva la salida sin consultar rutas alternativas")
+            if 400 <= r.status_code < 500 and r.status_code != 429:
+                raise ValueError(f"La fuente respondió HTTP {r.status_code}; revisar el recurso antes de continuar")
             r.raise_for_status()
             if 300 <= r.status_code < 400:
                 target = urljoin(url, r.headers.get("location", ""))

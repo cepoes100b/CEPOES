@@ -104,4 +104,3 @@ jobs:
           marker = fetch_marker('cepoes100b/CEPOES', f'ci-{time.time_ns()}')
           print('Marcador legacy ausente (HTTP 404)' if marker is None else 'Marcador válido: ' + marker['commit_sha'])
           PYMARKER
-

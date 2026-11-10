@@ -10,7 +10,7 @@ from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit
+from urllib.parse import urljoin, urlsplit
 
 import requests
 
@@ -84,6 +84,14 @@ def rows(raw: bytes):
     yield from reader
 
 
+def valid_csv_url(url: str) -> bool:
+    parsed = urlsplit(url)
+    prefix = "/datosabiertos/datasets/agencia-gubernamental-de-control/habilitaciones-aprobadas/"
+    return (parsed.scheme == "https" and parsed.netloc == "cdn.buenosaires.gob.ar"
+            and parsed.path.startswith(prefix) and parsed.path.endswith(".csv")
+            and not parsed.query and not parsed.fragment)
+
+
 def get_source(url: str):
     """Reintentos acotados sólo para fallas transitorias de transporte."""
     for attempt in range(3):
@@ -91,7 +99,11 @@ def get_source(url: str):
             r = requests.get(url, timeout=TIMEOUT, headers={"User-Agent": "CEPOES-data/1.0"}, allow_redirects=False)
             r.raise_for_status()
             if 300 <= r.status_code < 400:
-                raise ValueError("La fuente cambió de ubicación; revisar antes de descargar")
+                target = urljoin(url, r.headers.get("location", ""))
+                if attempt == 2 or not r.headers.get("location") or not valid_csv_url(target):
+                    raise ValueError("Redirección inesperada o excesiva en la fuente oficial")
+                url = target
+                continue
             return r
         except (requests.Timeout, requests.ConnectionError):
             if attempt == 2:
@@ -109,11 +121,7 @@ def resource_url(rid: str) -> str:
     if metadata.get("success") is not True or resource.get("id") != rid or resource.get("format", "").upper() != "CSV":
         raise ValueError("El catálogo no identifica el recurso CSV esperado")
     url = resource.get("url", "")
-    parsed = urlsplit(url)
-    prefix = "/datosabiertos/datasets/agencia-gubernamental-de-control/habilitaciones-aprobadas/"
-    if (parsed.scheme != "https" or parsed.netloc != "cdn.buenosaires.gob.ar"
-            or not parsed.path.startswith(prefix) or not parsed.path.endswith(".csv")
-            or parsed.query or parsed.fragment):
+    if not valid_csv_url(url):
         raise ValueError("El catálogo devolvió una ubicación no admitida para habilitaciones")
     return url
 
@@ -123,7 +131,7 @@ def download(year: int) -> bytes:
     try:
         url = resource_url(rid)
         r = get_source(url)
-    except requests.RequestException:
+    except (requests.HTTPError, requests.Timeout, requests.ConnectionError):
         # Compatibilidad con el endpoint canónico si el catálogo/CDN no responde.
         url = f"https://data.buenosaires.gob.ar/dataset/habilitaciones-aprobadas/resource/{rid}/download"
         r = get_source(url)
@@ -245,4 +253,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

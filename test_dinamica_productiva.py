@@ -86,6 +86,27 @@ class DownloadTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             g.get_source(CDN)
 
+    @patch.object(g.requests, 'get')
+    def test_canonical_redirect_to_official_csv_is_followed(self, get):
+        redirect = response(302)
+        redirect.headers['location'] = CDN
+        get.side_effect = [redirect, response()]
+        self.assertEqual(g.get_source('https://data.buenosaires.gob.ar/download').status_code, 200)
+        self.assertEqual(get.call_args.args[0], CDN)
+
+    @patch.object(g, 'download')
+    def test_late_failure_preserves_output(self, download):
+        raw = b'DescripcionRubro,Calles,Seccion,Manzana\n' + b'COMERCIO,CALLE 1,1,1\n' * 60
+        download.side_effect = [raw, raw, requests.ConnectionError('third resource failed')]
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / 'dinamica.json'
+            out.write_text('last valid', encoding='utf-8')
+            with patch.object(g, 'OUT', out):
+                with self.assertRaises(requests.ConnectionError):
+                    g.main()
+            self.assertEqual(out.read_text(encoding='utf-8'), 'last valid')
+            self.assertEqual(download.call_count, 3)
+
     @patch.object(g, 'download', side_effect=requests.ConnectionError('unavailable'))
     def test_failure_preserves_last_valid_output(self, download):
         with tempfile.TemporaryDirectory() as tmp:

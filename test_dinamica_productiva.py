@@ -64,6 +64,14 @@ class DownloadTests(unittest.TestCase):
         self.assertTrue(get.call_args.args[0].endswith('/' + RID + '/download'))
 
     @patch.object(g, 'get_source')
+    def test_non_json_catalog_falls_back_to_same_resource(self, get):
+        broken = response()
+        broken.json = Mock(side_effect=requests.exceptions.JSONDecodeError('invalid', '', 0))
+        get.side_effect = [broken, response()]
+        self.assertEqual(g.download(2026), response().content)
+        self.assertTrue(get.call_args.args[0].endswith('/' + RID + '/download'))
+
+    @patch.object(g, 'get_source')
     def test_invalid_catalog_is_not_silently_bypassed(self, get):
         for change in ({'id': 'other'}, {'format': 'XLSX'}, {'url': 'https://example.com/a.csv'}, {'url': CDN + '?token=x'}, {'url': CDN.replace('https:', 'http:')}):
             with self.subTest(change=change):

@@ -131,7 +131,7 @@ def download(year: int) -> bytes:
     try:
         url = resource_url(rid)
         r = get_source(url)
-    except (requests.HTTPError, requests.Timeout, requests.ConnectionError):
+    except (requests.HTTPError, requests.Timeout, requests.ConnectionError, requests.exceptions.JSONDecodeError):
         # Compatibilidad con el endpoint canónico si el catálogo/CDN no responde.
         url = f"https://data.buenosaires.gob.ar/dataset/habilitaciones-aprobadas/resource/{rid}/download"
         r = get_source(url)

@@ -1,0 +1,19 @@
+Fecha UTC: 2026-11-10T22:51:13Z
+Commit: 6431dc385f4aba6d364f511a5933bb6e90c7887f
+Exit code: 1
+
+Traceback (most recent call last):
+  File "/home/runner/work/CEPOES/CEPOES/generar_dinamica_productiva.py", line 266, in <module>
+    main()
+  File "/home/runner/work/CEPOES/CEPOES/generar_dinamica_productiva.py", line 172, in main
+    raw = download(year)
+          ^^^^^^^^^^^^^^
+  File "/home/runner/work/CEPOES/CEPOES/generar_dinamica_productiva.py", line 143, in download
+    url = resource_url(rid)
+          ^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CEPOES/CEPOES/generar_dinamica_productiva.py", line 130, in resource_url
+    metadata = get_source(f"https://data.buenosaires.gob.ar/api/3/action/resource_show?id={rid}").json()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CEPOES/CEPOES/generar_dinamica_productiva.py", line 108, in get_source
+    raise ValueError("La fuente denegó el acceso; se conserva la salida sin consultar rutas alternativas")
+ValueError: La fuente denegó el acceso; se conserva la salida sin consultar rutas alternativas

@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-11-13T20:53:36.139307+00:00",
+  "generado_en": "2026-11-16T23:15:16.400559+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,10 +9,10 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2024-03-07",
-    "fecha_mas_reciente_obtenida": "2026-11-13",
-    "ids_del_anio_en_ventana": 3601,
-    "ids_revisados_acumulados": 3601,
+    "fecha_mas_antigua_obtenida": "2024-03-08",
+    "fecha_mas_reciente_obtenida": "2026-11-16",
+    "ids_del_anio_en_ventana": 3622,
+    "ids_revisados_acumulados": 3622,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
@@ -30,11 +30,11 @@
     "LEY": 67
   },
   "por_estado_actual": {
-    "en_comision": 126,
+    "en_comision": 127,
     "archivado": 94,
     "sancionado": 23,
-    "ingresado": 4,
-    "con_dictamen": 3
+    "con_dictamen": 3,
+    "ingresado": 3
   },
   "por_etapa_ciclo": {
     "en_comision": 130,
@@ -96,8 +96,8 @@
     "id_sesion": "1267",
     "fecha": "2026-11-05",
     "realizada": true,
-    "asuntos_considerados": 348,
-    "sanciones": 164,
+    "asuntos_considerados": 360,
+    "sanciones": 176,
     "votaciones_nominales": 10,
     "version_taquigrafica_disponible": false
   },
@@ -133,16 +133,16 @@
       ],
       "cantidad_autores": 17,
       "tipo_oficial": "DECLARACION",
-      "estado_actual": "ingresado",
+      "estado_actual": "en_comision",
       "etapa_ciclo": "en_comision",
-      "ubicacion": "MEP",
+      "ubicacion": "DISCAPACIDAD",
       "giros": [
-        "(GIRO AUN NO ASIGNADO)"
+        "DISCAPACIDAD"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-11-13",
-        "oficina": "MEP",
-        "descripcion": "ESPERANDO ENVIO A COMISION (ESPERANDO RECEPCION)"
+        "fecha": "2026-11-16",
+        "oficina": "DISCAPACIDAD",
+        "descripcion": "EN COMISION (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],
@@ -819,7 +819,6 @@
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,
@@ -873,7 +872,6 @@
       "evidencia_sancion": false,
       "fuentes_sancion": [],
       "fuentes_captura": [
-        "radar_ingresos",
         "seguimiento_institucional"
       ],
       "ficha_oficial_completa": true,

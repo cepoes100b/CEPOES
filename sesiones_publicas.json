@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "actualizado_en": "2026-11-18T18:33:44-03:00",
+  "actualizado_en": "2026-11-19T18:45:57-03:00",
   "fuente": {
     "organismo": "Legislatura de la Ciudad Autónoma de Buenos Aires",
     "sistema": "Sistema de Consultas Parlamentarias",
@@ -10,23 +10,23 @@
   },
   "periodo_consultado": {
     "desde": "01/01/2026",
-    "hasta": "18/11/2026"
+    "hasta": "19/11/2026"
   },
   "resumen": {
     "sesiones": 11,
     "sesiones_realizadas": 11,
     "registros_presentismo": 663,
-    "asuntos_considerados": 1564,
+    "asuntos_considerados": 1565,
     "votaciones_asuntos": 121,
     "votos_nominales": 7287,
     "expedientes_votados_unicos": 113,
     "fallas": 0,
-    "items_recinto": 1564,
-    "sanciones_expediente": 765,
+    "items_recinto": 1565,
+    "sanciones_expediente": 766,
     "sanciones_despacho": 755,
     "cambios_giro": 44,
     "sanciones_por_alcance": {
-      "definitiva": 744,
+      "definitiva": 745,
       "inicial": 21
     }
   },
@@ -72784,8 +72784,8 @@
           "descripcion": "Resolución nro. 600-2026 / Expediente 1466-D-2026"
         },
         {
-          "id_expediente": "142632",
-          "numero_expediente": "3022-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "procesado": true,
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Declaración nro. 767-2026 / Expediente 3022-D-2026"
@@ -73608,6 +73608,13 @@
           "procesado": true,
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Resolución nro. 631-2026 / Expediente 2999-D-2026"
+        },
+        {
+          "id_expediente": "140955",
+          "numero_expediente": "1511-I-2026",
+          "procesado": true,
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 641-2026 / Expediente 1511-I-2026"
         },
         {
           "id_expediente": "141301",
@@ -75600,8 +75607,8 @@
           "alcance": "definitiva"
         },
         {
-          "id_expediente": "142632",
-          "numero_expediente": "3022-D-2026",
+          "id_expediente": "",
+          "numero_expediente": "",
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Declaración nro. 767-2026 / Expediente 3022-D-2026",
           "alcance": "definitiva"
@@ -76052,6 +76059,13 @@
           "numero_expediente": "1511-I-2026",
           "tipo": "SANCION DE UN EXPEDIENTE",
           "descripcion": "Resolución nro. 640-2026 / Expediente 1511-I-2026",
+          "alcance": "definitiva"
+        },
+        {
+          "id_expediente": "140955",
+          "numero_expediente": "1511-I-2026",
+          "tipo": "SANCION DE UN EXPEDIENTE",
+          "descripcion": "Resolución nro. 641-2026 / Expediente 1511-I-2026",
           "alcance": "definitiva"
         },
         {
@@ -81742,8 +81756,8 @@
       ],
       "cambios_giro": [],
       "resumen_items_recinto": {
-        "total": 360,
-        "sanciones_expediente": 176,
+        "total": 361,
+        "sanciones_expediente": 177,
         "sanciones_despacho": 184,
         "cambios_giro": 0
       }
@@ -81763,7 +81777,7 @@
     "tipos_oficiales_observados": {
       "cambio de giro": 44,
       "sancion de un despacho": 755,
-      "sancion de un expediente": 765
+      "sancion de un expediente": 766
     },
     "alcance_sancion": "inicial, definitiva o no_especificada según descripción oficial"
   }

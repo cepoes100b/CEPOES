@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generado_en": "2026-11-18T21:48:13.278064+00:00",
+  "generado_en": "2026-11-19T22:00:30.977335+00:00",
   "persona": "Claudia Negri",
   "anio": 2026,
   "auditoria_confirmada": true,
@@ -9,38 +9,38 @@
     "anio": 2026,
     "completo": true,
     "limite_solicitado": 10000,
-    "fecha_mas_antigua_obtenida": "2024-03-11",
-    "fecha_mas_reciente_obtenida": "2026-11-18",
-    "ids_del_anio_en_ventana": 3645,
-    "ids_revisados_acumulados": 3645,
+    "fecha_mas_antigua_obtenida": "2024-03-13",
+    "fecha_mas_reciente_obtenida": "2026-11-19",
+    "ids_del_anio_en_ventana": 3674,
+    "ids_revisados_acumulados": 3674,
     "fichas_fallidas_en_corrida": []
   },
   "resumen": {
-    "expedientes_seguimiento_institucional": 250,
-    "expedientes_auditados": 250,
+    "expedientes_seguimiento_institucional": 251,
+    "expedientes_auditados": 251,
     "autoría_principal": 49,
-    "coautoría": 201,
-    "fichas_oficiales_completas": 250,
+    "coautoría": 202,
+    "fichas_oficiales_completas": 251,
     "con_evidencia_sancion": 107,
     "problemas": 0
   },
   "por_tipo": {
-    "DECLARACION": 104,
+    "DECLARACION": 105,
     "RESOLUCION": 79,
     "LEY": 67
   },
   "por_estado_actual": {
     "en_comision": 126,
-    "archivado": 94,
-    "sancionado": 23,
+    "archivado": 95,
+    "sancionado": 22,
+    "ingresado": 4,
     "con_dictamen": 3,
-    "ingresado": 3,
     "despacho": 1
   },
   "por_etapa_ciclo": {
-    "en_comision": 129,
-    "archivado": 94,
-    "sancionado": 23,
+    "en_comision": 130,
+    "archivado": 95,
+    "sancionado": 22,
     "con_dictamen": 4
   },
   "control_832_2026": {
@@ -97,13 +97,65 @@
     "id_sesion": "1267",
     "fecha": "2026-11-05",
     "realizada": true,
-    "asuntos_considerados": 360,
-    "sanciones": 176,
+    "asuntos_considerados": 361,
+    "sanciones": 177,
     "votaciones_nominales": 10,
     "version_taquigrafica_disponible": false
   },
   "problemas": [],
   "expedientes": [
+    {
+      "id_expediente": "143228",
+      "numero": "3594-D-2026",
+      "fecha_ingreso": "2026-11-19T12:06:39",
+      "sumario": "REPUDIO ANTE LA ABSTENCIÓN DE LA REPÚBLICA ARGENTINA EN LA TERCERA COMISIÓN DE LA ASAMBLEA GENERAL DE LAS NACIONES UNIDAS, RESPECTO DE LA INICIATIVA PARA PREVENIR Y ELIMINAR TODAS LAS FORMAS DE VIOLENCIA CONTRA LAS MUJERES Y LAS NIÑAS.",
+      "rol_claudia": "coautora",
+      "rol_recalculado": "coautora",
+      "autoría_confirmada": true,
+      "rol_consistente": true,
+      "autores": [
+        "VELÁZQUEZ, DELFINA",
+        "BIELLI, MARÍA",
+        "CAPORICCIO, FRANCISCO",
+        "FERREÑO, CLAUDIO AMÉRICO",
+        "FREIRE, VICTORIA",
+        "GONZÁLEZ, ANDREA MARIANA",
+        "GRILLO, ALEJANDRO OMAR",
+        "IAÑEZ, BERENICE",
+        "LA BLUNDA, ANDRÉS",
+        "LAMMENS , MATÍAS",
+        "MOCHI, FEDERICO",
+        "MODARELLI, JUAN PABLO",
+        "NEGRI, CLAUDIA",
+        "NEIRA, CLAUDIA",
+        "PEÑAFORT, GRACIANA",
+        "ROSSEN, BÁRBARA",
+        "SALVATIERRA, ALEJANDRO",
+        "SANTORO, LEANDRO"
+      ],
+      "cantidad_autores": 18,
+      "tipo_oficial": "DECLARACION",
+      "estado_actual": "ingresado",
+      "etapa_ciclo": "en_comision",
+      "ubicacion": "SP",
+      "giros": [
+        "(GIRO AUN NO ASIGNADO)"
+      ],
+      "ultimo_movimiento": {
+        "fecha": "2026-11-19",
+        "oficina": "SP",
+        "descripcion": "ESPERANDO FIRMA DE ASIGNACION DE GIRO (ESPERANDO RECEPCION)"
+      },
+      "evidencia_sancion": false,
+      "fuentes_sancion": [],
+      "fuentes_captura": [
+        "radar_ingresos",
+        "seguimiento_institucional"
+      ],
+      "ficha_oficial_completa": true,
+      "url_expediente": "https://parlamentaria.legislatura.gob.ar/pages/expediente.aspx?id=143228",
+      "es_832_2026": false
+    },
     {
       "id_expediente": "143153",
       "numero": "3521-D-2026",
@@ -2774,21 +2826,19 @@
       ],
       "cantidad_autores": 11,
       "tipo_oficial": "RESOLUCION",
-      "estado_actual": "sancionado",
-      "etapa_ciclo": "sancionado",
-      "ubicacion": "MEP",
+      "estado_actual": "archivado",
+      "etapa_ciclo": "archivado",
+      "ubicacion": "ARCHIVO",
       "giros": [
         "PRESUPUESTO, HACIENDA, ADMINISTRACIÓN FINANCIERA Y POLÍTICA TRIBUTARIA"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-08-31",
-        "oficina": "MEP",
-        "descripcion": "SANCIONADO. EN MEP ESPERANDO COMUNICACION CON EL PE U OTRAS ENTIDADES"
+        "fecha": "2026-11-19",
+        "oficina": "ARCHIVO",
+        "descripcion": "EN ARCHIVO. ESPERANDO INGRESO DE DATOS BANK (ESPERANDO RECEPCION)"
       },
       "evidencia_sancion": true,
       "fuentes_sancion": [
-        "estado_actual",
-        "etapa_ciclo",
         "ficha_oficial.hitos.tuvo_sancion",
         "ficha_oficial.sanciones",
         "actividad_recinto"
@@ -3203,9 +3253,9 @@
         "COMUNICACIÓN SOCIAL, MEDIOS DE COMUNICACIÓN Y TECNOLOGÍAS DE LA COMUNICACIÓN"
       ],
       "ultimo_movimiento": {
-        "fecha": "2026-11-18",
+        "fecha": "2026-11-19",
         "oficina": "DGDP",
-        "descripcion": "DESPACHO ESPERANDO NUMERACION (ESPERANDO RECEPCION)"
+        "descripcion": "DESPACHO NUMERADO. ESPERANDO INICIO DE PLAZO DE OBSERVACIONES"
       },
       "evidencia_sancion": false,
       "fuentes_sancion": [],

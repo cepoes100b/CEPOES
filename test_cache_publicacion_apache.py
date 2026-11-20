@@ -24,11 +24,16 @@ import urllib.request
 
 
 EXPECTED_CACHE = {"no-cache", "max-age=0", "must-revalidate"}
+INDICATORS = ("precios/canasta-consumo", "precios/ipc", "trabajo/empleo", "condiciones-de-vida/pobreza")
+INDICATOR_TARGETS = tuple(
+    f"/observatorio/{slug}/{suffix}" for slug in INDICATORS for suffix in ("", "index.html", "datos.csv")
+)
 TARGETS = ("/", "/index.html", "/observatorio/", "/observatorio/index.html",
            "/observatorio/produccion/industria/", "/observatorio/produccion/industria/index.html",
            "/observatorio/produccion/industria/datos.csv",
            "/datos/estado/", "/datos/estado/index.html",
-           "/assets/data/estructura-productiva/actual.json", "/.well-known/cepoes-release.json")
+           "/assets/data/estructura-productiva/actual.json", "/.well-known/cepoes-release.json",
+           "/assets/data/datos.json", "/assets/indicator.js", *INDICATOR_TARGETS)
 CONTROLS = ("/assets/fixture.css", "/assets/data/otra.json", "/publicaciones/fixture/",
             "/privado/", "/privado/index.html", "/private-marker.txt", "/legacy-cache-check",
             "/observatorio/fixture/")
@@ -100,6 +105,10 @@ def main() -> None:
             "observatorio/fixture/index.html": "fixture-other-observatory-html",
             "datos/estado/index.html": "fixture-state",
             "assets/data/estructura-productiva/actual.json": '{"fixture":"current"}',
+            "assets/data/datos.json": '{"fixture":"backup"}',
+            "assets/indicator.js": "/* runtime fixture */",
+            **{f"observatorio/{slug}/{file}": f"{slug} {file}"
+               for slug in INDICATORS for file in ("index.html", "datos.csv")},
             ".well-known/cepoes-release.json": '{"fixture":"release"}',
             "assets/fixture.css": "body { color: black; }",
             "assets/data/otra.json": '{"fixture":"other"}',
@@ -190,6 +199,9 @@ def main() -> None:
                 assert after["/"]["sha256"] == after["/index.html"]["sha256"]
                 assert after["/observatorio/"]["sha256"] == after["/observatorio/index.html"]["sha256"]
                 assert after["/datos/estado/"]["sha256"] == after["/datos/estado/index.html"]["sha256"]
+                for slug in INDICATORS:
+                    url = f"/observatorio/{slug}/"
+                    assert after[url]["sha256"] == after[url + "index.html"]["sha256"]
                 result = {"ok": True, "apache": version, "listen": "127.0.0.1",
                           "target_urls": len(TARGETS), "control_urls": len(CONTROLS),
                           "phases": ["before", "after", "idempotent"], "after": after}

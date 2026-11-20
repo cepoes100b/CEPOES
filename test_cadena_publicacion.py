@@ -418,7 +418,7 @@ class EvidenceTests(unittest.TestCase):
         observatory.parent.mkdir()
         observatory.write_bytes(self.observatory)
         self.industry = {}
-        for relative, url_path in evidence.INDUSTRY_FILES.items():
+        for relative, url_path in {**evidence.INDUSTRY_FILES, **evidence.INDICATOR_FILES}.items():
             path = self.site / relative
             path.parent.mkdir(parents=True, exist_ok=True)
             content = ("current " + relative).encode()
@@ -467,7 +467,8 @@ class EvidenceTests(unittest.TestCase):
         with patch.object(evidence, "read_public", side_effect=self.read) as read:
             evidence.verify_online(self.marker, "test", candidate_site=self.site)
         paths = ["/" + evidence.MARKER_PATH, *evidence.PUBLIC_FILES.values(),
-                 "/observatorio/", "/observatorio/index.html", *evidence.INDUSTRY_FILES.values()]
+                 "/observatorio/", "/observatorio/index.html", *evidence.INDUSTRY_FILES.values(),
+                 *evidence.INDICATOR_FILES.values()]
         self.assertEqual([(c.args[0], c.args[1]) for c in read.call_args_list],
                          [(p, None) for p in paths] + [(p, "test") for p in paths])
         # La verificación nueva no invalida los marcadores/restauraciones previos.
@@ -486,6 +487,18 @@ class EvidenceTests(unittest.TestCase):
                 with self.subTest(path=stale_path, nonce=with_nonce):
                     with patch.object(evidence, "read_public", side_effect=response):
                         with self.assertRaisesRegex(ValueError, "bytes.*industria"):
+                            evidence.verify_online(self.marker, "test", candidate_site=self.site)
+
+    def test_stale_indicator_files_or_fallback_abort_public_smoke(self):
+        for stale_path in evidence.INDICATOR_FILES.values():
+            for with_nonce in (False, True):
+                def response(path, nonce, **kwargs):
+                    if path == stale_path and (nonce is not None) == with_nonce:
+                        return b"anterior"
+                    return self.read(path, nonce, **kwargs)
+                with self.subTest(path=stale_path, nonce=with_nonce):
+                    with patch.object(evidence, "read_public", side_effect=response):
+                        with self.assertRaisesRegex(ValueError, "bytes"):
                             evidence.verify_online(self.marker, "test", candidate_site=self.site)
 
     def test_stale_observatory_alias_fails_even_when_nonce_is_current(self):
@@ -570,12 +583,13 @@ class EvidenceTests(unittest.TestCase):
             return any(re.fullmatch(pattern, path) for pattern in public_site.PUBLIC_REVALIDATION_PATHS)
         for path in ("/", "/index.html", "/observatorio/", "/observatorio/index.html",
                      "/datos/estado/", "/datos/estado/index.html",
-                     "/assets/data/estructura-productiva/actual.json", "/.well-known/cepoes-release.json"):
+                     "/assets/data/estructura-productiva/actual.json", "/.well-known/cepoes-release.json",
+                     *evidence.INDICATOR_FILES.values()):
             with self.subTest(path=path):
                 self.assertTrue(matches(path))
         for path in ("/privado/", "/privado/index.html", "/suscripcion/", "/publicaciones/index.html",
                      "/assets/mapa.js", "/assets/site.css", "/assets/data/otra.json", "/datos/estado/archivo.html",
-                     "/observatorio/salud-mental/", "/observatorio/precios/ipc/", "/observatorio/otra.html"):
+                     "/observatorio/salud-mental/", "/observatorio/precios/ipc/otro.csv", "/observatorio/otra.html"):
             with self.subTest(path=path):
                 self.assertFalse(matches(path))
 

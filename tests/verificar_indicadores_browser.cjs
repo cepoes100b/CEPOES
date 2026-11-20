@@ -50,13 +50,9 @@ function views(name, rows) {
     [formatPeriod(period),...v.map(n=>name==='Canasta'?money(n):formatPct(n,name==='IPC'))]).reverse();
   return [formatPeriod(period), m, rendered];
 }
-function mime(ext) {
-  return ({'.html':'text/html; charset=utf-8','.csv':'text/csv; charset=utf-8',
-    '.json':'application/json; charset=utf-8','.js':'application/javascript; charset=utf-8',
-    '.css':'text/css; charset=utf-8','.png':'image/png','.svg':'image/svg+xml'})[ext];
-}
 async function main() {
-  assert(INPUT, 'uso: node verify_exports.cjs datos.json');
+  assert(INPUT, 'uso: node verificar_indicadores_browser.cjs datos.json');
+  if (ROOT) assert.match(ORIGIN, /^http:\/\/127[.]0[.]0[.]1:[1-9][0-9]*$/, 'el candidato sólo puede usar loopback');
   const inputBytes = await fs.readFile(INPUT);
   const data = JSON.parse(inputBytes);
   const modes = process.env.CEPOES_QA_MODES?.split(',') || ['no-js','fallback','normal'];
@@ -78,15 +74,7 @@ async function main() {
             if (ROOT) return r.fulfill({body:inputBytes,contentType:'application/json',
               headers:{'access-control-allow-origin':'*'}});
           }
-          if (ROOT && u.origin===ORIGIN) {
-            const rel = decodeURIComponent(u.pathname);
-            const file = path.resolve(ROOT,'.'+rel+(rel.endsWith('/')?'index.html':''));
-            assert(file.startsWith(ROOT+path.sep), 'ruta fuera del fixture');
-            let body;
-            try { body=await fs.readFile(file); }
-            catch(e) { if(e.code==='ENOENT')return r.fulfill({status:404,body:'fixture ausente'}); throw e; }
-            return r.fulfill({body,contentType:mime(path.extname(file))});
-          }
+          if (ROOT && u.origin===ORIGIN) return r.continue();
           if (ROOT && u.hostname==='cdn.jsdelivr.net' && process.env.CHART_JS && /\.js$/.test(u.pathname)) {
             return r.fulfill({body:await fs.readFile(process.env.CHART_JS),contentType:'application/javascript'});
           }
@@ -134,6 +122,10 @@ async function main() {
           const downloadEvent = page.waitForEvent('download',{timeout:15000});
           await link.click({timeout:10000});
           const download = await downloadEvent;
+          if (ROOT) {
+            if (mode==='no-js') assert.equal(download.url(),ORIGIN+url+'datos.csv',name+' CSV fuera del candidato');
+            else assert(download.url().startsWith('blob:'+ORIGIN+'/'),name+' CSV blob fuera del candidato');
+          }
           const bytes = await fs.readFile(await download.path(),'utf8');
           assert.deepEqual(csv(bytes),[header,rows],name+' '+mode+' CSV completo');
           if(mode!=='no-js'){

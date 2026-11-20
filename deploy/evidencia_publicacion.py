@@ -28,6 +28,14 @@ INDUSTRY_FILES = {
     "observatorio/produccion/industria/index.html": "/observatorio/produccion/industria/",
     "observatorio/produccion/industria/datos.csv": "/observatorio/produccion/industria/datos.csv",
 }
+INDICATOR_SLUGS = ("precios/canasta-consumo", "precios/ipc", "trabajo/empleo", "condiciones-de-vida/pobreza")
+INDICATOR_FILES = {
+    file: "/" + url_path
+    for slug in INDICATOR_SLUGS
+    for file, url_path in ((f"observatorio/{slug}/index.html", f"observatorio/{slug}/"),
+                           (f"observatorio/{slug}/datos.csv", f"observatorio/{slug}/datos.csv"))
+}
+INDICATOR_FILES.update({file: "/" + file for file in ("assets/data/datos.json", "assets/indicator.js")})
 SHA = re.compile(r"[0-9a-f]{40}")
 HASH = re.compile(r"[0-9a-f]{64}")
 
@@ -62,7 +70,8 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 def read_public(path: str, nonce: str | None, *, limit: int = 8 * 1024 * 1024) -> bytes:
-    if path not in {"/" + MARKER_PATH, *PUBLIC_FILES.values(), *OBSERVATORY_PATHS, *INDUSTRY_FILES.values()}:
+    if path not in {"/" + MARKER_PATH, *PUBLIC_FILES.values(), *OBSERVATORY_PATHS,
+                    *INDUSTRY_FILES.values(), *INDICATOR_FILES.values()}:
         raise ValueError("Ruta fuera de la whitelist pública")
     if nonce is not None and not re.fullmatch(r"[A-Za-z0-9-]+", nonce):
         raise ValueError("Identificador de comprobación inválido")
@@ -117,7 +126,7 @@ def verify_online(marker: dict, nonce: str, *, candidate_site: Path | None = Non
             raise ValueError(f"Falta ruta pública regular: {OBSERVATORY_FILE}")
         expected = fingerprint(path.read_bytes())
         routes.extend((OBSERVATORY_FILE, url_path, expected) for url_path in OBSERVATORY_PATHS)
-        for relative, url_path in INDUSTRY_FILES.items():
+        for relative, url_path in {**INDUSTRY_FILES, **INDICATOR_FILES}.items():
             path = candidate_site / relative
             if path.is_symlink() or not path.is_file():
                 raise ValueError(f"Falta ruta pública regular: {relative}")

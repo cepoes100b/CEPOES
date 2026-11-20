@@ -11,6 +11,14 @@
       "reason": "Normalización del sitio"
     },
     {
+      "path": "deploy/preparar_indicadores.py",
+      "reason": "Sincronización de fichas, descargas CSV y respaldo del Observatorio"
+    },
+    {
+      "path": "test_preparar_indicadores.py",
+      "reason": "Control de concordancia de indicadores y conservación del respaldo"
+    },
+    {
       "path": "deploy/axes-registry.json",
       "reason": "Clasificación editorial y catálogo transversal de ejes"
     },

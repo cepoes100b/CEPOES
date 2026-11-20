@@ -57,21 +57,24 @@ class BulletinCatalogTests(unittest.TestCase):
     def test_next_edition_updates_both_pages_and_is_idempotent(self):
         import tempfile, shutil
         from pathlib import Path
-        from scripts.generar_catalogo_boletines import generate, validate
+        from scripts.generar_catalogo_boletines import catalog, generate, validate
         source=Path(__file__).parent/'deploy/site-overlay'
         with tempfile.TemporaryDirectory() as directory:
             site=Path(directory)
             shutil.copytree(source/'publicaciones',site/'publicaciones')
-            latest=site/'publicaciones/boletines/boletin-06-octubre-2026/index.html'
-            future=latest.parent.parent/'boletin-07-noviembre-2026/index.html'
+            current=catalog(site)[0]
+            latest=site/current['url'].lstrip('/')/'index.html'
+            next_edition=current['edition'] + 1
+            future=latest.parent.parent/f'boletin-{next_edition:02d}-diciembre-2099'/'index.html'
             future.parent.mkdir()
-            future.write_text(latest.read_text().replace('boletin-06-octubre-2026','boletin-07-noviembre-2026').replace('Octubre 2026','Noviembre 2026'))
+            future.write_text(latest.read_text().replace(latest.parent.name,future.parent.name).replace(current['period'],'Diciembre 2099'))
             items=generate(site)
-            self.assertEqual(items[0]['edition'],7)
+            self.assertEqual(items[0]['edition'],next_edition)
+            self.assertEqual(items[0]['url'],f'/publicaciones/boletines/{future.parent.name}/')
             snapshots={str(p):p.read_bytes() for p in (site/'publicaciones/index.html',site/'publicaciones/boletines/index.html')}
             generate(site)
             self.assertEqual(snapshots,{p:Path(p).read_bytes() for p in snapshots})
             validate(site)
             broken=site/'publicaciones/index.html'
-            broken.write_text(broken.read_text().replace('boletin-07-noviembre-2026','boletin-06-octubre-2026'))
+            broken.write_text(broken.read_text().replace(future.parent.name,latest.parent.name))
             with self.assertRaises(ValueError):validate(site)

@@ -137,6 +137,13 @@
         }
       },
       "date_note": "2025/12 en la URL es una ruta del recurso, no el período de observación. generated_at conserva la generación del pipeline; reviewed_on identifica esta revisión manual."
+    },
+    "birth_rate_2025_per_1000": 6.6,
+    "birth_rate_review": {
+      "reviewed_on": "2026-11-20",
+      "data_year": 2025,
+      "source_id": "idecba_tasa_bruta_nat",
+      "methodology_url": "https://www.estadisticaciudad.gob.ar/si/dnnya//principal-info-indicador?indicador=tas_brut_nat"
     }
   },
   "events": [
@@ -179,6 +186,11 @@
       "id": "idecba_nps",
       "name": "IDECBA · Nacimientos inscriptos a término",
       "url": "https://www.estadisticaciudad.gob.ar/eyc/wp-content/uploads/2025/12/NPS.xlsx"
+    },
+    {
+      "id": "idecba_tasa_bruta_nat",
+      "name": "IDECBA · Tasa bruta de natalidad",
+      "url": "https://www.estadisticaciudad.gob.ar/si/dnnya/principal-indicador?indicador=tas_brut_nat"
     }
   ]
 }

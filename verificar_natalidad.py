@@ -12,7 +12,7 @@ if d.get('argentina',{}).get('replacement_reference')!=2.1:err.append('Referenci
 if Path('natalidad.json').read_bytes()!=p.read_bytes():err.append('Copias JSON divergentes')
 years=[x['year'] for x in d['caba']['tgf']]
 if years!=list(range(2010,2026)):err.append('Serie CABA incompleta, desordenada o duplicada')
-for key,value in {'births_2024':21366,'births_2025':20444,'birth_rate_2024_per_1000':6.9,'mean_maternal_age_2024':32.5,'mean_maternal_age_2025':32.8}.items():
+for key,value in {'births_2024':21366,'births_2025':20444,'birth_rate_2024_per_1000':6.9,'birth_rate_2025_per_1000':6.6,'mean_maternal_age_2024':32.5,'mean_maternal_age_2025':32.8}.items():
     if d['caba'].get(key)!=value:err.append(f'CABA {key}: valor inesperado')
 if d['argentina']['tgf'][-1]!={'year':2019,'value':1.8}:err.append('Ancla RENAPER 2019 alterada')
 review=d['caba'].get('review',{})

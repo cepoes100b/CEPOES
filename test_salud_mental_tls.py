@@ -128,6 +128,20 @@ class TransportTests(unittest.TestCase):
         redirected = handler.redirect_request(req, None, 302, "Found", {}, DEIS_CSV)
         self.assertEqual(redirected.full_url, DEIS_CSV)
 
+    def test_annual_redirect_must_stay_on_official_https_origin(self):
+        host = "www.argentina.gob.ar"
+        handler = sm.HTTPSOnlyRedirectHandler(host)
+        url = sm.DEIS_ANNUAL_BASE + sm.DEIS_ANNUAL_CSV[2024]
+        req = urllib.request.Request(url)
+        for target in ("https://other.example/data.csv", "http://www.argentina.gob.ar/example.csv"):
+            with self.subTest(target=target), self.assertRaises(sm.SourceDownloadError):
+                handler.redirect_request(req, None, 302, "Found", {}, target)
+        self.assertEqual(handler.redirect_request(req, None, 302, "Found", {}, url).full_url, url)
+        with patch.object(sm.urllib.request, "build_opener") as factory:
+            with self.assertRaisesRegex(sm.SourceDownloadError, "origen no autorizado"):
+                sm.request_bytes(DEIS_CSV, allowed_host=host)
+        factory.assert_not_called()
+
     def test_workflow_uses_direct_generator_without_tls_override(self):
         workflow = (ROOT / ".github/workflows/salud-mental.yml").read_text()
         self.assertIn("run: python actualizar_salud_mental.py", workflow)
@@ -217,6 +231,77 @@ class PipelineTests(unittest.TestCase):
         with patch.object(sm, "load_deis_national", side_effect=sm.SourceDownloadError("certificado inválido")):
             with self.assertRaises(sm.SourceDownloadError):
                 sm.load_deis_with_fallback(self.previous)
+
+    def annual_previous(self):
+        result = [{"anio": y, "defunciones": {2023: 3488, 2024: 3614}.get(y, 10)}
+                  for y in range(2005, 2025)]
+        self.previous["contraste_deis"]["serie_nacional"] = result
+        self.out_root.write_text(json.dumps(self.previous, indent=2))
+        return result
+
+    def run_annual(self, counts, *, fail_year=None, nonmatching_year=None, original_status=None):
+        payloads = source_fixtures()
+        years = {sm.DEIS_ANNUAL_BASE + fname: y for y, fname in sm.DEIS_ANNUAL_CSV.items()}
+        calls = []
+        def open_request(req, timeout):
+            url = req.full_url
+            calls.append(url)
+            if url == sm.DEIS_CKAN:
+                if original_status:
+                    raise urllib.error.HTTPError(url, original_status, "Fixture", {}, None)
+                raise urllib.error.URLError(ssl.SSLCertVerificationError(1, "CERTIFICATE_VERIFY_FAILED"))
+            if url in years:
+                y = years[url]
+                if y == fail_year:
+                    raise urllib.error.URLError(ssl.SSLCertVerificationError(1, "CERTIFICATE_VERIFY_FAILED"))
+                total = counts[y] + (y == nonmatching_year)
+                return io.BytesIO(f"CAUSA;CUENTA\nX60-X84;{total}\nA16;2500\n".encode())
+            return io.BytesIO(payloads[url])
+        opener = MagicMock()
+        opener.open.side_effect = open_request
+        with (patch.object(sm.urllib.request, "build_opener", return_value=opener),
+              contextlib.redirect_stdout(io.StringIO())):
+            sm.main()
+        return calls
+
+    def test_verified_alternative_provenance_and_series_identical(self):
+        prior = self.annual_previous()
+        totals = {x["anio"]: x["defunciones"] for x in prior}
+        calls = self.run_annual(totals)
+        self.assertEqual(calls, [sm.SNIC_PAIS_URL, sm.SNIC_PROVINCIAS_URL, sm.DEIS_CKAN] +
+                         [sm.DEIS_ANNUAL_BASE + n for n in sm.DEIS_ANNUAL_CSV.values()])
+        self.assertEqual(self.out_root.read_bytes(), self.out_public.read_bytes())
+        result = json.loads(self.out_root.read_text())
+        deis = result["contraste_deis"]
+        self.assertEqual(deis["serie_nacional"], prior)
+        self.assertEqual(deis["fuente"], sm.DEIS_ANNUAL_SOURCE)
+        self.assertEqual(result["sources"]["deis"], sm.DEIS_ANNUAL_SOURCE)
+        self.assertEqual(deis["estado"], "REVALIDADO_FUENTE_OFICIAL_ALTERNATIVA")
+        self.assertEqual(deis["ultimo_anio"], 2024)
+        before = Path.cwd()
+        try:
+            os.chdir(self.root)
+            with contextlib.redirect_stdout(io.StringIO()):
+                runpy.run_path(str(ROOT / "verificar_salud_mental.py"), run_name="__main__")
+        finally:
+            os.chdir(before)
+
+    def test_alternative_failure_deviation_or_primary_denial_never_write(self):
+        prior = self.annual_previous()
+        counts = {x["anio"]: x["defunciones"] for x in prior}
+        before = (self.out_root.read_bytes(), self.out_public.read_bytes())
+        for params in ({"fail_year": 2016}, {"nonmatching_year": 2006}, {"original_status": 403}):
+            with self.subTest(params=params), self.assertRaises(sm.SourceDownloadError):
+                self.run_annual(counts, **params)
+            self.assertEqual((self.out_root.read_bytes(), self.out_public.read_bytes()), before)
+
+    def test_alternative_cannot_replace_a_newer_or_partial_prior_series(self):
+        prior = self.annual_previous()
+        for series in (prior[:-1], prior + [{"anio": 2025, "defunciones": 1}]):
+            with self.subTest(series=series), patch.object(sm, "request_bytes") as request:
+                with self.assertRaisesRegex(sm.SourceDownloadError, "serie comparable"):
+                    sm.load_deis_annual({"contraste_deis": {"serie_nacional": series}})
+                request.assert_not_called()
 
     def test_existing_schema_fallback_remains_separate(self):
         with patch.object(sm, "load_deis_national", side_effect=RuntimeError("esquema cambió")):

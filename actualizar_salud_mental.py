@@ -19,6 +19,7 @@ puntos oficiales 2025 o si las 24 jurisdicciones no suman el total nacional.
 from __future__ import annotations
 
 import csv
+import hashlib
 import http.client
 import io
 import json
@@ -38,6 +39,15 @@ SNIC_MANUAL_URL = "https://cloud-snic.minseg.gob.ar/Bases/SNIC/Manual_de_usuario
 SNIC_REPORT_2025 = "https://cloud-snic.minseg.gob.ar/Informes/SNIC/Informe_SNIC_Nacional_2025.pdf"
 
 DEIS_CKAN = "https://datos.salud.gob.ar/api/3/action/package_show?id=27c588e8-43d0-411a-a40c-7ecc563c2c9f"
+DEIS_ANNUAL_SOURCE = "https://www.argentina.gob.ar/salud/deis/datos/defunciones"
+DEIS_ANNUAL_BASE = "https://www.argentina.gob.ar/sites/default/files/2021/03/"
+# Lista oficial verificada a noviembre de 2026. Sólo permite revalidar este
+# período: una nueva edición o revisión debe acreditarse por separado.
+DEIS_ANNUAL_CSV = {
+    **{year: "defweb" + str(year)[-2:] + ("_0" if 2020 <= year <= 2022 else "") + ".csv"
+       for year in range(2005, 2024)},
+    2024: "datos_sobre_defunciones_2024.csv",
+}
 DEIS_REPORT_2024 = "https://www.argentina.gob.ar/sites/default/files/serie_5_nro_68_anuario_vitales_v4_revisada_ok.pdf"
 
 OUT_ROOT = Path("salud_mental.json")
@@ -142,6 +152,21 @@ def norm(value: object) -> str:
 class SourceDownloadError(RuntimeError):
     """La fuente no pudo descargarse con transporte verificable."""
 
+    def __init__(self, message: str, *, source_url: str | None = None):
+        super().__init__(message)
+        self.source_url = source_url
+
+
+def allow_annual_deis_fallback(error: SourceDownloadError) -> bool:
+    # No usar una fuente alternativa para eludir una denegación ni una
+    # redirección insegura. Sólo errores de transporte del origen DEIS.
+    cause = error.__cause__
+    if urlparse(error.source_url or "").hostname != "datos.salud.gob.ar":
+        return False
+    if isinstance(cause, urllib.error.HTTPError):
+        return 500 <= cause.code <= 599
+    return isinstance(cause, (urllib.error.URLError, OSError, http.client.HTTPException))
+
 
 def require_https(url: str) -> None:
     if urlparse(url).scheme.lower() != "https":
@@ -149,13 +174,21 @@ def require_https(url: str) -> None:
 
 
 class HTTPSOnlyRedirectHandler(urllib.request.HTTPRedirectHandler):
+    def __init__(self, allowed_host: str | None = None):
+        super().__init__()
+        self.allowed_host = allowed_host
+
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         require_https(newurl)
+        if self.allowed_host and urlparse(newurl).hostname != self.allowed_host:
+            raise SourceDownloadError("Redirección rechazada: destino fuera del origen oficial")
         return super().redirect_request(req, fp, code, msg, headers, newurl)
 
 
-def request_bytes(url: str, timeout: int = 180) -> bytes:
+def request_bytes(url: str, timeout: int = 180, *, allowed_host: str | None = None) -> bytes:
     require_https(url)
+    if allowed_host and urlparse(url).hostname != allowed_host:
+        raise SourceDownloadError("Descarga rechazada: origen no autorizado")
     req = urllib.request.Request(
         url,
         headers={
@@ -166,7 +199,7 @@ def request_bytes(url: str, timeout: int = 180) -> bytes:
     # Verificación estándar de certificados y hostname, también tras redirecciones.
     opener = urllib.request.build_opener(
         urllib.request.HTTPSHandler(context=ssl.create_default_context()),
-        HTTPSOnlyRedirectHandler(),
+        HTTPSOnlyRedirectHandler(allowed_host),
     )
     try:
         with opener.open(req, timeout=timeout) as r:
@@ -174,7 +207,8 @@ def request_bytes(url: str, timeout: int = 180) -> bytes:
     except (urllib.error.URLError, OSError, http.client.HTTPException) as exc:
         raise SourceDownloadError(
             f"Fuente no verificable ({urlparse(url).hostname}): "
-            f"{type(exc).__name__}: {exc}. Se conserva el último resultado válido."
+            f"{type(exc).__name__}: {exc}.",
+            source_url=url,
         ) from exc
 
 
@@ -536,6 +570,35 @@ def previous_deis_series(previous: dict) -> list[dict]:
     return old if isinstance(old, list) else []
 
 
+def load_deis_annual(previous: dict) -> tuple[list[dict], list[dict]]:
+    # La recuperación del transporte no autoriza cambiar período, serie o método.
+    prior = previous_deis_series(previous)
+    if not prior or [row.get("anio") for row in prior] != list(DEIS_ANNUAL_CSV):
+        raise SourceDownloadError("DEIS anual: no hay serie comparable validada 2005–2024")
+    series, diagnostics = [], []
+    for year, name in DEIS_ANNUAL_CSV.items():
+        url = DEIS_ANNUAL_BASE + name
+        raw = request_bytes(url, 60, allowed_host="www.argentina.gob.ar")
+        fields, rows = decode_csv(raw)
+        if not {"CAUSA", "CUENTA"} <= set(fields) or not rows:
+            raise SourceDownloadError(f"DEIS anual: esquema o filas no conformes en {year}")
+        total = 0
+        for row in rows:
+            if is_suicide_deis(row.get("CAUSA")):
+                count = to_int(row.get("CUENTA"))
+                if count is None or count < 0:
+                    raise SourceDownloadError(f"DEIS anual: CUENTA no conforme en {year}")
+                total += count
+        if total <= 0:
+            raise SourceDownloadError(f"DEIS anual: no hay observaciones válidas en {year}")
+        series.append({"anio": year, "defunciones": total})
+        diagnostics.append({"url": url, "year_forced": year, "rows": len(rows),
+                            "suicidios_sumados": total, "sha256": hashlib.sha256(raw).hexdigest()})
+    if series != [{"anio": row.get("anio"), "defunciones": row.get("defunciones")} for row in prior]:
+        raise SourceDownloadError("DEIS anual: la serie no coincide con el último contraste validado")
+    return series, diagnostics
+
+
 def load_deis_with_fallback(previous: dict) -> dict:
     try:
         series, diagnostics = load_deis_national()
@@ -550,10 +613,26 @@ def load_deis_with_fallback(previous: dict) -> dict:
                 "no se fusionan ambas fuentes."
             ),
         }
-    except SourceDownloadError:
-        # Un fallo TLS/transporte nunca se convierte en una actualización exitosa.
-        # main escribe ambos resultados sólo después de completar las descargas.
-        raise
+    except SourceDownloadError as exc:
+        if not allow_annual_deis_fallback(exc):
+            raise
+        # Se acepta sólo una revalidación HTTPS independiente con paridad total;
+        # cualquier fallo alternativo aborta antes de escribir ambos resultados.
+        try:
+            series, diagnostics = load_deis_annual(previous)
+        except (SourceDownloadError, ValueError, RuntimeError) as fallback:
+            raise SourceDownloadError(
+                f"DEIS CKAN no verificable; alternativa oficial rechazada: {fallback}. "
+                "Se conserva el último resultado válido."
+            ) from fallback
+        return {
+            "estado": "REVALIDADO_FUENTE_OFICIAL_ALTERNATIVA",
+            "serie_nacional": series,
+            "ultimo_anio": series[-1]["anio"],
+            "diagnostico": diagnostics,
+            "fuente": DEIS_ANNUAL_SOURCE,
+            "nota": "Archivos anuales oficiales DEIS verificados; misma serie 2005–2024, sin nuevas ediciones.",
+        }
     except Exception as exc:
         old = previous_deis_series(previous)
         if not old:
@@ -706,7 +785,7 @@ def main() -> None:
             "snic_provincias": SNIC_PROVINCIAS_URL,
             "snic_manual": SNIC_MANUAL_URL,
             "snic_informe_2025": SNIC_REPORT_2025,
-            "deis": DEIS_CKAN,
+            "deis": deis["fuente"],
             "deis_informe_2024": DEIS_REPORT_2024,
             "cesac": CESAC_SOURCE,
             "efectores_especializados": EFFECTORS_SOURCE,

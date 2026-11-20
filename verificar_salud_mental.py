@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 import json
+import re
 from pathlib import Path
+
+from actualizar_salud_mental import DEIS_ANNUAL_BASE, DEIS_ANNUAL_CSV, DEIS_ANNUAL_SOURCE
 
 p = Path("salud_mental.json")
 if not p.is_file():
@@ -76,11 +79,29 @@ for phone in ("0800-999-0091", "107"):
         problems.append(f"falta información de asistencia: {phone}")
 
 deis = d.get("contraste_deis", {})
-if deis.get("estado") not in {"ACTUALIZADO", "ULTIMO_DATO_VALIDADO"}:
+if deis.get("estado") not in {"ACTUALIZADO", "ULTIMO_DATO_VALIDADO", "REVALIDADO_FUENTE_OFICIAL_ALTERNATIVA"}:
     problems.append(f"estado DEIS inválido: {deis.get('estado')}")
 deis_series = deis.get("serie_nacional", [])
 if not deis_series or max(int(x.get("anio") or 0) for x in deis_series) < 2024:
     problems.append("contraste DEIS no conserva al menos el último dato validado 2024")
+
+if deis.get("estado") == "REVALIDADO_FUENTE_OFICIAL_ALTERNATIVA":
+    years = list(DEIS_ANNUAL_CSV)
+    rows = deis.get("diagnostico") or []
+    expected_urls = [DEIS_ANNUAL_BASE + DEIS_ANNUAL_CSV[y] for y in years]
+    expected_counts = [row.get("defunciones") for row in deis_series]
+    if (deis.get("fuente") != DEIS_ANNUAL_SOURCE or
+            d.get("sources", {}).get("deis") != DEIS_ANNUAL_SOURCE or
+            [row.get("anio") for row in deis_series] != years or
+            deis.get("ultimo_anio") != years[-1] or
+            [r.get("year_forced") for r in rows] != years or
+            [r.get("url") for r in rows] != expected_urls or
+            [r.get("suicidios_sumados") for r in rows] != expected_counts or
+            any(not re.fullmatch(r"[a-f0-9]{64}", str(r.get("sha256", ""))) or
+                type(r.get("rows")) is not int or r["rows"] <= 0 for r in rows) or
+            dict(zip(years, expected_counts)).get(2023) != 3488 or
+            dict(zip(years, expected_counts)).get(2024) != 3614):
+        problems.append("revalidación DEIS anual sin períodos, huellas o procedencia verificable")
 
 if problems:
     print("✘ salud mental V3 inválida")

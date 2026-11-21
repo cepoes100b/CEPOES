@@ -26,6 +26,7 @@ for path in required:
     assert path.is_file() and path.stat().st_size > 100, f'Falta o está vacío: {path.relative_to(ROOT)}'
 
 script = SCRIPT.read_text(encoding='utf-8')
+copilot = COPILOT.read_text(encoding='utf-8')
 hardened = HARDENED.read_text(encoding='utf-8')
 v3 = V3.read_text(encoding='utf-8')
 workflow = WORKFLOW.read_text(encoding='utf-8')
@@ -41,15 +42,20 @@ registry = json.loads(REGISTRY.read_text(encoding='utf-8'))
 assert re.search(r'^\s*id-token:\s*write\s*$', workflow, re.M)
 assert 'models: read' not in workflow
 assert 'COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}' in workflow
-assert 'npm install -g @github/copilot@latest' in workflow
+assert 'python qa/probar_copilot_cli_release.py --install-bin' in workflow
+assert 'test "$(command -v copilot)" = "$RUNNER_TEMP/cepoes-copilot/copilot"' in workflow
+assert 'COPILOT_AUTO_UPDATE: "false"' in workflow
+assert '@github/copilot@' not in workflow
 assert 'automatizar_analisis_legislativo_v3.py' in workflow, 'Producción no usa v3'
 assert 'legislative-analysis-ingest-v2' in workflow
 for forbidden in ['SUPABASE_SERVICE_ROLE', 'SUPABASE_SECRET_KEY', 'OPENAI_API_KEY']:
     assert forbidden not in workflow, f'Secreto prohibido en workflow: {forbidden}'
 
 # Copilot no puede usar herramientas externas.
-assert '--no-ask-user' in hardened and '--no-custom-instructions' in hardened
-assert '--deny-tool=shell,write,read,url,memory' in hardened
+assert 'copilot.run_programmatic_copilot(prompt, model)' in hardened
+assert '--no-ask-user' in copilot and '--no-custom-instructions' in copilot
+assert '--deny-tool=shell,write,read,url,memory' in copilot
+assert '--sync-session=off' in copilot and '--no-remote' not in copilot
 assert 'No uses memoria, conocimiento general ni web' in hardened
 
 # Selección primaria strict-v2 conservada.

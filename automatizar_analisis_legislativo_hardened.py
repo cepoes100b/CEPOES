@@ -18,7 +18,6 @@ import hashlib
 import json
 import os
 import re
-import subprocess
 from urllib.parse import parse_qs, urljoin, urlparse, urlunparse
 
 from bs4 import BeautifulSoup
@@ -236,20 +235,8 @@ def unsupported_numbers(result: dict, material: str) -> list[str]:
 def run_copilot(prompt: str) -> dict:
     if not os.getenv("COPILOT_GITHUB_TOKEN"):
         raise RuntimeError("Falta COPILOT_GITHUB_TOKEN")
-    cmd = [
-        "copilot", "-p", prompt, "-s",
-        "--no-ask-user", "--no-custom-instructions", "--no-auto-update",
-        "--no-remote", "--no-remote-export", "--no-color",
-        "--deny-tool=shell,write,read,url,memory",
-    ]
     model = os.getenv("COPILOT_MODEL", "").strip()
-    if model:
-        cmd.extend(["--model", model])
-    proc = subprocess.run(cmd, text=True, capture_output=True, timeout=180, env=os.environ.copy())
-    if proc.returncode != 0:
-        detail = (proc.stderr or proc.stdout or "Error sin detalle").strip()[-1200:]
-        raise RuntimeError(f"Copilot CLI falló ({proc.returncode}): {detail}")
-    return copilot.extract_json(proc.stdout)
+    return copilot.run_programmatic_copilot(prompt, model)
 
 
 def build_prompt(material: str, correction: str = "") -> str:

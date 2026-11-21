@@ -41,7 +41,7 @@
 | salud-reproductiva.yml | workflow_dispatch, schedule, pull_request | contents:write | git push, git commit | operativo | Pipeline regular de Salud Reproductiva. |
 | territorio.yml | workflow_dispatch, schedule, push | contents:write | git push, git commit | operativo | Pipeline territorial regular. |
 | validar-accesibilidad-visual.yml | workflow_dispatch, push, pull_request | contents:read | sin escritura detectada | operativo | Control específico de contraste y accesibilidad visual. |
-| validar-analisis-automatico.yml | workflow_dispatch, pull_request | contents:read | secretos | operativo | Control del análisis automático legislativo. |
+| validar-analisis-automatico.yml | workflow_dispatch, pull_request | contents:read | sin escritura detectada | operativo | Control del análisis automático legislativo. |
 | validar-area-legislativa.yml | workflow_dispatch, push, pull_request | contents:read | sin escritura detectada | operativo | Control del área legislativa. |
 | validar-deporte-salud.yml | push, pull_request | contents:read | sin escritura detectada | operativo | Control de datos, UI y accesibilidad de Deporte y Salud. |
 | validar-endeudamiento-main.yml | workflow_dispatch, pull_request | contents:read | sin escritura detectada | operativo | Control de regresión del pipeline de endeudamiento. |

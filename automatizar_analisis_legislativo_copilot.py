@@ -31,7 +31,8 @@ def check_copilot_cli() -> None:
     try:
         proc = subprocess.run(
             ["copilot", "--help"], text=True, capture_output=True, timeout=15,
-            env={"PATH": os.environ.get("PATH", os.defpath), "TERM": "dumb"},
+            env={"PATH": os.environ.get("PATH", os.defpath), "TERM": "dumb",
+                 "COPILOT_AUTO_UPDATE": "false"},
         )
     except (OSError, subprocess.TimeoutExpired):
         raise pipeline.ModelExecutionError("No se pudo consultar la ayuda de Copilot CLI") from None

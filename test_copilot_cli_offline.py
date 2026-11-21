@@ -60,7 +60,8 @@ class CopilotContractTests(unittest.TestCase):
         with patch.object(copilot.subprocess, "run", return_value=result) as run:
             copilot.check_copilot_cli()
             self.assertEqual(run.call_args.args[0], ["copilot", "--help"])
-            self.assertEqual(set(run.call_args.kwargs["env"]), {"PATH", "TERM"})
+            self.assertEqual(set(run.call_args.kwargs["env"]), {"PATH", "TERM", "COPILOT_AUTO_UPDATE"})
+            self.assertEqual(run.call_args.kwargs["env"]["COPILOT_AUTO_UPDATE"], "false")
             run.return_value = subprocess.CompletedProcess([], 0, help_flags.replace("--sync-session", "--no-remote-export"), "")
             with self.assertRaisesRegex(pipeline.ModelExecutionError, "incompatible"):
                 copilot.check_copilot_cli()
@@ -132,6 +133,36 @@ class ProcessSmokeTests(unittest.TestCase):
 
 
 class PublicReleaseProbeTests(unittest.TestCase):
+    def test_version_allows_official_punctuation_and_either_channel(self):
+        v = release.VERSION
+        for stdout, stderr, expected in (
+            (f"GitHub Copilot CLI {v}.\n", "", "stdout"),
+            ("", f"GitHub Copilot CLI {v}\n", "stderr"),
+            (f"\x1b[1mGitHub Copilot CLI {v}\x1b[0m (build abc)\n", f"v{v}\n", "stdout/stderr"),
+            (f"Version: {v}\n", "", "stdout"),
+        ):
+            with self.subTest(expected=expected):
+                self.assertEqual(release.verify_version(stdout, stderr), expected)
+
+    def test_wrong_numeric_versions_and_nonstable_tails_fail_without_raw_output(self):
+        v = release.VERSION
+        for stdout, stderr in (
+            ("GitHub Copilot CLI 1.0.113.\n", ""),
+            ("", f"GitHub Copilot CLI {v}-preview.3\n"),
+            (f"GitHub Copilot CLI {v}-2\n", ""),
+            (f"GitHub Copilot CLI {v}+a1b2\n", ""),
+            (f"GitHub Copilot CLI {v}.1\n", ""),
+            (f"GitHub Copilot CLI {v}\n", "GitHub Copilot CLI 2.0.114\n"),
+            ("no es una versión; texto privado sintético\n", ""),
+        ):
+            with self.subTest(stdout=stdout, stderr=stderr), self.assertRaises(RuntimeError) as exc:
+                release.verify_version(stdout, stderr)
+            self.assertNotIn("texto privado", str(exc.exception))
+            self.assertNotIn("preview", str(exc.exception))
+            self.assertNotIn("a1b2", str(exc.exception))
+            self.assertIn("stdout=", str(exc.exception))
+            self.assertIn("stderr=", str(exc.exception))
+
     def test_public_https_release_origins_only(self):
         release.require_release_url(release.URL)
         release.require_release_url("https://release-assets.githubusercontent.com/test.bin")
@@ -176,6 +207,33 @@ class PublicReleaseProbeTests(unittest.TestCase):
             self.assertEqual(binary.read_bytes(), synthetic)
             self.assertEqual(binary.stat().st_mode & 0o777, 0o700)
             self.assertEqual(sorted(x.name for x in work.iterdir()), ["known-path", "sample.tgz"])
+
+    def test_shared_installer_only_exposes_verified_binary_and_never_runs_it(self):
+        fixture = b"fixture, not a binary"
+
+        def fake_download(archive):
+            with tarfile.open(archive, "w:gz") as tar:
+                member = tarfile.TarInfo("copilot")
+                member.size = len(fixture)
+                tar.addfile(member, io.BytesIO(fixture))
+
+        with tempfile.TemporaryDirectory() as raw, patch.object(release, "require_platform"), \
+                patch.object(release.subprocess, "run", side_effect=forbidden), \
+                patch.object(release, "download", side_effect=fake_download) as download:
+            output = Path(raw) / "copilot"
+            release.install_verified(output)
+            self.assertEqual(output.read_bytes(), fixture)
+            self.assertEqual(output.stat().st_mode & 0o777, 0o700)
+            self.assertEqual(list(Path(raw).iterdir()), [output])
+            self.assertEqual(download.call_args.args[0].name, release.ASSET)
+            with self.assertRaises(FileExistsError):
+                release.install_verified(output)
+            self.assertEqual(output.read_bytes(), fixture)
+            download.side_effect = RuntimeError("hash incorrecto simulado")
+            failure = Path(raw) / "fallo"
+            with self.assertRaisesRegex(RuntimeError, "hash incorrecto"):
+                release.install_verified(failure)
+            self.assertFalse(failure.exists())
 
 
 if __name__ == "__main__":

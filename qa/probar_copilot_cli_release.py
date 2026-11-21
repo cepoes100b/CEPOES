@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Verifica un release oficial en QA. Nunca llama al modelo ni carga credenciales."""
+"""Instala o verifica el mismo release oficial. No llama al modelo ni usa credenciales."""
+import argparse
 import hashlib
 import os
 from pathlib import Path
@@ -24,6 +25,15 @@ FLAGS = (
     "-s", "--no-ask-user", "--no-custom-instructions", "--no-auto-update",
     "--sync-session=off", "--no-color", "--deny-tool=shell,write,read,url,memory",
 )
+# Se permite puntuación editorial después de un número completo, no una cuarta
+# componente ni sufijos de versión (p. ej. -preview o -2).
+VERSION_LINE = re.compile(
+    r"^[ \t]*(?:(?:GitHub[ \t]+)?Copilot[ \t]+CLI(?:[ \t]+version)?[ \t]*[:=]?[ \t]+|version[ \t]*:[ \t]*)?v?"
+    r"(?P<core>[0-9]{1,5}\.[0-9]{1,5}\.[0-9]{1,5})(?P<suffix>[-+][0-9A-Za-z][0-9A-Za-z.+-]{0,31})?"
+    r"(?=$|[ \t(]|[.,:](?=[ \t]|$))",
+    re.IGNORECASE,
+)
+ANSI_CSI = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]")
 
 
 def require_release_url(url: str) -> None:
@@ -68,6 +78,24 @@ def extract_cli(archive: Path, binary: Path) -> None:
     binary.chmod(0o700)
 
 
+def require_platform() -> None:
+    if platform.system() != "Linux" or platform.machine() != "x86_64" or platform.libc_ver()[0] != "glibc":
+        raise RuntimeError("El release fijado requiere Linux x86_64 con glibc")
+
+
+def install_verified(binary: Path) -> None:
+    """Publica el ejecutable sólo después de validar el mismo hash que QA."""
+    require_platform()
+    with TemporaryDirectory(prefix=".cepoes-release-", dir=binary.parent) as raw:
+        staging = Path(raw)
+        archive = staging / ASSET
+        extracted = staging / "copilot"
+        download(archive)
+        extract_cli(archive, extracted)
+        # Misma partición; la ruta aparece completa y nunca pisa otro archivo.
+        os.link(extracted, binary)
+
+
 def isolated_command(binary: Path, home: Path, *args: str) -> list[str]:
     # GitHub-hosted Linux VM: sudo no-interactivo. Red aislada, luego baja a
     # usuario no privilegiado. Si no puede aislarse, no ejecuta el binario.
@@ -83,7 +111,7 @@ def isolated_command(binary: Path, home: Path, *args: str) -> list[str]:
     ]
 
 
-def run_probe(binary: Path, home: Path, *args: str) -> str:
+def run_probe(binary: Path, home: Path, *args: str) -> subprocess.CompletedProcess[str]:
     proc = subprocess.run(
         isolated_command(binary, home, *args), cwd=home, stdin=subprocess.DEVNULL,
         text=True, capture_output=True, check=False, timeout=55,
@@ -94,26 +122,46 @@ def run_probe(binary: Path, home: Path, *args: str) -> str:
         err = proc.stderr
         reason = "el runner no pudo establecer el aislamiento de red/usuario" if re.search(r"(unshare|setpriv|sudo):", err) else "el CLI rechazó las opciones de QA"
         raise RuntimeError(f"{reason} (código {proc.returncode})")
-    return proc.stdout
+    return proc
+
+
+def verify_version(stdout: str, stderr: str) -> str:
+    """Comprueba ambos canales de --version; sólo registra valores saneados."""
+    observed = {}
+    for stream, output in (("stdout", stdout), ("stderr", stderr)):
+        matches = (VERSION_LINE.match(ANSI_CSI.sub("", line[:512])) for line in output.splitlines()[:64])
+        observed[stream] = [(m["core"], m["suffix"] is not None) for m in matches if m]
+    versions = {version for tokens in observed.values() for version in tokens}
+    if versions != {(VERSION, False)}:
+        summary = "; ".join(
+            f"{stream}=" + (", ".join(core + (" (con sufijo)" if suffix else "")
+                                     for core, suffix in tokens[:3]) or "sin versión reconocible")
+            for stream, tokens in observed.items()
+        )
+        raise RuntimeError(f"El binario no informa inequívocamente la versión estable {VERSION}: {summary}")
+    return "/".join(stream for stream, tokens in observed.items() if tokens)
 
 
 def main() -> None:
-    if platform.system() != "Linux" or platform.machine() != "x86_64" or platform.libc_ver()[0] != "glibc":
-        raise RuntimeError("La verificación requiere un runner Linux x86_64 con glibc")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--install-bin", type=Path, help="Instalar el binario verificado sin ejecutarlo")
+    options = parser.parse_args()
+    if options.install_bin:
+        install_verified(options.install_bin)
+        print(f"Copilot CLI {VERSION}: release verificado e instalado, sin ejecución.")
+        return
     if os.getuid() == 0:
         raise RuntimeError("La verificación requiere un usuario de runner no privilegiado")
     with TemporaryDirectory(prefix="cepoes-copilot-qa-") as raw:
         work = Path(raw)
         home = work / "home"
         (home / "empty-path").mkdir(parents=True)
-        archive = work / ASSET
         binary = work / "copilot"
-        download(archive)
-        extract_cli(archive, binary)
+        install_verified(binary)
         version = run_probe(binary, home, "--version")
-        if not re.search(r"(?<![\d.])" + re.escape(VERSION) + r"(?![\d.]|[-+])", version):
-            raise RuntimeError("El binario no informa la versión estable fijada")
-        help_text = run_probe(binary, home, "--help")
+        streams = verify_version(version.stdout, version.stderr)
+        print(f"Copilot CLI --version: {VERSION} ({streams}).")
+        help_text = run_probe(binary, home, "--help").stdout
         for flag in (*FLAGS, "--prompt", "--model"):
             base = flag.split("=", 1)[0]
             if not re.search(r"(?<![\w-])" + re.escape(base) + r"(?![\w-])", help_text):

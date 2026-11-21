@@ -42,7 +42,10 @@ registry = json.loads(REGISTRY.read_text(encoding='utf-8'))
 assert re.search(r'^\s*id-token:\s*write\s*$', workflow, re.M)
 assert 'models: read' not in workflow
 assert 'COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}' in workflow
-assert 'npm install -g @github/copilot@latest' in workflow
+assert 'python qa/probar_copilot_cli_release.py --install-bin' in workflow
+assert 'test "$(command -v copilot)" = "$RUNNER_TEMP/cepoes-copilot/copilot"' in workflow
+assert 'COPILOT_AUTO_UPDATE: "false"' in workflow
+assert '@github/copilot@' not in workflow
 assert 'automatizar_analisis_legislativo_v3.py' in workflow, 'Producción no usa v3'
 assert 'legislative-analysis-ingest-v2' in workflow
 for forbidden in ['SUPABASE_SERVICE_ROLE', 'SUPABASE_SECRET_KEY', 'OPENAI_API_KEY']:

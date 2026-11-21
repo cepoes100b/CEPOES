@@ -26,6 +26,7 @@ for path in required:
     assert path.is_file() and path.stat().st_size > 100, f'Falta o está vacío: {path.relative_to(ROOT)}'
 
 script = SCRIPT.read_text(encoding='utf-8')
+copilot = COPILOT.read_text(encoding='utf-8')
 hardened = HARDENED.read_text(encoding='utf-8')
 v3 = V3.read_text(encoding='utf-8')
 workflow = WORKFLOW.read_text(encoding='utf-8')
@@ -48,8 +49,10 @@ for forbidden in ['SUPABASE_SERVICE_ROLE', 'SUPABASE_SECRET_KEY', 'OPENAI_API_KE
     assert forbidden not in workflow, f'Secreto prohibido en workflow: {forbidden}'
 
 # Copilot no puede usar herramientas externas.
-assert '--no-ask-user' in hardened and '--no-custom-instructions' in hardened
-assert '--deny-tool=shell,write,read,url,memory' in hardened
+assert 'copilot.run_programmatic_copilot(prompt, model)' in hardened
+assert '--no-ask-user' in copilot and '--no-custom-instructions' in copilot
+assert '--deny-tool=shell,write,read,url,memory' in copilot
+assert '--sync-session=off' in copilot and '--no-remote' not in copilot
 assert 'No uses memoria, conocimiento general ni web' in hardened
 
 # Selección primaria strict-v2 conservada.

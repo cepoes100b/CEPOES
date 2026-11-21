@@ -20,6 +20,48 @@ COPILOT_MODEL = os.getenv("COPILOT_MODEL", "").strip()
 MODEL_LABEL = f"github-copilot-cli:{COPILOT_MODEL or 'auto'}"
 
 
+PROMPT_OPTIONS = (
+    "-s", "--no-ask-user", "--no-custom-instructions", "--no-auto-update",
+    "--sync-session=off", "--no-color", "--deny-tool=shell,write,read,url,memory",
+)
+
+
+def check_copilot_cli() -> None:
+    """Read the CLI help only: no prompt, model, authentication or draft writes."""
+    try:
+        proc = subprocess.run(
+            ["copilot", "--help"], text=True, capture_output=True, timeout=15,
+            env={"PATH": os.environ.get("PATH", os.defpath), "TERM": "dumb"},
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        raise pipeline.ModelExecutionError("No se pudo consultar la ayuda de Copilot CLI") from None
+    missing = [
+        flag for flag in (*PROMPT_OPTIONS, "--prompt") if flag.startswith("--")
+        and not re.search(r"(?<![\w-])" + re.escape(flag.split("=", 1)[0]) + r"(?![\w-])", proc.stdout)
+    ]
+    if proc.returncode or missing:
+        raise pipeline.ModelExecutionError("Copilot CLI incompatible con las opciones requeridas")
+
+
+def run_programmatic_copilot(prompt: str, model: str = "") -> dict:
+    cmd = ["copilot", "-p", prompt, *PROMPT_OPTIONS]
+    if model:
+        cmd.extend(["--model", model])
+    try:
+        proc = subprocess.run(
+            cmd, text=True, capture_output=True, timeout=180, env=os.environ.copy(),
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        raise pipeline.ModelExecutionError("Copilot CLI no disponible o excedió el tiempo límite") from None
+    if proc.returncode != 0:
+        # Do not log subprocess output: it may contain source or session data.
+        raise pipeline.ModelExecutionError(f"Copilot CLI terminó con código {proc.returncode}")
+    try:
+        return extract_json(proc.stdout)
+    except (RuntimeError, ValueError):
+        raise pipeline.ModelExecutionError("Copilot CLI no devolvió un JSON válido para el análisis") from None
+
+
 def schema_instruction() -> str:
     schema = pipeline.SCHEMA["schema"]
     return json.dumps(schema, ensure_ascii=False, separators=(",", ":"))
@@ -85,26 +127,7 @@ EVIDENCIA OFICIAL:
 {material}
 """.strip()
 
-    cmd = [
-        "copilot", "-p", prompt, "-s",
-        "--no-ask-user", "--no-custom-instructions", "--no-auto-update",
-        "--no-remote", "--no-remote-export", "--no-color",
-        "--deny-tool=shell,write,read,url,memory",
-    ]
-    if COPILOT_MODEL:
-        cmd.extend(["--model", COPILOT_MODEL])
-
-    proc = subprocess.run(
-        cmd,
-        text=True,
-        capture_output=True,
-        timeout=180,
-        env=os.environ.copy(),
-    )
-    if proc.returncode != 0:
-        detail = (proc.stderr or proc.stdout or "Error sin detalle").strip()[-1200:]
-        raise RuntimeError(f"Copilot CLI falló ({proc.returncode}): {detail}")
-    return extract_json(proc.stdout)
+    return run_programmatic_copilot(prompt, COPILOT_MODEL)
 
 
 def self_test() -> None:

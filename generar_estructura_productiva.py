@@ -16,7 +16,7 @@ import requests
 # El workflow normaliza el recurso descargable RUS 2017 y reemplaza esta URL
 # por un servidor local temporal antes de ejecutar el generador.
 RUS_URL = "https://data.buenosaires.gob.ar/es_AR/dataset/relevamiento-usos-suelo/resource/3c7e5f10-577a-44ea-b614-82cc05f842aa/download"
-MANZANAS_URL = "https://data.buenosaires.gob.ar/es_AR/dataset/manzanas/resource/78a97854-6930-4d1c-b345-deb43168d88d/download"
+MANZANAS_URL = "https://cdn.buenosaires.gob.ar/datosabiertos/datasets/secretaria-de-desarrollo-urbano/manzanas/manzanas_catastrales.geojson"
 OUT = Path("deploy/site-overlay/assets/data/estructura-productiva")
 TIMEOUT = 180
 

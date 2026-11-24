@@ -58,11 +58,13 @@ export function searchTerritories(territories,query){
 export function readState(search,territories){
   const p=new URLSearchParams(search);const ids=new Map(territories.map(f=>[featureID(f),f]));
   const raw=p.get('territorio')||'';const territory=ids.has(raw)?raw:'';
-  return {layer:Object.hasOwn(LAYERS,p.get('capa'))?p.get('capa'):'salud',level:territory?ids.get(territory).properties.level:p.get('escala')==='comuna'?'comuna':'barrio',territory,category:''};
+  const analysis=p.get('modo')==='analizar'?{mode:'analyze',view:p.get('vista')==='3d'?'3d':'flat',indicator:/^[a-z][a-z0-9-]{0,79}$/.test(p.get('indicador')||'')?p.get('indicador'):''}:{};
+  return {layer:Object.hasOwn(LAYERS,p.get('capa'))?p.get('capa'):'salud',level:territory?ids.get(territory).properties.level:p.get('escala')==='comuna'?'comuna':'barrio',territory,category:'',...analysis};
 }
 export function stateQuery(state){
   const p=new URLSearchParams({capa:Object.hasOwn(LAYERS,state.layer)?state.layer:'salud',escala:state.level==='comuna'?'comuna':'barrio'});
   if(/^barrio:[a-z0-9-]+$|^comuna:(?:[1-9]|1[0-5])$/.test(state.territory))p.set('territorio',state.territory);
+  if(state.mode==='analyze'){p.set('modo','analizar');p.set('vista',state.view==='3d'?'3d':'plana');if(/^[a-z][a-z0-9-]{0,79}$/.test(state.indicator||''))p.set('indicador',state.indicator);}
   return `?${p}`;
 }
 export function boundsFor(feature){

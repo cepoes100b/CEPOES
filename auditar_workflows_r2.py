@@ -18,6 +18,7 @@ RETIREMENT_CLASSES = {"archivar", "eliminar después de retención"}
 # La clasificación no desactiva archivos. Documenta la decisión propuesta y obliga
 # a revisar explícitamente cualquier workflow nuevo antes de incorporarlo.
 DECISIONS = {
+    "mapa-territorial-qa.yml": ("operativo", "QA local de prototipo territorial con Chromium/WebGL; solo lectura, sin secretos, publicación ni almacenamiento de artefactos."),
     "newsletter.yml": ("operativo", "Distribución de boletines publicados; activación explícita, cola privada y permisos de sólo lectura."),
     "CEPOES_auditar_reparar_publicar_FINAL.yml": ("archivar", "Reparación/publicación manual histórica; duplica el publicador canónico."),
     "CEPOES_auditoria_reparacion_final.yml": ("archivar", "Auditoría/reparación manual histórica con permisos amplios."),

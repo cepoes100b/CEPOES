@@ -1,0 +1,419 @@
+{
+  "tested_commit": "45170473c22a09a33976e90288457c369c95419f",
+  "run_url": "https://github.com/cepoes100b/CEPOES/actions/runs/37888431231",
+  "browser_suite": {
+    "passed": 22,
+    "failed": 0,
+    "skipped": 0
+  },
+  "local_tests": {
+    "javascript": 24,
+    "python": 15
+  },
+  "real_render": "Chromium WebGL2 ANGLE/SwiftShader software rendering",
+  "analytical_matrix": [
+    {
+      "width": 320,
+      "theme": "light",
+      "passed": true,
+      "selected_value": "41,6",
+      "controls_height_px": 458.125,
+      "turquoise_samples": 770,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 320,
+      "theme": "dark",
+      "passed": true,
+      "selected_value": "41,6",
+      "controls_height_px": 458.125,
+      "turquoise_samples": 772,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 390,
+      "theme": "light",
+      "passed": true,
+      "selected_value": "41,6",
+      "controls_height_px": 405.484375,
+      "turquoise_samples": 1182,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 390,
+      "theme": "dark",
+      "passed": true,
+      "selected_value": "41,6",
+      "controls_height_px": 405.484375,
+      "turquoise_samples": 1182,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 430,
+      "theme": "light",
+      "passed": true,
+      "selected_value": "41,6",
+      "controls_height_px": 405.484375,
+      "turquoise_samples": 1523,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 430,
+      "theme": "dark",
+      "passed": true,
+      "selected_value": "41,6",
+      "controls_height_px": 405.484375,
+      "turquoise_samples": 1524,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 37300000
+    },
+    {
+      "width": 1440,
+      "theme": "light",
+      "passed": true,
+      "selected_value": "41,6",
+      "controls_height_px": 1137.90625,
+      "turquoise_samples": 4012,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 39600000
+    },
+    {
+      "width": 1440,
+      "theme": "dark",
+      "passed": true,
+      "selected_value": "41,6",
+      "controls_height_px": 1137.90625,
+      "turquoise_samples": 4024,
+      "rendered_ids": [
+        "comuna:8",
+        "comuna:4",
+        "comuna:7",
+        "comuna:1",
+        "comuna:9",
+        "comuna:5",
+        "comuna:3",
+        "comuna:6",
+        "comuna:10",
+        "comuna:2",
+        "comuna:11",
+        "comuna:15",
+        "comuna:14",
+        "comuna:13",
+        "comuna:12"
+      ],
+      "a11y_violations": 0,
+      "js_heap_bytes": 33100000
+    }
+  ],
+  "performance": {
+    "performance-analysis": {
+      "context": "Chromium ANGLE/SwiftShader at390px, selected roof label active; camera and opt-in orbit frame cadence, not physical GPU benchmark",
+      "frames": 122,
+      "meanFrameMs": 16.504918032787074,
+      "p95FrameMs": 16.799999999999727,
+      "orbit": {
+        "frames": 121,
+        "meanFrameMs": 16.60413223140515,
+        "p95FrameMs": 16.700000000000728
+      }
+    },
+    "performance-mobile": {
+      "context": "390px Chromium ANGLE/SwiftShader, CI runner, reduced motion; frame cadence is not hardware GPU FPS",
+      "frames": 120,
+      "meanFrameMs": 16.715833333333237,
+      "p95FrameMs": 16.799999999999955
+    }
+  },
+  "screenshots": [
+    {
+      "file": "2d-1440-dark-overview.jpg",
+      "bytes": 110944,
+      "sha256": "a16a07a1494f2f46922323e1d3e4e556a61981d3197c1d8dcc92e4c25d70cecb"
+    },
+    {
+      "file": "2d-1440-dark.jpg",
+      "bytes": 103869,
+      "sha256": "20f2855c12a94371cf9564ee1372944d6b31d25cb5fad2205cc9a181b98a0e17"
+    },
+    {
+      "file": "2d-1440-light-overview.jpg",
+      "bytes": 108970,
+      "sha256": "a79586bdd6652574f6893fa1c503ef62a719dae41b5733c926a9887239e5fb8c"
+    },
+    {
+      "file": "2d-1440-light.jpg",
+      "bytes": 101368,
+      "sha256": "20b5035c3452290e5cf0a50ffaa773f1e4c3ddb0fbf3fc5f01c833e578621062"
+    },
+    {
+      "file": "2d-320-dark.jpg",
+      "bytes": 62990,
+      "sha256": "1410eff110e2e52235563a994c4ff34d96e44b9363e4188c0934c91630c8a232"
+    },
+    {
+      "file": "2d-320-light.jpg",
+      "bytes": 61823,
+      "sha256": "f78970cf8fd7e4cc98218ae97c596bcbf8cf2afad83b43c0dba5dd63a15c9260"
+    },
+    {
+      "file": "2d-390-dark.jpg",
+      "bytes": 69356,
+      "sha256": "3b24daf3ffffe2fb57f100a581df4d33aca6b1cae315c18a69502a26dbea5cd9"
+    },
+    {
+      "file": "2d-390-light.jpg",
+      "bytes": 67776,
+      "sha256": "31417c314e947eabbf371eeff530b1560374793fe613c670c728854610ae3657"
+    },
+    {
+      "file": "2d-430-dark.jpg",
+      "bytes": 72465,
+      "sha256": "d7611ef9f956cdd34a82f5258535ab5eb5831ac225a67c87e03eeae13c877cd9"
+    },
+    {
+      "file": "2d-430-light.jpg",
+      "bytes": 70743,
+      "sha256": "ac529bac504ada05f3a1abe9a652408179ae0134a8fc864bf65d185e86e981ae"
+    },
+    {
+      "file": "2d-touch-selected.jpg",
+      "bytes": 65449,
+      "sha256": "d35f802ac0b397fd078a1383a097f35ea44d399f1c0a558e8ee77f8ddc4e68de"
+    },
+    {
+      "file": "analysis-1440-dark-3d.jpg",
+      "bytes": 98655,
+      "sha256": "9b0b441afb56553c084b817f853eea1a5cef7fb46a62e7c0b3862ed96d31577c"
+    },
+    {
+      "file": "analysis-1440-dark-flat.jpg",
+      "bytes": 51506,
+      "sha256": "69ceab88d432d261c1e61cdddf7c55bda4fe5cd1205efeca28bf9f407a3ae4d3"
+    },
+    {
+      "file": "analysis-1440-light-3d.jpg",
+      "bytes": 94221,
+      "sha256": "f7bb11f85345c6a8a3be5bed4d8829698502f2bb97b7bc6c2d5af82ea6686a2f"
+    },
+    {
+      "file": "analysis-1440-light-flat.jpg",
+      "bytes": 51567,
+      "sha256": "159951111ff4007572393d35fa9041597259b9524dc62c82b7c9e6c548a295e2"
+    },
+    {
+      "file": "analysis-320-dark-3d.jpg",
+      "bytes": 84719,
+      "sha256": "36c61d3857cb91cf9ff0dbff90ca42f21658defb5fb71385f9c56356919ef0fa"
+    },
+    {
+      "file": "analysis-320-dark-flat.jpg",
+      "bytes": 32588,
+      "sha256": "a9e1b672b86d34a4c186e610cdaf4150e9cb18b905c075582ef260831d583a79"
+    },
+    {
+      "file": "analysis-320-light-3d.jpg",
+      "bytes": 82154,
+      "sha256": "4a2cbc192d26c1ebe422759fc9821b92558d4430cf11479445d84f7cb3172d85"
+    },
+    {
+      "file": "analysis-320-light-flat.jpg",
+      "bytes": 31994,
+      "sha256": "5fc9efac47b15802d5bd77678abded930d07934de409dae3c14a2a4300cffe59"
+    },
+    {
+      "file": "analysis-390-dark-3d.jpg",
+      "bytes": 88723,
+      "sha256": "bfe480c7a15043a745027a77b7bece8d24c49b2a8de67c730e405480a307af6b"
+    },
+    {
+      "file": "analysis-390-dark-flat.jpg",
+      "bytes": 33594,
+      "sha256": "65ecad83fdba547b8ec1d2c27988e02c224c614b8d9c98116c42579af4ac53c1"
+    },
+    {
+      "file": "analysis-390-light-3d.jpg",
+      "bytes": 85276,
+      "sha256": "9905293035ada78dc669ab0a21713f69ec6d5adda2c49f00bca030663690240c"
+    },
+    {
+      "file": "analysis-390-light-flat.jpg",
+      "bytes": 33066,
+      "sha256": "bd1272380f3817eaac6d8c0d87626a50b8955a7e43d72817424763b224f2697e"
+    },
+    {
+      "file": "analysis-430-dark-3d.jpg",
+      "bytes": 89374,
+      "sha256": "bd2bdd4f603bc00e691a14f44bb863a61d174ee65124cd42239536cd30b7d6bb"
+    },
+    {
+      "file": "analysis-430-dark-flat.jpg",
+      "bytes": 34196,
+      "sha256": "03d0746e10a27b78bcecf6e999d2533d250d2fb9d6db8e2913a4559a6d7321ea"
+    },
+    {
+      "file": "analysis-430-light-3d.jpg",
+      "bytes": 85704,
+      "sha256": "312d3c5d898057b890e0edc89a057be26ba13a5b1006918afaf234fd58508fb6"
+    },
+    {
+      "file": "analysis-430-light-flat.jpg",
+      "bytes": 33425,
+      "sha256": "b97f29b0449be99a7b1a1f8922c22ae0c61d6308b9919bf04434a701bdc214ba"
+    },
+    {
+      "file": "analysis-no-webgl.jpg",
+      "bytes": 88575,
+      "sha256": "9683d936dd54767ac6bef31f252f8f2efeec385f1e4bb145254d2d5f1ac66ee8"
+    },
+    {
+      "file": "reference-d3.jpg",
+      "bytes": 24262,
+      "sha256": "3fe6aec0b897b9d6c6db2d363d6d2d8b6463f0f27431b9478e4d5543e120a65a"
+    }
+  ],
+  "limitations": [
+    "Software-rendered CI is not physical GPU or phone performance.",
+    "No Safari, physical iPhone/Android or screen-reader certification.",
+    "Missing-WebGL fallback is a controlled fault test, not graphical rendering.",
+    "No deployment or external preview."
+  ],
+  "visual_review": {
+    "status": "inspected",
+    "three_dimensional": 8,
+    "explorer_2d": "Desktop delivery image is byte-identical to the inspected previous version.",
+    "p1_findings": 0,
+    "p2_closed": [
+      "Rótulo único con pin anclado al techo real, misma altura interpolada, sin sustituir el color; occlusión controlada y distintivo fijo de selección.",
+      "Texto extenso en details nativo y enlace a método completo; período/universo breve visibles; fila móvil de controles."
+    ],
+    "residuals": [
+      "La oclusión y la dependencia perceptiva del volumen respecto del área son inherentes a la perspectiva3D; tabla, ranking y vista plana permanecen disponibles.",
+      "No hay certificación de GPU física, Safari ni lector de pantalla."
+    ],
+    "flat_analytical": 8
+  }
+}

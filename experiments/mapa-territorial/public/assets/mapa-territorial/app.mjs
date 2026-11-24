@@ -2,8 +2,9 @@ import {LAYERS,normalize,escapeHTML as esc,number as fmt,featureID,collection,ha
 import {TerritorialMap,palette} from './engine.mjs';
 const $=id=>document.getElementById(id);
 const BASE=new URL('./data/',import.meta.url);
-const state={layer:'salud',level:'barrio',territory:'',category:'',query:'',limit:20};
-const cache=new Map();let territories=[],manifest=null,loaded=null,stats=null,engine=null,request=0,initializing=false,engineAttempted=false;
+const state={layer:'salud',level:'barrio',territory:'',category:'',query:'',limit:20,mode:'explore',view:'flat',indicator:''};
+let analysis=null,analysisLoad=null,analysisRequest=0;
+const cache=new Map();let territories=[],manifest=null,loaded=null,loadedLayerId='',stats=null,engine=null,request=0,initializing=false,engineAttempted=false;
 const qa={started:performance.now(),status:'loading',map:'pending',measures:[],loadedLayers:[]};
 Object.defineProperty(window,'__CEPOES_MAP_QA',{value:qa,writable:false});
 const measure=(name,start)=>{qa.measures.push({name,ms:Math.round((performance.now()-start)*100)/100});if(qa.measures.length>100)qa.measures.shift();};
@@ -24,6 +25,40 @@ async function json(relative){
   const response=await fetch(url,{credentials:'omit',cache:relative==='manifest.json'?'no-cache':'default',signal:AbortSignal.timeout(12000)});
   if(!response.ok)throw new Error(`No se pudo leer ${relative} (HTTP ${response.status})`);
   return response.json();
+}
+function modeChrome(){
+  const analytical=state.mode==='analyze';$('mt-explorer').dataset.mode=state.mode;
+  document.querySelectorAll('#mt-mode-controls [data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===state.mode)));
+  for(const id of ['mt-analysis-controls','mt-analysis-ranking','mt-analysis-data'])$(id).hidden=!analytical;
+  for(const id of ['mt-records','mt-accessible','mt-method'])$(id).hidden=analytical;
+  document.querySelector('.mt-layers').hidden=analytical;
+  $('mt-streets').parentElement.hidden=analytical;
+  document.querySelectorAll('.mt-dossier-actions a').forEach(a=>a.hidden=analytical);
+  $('mt-search-results').hidden=true;$('mt-service-card').hidden=true;
+  engine?.map.resize();
+}
+async function setMode(mode,{push=true,fit=false}={}){
+  const token=++analysisRequest,start=performance.now();state.mode=mode==='analyze'?'analyze':'explore';
+  modeChrome();clearError();
+  if(state.mode==='explore'){
+    analysis?.deactivate();populateTerritories();syncURL(push);
+    if(loaded&&loadedLayerId===state.layer)render();else if(manifest)await loadLayer(state.layer,{push:false});return;
+  }
+  populateTerritories();syncURL(push);
+  if(!analysis){
+    $('mt-metrics').innerHTML='<p class="mt-small">Cargando el indicador y sus fuentes verificadas…</p>';
+    $('mt-legend').textContent='Esperando datos analíticos. No se muestran valores de otra capa.';
+    $('mt-analysis-indicator').disabled=true;status('Cargando modo analítico…');
+    qa.analysis={status:'loading',rendered:false};
+    // Do not leave 2D inventory colors or records visible under a new analytical legend.
+    engine?.update({level:state.level,territory:state.territory,records:[],stats:null});
+    try{
+      analysisLoad??=import('./analysis/controller.mjs').then(m=>m.createAnalysis({json,onChange:patch=>{Object.assign(state,patch);populateTerritories();render();syncURL(true);},onSelect:id=>selectTerritory(id),qa}));
+      analysis=await analysisLoad;
+    }catch(error){analysisLoad=null;if(token!==analysisRequest||state.mode!=='analyze')return;qa.analysis={status:'error',rendered:false};qa.status='analysis-error';showError(`No se pudo verificar el indicador: ${error.message}. Los datos anteriores no se usan como reemplazo.`);status('Indicador no disponible. Volvé a intentar.');return;}
+  }
+  if(token!==analysisRequest||state.mode!=='analyze')return;
+  $('mt-analysis-indicator').disabled=false;render();qa.status='ready';measure('analysis-ready',start);syncURL(false);if(fit)engine?.fit(selected());
 }
 function populateTerritories(){
   $('mt-level').value=state.level;
@@ -46,7 +81,7 @@ function renderSources(){
 }
 async function loadLayer(id,{force=false,push=true}={}){
   if(!Object.hasOwn(LAYERS,id))return;const token=++request,start=performance.now();
-  state.layer=id;state.category='';state.limit=20;state.query='';$('mt-record-search').value='';loaded=null;stats=null;
+  state.layer=id;state.category='';state.limit=20;state.query='';$('mt-record-search').value='';loaded=null;loadedLayerId='';stats=null;
   $('mt-service-card').hidden=true;$('mt-service-card').innerHTML='';
   $('mt-territory-table').innerHTML='';$('mt-table-caption').textContent=`${LAYERS[id].name} · cargando fuente`;
   $('mt-record-count').textContent='Cargando…';$('mt-record-warning').textContent='';$('mt-more').hidden=true;
@@ -64,22 +99,23 @@ async function loadLayer(id,{force=false,push=true}={}){
       const ids=data.features.map(featureID);if(ids.some(x=>!x)||new Set(ids).size!==ids.length)throw new Error('Registros sin identificador o duplicados.');
       return data;
     }).catch(e=>{cache.delete(id);throw e;}));
-    const data=await cache.get(id);if(token!==request)return;
-    loaded=data;
+    const data=await cache.get(id);if(token!==request||state.layer!==id)return;
+    loaded=data;loadedLayerId=id;
     if(!qa.loadedLayers.includes(id))qa.loadedLayers.push(id);
     const categories=[...new Set(data.features.map(f=>f.properties.category).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));
     $('mt-category').innerHTML='<option value="">Todos los tipos</option>'+categories.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');$('mt-category').disabled=false;
     render();measure(`load-layer:${id}`,start);qa.status='ready';
-  }catch(error){if(token!==request)return;qa.status='layer-error';showError(`${LAYERS[id].name}: ${error.message}. Podés volver a intentar o elegir otra capa.`);status('Capa no disponible. No se sustituyen los datos faltantes por ceros.');$('mt-record-list').innerHTML='<p class="mt-empty">Sin datos disponibles para esta capa. Los registros anteriores se ocultaron para evitar confusiones.</p>';$('mt-territory-table').innerHTML='';$('mt-record-count').textContent='Sin dato';$('mt-more').hidden=true;}
+  }catch(error){if(token!==request||state.layer!==id||state.mode==='analyze')return;qa.status='layer-error';showError(`${LAYERS[id].name}: ${error.message}. Podés volver a intentar o elegir otra capa.`);status('Capa no disponible. No se sustituyen los datos faltantes por ceros.');$('mt-record-list').innerHTML='<p class="mt-empty">Sin datos disponibles para esta capa. Los registros anteriores se ocultaron para evitar confusiones.</p>';$('mt-territory-table').innerHTML='';$('mt-record-count').textContent='Sin dato';$('mt-more').hidden=true;}
 }
 function render(){
+  if(state.mode==='analyze'){analysis?.render(state,engine,territories);return;}
   const t=selected(),p=t?.properties,name=p?.name||'Toda la Ciudad';
   $('mt-place-name').textContent=name;$('mt-map-title').textContent=p?.name||'Ciudad de Buenos Aires';
   $('mt-place-kind').textContent=p?(p.level==='barrio'?`Barrio · Comuna ${p.comuna}`:'Comuna'):'Ciudad de Buenos Aires';
   $('mt-place-description').textContent=p?`${fmt(p.area_km2,2)} km² de superficie administrativa · ${LAYERS[state.layer].name}`:'48 barrios y 15 comunas. Elegí un territorio para comparar su inventario.';
   $('mt-related').href=p?.level==='barrio'?`/territorio/barrios/${p.slug}/`:'/territorio/equipamientos/';
   $('mt-related').textContent=p?.level==='barrio'?`Leer la ficha de ${p.name} →`:'Explorar catálogo territorial →';
-  if(!loaded)return;
+  if(!loaded||loadedLayerId!==state.layer)return;
   const start=performance.now(),records=filterRecords(loaded.features,{category:state.category});
   stats=aggregate(records,territories);
   const scope=filterRecords(records,{territory:state.territory});
@@ -125,7 +161,7 @@ function positionDescription(f){
   return manifest.position_methods[p.position_method]||'Punto procedente de fuente oficial.';
 }
 function renderRecords(){
-  if(!loaded)return;
+  if(!loaded||loadedLayerId!==state.layer)return;
   const all=filterRecords(loaded.features,{territory:state.territory,category:state.category});
   const records=filterRecords(all,{query:state.query}).sort((a,b)=>a.properties.name.localeCompare(b.properties.name,'es'));
   $('mt-records-title').textContent=LAYERS[state.layer].name+(selected()?` en ${selected().properties.name}`:' en la Ciudad');
@@ -145,12 +181,12 @@ function mapFailed(error){
   if(engine){engine.destroy();engine=null;}
   qa.map='unavailable';$('mt-map').classList.add('mt-map-failed');
   $('mt-map').innerHTML='<div class="mt-map-loading" role="status"><p>El mapa interactivo no está disponible en este navegador. Podés explorar todos los barrios, comunas y registros con los selectores y la tabla de esta página.</p></div>';
-  $('mt-streets').disabled=true;$('mt-fit').disabled=true;console.warn('CEPOES Mapa:',error?.message||'WebGL no disponible');
+  $('mt-streets').disabled=true;$('mt-fit').disabled=true;if(state.mode==='analyze')render();console.warn('CEPOES Mapa:',error?.message||'WebGL no disponible');
 }
 async function initEngine(){
   if(engineAttempted)return;engineAttempted=true;
   try{
-    engine=await TerritorialMap.create({container:'mt-map',territories,onTerritory:id=>selectTerritory(id),onRecord:showRecord,onReady:()=>{$('mt-map-loading')?.remove();$('mt-streets').disabled=false;$('mt-fit').disabled=false;qa.map='ready';measure('map-ready',qa.started);if(selected())engine?.fit(selected());},onFailure:mapFailed,onBaseStatus:(message,enabled)=>{$('mt-base-status').textContent=message;$('mt-streets').checked=enabled;}});
+    engine=await TerritorialMap.create({container:'mt-map',territories,onTerritory:id=>selectTerritory(id),onRecord:showRecord,onReady:()=>{$('mt-map-loading')?.remove();$('mt-streets').disabled=false;$('mt-fit').disabled=false;qa.map='ready';measure('map-ready',qa.started);render();if(selected())engine?.fit(selected());},onFailure:mapFailed,onBaseStatus:(message,enabled)=>{$('mt-base-status').textContent=message;$('mt-streets').checked=enabled;}});
     render();
   }catch(e){mapFailed(e);}
 }
@@ -161,10 +197,11 @@ async function initialize(){
     ({features:territories}=assertTerritories(await json('territories.geojson')));
     if(!Array.isArray(manifest.sources)||!Array.isArray(manifest.layers)||['salud','educacion','verdes'].some(id=>!manifest.layers.some(l=>l.id===id)))throw new Error('Manifiesto de fuentes incompleto.');
     Object.assign(state,readState(location.search,territories));populateTerritories();renderSources();
-    await loadLayer(state.layer,{push:false});initEngine();
+    if(state.mode==='analyze')await setMode('analyze',{push:false});else await loadLayer(state.layer,{push:false});initEngine();
   }catch(error){qa.status='initial-error';showError(`No se pudo iniciar el explorador: ${error.message}. Volvé a intentar.`);$('mt-map-loading').textContent='Cartografía no disponible. No se muestran territorios parciales.';status('No se pudo comprobar la cobertura 48 barrios / 15 comunas.');}
   finally{initializing=false;}
 }
+$('mt-mode-controls').addEventListener('click',e=>{const button=e.target.closest('[data-mode]');if(!button||!manifest||button.dataset.mode===state.mode)return;if(button.dataset.mode==='analyze'){if(!state.territory)state.level='comuna';state.view='3d';}setMode(button.dataset.mode);});
 $('mt-search').addEventListener('input',renderSearch);
 $('mt-search').addEventListener('keydown',e=>{if(e.key==='Escape'){$('mt-search-results').hidden=true;}if(e.key==='ArrowDown'){e.preventDefault();$('mt-search-results').querySelector('button')?.focus();}});
 $('mt-search-form').addEventListener('submit',e=>{e.preventDefault();const matches=searchTerritories(territories,$('mt-search').value);if(matches.length===1){selectTerritory(featureID(matches[0]));$('mt-search-results').hidden=true;}else renderSearch();});
@@ -182,7 +219,7 @@ $('mt-reset').addEventListener('click',()=>{state.category='';$('mt-category').v
 $('mt-fit').addEventListener('click',()=>engine?.fit(selected()));
 $('mt-streets').addEventListener('change',()=>engine?.setStreets($('mt-streets').checked));
 $('mt-share').addEventListener('click',()=>{syncURL();$('mt-share-url').hidden=false;$('mt-share-url').focus();$('mt-share-url').select();});
-$('mt-retry').addEventListener('click',()=>manifest&&territories.length?loadLayer(state.layer,{force:true,push:false}):initialize());
-window.addEventListener('popstate',()=>{if(!territories.length)return;const next=readState(location.search,territories),changed=next.layer!==state.layer;Object.assign(state,next);state.query='';state.limit=20;$('mt-record-search').value='';$('mt-category').value='';$('mt-service-card').hidden=true;populateTerritories();if(changed)loadLayer(state.layer,{push:false});else{render();engine?.fit(selected());}});
-new MutationObserver(()=>{if(stats)renderLegend();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+$('mt-retry').addEventListener('click',()=>state.mode==='analyze'&&manifest?setMode('analyze',{push:false}):manifest&&territories.length?loadLayer(state.layer,{force:true,push:false}):initialize());
+window.addEventListener('popstate',()=>{if(!territories.length)return;const next={mode:'explore',view:'flat',indicator:'',...readState(location.search,territories)},changed=next.layer!==state.layer;if(changed){request++;loaded=null;loadedLayerId='';stats=null;}Object.assign(state,next);state.query='';state.limit=20;$('mt-record-search').value='';$('mt-category').value='';$('mt-service-card').hidden=true;populateTerritories();if(state.mode==='analyze')setMode('analyze',{push:false,fit:true});else{analysisRequest++;analysis?.deactivate();modeChrome();if(changed||!loaded)loadLayer(state.layer,{push:false});else{render();engine?.fit(selected());}}});
+new MutationObserver(()=>{if(state.mode==='analyze')render();else if(stats)renderLegend();}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 initialize();

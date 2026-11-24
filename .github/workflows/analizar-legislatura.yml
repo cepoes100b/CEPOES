@@ -35,10 +35,11 @@ concurrency:
 
 jobs:
   analizar:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     env:
       ANALYSIS_MAX_ITEMS: ${{ inputs.max_items || '3' }}
+      COPILOT_AUTO_UPDATE: "false"
       LEGISLATIVE_ANALYSIS_FUNCTION_URL: https://nriexnijkjamrmfivfmd.supabase.co/functions/v1/legislative-analysis-ingest-v2
       COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
     steps:
@@ -46,9 +47,6 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
-      - uses: actions/setup-node@v5
-        with:
-          node-version: "22"
       - name: Verificar credencial de Copilot
         shell: bash
         run: |
@@ -56,9 +54,22 @@ jobs:
             echo "Falta el secreto COPILOT_GITHUB_TOKEN (fine-grained PAT con Copilot Requests)." >&2
             exit 21
           fi
-      - name: Instalar dependencias
+      - name: Instalar el mismo binario de Copilot verificado en QA
+        shell: bash
         run: |
-          pip install -r requirements.txt
-          npm install -g @github/copilot@latest
+          set -euo pipefail
+          install_dir="$RUNNER_TEMP/cepoes-copilot"
+          mkdir -m 700 -- "$install_dir"
+          env -i PATH="$PATH" HOME="$install_dir" \
+            python qa/probar_copilot_cli_release.py --install-bin "$install_dir/copilot"
+          printf '%s\n' "$install_dir" >> "$GITHUB_PATH"
+      - name: Instalar dependencias de Python
+        run: pip install -r requirements.txt
+      - name: Validar opciones del CLI sin inferencia
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(command -v copilot)" = "$RUNNER_TEMP/cepoes-copilot/copilot"
+          python -c 'from automatizar_analisis_legislativo_copilot import check_copilot_cli; check_copilot_cli()'
       - name: Generar y guardar borradores privados
         run: python automatizar_analisis_legislativo_v3_3.py --max-items "$ANALYSIS_MAX_ITEMS"

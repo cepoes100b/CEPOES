@@ -368,6 +368,10 @@ def kind_for(project: dict) -> str:
     return "proyecto"
 
 
+class ModelExecutionError(RuntimeError):
+    """An inference runner failed; this is not a no-change or duplicate result."""
+
+
 def process(max_items: int) -> int:
     if not LEG_PATH.exists():
         raise RuntimeError(f"No existe {LEG_PATH.name}")
@@ -382,6 +386,8 @@ def process(max_items: int) -> int:
 
     generated = 0
     scanned = 0
+    model_completed = 0
+    model_failed = 0
     for project in candidates:
         if generated >= max_items or scanned >= max(max_items * 8, 40):
             break
@@ -396,6 +402,7 @@ def process(max_items: int) -> int:
                 print("  ↳ sin cambios de fuente; se conserva la versión existente")
                 continue
             analysis = call_model(material)
+            model_completed += 1
             title_sum = clean(project.get("sumario"), 300)
             title = f"{numero} · {title_sum}" if title_sum else f"Análisis técnico · {numero}"
             result = private_call({
@@ -408,9 +415,17 @@ def process(max_items: int) -> int:
                 print(f"  ✓ borrador automático v{result.get('version')} guardado en Supabase")
             else:
                 print("  ↳ duplicado evitado")
+        except ModelExecutionError as exc:
+            model_failed += 1
+            print(f"  ✗ {exc}", file=sys.stderr)
         except Exception as exc:
             print(f"  ✗ {exc}", file=sys.stderr)
     print(f"Generados: {generated} · escaneados: {scanned}")
+    print(f"Inferencia: {model_completed} completadas · {model_failed} fallidas")
+    if model_failed and not model_completed:
+        raise ModelExecutionError("Ninguna inferencia completada tras errores del CLI")
+    if model_failed:
+        print("::warning::Análisis legislativo parcial: hubo errores de inferencia", file=sys.stderr)
     return generated
 
 

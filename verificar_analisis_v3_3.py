@@ -18,7 +18,8 @@ for token in [
     assert token in v33, f'Falta guardrail v3.3: {token}'
 assert 'automatizar_analisis_legislativo_v3_3.py --max-items' in workflow
 assert 'cancel-in-progress: true' in workflow
-assert 'automatizar_analisis_legislativo_v3_3.py --self-test' in validation
+assert 'python -m unittest test_copilot_cli_offline.py' in validation
+assert 'v33.self_test()' in (ROOT / 'test_copilot_cli_offline.py').read_text(encoding='utf-8')
 assert 'verificar_analisis_v3_3.py' in validation
 
 print('Análisis legislativo v3.3 · validación estática OK')

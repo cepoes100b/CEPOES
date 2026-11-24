@@ -31,8 +31,8 @@ uses_v33 = ('import automatizar_analisis_legislativo_v3_2 as v32' in v33 and
             'automatizar_analisis_legislativo_v3_3.py --max-items' in workflow)
 assert uses_v32 or uses_v33, 'Producción no usa v3.2 ni un sucesor compatible'
 assert 'cancel-in-progress: true' in workflow
-assert ('automatizar_analisis_legislativo_v3_2.py --self-test' in validation or
-        'automatizar_analisis_legislativo_v3_3.py --self-test' in validation)
+assert 'python -m unittest test_copilot_cli_offline.py' in validation
+assert 'v33.self_test()' in (ROOT / 'test_copilot_cli_offline.py').read_text(encoding='utf-8')
 assert 'verificar_analisis_v3_2.py' in validation
 
 print('Análisis legislativo v3.2 · validación estática OK')

@@ -53,12 +53,37 @@ def main() -> None:
         ("Salud mental", "/observatorio/salud-mental/", "/cepoes/metodologia/salud-mental/", "SNIC · fuentes sanitarias oficiales", mental.get("generated_at"), "Serie 2016–2025 · red territorial CABA"),
         ("Migraciones", "/territorio/migraciones/", "/cepoes/metodologia/migraciones/", "INDEC · IDECBA · EAH", migration.get("updated_at") or migration.get("generated"), f'{len(migration.get("communes", {}))} comunas · Censo 2022 y EAH'),
     ]
+    structure_status = legislature.get("estado_estructura_institucional")
+    if structure_status and (
+        structure_status.get("estado") != "degradada"
+        or structure_status.get("motivo") != "omisiones_verificadas_comisiones"
+    ):
+        raise ValueError("Estado público de estructura institucional inválido")
+    structure_note = ""
+    if structure_status:
+        validated = date(structure_status["ultimo_validado_en"])
+        checked = date(structure_status["intentado_en"])
+        details = "; ".join(
+            f'{html.escape(c["comision"])} ({int(c["integrantes_observados"])} de {int(c["integrantes_normativos"])})'
+            for c in structure_status["comisiones"]
+        )
+        structure_note = (
+            f'<p class="state-source"><strong>Estructura institucional: última validada el {validated}.</strong> '
+            f'En la revisión del {checked}, las fuentes oficiales mostraron menos integrantes: {details}. '
+            'La fecha de procesamiento indicada corresponde al monitor, no a la nómina retenida.</p>'
+        )
+
     cards = "".join(
-        f'<article class="state-card"><div class="state-card-top"><span class="state-dot" aria-hidden="true"></span><span>Conjunto incorporado</span></div>'
+        '<article class="state-card"><div class="state-card-top">'
+        + ('<span>Estructura institucional con actualización parcial</span>'
+           if title == "Legislatura" and structure_note
+           else '<span class="state-dot" aria-hidden="true"></span><span>Conjunto incorporado</span>')
+        + '</div>'
         f'<h3><a href="{product}">{html.escape(title)}</a></h3>'
         f'<p class="state-source">{html.escape(source)}</p>'
         f'<dl><div><dt>Procesado</dt><dd>{date(processed)}</dd></div><div><dt>Cobertura</dt><dd>{html.escape(coverage)}</dd></div></dl>'
-        f'<div class="state-actions"><a href="{product}">Explorar datos <span aria-hidden="true">→</span></a><a href="{method}">Ficha técnica <span aria-hidden="true">→</span></a></div></article>'
+        + (structure_note if title == "Legislatura" else "")
+        + f'<div class="state-actions"><a href="{product}">Explorar datos <span aria-hidden="true">→</span></a><a href="{method}">Ficha técnica <span aria-hidden="true">→</span></a></div></article>'
         for title, product, method, source, processed, coverage in rows
     )
     generated = datetime.now().astimezone().strftime("%Y-%m-%d")

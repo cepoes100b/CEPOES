@@ -12,6 +12,7 @@ autoridades y metadatos institucionales públicos.
 from __future__ import annotations
 
 import json
+import os
 import re
 import unicodedata
 from datetime import datetime
@@ -21,10 +22,16 @@ from zoneinfo import ZoneInfo
 import requests
 from bs4 import BeautifulSoup
 
+from verificar_estructura_legislativa import (
+    BLOCK_PAGE, DEGRADED_REASON, KNOWN_BLOCK, KNOWN_MISSING_MEMBER,
+    KNOWN_PREVIOUS_BLOCK_TOTAL, KNOWN_ROSTER_GAPS, OFFICIAL_BASE,
+    public_structure_status, validate_structure,
+)
+
 OUT = Path("estructura_legislativa.json")
 TZ = ZoneInfo("America/Argentina/Buenos_Aires")
-BASE = "https://www.legislatura.gob.ar"
-BLOCK_URL = f"{BASE}/bloque/fuerzaporbuenosaires"
+BASE = OFFICIAL_BASE
+BLOCK_URL = BLOCK_PAGE
 RESOLUTION_URL = "https://parlamentaria.legislatura.gob.ar/pages/download.aspx?IdDoc=223084"
 UA = "cepoes-estructura-legislativa/1.0 (+https://github.com/cepoes100b/CEPOES)"
 
@@ -92,13 +99,14 @@ def row_cells(tr) -> list[str]:
     return [clean(cell.get_text(" ", strip=True)) for cell in tr.find_all(["th", "td"], recursive=False)]
 
 
-def parse_member_table(soup: BeautifulSoup) -> list[dict]:
+def read_member_table(soup: BeautifulSoup) -> tuple[list[dict], int]:
     """Lee la tabla Integrantes por nombre de columna, nunca por posición fija.
 
     La web oficial antepone una columna de imagen sin encabezado, por lo que
     asumir que Diputado es la columna 0 genera un corrimiento silencioso.
     """
     best: list[dict] = []
+    incomplete = 0
     for table in soup.find_all("table"):
         trs = table.find_all("tr")
         header_index = None
@@ -123,15 +131,20 @@ def parse_member_table(soup: BeautifulSoup) -> list[dict]:
 
         rows: list[dict] = []
         need = max(positions.values())
+        incomplete_rows = 0
         for tr in trs[header_index + 1:]:
             cells = row_cells(tr)
             if len(cells) <= need:
+                incomplete_rows += bool(any(cells))
                 continue
             name = cells[positions["nombre"]]
             block = cells[positions["bloque"]]
             role = cells[positions["cargo"]]
             since = cells[positions["desde"]] if "desde" in positions and len(cells) > positions["desde"] else ""
+            if norm(name) in {"diputado", "diputado a"} and norm(block) == "bloque" and norm(role) == "cargo":
+                continue
             if not name or not block or norm(name) in {"diputado", "diputado a", "nombre"}:
+                incomplete_rows += bool(any(cells))
                 continue
             rows.append({
                 "nombre": name,
@@ -140,27 +153,35 @@ def parse_member_table(soup: BeautifulSoup) -> list[dict]:
                 "integrante_desde": since or None,
             })
         if len(rows) > len(best):
-            best = rows
-    return best
+            best, incomplete = rows, incomplete_rows
+    return best, incomplete
+
+
+def parse_member_table(soup: BeautifulSoup) -> list[dict]:
+    return read_member_table(soup)[0]
+
+
+class RosterCountMismatch(RuntimeError):
+    def __init__(self, commission: dict, incomplete_rows: int):
+        self.commission = commission
+        self.incomplete_rows = incomplete_rows
+        super().__init__(
+            f"{commission['nombre']}: esperaba {commission['integrantes_normativos']} integrantes "
+            f"y encontré {len(commission['integrantes'])} en {commission['url']}"
+        )
 
 
 def parse_commission(session: requests.Session, official_name: str, slug: str, expected: int, weekly: bool) -> dict:
     url = f"{BASE}/comision/{slug}"
     r = request(session, url)
     soup = BeautifulSoup(r.text, "html.parser")
-    members = parse_member_table(soup)
-    if len(members) != expected:
-        raise RuntimeError(f"{official_name}: esperaba {expected} integrantes y encontré {len(members)} en {url}")
-
+    members, incomplete = read_member_table(soup)
     authorities = [m for m in members if norm(m.get("cargo")) != "vocal"]
-    if not any(norm(m.get("cargo")) == "presidente" for m in members):
-        raise RuntimeError(f"{official_name}: no se identificó presidencia")
-
     h1 = soup.find("h1")
-    page_name = clean(h1.get_text(" ", strip=True)) if h1 else official_name
-    return {
+    page_name = clean(h1.get_text(" ", strip=True)) if h1 else ""
+    commission = {
         "nombre": official_name,
-        "nombre_fuente": page_name,
+        "nombre_fuente": page_name or official_name,
         "slug": slug,
         "url": url,
         "integrantes_normativos": expected,
@@ -168,6 +189,22 @@ def parse_commission(session: requests.Session, official_name: str, slug: str, e
         "autoridades": authorities,
         "integrantes": members,
     }
+    if len(members) != expected:
+        # Sin identificación de fuente, no es un caso elegible para retención controlada.
+        raise RosterCountMismatch(commission, incomplete + int(not page_name or norm(page_name) != norm(official_name)))
+    validate_members(commission, 0)
+    return commission
+
+
+def validate_members(commission: dict, incomplete_rows: int) -> None:
+    name = commission["nombre"]
+    members = commission["integrantes"]
+    if incomplete_rows:
+        raise RuntimeError(f"{name}: {incomplete_rows} filas potencialmente incompletas")
+    if len({person_key(m["nombre"]) for m in members}) != len(members):
+        raise RuntimeError(f"{name}: integrantes duplicados")
+    if not any(norm(m.get("cargo")) == "presidente" for m in members):
+        raise RuntimeError(f"{name}: no se identificó presidencia")
 
 
 def parse_block_count(session: requests.Session) -> int | None:
@@ -212,13 +249,99 @@ def find_claudia(commissions: list[dict]) -> dict:
     return {"nombre": canonical_name, "bloque": "Fuerza por Buenos Aires", "comisiones": roles}
 
 
+def known_roster_shape(error: RosterCountMismatch) -> bool:
+    commission = error.commission
+    gap = KNOWN_ROSTER_GAPS.get(commission["slug"])
+    return bool(
+        gap and commission["integrantes_normativos"] == gap[1]
+        and len(commission["integrantes"]) == gap[1] - 1
+        and error.incomplete_rows == 0
+    )
+
+
+def retain_validated_structure(observed: list[dict], fpba: list[dict], official_count: int, now: str) -> dict:
+    previous = json.loads(OUT.read_text(encoding="utf-8"))
+    validate_structure(previous)
+    registry = {(name, slug, count) for name, slug, count, _ in COMMISSION_REGISTRY}
+    if {(c["nombre"], c.get("slug"), c["integrantes_normativos"]) for c in previous["comisiones"]} != registry:
+        raise RuntimeError("No coincide el padrón de comisiones de la estructura validada")
+
+    def signature(rows: list[dict]) -> set[tuple[str, str, str]]:
+        return {(person_key(m["nombre"]), norm(m["bloque"]), norm(m["cargo"])) for m in rows}
+
+    previous_by_slug = {c["slug"]: c for c in previous["comisiones"]}
+    person = person_key(KNOWN_MISSING_MEMBER)
+    block = norm(KNOWN_BLOCK)
+    affected = {c["slug"] for c in observed}
+    previous_memberships = {
+        c["slug"] for c in previous["comisiones"]
+        if any(person_key(m["nombre"]) == person for m in c["integrantes"])
+    }
+    if previous_memberships != set(KNOWN_ROSTER_GAPS):
+        raise RuntimeError("La estructura validada no coincide con las cuatro membresías cotejadas")
+
+    details = []
+    for commission in observed:
+        slug = commission["slug"]
+        label, expected, missing_role = KNOWN_ROSTER_GAPS[slug]
+        old = signature(previous_by_slug[slug]["integrantes"])
+        new = signature(commission["integrantes"])
+        missing = (person, block, norm(missing_role))
+        if len(old) != expected or missing not in old or new != old - {missing}:
+            raise RuntimeError(f"{label}: los integrantes observados no coinciden con la omisión verificada")
+        details.append({
+            "slug": slug, "comision": label, "fuente": commission["url"],
+            "integrantes_observados": len(commission["integrantes"]), "integrantes_normativos": expected,
+        })
+
+    old_block = previous["bloques"]["fuerza_por_buenos_aires"]
+    old_keys = {person_key(m["nombre"]) for m in old_block["integrantes"]}
+    live_keys = {person_key(m["nombre"]) for m in fpba}
+    expected_keys = old_keys - {person} if affected == set(KNOWN_ROSTER_GAPS) else old_keys
+    if (
+        len(old_keys) != KNOWN_PREVIOUS_BLOCK_TOTAL or person not in old_keys
+        or old_block["integrantes_informados"] != KNOWN_PREVIOUS_BLOCK_TOTAL
+        or official_count != len(expected_keys) or live_keys != expected_keys
+    ):
+        raise RuntimeError(
+            f"{KNOWN_BLOCK}: composición observada incompatible con la omisión cotejada "
+            f"(fuente {official_count}, unión {len(live_keys)}, esperado {len(expected_keys)})"
+        )
+
+    previous["control_actualizacion"] = {
+        "estado": "degradada",
+        "motivo": DEGRADED_REASON,
+        "intentado_en": now,
+        "comisiones": details,
+        "bloque_fuerza_por_buenos_aires": {
+            "fuente": BLOCK_URL, "integrantes_observados": official_count,
+            "integrantes_ultimo_validado": KNOWN_PREVIOUS_BLOCK_TOTAL,
+        },
+    }
+    public_structure_status(previous)
+    return previous
+
+
 def main() -> None:
     session = requests.Session()
-    commissions = [parse_commission(session, *row) for row in COMMISSION_REGISTRY]
+    commissions = []
+    incomplete_commissions = []
+    for row in COMMISSION_REGISTRY:
+        try:
+            commission = parse_commission(session, *row)
+        except RosterCountMismatch as error:
+            if not known_roster_shape(error):
+                raise
+            commission = error.commission
+            validate_members(commission, error.incomplete_rows)
+            incomplete_commissions.append(commission)
+        commissions.append(commission)
 
-    fpba = block_members_from_commissions(commissions, "Fuerza por Buenos Aires")
+    fpba = block_members_from_commissions(commissions, KNOWN_BLOCK)
     official_block_count = parse_block_count(session)
-    if official_block_count is not None and len(fpba) != official_block_count:
+    if official_block_count is None:
+        raise RuntimeError(f"{KNOWN_BLOCK}: no se encontró el contador oficial de integrantes")
+    if len(fpba) != official_block_count:
         raise RuntimeError(
             f"Fuerza por Buenos Aires: la página oficial informa {official_block_count} integrantes "
             f"pero la unión de las 27 comisiones recuperó {len(fpba)}"
@@ -226,6 +349,25 @@ def main() -> None:
 
     claudia = find_claudia(commissions)
     now = datetime.now(TZ).isoformat(timespec="seconds")
+    if incomplete_commissions:
+        dataset = retain_validated_structure(incomplete_commissions, fpba, official_block_count, now)
+        details = dataset["control_actualizacion"]["comisiones"]
+        counts = "; ".join(
+            f"{c['comision']}: {c['integrantes_observados']} de {c['integrantes_normativos']}"
+            for c in details
+        )
+        message = (
+            f"Estructura institucional degradada ({counts}; bloque: {official_block_count} informados). "
+            f"Se conserva la última estructura validada ({dataset['actualizado_en']}); "
+            "el resto del núcleo legislativo sigue con sus verificaciones."
+        )
+        OUT.write_text(json.dumps(dataset, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(f"::warning::{message}")
+        if summary := os.environ.get("GITHUB_STEP_SUMMARY"):
+            with Path(summary).open("a", encoding="utf-8") as f:
+                f.write(f"\n**Actualización parcial:** {message}\n")
+        return
+
     dataset = {
         "schema": "cepoes-estructura-legislativa-v1",
         "actualizado_en": now,

@@ -123,21 +123,32 @@ class LegislativeRefreshTests(unittest.TestCase):
         self.output.write_text(json.dumps(self.previous, ensure_ascii=False), encoding="utf-8")
         self.agenda_id = 4852
         self.seen = []
+        self.block_count = 20
 
     def commission(self, slug):
         return next(c for c in self.commissions if c["slug"] == slug)
 
-    def missing_health_member(self):
-        members = self.commission("salud")["integrantes"]
+    def remove_known_member(self, slug):
+        members = self.commission(slug)["integrantes"]
         index = next(i for i, m in enumerate(members)
                      if parser.person_key(m["nombre"]) == parser.person_key("Noemí Geminiani"))
         return members.pop(index)
 
+    def missing_health_member(self):
+        return self.remove_known_member("salud")
+
+    def missing_four(self):
+        removals = {slug: self.remove_known_member(slug) for slug in (
+            "salud", "ninezadolescenciayjuventud", "turismoydeportes", "personasmayores"
+        )}
+        self.block_count = 19
+        return removals
+
     def live_response(self, url, **_opts):
         self.seen.append(url)
         if url == parser.BLOCK_URL:
-            total = self.previous["bloques"]["fuerza_por_buenos_aires"]["integrantes_informados"]
-            document = f"<h1>Fuerza por Buenos Aires</h1><p>Integrantes {total}</p>"
+            counter = f"<p>Integrantes {self.block_count}</p>" if self.block_count is not None else ""
+            document = "<h1>Fuerza por Buenos Aires</h1>" + counter
         else:
             commission = self.commission(url.rsplit("/", 1)[-1])
             documents = [
@@ -216,7 +227,11 @@ class LegislativeRefreshTests(unittest.TestCase):
         return site, page
 
     def test_known_mismatch_retains_validated_data_reaches_public_monitor_and_recovers(self):
-        removed = self.missing_health_member()
+        removed = self.missing_four()
+        # Misma persona/rol/bloque con orden, acentos y mayúsculas distintos.
+        health_president = self.commission("salud")["integrantes"][0]
+        health_president["nombre"] = "JUAN FACUNDO DEL GAISO"
+        health_president["cargo"] = "  PRESIDENTE  "
         log = self.run_structure()
         self.assertIn("::warning::", log)
         self.assertIn("14 de 15", self.summary.read_text(encoding="utf-8"))
@@ -226,6 +241,11 @@ class LegislativeRefreshTests(unittest.TestCase):
         degraded = public_structure_status(retained)
         self.assertEqual(degraded["ultimo_validado_en"], self.previous["actualizado_en"])
         self.assertNotEqual(degraded["intentado_en"], degraded["ultimo_validado_en"])
+        self.assertEqual({c["slug"]: (c["integrantes_observados"], c["integrantes_normativos"])
+                          for c in degraded["comisiones"]},
+                         {"salud": (14, 15), "ninezadolescenciayjuventud": (12, 13),
+                          "turismoydeportes": (8, 9), "personasmayores": (10, 11)})
+        self.assertEqual(degraded["bloque_fuerza_por_buenos_aires"]["integrantes_observados"], 19)
         self.assertEqual({k: v for k, v in retained.items() if k != "control_actualizacion"}, self.previous)
 
         live = self.run_monitor()
@@ -237,15 +257,21 @@ class LegislativeRefreshTests(unittest.TestCase):
         self.assertEqual(len(public["expedientes"]), 1000)
         self.assertEqual(public["reuniones"][0]["id"], "reunion-de-prueba")
         self.assertEqual(public["estado_estructura_institucional"], degraded)
-        self.assertIn("14 de los 15 integrantes", page.read_text(encoding="utf-8"))
-        self.assertIn("01/01/2026", page.read_text(encoding="utf-8"))
+        notice = page.read_text(encoding="utf-8")
+        for label in ("Salud (14 de 15)", "Niñez, Adolescencia y Juventud (12 de 13)",
+                      "Turismo y Deportes (8 de 9)", "Personas Mayores (10 de 11)",
+                      "informó 19 integrantes", "no acredita cambios formales", "01/01/2026"):
+            self.assertIn(label, notice)
+        self.assertNotIn("Geminiani", notice)
         self.assertIn("última validada el 1 de enero de 2026",
                       (site / "datos/estado/index.html").read_text(encoding="utf-8"))
 
         self.staged_site(live)
         self.assertEqual(page.read_text(encoding="utf-8").count("cepoes-estado-estructura:inicio"), 1)
 
-        self.commission("salud")["integrantes"].append(removed)
+        for slug, member in removed.items():
+            self.commission(slug)["integrantes"].append(member)
+        self.block_count = 20
         self.assertNotIn("::warning::", self.run_structure())
         fresh = json.loads(self.output.read_text(encoding="utf-8"))
         self.assertIsNone(public_structure_status(fresh))
@@ -265,10 +291,42 @@ class LegislativeRefreshTests(unittest.TestCase):
         self.assertEqual(self.output.read_bytes() if self.output.exists() else None, before)
         self.assertFalse(self.summary.exists())
 
+    def test_subset_with_recovered_commission_and_matching_block_is_allowed(self):
+        removed = self.missing_four()
+        self.commission("salud")["integrantes"].append(removed["salud"])
+        self.block_count = 20
+        self.assertIn("::warning::", self.run_structure())
+        retained = json.loads(self.output.read_text(encoding="utf-8"))
+        self.assertEqual(retained["actualizado_en"], self.previous["actualizado_en"])
+        self.assertEqual(len(public_structure_status(retained)["comisiones"]), 3)
+        self.assertEqual(public_structure_status(retained)["bloque_fuerza_por_buenos_aires"]["integrantes_observados"], 20)
+
     def test_later_unrelated_roster_error_still_stops_and_does_not_certify_a_partial_run(self):
         self.missing_health_member()
-        self.commission("personasmayores")["integrantes"].pop()
-        self.assert_hard_failure("Personas Mayores: esperaba 11 integrantes y encontré 10")
+        self.commission("ambiente")["integrantes"].pop()
+        self.assert_hard_failure("Ambiente: esperaba 11 integrantes y encontré 10")
+
+    def test_unrelated_member_absent_from_one_of_four_commissions_is_a_hard_failure(self):
+        members = self.commission("personasmayores")["integrantes"]
+        members.pop(next(i for i, m in enumerate(members) if parser.norm(m["cargo"]) == "vocal"))
+        self.assert_hard_failure("Personas Mayores: los integrantes observados no coinciden con la omisión verificada")
+
+    def test_same_block_count_with_an_unrelated_replacement_is_a_hard_failure(self):
+        self.missing_four()
+        whom = next(person["nombre"] for person in self.previous["bloques"]["fuerza_por_buenos_aires"]["integrantes"]
+                    if not any(x in parser.norm(person["nombre"]) for x in ("claudia", "geminiani")))
+        for c in self.commissions:
+            for member in c["integrantes"]:
+                if parser.person_key(member["nombre"]) == parser.person_key(whom):
+                    member["nombre"] = "Apellido, Nueva persona"
+        self.assert_hard_failure("composición observada incompatible.*fuente 19, unión 19, esperado 19")
+
+    def test_incompatible_or_missing_block_counter_is_a_hard_failure(self):
+        self.missing_four()
+        self.block_count = 20
+        self.assert_hard_failure("la página oficial informa 20 integrantes")
+        self.block_count = None
+        self.assert_hard_failure("no se encontró el contador oficial")
 
     def test_unknown_health_shape_and_unvalidated_snapshot_are_not_published(self):
         self.missing_health_member()

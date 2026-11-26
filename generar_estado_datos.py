@@ -56,16 +56,20 @@ def main() -> None:
     structure_status = legislature.get("estado_estructura_institucional")
     if structure_status and (
         structure_status.get("estado") != "degradada"
-        or structure_status.get("motivo") != "salud_14_de_15"
+        or structure_status.get("motivo") != "omisiones_verificadas_comisiones"
     ):
         raise ValueError("Estado público de estructura institucional inválido")
     structure_note = ""
     if structure_status:
         validated = date(structure_status["ultimo_validado_en"])
         checked = date(structure_status["intentado_en"])
+        details = "; ".join(
+            f'{html.escape(c["comision"])} ({int(c["integrantes_observados"])} de {int(c["integrantes_normativos"])})'
+            for c in structure_status["comisiones"]
+        )
         structure_note = (
             f'<p class="state-source"><strong>Estructura institucional: última validada el {validated}.</strong> '
-            f'En la revisión del {checked}, la Comisión de Salud mostró 14 de 15 integrantes. '
+            f'En la revisión del {checked}, las fuentes oficiales mostraron menos integrantes: {details}. '
             'La fecha de procesamiento indicada corresponde al monitor, no a la nómina retenida.</p>'
         )
 

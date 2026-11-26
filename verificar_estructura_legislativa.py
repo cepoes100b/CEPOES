@@ -11,19 +11,50 @@ def norm(v):
     s=unicodedata.normalize('NFKD',str(v or '')).encode('ascii','ignore').decode().lower()
     return re.sub(r'[^a-z0-9]+',' ',s).strip()
 
+# Incidente cotejado con las cuatro páginas oficiales en noviembre de 2026.
+KNOWN_ROSTER_GAPS = {
+    "salud": ("Salud", 15, "Vocal"),
+    "ninezadolescenciayjuventud": ("Niñez, Adolescencia y Juventud", 13, "Vocal"),
+    "turismoydeportes": ("Turismo y Deportes", 9, "Vocal"),
+    "personasmayores": ("Personas Mayores", 11, "Vicepresidente 1"),
+}
+KNOWN_MISSING_MEMBER = "Noemí Geminiani"
+KNOWN_BLOCK = "Fuerza por Buenos Aires"
+KNOWN_PREVIOUS_BLOCK_TOTAL = 20
+OFFICIAL_BASE = "https://www.legislatura.gob.ar"
+BLOCK_PAGE = f"{OFFICIAL_BASE}/bloque/fuerzaporbuenosaires"
+DEGRADED_REASON = "omisiones_verificadas_comisiones"
+
+
 def public_structure_status(x):
     status = x.get("control_actualizacion")
     if status is None:
         return None
-    if not isinstance(status, dict) or status != {
-        "estado": "degradada",
-        "motivo": "salud_14_de_15",
-        "intentado_en": status.get("intentado_en"),
-        "fuente": "https://www.legislatura.gob.ar/comision/salud",
-        "integrantes_observados": 14,
-        "integrantes_normativos": 15,
-    }:
+    if not isinstance(status, dict) or set(status) != {
+        "estado", "motivo", "intentado_en", "comisiones", "bloque_fuerza_por_buenos_aires"
+    } or status["estado"] != "degradada" or status["motivo"] != DEGRADED_REASON:
         raise ValueError("Estado de degradación institucional inválido")
+    commissions = status["comisiones"]
+    if not isinstance(commissions, list) or not commissions:
+        raise ValueError("Estado sin comisiones afectadas")
+    seen = set()
+    for row in commissions:
+        slug = row.get("slug") if isinstance(row, dict) else None
+        if slug in seen or slug not in KNOWN_ROSTER_GAPS:
+            raise ValueError("Comisión no autorizada o repetida en el estado de degradación")
+        label, expected, _ = KNOWN_ROSTER_GAPS[slug]
+        if row != {
+            "slug": slug, "comision": label, "fuente": f"{OFFICIAL_BASE}/comision/{slug}",
+            "integrantes_observados": expected - 1, "integrantes_normativos": expected,
+        }:
+            raise ValueError("Detalle de comisión inválido en el estado de degradación")
+        seen.add(slug)
+    expected_block = KNOWN_PREVIOUS_BLOCK_TOTAL - int(seen == set(KNOWN_ROSTER_GAPS))
+    if status["bloque_fuerza_por_buenos_aires"] != {
+        "fuente": BLOCK_PAGE, "integrantes_observados": expected_block,
+        "integrantes_ultimo_validado": KNOWN_PREVIOUS_BLOCK_TOTAL,
+    }:
+        raise ValueError("Detalle de bloque inválido en el estado de degradación")
     validated_at = x.get("actualizado_en")
     attempted_at = datetime.fromisoformat(status["intentado_en"])
     updated_at = datetime.fromisoformat(validated_at)

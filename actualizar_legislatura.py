@@ -17,9 +17,12 @@ from urllib.parse import urljoin
 import requests
 from bs4 import BeautifulSoup
 
+from verificar_estructura_legislativa import public_structure_status
+
 BASE = Path(__file__).resolve().parent
 OUT = BASE / "legislatura_publica.json"
 STATE = BASE / "estado_legislatura.json"
+STRUCTURE = BASE / "estructura_legislativa.json"
 
 HOST = "https://www.legislatura.gob.ar"
 MAIN_AGENDA = f"{HOST}/AgendaLCABA"
@@ -404,6 +407,11 @@ def main() -> int:
         "expedientes": projects,
         "taxonomia_tematica": sorted(TOPICS.keys()),
     }
+    # La frescura de una nómina retenida no es la de la agenda procesada.
+    if STRUCTURE.exists():
+        status = public_structure_status(json.loads(STRUCTURE.read_text(encoding="utf-8")))
+        if status is not None:
+            out["estado_estructura_institucional"] = status
     OUT.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     STATE.write_text(json.dumps({
         "version": 3,

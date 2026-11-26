@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import re
 from pathlib import Path
@@ -29,14 +30,22 @@ def inject_structure_status(source: str, status: dict | None) -> str:
     cleaned = STATUS_PATTERN.sub("", source)
     if status is None:
         return cleaned
-    if status.get("estado") != "degradada" or status.get("motivo") != "salud_14_de_15":
+    if status.get("estado") != "degradada" or status.get("motivo") != "omisiones_verificadas_comisiones":
         raise ValueError("Estado público de estructura institucional inválido")
     validated = datetime.fromisoformat(status["ultimo_validado_en"]).strftime("%d/%m/%Y")
+    rows = "; ".join(
+        f'{html.escape(c["comision"])} ({int(c["integrantes_observados"])} de {int(c["integrantes_normativos"])})'
+        for c in status["comisiones"]
+    )
+    block = status["bloque_fuerza_por_buenos_aires"]
+    observed, last = int(block["integrantes_observados"]), int(block["integrantes_ultimo_validado"])
+    block_note = f' El bloque Fuerza por Buenos Aires informó {observed} integrantes; el registro validado conserva {last}.' if observed != last else ""
     notice = (
         STATUS_BEGIN + '<aside class="wrap" aria-label="Estado de la estructura institucional">'
         '<p><strong>Estructura institucional con actualización parcial.</strong> '
-        f'La nómina oficial de la Comisión de Salud mostró 14 de los 15 integrantes previstos. '
+        f'Las nóminas oficiales mostraron menos integrantes que los previstos: {rows}.{block_note} '
         f'Se conserva la última estructura validada, del {validated}. '
+        'Este aviso no acredita cambios formales de integración. '
         'La agenda, las sesiones y los expedientes se actualizan por separado. '
         '<a href="/datos/estado/">Ver estado de los datos</a>.</p></aside>' + STATUS_END
     )
@@ -85,6 +94,8 @@ def prepare(site: Path) -> int:
 
     payload = site / "legislatura_publica.json"
     status = json.loads(payload.read_text(encoding="utf-8")).get("estado_estructura_institucional")
+    if status is not None and not (legislature / "index.html").is_file():
+        raise ValueError("No está la entrada pública /legislatura/ para mostrar la advertencia")
 
     for path in pages:
         relative = path.relative_to(site).as_posix()

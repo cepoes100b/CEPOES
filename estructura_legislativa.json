@@ -3325,5 +3325,45 @@
         }
       ]
     }
+  },
+  "control_actualizacion": {
+    "estado": "degradada",
+    "motivo": "omisiones_verificadas_comisiones",
+    "intentado_en": "2026-11-26T19:32:00-03:00",
+    "comisiones": [
+      {
+        "slug": "salud",
+        "comision": "Salud",
+        "fuente": "https://www.legislatura.gob.ar/comision/salud",
+        "integrantes_observados": 14,
+        "integrantes_normativos": 15
+      },
+      {
+        "slug": "ninezadolescenciayjuventud",
+        "comision": "Niñez, Adolescencia y Juventud",
+        "fuente": "https://www.legislatura.gob.ar/comision/ninezadolescenciayjuventud",
+        "integrantes_observados": 12,
+        "integrantes_normativos": 13
+      },
+      {
+        "slug": "turismoydeportes",
+        "comision": "Turismo y Deportes",
+        "fuente": "https://www.legislatura.gob.ar/comision/turismoydeportes",
+        "integrantes_observados": 8,
+        "integrantes_normativos": 9
+      },
+      {
+        "slug": "personasmayores",
+        "comision": "Personas Mayores",
+        "fuente": "https://www.legislatura.gob.ar/comision/personasmayores",
+        "integrantes_observados": 10,
+        "integrantes_normativos": 11
+      }
+    ],
+    "bloque_fuerza_por_buenos_aires": {
+      "fuente": "https://www.legislatura.gob.ar/bloque/fuerzaporbuenosaires",
+      "integrantes_observados": 19,
+      "integrantes_ultimo_validado": 20
+    }
   }
 }

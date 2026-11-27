@@ -3329,7 +3329,7 @@
   "control_actualizacion": {
     "estado": "degradada",
     "motivo": "omisiones_verificadas_comisiones",
-    "intentado_en": "2026-11-26T19:32:00-03:00",
+    "intentado_en": "2026-11-27T19:16:36-03:00",
     "comisiones": [
       {
         "slug": "salud",

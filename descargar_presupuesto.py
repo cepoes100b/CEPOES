@@ -107,6 +107,9 @@ def choose_sanctioned(pkg: dict, year: int) -> dict:
 
 def resource_url(resource: dict) -> str:
     url = str(resource.get("url") or "").strip()
+    # BA Data can prepend the string "None" to its own CDN download URL.
+    if url.startswith("Nonehttps://cdn.buenosaires.gob.ar/datosabiertos/"):
+        url = url.removeprefix("None")
     if not url:
         rid = resource.get("id")
         if not rid:
